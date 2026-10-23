@@ -55,8 +55,15 @@ terrane app
 
 `terrane app` opens the estate at http://127.0.0.1:8020: every diagram, the
 records as tables, the library, and the checks. Edits made there are written
-back as YAML files that read as if a person wrote them. A first visit to the
-sample estate offers a two-minute tour.
+back as YAML files that read as if a person wrote them. An empty estate's
+first page says how to bring in an inventory, and `terrane init` names a
+sample spreadsheet inside the package to try it with.
+
+The sample estate, a card issuer, shows what a full estate draws. It is on
+[the demo](https://matthewbakerthompson.github.io/terrane/), read-only and
+with nothing to install, where a first visit offers a two-minute tour. To
+edit it, clone the repository and run `terrane app` in the clone's root
+folder.
 
 `terrane init` pins the Terrane releases the estate is checked with, so
 everyone on it draws the same thing, and can name the organization's
@@ -154,6 +161,7 @@ THIRD_PARTY_NOTICES.md.
 ## Links
 
 - [The repository](https://github.com/matthewbakerthompson/terrane)
+- [The demo](https://matthewbakerthompson.github.io/terrane/), the sample estate in the app, read-only
 - [The method](https://github.com/matthewbakerthompson/terrane/tree/main/00_METHOD), chapter by chapter
 - [The changelog](https://github.com/matthewbakerthompson/terrane/blob/main/CHANGELOG.md)
 - [Issues](https://github.com/matthewbakerthompson/terrane/issues)

@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.0.1 (2026-10-23)
+
+What an installed Terrane tells its user now names only what an install
+has.
+
+- **An empty estate.** `terrane app` on an estate with no records said to
+  import `../90_EXAMPLE/csv`, a folder only a clone of the repository has.
+  It now names Import in the app, `terrane adopt` for a spreadsheet and
+  `terrane import csv` for a folder of CSVs, and where the sample
+  spreadsheet inside the package is. `terrane init` names that
+  spreadsheet too.
+- **Import in the app.** The folder of CSVs was filled in as
+  `90_EXAMPLE/csv`; it starts empty.
+- **Taking the sample out.** Settings said `terrane clear` takes the sample
+  out on every estate; it says so on the sample alone, and `terrane clear`
+  no longer sends a person to a folder of the repository's for the columns.
+- **The tour.** The package's page said the sample estate offers a tour
+  without saying where the sample is: it is on the demo, with nothing to
+  install, and in a clone of the repository. The demo's own notes name
+  `pip install terrane` rather than a script in the repository.
+
 ## 1.0.0 (2026-10-23)
 
 The first release on PyPI.

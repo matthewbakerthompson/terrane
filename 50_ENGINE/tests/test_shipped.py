@@ -256,6 +256,12 @@ class TestThePackagesCopiesAlone(unittest.TestCase):
             self.assertTrue(len(drawings), name)
             self.assertFalse([n for n in drawings.notes if n.startswith("ERROR")], (name, drawings.notes))
 
+    def test_the_spreadsheet_an_empty_estate_is_offered_travels(self) -> None:
+        # `terrane init` and the app's note for an empty model name it. The
+        # note once named `../90_EXAMPLE/csv`, which no wheel carries.
+        offered = shipped.sample_inventory().relative_to(shipped.shipped_root())
+        self.assertTrue((self.inside / offered).is_file(), offered)
+
 
 if __name__ == "__main__":
     unittest.main()

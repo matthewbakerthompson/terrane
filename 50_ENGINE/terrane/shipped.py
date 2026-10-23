@@ -75,3 +75,11 @@ def default_root() -> Path:
 
 def example_path() -> Path:
     return shipped_root() / "90_EXAMPLE" / "quick" / "payments.yaml"
+
+
+def sample_inventory() -> Path:
+    """The spreadsheet an empty estate is pointed at to try an import on:
+    an inventory as a portfolio tool exports it, which `terrane adopt` and
+    the app's Import both read. A hint once named `../90_EXAMPLE/csv`, a
+    folder of the repository's that no pip install has."""
+    return shipped_root() / "90_EXAMPLE" / "quick" / "sample-inventory.xlsx"

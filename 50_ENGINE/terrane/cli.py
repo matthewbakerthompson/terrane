@@ -59,7 +59,7 @@ from .render_sequence import render as render_sequence
 from .render_sequence import render_markdown as render_flow_markdown
 from .render_structurizr import render_workspace
 from .schema import ENTITY_TYPES
-from .shipped import default_root, shipped_app
+from .shipped import default_root, sample_inventory, shipped_app
 from .estate import InitError, init_estate, pins as estate_pins, problems as estate_problems, views_of
 
 
@@ -144,7 +144,8 @@ def cmd_render(args: argparse.Namespace) -> int:
     if want_svg:
         svg_dir.mkdir(parents=True, exist_ok=True)
         if web is None:
-            print("no marks on the SVG: 80_APP/web/icons was not found beside the model or the engine")
+            print("no marks on the SVG: the icons were found neither beside the estate nor in this terrane; "
+                  "reinstalling terrane puts them back")
     rasterize = _rasterizer() if getattr(args, "png", False) else None
     if rasterize:
         png_dir.mkdir(parents=True, exist_ok=True)
@@ -1274,8 +1275,12 @@ def cmd_clear(args: argparse.Namespace) -> int:
     print("Removed %d file(s) from %s%s." % (
         total, model_dir, "; kept %s" % ", ".join(sorted(keep)) if keep else ""))
     print("")
+    # Run from 50_ENGINE as often as from the root, so a folder of the
+    # repository's named here was the wrong path half the time, and no
+    # path at all once installed: the columns are said, not pointed at.
     print("Next:")
-    print("  terrane import csv --from <your inventory>   (metamodel v2 CSVs; see 90_EXAMPLE/csv for the columns)")
+    print("  terrane adopt <a spreadsheet>                (an inventory as exported, read by its column names)")
+    print("  terrane import csv --from <a folder>         (metamodel v2 CSVs, as terrane export csv writes them)")
     print("  terrane validate                             (warnings are the list of what the inventory lacks)")
     print("  terrane refresh                              (the drawings, the schemas and the exports)")
     print("")
@@ -1336,7 +1341,9 @@ def cmd_init(args: argparse.Namespace) -> int:
     print("%s: an empty estate on terrane %s, %d views, %d error(s)"
           % (folder.name, __version__, len(views_of(folder)), errors))
     print("Next: add records (terrane new system SYS-..., terrane import csv, terrane adopt FILE),")
-    print("then terrane validate and terrane render, from inside the folder or with --root.")
+    print("then terrane validate and terrane render, from inside the folder or with --root;")
+    print("terrane app opens it in the browser. A spreadsheet to try terrane adopt on:")
+    print("  %s" % sample_inventory())
     return 1 if errors else 0
 
 

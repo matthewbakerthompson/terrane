@@ -38,7 +38,9 @@ and `terrane app` opens it in the browser. [AAC-15](00_METHOD/AAC-15_ADOPTING.md
 is the first week of filling it.
 
 The pictures on this page are of the sample estate, a card issuer, which lives
-in this repository. To open it, clone the repository and, from its root folder:
+in this repository and, read-only, on
+[the demo](https://matthewbakerthompson.github.io/terrane/), with nothing to
+install. To open it in the app, clone the repository and, from its root folder:
 
 ```bash
 pip install .

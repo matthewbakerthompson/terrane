@@ -48,6 +48,7 @@ from terrane.loader import ModelFileError, parse_data_text, read_data_file  # no
 from terrane.model import ModelError, load  # noqa: E402
 from terrane.palette import TONES, Palette  # noqa: E402
 from terrane.estate import is_shipped_view, views_of  # noqa: E402
+from terrane.shipped import sample_inventory  # noqa: E402
 from terrane.query import VIEW_CATEGORIES, ViewError, bind, load_views, parse_view  # noqa: E402
 from terrane.query import render_targets, resolve  # noqa: E402
 from terrane.render_mermaid import render as render_mermaid  # noqa: E402
@@ -6172,20 +6173,28 @@ def main(argv: Optional[List[str]] = None) -> int:
         # call time, so naming the root here is the whole of it.
         REPO_ROOT = Path(args.root).resolve()
 
+    # The hints below name the installed command and no folder of the
+    # repository's: this file ships inside the package and is started by
+    # `terrane app`, and the note for an empty model once sent a pip user
+    # to `../90_EXAMPLE/csv`, which only a clone has.
     try:
         model, views = _load_all()
     except Exception as exc:  # noqa: BLE001
         print("The model did not load: %s" % exc, file=sys.stderr)
-        print("Fix it with `python -m terrane validate`, then start the app again.", file=sys.stderr)
+        print("Run `terrane validate` in %s for what to fix, then start the app again." % REPO_ROOT,
+              file=sys.stderr)
         return 1
 
     entities = sum(len(v) for v in model.entities.values())
     print("Architecture model app")
-    print("  repo    %s" % REPO_ROOT)
+    print("  estate  %s" % REPO_ROOT)
     print("  model   %d entities, %d views" % (entities, len(views)))
     if not entities:
-        print("  note    the model is empty. Use Import in the app, or:")
-        print("          python -m terrane import csv --from ../90_EXAMPLE/csv")
+        print("  note    the model is empty. Bring in an inventory with Import in the app, or in")
+        print("          the estate's folder with `terrane adopt <a spreadsheet>` or")
+        print("          `terrane import csv --from <a folder of CSVs>`.")
+        print("  sample  an inventory to try it with:")
+        print("          %s" % sample_inventory())
     print("")
     print("  http://%s:%d" % (args.host, args.port))
     print("")

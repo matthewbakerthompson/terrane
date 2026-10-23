@@ -10894,7 +10894,7 @@
     if (readOnly) {
       panel.appendChild(el("p", { class: "gallery-foot", text:
         "This is the read-only copy. Everything that reads the model works here; what writes "
-        + "runs in the local app, started with python 80_APP/app/server.py." }));
+        + "runs in the app on your own machine: pip install terrane, then terrane init and terrane app." }));
     }
     syncUrl();
   }
@@ -16568,8 +16568,11 @@
         side.appendChild(el("div", { class: "est-step" }, [el("span", { class: "fh-n small", text: s[0] }),
           el("div", {}, [el("strong", { text: s[1] }), el("p", { text: s[2] })])]));
       });
-    side.appendChild(el("p", { class: "st-hint", text: "Taking the sample out of this repository instead is terrane clear, "
-      + "from a terminal: it says what it would remove before it removes anything." }));
+    // Said only on the sample: an estate of one's own has no sample to take out.
+    if (state.overview && state.overview.estate && state.overview.estate.sample) {
+      side.appendChild(el("p", { class: "st-hint", text: "Taking the sample out of this repository instead is terrane clear, "
+        + "from a terminal: it says what it would remove before it removes anything." }));
+    }
   }
 
   function renderConnectionsTab(body) {
@@ -16633,9 +16636,12 @@
       body.appendChild(el("p", { class: "explain", text:
         "Point this at a folder of metamodel v2 CSVs — the layout `terrane export csv` writes. " +
         "Records already in the model are reported and left alone, never silently replaced." }));
+      // Empty, not the sample's own CSVs: `90_EXAMPLE/csv` was filled in
+      // here, a folder of the repository's that an estate started from a pip
+      // install never has, so Import failed on the path it suggested.
       body.appendChild(el("div", { class: "field mono-in" }, [
         el("label", { for: "f__src" }, ["source folder"]),
-        el("input", { id: "f__src", type: "text", value: "90_EXAMPLE/csv" }),
+        el("input", { id: "f__src", type: "text", placeholder: "a whole path, or a folder inside the estate" }),
       ]));
       body.appendChild(el("div", { class: "field" }, [
         el("label", { for: "f__ow" }, [

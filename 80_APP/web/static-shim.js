@@ -22,8 +22,8 @@
   var FOCUS_DEPTHS = 2;
   var MSG =
     "This is the read-only hosted demo. Editing, import, validate-on-save and " +
-    "render write to the model on disk, so they run in the local app: clone the " +
-    "repo and run python 80_APP/app/server.py.";
+    "render write to the model on disk, so they run in the app on your own " +
+    "machine: pip install terrane, then terrane init and terrane app.";
 
   window.__AAC_STATIC__ = true;
 

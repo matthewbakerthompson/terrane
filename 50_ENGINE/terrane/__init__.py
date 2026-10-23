@@ -15,7 +15,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Dict, List
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 __all__ = ["__version__", "adopt", "change", "diagrams", "example", "examples", "export_archimate", "export_drawio",
            "connect", "export_changes", "export_excel", "export_plantuml", "from_parts", "made_by", "on_shape",
            "part", "presets", "since", "views"]

@@ -19,6 +19,7 @@ import tempfile
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -27,10 +28,20 @@ from terrane.join import estate_copy  # noqa: E402
 from terrane.library import LibraryError, library_roots  # noqa: E402
 from terrane.model import load  # noqa: E402
 from terrane.query import ViewError, load_views  # noqa: E402
-from terrane.shipped import shipped_root  # noqa: E402
+from terrane.shipped import sample_inventory, shipped_root  # noqa: E402
 from terrane import validate  # noqa: E402
 
 SHIPPED_VIEWS = len(load_views(shipped_root() / "30_VIEWS"))
+
+
+def _server():
+    """The app's server module, fresh, as `terrane app` loads it."""
+    import importlib
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "80_APP" / "app"))
+    import server as server_module
+
+    return importlib.reload(server_module)
 
 
 class _Estate(unittest.TestCase):
@@ -71,6 +82,48 @@ class TestInit(_Estate):
         # Generated pictures stay out of the repository, so two people's
         # renders never conflict.
         self.assertIn("70_ARTIFACTS/", (self.root / ".gitignore").read_text(encoding="utf-8"))
+
+    def test_the_spreadsheet_init_offers_is_there_and_adopt_reads_it(self) -> None:
+        # The hints an empty estate gets once named `../90_EXAMPLE/csv`, a
+        # folder only a clone of the repository has.
+        out = io.StringIO()
+        with redirect_stdout(out), redirect_stderr(io.StringIO()):
+            self.assertEqual(cli.main(["init", str(self.root), "--name", "Contoso Architecture"]), 0)
+        offered = Path(out.getvalue().splitlines()[-1].strip())
+        self.assertEqual(offered, sample_inventory())
+        self.assertTrue(offered.is_file(), offered)
+        self.assertNotIn("90_EXAMPLE/csv", out.getvalue())
+        tried = io.StringIO()
+        with redirect_stdout(tried), redirect_stderr(io.StringIO()):
+            self.assertEqual(cli.main(["--root", str(self.root), "adopt", str(offered), "--dry-run"]), 0)
+        self.assertIn("would adopt 5", tried.getvalue())
+
+    def test_the_app_on_an_empty_estate_names_what_an_install_has(self) -> None:
+        self.assertEqual(self.init(), 0)
+        server = _server()
+
+        class Stopped:
+            """The server, stopped as soon as it would serve."""
+
+            def __init__(self, *_args) -> None:
+                pass
+
+            def serve_forever(self) -> None:
+                raise KeyboardInterrupt
+
+            def server_close(self) -> None:
+                pass
+
+        out = io.StringIO()
+        with mock.patch.object(server, "ThreadingHTTPServer", Stopped), redirect_stdout(out):
+            self.assertEqual(server.main(["--root", str(self.root)]), 0)
+        lines = out.getvalue().splitlines()
+        self.assertIn("terrane adopt <a spreadsheet>", out.getvalue())
+        self.assertNotIn("90_EXAMPLE/csv", out.getvalue())
+        self.assertNotIn("python -m terrane", out.getvalue())
+        sample = Path(lines[[i for i, line in enumerate(lines) if line.lstrip().startswith("sample")][0] + 1].strip())
+        self.assertEqual(sample, sample_inventory())
+        self.assertTrue(sample.is_file(), sample)
 
     def test_credentials_are_kept_out_of_the_repository(self) -> None:
         self.assertEqual(self.init(), 0)

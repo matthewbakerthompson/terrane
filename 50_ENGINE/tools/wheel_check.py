@@ -11,8 +11,9 @@ faces, ELK and Cytoscape, the examples, the landing zones, the sample's
 answers), the `terrane` command is on the path and nothing is installed as
 `aac`, a sketch and a reader's file draw, a part draws with what it
 requires, both examples on the library draw, an editable deck and a draw.io
-file are written with no repository around, and the wheel is named
-`terrane` and carries the license and its notice. Both files are copied to
+file are written with no repository around, `terrane init` and `terrane
+app` point an empty estate at a spreadsheet the wheel carries, and the
+wheel is named `terrane` and carries the license and its notice. Both files are copied to
 `dist/` at the repository's root once they pass; `tools/release.py` runs
 this and uploads the two it proved.
 """
@@ -69,6 +70,13 @@ print("ok: %d parts, %d views, %d shapes; deck %d bytes, drawio %d bytes" % (
     len(presets["parts"]), len(terrane.views()), len(presets["shapes"]), Path("deck.pptx").stat().st_size,
     Path("visio.drawio").stat().st_size))
 '''
+
+
+def _inside_the_wheel(said: str, who: str) -> None:
+    """A path a command tells a pip user to open is a file of the installed
+    package, not of the repository the wheel was built in."""
+    path = Path(said)
+    assert path.is_file() and "site-packages" in path.parts, "%s names %s" % (who, said)
 
 
 def main() -> int:
@@ -140,7 +148,8 @@ def main() -> int:
     init = subprocess.run([str(terrane_cmd), "init", "estate", "--name", "Wheel estate"], capture_output=True,
                           text=True, cwd=str(empty))
     assert init.returncode == 0 and " 0 error(s)" in init.stdout, init.stdout + init.stderr
-    stats = subprocess.run([str(terrane_cmd), "--root", "estate", "stats"], capture_output=True, text=True,
+    _inside_the_wheel(init.stdout.splitlines()[-1].strip(), "terrane init")
+    stats =subprocess.run([str(terrane_cmd), "--root", "estate", "stats"], capture_output=True, text=True,
                            cwd=str(empty), check=True).stdout
     # The heading line, not the first "views:": `shipped views:` comes first.
     views = [line for line in stats.split("\nviews:\n", 1)[1].split("\n\n", 1)[0].splitlines() if line.strip()]
@@ -153,8 +162,11 @@ def main() -> int:
     with socket.socket() as probe:
         probe.bind(("127.0.0.1", 0))
         port = probe.getsockname()[1]
+    # Unbuffered, so the note the app prints on starting is there to read
+    # once it is stopped: a stopped process on Windows flushes nothing.
     app = subprocess.Popen([str(terrane_cmd), "--root", "estate", "app", "--no-browser", "--port", str(port)],
-                           cwd=str(empty), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+                           cwd=str(empty), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
+                           env=dict(os.environ, PYTHONUNBUFFERED="1"))
     try:
         overview = None
         for _ in range(150):
@@ -181,6 +193,15 @@ def main() -> int:
         except subprocess.TimeoutExpired:
             app.kill()
     print("terrane app opens the estate from the wheel, with its %d views" % len(overview["views"]))
+    # The estate is empty, so the app says how to fill it: in 1.0.0 with
+    # `../90_EXAMPLE/csv`, a folder of the repository's no install has.
+    said = app.stdout.read()
+    assert "90_EXAMPLE/csv" not in said and "terrane adopt" in said, said
+    lines = said.splitlines()
+    sample = [i for i, line in enumerate(lines) if line.lstrip().startswith("sample")]
+    assert sample, "terrane app named no sample for an empty estate: %s" % said
+    _inside_the_wheel(lines[sample[0] + 1].strip(), "terrane app")
+    print("an empty estate is pointed at a spreadsheet the wheel carries")
     subprocess.run([str(python), "-X", "utf8", "-c", SMOKE.replace("SHIPPED_VIEWS", str(SHIPPED_VIEWS))],
                    check=True, cwd=str(empty))
     dist = REPO / "dist"
