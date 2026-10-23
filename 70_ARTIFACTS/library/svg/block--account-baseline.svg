@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="477.4" viewBox="0 0 1100 477.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Account baseline</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Account baseline</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   5 nodes · 2 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">The network, its tiers, and the services every workload in the account needs whether or not anybody asked for them. What onboarding actually creates before a line</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">of application code lands.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(346 111.7)">
+<g class="edge" data-id="e0::vpc::subnet">
+<path d="M182 44 L222.48 44" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M226 44 L216.43 48.78 L216.43 39.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e1::vpc::dns">
+<path d="M182 65 L190 65 A8 8 0 0 1 198 73 L198 115 A10 10 0 0 0 208 125 L222.48 125" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M226 125 L216.43 129.78 L216.43 120.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="vpc" data-type="tech_services">
+<title>Virtual network</title>
+<path d="M12 23 L125.31 23 L182 86 L68.69 86 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="93" y="53.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Virtual network</text>
+<text x="97" y="80.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Amazon VPC · Azure Virtual Network · VP…</text>
+<svg x="153" y="28" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M8 3.5a1.5 1.5 0 1 0 0 .01 M3.5 12.5a1.5 1.5 0 1 0 0 .01 M12.5 12.5a1.5 1.5 0 1 0 0 .01 M8 5v3 M8 8l-4 3.5 M8 8l4 3.5" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="subnet" data-type="tech_services">
+<title>Subnet</title>
+<path d="M226 12 L339.31 12 L396 75 L282.69 75 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="307" y="42.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Subnet</text>
+<text x="311" y="69.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Subnet · Subnet · Subnetwork</text>
+<svg x="367" y="17" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M8 3.5a1.5 1.5 0 1 0 0 .01 M3.5 12.5a1.5 1.5 0 1 0 0 .01 M12.5 12.5a1.5 1.5 0 1 0 0 .01 M8 5v3 M8 8l-4 3.5 M8 8l4 3.5" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="dns" data-type="tech_services">
+<title>DNS</title>
+<path d="M226 93 L339.31 93 L396 156 L282.69 156 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="307" y="123.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">DNS</text>
+<text x="311" y="150.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Amazon Route 53 · Azure DNS · Cloud DNS</text>
+<svg x="367" y="98" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M8 3.5a1.5 1.5 0 1 0 0 .01 M3.5 12.5a1.5 1.5 0 1 0 0 .01 M12.5 12.5a1.5 1.5 0 1 0 0 .01 M8 5v3 M8 8l-4 3.5 M8 8l4 3.5" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="observability" data-type="tech_services">
+<title>Observability</title>
+<path d="M12 104 L125.31 104 L182 167 L68.69 167 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="93" y="134.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Observability</text>
+<text x="97" y="161.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Amazon CloudWatch · Azure Monitor · Clo…</text>
+<svg x="153" y="109" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M2.5 11a5.5 5.5 0 0 1 11 0 M8 11l2.5-4" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="iac" data-type="tech_services">
+<title>Infrastructure as code</title>
+<path d="M12 185 L125.31 185 L182 248 L68.69 248 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="93" y="209.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Infrastructure as</text>
+<text x="93" y="221.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">code</text>
+<text x="97" y="242.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AWS CloudFormation or CDK · Bicep · Infr…</text>
+<svg x="153" y="190" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M2.5 11a5.5 5.5 0 0 1 11 0 M8 11l2.5-4" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="375.4" x2="1072" y2="375.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="399.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 388.4)" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"><path d="M5 1h14l-4 12H1z"/></g>
+<text x="93.2" y="399.4" font-size="12" font-weight="400" fill="#343d50">technology service · 5</text>
+<text x="28" y="421.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 410.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="421.4" font-size="12" font-weight="400" fill="#343d50">connects to</text>
+<text x="28" y="455.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · block--account-baseline · edit the model, not the picture</text></g>
+</svg>

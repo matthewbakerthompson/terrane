@@ -1,0 +1,72 @@
+# Model platform — Processes and Capabilities
+
+One system, every process that uses it and in what role, and the capabilities those processes support. This shows the business impact of changing the system. A long list against a low criticality rating is worth a second look.
+
+```mermaid
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Model platform — Processes and Capabilities
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Capability["Capability"]
+    direction LR
+    CAP_DATA_06{{"AI/ML Model Operations"}}
+    CAP_CRED_01{{"Credit Strategy &<br/>Scorecard Management"}}
+    CAP_CRED_05{{"Loss Forecasting &<br/>Allowance"}}
+    CAP_CRED_02{{"Model Development &<br/>Validation"}}
+    CAP_RGOV_08{{"Model Risk Governance"}}
+    CAP_FRAUD_01{{"Transaction Fraud<br/>Detection & Strategy"}}
+  end
+
+  subgraph grp_Process["Process"]
+    direction LR
+    P_DATAENG_002[\"Deploy and monitor<br/>production model"/]
+    P_CREDIT_002[\"Develop and validate<br/>credit model"/]
+    P_FRAUD_006[\"Maintain fraud detection<br/>strategy"/]
+    P_CREDIT_006[\"Produce loss forecast and<br/>allowance"/]
+    P_CREDIT_001[\"Set and deploy credit<br/>decision strategy"/]
+    P_RISK_002[\"Validate model<br/>independently"/]
+  end
+
+  subgraph grp_System["System"]
+    direction LR
+    SYS_MODEL["Model platform"]
+  end
+
+  P_CREDIT_001 -->|"Supporting"| SYS_MODEL
+  P_CREDIT_002 -->|"Primary"| SYS_MODEL
+  P_CREDIT_006 -->|"Primary"| SYS_MODEL
+  P_FRAUD_006 -->|"Supporting"| SYS_MODEL
+  P_RISK_002 -->|"Primary"| SYS_MODEL
+  P_DATAENG_002 -->|"Primary"| SYS_MODEL
+  P_CREDIT_001 -->|"supports"| CAP_CRED_01
+  P_CREDIT_002 -->|"supports"| CAP_CRED_02
+  P_CREDIT_002 -->|"supports"| CAP_RGOV_08
+  P_CREDIT_006 -->|"supports"| CAP_CRED_05
+  P_FRAUD_006 -->|"supports"| CAP_FRAUD_01
+  P_RISK_002 -->|"supports"| CAP_RGOV_08
+  P_DATAENG_002 -->|"supports"| CAP_DATA_06
+
+  classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
+  classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  class CAP_CRED_01,CAP_CRED_02,CAP_CRED_05,CAP_DATA_06,CAP_FRAUD_01,CAP_RGOV_08 s_capabilities__capabilities;
+  class P_CREDIT_001,P_CREDIT_002,P_CREDIT_006,P_DATAENG_002,P_FRAUD_006,P_RISK_002 s_processes__processes;
+  class SYS_MODEL s_systems__systems;
+  classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_Capability,grp_Process,grp_System boundary1;
+```
+
+The same view as the app draws it, written beside the Mermaid by `terrane render`:
+
+![Model platform — Processes and Capabilities](../svg/system-processes--sys-model.svg)
+
+**Hue is the entity type.**
+
+| | Entity type |
+|---|---|
+| `#6d28d9` | capabilities |
+| `#0369a1` | processes |
+| `#4338ca` | systems |
+
+13 entities, 13 relationships. Generated from the model; edit the model, not this file.

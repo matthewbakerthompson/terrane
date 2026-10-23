@@ -1,0 +1,174 @@
+@startuml
+' Card Servicing Service — Architecture
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Card Servicing Service — Architecture
+
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("offered_interfaces", $bgColor="#e6ecff", $borderColor="#6366f1", $fontColor="#0f172a", $legendText="offered interface")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("tech_services", $bgColor="#fed7aa", $borderColor="#c2410c", $fontColor="#0f172a", $legendText="technology service")
+AddRelTag("api-call", $legendText="API call")
+AddRelTag("event", $legendText="Event on the bus")
+AddRelTag("own-datastore", $legendText="Its own datastore")
+AddRelTag("queued-request", $legendText="Request on a queue")
+
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_CARD_ACCOUNT, "Card account master", "Account, balance, limit and status records for every card account.", $tags="data_assets")
+  ' aac DA_CARD_ACCOUNT: company_domain="Card Issuing"
+  SystemDb(DA_CARDSVC_OPERATIONAL, "Card Servicing operational data", "Operational records held by Card Servicing.", $tags="data_assets")
+  ' aac DA_CARDSVC_OPERATIONAL: company_domain="Servicing"
+  SystemDb(DA_TRANSACTION, "Card transaction history", "Authorized, cleared and settled card transactions.", $tags="data_assets")
+  ' aac DA_TRANSACTION: company_domain="Payments"
+  SystemDb(DA_PAYMENT_INSTR, "Payment instructions", "Cardholder payment methods and instructions: ACH details, scheduled payments.", $tags="data_assets")
+  ' aac DA_PAYMENT_INSTR: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(OI_CARDSVC_API, "Card Servicing API", "The domain API Card Servicing offers its channels, its jobs and its partners. Built with HTTPS.", $tags="offered_interfaces")
+  ' aac OI_CARDSVC_API: company_domain="Servicing"; technology="HTTPS"
+  System(SYS_CARDSVC_STORE, "Card Servicing Datastore", "Operational datastore owned by Card Servicing. Built with Azure SQL.", $tags="systems")
+  ' aac SYS_CARDSVC_STORE: company_domain="Servicing"; hosting="Azure"; technology="Azure SQL"
+  System(SYS_CARDSVC_EVENTS, "Card Servicing Event Publisher", "Publishes Card Servicing domain events onto the enterprise bus. Built with Service Bus.", $tags="systems")
+  ' aac SYS_CARDSVC_EVENTS: company_domain="Servicing"; hosting="Azure"; technology="Service Bus"
+  System(SYS_CARDSVC_API, "Card Servicing Service", "The service behind the Card Servicing API, backing the channel. Built with AKS · Card Servicing Cache.", $tags="systems")
+  ' aac SYS_CARDSVC_API: company_domain="Servicing"; hosting="Azure"; technology="AKS · Card Servicing Cache"
+  System(SYS_CARDSVC_WEB, "Card Servicing Web", "Browser front end for Card Servicing. Built with AKS.", $tags="systems")
+  ' aac SYS_CARDSVC_WEB: company_domain="Servicing"; hosting="Azure"; technology="AKS"
+  System(SYS_MOBILE, "Cardholder mobile application", "Cardholder mobile self-service.", $tags="systems")
+  ' aac SYS_MOBILE: company_domain=""
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(OI_LEDGER_QUEUE, "Core Ledger request queue", "Postings, holds and balance requests put on the ledger's MQ request queue, answered on the reply queue in the order they arrived. Built with MQ.", $tags="offered_interfaces")
+  ' aac OI_LEDGER_QUEUE: company_domain="Card Issuing"; technology="MQ"
+  System(OI_IDENTITY_API, "Customer Identity API", "Customer authentication and the profile behind it, for every product that signs a customer in. Built with HTTPS.", $tags="offered_interfaces")
+  ' aac OI_IDENTITY_API: company_domain="Enterprise Platform"; technology="HTTPS"
+  System(SYS_IDENTITY_SVC, "Customer Identity Service", "Shared platform service: Customer Identity Service. Built with AKS.", $tags="systems")
+  ' aac SYS_IDENTITY_SVC: company_domain="Enterprise Platform"; hosting="Azure"; technology="AKS"
+  System(SYS_IVR, "IVR and self-service voice", "Interactive voice response and voice self-service.", $tags="systems")
+  ' aac SYS_IVR: company_domain=""
+}
+Boundary(b_Technology_Service, "Technology Service") {
+  Deployment_Node(TS_AZURE_APIM, "Azure API Management", "API gateway", "The API gateway every internal and partner API is published through.", $tags="tech_services") {
+    ' aac TS_AZURE_APIM: company_domain="Enterprise Platform"; technology="API gateway"
+  }
+  Deployment_Node(TS_AZURE_KEYVAULT, "Azure Key Vault", "Secrets manager", "Secret, key and certificate management.", $tags="tech_services") {
+    ' aac TS_AZURE_KEYVAULT: company_domain="Enterprise Platform"; technology="Secrets manager"
+  }
+  Deployment_Node(TS_AZURE_AKS, "Azure Kubernetes Service", "Container platform", "Managed Kubernetes hosting the containerized estate.", $tags="tech_services") {
+    ' aac TS_AZURE_AKS: company_domain="Enterprise Platform"; technology="Container platform"
+  }
+  Deployment_Node(TS_AZURE_MONITOR, "Azure Monitor", "Observability", "Metrics, logs and alerts for the Azure-hosted estate.", $tags="tech_services") {
+    ' aac TS_AZURE_MONITOR: company_domain="Enterprise Platform"; technology="Observability"
+  }
+  Deployment_Node(TS_AZURE_SERVICEBUS, "Azure Service Bus", "Message queue", "Enterprise messaging backbone for domain events.", $tags="tech_services") {
+    ' aac TS_AZURE_SERVICEBUS: company_domain="Enterprise Platform"; technology="Message queue"
+  }
+  Deployment_Node(TS_AZURE_SQL, "Azure SQL Database", "Relational database", "Managed relational database for operational datastores.", $tags="tech_services") {
+    ' aac TS_AZURE_SQL: company_domain="Enterprise Platform"; technology="Relational database"
+  }
+  Deployment_Node(TS_CARDSVC_BACKUP, "Card Servicing Backup and recovery", "Azure Backup", "Copies that survive the thing they came from. The recovery objective is a property of this, not of the database.", $tags="tech_services") {
+    ' aac TS_CARDSVC_BACKUP: company_domain="Servicing"; technology="Azure Backup"
+  }
+  Deployment_Node(TS_CARDSVC_CACHE, "Card Servicing Cache", "Azure Cache for Redis", "In-memory key-value store. Also, in most estates, an accidental database with no backup.", $tags="tech_services") {
+    ' aac TS_CARDSVC_CACHE: company_domain="Servicing"; technology="Azure Cache for Redis"
+  }
+  Deployment_Node(TS_CARDSVC_DNS, "Card Servicing DNS", "Azure DNS", "Name resolution and, in practice, the failover mechanism of last resort.", $tags="tech_services") {
+    ' aac TS_CARDSVC_DNS: company_domain="Servicing"; technology="Azure DNS"
+  }
+  Deployment_Node(TS_CARDSVC_WAF, "Card Servicing Web application firewall", "Azure WAF", "Request inspection at the edge. Blocks the traffic nobody wrote a test for.", $tags="tech_services") {
+    ' aac TS_CARDSVC_WAF: company_domain="Servicing"; technology="Azure WAF"
+  }
+  Deployment_Node(TS_IDENTITY_DNS, "Customer Identity Service DNS", "Azure DNS", "Name resolution and, in practice, the failover mechanism of last resort.", $tags="tech_services") {
+    ' aac TS_IDENTITY_DNS: company_domain="Enterprise Platform"; technology="Azure DNS"
+  }
+  Deployment_Node(TS_IDENTITY_WAF, "Customer Identity Service Web application firewall", "Azure WAF", "Request inspection at the edge. Blocks the traffic nobody wrote a test for.", $tags="tech_services") {
+    ' aac TS_IDENTITY_WAF: company_domain="Enterprise Platform"; technology="Azure WAF"
+  }
+  Deployment_Node(TS_ENTRA_ID, "Microsoft Entra ID", "Identity provider", "Workforce and customer identity provider.", $tags="tech_services") {
+    ' aac TS_ENTRA_ID: company_domain="Enterprise Platform"; technology="Identity provider"
+  }
+  Deployment_Node(TS_ONPREM_DC, "Primary Data Center", "Virtual network", "The data center the mainframe and the authorization switch live in. Modeled because half the integration cost of any cloud onboarding is the path back to here.", $tags="tech_services") {
+    ' aac TS_ONPREM_DC: company_domain="Enterprise Platform"; technology="Virtual network"
+  }
+}
+
+Rel(SYS_MOBILE, OI_CARDSVC_API, "Cardholder Mobile to Card Servicing API", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_MOBILE"; target="OI_CARDSVC_API"; label="Cardholder Mobile to Card Servicing API"; interface_id="INT-MOBILE-CARDSVC"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="api-front-door"; offered_interface_id="OI-CARDSVC-API"
+Rel(SYS_IVR, OI_CARDSVC_API, "IVR to Card Servicing API", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_IVR"; target="OI_CARDSVC_API"; label="IVR to Card Servicing API"; interface_id="INT-IVR-CARDSVC"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="contact-center-integration;api-front-door"; offered_interface_id="OI-CARDSVC-API"
+Rel(SYS_CARDSVC_API, OI_IDENTITY_API, "Card Servicing Service to Identity Service", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CARDSVC_API"; target="OI_IDENTITY_API"; label="Card Servicing Service to Identity Service"; interface_id="INT-CARDSVC-API-IDENTITY"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-IDENTITY-API"
+Rel(SYS_CARDSVC_API, OI_LEDGER_QUEUE, "Card Servicing Service to Core Ledger", "MQ", $tags="queued-request")
+' aac rel: source="SYS_CARDSVC_API"; target="OI_LEDGER_QUEUE"; label="Card Servicing Service to Core Ledger"; interface_id="INT-CARDSVC-API-LEDGER"; kind="queued-request"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-LEDGER-QUEUE"
+Rel(SYS_CARDSVC_WEB, OI_CARDSVC_API, "Card Servicing Web to API", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CARDSVC_WEB"; target="OI_CARDSVC_API"; label="Card Servicing Web to API"; interface_id="INT-CARDSVC-WEB-API"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-CARDSVC-API"
+Rel(SYS_CARDSVC_API, SYS_CARDSVC_STORE, "Card Servicing Service to Datastore", "TDS", $tags="own-datastore")
+' aac rel: source="SYS_CARDSVC_API"; target="SYS_CARDSVC_STORE"; label="Card Servicing Service to Datastore"; interface_id="INT-CARDSVC-API-STORE"; kind="own-datastore"; integration_style="Request-response"; auth_method="ManagedIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_CARDSVC_API, SYS_CARDSVC_EVENTS, "Card Servicing Service to Event Publisher", "AMQP", $tags="event")
+' aac rel: source="SYS_CARDSVC_API"; target="SYS_CARDSVC_EVENTS"; label="Card Servicing Service to Event Publisher"; interface_id="INT-CARDSVC-API-EVENTS"; kind="event"; integration_style="Event"; auth_method="ManagedIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_CARDSVC_API, TS_AZURE_APIM, "runs on")
+' aac rel: source="SYS_CARDSVC_API"; target="TS_AZURE_APIM"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_API, TS_AZURE_AKS, "runs on")
+' aac rel: source="SYS_CARDSVC_API"; target="TS_AZURE_AKS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_API, TS_CARDSVC_CACHE, "runs on")
+' aac rel: source="SYS_CARDSVC_API"; target="TS_CARDSVC_CACHE"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_API, TS_AZURE_MONITOR, "runs on")
+' aac rel: source="SYS_CARDSVC_API"; target="TS_AZURE_MONITOR"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_API, TS_AZURE_KEYVAULT, "runs on")
+' aac rel: source="SYS_CARDSVC_API"; target="TS_AZURE_KEYVAULT"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_WEB, TS_CARDSVC_DNS, "runs on")
+' aac rel: source="SYS_CARDSVC_WEB"; target="TS_CARDSVC_DNS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_WEB, TS_CARDSVC_WAF, "runs on")
+' aac rel: source="SYS_CARDSVC_WEB"; target="TS_CARDSVC_WAF"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_WEB, TS_AZURE_AKS, "runs on")
+' aac rel: source="SYS_CARDSVC_WEB"; target="TS_AZURE_AKS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_WEB, TS_ENTRA_ID, "runs on")
+' aac rel: source="SYS_CARDSVC_WEB"; target="TS_ENTRA_ID"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_STORE, TS_AZURE_SQL, "runs on")
+' aac rel: source="SYS_CARDSVC_STORE"; target="TS_AZURE_SQL"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_STORE, TS_CARDSVC_BACKUP, "runs on")
+' aac rel: source="SYS_CARDSVC_STORE"; target="TS_CARDSVC_BACKUP"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_STORE, TS_AZURE_KEYVAULT, "runs on")
+' aac rel: source="SYS_CARDSVC_STORE"; target="TS_AZURE_KEYVAULT"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_EVENTS, TS_AZURE_SERVICEBUS, "runs on")
+' aac rel: source="SYS_CARDSVC_EVENTS"; target="TS_AZURE_SERVICEBUS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDENTITY_SVC, TS_IDENTITY_DNS, "runs on")
+' aac rel: source="SYS_IDENTITY_SVC"; target="TS_IDENTITY_DNS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDENTITY_SVC, TS_IDENTITY_WAF, "runs on")
+' aac rel: source="SYS_IDENTITY_SVC"; target="TS_IDENTITY_WAF"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDENTITY_SVC, TS_AZURE_APIM, "runs on")
+' aac rel: source="SYS_IDENTITY_SVC"; target="TS_AZURE_APIM"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDENTITY_SVC, TS_AZURE_AKS, "runs on")
+' aac rel: source="SYS_IDENTITY_SVC"; target="TS_AZURE_AKS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDENTITY_SVC, TS_AZURE_KEYVAULT, "runs on")
+' aac rel: source="SYS_IDENTITY_SVC"; target="TS_AZURE_KEYVAULT"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CORE_LEDGER, TS_ONPREM_DC, "runs on")
+' aac rel: source="SYS_CORE_LEDGER"; target="TS_ONPREM_DC"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_API, DA_CARDSVC_OPERATIONAL, "ReadWrite")
+' aac rel: source="SYS_CARDSVC_API"; target="DA_CARDSVC_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_CARDSVC_STORE, DA_CARDSVC_OPERATIONAL, "ReadWrite")
+' aac rel: source="SYS_CARDSVC_STORE"; target="DA_CARDSVC_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_CORE_LEDGER, DA_PAYMENT_INSTR, "Read")
+' aac rel: source="SYS_CORE_LEDGER"; target="DA_PAYMENT_INSTR"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_MOBILE, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_MOBILE"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_MOBILE, DA_TRANSACTION, "Read")
+' aac rel: source="SYS_MOBILE"; target="DA_TRANSACTION"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_IVR, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_IVR"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_CARDSVC_API, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_CARDSVC_API"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_CARDSVC_API, DA_TRANSACTION, "Read")
+' aac rel: source="SYS_CARDSVC_API"; target="DA_TRANSACTION"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_CORE_LEDGER, DA_CARD_ACCOUNT, "ReadWrite")
+' aac rel: source="SYS_CORE_LEDGER"; target="DA_CARD_ACCOUNT"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(OI_CARDSVC_API, SYS_CARDSVC_API, "offered by")
+' aac rel: source="OI_CARDSVC_API"; target="SYS_CARDSVC_API"; label="offered by"; field="system_id"
+Rel(OI_IDENTITY_API, SYS_IDENTITY_SVC, "offered by")
+' aac rel: source="OI_IDENTITY_API"; target="SYS_IDENTITY_SVC"; label="offered by"; field="system_id"
+Rel(OI_LEDGER_QUEUE, SYS_CORE_LEDGER, "offered by")
+' aac rel: source="OI_LEDGER_QUEUE"; target="SYS_CORE_LEDGER"; label="offered by"; field="system_id"
+
+SHOW_LEGEND()
+@enduml

@@ -1,0 +1,45 @@
+view_id: restricted-data-governance
+title: Restricted Data and What Governs It
+category: Data
+section: Governance
+kind: diagram
+description: >
+  The data assets classified Restricted, the system that masters each, the
+  controls that govern them and the policies they are subject to. A
+  Restricted asset with no control is the first thing an auditor will ask about.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+group_by: type
+
+scope:
+  include:
+    - type: data_assets
+      where:
+        classification: [Restricted]
+        status: [Active, Planned, Proposed]
+  expand:
+    - relation: source_of_truth
+      depth: 1
+      types: [systems]
+    - relation: data_governed_by_control
+      depth: 1
+      types: [controls]
+    - relation: data_subject_to_policy
+      depth: 1
+      types: [policies]
+
+edges:
+  - via: source_of_truth
+    text: masters
+  - via: data_governed_by_control
+    text: governed by
+  - via: data_subject_to_policy
+    text: subject to
+
+style:
+  color_by: classification
+
+limits:
+  max_nodes: 60

@@ -1,0 +1,37 @@
+view_id: tiered-architecture
+title: Tiered Architecture
+category: Technology
+section: Network and resilience
+kind: diagram
+description: >
+  Systems arranged by tier: edge, public, application, data, shared services
+  and on-premise. The tier is a field on each system, not a layout choice.
+  Traffic should cross one boundary at a time; anywhere it does not is worth a
+  look.
+layout: TB
+node_label: name
+renderers: [mermaid, structurizr]
+
+group_by: network_zone
+# The tiers in reading order, edge to data, whatever the edges between them
+# say. This is the field's reading order, which a grouped field that has one
+# takes by default; it is written out here because this is the view the
+# order matters most on.
+lanes: [Edge, Public, Private-App, Private-Data, Shared-Services, On-prem]
+
+scope:
+  include:
+    - type: systems
+      where:
+        status: [Active, Planned]
+        network_zone: {exists: true}
+
+edges:
+  - via: interfaces
+    label: protocol
+
+style:
+  color_by: criticality
+
+limits:
+  max_nodes: 56

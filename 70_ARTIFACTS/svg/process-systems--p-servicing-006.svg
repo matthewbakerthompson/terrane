@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="786.4" viewBox="0 0 1100 786.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Capture and resolve complaint — Systems, Data and Controls</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Capture and resolve complaint — Systems, Data and Controls</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   7 nodes · 6 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(165.7 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="279.72" y="394.3" width="212.57" height="175.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="321.72" y="411.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Control">
+<rect x="280.3" y="262.3" width="211.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="313.15" y="279.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Control</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.9" y="150.26" width="212.2" height="123.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.75" y="167.66" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="537.3" y="24.3" width="221.4" height="295.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="567.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-SERVICING-006::SYS-CRM">
+<title>Primary</title>
+<path d="M196 186.29 L224.95 186 A10 10 0 0 1 225.05 186 L233 186 A8 8 0 0 0 241 178 L241 94 A10 10 0 0 1 251 84 L534 84 L559.48 84" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M563 84 L553.43 88.78 L553.43 79.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-SERVICING-006::SYS-CRM">
+<rect x="362.32" y="90.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="383.5" y="102.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-SERVICING-006::SYS-GRC">
+<title>Supporting</title>
+<path d="M196 196.57 L224.93 197 A10 10 0 0 0 225.07 197 L241 197 A10 10 0 0 0 251 187 L251 182 A10 10 0 0 1 261 172 L534 172 L559.48 172" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M563 172 L553.43 176.78 L553.43 167.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-SERVICING-006::SYS-GRC">
+<rect x="354.46" y="178.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="383.5" y="190.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-SERVICING-006::SYS-CONTACT">
+<title>Supporting</title>
+<path d="M196 206.86 L224.98 207 A10 10 0 0 0 225.02 207 L496 207 A10 10 0 0 1 506 217 L506 250 A10 10 0 0 0 516 260 L534 260 L559.48 260" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M563 260 L553.43 264.79 L553.43 255.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-SERVICING-006::SYS-CONTACT">
+<rect x="354.46" y="213.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="383.5" y="225.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e3::P-SERVICING-006::CTL-COMPLAINT-REG">
+<title>governed by</title>
+<path d="M196 217.14 L224.98 217 A10 10 0 0 1 225.02 217 L251 217 A10 10 0 0 1 261 227 L261 306 A8 8 0 0 0 269 314 L277 314 L302.48 314" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M306 314 L296.43 318.79 L296.43 309.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e4::P-SERVICING-006::CAP-SERV-05">
+<title>supports</title>
+<path d="M196 227.43 L224.93 227 A10 10 0 0 1 225.07 227 L241 227 A10 10 0 0 1 251 237 L251 436 A10 10 0 0 0 261 446 L277 446 L302.48 446" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M306 446 L296.43 450.79 L296.43 441.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e5::P-SERVICING-006::CAP-RGOV-06">
+<title>supports</title>
+<path d="M196 237.71 L224.95 238 A10 10 0 0 0 225.05 238 L233 238 A8 8 0 0 1 241 246 L241 508 A10 10 0 0 0 251 518 L277 518 L302.48 518" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M306 518 L296.43 522.78 L296.43 513.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-RGOV-06" data-type="capabilities">
+<title>Complaint Oversight &amp; UDAAP Management</title>
+<path d="M346 492 L306 518 L346 544 L426 544 L466 518 L426 492 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="386" y="516.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Complaint Oversight &amp;</text>
+<text x="386" y="528.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">UDAAP Management</text>
+</g>
+<g class="node" data-id="CAP-SERV-05" data-type="capabilities">
+<title>Complaint Capture &amp; Resolution</title>
+<path d="M346 420 L306 446 L346 472 L426 472 L466 446 L426 420 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="386" y="444.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Complaint Capture &amp;</text>
+<text x="386" y="456.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Resolution</text>
+</g>
+<g class="node" data-id="CTL-COMPLAINT-REG" data-type="controls">
+<title>Complaint regulatory routing</title>
+<path d="M352.86 288 L306 303.23 L306 324.77 L352.86 340 L419.14 340 L466 324.77 L466 303.23 L419.14 288 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="386" y="312.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Complaint regulatory</text>
+<text x="386" y="324.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">routing</text>
+</g>
+<g class="node" data-id="P-SERVICING-006" data-type="processes">
+<title>Capture and resolve complaint</title>
+<path d="M116 176 L36 203.5 L66.56 248 L165.44 248 L196 203.5 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="210.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Capture and resolve</text>
+<text x="116" y="222.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">complaint</text>
+</g>
+<g class="node" data-id="SYS-CONTACT" data-type="systems">
+<title>Contact center platform</title>
+<rect x="563" y="226" width="170" height="68" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="644" y="258.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Contact center</text>
+<text x="644" y="270.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">platform</text>
+<svg x="715" y="231" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-CRM" data-type="systems">
+<title>Dynamics 365 Customer Service</title>
+<rect x="563" y="50" width="170" height="68" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="644" y="76.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dynamics 365</text>
+<text x="644" y="88.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer Service</text>
+<text x="648" y="112.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Microsoft</text>
+<svg x="715" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-GRC" data-type="systems">
+<title>Governance, risk and compliance platform</title>
+<rect x="563" y="138" width="170" height="68" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="644" y="170.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Governance, risk and</text>
+<text x="644" y="182.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">compliance platform</text>
+<svg x="715" y="143" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="684.4" x2="1072" y2="684.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="708.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 697.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="708.4" font-size="12" font-weight="400" fill="#343d50">capability · 2</text>
+<g transform="translate(180.32 697.4)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="206.32" y="708.4" font-size="12" font-weight="400" fill="#343d50">control · 1</text>
+<g transform="translate(275.87 697.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="301.87" y="708.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(376.14 697.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="402.14" y="708.4" font-size="12" font-weight="400" fill="#343d50">system · 3</text>
+<text x="28" y="730.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 719.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="730.4" font-size="12" font-weight="400" fill="#343d50">governed by</text>
+<g transform="translate(184.75 719.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="210.75" y="730.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(277.26 719.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="303.26" y="730.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="764.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-servicing-006 · edit the model, not the picture</text></g>
+</svg>

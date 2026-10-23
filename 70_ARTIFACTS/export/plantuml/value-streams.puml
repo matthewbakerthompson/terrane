@@ -1,0 +1,150 @@
+@startuml
+' Value Streams
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Value Streams
+
+AddElementTag("value_stream_stages", $bgColor="#f3e8ff", $borderColor="#a855f7", $fontColor="#0f172a", $legendText="value stream stage")
+
+Boundary(b_Client_Opportunity_to_Live_Program, "Client Opportunity to Live Program") {
+  System(VS_ONBOARD_CLIENT_S01, "Qualify Opportunity", $tags="value_stream_stages")
+  ' aac VS_ONBOARD_CLIENT_S01: company_domain=""
+  System(VS_ONBOARD_CLIENT_S02, "Diligence & Contract", $tags="value_stream_stages")
+  ' aac VS_ONBOARD_CLIENT_S02: company_domain=""
+  System(VS_ONBOARD_CLIENT_S03, "Design Program", $tags="value_stream_stages")
+  ' aac VS_ONBOARD_CLIENT_S03: company_domain=""
+  System(VS_ONBOARD_CLIENT_S04, "Configure Platform", $tags="value_stream_stages")
+  ' aac VS_ONBOARD_CLIENT_S04: company_domain=""
+  System(VS_ONBOARD_CLIENT_S05, "Convert Portfolio", $tags="value_stream_stages")
+  ' aac VS_ONBOARD_CLIENT_S05: company_domain=""
+  System(VS_ONBOARD_CLIENT_S06, "Stabilize", $tags="value_stream_stages")
+  ' aac VS_ONBOARD_CLIENT_S06: company_domain=""
+  System(VS_ONBOARD_CLIENT_S07, "Steady-State Service", $tags="value_stream_stages")
+  ' aac VS_ONBOARD_CLIENT_S07: company_domain=""
+}
+Boundary(b_Concept_to_Market, "Concept to Market") {
+  System(VS_LAUNCH_PRODUCT_S01, "Concept & Business Case", $tags="value_stream_stages")
+  ' aac VS_LAUNCH_PRODUCT_S01: company_domain=""
+  System(VS_LAUNCH_PRODUCT_S02, "Design & Price", $tags="value_stream_stages")
+  ' aac VS_LAUNCH_PRODUCT_S02: company_domain=""
+  System(VS_LAUNCH_PRODUCT_S03, "Legal & Compliance Review", $tags="value_stream_stages")
+  ' aac VS_LAUNCH_PRODUCT_S03: company_domain=""
+  System(VS_LAUNCH_PRODUCT_S04, "Configure & Test", $tags="value_stream_stages")
+  ' aac VS_LAUNCH_PRODUCT_S04: company_domain=""
+  System(VS_LAUNCH_PRODUCT_S05, "Launch", $tags="value_stream_stages")
+  ' aac VS_LAUNCH_PRODUCT_S05: company_domain=""
+  System(VS_LAUNCH_PRODUCT_S06, "Monitor & Iterate", $tags="value_stream_stages")
+  ' aac VS_LAUNCH_PRODUCT_S06: company_domain=""
+}
+Boundary(b_Dealer_Purchase_to_Funded_Loan, "Dealer Purchase to Funded Loan") {
+  System(VS_FINANCE_PURCHASE_S01, "Dealer Submits", $tags="value_stream_stages")
+  ' aac VS_FINANCE_PURCHASE_S01: company_domain=""
+  System(VS_FINANCE_PURCHASE_S02, "Decision & Terms", $tags="value_stream_stages")
+  ' aac VS_FINANCE_PURCHASE_S02: company_domain=""
+  System(VS_FINANCE_PURCHASE_S03, "Docs & Stipulations", $tags="value_stream_stages")
+  ' aac VS_FINANCE_PURCHASE_S03: company_domain=""
+  System(VS_FINANCE_PURCHASE_S04, "Board & Fund Dealer", $tags="value_stream_stages")
+  ' aac VS_FINANCE_PURCHASE_S04: company_domain=""
+  System(VS_FINANCE_PURCHASE_S05, "Perfect Lien", $tags="value_stream_stages")
+  ' aac VS_FINANCE_PURCHASE_S05: company_domain=""
+  System(VS_FINANCE_PURCHASE_S06, "Service Loan", $tags="value_stream_stages")
+  ' aac VS_FINANCE_PURCHASE_S06: company_domain=""
+  System(VS_FINANCE_PURCHASE_S07, "Payoff or Recover", $tags="value_stream_stages")
+  ' aac VS_FINANCE_PURCHASE_S07: company_domain=""
+}
+Boundary(b_Delinquency_to_Recovery, "Delinquency to Recovery") {
+  System(VS_RECOVER_VALUE_S01, "Detect Delinquency", $tags="value_stream_stages")
+  ' aac VS_RECOVER_VALUE_S01: company_domain=""
+  System(VS_RECOVER_VALUE_S02, "Segment & Strategize", $tags="value_stream_stages")
+  ' aac VS_RECOVER_VALUE_S02: company_domain=""
+  System(VS_RECOVER_VALUE_S03, "Contact & Treat", $tags="value_stream_stages")
+  ' aac VS_RECOVER_VALUE_S03: company_domain=""
+  System(VS_RECOVER_VALUE_S04, "Arrange or Assist", $tags="value_stream_stages")
+  ' aac VS_RECOVER_VALUE_S04: company_domain=""
+  System(VS_RECOVER_VALUE_S05, "Charge Off", $tags="value_stream_stages")
+  ' aac VS_RECOVER_VALUE_S05: company_domain=""
+  System(VS_RECOVER_VALUE_S06, "Place or Sell", $tags="value_stream_stages")
+  ' aac VS_RECOVER_VALUE_S06: company_domain=""
+  System(VS_RECOVER_VALUE_S07, "Recover & Account", $tags="value_stream_stages")
+  ' aac VS_RECOVER_VALUE_S07: company_domain=""
+}
+Boundary(b_Deposit_Opened_to_Maturity, "Deposit Opened to Maturity") {
+  System(VS_GROW_SAVINGS_S01, "Choose Product", $tags="value_stream_stages")
+  ' aac VS_GROW_SAVINGS_S01: company_domain=""
+  System(VS_GROW_SAVINGS_S02, "Open & Verify", $tags="value_stream_stages")
+  ' aac VS_GROW_SAVINGS_S02: company_domain=""
+  System(VS_GROW_SAVINGS_S03, "Fund", $tags="value_stream_stages")
+  ' aac VS_GROW_SAVINGS_S03: company_domain=""
+  System(VS_GROW_SAVINGS_S04, "Accrue & Report", $tags="value_stream_stages")
+  ' aac VS_GROW_SAVINGS_S04: company_domain=""
+  System(VS_GROW_SAVINGS_S05, "Mature or Renew", $tags="value_stream_stages")
+  ' aac VS_GROW_SAVINGS_S05: company_domain=""
+  System(VS_GROW_SAVINGS_S06, "Pay Out", $tags="value_stream_stages")
+  ' aac VS_GROW_SAVINGS_S06: company_domain=""
+}
+Boundary(b_Inquiry_to_Resolution, "Inquiry to Resolution") {
+  System(VS_RESOLVE_ISSUE_S01, "Contact & Route", $tags="value_stream_stages")
+  ' aac VS_RESOLVE_ISSUE_S01: company_domain=""
+  System(VS_RESOLVE_ISSUE_S02, "Identify & Authenticate", $tags="value_stream_stages")
+  ' aac VS_RESOLVE_ISSUE_S02: company_domain=""
+  System(VS_RESOLVE_ISSUE_S03, "Classify Issue", $tags="value_stream_stages")
+  ' aac VS_RESOLVE_ISSUE_S03: company_domain=""
+  System(VS_RESOLVE_ISSUE_S04, "Investigate", $tags="value_stream_stages")
+  ' aac VS_RESOLVE_ISSUE_S04: company_domain=""
+  System(VS_RESOLVE_ISSUE_S05, "Decide & Adjust", $tags="value_stream_stages")
+  ' aac VS_RESOLVE_ISSUE_S05: company_domain=""
+  System(VS_RESOLVE_ISSUE_S06, "Notify", $tags="value_stream_stages")
+  ' aac VS_RESOLVE_ISSUE_S06: company_domain=""
+  System(VS_RESOLVE_ISSUE_S07, "Close & Learn", $tags="value_stream_stages")
+  ' aac VS_RESOLVE_ISSUE_S07: company_domain=""
+}
+Boundary(b_Merchant_Signed_to_Settled, "Merchant Signed to Settled") {
+  System(VS_ENABLE_MERCHANT_S01, "ISO Submits", $tags="value_stream_stages")
+  ' aac VS_ENABLE_MERCHANT_S01: company_domain=""
+  System(VS_ENABLE_MERCHANT_S02, "Underwrite Merchant", $tags="value_stream_stages")
+  ' aac VS_ENABLE_MERCHANT_S02: company_domain=""
+  System(VS_ENABLE_MERCHANT_S03, "Board & Sponsor", $tags="value_stream_stages")
+  ' aac VS_ENABLE_MERCHANT_S03: company_domain=""
+  System(VS_ENABLE_MERCHANT_S04, "Accept & Settle", $tags="value_stream_stages")
+  ' aac VS_ENABLE_MERCHANT_S04: company_domain=""
+  System(VS_ENABLE_MERCHANT_S05, "Monitor Exposure", $tags="value_stream_stages")
+  ' aac VS_ENABLE_MERCHANT_S05: company_domain=""
+  System(VS_ENABLE_MERCHANT_S06, "Retain or Exit", $tags="value_stream_stages")
+  ' aac VS_ENABLE_MERCHANT_S06: company_domain=""
+}
+Boundary(b_Prospect_to_Funded_Account, "Prospect to Funded Account") {
+  System(VS_ACQUIRE_CUSTOMER_S01, "Target & Offer", $tags="value_stream_stages")
+  ' aac VS_ACQUIRE_CUSTOMER_S01: company_domain=""
+  System(VS_ACQUIRE_CUSTOMER_S02, "Apply", $tags="value_stream_stages")
+  ' aac VS_ACQUIRE_CUSTOMER_S02: company_domain=""
+  System(VS_ACQUIRE_CUSTOMER_S03, "Verify Identity", $tags="value_stream_stages")
+  ' aac VS_ACQUIRE_CUSTOMER_S03: company_domain=""
+  System(VS_ACQUIRE_CUSTOMER_S04, "Decide", $tags="value_stream_stages")
+  ' aac VS_ACQUIRE_CUSTOMER_S04: company_domain=""
+  System(VS_ACQUIRE_CUSTOMER_S05, "Open Account", $tags="value_stream_stages")
+  ' aac VS_ACQUIRE_CUSTOMER_S05: company_domain=""
+  System(VS_ACQUIRE_CUSTOMER_S06, "Fulfill Card", $tags="value_stream_stages")
+  ' aac VS_ACQUIRE_CUSTOMER_S06: company_domain=""
+  System(VS_ACQUIRE_CUSTOMER_S07, "Activate & First Use", $tags="value_stream_stages")
+  ' aac VS_ACQUIRE_CUSTOMER_S07: company_domain=""
+}
+Boundary(b_Transact_to_Statement, "Transact to Statement") {
+  System(VS_SERVICE_ACCOUNT_S01, "Authorize", $tags="value_stream_stages")
+  ' aac VS_SERVICE_ACCOUNT_S01: company_domain=""
+  System(VS_SERVICE_ACCOUNT_S02, "Clear & Post", $tags="value_stream_stages")
+  ' aac VS_SERVICE_ACCOUNT_S02: company_domain=""
+  System(VS_SERVICE_ACCOUNT_S03, "Assess Interest & Fees", $tags="value_stream_stages")
+  ' aac VS_SERVICE_ACCOUNT_S03: company_domain=""
+  System(VS_SERVICE_ACCOUNT_S04, "Cut Cycle & Statement", $tags="value_stream_stages")
+  ' aac VS_SERVICE_ACCOUNT_S04: company_domain=""
+  System(VS_SERVICE_ACCOUNT_S05, "Deliver Statement", $tags="value_stream_stages")
+  ' aac VS_SERVICE_ACCOUNT_S05: company_domain=""
+  System(VS_SERVICE_ACCOUNT_S06, "Capture Payment", $tags="value_stream_stages")
+  ' aac VS_SERVICE_ACCOUNT_S06: company_domain=""
+  System(VS_SERVICE_ACCOUNT_S07, "Settle & Reconcile", $tags="value_stream_stages")
+  ' aac VS_SERVICE_ACCOUNT_S07: company_domain=""
+}
+
+SHOW_LEGEND()
+@enduml

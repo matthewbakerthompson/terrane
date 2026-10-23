@@ -1,0 +1,72 @@
+@startuml
+' Data Landscape
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Data Landscape
+
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+
+Boundary(b_Card_Issuing, "Card Issuing") {
+  SystemDb(DA_CARD_ACCOUNT, "Card account master", "Account, balance, limit and status records for every card account.", $tags="data_assets")
+  ' aac DA_CARD_ACCOUNT: company_domain="Card Issuing"
+  SystemDb(DA_REWARDS_OPERATIONAL, "Rewards Redemption operational data", "Operational records held by Rewards Redemption.", $tags="data_assets")
+  ' aac DA_REWARDS_OPERATIONAL: company_domain="Card Issuing"
+}
+Boundary(b_Collections, "Collections") {
+  SystemDb(DA_COLLECT_OPERATIONAL, "Collections Workspace operational data", "Operational records held by Collections Workspace.", $tags="data_assets")
+  ' aac DA_COLLECT_OPERATIONAL: company_domain="Collections"
+}
+Boundary(b_Data_and_Analytics, "Data and Analytics") {
+  SystemDb(DA_CUST360_CURATED, "Customer 360 curated dataset", "Curated, governed dataset produced by Customer 360.", $tags="data_assets")
+  ' aac DA_CUST360_CURATED: company_domain="Data and Analytics"
+}
+Boundary(b_Lending, "Lending") {
+  SystemDb(DA_LENDING_OPERATIONAL, "Installment Lending operational data", "Operational records held by Installment Lending.", $tags="data_assets")
+  ' aac DA_LENDING_OPERATIONAL: company_domain="Lending"
+  SystemDb(DA_LENDPERF_CURATED, "Lending Portfolio Performance curated dataset", "Curated, governed dataset produced by Lending Portfolio Performance, held in BigQuery.", $tags="data_assets")
+  ' aac DA_LENDPERF_CURATED: company_domain="Lending"
+  SystemDb(DA_POSFIN_OPERATIONAL, "Point-of-Sale Finance operational data", "Operational records held by Point-of-Sale Finance.", $tags="data_assets")
+  ' aac DA_POSFIN_OPERATIONAL: company_domain="Lending"
+}
+Boundary(b_Payments, "Payments") {
+  SystemDb(DA_TRANSACTION, "Card transaction history", "Authorized, cleared and settled card transactions.", $tags="data_assets")
+  ' aac DA_TRANSACTION: company_domain="Payments"
+  SystemDb(DA_MERCHANT_OPERATIONAL, "Merchant Portal operational data", "Operational records held by Merchant Portal.", $tags="data_assets")
+  ' aac DA_MERCHANT_OPERATIONAL: company_domain="Payments"
+}
+Boundary(b_Risk_and_Compliance, "Risk and Compliance") {
+  SystemDb(DA_SCREENING_OUTCOMES, "NICE Actimize Screening outcomes", "What the vendor decided and why, landed our side. Held because a decision we cannot explain is a decision we cannot defend.", $tags="data_assets")
+  ' aac DA_SCREENING_OUTCOMES: company_domain="Risk and Compliance"
+}
+Boundary(b_Servicing, "Servicing") {
+  SystemDb(DA_CARDSVC_OPERATIONAL, "Card Servicing operational data", "Operational records held by Card Servicing.", $tags="data_assets")
+  ' aac DA_CARDSVC_OPERATIONAL: company_domain="Servicing"
+  SystemDb(DA_CUSTOMER_PROFILE, "Customer profile", "Contact details, preferences and servicing history.", $tags="data_assets")
+  ' aac DA_CUSTOMER_PROFILE: company_domain="Servicing"
+  SystemDb(DA_DISPUTES_VENDOR_FEED, "Dispute Management Platform vendor feed", "Landed vendor extract from Pegasystems.", $tags="data_assets")
+  ' aac DA_DISPUTES_VENDOR_FEED: company_domain="Servicing"
+}
+SystemDb(DA_COLLECT_ACT, "Collections activity record", "Contact attempts, dispositions, promises, and arrangement terms.", $tags="data_assets")
+' aac DA_COLLECT_ACT: company_domain=""
+SystemDb(DA_APPLICATION, "Credit application record", "Application content, identity evidence, and decision inputs, including bureau pulls.", $tags="data_assets")
+' aac DA_APPLICATION: company_domain=""
+SystemDb(DA_BUREAU_FILE, "Credit bureau furnishing file", "Monthly tradeline furnishing extract and consumer-dispute responses.", $tags="data_assets")
+' aac DA_BUREAU_FILE: company_domain=""
+SystemDb(DA_DISPUTE_CASE, "Dispute case file", "Claims, evidence, correspondence, timers, and determinations for error resolution.", $tags="data_assets")
+' aac DA_DISPUTE_CASE: company_domain=""
+SystemDb(DA_GL, "General ledger entries", "Posted financial entries, settlement and reconciliation balances.", $tags="data_assets")
+' aac DA_GL: company_domain=""
+SystemDb(DA_MODEL_FEAT, "Model feature store", "Curated features and scores for credit, fraud, and collections models.", $tags="data_assets")
+' aac DA_MODEL_FEAT: company_domain=""
+SystemDb(DA_PAYMENT_INSTR, "Payment instructions", "Cardholder payment methods and instructions: ACH details, scheduled payments.", $tags="data_assets")
+' aac DA_PAYMENT_INSTR: company_domain=""
+SystemDb(DA_PROSPECT, "Prospect marketing list", "Permissioned prospect records with bureau pre-screen attributes.", $tags="data_assets")
+' aac DA_PROSPECT: company_domain=""
+SystemDb(DA_CLIENT_SERV, "Servicing client program data", "Client program configuration, SLAs, and reporting extracts for serviced portfolios.", $tags="data_assets")
+' aac DA_CLIENT_SERV: company_domain=""
+SystemDb(DA_STATEMENTS, "Statement archive", "Rendered periodic statements and disclosures as delivered.", $tags="data_assets")
+' aac DA_STATEMENTS: company_domain=""
+
+SHOW_LEGEND()
+@enduml

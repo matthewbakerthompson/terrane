@@ -1,0 +1,57 @@
+@startuml
+' Security Monitoring — Governance
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Security Monitoring — Governance
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("policies", $bgColor="#fecaca", $borderColor="#dc2626", $fontColor="#0f172a", $legendText="policy")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_SEC_02_02, "Security Incident Response", "Manage detected security events through containment and recovery.", $tags="capabilities")
+  ' aac CAP_SEC_02_02: company_domain="Cross-Functional Services"
+  System(CAP_SEC_02_01, "Security Monitoring", "Continuous monitoring of networks and systems for adverse events.", $tags="capabilities")
+  ' aac CAP_SEC_02_01: company_domain="Cross-Functional Services"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_ACCESS_CERT, "Periodic access certification", "Access to systems handling cardholder data is re-certified by the owning manager on a fixed cycle; uncertified access is revoked.", $tags="controls")
+  ' aac CTL_ACCESS_CERT: company_domain=""
+  System(CTL_RETENTION, "Retention schedule enforcement", "Records are retained to schedule and destroyed on expiry with a certificate of disposition.", $tags="controls")
+  ' aac CTL_RETENTION: company_domain=""
+  System(CTL_IR_PLAYBOOK, "Security incident response execution", "Security events run the incident response playbook with severity-driven escalation and post-incident review; the timeline is evidence.", $tags="controls")
+  ' aac CTL_IR_PLAYBOOK: company_domain=""
+}
+Boundary(b_Policy, "Policy") {
+  System(POL_INFOSEC, "Information Security Policy", $tags="policies")
+  ' aac POL_INFOSEC: company_domain=""
+  System(POL_RECORDS, "Records Retention & Disposition Policy", $tags="policies")
+  ' aac POL_RECORDS: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_SIEM, "Security Monitoring", "Security information and event management: the audit trails of the estate and of every bought service, correlated in one place, and the console the incident response playbook runs from. Built with Microsoft Sentinel.", $tags="systems")
+  ' aac SYS_SIEM: company_domain="Enterprise Platform"; hosting="SaaS"; technology="Microsoft Sentinel"
+}
+
+Rel(SYS_SIEM, CTL_IR_PLAYBOOK, "enforces")
+' aac rel: source="SYS_SIEM"; target="CTL_IR_PLAYBOOK"; label="enforces"; relation="system_governed_by_control"
+Rel(SYS_SIEM, CTL_ACCESS_CERT, "enforces")
+' aac rel: source="SYS_SIEM"; target="CTL_ACCESS_CERT"; label="enforces"; relation="system_governed_by_control"
+Rel(SYS_SIEM, CTL_RETENTION, "enforces")
+' aac rel: source="SYS_SIEM"; target="CTL_RETENTION"; label="enforces"; relation="system_governed_by_control"
+Rel(SYS_SIEM, CAP_SEC_02_01, "realizes")
+' aac rel: source="SYS_SIEM"; target="CAP_SEC_02_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_SIEM, CAP_SEC_02_02, "realizes")
+' aac rel: source="SYS_SIEM"; target="CAP_SEC_02_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_SIEM, POL_INFOSEC, "subject to")
+' aac rel: source="SYS_SIEM"; target="POL_INFOSEC"; label="subject to"; relation="system_subject_to_policy"
+Rel(SYS_SIEM, POL_RECORDS, "subject to")
+' aac rel: source="SYS_SIEM"; target="POL_RECORDS"; label="subject to"; relation="system_subject_to_policy"
+Rel(CTL_ACCESS_CERT, POL_INFOSEC, "gives effect to")
+Rel(CTL_IR_PLAYBOOK, POL_INFOSEC, "gives effect to")
+Rel(CTL_RETENTION, POL_RECORDS, "gives effect to")
+
+SHOW_LEGEND()
+@enduml

@@ -1,0 +1,131 @@
+# Value streams: how the enterprise actually delivers something someone wants.
+#
+# Imported from the business architecture repository. A value stream is not a
+# process: it is stated from the point of view of whoever receives the value,
+# and it ends when they have it.
+
+- value_stream_id: VS-ACQUIRE-CUSTOMER
+  name: Prospect to Funded Account
+  description: A qualified applicant receives an actionable credit decision quickly and compliantly, and can transact within days.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_type: Core
+  stakeholders: Prospective cardholder;Marketing;Credit Risk;Compliance
+  value_proposition: A qualified applicant receives an actionable credit decision quickly and compliantly, and can transact within days.
+  owner_org_id: ORG-ORIG
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- value_stream_id: VS-ENABLE-MERCHANT
+  name: Merchant Signed to Settled
+  description: A merchant — usually brought by an ISO — is underwritten, boarded, and sponsored into the networks, can accept cards, and is settled daily with exposure managed.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_type: Core
+  stakeholders: Merchant;ISO / agent;Card networks;Merchant Risk
+  value_proposition: A merchant — usually brought by an ISO — is underwritten, boarded, and sponsored into the networks, can accept cards, and is settled daily with exposure managed.
+  owner_org_id: ORG-MERCHANT
+  last_reviewed: 2026-08-22
+  source: Business architecture repository
+
+- value_stream_id: VS-FINANCE-PURCHASE
+  name: Dealer Purchase to Funded Loan
+  description: A consumer buying an RV, boat, or powersports vehicle gets a financing decision at the dealer while they are standing there, and the dealer is funded within days.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_type: Core
+  stakeholders: Borrower;Dealer;Credit Risk;Lending Operations
+  value_proposition: A consumer buying an RV, boat, or powersports vehicle gets a financing decision at the dealer while they are standing there, and the dealer is funded within days.
+  owner_org_id: ORG-LENDING
+  last_reviewed: 2026-08-22
+  source: Business architecture repository
+
+- value_stream_id: VS-GROW-SAVINGS
+  name: Deposit Opened to Maturity
+  description: A saver opens a CD or savings account — directly or through a broker — funds it without friction, and is paid accurately at maturity. This stream is also how the bank funds its lending.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_type: Core
+  stakeholders: Depositor;Deposit broker;Treasury;Compliance
+  value_proposition: A saver opens a CD or savings account — directly or through a broker — funds it without friction, and is paid accurately at maturity. This stream is also how the bank funds its lending.
+  owner_org_id: ORG-DEPOSITS
+  last_reviewed: 2026-08-22
+  source: Business architecture repository
+
+- value_stream_id: VS-LAUNCH-PRODUCT
+  name: Concept to Market
+  description: A product change reaches market correctly disclosed, correctly priced, and correctly configured everywhere it needs to be.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_type: Management
+  stakeholders: Product;Legal;Compliance;Technology;Marketing
+  value_proposition: A product change reaches market correctly disclosed, correctly priced, and correctly configured everywhere it needs to be.
+  owner_org_id: ORG-PRODUCT
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- value_stream_id: VS-ONBOARD-CLIENT
+  name: Client Opportunity to Live Program
+  description: A client institution's portfolio moves onto our servicing platform with no cardholder disruption and full regulatory continuity.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_type: Core
+  stakeholders: Servicing client;Client regulator;Technology;Operations
+  value_proposition: A client institution's portfolio moves onto our servicing platform with no cardholder disruption and full regulatory continuity.
+  owner_org_id: ORG-CLIENTMGMT
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- value_stream_id: VS-RECOVER-VALUE
+  name: Delinquency to Recovery
+  description: Accounts in difficulty are treated fairly and consistently, and the enterprise recovers what it reasonably can.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_type: Core
+  stakeholders: Cardholder;Collections;Finance;Compliance
+  value_proposition: Accounts in difficulty are treated fairly and consistently, and the enterprise recovers what it reasonably can.
+  owner_org_id: ORG-COLLECTIONS
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- value_stream_id: VS-RESOLVE-ISSUE
+  name: Inquiry to Resolution
+  description: A cardholder with a problem gets a correct, timely answer and, where money is involved, gets it back within regulatory timers.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_type: Core
+  stakeholders: Cardholder;Servicing;Disputes;Compliance
+  value_proposition: A cardholder with a problem gets a correct, timely answer and, where money is involved, gets it back within regulatory timers.
+  owner_org_id: ORG-SERVICING
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- value_stream_id: VS-SERVICE-ACCOUNT
+  name: Transact to Statement
+  description: Transactions are authorized reliably, posted accurately, billed correctly, and paid without friction.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_type: Core
+  stakeholders: Cardholder;Merchant;Network;Finance
+  value_proposition: Transactions are authorized reliably, posted accurately, billed correctly, and paid without friction.
+  owner_org_id: ORG-SERVICING
+  last_reviewed: 2026-08-17
+  source: Business architecture repository

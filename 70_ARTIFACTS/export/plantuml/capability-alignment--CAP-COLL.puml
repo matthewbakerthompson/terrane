@@ -1,0 +1,205 @@
+@startuml
+' Collections & Recovery — Frameworks, Controls, Systems
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Collections & Recovery — Frameworks, Controls, Systems
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_COLL_06, "Bankruptcy, Deceased & Legal Account Handling", "Handle accounts under legal protection or in estate.", $tags="capabilities")
+  ' aac CAP_COLL_06: company_domain="Collections"
+  System(CAP_COLL_04, "Charge-off Processing", "Execute charge-off on policy timing with the correct accounting effect.", $tags="capabilities")
+  ' aac CAP_COLL_04: company_domain="Collections"
+  System(CAP_COLL, "Collections & Recovery", "Collections & Recovery. Level 0 enterprise capability domain (Core tier).", $tags="capabilities")
+  ' aac CAP_COLL: company_domain="Collections"
+  System(CAP_COLL_07, "Collections Compliance Oversight", "Assure conformance with debt collection, contact, and state-law requirements.", $tags="capabilities")
+  ' aac CAP_COLL_07: company_domain="Collections"
+  System(CAP_COLL_08, "Credit Bureau Reporting & Dispute Handling", "Furnish data to bureaus and handle consumer reporting disputes.", $tags="capabilities")
+  ' aac CAP_COLL_08: company_domain="Collections"
+  System(CAP_COLL_01, "Delinquency Segmentation & Treatment Strategy", "Decide which accounts are contacted, how, and when.", $tags="capabilities")
+  ' aac CAP_COLL_01: company_domain="Collections"
+  System(CAP_COLL_02, "Outbound Contact Operations", "Execute dialer, digital, and letter treatment.", $tags="capabilities")
+  ' aac CAP_COLL_02: company_domain="Collections"
+  System(CAP_COLL_03, "Payment Arrangement & Settlement Offers", "Negotiate and administer arrangements and settlements.", $tags="capabilities")
+  ' aac CAP_COLL_03: company_domain="Collections"
+  System(CAP_COLL_05, "Recovery, Agency & Debt Sale Management", "Place, manage, and settle with agencies, and execute debt sales.", $tags="capabilities")
+  ' aac CAP_COLL_05: company_domain="Collections"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_BUREAU_ACC, "Bureau furnishing accuracy", "Furnished tradeline data is reconciled to the system of record before transmission; consumer disputes update furnishing.", $tags="controls")
+  ' aac CTL_BUREAU_ACC: company_domain=""
+  System(CTL_CHARGEOFF_TIME, "Charge-off timing to policy", "Charge-off executes at the policy timing aligned to regulatory guidance, with exceptions approved and documented.", $tags="controls")
+  ' aac CTL_CHARGEOFF_TIME: company_domain=""
+  System(CTL_CONTACT_LIM, "Collections contact limits", "Outbound contact respects time-of-day, frequency, and channel-consent constraints; blocked numbers and cease requests are honored.", $tags="controls")
+  ' aac CTL_CONTACT_LIM: company_domain=""
+  System(CTL_METRO2_RECON, "Furnishing and bucketing reconciliation", "Delinquency bucketing and bureau furnishing reconcile to the system of record each cycle; unexplained movement blocks the file.", $tags="controls")
+  ' aac CTL_METRO2_RECON: company_domain=""
+  System(CTL_FDCPA_NOTICE, "Statutory collections notices", "Validation and other statutory notices issue within the prescribed period with content owned by legal; continued collection is blocked until issued.", $tags="controls")
+  ' aac CTL_FDCPA_NOTICE: company_domain=""
+  System(CTL_TREATMENT_APPR, "Treatment strategy approval", "Collections treatment strategies and authorization strategies deploy only with documented risk and compliance approval and champion-challenger evidence.", $tags="controls")
+  ' aac CTL_TREATMENT_APPR: company_domain=""
+}
+Boundary(b_Framework, "Framework") {
+  System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
+  ' aac FW_BIAN: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_COLLECTIONS_001, "Assign delinquency treatment strategy", "Segment delinquent accounts and assign the contact and treatment strategy. Runs nightly after delinquency bucketing; the strategy drives queue, channel, intensity, and hardship routing, and a wrong assignment is a conduct risk as much as a loss risk.", $tags="processes")
+  ' aac P_COLLECTIONS_001: company_domain=""
+  System(P_DELQ_001, "Detect and bucket delinquent account", "Identify accounts that have missed a payment and assign them to the correct delinquency bucket. Bucketing runs in the nightly cycle and is the trigger for every downstream collections treatment; a bucketing error propagates into contact, reporting, and accounting.", $tags="processes")
+  ' aac P_DELQ_001: company_domain=""
+  System(P_COLLECTIONS_004, "Execute charge-off", "Execute charge-off on policy timing and record the accounting effect. Timing follows the charge-off policy aligned to regulatory guidance; the entry moves the balance to charged-off status and hands the account to recovery placement.", $tags="processes")
+  ' aac P_COLLECTIONS_004: company_domain=""
+  System(P_RECOVERY_002, "Execute debt sale", "Assemble, price, and execute a sale of charged-off receivables. Debt sale packages carry account-level data quality and documentation warranties; buyer diligence and post-sale complaint routing are part of the process, not after-thoughts.", $tags="processes")
+  ' aac P_RECOVERY_002: company_domain=""
+  System(P_COLLECTIONS_002, "Execute outbound collections contact", "Execute outbound contact attempts within contact-frequency and communication constraints. Contact windows, frequency caps, and channel consent come from FDCPA, Reg F, and TCPA; the process starts at queue release and ends when the disposition is recorded.", $tags="processes")
+  ' aac P_COLLECTIONS_002: company_domain=""
+  System(P_COLLECTIONS_005, "Furnish credit bureau data", "Compile and furnish account data to the consumer reporting agencies. Monthly Metro 2 furnishing to the bureaus; accuracy is an FCRA obligation, and the file must reconcile to the system of record before transmission.", $tags="processes")
+  ' aac P_COLLECTIONS_005: company_domain=""
+  System(P_RECOVERY_003, "Handle bankruptcy notification", "Receive, verify, and action a bankruptcy notification with required account treatment. The automatic stay stops collection on notice; verification, claim filing, and account treatment follow bankruptcy chapter rules with dates that are court deadlines.", $tags="processes")
+  ' aac P_RECOVERY_003: company_domain=""
+  System(P_COLLECTIONS_006, "Handle credit reporting dispute", "Investigate and respond to a consumer credit reporting dispute within the required period. Direct and bureau-routed disputes both land here; FCRA sets the investigation window, and the outcome must correct both the bureau file and the account when the consumer is right.", $tags="processes")
+  ' aac P_COLLECTIONS_006: company_domain=""
+  System(P_RECOVERY_004, "Handle deceased cardholder and estate", "Verify a deceased notification and manage the account through estate resolution. Estate handling balances recovery with conduct: verified notification stops collection contact, and the claim proceeds through the estate at the estate's pace.", $tags="processes")
+  ' aac P_RECOVERY_004: company_domain=""
+  System(P_COLLECTIONS_007, "Issue debt validation notice", "Generate and deliver the required validation notice within the prescribed period. The validation notice is a statutory precondition to continued collection on affected accounts; timing and content mistakes surface directly as regulatory findings.", $tags="processes")
+  ' aac P_COLLECTIONS_007: company_domain=""
+  System(P_COLLECTIONS_003, "Negotiate and administer payment arrangement", "Agree, document, and administer a payment arrangement or settlement. Covers promises to pay, long-term arrangements, and settlements; terms must fit the approved matrix, and the arrangement drives bucket movement and interest treatment downstream.", $tags="processes")
+  ' aac P_COLLECTIONS_003: company_domain=""
+  System(P_RECOVERY_001, "Place account with collection agency", "Select, place, and monitor charged-off accounts with an external collection agency. Agency placement follows the approved network with performance and conduct oversight; the agency acts in the bank's name, so its conduct is the bank's risk.", $tags="processes")
+  ' aac P_RECOVERY_001: company_domain=""
+  System(P_RECOVERY_005, "Post recovery and account for proceeds", "Post recoveries and account for proceeds from agency, legal, and sale channels. Proceeds post against charged-off balances with channel attribution; recoveries feed the loss forecast, so mis-posting distorts the allowance.", $tags="processes")
+  ' aac P_RECOVERY_005: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_COLLECT_API, "Collections Workspace Service", "The service behind the Collections Workspace API, backing the channel. Built with AKS · Collections Workspace Cache.", $tags="systems")
+  ' aac SYS_COLLECT_API: company_domain="Collections"; hosting="Azure"; technology="AKS · Collections Workspace Cache"
+  System(SYS_COLLECT_WEB, "Collections Workspace Web", "Browser front end for Collections Workspace. Built with AKS.", $tags="systems")
+  ' aac SYS_COLLECT_WEB: company_domain="Collections"; hosting="Azure"; technology="AKS"
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_BUREAU_GW, "Credit bureau gateway", "Credit bureau furnishing and consumer dispute exchange.", $tags="systems")
+  ' aac SYS_BUREAU_GW: company_domain=""
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+  System(SYS_DIALER, "Outbound contact platform", "Outbound dialer and contact campaign execution.", $tags="systems")
+  ' aac SYS_DIALER: company_domain=""
+}
+
+Rel(CAP_COLL_01, CAP_COLL, "part of")
+Rel(CAP_COLL_02, CAP_COLL, "part of")
+Rel(CAP_COLL_03, CAP_COLL, "part of")
+Rel(CAP_COLL_04, CAP_COLL, "part of")
+Rel(CAP_COLL_05, CAP_COLL, "part of")
+Rel(CAP_COLL_06, CAP_COLL, "part of")
+Rel(CAP_COLL_07, CAP_COLL, "part of")
+Rel(CAP_COLL_08, CAP_COLL, "part of")
+Rel(CAP_COLL, FW_BIAN, "Aligned to")
+' aac rel: source="CAP_COLL"; target="FW_BIAN"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
+Rel(CAP_COLL_01, FW_BIAN, "Operations and Execution > Operational Services > Card Collections / Assignment")
+' aac rel: source="CAP_COLL_01"; target="FW_BIAN"; label="Operations and Execution > Operational Services > Card Collections / Assignment"; relation="capability_references_framework"; ref="Operations and Execution > Operational Services > Card Collections / Assignment"
+Rel(CAP_COLL_02, FW_BIAN, "Sales and Service > Channel Specific > Contact Center Operations")
+' aac rel: source="CAP_COLL_02"; target="FW_BIAN"; label="Sales and Service > Channel Specific > Contact Center Operations"; relation="capability_references_framework"; ref="Sales and Service > Channel Specific > Contact Center Operations"
+Rel(CAP_COLL_03, FW_BIAN, "Operations and Execution > Operational Services > Card Collections / Payment Terms")
+' aac rel: source="CAP_COLL_03"; target="FW_BIAN"; label="Operations and Execution > Operational Services > Card Collections / Payment Terms"; relation="capability_references_framework"; ref="Operations and Execution > Operational Services > Card Collections / Payment Terms"
+Rel(CAP_COLL_04, FW_BIAN, "Sales and Service > Customer Management > Account Recovery")
+' aac rel: source="CAP_COLL_04"; target="FW_BIAN"; label="Sales and Service > Customer Management > Account Recovery"; relation="capability_references_framework"; ref="Sales and Service > Customer Management > Account Recovery"
+Rel(CAP_COLL_05, FW_BIAN, "Sales and Service > Customer Management > Account Recovery")
+' aac rel: source="CAP_COLL_05"; target="FW_BIAN"; label="Sales and Service > Customer Management > Account Recovery"; relation="capability_references_framework"; ref="Sales and Service > Customer Management > Account Recovery"
+Rel(CAP_COLL_06, FW_BIAN, "Sales and Service > Customer Management > Account Recovery")
+' aac rel: source="CAP_COLL_06"; target="FW_BIAN"; label="Sales and Service > Customer Management > Account Recovery"; relation="capability_references_framework"; ref="Sales and Service > Customer Management > Account Recovery"
+Rel(CAP_COLL_07, FW_BIAN, "Risk and Compliance > Regulations and Compliance > Regulatory Compliance")
+' aac rel: source="CAP_COLL_07"; target="FW_BIAN"; label="Risk and Compliance > Regulations and Compliance > Regulatory Compliance"; relation="capability_references_framework"; ref="Risk and Compliance > Regulations and Compliance > Regulatory Compliance"
+Rel(CAP_COLL_08, FW_BIAN, "Sales and Service > Customer Management > Customer Credit Rating")
+' aac rel: source="CAP_COLL_08"; target="FW_BIAN"; label="Sales and Service > Customer Management > Customer Credit Rating"; relation="capability_references_framework"; ref="Sales and Service > Customer Management > Customer Credit Rating"
+Rel(P_DELQ_001, CAP_COLL_01, "supported by")
+' aac rel: source="P_DELQ_001"; target="CAP_COLL_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_001, CAP_COLL_01, "supported by")
+' aac rel: source="P_COLLECTIONS_001"; target="CAP_COLL_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_002, CAP_COLL_02, "supported by")
+' aac rel: source="P_COLLECTIONS_002"; target="CAP_COLL_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_002, CAP_COLL_07, "supported by")
+' aac rel: source="P_COLLECTIONS_002"; target="CAP_COLL_07"; label="supported by"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_003, CAP_COLL_03, "supported by")
+' aac rel: source="P_COLLECTIONS_003"; target="CAP_COLL_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_004, CAP_COLL_04, "supported by")
+' aac rel: source="P_COLLECTIONS_004"; target="CAP_COLL_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_005, CAP_COLL_08, "supported by")
+' aac rel: source="P_COLLECTIONS_005"; target="CAP_COLL_08"; label="supported by"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_006, CAP_COLL_08, "supported by")
+' aac rel: source="P_COLLECTIONS_006"; target="CAP_COLL_08"; label="supported by"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_007, CAP_COLL_07, "supported by")
+' aac rel: source="P_COLLECTIONS_007"; target="CAP_COLL_07"; label="supported by"; relation="process_supports_capability"
+Rel(P_RECOVERY_001, CAP_COLL_05, "supported by")
+' aac rel: source="P_RECOVERY_001"; target="CAP_COLL_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_RECOVERY_002, CAP_COLL_05, "supported by")
+' aac rel: source="P_RECOVERY_002"; target="CAP_COLL_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_RECOVERY_003, CAP_COLL_06, "supported by")
+' aac rel: source="P_RECOVERY_003"; target="CAP_COLL_06"; label="supported by"; relation="process_supports_capability"
+Rel(P_RECOVERY_004, CAP_COLL_06, "supported by")
+' aac rel: source="P_RECOVERY_004"; target="CAP_COLL_06"; label="supported by"; relation="process_supports_capability"
+Rel(P_RECOVERY_005, CAP_COLL_05, "supported by")
+' aac rel: source="P_RECOVERY_005"; target="CAP_COLL_05"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_COLL, CTL_BUREAU_ACC, "governed by")
+' aac rel: source="CAP_COLL"; target="CTL_BUREAU_ACC"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_COLL, CTL_CHARGEOFF_TIME, "governed by")
+' aac rel: source="CAP_COLL"; target="CTL_CHARGEOFF_TIME"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_COLL, CTL_CONTACT_LIM, "governed by")
+' aac rel: source="CAP_COLL"; target="CTL_CONTACT_LIM"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_COLL, CTL_FDCPA_NOTICE, "governed by")
+' aac rel: source="CAP_COLL"; target="CTL_FDCPA_NOTICE"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_COLL, CTL_METRO2_RECON, "governed by")
+' aac rel: source="CAP_COLL"; target="CTL_METRO2_RECON"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_COLL, CTL_TREATMENT_APPR, "governed by")
+' aac rel: source="CAP_COLL"; target="CTL_TREATMENT_APPR"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_COLL_01, CTL_METRO2_RECON, "governed by")
+' aac rel: source="CAP_COLL_01"; target="CTL_METRO2_RECON"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_COLL_01, CTL_TREATMENT_APPR, "governed by")
+' aac rel: source="CAP_COLL_01"; target="CTL_TREATMENT_APPR"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_COLL_02, CTL_CONTACT_LIM, "governed by")
+' aac rel: source="CAP_COLL_02"; target="CTL_CONTACT_LIM"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_COLL_04, CTL_CHARGEOFF_TIME, "governed by")
+' aac rel: source="CAP_COLL_04"; target="CTL_CHARGEOFF_TIME"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_COLL_06, CTL_FDCPA_NOTICE, "governed by")
+' aac rel: source="CAP_COLL_06"; target="CTL_FDCPA_NOTICE"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_COLL_07, CTL_CONTACT_LIM, "governed by")
+' aac rel: source="CAP_COLL_07"; target="CTL_CONTACT_LIM"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_COLL_07, CTL_FDCPA_NOTICE, "governed by")
+' aac rel: source="CAP_COLL_07"; target="CTL_FDCPA_NOTICE"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_COLL_08, CTL_BUREAU_ACC, "governed by")
+' aac rel: source="CAP_COLL_08"; target="CTL_BUREAU_ACC"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_COLL_08, CTL_METRO2_RECON, "governed by")
+' aac rel: source="CAP_COLL_08"; target="CTL_METRO2_RECON"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(SYS_COLLECT_API, CAP_COLL, "realizes")
+' aac rel: source="SYS_COLLECT_API"; target="CAP_COLL"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_COLLECT_WEB, CAP_COLL, "realizes")
+' aac rel: source="SYS_COLLECT_WEB"; target="CAP_COLL"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_BUREAU_GW, CAP_COLL_08, "realizes")
+' aac rel: source="SYS_BUREAU_GW"; target="CAP_COLL_08"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_COLLECT_API, CAP_COLL_01, "realizes")
+' aac rel: source="SYS_COLLECT_API"; target="CAP_COLL_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_COLLECT_API, CAP_COLL_03, "realizes")
+' aac rel: source="SYS_COLLECT_API"; target="CAP_COLL_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_COLLECT_API, CAP_COLL_05, "realizes")
+' aac rel: source="SYS_COLLECT_API"; target="CAP_COLL_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_COLLECT_API, CAP_COLL_06, "realizes")
+' aac rel: source="SYS_COLLECT_API"; target="CAP_COLL_06"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CORE_LEDGER, CAP_COLL_01, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_COLL_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CORE_LEDGER, CAP_COLL_04, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_COLL_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DIALER, CAP_COLL_02, "realizes")
+' aac rel: source="SYS_DIALER"; target="CAP_COLL_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DIALER, CAP_COLL_07, "realizes")
+' aac rel: source="SYS_DIALER"; target="CAP_COLL_07"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DOC, CAP_COLL_07, "realizes")
+' aac rel: source="SYS_DOC"; target="CAP_COLL_07"; label="realizes"; relation="system_realizes_capability"
+
+SHOW_LEGEND()
+@enduml

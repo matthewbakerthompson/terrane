@@ -1,0 +1,135 @@
+# A handful of the processes the source project modeled step by step, kept
+# here at the level the estate needs: what each touches. The steps and
+# their measures stay where they were drafted.
+
+- process_id: P-ED-001
+  name: Emergency department arrival to disposition
+  description: Quick registration, triage, evaluation and the decision to admit or discharge.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  value_stream_id: VS-EMERGENCY-CARE
+  owner_org_id: ORG-ED
+  criticality: High
+  trigger: Patient arrives
+  frequency: Per event
+  data_classification: Restricted
+  pii_flag: "Yes"
+
+- process_id: P-ED-002
+  name: Boarding and bed assignment
+  description: Finding an inpatient bed for an admitted emergency patient and moving them to it.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  value_stream_id: VS-EMERGENCY-CARE
+  owner_org_id: ORG-INPATIENT
+  criticality: High
+  trigger: Decision to admit
+  frequency: Per event
+  data_classification: Confidential
+  pii_flag: "Yes"
+
+- process_id: P-LAB-001
+  name: Lab order to result
+  description: Order, collection, analysis, verification and the result filed to the chart.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  value_stream_id: VS-DIAGNOSTICS
+  owner_org_id: ORG-LAB
+  criticality: High
+  trigger: Lab order signed
+  frequency: Per event
+  data_classification: Restricted
+  pii_flag: "Yes"
+
+- process_id: P-IMG-001
+  name: Imaging order to signed report
+  description: Order, protocol, acquisition, read and the signed report.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  value_stream_id: VS-DIAGNOSTICS
+  owner_org_id: ORG-IMAGING
+  criticality: High
+  trigger: Imaging order signed
+  frequency: Per event
+  data_classification: Restricted
+  pii_flag: "Yes"
+
+- process_id: P-MED-001
+  name: Medication order to administration
+  description: Order, pharmacist verification, dispensing and the scanned dose at the bedside.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  owner_org_id: ORG-PHARMACY
+  criticality: High
+  trigger: Medication order signed
+  frequency: Per event
+  data_classification: Restricted
+  pii_flag: "Yes"
+
+- process_id: P-ONC-001
+  name: Chemotherapy planning and administration
+  description: Regimen chosen at tumor board, each cycle checked against today's labs, given in infusion.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  value_stream_id: VS-CANCER-CARE
+  owner_org_id: ORG-CANCER-CENTER
+  criticality: High
+  trigger: Treatment plan agreed
+  frequency: Per event
+  data_classification: Restricted
+  pii_flag: "Yes"
+
+- process_id: P-ONC-002
+  name: Cancer case abstraction and reporting
+  description: Case finding from pathology, abstracting, and the report to the state registry.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  value_stream_id: VS-CANCER-CARE
+  owner_org_id: ORG-CANCER-CENTER
+  criticality: Medium
+  trigger: Reportable diagnosis
+  frequency: Daily
+  data_classification: Restricted
+  pii_flag: "Yes"
+
+- process_id: P-REV-001
+  name: Claim submission to payment
+  description: Charges coded, the claim scrubbed and submitted, the remittance posted and any denial worked.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  owner_org_id: ORG-REV-CYCLE
+  criticality: High
+  trigger: Encounter closed
+  frequency: Daily
+  data_classification: Restricted
+  pii_flag: "Yes"
+
+- process_id: P-SEC-001
+  name: Privacy access review
+  description: The access audit run against rules for coworkers, family and VIPs, and every hit investigated.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  owner_org_id: ORG-COMPLIANCE
+  criticality: Medium
+  trigger: Scheduled
+  frequency: Weekly
+  data_classification: Restricted
+  pii_flag: "Yes"

@@ -1,0 +1,36 @@
+view_id: parts-in-use
+title: Parts in Use
+category: Application
+section: Landscape
+kind: map
+description: >
+  Every system a part of the library made, grouped by the part: which parts
+  the estate leans on, which products share them (the names say the product),
+  and what a change to one part would touch. The lines are the interfaces
+  between them, faded, so the same pattern shows on every product. A system
+  written by hand has no part and is not here; the parts page of the library
+  says the same from the other side.
+layout: TB
+node_label: name
+renderers: [mermaid]
+
+# The part each thing came from, which the composer stamps on everything a
+# module provides.
+group_by: module
+
+scope:
+  include:
+    - type: systems
+      where:
+        module: {exists: true}
+
+edges:
+  - via: interfaces
+
+# The product is not a color: a nominal dimension changes nothing in the
+# palette on purpose, and the boundary and the name already say it.
+style:
+  color_by: type
+
+limits:
+  max_nodes: 80

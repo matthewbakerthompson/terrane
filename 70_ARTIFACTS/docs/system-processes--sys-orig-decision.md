@@ -1,0 +1,90 @@
+# Originations decision engine — Processes and Capabilities
+
+One system, every process that uses it and in what role, and the capabilities those processes support. This shows the business impact of changing the system. A long list against a low criticality rating is worth a second look.
+
+```mermaid
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Originations decision engine — Processes and Capabilities
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Capability["Capability"]
+    direction LR
+    CAP_ORIG_06{{"Account Establishment &<br/>Card Issuance"}}
+    CAP_ORIG_05{{"Adverse Action & Notice<br/>Generation"}}
+    CAP_ORIG_01{{"Application Capture"}}
+    CAP_ORIG_03{{"Application Fraud<br/>Screening"}}
+    CAP_CRED_03{{"Credit Line Assignment &<br/>Management"}}
+    CAP_CRED_01{{"Credit Strategy &<br/>Scorecard Management"}}
+    CAP_RGOV_07{{"Financial Crimes & BSA/AML<br/>Compliance"}}
+    CAP_ORIG_02{{"Identity Verification &<br/>KYC/CIP"}}
+    CAP_PROD_05{{"Product Lifecycle &<br/>Retirement"}}
+    CAP_ORIG_04{{"Underwriting & Credit<br/>Decisioning Execution"}}
+  end
+
+  subgraph grp_Process["Process"]
+    direction LR
+    P_ORIG_001[\"Capture card application"/]
+    P_ORIG_006[\"Establish account and<br/>issue credentials"/]
+    P_ORIG_004[\"Execute credit decision"/]
+    P_CREDIT_003[\"Execute credit line<br/>increase program"/]
+    P_ORIG_009[\"Handle application<br/>withdrawal and abandonment"/]
+    P_ORIG_005[\"Issue adverse action<br/>notice"/]
+    P_PRODUCT_003[\"Launch product to market"/]
+    P_ORIG_003[\"Screen application for<br/>fraud"/]
+    P_CREDIT_001[\"Set and deploy credit<br/>decision strategy"/]
+    P_ORIG_002[\"Verify applicant identity<br/>and satisfy CIP"/]
+  end
+
+  subgraph grp_System["System"]
+    direction LR
+    SYS_ORIG_DECISION["Originations decision<br/>engine"]
+  end
+
+  P_ORIG_001 -->|"Primary"| SYS_ORIG_DECISION
+  P_ORIG_002 -->|"Supporting"| SYS_ORIG_DECISION
+  P_ORIG_003 -->|"Supporting"| SYS_ORIG_DECISION
+  P_ORIG_004 -->|"Primary"| SYS_ORIG_DECISION
+  P_ORIG_005 -->|"Supporting"| SYS_ORIG_DECISION
+  P_ORIG_006 -->|"Supporting"| SYS_ORIG_DECISION
+  P_ORIG_009 -->|"Primary"| SYS_ORIG_DECISION
+  P_CREDIT_001 -->|"Primary"| SYS_ORIG_DECISION
+  P_CREDIT_003 -->|"Supporting"| SYS_ORIG_DECISION
+  P_PRODUCT_003 -->|"Supporting"| SYS_ORIG_DECISION
+  P_ORIG_001 -->|"supports"| CAP_ORIG_01
+  P_ORIG_002 -->|"supports"| CAP_ORIG_02
+  P_ORIG_002 -->|"supports"| CAP_RGOV_07
+  P_ORIG_003 -->|"supports"| CAP_ORIG_03
+  P_ORIG_004 -->|"supports"| CAP_ORIG_04
+  P_ORIG_004 -->|"supports"| CAP_CRED_01
+  P_ORIG_004 -->|"supports"| CAP_CRED_03
+  P_ORIG_005 -->|"supports"| CAP_ORIG_05
+  P_ORIG_006 -->|"supports"| CAP_ORIG_06
+  P_ORIG_009 -->|"supports"| CAP_ORIG_01
+  P_CREDIT_001 -->|"supports"| CAP_CRED_01
+  P_CREDIT_003 -->|"supports"| CAP_CRED_03
+  P_PRODUCT_003 -->|"supports"| CAP_PROD_05
+
+  classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
+  classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  class CAP_CRED_01,CAP_CRED_03,CAP_ORIG_01,CAP_ORIG_02,CAP_ORIG_03,CAP_ORIG_04,CAP_ORIG_05,CAP_ORIG_06,CAP_PROD_05,CAP_RGOV_07 s_capabilities__capabilities;
+  class P_CREDIT_001,P_CREDIT_003,P_ORIG_001,P_ORIG_002,P_ORIG_003,P_ORIG_004,P_ORIG_005,P_ORIG_006,P_ORIG_009,P_PRODUCT_003 s_processes__processes;
+  class SYS_ORIG_DECISION s_systems__systems;
+  classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_Capability,grp_Process,grp_System boundary1;
+```
+
+The same view as the app draws it, written beside the Mermaid by `terrane render`:
+
+![Originations decision engine — Processes and Capabilities](../svg/system-processes--sys-orig-decision.svg)
+
+**Hue is the entity type.**
+
+| | Entity type |
+|---|---|
+| `#6d28d9` | capabilities |
+| `#0369a1` | processes |
+| `#4338ca` | systems |
+
+21 entities, 23 relationships. Generated from the model; edit the model, not this file.

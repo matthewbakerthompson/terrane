@@ -1,0 +1,57 @@
+@startuml
+' Issue adverse action notice — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Issue adverse action notice — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_ORIG_05, "Adverse Action & Notice Generation", "Produce compliant decline and counter-offer notices.", $tags="capabilities")
+  ' aac CAP_ORIG_05: company_domain="Originations"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_ADVERSE_ACT, "Adverse action notice completeness", "Every declined application generates a compliant adverse action notice with the principal reasons, within the required period.", $tags="controls")
+  ' aac CTL_ADVERSE_ACT: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_APPLICATION, "Credit application record", "Application content, identity evidence, and decision inputs, including bureau pulls.", $tags="data_assets")
+  ' aac DA_APPLICATION: company_domain=""
+  SystemDb(DA_BUREAU_FILE, "Credit bureau furnishing file", "Monthly tradeline furnishing extract and consumer-dispute responses.", $tags="data_assets")
+  ' aac DA_BUREAU_FILE: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_ORIG_005, "Issue adverse action notice", "Generate and deliver a compliant adverse action or counter-offer notice within the required period. ECOA and FCRA set the notice content and the clock; the principal reasons must match the actual decision factors, which is exactly what fair-lending testing checks.", $tags="processes")
+  ' aac P_ORIG_005: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+  System(SYS_ORIG_DECISION, "Originations decision engine", "Application processing and credit decision execution.", $tags="systems")
+  ' aac SYS_ORIG_DECISION: company_domain=""
+  System(SYS_STATEMENTS, "Statement Generation", "Composes, renders and dispatches customer statements.", $tags="systems")
+  ' aac SYS_STATEMENTS: company_domain="Servicing"; hosting="On-prem"
+}
+
+Rel(P_ORIG_005, SYS_DOC, "Primary")
+' aac rel: source="P_ORIG_005"; target="SYS_DOC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_ORIG_005, SYS_ORIG_DECISION, "Supporting")
+' aac rel: source="P_ORIG_005"; target="SYS_ORIG_DECISION"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_ORIG_005, SYS_STATEMENTS, "Supporting")
+' aac rel: source="P_ORIG_005"; target="SYS_STATEMENTS"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_ORIG_005, DA_APPLICATION, "Reads")
+' aac rel: source="P_ORIG_005"; target="DA_APPLICATION"; label="Reads"; relation="process_uses_data_asset"; access="Reads"
+Rel(P_ORIG_005, DA_BUREAU_FILE, "Reads")
+' aac rel: source="P_ORIG_005"; target="DA_BUREAU_FILE"; label="Reads"; relation="process_uses_data_asset"; access="Reads"
+Rel(P_ORIG_005, CTL_ADVERSE_ACT, "governed by")
+' aac rel: source="P_ORIG_005"; target="CTL_ADVERSE_ACT"; label="governed by"; relation="process_governed_by_control"
+Rel(P_ORIG_005, CAP_ORIG_05, "supports")
+' aac rel: source="P_ORIG_005"; target="CAP_ORIG_05"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

@@ -1,0 +1,27 @@
+# The security monitoring platform every vendor's audit trail lands in. A
+# shared system rather than a technology service, because interfaces need a
+# system at each end and "the vendor streams its audit log to us" is an
+# interface worth drawing.
+system_id: SYS-SIEM
+name: Security Monitoring
+description: >
+  Security information and event management: the audit trails of the estate
+  and of every bought service, correlated in one place, and the console the
+  incident response playbook runs from.
+status: Active
+togaf_layer: Application
+architecture_domain: Technology
+abstraction_level: Physical
+company_domain: Enterprise Platform
+tags: [security, platform, shared-service]
+owner_org_id: ORG-INFOSEC
+criticality: High
+service_tier: Tier 1
+hosting: SaaS
+environment: Production
+provider: Microsoft Sentinel
+system_category: Security
+data_classification_supported: Restricted
+cloud_provider: SaaS
+network_zone: Edge
+resilience: Multi-region

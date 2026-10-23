@@ -1,0 +1,179 @@
+# The frameworks the capability map answers to.
+#
+# Not one framework governs an enterprise, and pretending otherwise is how a
+# capability map ends up either shaped like BIAN with the corporate functions
+# missing, or shaped like APQC with nothing specific to the business in it.
+# Different domains answer to different bodies of practice, and saying which is
+# how a review knows what good looks like for a given domain.
+#
+# `scope` is the honest part: it says what the framework is actually for, so
+# nobody claims coverage it does not give.
+
+- framework_id: FW-BIAN
+  name: BIAN
+  description: >
+    The Banking Industry Architecture Network's service landscape. A reference
+    model of banking service domains, organized into business areas. Strong on
+    what a bank does and deliberately silent on how it is run.
+  status: Active
+  publisher: BIAN e.V.
+  framework_type: Reference model
+  scope: Banking business capabilities and service domains
+  version: "12"
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+
+- framework_id: FW-APQC
+  name: APQC Process Classification Framework
+  description: >
+    A cross-industry process taxonomy. Used here for the enabling tier, where a
+    card-specific name adds nothing: finance, HR and corporate services look
+    much the same in any industry, and inventing local names for them costs
+    comparability for no benefit.
+  status: Active
+  publisher: APQC
+  framework_type: Reference model
+  scope: Cross-industry operating and management processes
+  version: "7.4"
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+
+- framework_id: FW-ITIL
+  name: ITIL 4
+  description: >
+    Service management practice: incident, change, problem, service level. The
+    frame technology operations is actually run and audited against, and the
+    vocabulary a service management tool already speaks.
+  status: Active
+  publisher: AXELOS / PeopleCert
+  framework_type: Practice framework
+  scope: IT service management
+  version: "4"
+  togaf_layer: Technology
+  architecture_domain: Technology
+  abstraction_level: Conceptual
+
+- framework_id: FW-DMBOK
+  name: DAMA-DMBOK
+  description: >
+    The data management body of knowledge: governance, quality, architecture,
+    metadata, master data, security. The only one of these with a defensible
+    account of what a data function is responsible for.
+  status: Active
+  publisher: DAMA International
+  framework_type: Body of knowledge
+  scope: Data management and governance
+  version: "2"
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Conceptual
+
+- framework_id: FW-COBIT
+  name: COBIT 2019
+  description: >
+    Governance and management objectives for enterprise IT. Where ITIL says how
+    to run a service, this says how to know whether it is being run well, which
+    is why the risk and technology governance domains answer to it.
+  status: Active
+  publisher: ISACA
+  framework_type: Governance framework
+  scope: Governance and management of enterprise IT
+  version: "2019"
+  togaf_layer: Technology
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+
+- framework_id: FW-NIST-CSF
+  name: NIST Cybersecurity Framework
+  description: >
+    Identify, Protect, Detect, Respond, Recover. The five functions most
+    security programs are structured and reported against, and the one framing
+    a board recognizes.
+  status: Active
+  publisher: NIST
+  framework_type: Practice framework
+  scope: Cybersecurity risk management
+  version: "2.0"
+  togaf_layer: Technology
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+
+- framework_id: FW-ISO27001
+  name: ISO/IEC 27001
+  description: >
+    The certifiable information security management standard. Named separately
+    from the NIST framework because certification is a fact about the
+    organization and a practice framework is not.
+  status: Active
+  publisher: ISO/IEC
+  framework_type: Standard
+  scope: Information security management systems
+  version: "2022"
+  togaf_layer: Technology
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+
+- framework_id: FW-PCI-DSS
+  name: PCI DSS
+  description: >
+    The card industry's data security standard. Not a framework anybody chose:
+    it is a condition of processing card transactions, which is why it governs
+    the payment and merchant domains whatever anyone thinks of it.
+  status: Active
+  publisher: PCI Security Standards Council
+  framework_type: Standard
+  scope: Cardholder data security
+  version: "4.0"
+  togaf_layer: Technology
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+
+- framework_id: FW-BIZBOK
+  name: BIZBOK
+  description: >
+    The Business Architecture Guild's body of knowledge. Governs how the
+    capability map and the value streams are built rather than what is in them,
+    which makes it the framework this repository's own business layer answers
+    to.
+  status: Active
+  publisher: Business Architecture Guild
+  framework_type: Body of knowledge
+  scope: Business architecture practice
+  version: "13"
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+
+- framework_id: FW-TOGAF
+  name: TOGAF
+  description: >
+    The architecture development method and content metamodel this repository's
+    entity types are drawn from. It governs the practice of architecture, not
+    any business domain, which is why nothing but the architecture function
+    maps to it.
+  status: Active
+  publisher: The Open Group
+  framework_type: Method
+  scope: Enterprise architecture method and content
+  version: "10"
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+
+- framework_id: FW-CRI
+  name: CRI Profile
+  description: >
+    The Cyber Risk Institute's Profile: the financial sector's harmonization of
+    NIST CSF, ISO 27001 and the regulators' expectations into one set of
+    diagnostic statements. What a bank is examined against for cyber, and
+    therefore what the security domain is governed by rather than informed by.
+  status: Active
+  publisher: Cyber Risk Institute
+  framework_type: Practice framework
+  scope: Cyber risk management and resilience in financial institutions
+  version: "2.0"
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual

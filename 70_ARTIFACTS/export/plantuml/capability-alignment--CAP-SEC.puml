@@ -1,0 +1,172 @@
+@startuml
+' Information Security & Privacy — Frameworks, Controls, Systems
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Information Security & Privacy — Frameworks, Controls, Systems
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_SEC_04, "Data Protection & Cryptography", "Protect data at rest and in transit, and manage keys and cardholder data scope.", $tags="capabilities")
+  ' aac CAP_SEC_04: company_domain="Cross-Functional Services"
+  System(CAP_SEC_01, "Identity & Access Management", "Govern who can access what, and evidence it.", $tags="capabilities")
+  ' aac CAP_SEC_01: company_domain="Cross-Functional Services"
+  System(CAP_SEC, "Information Security & Privacy", "Information Security & Privacy. Level 0 enterprise capability domain (Enable tier).", $tags="capabilities")
+  ' aac CAP_SEC: company_domain="Cross-Functional Services"
+  System(CAP_SEC_05, "Privacy Management", "Operate privacy obligations including consumer rights requests.", $tags="capabilities")
+  ' aac CAP_SEC_05: company_domain="Cross-Functional Services"
+  System(CAP_SEC_02, "Threat Detection & Response", "Detect and respond to security events.", $tags="capabilities")
+  ' aac CAP_SEC_02: company_domain="Cross-Functional Services"
+  System(CAP_SEC_03, "Vulnerability & Patch Management", "Find and remediate technical exposure.", $tags="capabilities")
+  ' aac CAP_SEC_03: company_domain="Cross-Functional Services"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_AUTH_POLICY, "Cardholder authentication to policy", "Cardholder authentication meets the risk-tiered policy before disclosure or account change, across every servicing channel.", $tags="controls")
+  ' aac CTL_AUTH_POLICY: company_domain=""
+  System(CTL_PCI_EVIDENCE, "Cardholder data scope and evidence maintenance", "CDE scope, segmentation, and assessment evidence are maintained continuously against the PCI DSS requirement set.", $tags="controls")
+  ' aac CTL_PCI_EVIDENCE: company_domain=""
+  System(CTL_PRIV_REQ, "Consumer privacy request fulfillment", "Access and deletion requests are verified, fulfilled, and evidenced within the applicable statutory window.", $tags="controls")
+  ' aac CTL_PRIV_REQ: company_domain=""
+  System(CTL_MASK_NONPROD, "Masked data outside production", "Non-production environments carry masked or synthetic data; unmasked extracts require a time-boxed exception.", $tags="controls")
+  ' aac CTL_MASK_NONPROD: company_domain=""
+  System(CTL_ACCESS_CERT, "Periodic access certification", "Access to systems handling cardholder data is re-certified by the owning manager on a fixed cycle; uncertified access is revoked.", $tags="controls")
+  ' aac CTL_ACCESS_CERT: company_domain=""
+  System(CTL_IR_PLAYBOOK, "Security incident response execution", "Security events run the incident response playbook with severity-driven escalation and post-incident review; the timeline is evidence.", $tags="controls")
+  ' aac CTL_IR_PLAYBOOK: company_domain=""
+  System(CTL_VULN_SLA, "Vulnerability remediation service level", "Vulnerabilities are remediated within the SLA for their severity; breaches of the SLA are escalated and tracked.", $tags="controls")
+  ' aac CTL_VULN_SLA: company_domain=""
+}
+Boundary(b_Framework, "Framework") {
+  System(FW_CRI, "CRI Profile", "The Cyber Risk Institute's Profile: the financial sector's harmonization of NIST CSF, ISO 27001 and the regulators' expectations into one set of diagnostic statements. What a bank is examined against for cyber, and therefore what the security domain is governed by rather than informed by.", $tags="frameworks")
+  ' aac FW_CRI: company_domain=""
+  System(FW_ISO27001, "ISO/IEC 27001", "The certifiable information security management standard. Named separately from the NIST framework because certification is a fact about the organization and a practice framework is not.", $tags="frameworks")
+  ' aac FW_ISO27001: company_domain=""
+  System(FW_NIST_CSF, "NIST Cybersecurity Framework", "Identify, Protect, Detect, Respond, Recover. The five functions most security programs are structured and reported against, and the one framing a board recognizes.", $tags="frameworks")
+  ' aac FW_NIST_CSF: company_domain=""
+  System(FW_PCI_DSS, "PCI DSS", "The card industry's data security standard. Not a framework anybody chose: it is a condition of processing card transactions, which is why it governs the payment and merchant domains whatever anyone thinks of it.", $tags="frameworks")
+  ' aac FW_PCI_DSS: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_SERVICING_005, "Authenticate cardholder", "Authenticate a cardholder to policy before disclosing information or executing a change. Authentication strength scales with request risk; failures route to step-up rather than disclosure, and the policy is tuned with the fraud team.", $tags="processes")
+  ' aac P_SERVICING_005: company_domain=""
+  System(P_INFOSEC_002, "Detect and respond to security event", "Detect, investigate, contain, and remediate a security event. Detection through containment runs the incident playbook with severity-driven escalation; the timeline is evidence for both the CRI assessment and any notification duty.", $tags="processes")
+  ' aac P_INFOSEC_002: company_domain=""
+  System(P_PRIVACY_001, "Fulfill consumer privacy request", "Receive, verify, and fulfill a consumer privacy rights request within the required period. Identity verification precedes any disclosure; state privacy laws set the clocks and the evidence of fulfillment is retained per request.", $tags="processes")
+  ' aac P_PRIVACY_001: company_domain=""
+  System(P_INFOSEC_004, "Maintain cardholder data scope and evidence", "Maintain the cardholder data environment scope and the supporting compliance evidence. PCI scope is maintained continuously: network segmentation, asset inventory, and evidence collection, so assessment is a report, not a scramble.", $tags="processes")
+  ' aac P_INFOSEC_004: company_domain=""
+  System(P_INFOSEC_001, "Provision and certify access", "Grant, review, and certify access to systems and data. Access follows least privilege with owner approval; the quarterly certification and automatic revocation of uncertified access are the controls CRI assesses.", $tags="processes")
+  ' aac P_INFOSEC_001: company_domain=""
+  System(P_QE_007, "Provision test environments and masked data", "Stand up and refresh non-production environments with representative, masked data, and retire them on schedule.", $tags="processes")
+  ' aac P_QE_007: company_domain=""
+  System(P_INFOSEC_003, "Remediate vulnerability", "Triage and remediate an identified vulnerability within the applicable service level. Severity sets the remediation SLA; breaches escalate rather than languish, and closure requires verification, not just a patch record.", $tags="processes")
+  ' aac P_INFOSEC_003: company_domain=""
+  System(P_APPDEV_005, "Scan code and dependencies for security defects", "Run static, dependency, and secret scanning on every change and remediate findings within the applicable service level.", $tags="processes")
+  ' aac P_APPDEV_005: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_IDENTITY_SVC, "Customer Identity Service", "Shared platform service: Customer Identity Service. Built with AKS.", $tags="systems")
+  ' aac SYS_IDENTITY_SVC: company_domain="Enterprise Platform"; hosting="Azure"; technology="AKS"
+  System(SYS_GRC, "Governance, risk and compliance platform", "Policy, control, issue, and risk register management.", $tags="systems")
+  ' aac SYS_GRC: company_domain=""
+  System(SYS_IAM, "Identity and access management", "Workforce identity, authentication, and access governance.", $tags="systems")
+  ' aac SYS_IAM: company_domain=""
+  System_Ext(SYS_ITSM, "IT service management", "Incident, change, and service management. Built with SaaS.", $tags="systems")
+  ' aac SYS_ITSM: company_domain=""; hosting="SaaS"; technology="SaaS"
+  System_Ext(SYS_SCM, "Source control and CI/CD pipeline", "Source repositories, build, and deployment pipeline. Built with SaaS.", $tags="systems")
+  ' aac SYS_SCM: company_domain=""; hosting="SaaS"; technology="SaaS"
+  System_Ext(SYS_TESTMGMT, "Test management and automation", "Test case management, automated test execution, and results. Built with SaaS.", $tags="systems")
+  ' aac SYS_TESTMGMT: company_domain=""; hosting="SaaS"; technology="SaaS"
+}
+
+Rel(CAP_SEC_01, CAP_SEC, "part of")
+Rel(CAP_SEC_02, CAP_SEC, "part of")
+Rel(CAP_SEC_03, CAP_SEC, "part of")
+Rel(CAP_SEC_04, CAP_SEC, "part of")
+Rel(CAP_SEC_05, CAP_SEC, "part of")
+Rel(CAP_SEC, FW_NIST_CSF, "Aligned to")
+' aac rel: source="CAP_SEC"; target="FW_NIST_CSF"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
+Rel(CAP_SEC, FW_ISO27001, "Governed by")
+' aac rel: source="CAP_SEC"; target="FW_ISO27001"; label="Governed by"; relation="capability_aligns_to_framework"; alignment="Governed by"
+Rel(CAP_SEC, FW_PCI_DSS, "Governed by")
+' aac rel: source="CAP_SEC"; target="FW_PCI_DSS"; label="Governed by"; relation="capability_aligns_to_framework"; alignment="Governed by"
+Rel(CAP_SEC, FW_CRI, "Governed by")
+' aac rel: source="CAP_SEC"; target="FW_CRI"; label="Governed by"; relation="capability_aligns_to_framework"; alignment="Governed by"
+Rel(CAP_SEC_01, FW_CRI, "Protect > PR.AA-01")
+' aac rel: source="CAP_SEC_01"; target="FW_CRI"; label="Protect > PR.AA-01"; relation="capability_references_framework"; ref="Protect > PR.AA-01"
+Rel(CAP_SEC_02, FW_CRI, "Detect > DE.CM-01")
+' aac rel: source="CAP_SEC_02"; target="FW_CRI"; label="Detect > DE.CM-01"; relation="capability_references_framework"; ref="Detect > DE.CM-01"
+Rel(CAP_SEC_03, FW_CRI, "Identify > ID.RA-01")
+' aac rel: source="CAP_SEC_03"; target="FW_CRI"; label="Identify > ID.RA-01"; relation="capability_references_framework"; ref="Identify > ID.RA-01"
+Rel(CAP_SEC_04, FW_CRI, "Protect > PR.DS-01")
+' aac rel: source="CAP_SEC_04"; target="FW_CRI"; label="Protect > PR.DS-01"; relation="capability_references_framework"; ref="Protect > PR.DS-01"
+Rel(CAP_SEC_05, FW_CRI, "Govern > GV.PO-01")
+' aac rel: source="CAP_SEC_05"; target="FW_CRI"; label="Govern > GV.PO-01"; relation="capability_references_framework"; ref="Govern > GV.PO-01"
+Rel(P_SERVICING_005, CAP_SEC_01, "supported by")
+' aac rel: source="P_SERVICING_005"; target="CAP_SEC_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_INFOSEC_001, CAP_SEC_01, "supported by")
+' aac rel: source="P_INFOSEC_001"; target="CAP_SEC_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_INFOSEC_002, CAP_SEC_02, "supported by")
+' aac rel: source="P_INFOSEC_002"; target="CAP_SEC_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_INFOSEC_003, CAP_SEC_03, "supported by")
+' aac rel: source="P_INFOSEC_003"; target="CAP_SEC_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_INFOSEC_004, CAP_SEC_04, "supported by")
+' aac rel: source="P_INFOSEC_004"; target="CAP_SEC_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_PRIVACY_001, CAP_SEC_05, "supported by")
+' aac rel: source="P_PRIVACY_001"; target="CAP_SEC_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_QE_007, CAP_SEC_04, "supported by")
+' aac rel: source="P_QE_007"; target="CAP_SEC_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_APPDEV_005, CAP_SEC_03, "supported by")
+' aac rel: source="P_APPDEV_005"; target="CAP_SEC_03"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_SEC, CTL_ACCESS_CERT, "governed by")
+' aac rel: source="CAP_SEC"; target="CTL_ACCESS_CERT"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_SEC, CTL_AUTH_POLICY, "governed by")
+' aac rel: source="CAP_SEC"; target="CTL_AUTH_POLICY"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_SEC, CTL_IR_PLAYBOOK, "governed by")
+' aac rel: source="CAP_SEC"; target="CTL_IR_PLAYBOOK"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_SEC, CTL_MASK_NONPROD, "governed by")
+' aac rel: source="CAP_SEC"; target="CTL_MASK_NONPROD"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_SEC, CTL_PCI_EVIDENCE, "governed by")
+' aac rel: source="CAP_SEC"; target="CTL_PCI_EVIDENCE"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_SEC, CTL_PRIV_REQ, "governed by")
+' aac rel: source="CAP_SEC"; target="CTL_PRIV_REQ"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_SEC, CTL_VULN_SLA, "governed by")
+' aac rel: source="CAP_SEC"; target="CTL_VULN_SLA"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_SEC_01, CTL_ACCESS_CERT, "governed by")
+' aac rel: source="CAP_SEC_01"; target="CTL_ACCESS_CERT"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_SEC_01, CTL_AUTH_POLICY, "governed by")
+' aac rel: source="CAP_SEC_01"; target="CTL_AUTH_POLICY"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_SEC_02, CTL_IR_PLAYBOOK, "governed by")
+' aac rel: source="CAP_SEC_02"; target="CTL_IR_PLAYBOOK"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_SEC_03, CTL_VULN_SLA, "governed by")
+' aac rel: source="CAP_SEC_03"; target="CTL_VULN_SLA"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_SEC_04, CTL_MASK_NONPROD, "governed by")
+' aac rel: source="CAP_SEC_04"; target="CTL_MASK_NONPROD"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_SEC_04, CTL_PCI_EVIDENCE, "governed by")
+' aac rel: source="CAP_SEC_04"; target="CTL_PCI_EVIDENCE"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_SEC_05, CTL_PRIV_REQ, "governed by")
+' aac rel: source="CAP_SEC_05"; target="CTL_PRIV_REQ"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(SYS_IDENTITY_SVC, CAP_SEC_01, "realizes")
+' aac rel: source="SYS_IDENTITY_SVC"; target="CAP_SEC_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_GRC, CAP_SEC_04, "realizes")
+' aac rel: source="SYS_GRC"; target="CAP_SEC_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_GRC, CAP_SEC_05, "realizes")
+' aac rel: source="SYS_GRC"; target="CAP_SEC_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_IAM, CAP_SEC_01, "realizes")
+' aac rel: source="SYS_IAM"; target="CAP_SEC_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_ITSM, CAP_SEC_02, "realizes")
+' aac rel: source="SYS_ITSM"; target="CAP_SEC_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_ITSM, CAP_SEC_03, "realizes")
+' aac rel: source="SYS_ITSM"; target="CAP_SEC_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_SCM, CAP_SEC_03, "realizes")
+' aac rel: source="SYS_SCM"; target="CAP_SEC_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_TESTMGMT, CAP_SEC_04, "realizes")
+' aac rel: source="SYS_TESTMGMT"; target="CAP_SEC_04"; label="realizes"; relation="system_realizes_capability"
+
+SHOW_LEGEND()
+@enduml

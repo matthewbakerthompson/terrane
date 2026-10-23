@@ -1,0 +1,52 @@
+@startuml
+' Customer 360 — By part
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Customer 360 — By part
+
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("tech_services", $bgColor="#fed7aa", $borderColor="#c2410c", $fontColor="#0f172a", $legendText="technology service")
+AddRelTag("pipeline-load", $legendText="Pipeline load")
+
+SystemDb(DA_CARD_ACCOUNT, "Card account master", "Account, balance, limit and status records for every card account.", $tags="data_assets")
+' aac DA_CARD_ACCOUNT: company_domain="Card Issuing"
+SystemDb(DA_TRANSACTION, "Card transaction history", "Authorized, cleared and settled card transactions.", $tags="data_assets")
+' aac DA_TRANSACTION: company_domain="Payments"
+Deployment_Node(TS_COLLIBRA, "Collibra", "Data catalog", "Governance catalog and the intended system of record for metadata.", $tags="tech_services") {
+  ' aac TS_COLLIBRA: company_domain="Data and Analytics"; technology="Data catalog"
+}
+SystemDb(DA_CUST360_CURATED, "Customer 360 curated dataset", "Curated, governed dataset produced by Customer 360.", $tags="data_assets")
+' aac DA_CUST360_CURATED: company_domain="Data and Analytics"
+System(SYS_CUST360_PIPELINE, "Customer 360 Pipeline", "Ingestion and curation jobs building Customer 360. Built with Snowflake Data Cloud +1.", $tags="systems")
+' aac SYS_CUST360_PIPELINE: company_domain="Data and Analytics"; hosting="Azure"; technology="Snowflake Data Cloud +1"
+System_Ext(SYS_CUST360_SEMANTIC, "Customer 360 Semantic Layer", "Governed models and metrics exposed to analysts for Customer 360. Built with Snowflake Data Cloud.", $tags="systems")
+' aac SYS_CUST360_SEMANTIC: company_domain="Data and Analytics"; hosting="SaaS"; technology="Snowflake Data Cloud"
+SystemDb(DA_CUSTOMER_PROFILE, "Customer profile", "Contact details, preferences and servicing history.", $tags="data_assets")
+' aac DA_CUSTOMER_PROFILE: company_domain="Servicing"
+Deployment_Node(TS_SNOWFLAKE, "Snowflake", "Data warehouse", "The enterprise warehouse and analytics compute.", $tags="tech_services") {
+  ' aac TS_SNOWFLAKE: company_domain="Data and Analytics"; technology="Data warehouse"
+}
+
+Rel(SYS_CUST360_PIPELINE, SYS_CUST360_SEMANTIC, "Customer 360 Pipeline to Semantic Layer", "SQL", $tags="pipeline-load")
+' aac rel: source="SYS_CUST360_PIPELINE"; target="SYS_CUST360_SEMANTIC"; label="Customer 360 Pipeline to Semantic Layer"; interface_id="INT-CUST360-PIPE-SEMANTIC"; kind="pipeline-load"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Outbound"
+Rel(SYS_CUST360_PIPELINE, TS_SNOWFLAKE, "runs on")
+' aac rel: source="SYS_CUST360_PIPELINE"; target="TS_SNOWFLAKE"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CUST360_PIPELINE, TS_COLLIBRA, "runs on")
+' aac rel: source="SYS_CUST360_PIPELINE"; target="TS_COLLIBRA"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CUST360_SEMANTIC, TS_SNOWFLAKE, "runs on")
+' aac rel: source="SYS_CUST360_SEMANTIC"; target="TS_SNOWFLAKE"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CUST360_PIPELINE, DA_CUST360_CURATED, "Write")
+' aac rel: source="SYS_CUST360_PIPELINE"; target="DA_CUST360_CURATED"; label="Write"; relation="system_reads_writes"; operation="Write"
+Rel(SYS_CUST360_SEMANTIC, DA_CUST360_CURATED, "Read")
+' aac rel: source="SYS_CUST360_SEMANTIC"; target="DA_CUST360_CURATED"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_CUST360_PIPELINE, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_CUST360_PIPELINE"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_CUST360_PIPELINE, DA_CUSTOMER_PROFILE, "Read")
+' aac rel: source="SYS_CUST360_PIPELINE"; target="DA_CUSTOMER_PROFILE"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_CUST360_PIPELINE, DA_TRANSACTION, "Read")
+' aac rel: source="SYS_CUST360_PIPELINE"; target="DA_TRANSACTION"; label="Read"; relation="system_reads_writes"; operation="Read"
+
+SHOW_LEGEND()
+@enduml

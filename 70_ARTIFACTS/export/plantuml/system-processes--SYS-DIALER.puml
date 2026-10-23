@@ -1,0 +1,35 @@
+@startuml
+' Outbound contact platform — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Outbound contact platform — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_COLL_07, "Collections Compliance Oversight", "Assure conformance with debt collection, contact, and state-law requirements.", $tags="capabilities")
+  ' aac CAP_COLL_07: company_domain="Collections"
+  System(CAP_COLL_02, "Outbound Contact Operations", "Execute dialer, digital, and letter treatment.", $tags="capabilities")
+  ' aac CAP_COLL_02: company_domain="Collections"
+}
+Boundary(b_Process, "Process") {
+  System(P_COLLECTIONS_002, "Execute outbound collections contact", "Execute outbound contact attempts within contact-frequency and communication constraints. Contact windows, frequency caps, and channel consent come from FDCPA, Reg F, and TCPA; the process starts at queue release and ends when the disposition is recorded.", $tags="processes")
+  ' aac P_COLLECTIONS_002: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_DIALER, "Outbound contact platform", "Outbound dialer and contact campaign execution.", $tags="systems")
+  ' aac SYS_DIALER: company_domain=""
+}
+
+Rel(P_COLLECTIONS_002, SYS_DIALER, "Primary")
+' aac rel: source="P_COLLECTIONS_002"; target="SYS_DIALER"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_COLLECTIONS_002, CAP_COLL_02, "supports")
+' aac rel: source="P_COLLECTIONS_002"; target="CAP_COLL_02"; label="supports"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_002, CAP_COLL_07, "supports")
+' aac rel: source="P_COLLECTIONS_002"; target="CAP_COLL_07"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

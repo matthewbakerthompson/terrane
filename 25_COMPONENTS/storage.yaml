@@ -1,0 +1,65 @@
+# Where bytes rest.
+#
+# Distinguished by access shape rather than by medium: what you can ask of it
+# is what decides whether it fits, not what it is made of.
+
+- component_type_id: object-store
+  name: Object store
+  category: Storage
+  applies_to: tech_services
+  shape: cylinder
+  description: >
+    Durable blob storage addressed by key. Cheap, effectively unlimited, and not a database however hard people try.
+  providers:
+    AWS: Amazon S3
+    Azure: Azure Blob Storage
+    GCP: Cloud Storage
+    On-prem: MinIO or a NAS
+  defaults:
+    service_category: Storage
+    network_zone: Private-Data
+
+- component_type_id: block-store
+  name: Block storage
+  category: Storage
+  applies_to: tech_services
+  shape: cylinder
+  description: >
+    A disk attached to one instance. Fast, and tied to the life of what it is attached to.
+  providers:
+    AWS: Amazon EBS
+    Azure: Azure Managed Disks
+    GCP: Persistent Disk
+  defaults:
+    service_category: Storage
+    network_zone: Private-Data
+
+- component_type_id: file-store
+  name: Shared file storage
+  category: Storage
+  applies_to: tech_services
+  shape: cylinder
+  description: >
+    A filesystem several things can mount. Usually there because something predates the cloud.
+  providers:
+    AWS: Amazon EFS or FSx
+    Azure: Azure Files
+    GCP: Filestore
+  defaults:
+    service_category: Storage
+    network_zone: Private-Data
+
+- component_type_id: archive
+  name: Archive storage
+  category: Storage
+  applies_to: tech_services
+  shape: cylinder
+  description: >
+    Cold storage for retention obligations. Cheap to keep and slow to read, which is the trade being made.
+  providers:
+    AWS: Amazon S3 Glacier
+    Azure: Azure Archive Storage
+    GCP: Archive class
+  defaults:
+    service_category: Storage
+    network_zone: Private-Data

@@ -1,0 +1,54 @@
+view_id: system-processes
+title: "{system} — Processes and Capabilities"
+category: Application
+section: Capabilities and processes
+kind: diagram
+description: >
+  One system, every process that uses it and in what role, and the
+  capabilities those processes support. This shows the business impact of
+  changing the system. A long list against a low criticality rating is worth a
+  second look.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+parameters:
+  - name: system
+    type: systems
+    required: true
+    description: The system this diagram is about
+
+group_by: type
+
+scope:
+  include:
+    - type: systems
+      where:
+        id_in: ["{system}"]
+  expand:
+    - relation: process_uses_system
+      depth: 1
+      types: [processes]
+    - relation: process_supports_capability
+      depth: 1
+      types: [capabilities]
+
+edges:
+  - via: process_uses_system
+    label: role
+  - via: process_supports_capability
+    text: supports
+
+style:
+  color_by: type
+
+limits:
+  max_nodes: 80
+
+# One committed diagram per system the business layer harvested: those are
+# the systems the processes were mapped against.
+render_for:
+  parameter: system
+  type: systems
+  where:
+    source: ["Business architecture repository"]

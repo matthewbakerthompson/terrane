@@ -1,0 +1,43 @@
+view_id: data-lineage
+title: Data Lineage
+category: Data
+section: Lineage and flow
+kind: report
+description: >
+  Where each data asset is mastered and which systems read or write it. More
+  than one writer for the same asset means there is no single system of
+  record.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+group_by: company_domain
+
+scope:
+  include:
+    - type: data_assets
+      where:
+        status: [Active, Planned]
+  expand:
+    - relation: system_reads_writes
+      depth: 1
+      types: [systems]
+    - relation: source_of_truth
+      depth: 1
+      types: [systems]
+
+edges:
+  - via: source_of_truth
+    text: masters
+  - via: system_reads_writes
+    label: operation
+
+style:
+  color_by: classification
+
+limits:
+  # Raised from 45 when the harvested estate's readers of the card account
+  # master arrived: the fraud scorer, the token vault, the reconciliation
+  # platform and the mobile app all read it, and a lineage view that drops
+  # readers is a lineage view that lies.
+  max_nodes: 70

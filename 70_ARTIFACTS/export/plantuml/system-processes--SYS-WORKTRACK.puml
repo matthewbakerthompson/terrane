@@ -1,0 +1,157 @@
+@startuml
+' Work and change tracking — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Work and change tracking — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_TPS_01, "Client Program Configuration & Setup", "Configure platform, product, and treatment for a client program.", $tags="capabilities")
+  ' aac CAP_TPS_01: company_domain="Cross-Functional Services"
+  System(CAP_TPS_06, "Client-Directed Change Management", "Intake, price, and deliver client-requested change.", $tags="capabilities")
+  ' aac CAP_TPS_06: company_domain="Cross-Functional Services"
+  System(CAP_TPRM_02, "Contract & SLA Management", "Contract suppliers and hold them to commitments.", $tags="capabilities")
+  ' aac CAP_TPRM_02: company_domain="Cross-Functional Services"
+  System(CAP_STRAT_04, "Enterprise Architecture & Change Portfolio", "Govern the shape of the estate and the pipeline of change.", $tags="capabilities")
+  ' aac CAP_STRAT_04: company_domain="Cross-Functional Services"
+  System(CAP_TECH_06, "Enterprise Integration & API Management", "Operate the integration and API estate.", $tags="capabilities")
+  ' aac CAP_TECH_06: company_domain="Technology"
+  System(CAP_RGOV_04, "Issue & Remediation Management", "Track findings and issues to evidenced closure.", $tags="capabilities")
+  ' aac CAP_RGOV_04: company_domain="Cross-Functional Services"
+  System(CAP_PROD_02, "Pricing, Fee & APR Management", "Set and maintain rate, fee, and pricing structures across products.", $tags="capabilities")
+  ' aac CAP_PROD_02: company_domain="Products"
+  System(CAP_PROD_01, "Product Design & Configuration", "Define product features, eligibility, and operating parameters.", $tags="capabilities")
+  ' aac CAP_PROD_01: company_domain="Products"
+  System(CAP_PROD_05, "Product Lifecycle & Retirement", "Launch, amend, sunset, and migrate products through their lifecycle.", $tags="capabilities")
+  ' aac CAP_PROD_05: company_domain="Products"
+  System(CAP_TECH_08, "Quality Engineering & Testing", "Prove that a change does what it claims before and after it reaches production: test strategy, automation, performance, acceptance, defects, and release certification.", $tags="capabilities")
+  ' aac CAP_TECH_08: company_domain="Technology"
+  System(CAP_RGOV_02, "Regulatory Change Management", "Detect, interpret, and land regulatory change across the enterprise.", $tags="capabilities")
+  ' aac CAP_RGOV_02: company_domain="Cross-Functional Services"
+  System(CAP_TECH_04, "Release & Change Management", "Move change into production safely.", $tags="capabilities")
+  ' aac CAP_TECH_04: company_domain="Technology"
+  System(CAP_TECH_01, "Solution Delivery & Engineering", "Build and change software.", $tags="capabilities")
+  ' aac CAP_TECH_01: company_domain="Technology"
+  System(CAP_TPRM_04, "Vendor Exit & Continuity Planning", "Maintain exit and continuity plans for critical suppliers.", $tags="capabilities")
+  ' aac CAP_TPRM_04: company_domain="Cross-Functional Services"
+  System(CAP_TPRM_01, "Vendor Sourcing & Due Diligence", "Select and diligence suppliers.", $tags="capabilities")
+  ' aac CAP_TPRM_01: company_domain="Cross-Functional Services"
+}
+Boundary(b_Process, "Process") {
+  System(P_COMPLIANCE_001, "Assess and land regulatory change", "Detect a regulatory change, assess applicability and impact, and drive implementation. Starts at horizon scanning and ends when the change is implemented and evidenced in the affected processes; applicability calls are documented even when the answer is not applicable.", $tags="processes")
+  ' aac P_COMPLIANCE_001: company_domain=""
+  System(P_TPS_001, "Configure client program", "Configure platform, product, treatment, and reporting for a new client program. Program configuration translates the client contract into platform, product, treatment, and reporting settings; every setting traces to a contract clause or a documented default.", $tags="processes")
+  ' aac P_TPS_001: company_domain=""
+  System(P_TECH_001, "Deliver software change", "Design, build, test, and release a software change into production. The umbrella delivery flow from approved demand to production release; the engineering-level decomposition lives in the P-APPDEV and P-QE processes it coordinates.", $tags="processes")
+  ' aac P_TECH_001: company_domain=""
+  System(P_PRODUCT_001, "Design and approve product change", "Define, price, and obtain approval for a change to a card product. A product change binds pricing, terms, and eligibility; approval spans product, credit, finance, legal, and compliance before configuration starts.", $tags="processes")
+  ' aac P_PRODUCT_001: company_domain=""
+  System(P_APPDEV_002, "Design and build a software increment", "Design, implement, and unit-test a work item to its acceptance criteria within the agreed architecture and standards.", $tags="processes")
+  ' aac P_APPDEV_002: company_domain=""
+  System(P_VENDORMGMT_003, "Execute supplier exit", "Execute the exit of a supplier, including data return and service transition. Exit executes the termination plan: service transition, data return or destruction with certificate, and access revocation, proving the exit clause was real.", $tags="processes")
+  ' aac P_VENDORMGMT_003: company_domain=""
+  System(P_TPS_008, "Intake and deliver client-directed change", "Receive, price, approve, and deliver a change requested by a servicing client. Client-directed changes are priced, approved, and delivered under the contract's change provisions; scope discipline here is what keeps serviced portfolios profitable.", $tags="processes")
+  ' aac P_TPS_008: company_domain=""
+  System(P_PRODUCT_003, "Launch product to market", "Configure, test, and release a product for origination across all affected systems. Launch is a coordinated configuration across origination, core, servicing, and statements, verified in test before the product opens to volume.", $tags="processes")
+  ' aac P_PRODUCT_003: company_domain=""
+  System(P_QE_006, "Manage defects to closure", "Triage, prioritize, assign, and verify defects found in test or production, and report defect trends by area.", $tags="processes")
+  ' aac P_QE_006: company_domain=""
+  System(P_RISK_001, "Manage issue and remediation to closure", "Track an identified issue through remediation to evidenced closure. Issues from any source (audit, compliance, self-identified, exam) run one lifecycle: owner, action plan, dates, and evidenced closure that survives challenge.", $tags="processes")
+  ' aac P_RISK_001: company_domain=""
+  System(P_APPDEV_006, "Manage technical debt", "Record, size, and prioritize technical debt, and reserve capacity in each increment to retire it. Debt items live in the same backlog as features so the trade-off is visible at prioritization, not discovered at incident time.", $tags="processes")
+  ' aac P_APPDEV_006: company_domain=""
+  System(P_VENDORMGMT_001, "Onboard and diligence supplier", "Assess, diligence, and contract a new supplier with required security and risk terms. Due diligence is risk-tiered per the TPRM policy; no supplier touches cardholder data before security review and contract terms land, which is the EX.DD control.", $tags="processes")
+  ' aac P_VENDORMGMT_001: company_domain=""
+  System(P_TECH_004, "Onboard and operate integration", "Design, register, and operate an interface between systems. Integration onboarding registers the interface, its data, and its owners before traffic flows; unregistered interfaces are how impact analysis goes blind.", $tags="processes")
+  ' aac P_TECH_004: company_domain=""
+  System(P_QE_001, "Plan the test strategy for a release", "Decide scope, risk-based depth, environments, data, and entry and exit criteria for a release before build starts.", $tags="processes")
+  ' aac P_QE_001: company_domain=""
+  System(P_APPDEV_001, "Refine and prioritize the product backlog", "Break approved demand into sized, ordered work items with acceptance criteria, and agree the next increment with the business owner.", $tags="processes")
+  ' aac P_APPDEV_001: company_domain=""
+  System(P_EA_002, "Review solution architecture for an initiative", "Assess a proposed solution against standards, target state, and risk before funding and again before build; record the decision.", $tags="processes")
+  ' aac P_EA_002: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_WORKTRACK, "Work and change tracking", "Work item and change tracking. Built with SaaS.", $tags="systems")
+  ' aac SYS_WORKTRACK: company_domain=""; hosting="SaaS"; technology="SaaS"
+}
+
+Rel(P_TPS_001, SYS_WORKTRACK, "Supporting")
+' aac rel: source="P_TPS_001"; target="SYS_WORKTRACK"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_TPS_008, SYS_WORKTRACK, "Primary")
+' aac rel: source="P_TPS_008"; target="SYS_WORKTRACK"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_COMPLIANCE_001, SYS_WORKTRACK, "Supporting")
+' aac rel: source="P_COMPLIANCE_001"; target="SYS_WORKTRACK"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_RISK_001, SYS_WORKTRACK, "Supporting")
+' aac rel: source="P_RISK_001"; target="SYS_WORKTRACK"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_TECH_001, SYS_WORKTRACK, "Primary")
+' aac rel: source="P_TECH_001"; target="SYS_WORKTRACK"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_TECH_004, SYS_WORKTRACK, "Supporting")
+' aac rel: source="P_TECH_004"; target="SYS_WORKTRACK"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_VENDORMGMT_001, SYS_WORKTRACK, "Supporting")
+' aac rel: source="P_VENDORMGMT_001"; target="SYS_WORKTRACK"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_VENDORMGMT_003, SYS_WORKTRACK, "Supporting")
+' aac rel: source="P_VENDORMGMT_003"; target="SYS_WORKTRACK"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PRODUCT_001, SYS_WORKTRACK, "Supporting")
+' aac rel: source="P_PRODUCT_001"; target="SYS_WORKTRACK"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PRODUCT_003, SYS_WORKTRACK, "Supporting")
+' aac rel: source="P_PRODUCT_003"; target="SYS_WORKTRACK"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_EA_002, SYS_WORKTRACK, "Supporting")
+' aac rel: source="P_EA_002"; target="SYS_WORKTRACK"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_QE_001, SYS_WORKTRACK, "Supporting")
+' aac rel: source="P_QE_001"; target="SYS_WORKTRACK"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_QE_006, SYS_WORKTRACK, "Primary")
+' aac rel: source="P_QE_006"; target="SYS_WORKTRACK"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_APPDEV_001, SYS_WORKTRACK, "Primary")
+' aac rel: source="P_APPDEV_001"; target="SYS_WORKTRACK"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_APPDEV_002, SYS_WORKTRACK, "Supporting")
+' aac rel: source="P_APPDEV_002"; target="SYS_WORKTRACK"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_APPDEV_006, SYS_WORKTRACK, "Primary")
+' aac rel: source="P_APPDEV_006"; target="SYS_WORKTRACK"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_TPS_001, CAP_TPS_01, "supports")
+' aac rel: source="P_TPS_001"; target="CAP_TPS_01"; label="supports"; relation="process_supports_capability"
+Rel(P_TPS_008, CAP_TPS_06, "supports")
+' aac rel: source="P_TPS_008"; target="CAP_TPS_06"; label="supports"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_001, CAP_RGOV_02, "supports")
+' aac rel: source="P_COMPLIANCE_001"; target="CAP_RGOV_02"; label="supports"; relation="process_supports_capability"
+Rel(P_RISK_001, CAP_RGOV_04, "supports")
+' aac rel: source="P_RISK_001"; target="CAP_RGOV_04"; label="supports"; relation="process_supports_capability"
+Rel(P_TECH_001, CAP_TECH_01, "supports")
+' aac rel: source="P_TECH_001"; target="CAP_TECH_01"; label="supports"; relation="process_supports_capability"
+Rel(P_TECH_001, CAP_TECH_04, "supports")
+' aac rel: source="P_TECH_001"; target="CAP_TECH_04"; label="supports"; relation="process_supports_capability"
+Rel(P_TECH_004, CAP_TECH_06, "supports")
+' aac rel: source="P_TECH_004"; target="CAP_TECH_06"; label="supports"; relation="process_supports_capability"
+Rel(P_VENDORMGMT_001, CAP_TPRM_01, "supports")
+' aac rel: source="P_VENDORMGMT_001"; target="CAP_TPRM_01"; label="supports"; relation="process_supports_capability"
+Rel(P_VENDORMGMT_001, CAP_TPRM_02, "supports")
+' aac rel: source="P_VENDORMGMT_001"; target="CAP_TPRM_02"; label="supports"; relation="process_supports_capability"
+Rel(P_VENDORMGMT_003, CAP_TPRM_04, "supports")
+' aac rel: source="P_VENDORMGMT_003"; target="CAP_TPRM_04"; label="supports"; relation="process_supports_capability"
+Rel(P_PRODUCT_001, CAP_PROD_01, "supports")
+' aac rel: source="P_PRODUCT_001"; target="CAP_PROD_01"; label="supports"; relation="process_supports_capability"
+Rel(P_PRODUCT_001, CAP_PROD_02, "supports")
+' aac rel: source="P_PRODUCT_001"; target="CAP_PROD_02"; label="supports"; relation="process_supports_capability"
+Rel(P_PRODUCT_003, CAP_PROD_05, "supports")
+' aac rel: source="P_PRODUCT_003"; target="CAP_PROD_05"; label="supports"; relation="process_supports_capability"
+Rel(P_EA_002, CAP_STRAT_04, "supports")
+' aac rel: source="P_EA_002"; target="CAP_STRAT_04"; label="supports"; relation="process_supports_capability"
+Rel(P_QE_001, CAP_TECH_08, "supports")
+' aac rel: source="P_QE_001"; target="CAP_TECH_08"; label="supports"; relation="process_supports_capability"
+Rel(P_QE_006, CAP_TECH_08, "supports")
+' aac rel: source="P_QE_006"; target="CAP_TECH_08"; label="supports"; relation="process_supports_capability"
+Rel(P_APPDEV_001, CAP_TECH_01, "supports")
+' aac rel: source="P_APPDEV_001"; target="CAP_TECH_01"; label="supports"; relation="process_supports_capability"
+Rel(P_APPDEV_002, CAP_TECH_01, "supports")
+' aac rel: source="P_APPDEV_002"; target="CAP_TECH_01"; label="supports"; relation="process_supports_capability"
+Rel(P_APPDEV_006, CAP_TECH_01, "supports")
+' aac rel: source="P_APPDEV_006"; target="CAP_TECH_01"; label="supports"; relation="process_supports_capability"
+Rel(P_APPDEV_006, CAP_STRAT_04, "supports")
+' aac rel: source="P_APPDEV_006"; target="CAP_STRAT_04"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

@@ -1,0 +1,568 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://architecture-as-code/schemas/relations.schema.json",
+  "title": "Relations",
+  "description": "A mapping of relation name to rows.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "system_uses_tech_service": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "system_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "tech_service_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          }
+        },
+        "required": [
+          "system_id",
+          "tech_service_id"
+        ]
+      }
+    },
+    "interface_transports_data_asset": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "interface_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "data_asset_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          }
+        },
+        "required": [
+          "interface_id",
+          "data_asset_id"
+        ]
+      }
+    },
+    "system_governed_by_control": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "system_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "control_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          }
+        },
+        "required": [
+          "system_id",
+          "control_id"
+        ]
+      }
+    },
+    "system_subject_to_policy": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "system_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "policy_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          }
+        },
+        "required": [
+          "system_id",
+          "policy_id"
+        ]
+      }
+    },
+    "data_governed_by_control": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data_asset_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "control_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          }
+        },
+        "required": [
+          "data_asset_id",
+          "control_id"
+        ]
+      }
+    },
+    "data_subject_to_policy": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data_asset_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "policy_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          }
+        },
+        "required": [
+          "data_asset_id",
+          "policy_id"
+        ]
+      }
+    },
+    "process_supports_capability": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "process_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "capability_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          }
+        },
+        "required": [
+          "process_id",
+          "capability_id"
+        ]
+      }
+    },
+    "process_uses_system": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "process_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "system_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "role": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "process_id",
+          "system_id"
+        ]
+      }
+    },
+    "process_uses_data_asset": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "process_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "data_asset_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "access": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "process_id",
+          "data_asset_id"
+        ]
+      }
+    },
+    "process_governed_by_control": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "process_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "control_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          }
+        },
+        "required": [
+          "process_id",
+          "control_id"
+        ]
+      }
+    },
+    "process_subject_to_policy": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "process_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "policy_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          }
+        },
+        "required": [
+          "process_id",
+          "policy_id"
+        ]
+      }
+    },
+    "capability_references_framework": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "capability_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "framework_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "ref": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "capability_id",
+          "framework_id"
+        ]
+      }
+    },
+    "capability_governed_by_control": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "capability_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "control_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "basis": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "capability_id",
+          "control_id"
+        ]
+      }
+    },
+    "capability_subject_to_policy": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "capability_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "policy_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "basis": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "capability_id",
+          "policy_id"
+        ]
+      }
+    },
+    "system_realizes_capability": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "system_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "capability_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          }
+        },
+        "required": [
+          "system_id",
+          "capability_id"
+        ]
+      }
+    },
+    "capability_aligns_to_framework": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "capability_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "framework_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "alignment": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "capability_id",
+          "framework_id"
+        ]
+      }
+    },
+    "stage_crosses_capability": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "stage_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "capability_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          }
+        },
+        "required": [
+          "stage_id",
+          "capability_id"
+        ]
+      }
+    },
+    "system_reads_writes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "system_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "data_asset_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "operation": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "system_id",
+          "data_asset_id"
+        ]
+      }
+    },
+    "product_includes_system": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "system_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          }
+        },
+        "required": [
+          "product_id",
+          "system_id"
+        ]
+      }
+    },
+    "actor_uses_system": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "actor_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "system_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "interaction": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "actor_id",
+          "system_id"
+        ]
+      }
+    },
+    "flow_step": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "flow_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "interface_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "sequence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "flow_id",
+          "interface_id"
+        ]
+      }
+    },
+    "tech_service_connects_to": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "from_tech_service_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "to_tech_service_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "connection": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "from_tech_service_id",
+          "to_tech_service_id"
+        ]
+      }
+    },
+    "product_realizes_capability": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "capability_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          }
+        },
+        "required": [
+          "product_id",
+          "capability_id"
+        ]
+      }
+    },
+    "work_package_affects_system": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "work_package_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "system_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "effect": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "work_package_id",
+          "system_id"
+        ]
+      }
+    },
+    "change_request_affects_system": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "change_request_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "system_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          }
+        },
+        "required": [
+          "change_request_id",
+          "system_id"
+        ]
+      }
+    }
+  }
+}

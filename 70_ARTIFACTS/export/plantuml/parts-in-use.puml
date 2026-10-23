@@ -1,0 +1,195 @@
+@startuml
+' Parts in Use
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Parts in Use
+
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddRelTag("api-call", $legendText="API call")
+AddRelTag("event", $legendText="Event on the bus")
+AddRelTag("event-over-https", $legendText="Event over HTTPS")
+AddRelTag("own-datastore", $legendText="Its own datastore")
+AddRelTag("private-egress", $legendText="Private path to a vendor")
+AddRelTag("sign-on-federation", $legendText="Sign-on federation")
+
+Boundary(b_api_outbound, "api-outbound") {
+  System(SYS_DISPUTES_GATEWAY, "Dispute Management Platform Integration Gateway", "Our side of the Pegasystems integration: mapping, retry and audit. Built with AKS.", $tags="systems")
+  ' aac SYS_DISPUTES_GATEWAY: company_domain="Servicing"; hosting="Azure"; technology="AKS"
+  System(SYS_IDV_GATEWAY, "Identity Document Verification Integration Gateway", "Our side of the Onfido integration: request mapping, retry and back-off, circuit breaking when the vendor is down, and the audit trail of what we sent them. Built with AKS.", $tags="systems")
+  ' aac SYS_IDV_GATEWAY: company_domain="Risk and Compliance"; hosting="Azure"; technology="AKS"
+  System(SYS_SCREENING_GATEWAY, "NICE Actimize Screening Integration Gateway", "Our side of the NICE Actimize integration: request mapping, retry and back-off, circuit breaking when the vendor is down, and the audit trail of what we sent them. Built with EKS.", $tags="systems")
+  ' aac SYS_SCREENING_GATEWAY: company_domain="Risk and Compliance"; hosting="AWS"; technology="EKS"
+  System(SYS_OBAFF_GATEWAY, "Open Banking Affordability Integration Gateway", "Our side of the TrueLayer integration: request mapping, retry and back-off, circuit breaking when the vendor is down, and the audit trail of what we sent them. Built with GKE.", $tags="systems")
+  ' aac SYS_OBAFF_GATEWAY: company_domain="Lending"; hosting="GCP"; technology="GKE"
+}
+Boundary(b_api_service, "api-service") {
+  System(SYS_CARDSVC_API, "Card Servicing Service", "The service behind the Card Servicing API, backing the channel. Built with AKS · Card Servicing Cache.", $tags="systems")
+  ' aac SYS_CARDSVC_API: company_domain="Servicing"; hosting="Azure"; technology="AKS · Card Servicing Cache"
+  System(SYS_COLLECT_API, "Collections Workspace Service", "The service behind the Collections Workspace API, backing the channel. Built with AKS · Collections Workspace Cache.", $tags="systems")
+  ' aac SYS_COLLECT_API: company_domain="Collections"; hosting="Azure"; technology="AKS · Collections Workspace Cache"
+  System(SYS_LENDING_API, "Installment Lending Service", "Domain service for Installment Lending, behind the Installment Lending API. Built with EKS · Installment Lending Cache.", $tags="systems")
+  ' aac SYS_LENDING_API: company_domain="Lending"; hosting="AWS"; technology="EKS · Installment Lending Cache"
+  System(SYS_MERCHANT_API, "Merchant Portal Service", "Domain API for the merchant portal: applications, settlement inquiries, chargeback responses and statement downloads. Built with AKS · Merchant Portal Cache.", $tags="systems")
+  ' aac SYS_MERCHANT_API: company_domain="Payments"; hosting="Azure"; technology="AKS · Merchant Portal Cache"
+  System(SYS_POSFIN_API, "Point-of-Sale Finance Service", "Domain API for point-of-sale finance: dealer applications, shopper identity and consent, decisions, and the payment schedule that follows. Built with GKE · Point-of-Sale Finance Cache.", $tags="systems")
+  ' aac SYS_POSFIN_API: company_domain="Lending"; hosting="GCP"; technology="GKE · Point-of-Sale Finance Cache"
+  System(SYS_REWARDS_API, "Rewards Redemption Service", "Domain service for Rewards Redemption, behind the Rewards Redemption API. Built with AKS · Rewards Redemption Cache.", $tags="systems")
+  ' aac SYS_REWARDS_API: company_domain="Card Issuing"; hosting="Azure"; technology="AKS · Rewards Redemption Cache"
+}
+Boundary(b_async_worker, "async-worker") {
+  System(SYS_LENDING_WORKER, "Installment Lending Async Worker", "Consumes Installment Lending domain events and drives long-running work. Built with EKS · MSK.", $tags="systems")
+  ' aac SYS_LENDING_WORKER: company_domain="Lending"; hosting="AWS"; technology="EKS · MSK"
+  System(SYS_REWARDS_WORKER, "Rewards Redemption Async Worker", "Consumes redemption events and fulfills them: statement credits posted to the ledger, gift-card orders placed with the fulfillment partner. Built with AKS · Event Hubs.", $tags="systems")
+  ' aac SYS_REWARDS_WORKER: company_domain="Card Issuing"; hosting="Azure"; technology="AKS · Event Hubs"
+}
+Boundary(b_event_publisher, "event-publisher") {
+  System(SYS_CARDSVC_EVENTS, "Card Servicing Event Publisher", "Publishes Card Servicing domain events onto the enterprise bus. Built with Service Bus.", $tags="systems")
+  ' aac SYS_CARDSVC_EVENTS: company_domain="Servicing"; hosting="Azure"; technology="Service Bus"
+  System(SYS_MERCHANT_EVENTS, "Merchant Portal Event Publisher", "Publishes Merchant Portal domain events onto the enterprise bus. Built with Service Bus.", $tags="systems")
+  ' aac SYS_MERCHANT_EVENTS: company_domain="Payments"; hosting="Azure"; technology="Service Bus"
+  System(SYS_POSFIN_EVENTS, "Point-of-Sale Finance Event Publisher", "Publishes Point-of-Sale Finance domain events onto the enterprise bus. Built with Pub/Sub.", $tags="systems")
+  ' aac SYS_POSFIN_EVENTS: company_domain="Lending"; hosting="GCP"; technology="Pub/Sub"
+  System(SYS_REWARDS_EVENTS, "Rewards Redemption Event Publisher", "Publishes Rewards Redemption domain events onto the enterprise bus. Built with Service Bus.", $tags="systems")
+  ' aac SYS_REWARDS_EVENTS: company_domain="Card Issuing"; hosting="Azure"; technology="Service Bus"
+}
+Boundary(b_integration_hub, "integration-hub") {
+  System(SYS_LENDING_HUB, "Installment Lending Integration Hub", "Mediates every Installment Lending integration: one place for mapping, routing, retry and the audit trail, so the spokes do not each carry their own.", $tags="systems")
+  ' aac SYS_LENDING_HUB: company_domain="Lending"; hosting="AWS"
+}
+Boundary(b_object_store, "object-store") {
+  System(SYS_LENDING_BUCKET, "Installment Lending Object Store", "S3 bucket holding signed credit agreements and disbursement evidence. Seven-year retention with Object Lock; a records-management obligation rather than ordinary product storage. Built with S3.", $tags="systems")
+  ' aac SYS_LENDING_BUCKET: company_domain="Lending"; hosting="AWS"; technology="S3"
+}
+Boundary(b_private_egress, "private-egress") {
+  System(SYS_IDV_EGRESS, "Identity Document Verification Private Egress", "PrivateLink endpoint and egress allow-list for Onfido. The control that keeps regulated data off the public internet, and the thing a security review asks to see first.", $tags="systems")
+  ' aac SYS_IDV_EGRESS: company_domain="Enterprise Platform"; hosting="Azure"
+  System(SYS_SCREENING_EGRESS, "NICE Actimize Screening Private Egress", "PrivateLink endpoint and egress allow-list for NICE Actimize. The control that keeps regulated data off the public internet, and the thing a security review asks to see first.", $tags="systems")
+  ' aac SYS_SCREENING_EGRESS: company_domain="Enterprise Platform"; hosting="AWS"
+  System(SYS_OBAFF_EGRESS, "Open Banking Affordability Private Egress", "PrivateLink endpoint and egress allow-list for TrueLayer. The control that keeps regulated data off the public internet, and the thing a security review asks to see first.", $tags="systems")
+  ' aac SYS_OBAFF_EGRESS: company_domain="Enterprise Platform"; hosting="GCP"
+}
+Boundary(b_public_web_entry, "public-web-entry") {
+  System(SYS_LENDING_EDGE, "Installment Lending Edge", "CDN distribution and WAF ruleset for Installment Lending.", $tags="systems")
+  ' aac SYS_LENDING_EDGE: company_domain="Lending"; hosting="AWS"
+  System(SYS_LENDING_ALB, "Installment Lending Load Balancer", "Public load balancer terminating TLS for Installment Lending.", $tags="systems")
+  ' aac SYS_LENDING_ALB: company_domain="Lending"; hosting="AWS"
+}
+Boundary(b_relational_datastore, "relational-datastore") {
+  System(SYS_CARDSVC_STORE, "Card Servicing Datastore", "Operational datastore owned by Card Servicing. Built with Azure SQL.", $tags="systems")
+  ' aac SYS_CARDSVC_STORE: company_domain="Servicing"; hosting="Azure"; technology="Azure SQL"
+  System(SYS_COLLECT_STORE, "Collections Workspace Datastore", "Operational datastore owned by Collections Workspace. Built with Azure SQL.", $tags="systems")
+  ' aac SYS_COLLECT_STORE: company_domain="Collections"; hosting="Azure"; technology="Azure SQL"
+  System(SYS_LENDING_DB, "Installment Lending Database", "Relational database for Installment Lending, encrypted with a customer managed key. Built with RDS.", $tags="systems")
+  ' aac SYS_LENDING_DB: company_domain="Lending"; hosting="AWS"; technology="RDS"
+  System(SYS_MERCHANT_STORE, "Merchant Portal Database", "Relational database for Merchant Portal, encrypted with a customer managed key. Built with Azure SQL.", $tags="systems")
+  ' aac SYS_MERCHANT_STORE: company_domain="Payments"; hosting="Azure"; technology="Azure SQL"
+  System(SYS_POSFIN_DB, "Point-of-Sale Finance Database", "Relational database for Point-of-Sale Finance, encrypted with a customer managed key. Built with Cloud SQL.", $tags="systems")
+  ' aac SYS_POSFIN_DB: company_domain="Lending"; hosting="GCP"; technology="Cloud SQL"
+  System(SYS_REWARDS_STORE, "Rewards Redemption Database", "Relational database for Rewards Redemption, encrypted with a customer managed key. Built with Azure SQL.", $tags="systems")
+  ' aac SYS_REWARDS_STORE: company_domain="Card Issuing"; hosting="Azure"; technology="Azure SQL"
+}
+Boundary(b_sso_federation, "sso-federation") {
+  System(SYS_SCREENING_FEDERATION, "NICE Actimize Screening Identity Federation", "Single sign-on into NICE Actimize: assertions from our identity provider, so access is granted and revoked where the joiner and leaver process already runs.", $tags="systems")
+  ' aac SYS_SCREENING_FEDERATION: company_domain="Enterprise Platform"; hosting="AWS"
+}
+Boundary(b_vendor_tenancy, "vendor-tenancy") {
+  System_Ext(SYS_IDV_VENDOR, "Identity Document Verification", "Document and liveness verification, operated by Onfido in their own tenancy. Contractually pinned to EU processing; images are deleted at the vendor once the result is returned. Built with Onfido.", $tags="systems")
+  ' aac SYS_IDV_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="Onfido"
+  System_Ext(SYS_SCREENING_VENDOR, "NICE Actimize Screening", "Financial Crime Screening, operated by NICE Actimize in their own tenancy. Contractually pinned to EU processing; the DPA restricts sub-processors and sets a 90-day retention ceiling. Built with NICE Actimize.", $tags="systems")
+  ' aac SYS_SCREENING_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="NICE Actimize"
+  System_Ext(SYS_OBAFF_VENDOR, "Open Banking Affordability", "Open banking data access and affordability categorization, operated by TrueLayer in their own tenancy under the UK open banking framework; bank data is held for the assessment and deleted at the vendor once the result is returned. Built with TrueLayer.", $tags="systems")
+  ' aac SYS_OBAFF_VENDOR: company_domain="Lending"; hosting="SaaS"; technology="TrueLayer"
+  System_Ext(SYS_DISPUTES_SAAS, "Pega Smart Dispute", "Dispute Management Platform, provided by Pegasystems and running in the vendor tenancy. Built with Pegasystems.", $tags="systems")
+  ' aac SYS_DISPUTES_SAAS: company_domain="Servicing"; hosting="SaaS"; technology="Pegasystems"
+}
+Boundary(b_web_channel, "web-channel") {
+  System(SYS_CARDSVC_WEB, "Card Servicing Web", "Browser front end for Card Servicing. Built with AKS.", $tags="systems")
+  ' aac SYS_CARDSVC_WEB: company_domain="Servicing"; hosting="Azure"; technology="AKS"
+  System(SYS_COLLECT_WEB, "Collections Workspace Web", "Browser front end for Collections Workspace. Built with AKS.", $tags="systems")
+  ' aac SYS_COLLECT_WEB: company_domain="Collections"; hosting="Azure"; technology="AKS"
+  System(SYS_LENDING_WEB, "Installment Lending Web", "Customer-facing front end for Installment Lending. Built with EKS.", $tags="systems")
+  ' aac SYS_LENDING_WEB: company_domain="Lending"; hosting="AWS"; technology="EKS"
+  System(SYS_MERCHANT_WEB, "Merchant Portal Web", "Customer-facing front end for Merchant Portal. Built with AKS.", $tags="systems")
+  ' aac SYS_MERCHANT_WEB: company_domain="Payments"; hosting="Azure"; technology="AKS"
+  System(SYS_POSFIN_WEB, "Point-of-Sale Finance Web", "Customer-facing front end for Point-of-Sale Finance. Built with GKE.", $tags="systems")
+  ' aac SYS_POSFIN_WEB: company_domain="Lending"; hosting="GCP"; technology="GKE"
+  System(SYS_REWARDS_WEB, "Rewards Redemption Web", "Customer-facing front end for Rewards Redemption. Built with AKS.", $tags="systems")
+  ' aac SYS_REWARDS_WEB: company_domain="Card Issuing"; hosting="Azure"; technology="AKS"
+}
+Boundary(b_webhook_inbound, "webhook-inbound") {
+  System(SYS_IDV_WEBHOOKS, "Identity Document Verification Webhook Listener", "Receives Onfido callbacks, verifies their signature, and forwards the event. Public by necessity, small by design. Built with AKS.", $tags="systems")
+  ' aac SYS_IDV_WEBHOOKS: company_domain="Risk and Compliance"; hosting="Azure"; technology="AKS"
+  System(SYS_OBAFF_WEBHOOKS, "Open Banking Affordability Webhook Listener", "Receives TrueLayer callbacks, verifies their signature, and forwards the event. Public by necessity, small by design. Built with GKE.", $tags="systems")
+  ' aac SYS_OBAFF_WEBHOOKS: company_domain="Lending"; hosting="GCP"; technology="GKE"
+}
+
+Rel(SYS_CARDSVC_WEB, SYS_CARDSVC_API, "Card Servicing Web to API", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CARDSVC_WEB"; target="SYS_CARDSVC_API"; label="Card Servicing Web to API"; interface_id="INT-CARDSVC-WEB-API"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-CARDSVC-API"
+Rel(SYS_CARDSVC_API, SYS_CARDSVC_STORE, "Card Servicing Service to Datastore", "TDS", $tags="own-datastore")
+' aac rel: source="SYS_CARDSVC_API"; target="SYS_CARDSVC_STORE"; label="Card Servicing Service to Datastore"; interface_id="INT-CARDSVC-API-STORE"; kind="own-datastore"; integration_style="Request-response"; auth_method="ManagedIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_CARDSVC_API, SYS_CARDSVC_EVENTS, "Card Servicing Service to Event Publisher", "AMQP", $tags="event")
+' aac rel: source="SYS_CARDSVC_API"; target="SYS_CARDSVC_EVENTS"; label="Card Servicing Service to Event Publisher"; interface_id="INT-CARDSVC-API-EVENTS"; kind="event"; integration_style="Event"; auth_method="ManagedIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_COLLECT_WEB, SYS_COLLECT_API, "Collections Workspace Web to API", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_COLLECT_WEB"; target="SYS_COLLECT_API"; label="Collections Workspace Web to API"; interface_id="INT-COLLECT-WEB-API"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-COLLECT-API"
+Rel(SYS_COLLECT_API, SYS_COLLECT_STORE, "Collections Workspace Service to Datastore", "TDS", $tags="own-datastore")
+' aac rel: source="SYS_COLLECT_API"; target="SYS_COLLECT_STORE"; label="Collections Workspace Service to Datastore"; interface_id="INT-COLLECT-API-STORE"; kind="own-datastore"; integration_style="Request-response"; auth_method="ManagedIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_DISPUTES_GATEWAY, SYS_DISPUTES_SAAS, "Dispute Management Platform Gateway to Pegasystems", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_DISPUTES_GATEWAY"; target="SYS_DISPUTES_SAAS"; label="Dispute Management Platform Gateway to Pegasystems"; interface_id="INT-DISPUTES-GATEWAY-SAAS"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_IDV_GATEWAY, SYS_IDV_EGRESS, "Identity Document Verification Gateway to Private Egress", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_IDV_GATEWAY"; target="SYS_IDV_EGRESS"; label="Identity Document Verification Gateway to Private Egress"; interface_id="INT-IDV-GATEWAY-EGRESS"; kind="api-call"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_IDV_EGRESS, SYS_IDV_VENDOR, "Private Egress to Onfido", "PrivateLink", $tags="private-egress")
+' aac rel: source="SYS_IDV_EGRESS"; target="SYS_IDV_VENDOR"; label="Private Egress to Onfido"; interface_id="INT-IDV-EGRESS-VENDOR"; kind="private-egress"; integration_style="Request-response"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_IDV_VENDOR, SYS_IDV_WEBHOOKS, "Onfido webhooks", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_IDV_VENDOR"; target="SYS_IDV_WEBHOOKS"; label="Onfido webhooks"; interface_id="INT-IDV-VENDOR-WEBHOOKS"; kind="event-over-https"; integration_style="Event"; auth_method="HMAC"; frequency="Realtime"; direction="Inbound"
+Rel(SYS_LENDING_WEB, SYS_LENDING_API, "Installment Lending Web to API", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_LENDING_WEB"; target="SYS_LENDING_API"; label="Installment Lending Web to API"; interface_id="INT-LENDING-WEB-API"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-LENDING-API"
+Rel(SYS_LENDING_EDGE, SYS_LENDING_ALB, "Installment Lending Edge to Load Balancer", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_LENDING_EDGE"; target="SYS_LENDING_ALB"; label="Installment Lending Edge to Load Balancer"; interface_id="INT-LENDING-EDGE-ALB"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Inbound"
+Rel(SYS_LENDING_ALB, SYS_LENDING_WEB, "Installment Lending Load Balancer to Web", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_LENDING_ALB"; target="SYS_LENDING_WEB"; label="Installment Lending Load Balancer to Web"; interface_id="INT-LENDING-ALB-WEB"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Inbound"
+Rel(SYS_LENDING_API, SYS_LENDING_WORKER, "Installment Lending Service to Async Worker", "Kafka", $tags="event")
+' aac rel: source="SYS_LENDING_API"; target="SYS_LENDING_WORKER"; label="Installment Lending Service to Async Worker"; interface_id="INT-LENDING-API-WORKER"; kind="event"; integration_style="Event"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_LENDING_API, SYS_LENDING_DB, "Installment Lending Service to Database", "PostgreSQL", $tags="own-datastore")
+' aac rel: source="SYS_LENDING_API"; target="SYS_LENDING_DB"; label="Installment Lending Service to Database"; interface_id="INT-LENDING-API-DB"; kind="own-datastore"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_LENDING_API, SYS_LENDING_BUCKET, "Installment Lending Service to Object Store", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_LENDING_API"; target="SYS_LENDING_BUCKET"; label="Installment Lending Service to Object Store"; interface_id="INT-LENDING-API-BUCKET"; kind="api-call"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_MERCHANT_WEB, SYS_MERCHANT_API, "Merchant Portal Web to API", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_MERCHANT_WEB"; target="SYS_MERCHANT_API"; label="Merchant Portal Web to API"; interface_id="INT-MERCHANT-WEB-API"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-MERCHANT-API"
+Rel(SYS_MERCHANT_API, SYS_MERCHANT_STORE, "Merchant Portal Service to Database", "TDS", $tags="own-datastore")
+' aac rel: source="SYS_MERCHANT_API"; target="SYS_MERCHANT_STORE"; label="Merchant Portal Service to Database"; interface_id="INT-MERCHANT-API-STORE"; kind="own-datastore"; integration_style="Request-response"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_MERCHANT_API, SYS_MERCHANT_EVENTS, "Merchant Portal Service to Event Publisher", "AMQP", $tags="event")
+' aac rel: source="SYS_MERCHANT_API"; target="SYS_MERCHANT_EVENTS"; label="Merchant Portal Service to Event Publisher"; interface_id="INT-MERCHANT-API-EVENTS"; kind="event"; integration_style="Event"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_POSFIN_API, SYS_OBAFF_GATEWAY, "SYS-POSFIN-API to Open Banking Affordability Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_POSFIN_API"; target="SYS_OBAFF_GATEWAY"; label="SYS-POSFIN-API to Open Banking Affordability Gateway"; interface_id="INT-OBAFF-CALLER-GATEWAY"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_OBAFF_GATEWAY, SYS_OBAFF_EGRESS, "Open Banking Affordability Gateway to Private Egress", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_OBAFF_GATEWAY"; target="SYS_OBAFF_EGRESS"; label="Open Banking Affordability Gateway to Private Egress"; interface_id="INT-OBAFF-GATEWAY-EGRESS"; kind="api-call"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_OBAFF_EGRESS, SYS_OBAFF_VENDOR, "Private Egress to TrueLayer", "PrivateLink", $tags="private-egress")
+' aac rel: source="SYS_OBAFF_EGRESS"; target="SYS_OBAFF_VENDOR"; label="Private Egress to TrueLayer"; interface_id="INT-OBAFF-EGRESS-VENDOR"; kind="private-egress"; integration_style="Request-response"; auth_method="WorkloadIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_OBAFF_VENDOR, SYS_OBAFF_WEBHOOKS, "TrueLayer webhooks", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_OBAFF_VENDOR"; target="SYS_OBAFF_WEBHOOKS"; label="TrueLayer webhooks"; interface_id="INT-OBAFF-VENDOR-WEBHOOKS"; kind="event-over-https"; integration_style="Event"; auth_method="HMAC"; frequency="Realtime"; direction="Inbound"
+Rel(SYS_OBAFF_WEBHOOKS, SYS_POSFIN_API, "Open Banking Affordability Webhook Listener to SYS-POSFIN-API", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_OBAFF_WEBHOOKS"; target="SYS_POSFIN_API"; label="Open Banking Affordability Webhook Listener to SYS-POSFIN-API"; interface_id="INT-OBAFF-WEBHOOKS-CONSUMER"; kind="event-over-https"; integration_style="Event"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_POSFIN_WEB, SYS_POSFIN_API, "Point-of-Sale Finance Web to API", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_POSFIN_WEB"; target="SYS_POSFIN_API"; label="Point-of-Sale Finance Web to API"; interface_id="INT-POSFIN-WEB-API"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-POSFIN-API"
+Rel(SYS_POSFIN_API, SYS_POSFIN_DB, "Point-of-Sale Finance Service to Database", "PostgreSQL", $tags="own-datastore")
+' aac rel: source="SYS_POSFIN_API"; target="SYS_POSFIN_DB"; label="Point-of-Sale Finance Service to Database"; interface_id="INT-POSFIN-API-DB"; kind="own-datastore"; integration_style="Request-response"; auth_method="WorkloadIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_POSFIN_API, SYS_POSFIN_EVENTS, "Point-of-Sale Finance Service to Event Publisher", "AMQP", $tags="event")
+' aac rel: source="SYS_POSFIN_API"; target="SYS_POSFIN_EVENTS"; label="Point-of-Sale Finance Service to Event Publisher"; interface_id="INT-POSFIN-API-EVENTS"; kind="event"; integration_style="Event"; auth_method="WorkloadIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_REWARDS_WEB, SYS_REWARDS_API, "Rewards Redemption Web to API", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_REWARDS_WEB"; target="SYS_REWARDS_API"; label="Rewards Redemption Web to API"; interface_id="INT-REWARDS-WEB-API"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-REWARDS-API"
+Rel(SYS_REWARDS_API, SYS_REWARDS_STORE, "Rewards Redemption Service to Database", "TDS", $tags="own-datastore")
+' aac rel: source="SYS_REWARDS_API"; target="SYS_REWARDS_STORE"; label="Rewards Redemption Service to Database"; interface_id="INT-REWARDS-API-STORE"; kind="own-datastore"; integration_style="Request-response"; auth_method="ManagedIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_REWARDS_API, SYS_REWARDS_EVENTS, "Rewards Redemption Service to Event Publisher", "AMQP", $tags="event")
+' aac rel: source="SYS_REWARDS_API"; target="SYS_REWARDS_EVENTS"; label="Rewards Redemption Service to Event Publisher"; interface_id="INT-REWARDS-API-EVENTS"; kind="event"; integration_style="Event"; auth_method="ManagedIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_REWARDS_API, SYS_REWARDS_WORKER, "Rewards Redemption Service to Async Worker", "Kafka", $tags="event")
+' aac rel: source="SYS_REWARDS_API"; target="SYS_REWARDS_WORKER"; label="Rewards Redemption Service to Async Worker"; interface_id="INT-REWARDS-API-WORKER"; kind="event"; integration_style="Event"; auth_method="ManagedIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_SCREENING_FEDERATION, SYS_SCREENING_VENDOR, "Identity Federation to NICE Actimize", "SAML", $tags="sign-on-federation")
+' aac rel: source="SYS_SCREENING_FEDERATION"; target="SYS_SCREENING_VENDOR"; label="Identity Federation to NICE Actimize"; interface_id="INT-SCREENING-FEDERATION-VENDOR"; kind="sign-on-federation"; integration_style="Request-response"; auth_method="Certificate"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_SCREENING_GATEWAY, SYS_SCREENING_EGRESS, "NICE Actimize Screening Gateway to Private Egress", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_SCREENING_GATEWAY"; target="SYS_SCREENING_EGRESS"; label="NICE Actimize Screening Gateway to Private Egress"; interface_id="INT-SCREENING-GATEWAY-EGRESS"; kind="api-call"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_SCREENING_EGRESS, SYS_SCREENING_VENDOR, "Private Egress to NICE Actimize", "PrivateLink", $tags="private-egress")
+' aac rel: source="SYS_SCREENING_EGRESS"; target="SYS_SCREENING_VENDOR"; label="Private Egress to NICE Actimize"; interface_id="INT-SCREENING-EGRESS-VENDOR"; kind="private-egress"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"
+
+SHOW_LEGEND()
+@enduml

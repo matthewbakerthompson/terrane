@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="813.4" viewBox="0 0 1100 813.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Reconcile network settlement — Systems, Data and Controls</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Reconcile network settlement — Systems, Data and Controls</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   8 nodes · 7 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(160.66 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="289.72" y="493.3" width="212.57" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="331.72" y="510.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Control">
+<rect x="290.3" y="345.3" width="211.4" height="119.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="323.15" y="362.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Control</text>
+</g>
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="547.3" y="300.3" width="221.4" height="175.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="589.3" y="317.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.98" y="162.25" width="212.03" height="135.45" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.83" y="179.65" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="547.3" y="24.3" width="221.4" height="247.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="577.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-NETWORK-RECON-001::SYS-RECON">
+<title>Primary</title>
+<path d="M196 198.5 L224.91 199 A10 10 0 0 0 225.09 199 L233 199 A8 8 0 0 0 241 191 L241 86 A10 10 0 0 1 251 76 L544 76 L569.48 76" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M573 76 L563.43 80.78 L563.43 71.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-NETWORK-RECON-001::SYS-RECON">
+<rect x="372.32" y="82.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="393.5" y="94.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-NETWORK-RECON-001::SYS-CORE-LEDGER">
+<title>Supporting</title>
+<path d="M196 209 L225 209 L241 209 A10 10 0 0 0 251 199 L251 158 A10 10 0 0 1 261 148 L544 148 L569.48 148" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M573 148 L563.43 152.78 L563.43 143.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-NETWORK-RECON-001::SYS-CORE-LEDGER">
+<rect x="364.46" y="154.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="393.5" y="166.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-NETWORK-RECON-001::SYS-GL">
+<title>Supporting</title>
+<path d="M196 219.5 L224.91 220 A10 10 0 0 0 225.09 220 L544 220 L569.48 220" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M573 220 L563.43 224.78 L563.43 215.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-NETWORK-RECON-001::SYS-GL">
+<rect x="364.46" y="226.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="393.5" y="238.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e3::P-NETWORK-RECON-001::DA-TRANSACTION">
+<title>Reads</title>
+<path d="M196 230 L225 230 L261 230 A10 10 0 0 1 271 240 L271 269 A10 10 0 0 0 281 279 L516 279 A10 10 0 0 1 526 289 L526 343 A9 9 0 0 0 535 352 L544 352 L569.48 352" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M573 352 L563.43 356.79 L563.43 347.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::P-NETWORK-RECON-001::DA-TRANSACTION">
+<rect x="375.82" y="256.5" width="35.36" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="393.5" y="268.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Reads</text>
+</g>
+<g class="edge" data-id="e4::P-NETWORK-RECON-001::DA-GL">
+<title>Writes</title>
+<path d="M196 240.5 L224.91 241 A10 10 0 0 0 225.09 241 L251 241 A10 10 0 0 1 261 251 L261 280 A10 10 0 0 0 271 290 L506 290 A10 10 0 0 1 516 300 L516 414 A10 10 0 0 0 526 424 L544 424 L569.48 424" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M573 424 L563.43 428.79 L563.43 419.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::P-NETWORK-RECON-001::DA-GL">
+<rect x="375.41" y="296.5" width="36.18" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="393.5" y="308.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Writes</text>
+</g>
+<g class="edge" data-id="e5::P-NETWORK-RECON-001::CTL-DAILY-RECON">
+<title>governed by</title>
+<path d="M196 251 L225 251 L241 251 A10 10 0 0 1 251 261 L251 395 A10 10 0 0 0 261 405 L287 405 L312.48 405" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M316 405 L306.43 409.79 L306.43 400.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e6::P-NETWORK-RECON-001::CAP-PAY-06">
+<title>supports</title>
+<path d="M196 261.5 L224.91 262 A10 10 0 0 0 225.09 262 L233 262 A8 8 0 0 1 241 270 L241 535 A10 10 0 0 0 251 545 L287 545 L312.48 545" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M316 545 L306.43 549.78 L306.43 540.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-PAY-06" data-type="capabilities">
+<title>Network &amp; Merchant Reconciliation</title>
+<path d="M356 519 L316 545 L356 571 L436 571 L476 545 L436 519 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="396" y="543.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Network &amp; Merchant</text>
+<text x="396" y="555.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Reconciliation</text>
+</g>
+<g class="node" data-id="CTL-DAILY-RECON" data-type="controls">
+<title>Daily settlement and clearing reconciliation</title>
+<path d="M362.86 371 L316 390.92 L316 419.08 L362.86 439 L429.14 439 L476 419.08 L476 390.92 L429.14 371 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="396" y="403.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Daily settlement and</text>
+<text x="396" y="415.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">clearing reconciliation</text>
+</g>
+<g class="node" data-id="DA-GL" data-type="data_assets">
+<title>General ledger entries</title>
+<path d="M573 400.6 Q581.5 398 615.5 398 L700.5 398 Q734.5 398 743 400.6 L743 447.4 Q734.5 450 700.5 450 L615.5 450 Q581.5 450 573 447.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="654" y="422.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">General ledger</text>
+<text x="654" y="434.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">entries</text>
+<svg x="725" y="403" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-TRANSACTION" data-type="data_assets">
+<title>Card transaction history</title>
+<path d="M573 328.6 Q581.5 326 615.5 326 L700.5 326 Q734.5 326 743 328.6 L743 375.4 Q734.5 378 700.5 378 L615.5 378 Q581.5 378 573 375.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="654" y="350.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Card transaction</text>
+<text x="654" y="362.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">history</text>
+<svg x="725" y="331" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-NETWORK-RECON-001" data-type="processes">
+<title>Reconcile network settlement</title>
+<path d="M116 188 L36 220.09 L66.56 272 L165.44 272 L196 220.09 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="228.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Reconcile network</text>
+<text x="116" y="240.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">settlement</text>
+</g>
+<g class="node" data-id="SYS-CORE-LEDGER" data-type="systems">
+<title>Core Card Ledger</title>
+<rect x="573" y="122" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="654" y="152.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Core Card Ledger</text>
+<svg x="725" y="127" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-GL" data-type="systems">
+<title>General ledger</title>
+<rect x="573" y="194" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="654" y="224.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">General ledger</text>
+<svg x="725" y="199" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-RECON" data-type="systems">
+<title>Reconciliation platform</title>
+<rect x="573" y="50" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="654" y="74.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Reconciliation</text>
+<text x="654" y="86.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">platform</text>
+<svg x="725" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="711.4" x2="1072" y2="711.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="735.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 724.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="735.4" font-size="12" font-weight="400" fill="#343d50">capability · 1</text>
+<g transform="translate(177.5 724.4)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="203.5" y="735.4" font-size="12" font-weight="400" fill="#343d50">control · 1</text>
+<g transform="translate(273.05 724.4)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="299.05" y="735.4" font-size="12" font-weight="400" fill="#343d50">data asset · 2</text>
+<g transform="translate(389.98 724.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="415.98" y="735.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(490.24 724.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="516.24" y="735.4" font-size="12" font-weight="400" fill="#343d50">system · 3</text>
+<text x="28" y="757.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 746.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="757.4" font-size="12" font-weight="400" fill="#343d50">governed by</text>
+<g transform="translate(184.75 746.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="210.75" y="757.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(277.26 746.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="303.26" y="757.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="791.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-network-recon-001 · edit the model, not the picture</text></g>
+</svg>

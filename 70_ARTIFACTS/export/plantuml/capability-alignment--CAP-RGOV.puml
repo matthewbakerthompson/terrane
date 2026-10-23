@@ -1,0 +1,185 @@
+@startuml
+' Risk Governance & Compliance Management — Frameworks, Controls, Systems
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Risk Governance & Compliance Management — Frameworks, Controls, Systems
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_RGOV_06, "Complaint Oversight & UDAAP Management", "Aggregate, analyze, and act on complaint signal for unfair practice risk.", $tags="capabilities")
+  ' aac CAP_RGOV_06: company_domain="Cross-Functional Services"
+  System(CAP_RGOV_03, "Compliance Monitoring & Testing", "Test whether controls operate as designed and report the result.", $tags="capabilities")
+  ' aac CAP_RGOV_03: company_domain="Cross-Functional Services"
+  System(CAP_RGOV_07, "Financial Crimes & BSA/AML Compliance", "Operate the KYC/CIP program, transaction monitoring, sanctions screening, and regulatory filing.", $tags="capabilities")
+  ' aac CAP_RGOV_07: company_domain="Cross-Functional Services"
+  System(CAP_RGOV_05, "Internal Audit & Examination Management", "Coordinate internal audits and regulatory examinations.", $tags="capabilities")
+  ' aac CAP_RGOV_05: company_domain="Cross-Functional Services"
+  System(CAP_RGOV_04, "Issue & Remediation Management", "Track findings and issues to evidenced closure.", $tags="capabilities")
+  ' aac CAP_RGOV_04: company_domain="Cross-Functional Services"
+  System(CAP_RGOV_08, "Model Risk Governance", "Independently validate and monitor models in production use.", $tags="capabilities")
+  ' aac CAP_RGOV_08: company_domain="Cross-Functional Services"
+  System(CAP_RGOV_02, "Regulatory Change Management", "Detect, interpret, and land regulatory change across the enterprise.", $tags="capabilities")
+  ' aac CAP_RGOV_02: company_domain="Cross-Functional Services"
+  System(CAP_RGOV_01, "Risk Appetite & Policy Management", "Define risk appetite and author and version enterprise policy.", $tags="capabilities")
+  ' aac CAP_RGOV_01: company_domain="Cross-Functional Services"
+  System(CAP_RGOV, "Risk Governance & Compliance Management", "Risk Governance & Compliance Management. Level 0 enterprise capability domain (Direct tier).", $tags="capabilities")
+  ' aac CAP_RGOV: company_domain="Cross-Functional Services"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_COMPLAINT_REG, "Complaint regulatory routing", "Complaints are classified to taxonomy, resolved to SLA, and routed to regulators where required; executive and regulator complaints carry expedited handling.", $tags="controls")
+  ' aac CTL_COMPLAINT_REG: company_domain=""
+  System(CTL_REGCHANGE_TRACK, "Regulatory change implementation tracking", "Applicability decisions and implementation actions for regulatory changes are tracked to evidenced completion with compliance sign-off.", $tags="controls")
+  ' aac CTL_REGCHANGE_TRACK: company_domain=""
+  System(CTL_REGRPT_CERT, "Regulatory report certification", "Regulatory submissions reconcile to the ledger and prior filings and carry a named officer certification before transmission.", $tags="controls")
+  ' aac CTL_REGRPT_CERT: company_domain=""
+  System(CTL_SANCTIONS, "Sanctions and watchlist screening", "Parties are screened at onboarding and on list updates; hits are dispositioned before processing continues.", $tags="controls")
+  ' aac CTL_SANCTIONS: company_domain=""
+  System(CTL_SAR_FILING, "Suspicious activity investigation and filing", "Alerts are investigated and SARs filed within the statutory window, with supporting documentation retained.", $tags="controls")
+  ' aac CTL_SAR_FILING: company_domain=""
+}
+Boundary(b_Framework, "Framework") {
+  System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
+  ' aac FW_BIAN: company_domain=""
+  System(FW_COBIT, "COBIT 2019", "Governance and management objectives for enterprise IT. Where ITIL says how to run a service, this says how to know whether it is being run well, which is why the risk and technology governance domains answer to it.", $tags="frameworks")
+  ' aac FW_COBIT: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_COMPLIANCE_005, "Analyze complaint signal for conduct risk", "Aggregate and analyze complaint data for unfair or deceptive practice risk. Feeds the UDAAP program: complaint taxonomy, root cause, and trend analysis across channels, including complaints held by servicing clients about serviced portfolios.", $tags="processes")
+  ' aac P_COMPLIANCE_005: company_domain=""
+  System(P_COMPLIANCE_001, "Assess and land regulatory change", "Detect a regulatory change, assess applicability and impact, and drive implementation. Starts at horizon scanning and ends when the change is implemented and evidenced in the affected processes; applicability calls are documented even when the answer is not applicable.", $tags="processes")
+  ' aac P_COMPLIANCE_001: company_domain=""
+  System(P_SERVICING_006, "Capture and resolve complaint", "Capture, classify, resolve, and evidence a cardholder complaint. Complaint handling runs intake through evidenced resolution with regulatory routing where required; the taxonomy feeds UDAAP analysis, so classification is not clerical.", $tags="processes")
+  ' aac P_SERVICING_006: company_domain=""
+  System(P_RISK_003, "Coordinate regulatory examination", "Coordinate the response to a regulatory examination, including evidence and findings. Exam coordination controls the single flow of requests, evidence, and meetings; every submission is logged and consistent with what other responses have said.", $tags="processes")
+  ' aac P_RISK_003: company_domain=""
+  System(P_CREDIT_002, "Develop and validate credit model", "Build, document, and validate credit and fraud models prior to production deployment. Development evidence, data lineage, and validation results follow model risk management expectations; nothing reaches production without an independent validation record.", $tags="processes")
+  ' aac P_CREDIT_002: company_domain=""
+  System(P_COMPLIANCE_002, "Execute compliance monitoring test", "Execute a scheduled control test and record the result and any exceptions. Runs the monitoring schedule agreed with the compliance plan; exceptions become issues in remediation tracking with owners and dates rather than emails.", $tags="processes")
+  ' aac P_COMPLIANCE_002: company_domain=""
+  System(P_EA_003, "Grant or decline an architecture exception", "Evaluate a request to deviate from a standard, set conditions and expiry, and track the exception to closure.", $tags="processes")
+  ' aac P_EA_003: company_domain=""
+  System(P_COMPLIANCE_004, "Investigate and file suspicious activity report", "Investigate an alert and, where warranted, prepare and file the regulatory report. The SAR decision and filing run on the BSA clock from alert qualification; the investigation file must stand on its own for examiner review, and filing is confidential by law.", $tags="processes")
+  ' aac P_COMPLIANCE_004: company_domain=""
+  System(P_RISK_001, "Manage issue and remediation to closure", "Track an identified issue through remediation to evidenced closure. Issues from any source (audit, compliance, self-identified, exam) run one lifecycle: owner, action plan, dates, and evidenced closure that survives challenge.", $tags="processes")
+  ' aac P_RISK_001: company_domain=""
+  System(P_COMPLIANCE_003, "Screen for sanctions and watchlists", "Screen parties and transactions against sanctions and watchlists and adjudicate hits. Screening runs at onboarding and on list updates across cardholders, clients, and suppliers; a hit blocks processing until dispositioned, and the disposition is retained as evidence.", $tags="processes")
+  ' aac P_COMPLIANCE_003: company_domain=""
+  System(P_RISK_002, "Validate model independently", "Perform independent validation of a model and record the outcome and conditions. Independent validation is organizationally separate from development; findings condition or block production use, and revalidation triggers are set at approval.", $tags="processes")
+  ' aac P_RISK_002: company_domain=""
+  System(P_ORIG_002, "Verify applicant identity and satisfy CIP", "Verify the applicant's identity and record evidence satisfying customer identification obligations. CIP evidence is retained per BSA requirements; verification failures route to document request rather than automatic decline, and synthetic identity signals feed fraud screening.", $tags="processes")
+  ' aac P_ORIG_002: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_ARCHREPO, "Architecture repository", "Architecture models, standards, decisions, and the application inventory. Built with SaaS.", $tags="systems")
+  ' aac SYS_ARCHREPO: company_domain=""; hosting="SaaS"; technology="SaaS"
+  System_Ext(SYS_CRM, "Dynamics 365 Customer Service", "Contact center desktop and case management for servicing agents. Built with Microsoft.", $tags="systems")
+  ' aac SYS_CRM: company_domain="Servicing"; hosting="SaaS"; technology="Microsoft"
+  System(SYS_AML, "Financial crimes platform", "Sanctions screening, transaction monitoring, and case management.", $tags="systems")
+  ' aac SYS_AML: company_domain=""
+  System(SYS_GRC, "Governance, risk and compliance platform", "Policy, control, issue, and risk register management.", $tags="systems")
+  ' aac SYS_GRC: company_domain=""
+  System(SYS_KYC, "Identity verification", "Identity verification and customer identification program checks.", $tags="systems")
+  ' aac SYS_KYC: company_domain=""
+  System(SYS_MODEL, "Model platform", "Model development, deployment, and monitoring.", $tags="systems")
+  ' aac SYS_MODEL: company_domain=""
+}
+
+Rel(CAP_RGOV_01, CAP_RGOV, "part of")
+Rel(CAP_RGOV_02, CAP_RGOV, "part of")
+Rel(CAP_RGOV_03, CAP_RGOV, "part of")
+Rel(CAP_RGOV_04, CAP_RGOV, "part of")
+Rel(CAP_RGOV_05, CAP_RGOV, "part of")
+Rel(CAP_RGOV_06, CAP_RGOV, "part of")
+Rel(CAP_RGOV_07, CAP_RGOV, "part of")
+Rel(CAP_RGOV_08, CAP_RGOV, "part of")
+Rel(CAP_RGOV, FW_COBIT, "Aligned to")
+' aac rel: source="CAP_RGOV"; target="FW_COBIT"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
+Rel(CAP_RGOV_01, FW_BIAN, "Risk and Compliance > Regulations and Compliance > Guideline Compliance")
+' aac rel: source="CAP_RGOV_01"; target="FW_BIAN"; label="Risk and Compliance > Regulations and Compliance > Guideline Compliance"; relation="capability_references_framework"; ref="Risk and Compliance > Regulations and Compliance > Guideline Compliance"
+Rel(CAP_RGOV_02, FW_BIAN, "Risk and Compliance > Regulations and Compliance > Regulatory Compliance")
+' aac rel: source="CAP_RGOV_02"; target="FW_BIAN"; label="Risk and Compliance > Regulations and Compliance > Regulatory Compliance"; relation="capability_references_framework"; ref="Risk and Compliance > Regulations and Compliance > Regulatory Compliance"
+Rel(CAP_RGOV_03, FW_BIAN, "Risk and Compliance > Regulations and Compliance > Compliance Reporting")
+' aac rel: source="CAP_RGOV_03"; target="FW_BIAN"; label="Risk and Compliance > Regulations and Compliance > Compliance Reporting"; relation="capability_references_framework"; ref="Risk and Compliance > Regulations and Compliance > Compliance Reporting"
+Rel(CAP_RGOV_04, FW_BIAN, "Risk and Compliance > Regulations and Compliance > Guideline Compliance")
+' aac rel: source="CAP_RGOV_04"; target="FW_BIAN"; label="Risk and Compliance > Regulations and Compliance > Guideline Compliance"; relation="capability_references_framework"; ref="Risk and Compliance > Regulations and Compliance > Guideline Compliance"
+Rel(CAP_RGOV_05, FW_BIAN, "Risk and Compliance > Regulations and Compliance > Regulatory Compliance")
+' aac rel: source="CAP_RGOV_05"; target="FW_BIAN"; label="Risk and Compliance > Regulations and Compliance > Regulatory Compliance"; relation="capability_references_framework"; ref="Risk and Compliance > Regulations and Compliance > Regulatory Compliance"
+Rel(CAP_RGOV_06, FW_BIAN, "Sales and Service > Servicing > Customer Case Management")
+' aac rel: source="CAP_RGOV_06"; target="FW_BIAN"; label="Sales and Service > Servicing > Customer Case Management"; relation="capability_references_framework"; ref="Sales and Service > Servicing > Customer Case Management"
+Rel(CAP_RGOV_07, FW_BIAN, "Risk and Compliance > Regulations and Compliance > Regulatory Compliance")
+' aac rel: source="CAP_RGOV_07"; target="FW_BIAN"; label="Risk and Compliance > Regulations and Compliance > Regulatory Compliance"; relation="capability_references_framework"; ref="Risk and Compliance > Regulations and Compliance > Regulatory Compliance"
+Rel(CAP_RGOV_08, FW_BIAN, "Risk and Compliance > Models > Credit Risk Models")
+' aac rel: source="CAP_RGOV_08"; target="FW_BIAN"; label="Risk and Compliance > Models > Credit Risk Models"; relation="capability_references_framework"; ref="Risk and Compliance > Models > Credit Risk Models"
+Rel(P_ORIG_002, CAP_RGOV_07, "supported by")
+' aac rel: source="P_ORIG_002"; target="CAP_RGOV_07"; label="supported by"; relation="process_supports_capability"
+Rel(P_CREDIT_002, CAP_RGOV_08, "supported by")
+' aac rel: source="P_CREDIT_002"; target="CAP_RGOV_08"; label="supported by"; relation="process_supports_capability"
+Rel(P_SERVICING_006, CAP_RGOV_06, "supported by")
+' aac rel: source="P_SERVICING_006"; target="CAP_RGOV_06"; label="supported by"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_001, CAP_RGOV_02, "supported by")
+' aac rel: source="P_COMPLIANCE_001"; target="CAP_RGOV_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_002, CAP_RGOV_03, "supported by")
+' aac rel: source="P_COMPLIANCE_002"; target="CAP_RGOV_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_003, CAP_RGOV_07, "supported by")
+' aac rel: source="P_COMPLIANCE_003"; target="CAP_RGOV_07"; label="supported by"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_004, CAP_RGOV_07, "supported by")
+' aac rel: source="P_COMPLIANCE_004"; target="CAP_RGOV_07"; label="supported by"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_005, CAP_RGOV_06, "supported by")
+' aac rel: source="P_COMPLIANCE_005"; target="CAP_RGOV_06"; label="supported by"; relation="process_supports_capability"
+Rel(P_RISK_001, CAP_RGOV_04, "supported by")
+' aac rel: source="P_RISK_001"; target="CAP_RGOV_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_RISK_002, CAP_RGOV_08, "supported by")
+' aac rel: source="P_RISK_002"; target="CAP_RGOV_08"; label="supported by"; relation="process_supports_capability"
+Rel(P_RISK_003, CAP_RGOV_05, "supported by")
+' aac rel: source="P_RISK_003"; target="CAP_RGOV_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_EA_003, CAP_RGOV_04, "supported by")
+' aac rel: source="P_EA_003"; target="CAP_RGOV_04"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_RGOV, CTL_COMPLAINT_REG, "governed by")
+' aac rel: source="CAP_RGOV"; target="CTL_COMPLAINT_REG"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_RGOV, CTL_REGCHANGE_TRACK, "governed by")
+' aac rel: source="CAP_RGOV"; target="CTL_REGCHANGE_TRACK"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_RGOV, CTL_REGRPT_CERT, "governed by")
+' aac rel: source="CAP_RGOV"; target="CTL_REGRPT_CERT"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_RGOV, CTL_SANCTIONS, "governed by")
+' aac rel: source="CAP_RGOV"; target="CTL_SANCTIONS"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_RGOV, CTL_SAR_FILING, "governed by")
+' aac rel: source="CAP_RGOV"; target="CTL_SAR_FILING"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_RGOV_02, CTL_REGCHANGE_TRACK, "governed by")
+' aac rel: source="CAP_RGOV_02"; target="CTL_REGCHANGE_TRACK"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_RGOV_05, CTL_REGRPT_CERT, "governed by")
+' aac rel: source="CAP_RGOV_05"; target="CTL_REGRPT_CERT"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_RGOV_06, CTL_COMPLAINT_REG, "governed by")
+' aac rel: source="CAP_RGOV_06"; target="CTL_COMPLAINT_REG"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_RGOV_07, CTL_SANCTIONS, "governed by")
+' aac rel: source="CAP_RGOV_07"; target="CTL_SANCTIONS"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_RGOV_07, CTL_SAR_FILING, "governed by")
+' aac rel: source="CAP_RGOV_07"; target="CTL_SAR_FILING"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(SYS_AML, CAP_RGOV_07, "realizes")
+' aac rel: source="SYS_AML"; target="CAP_RGOV_07"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_ARCHREPO, CAP_RGOV_04, "realizes")
+' aac rel: source="SYS_ARCHREPO"; target="CAP_RGOV_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CRM, CAP_RGOV_06, "realizes")
+' aac rel: source="SYS_CRM"; target="CAP_RGOV_06"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_GRC, CAP_RGOV_02, "realizes")
+' aac rel: source="SYS_GRC"; target="CAP_RGOV_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_GRC, CAP_RGOV_03, "realizes")
+' aac rel: source="SYS_GRC"; target="CAP_RGOV_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_GRC, CAP_RGOV_04, "realizes")
+' aac rel: source="SYS_GRC"; target="CAP_RGOV_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_GRC, CAP_RGOV_05, "realizes")
+' aac rel: source="SYS_GRC"; target="CAP_RGOV_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_GRC, CAP_RGOV_06, "realizes")
+' aac rel: source="SYS_GRC"; target="CAP_RGOV_06"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_KYC, CAP_RGOV_07, "realizes")
+' aac rel: source="SYS_KYC"; target="CAP_RGOV_07"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_MODEL, CAP_RGOV_08, "realizes")
+' aac rel: source="SYS_MODEL"; target="CAP_RGOV_08"; label="realizes"; relation="system_realizes_capability"
+
+SHOW_LEGEND()
+@enduml

@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://architecture-as-code/schemas/building_block.schema.json",
+  "title": "Building block",
+  "description": "A handful of component types that always arrive together, or a list of them.",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "building_block_id",
+        "name",
+        "provides"
+      ],
+      "properties": {
+        "building_block_id": {
+          "type": "string"
+        },
+        "replaces": {
+          "type": "string",
+          "description": "This record's own id, said to stand in for the record of that id in a library read before this one. Without it a second record of an id is an error."
+        },
+        "name": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "provides": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "component"
+                ],
+                "properties": {
+                  "component": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "relations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "from",
+              "to"
+            ],
+            "properties": {
+              "from": {
+                "type": "string"
+              },
+              "to": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "defaults": {
+          "type": "object"
+        }
+      }
+    },
+    {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "building_block_id",
+          "name",
+          "provides"
+        ],
+        "properties": {
+          "building_block_id": {
+            "type": "string"
+          },
+          "replaces": {
+            "type": "string",
+            "description": "This record's own id, said to stand in for the record of that id in a library read before this one. Without it a second record of an id is an error."
+          },
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "provides": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "component"
+                  ],
+                  "properties": {
+                    "component": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "relations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "from",
+                "to"
+              ],
+              "properties": {
+                "from": {
+                  "type": "string"
+                },
+                "to": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "defaults": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  ]
+}

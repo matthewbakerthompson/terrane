@@ -1,0 +1,63 @@
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart TB
+  %% Rewards Redemption — Onboarding
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Azure["Azure"]
+    direction TB
+    subgraph grp_Azure__azure_cards_prod["subscription azure-cards-prod"]
+      direction TB
+      subgraph grp_Azure__azure_cards_prod__uksouth["region uksouth"]
+        direction TB
+        SYS_REWARDS_EVENTS["Rewards Redemption Event<br/>Publisher<br/>[Service Bus]"]
+        subgraph grp_Azure__azure_cards_prod__uksouth__Private_App["Private-App"]
+          direction TB
+          OI_REWARDS_API("Rewards Redemption API<br/>[HTTPS]")
+          SYS_REWARDS_WORKER["Rewards Redemption Async<br/>Worker<br/>[AKS · Event Hubs]"]
+          SYS_REWARDS_API["Rewards Redemption Service<br/>[AKS · Rewards Redemption Cache]"]
+          SYS_REWARDS_WEB["Rewards Redemption Web<br/>[AKS]"]
+        end
+        subgraph grp_Azure__azure_cards_prod__uksouth__Private_Data["Private-Data"]
+          direction TB
+          SYS_REWARDS_STORE["Rewards Redemption<br/>Database<br/>[Azure SQL]"]
+        end
+      end
+    end
+  end
+
+  subgraph grp_On_prem["On-prem"]
+    direction TB
+    SYS_CORE_LEDGER["Core Card Ledger"]
+    OI_LEDGER_QUEUE("Core Ledger request queue<br/>[MQ]")
+  end
+
+  SYS_REWARDS_WEB --> OI_REWARDS_API
+  SYS_REWARDS_API -->|"TDS"| SYS_REWARDS_STORE
+  SYS_REWARDS_API -->|"AMQP"| SYS_REWARDS_EVENTS
+  SYS_REWARDS_API -->|"Kafka"| SYS_REWARDS_WORKER
+  SYS_REWARDS_WORKER --> OI_LEDGER_QUEUE
+  OI_LEDGER_QUEUE --- SYS_CORE_LEDGER
+  OI_REWARDS_API --- SYS_REWARDS_API
+
+  classDef s_offered_interfaces__on_prem fill:#e6ecff,stroke:#6366f1,color:#0f172a,stroke-width:1.4px;
+  classDef s_offered_interfaces__private_app fill:#e6ecff,stroke:#6366f1,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__default fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__on_prem fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__private_app fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__private_data fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  class OI_LEDGER_QUEUE s_offered_interfaces__on_prem;
+  class OI_REWARDS_API s_offered_interfaces__private_app;
+  class SYS_REWARDS_EVENTS s_systems__default;
+  class SYS_CORE_LEDGER s_systems__on_prem;
+  class SYS_REWARDS_API,SYS_REWARDS_WEB,SYS_REWARDS_WORKER s_systems__private_app;
+  class SYS_REWARDS_STORE s_systems__private_data;
+  classDef boundary1 fill:#f1f6fb,stroke:#5b9bd5,color:#2f5d8a;
+  class grp_Azure__azure_cards_prod__uksouth__Private_App,grp_Azure__azure_cards_prod__uksouth__Private_Data boundary1;
+  classDef boundary2 fill:#f4f5f7,stroke:#5f6b7a,color:#3f4a5c;
+  class grp_On_prem boundary2;
+  classDef boundary3 fill:#f7fbfe,stroke:#0078d4,color:#1b4b7a,stroke-dasharray:6 3;
+  class grp_Azure__azure_cards_prod boundary3;
+  classDef boundary4 fill:#f7fbfe,stroke:#0078d4,color:#1b4b7a;
+  class grp_Azure boundary4;
+  classDef boundary5 fill:#f8fafc,stroke:#7a8699,color:#4b5563,stroke-dasharray:2 3;
+  class grp_Azure__azure_cards_prod__uksouth boundary5;

@@ -1,0 +1,67 @@
+# Transactions, as they actually cross the estate.
+#
+# Not a process model. A process model belongs in a business architecture
+# capture effort and works at a different granularity; this is the technology
+# question: which systems does one transaction touch, in what order, and where
+# is the latency budget spent.
+#
+# The steps themselves live in `relations/flow_steps.yaml`, ordered by the
+# `sequence` qualifier.
+
+- flow_id: FLOW-CARD-AUTH
+  name: Card Authorization
+  description: >
+    A card presented at a merchant, authorized or declined inside the scheme
+    timeout. The tightest latency budget in the estate, and the reason the
+    screening call has a circuit breaker rather than a retry.
+  status: Active
+  owner_org_id: ORG-PAYMENTS
+  trigger: Cardholder presents a card at a merchant
+  criticality: High
+  target_latency: under 500ms end to end
+  company_domain: Payments
+  togaf_layer: Business
+  architecture_domain: Business
+
+- flow_id: FLOW-LOAN-APPLICATION
+  name: Installment Loan Application
+  description: >
+    An applicant applies for point-of-sale credit. Bureau search, affordability
+    and a decision, with referral to an underwriter when the automated decision
+    declines to take it.
+  status: Planned
+  owner_org_id: ORG-PRODUCT
+  trigger: Applicant submits an application
+  criticality: High
+  target_latency: under 20s to a decision
+  company_domain: Lending
+  togaf_layer: Business
+  architecture_domain: Business
+
+- flow_id: FLOW-DISPUTE
+  name: Dispute and Chargeback
+  description: >
+    A cardholder disputes a transaction. Raised in the contact center, handled
+    in the vendor platform, settled back through the ledger.
+  status: Active
+  owner_org_id: ORG-SERVICING
+  trigger: Cardholder disputes a transaction
+  criticality: Medium
+  target_latency: scheme deadline, measured in days
+  company_domain: Servicing
+  togaf_layer: Business
+  architecture_domain: Business
+
+- flow_id: FLOW-REG-RETURN
+  name: Regulatory Return
+  description: >
+    The monthly supervisory return. Entirely batch, and the only flow whose
+    deadline is external and non-negotiable.
+  status: Planned
+  owner_org_id: ORG-COMPLIANCE
+  trigger: Month end
+  criticality: High
+  target_latency: filed within 10 working days
+  company_domain: Risk and Compliance
+  togaf_layer: Business
+  architecture_domain: Governance

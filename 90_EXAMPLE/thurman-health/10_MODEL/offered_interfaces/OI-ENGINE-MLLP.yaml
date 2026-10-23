@@ -1,0 +1,19 @@
+# The engine's inbound HL7 listener. Every departmental system sends its
+# feed here and nowhere else, which is the point of having an engine: nine
+# feeds were nine records describing the same port.
+offered_interface_id: OI-ENGINE-MLLP
+name: HL7 inbound listener
+description: >
+  MLLP over TLS on the engine's inbound port: admissions, orders, results,
+  charges and device vitals, acknowledged message by message.
+status: Active
+togaf_layer: Application
+architecture_domain: Application
+company_domain: Interoperability
+system_id: SYS-INTERFACE-ENGINE
+owner_org_id: ORG-INTEGRATION
+protocol: MLLP
+integration_style: Event
+auth_method: MutualTLS
+data_classification: Restricted
+frequency: Realtime

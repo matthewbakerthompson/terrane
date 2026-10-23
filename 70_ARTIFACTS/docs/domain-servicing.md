@@ -1,0 +1,132 @@
+# Servicing Domain
+
+The Servicing domain and its immediate neighbors: every system in the domain plus everything one interface away. Smaller and easier to read than the full landscape, and it updates as the model changes.
+
+```mermaid
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Servicing Domain
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Card_Issuing["Card Issuing"]
+    direction LR
+    SYS_CORE_LEDGER["Core Card Ledger"]
+    OI_LEDGER_QUEUE("Core Ledger request queue<br/>[MQ]")
+  end
+
+  subgraph grp_Data_and_Analytics["Data and Analytics"]
+    direction LR
+    SYS_DATA_INGEST["Enterprise Data Ingestion<br/>Hub<br/>[Service Bus · Snowflake Data Cloud]"]
+  end
+
+  subgraph grp_Enterprise_Platform["Enterprise Platform"]
+    direction LR
+    OI_IDENTITY_API("Customer Identity API<br/>[HTTPS]")
+    SYS_IDENTITY_SVC["Customer Identity Service<br/>[AKS]"]
+  end
+
+  subgraph grp_Lending["Lending"]
+    direction LR
+    SYS_LENDING_HUB["Installment Lending<br/>Integration Hub"]
+  end
+
+  subgraph grp_Servicing["Servicing"]
+    direction LR
+    OI_CARDSVC_API("Card Servicing API<br/>[HTTPS]")
+    SYS_CARDSVC_STORE["Card Servicing Datastore<br/>[Azure SQL]"]
+    SYS_CARDSVC_EVENTS["Card Servicing Event<br/>Publisher<br/>[Service Bus]"]
+    SYS_CARDSVC_API["Card Servicing Service<br/>[AKS · Card Servicing Cache]"]
+    SYS_CARDSVC_WEB["Card Servicing Web<br/>[AKS]"]
+    SYS_DISPUTES_GATEWAY["Dispute Management<br/>Platform Integration<br/>Gateway<br/>[AKS]"]
+    SYS_CRM["Dynamics 365 Customer<br/>Service<br/>[Microsoft]"]
+    SYS_DISPUTES_SAAS["Pega Smart Dispute<br/>[Pegasystems]"]
+    SYS_STATEMENTS["Statement Generation"]
+  end
+
+  SYS_MARKETING["Campaign management"]
+  SYS_MOBILE["Cardholder mobile<br/>application"]
+  SYS_CONTACT["Contact center platform"]
+  SYS_BUREAU_GW["Credit bureau gateway"]
+  SYS_DOC["Document management and<br/>archive"]
+  SYS_IAM["Identity and access<br/>management"]
+  SYS_IVR["IVR and self-service voice"]
+  SYS_FRAUD_DETECT["Transaction fraud<br/>detection"]
+
+  SYS_FRAUD_DETECT -->|"AMQP"| SYS_CRM
+  SYS_MOBILE --> OI_CARDSVC_API
+  SYS_CORE_LEDGER -->|"FileTransfer"| SYS_BUREAU_GW
+  SYS_BUREAU_GW -->|"FileTransfer"| SYS_CRM
+  SYS_CORE_LEDGER -->|"FileTransfer"| SYS_DOC
+  SYS_STATEMENTS -->|"FileTransfer"| SYS_DOC
+  SYS_CONTACT -->|"HTTPS"| SYS_CRM
+  SYS_IVR -->|"SIP"| SYS_CONTACT
+  SYS_IVR --> OI_CARDSVC_API
+  SYS_CRM -->|"HTTPS"| SYS_DISPUTES_GATEWAY
+  SYS_MARKETING -->|"AMQP"| SYS_CRM
+  SYS_CRM -->|"HTTPS"| SYS_IAM
+  SYS_CONTACT -->|"HTTPS"| SYS_IAM
+  SYS_CARDSVC_API --> OI_IDENTITY_API
+  SYS_CARDSVC_API --> OI_LEDGER_QUEUE
+  SYS_CARDSVC_EVENTS -->|"AMQP"| SYS_DATA_INGEST
+  SYS_CRM -->|"HTTPS"| SYS_CORE_LEDGER
+  SYS_CORE_LEDGER -->|"FileTransfer"| SYS_DATA_INGEST
+  SYS_CORE_LEDGER -->|"FileTransfer"| SYS_STATEMENTS
+  SYS_CARDSVC_WEB --> OI_CARDSVC_API
+  SYS_CARDSVC_API -->|"TDS"| SYS_CARDSVC_STORE
+  SYS_CARDSVC_API -->|"AMQP"| SYS_CARDSVC_EVENTS
+  SYS_CORE_LEDGER -->|"HTTPS"| SYS_DISPUTES_GATEWAY
+  SYS_DISPUTES_GATEWAY -->|"HTTPS"| SYS_DISPUTES_SAAS
+  SYS_DISPUTES_SAAS -->|"SFTP"| SYS_DATA_INGEST
+  SYS_CORE_LEDGER -->|"HTTPS"| SYS_LENDING_HUB
+  SYS_CRM -->|"HTTPS"| SYS_LENDING_HUB
+  OI_CARDSVC_API --- SYS_CARDSVC_API
+  OI_IDENTITY_API --- SYS_IDENTITY_SVC
+  OI_LEDGER_QUEUE --- SYS_CORE_LEDGER
+
+  classDef s_offered_interfaces__high fill:#b9befa,stroke:#6366f1,color:#0f172a,stroke-width:2.6px;
+  classDef s_systems__high fill:#9aa0ed,stroke:#4338ca,color:#0f172a,stroke-width:2.6px;
+  classDef s_systems__medium fill:#becbfb,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  class OI_CARDSVC_API,OI_IDENTITY_API,OI_LEDGER_QUEUE s_offered_interfaces__high;
+  class SYS_CARDSVC_API,SYS_CARDSVC_STORE,SYS_CARDSVC_WEB,SYS_CORE_LEDGER,SYS_IDENTITY_SVC,SYS_LENDING_HUB s_systems__high;
+  class SYS_BUREAU_GW,SYS_CARDSVC_EVENTS,SYS_CONTACT,SYS_CRM,SYS_DATA_INGEST,SYS_DISPUTES_GATEWAY,SYS_DISPUTES_SAAS,SYS_DOC,SYS_FRAUD_DETECT,SYS_IAM,SYS_IVR,SYS_MARKETING,SYS_MOBILE,SYS_STATEMENTS s_systems__medium;
+  classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_Card_Issuing,grp_Data_and_Analytics,grp_Enterprise_Platform,grp_Lending,grp_Servicing boundary1;
+```
+
+The same view as the app draws it, written beside the Mermaid by `terrane render`:
+
+![Servicing Domain](../svg/domain-servicing.svg)
+
+**Hue is the entity type.**
+
+| | Entity type |
+|---|---|
+| `#6366f1` | offered interfaces |
+| `#4338ca` | systems |
+
+**criticality** is drawn as border weight and tint, strongest first.
+
+| Border | Value |
+|---|---|
+| 2.6px | High |
+| 1.4px | Medium |
+
+## Flows across this diagram
+
+Each flow is a recorded sequence of interfaces. The steps drawn on this diagram are numbered; a step whose interface is not on it is marked.
+
+**Dispute and Chargeback**: A cardholder disputes a transaction. Raised in the contact center, handled in the vendor platform, settled back through the ledger.
+
+1. Dynamics 365 Customer Service → Core Card Ledger (HTTPS)
+2. Core Card Ledger → Dispute Management Platform Integration Gateway (HTTPS)
+3. Dispute Management Platform Integration Gateway → Pega Smart Dispute (HTTPS)
+4. Pega Smart Dispute → Enterprise Data Ingestion Hub (SFTP)
+
+**Regulatory Return**: The monthly supervisory return. Entirely batch, and the only flow whose deadline is external and non-negotiable.
+
+1. Core Card Ledger → Enterprise Data Ingestion Hub (FileTransfer)
+2. Enterprise Data Ingestion Hub → Customer 360 Pipeline (Snowpipe) — not on this diagram
+3. Customer 360 Pipeline → Customer 360 Semantic Layer (SQL) — not on this diagram
+4. Customer 360 Semantic Layer → Regulatory Reporting Engine (SQL) — not on this diagram
+
+23 entities, 30 relationships. Generated from the model; edit the model, not this file.

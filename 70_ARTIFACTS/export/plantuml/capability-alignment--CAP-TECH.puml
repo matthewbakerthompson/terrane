@@ -1,0 +1,283 @@
+@startuml
+' Technology & Platform Operations — Frameworks, Controls, Systems
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Technology & Platform Operations — Frameworks, Controls, Systems
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_TECH_05, "Business Continuity & Disaster Recovery", "Recover the business to committed objectives.", $tags="capabilities")
+  ' aac CAP_TECH_05: company_domain="Technology"
+  System(CAP_TECH_07, "End-User Computing & Workplace Technology", "Equip and support the workforce with workplace technology.", $tags="capabilities")
+  ' aac CAP_TECH_07: company_domain="Technology"
+  System(CAP_TECH_06, "Enterprise Integration & API Management", "Operate the integration and API estate.", $tags="capabilities")
+  ' aac CAP_TECH_06: company_domain="Technology"
+  System(CAP_TECH_02, "Platform & Infrastructure Operations", "Run the technology estate.", $tags="capabilities")
+  ' aac CAP_TECH_02: company_domain="Technology"
+  System(CAP_TECH_08, "Quality Engineering & Testing", "Prove that a change does what it claims before and after it reaches production: test strategy, automation, performance, acceptance, defects, and release certification.", $tags="capabilities")
+  ' aac CAP_TECH_08: company_domain="Technology"
+  System(CAP_TECH_04, "Release & Change Management", "Move change into production safely.", $tags="capabilities")
+  ' aac CAP_TECH_04: company_domain="Technology"
+  System(CAP_TECH_03, "Service Management & Incident Response", "Detect, triage, and resolve service incidents.", $tags="capabilities")
+  ' aac CAP_TECH_03: company_domain="Technology"
+  System(CAP_TECH_01, "Solution Delivery & Engineering", "Build and change software.", $tags="capabilities")
+  ' aac CAP_TECH_01: company_domain="Technology"
+  System(CAP_TECH, "Technology & Platform Operations", "Technology & Platform Operations. Level 0 enterprise capability domain (Enable tier).", $tags="capabilities")
+  ' aac CAP_TECH: company_domain="Technology"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_AUTH_AVAIL, "Authorization availability and stand-in", "Authorization availability is monitored against the network SLA with tested stand-in arrangements; incidents invoke the resilience playbook.", $tags="controls")
+  ' aac CTL_AUTH_AVAIL: company_domain=""
+  System(CTL_MASK_NONPROD, "Masked data outside production", "Non-production environments carry masked or synthetic data; unmasked extracts require a time-boxed exception.", $tags="controls")
+  ' aac CTL_MASK_NONPROD: company_domain=""
+  System(CTL_CHG_APPROVAL, "Production change approval", "No change reaches production without an approved change record, test evidence, and a rollback plan; emergency changes are reviewed after the fact.", $tags="controls")
+  ' aac CTL_CHG_APPROVAL: company_domain=""
+  System(CTL_DR_TEST, "Recovery test against committed objectives", "Recovery is exercised at least annually against stated RTO/RPO; misses produce tracked remediation.", $tags="controls")
+  ' aac CTL_DR_TEST: company_domain=""
+  System(CTL_VULN_SLA, "Vulnerability remediation service level", "Vulnerabilities are remediated within the SLA for their severity; breaches of the SLA are escalated and tracked.", $tags="controls")
+  ' aac CTL_VULN_SLA: company_domain=""
+}
+Boundary(b_Framework, "Framework") {
+  System(FW_COBIT, "COBIT 2019", "Governance and management objectives for enterprise IT. Where ITIL says how to run a service, this says how to know whether it is being run well, which is why the risk and technology governance domains answer to it.", $tags="frameworks")
+  ' aac FW_COBIT: company_domain=""
+  System(FW_CRI, "CRI Profile", "The Cyber Risk Institute's Profile: the financial sector's harmonization of NIST CSF, ISO 27001 and the regulators' expectations into one set of diagnostic statements. What a bank is examined against for cyber, and therefore what the security domain is governed by rather than informed by.", $tags="frameworks")
+  ' aac FW_CRI: company_domain=""
+  System(FW_ITIL, "ITIL 4", "Service management practice: incident, change, problem, service level. The frame technology operations is actually run and audited against, and the vocabulary a service management tool already speaks.", $tags="frameworks")
+  ' aac FW_ITIL: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_EA_007, "Assess change impact of a proposed system change", "Trace a proposed system or interface change to the processes, capabilities, and clients it affects, and brief the change authority.", $tags="processes")
+  ' aac P_EA_007: company_domain=""
+  System(P_EA_005, "Assess technology lifecycle and rationalization", "Rate each application and platform for tolerate, invest, migrate, or eliminate; identify duplication and end-of-support exposure.", $tags="processes")
+  ' aac P_EA_005: company_domain=""
+  System(P_QE_002, "Build and maintain the automated regression suite", "Author, review, and prune automated tests so the regression suite stays fast, trusted, and aligned to current behavior.", $tags="processes")
+  ' aac P_QE_002: company_domain=""
+  System(P_QE_008, "Certify a release for production", "Assess test results, open defects, and exit criteria, and issue or withhold the quality certification the change authority relies on.", $tags="processes")
+  ' aac P_QE_008: company_domain=""
+  System(P_APPDEV_009, "Decommission an application", "Retire an application: migrate or archive its data to the retention schedule, remove interfaces and access, and update the inventory.", $tags="processes")
+  ' aac P_APPDEV_009: company_domain=""
+  System(P_TECH_001, "Deliver software change", "Design, build, test, and release a software change into production. The umbrella delivery flow from approved demand to production release; the engineering-level decomposition lives in the P-APPDEV and P-QE processes it coordinates.", $tags="processes")
+  ' aac P_TECH_001: company_domain=""
+  System(P_APPDEV_002, "Design and build a software increment", "Design, implement, and unit-test a work item to its acceptance criteria within the agreed architecture and standards.", $tags="processes")
+  ' aac P_APPDEV_002: company_domain=""
+  System(P_TECH_003, "Execute disaster recovery test", "Plan and execute a recovery test against committed recovery objectives. The annual test exercises recovery against committed RTO and RPO with business participation; misses become tracked remediation, and the evidence supports the CRI assessment.", $tags="processes")
+  ' aac P_TECH_003: company_domain=""
+  System(P_QE_003, "Execute functional and regression testing", "Run planned functional tests and the regression suite against a candidate build, and record results against the plan.", $tags="processes")
+  ' aac P_QE_003: company_domain=""
+  System(P_QE_004, "Execute performance and resilience testing", "Load, soak, and failover-test a candidate against stated capacity and recovery objectives before a material release.", $tags="processes")
+  ' aac P_QE_004: company_domain=""
+  System(P_EA_009, "Maintain the application and technology inventory", "Keep the inventory of applications, platforms, and interfaces complete and attributed, including owner, tier, hosting, and lifecycle state.", $tags="processes")
+  ' aac P_EA_009: company_domain=""
+  System(P_APPDEV_007, "Manage application configuration and feature flags", "Control configuration and feature-flag changes so behavior can be changed or reverted without a code release, with an audit trail.", $tags="processes")
+  ' aac P_APPDEV_007: company_domain=""
+  System(P_QE_006, "Manage defects to closure", "Triage, prioritize, assign, and verify defects found in test or production, and report defect trends by area.", $tags="processes")
+  ' aac P_QE_006: company_domain=""
+  System(P_APPDEV_006, "Manage technical debt", "Record, size, and prioritize technical debt, and reserve capacity in each increment to retire it. Debt items live in the same backlog as features so the trade-off is visible at prioritization, not discovered at incident time.", $tags="processes")
+  ' aac P_APPDEV_006: company_domain=""
+  System(P_TECH_004, "Onboard and operate integration", "Design, register, and operate an interface between systems. Integration onboarding registers the interface, its data, and its owners before traffic flows; unregistered interfaces are how impact analysis goes blind.", $tags="processes")
+  ' aac P_TECH_004: company_domain=""
+  System(P_QE_001, "Plan the test strategy for a release", "Decide scope, risk-based depth, environments, data, and entry and exit criteria for a release before build starts.", $tags="processes")
+  ' aac P_QE_001: company_domain=""
+  System(P_QE_007, "Provision test environments and masked data", "Stand up and refresh non-production environments with representative, masked data, and retire them on schedule.", $tags="processes")
+  ' aac P_QE_007: company_domain=""
+  System(P_APPDEV_001, "Refine and prioritize the product backlog", "Break approved demand into sized, ordered work items with acceptance criteria, and agree the next increment with the business owner.", $tags="processes")
+  ' aac P_APPDEV_001: company_domain=""
+  System(P_TECH_002, "Respond to service incident", "Detect, triage, resolve, and review a service incident. Incident response runs detect, triage, resolve, and review with severity-driven communication; customer-impacting incidents feed problem management and the resilience picture.", $tags="processes")
+  ' aac P_TECH_002: company_domain=""
+  System(P_APPDEV_003, "Review and merge code", "Peer-review a change for correctness, security, and standards before it is merged to the main line. Merge rights sit with reviewers, not authors, which is the segregation the change-control audit tests; review evidence stays on the pull request.", $tags="processes")
+  ' aac P_APPDEV_003: company_domain=""
+  System(P_APPDEV_004, "Run the build and deployment pipeline", "Build, package, scan, and promote a change through environments automatically, with gates that stop a failing build.", $tags="processes")
+  ' aac P_APPDEV_004: company_domain=""
+  System(P_QE_005, "Run user acceptance testing with the business", "Prepare scripts and data, run acceptance with business owners, and obtain their sign-off or documented rejection.", $tags="processes")
+  ' aac P_QE_005: company_domain=""
+  System(P_APPDEV_005, "Scan code and dependencies for security defects", "Run static, dependency, and secret scanning on every change and remediate findings within the applicable service level.", $tags="processes")
+  ' aac P_APPDEV_005: company_domain=""
+  System(P_APPDEV_008, "Support a production application", "Diagnose and fix application defects escalated from service management, and feed root causes back into the backlog.", $tags="processes")
+  ' aac P_APPDEV_008: company_domain=""
+  System(P_QE_009, "Verify a release in production", "Run post-deployment checks and smoke tests in production, confirm monitoring is green, and trigger rollback if criteria fail.", $tags="processes")
+  ' aac P_QE_009: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_ARCHREPO, "Architecture repository", "Architecture models, standards, decisions, and the application inventory. Built with SaaS.", $tags="systems")
+  ' aac SYS_ARCHREPO: company_domain=""; hosting="SaaS"; technology="SaaS"
+  System_Ext(SYS_ITSM, "IT service management", "Incident, change, and service management. Built with SaaS.", $tags="systems")
+  ' aac SYS_ITSM: company_domain=""; hosting="SaaS"; technology="SaaS"
+  System_Ext(SYS_OBSERV, "Observability platform", "Logs, metrics, traces, and production monitoring. Built with SaaS.", $tags="systems")
+  ' aac SYS_OBSERV: company_domain=""; hosting="SaaS"; technology="SaaS"
+  System_Ext(SYS_SCM, "Source control and CI/CD pipeline", "Source repositories, build, and deployment pipeline. Built with SaaS.", $tags="systems")
+  ' aac SYS_SCM: company_domain=""; hosting="SaaS"; technology="SaaS"
+  System_Ext(SYS_TESTMGMT, "Test management and automation", "Test case management, automated test execution, and results. Built with SaaS.", $tags="systems")
+  ' aac SYS_TESTMGMT: company_domain=""; hosting="SaaS"; technology="SaaS"
+  System_Ext(SYS_WORKTRACK, "Work and change tracking", "Work item and change tracking. Built with SaaS.", $tags="systems")
+  ' aac SYS_WORKTRACK: company_domain=""; hosting="SaaS"; technology="SaaS"
+}
+
+Rel(CAP_TECH_01, CAP_TECH, "part of")
+Rel(CAP_TECH_02, CAP_TECH, "part of")
+Rel(CAP_TECH_03, CAP_TECH, "part of")
+Rel(CAP_TECH_04, CAP_TECH, "part of")
+Rel(CAP_TECH_05, CAP_TECH, "part of")
+Rel(CAP_TECH_06, CAP_TECH, "part of")
+Rel(CAP_TECH_07, CAP_TECH, "part of")
+Rel(CAP_TECH_08, CAP_TECH, "part of")
+Rel(CAP_TECH, FW_ITIL, "Aligned to")
+' aac rel: source="CAP_TECH"; target="FW_ITIL"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
+Rel(CAP_TECH, FW_COBIT, "Informed by")
+' aac rel: source="CAP_TECH"; target="FW_COBIT"; label="Informed by"; relation="capability_aligns_to_framework"; alignment="Informed by"
+Rel(CAP_TECH_01, FW_CRI, "Protect > PR.PS-06")
+' aac rel: source="CAP_TECH_01"; target="FW_CRI"; label="Protect > PR.PS-06"; relation="capability_references_framework"; ref="Protect > PR.PS-06"
+Rel(CAP_TECH_01, FW_ITIL, "Technical management > Software Development and Management")
+' aac rel: source="CAP_TECH_01"; target="FW_ITIL"; label="Technical management > Software Development and Management"; relation="capability_references_framework"; ref="Technical management > Software Development and Management"
+Rel(CAP_TECH_02, FW_ITIL, "Service management > Capacity and Performance Management")
+' aac rel: source="CAP_TECH_02"; target="FW_ITIL"; label="Service management > Capacity and Performance Management"; relation="capability_references_framework"; ref="Service management > Capacity and Performance Management"
+Rel(CAP_TECH_03, FW_ITIL, "Service management > Incident Management")
+' aac rel: source="CAP_TECH_03"; target="FW_ITIL"; label="Service management > Incident Management"; relation="capability_references_framework"; ref="Service management > Incident Management"
+Rel(CAP_TECH_04, FW_ITIL, "Service management > Change Enablement")
+' aac rel: source="CAP_TECH_04"; target="FW_ITIL"; label="Service management > Change Enablement"; relation="capability_references_framework"; ref="Service management > Change Enablement"
+Rel(CAP_TECH_05, FW_CRI, "Recover > RC.RP-01")
+' aac rel: source="CAP_TECH_05"; target="FW_CRI"; label="Recover > RC.RP-01"; relation="capability_references_framework"; ref="Recover > RC.RP-01"
+Rel(CAP_TECH_05, FW_ITIL, "Service management > Service Continuity Management")
+' aac rel: source="CAP_TECH_05"; target="FW_ITIL"; label="Service management > Service Continuity Management"; relation="capability_references_framework"; ref="Service management > Service Continuity Management"
+Rel(CAP_TECH_06, FW_ITIL, "Technical management > Infrastructure and Platform Management")
+' aac rel: source="CAP_TECH_06"; target="FW_ITIL"; label="Technical management > Infrastructure and Platform Management"; relation="capability_references_framework"; ref="Technical management > Infrastructure and Platform Management"
+Rel(CAP_TECH_07, FW_ITIL, "Service management > IT Asset Management")
+' aac rel: source="CAP_TECH_07"; target="FW_ITIL"; label="Service management > IT Asset Management"; relation="capability_references_framework"; ref="Service management > IT Asset Management"
+Rel(CAP_TECH_08, FW_ITIL, "Service management > Service Validation and Testing")
+' aac rel: source="CAP_TECH_08"; target="FW_ITIL"; label="Service management > Service Validation and Testing"; relation="capability_references_framework"; ref="Service management > Service Validation and Testing"
+Rel(P_TECH_001, CAP_TECH_01, "supported by")
+' aac rel: source="P_TECH_001"; target="CAP_TECH_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_TECH_001, CAP_TECH_04, "supported by")
+' aac rel: source="P_TECH_001"; target="CAP_TECH_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_TECH_002, CAP_TECH_03, "supported by")
+' aac rel: source="P_TECH_002"; target="CAP_TECH_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_TECH_003, CAP_TECH_05, "supported by")
+' aac rel: source="P_TECH_003"; target="CAP_TECH_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_TECH_004, CAP_TECH_06, "supported by")
+' aac rel: source="P_TECH_004"; target="CAP_TECH_06"; label="supported by"; relation="process_supports_capability"
+Rel(P_EA_005, CAP_TECH_02, "supported by")
+' aac rel: source="P_EA_005"; target="CAP_TECH_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_EA_007, CAP_TECH_04, "supported by")
+' aac rel: source="P_EA_007"; target="CAP_TECH_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_EA_009, CAP_TECH_07, "supported by")
+' aac rel: source="P_EA_009"; target="CAP_TECH_07"; label="supported by"; relation="process_supports_capability"
+Rel(P_QE_001, CAP_TECH_08, "supported by")
+' aac rel: source="P_QE_001"; target="CAP_TECH_08"; label="supported by"; relation="process_supports_capability"
+Rel(P_QE_002, CAP_TECH_08, "supported by")
+' aac rel: source="P_QE_002"; target="CAP_TECH_08"; label="supported by"; relation="process_supports_capability"
+Rel(P_QE_003, CAP_TECH_08, "supported by")
+' aac rel: source="P_QE_003"; target="CAP_TECH_08"; label="supported by"; relation="process_supports_capability"
+Rel(P_QE_004, CAP_TECH_08, "supported by")
+' aac rel: source="P_QE_004"; target="CAP_TECH_08"; label="supported by"; relation="process_supports_capability"
+Rel(P_QE_004, CAP_TECH_02, "supported by")
+' aac rel: source="P_QE_004"; target="CAP_TECH_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_QE_005, CAP_TECH_08, "supported by")
+' aac rel: source="P_QE_005"; target="CAP_TECH_08"; label="supported by"; relation="process_supports_capability"
+Rel(P_QE_006, CAP_TECH_08, "supported by")
+' aac rel: source="P_QE_006"; target="CAP_TECH_08"; label="supported by"; relation="process_supports_capability"
+Rel(P_QE_007, CAP_TECH_08, "supported by")
+' aac rel: source="P_QE_007"; target="CAP_TECH_08"; label="supported by"; relation="process_supports_capability"
+Rel(P_QE_007, CAP_TECH_02, "supported by")
+' aac rel: source="P_QE_007"; target="CAP_TECH_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_QE_008, CAP_TECH_08, "supported by")
+' aac rel: source="P_QE_008"; target="CAP_TECH_08"; label="supported by"; relation="process_supports_capability"
+Rel(P_QE_008, CAP_TECH_04, "supported by")
+' aac rel: source="P_QE_008"; target="CAP_TECH_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_QE_009, CAP_TECH_08, "supported by")
+' aac rel: source="P_QE_009"; target="CAP_TECH_08"; label="supported by"; relation="process_supports_capability"
+Rel(P_QE_009, CAP_TECH_04, "supported by")
+' aac rel: source="P_QE_009"; target="CAP_TECH_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_APPDEV_001, CAP_TECH_01, "supported by")
+' aac rel: source="P_APPDEV_001"; target="CAP_TECH_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_APPDEV_002, CAP_TECH_01, "supported by")
+' aac rel: source="P_APPDEV_002"; target="CAP_TECH_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_APPDEV_003, CAP_TECH_01, "supported by")
+' aac rel: source="P_APPDEV_003"; target="CAP_TECH_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_APPDEV_004, CAP_TECH_01, "supported by")
+' aac rel: source="P_APPDEV_004"; target="CAP_TECH_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_APPDEV_004, CAP_TECH_04, "supported by")
+' aac rel: source="P_APPDEV_004"; target="CAP_TECH_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_APPDEV_005, CAP_TECH_01, "supported by")
+' aac rel: source="P_APPDEV_005"; target="CAP_TECH_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_APPDEV_006, CAP_TECH_01, "supported by")
+' aac rel: source="P_APPDEV_006"; target="CAP_TECH_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_APPDEV_007, CAP_TECH_01, "supported by")
+' aac rel: source="P_APPDEV_007"; target="CAP_TECH_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_APPDEV_007, CAP_TECH_04, "supported by")
+' aac rel: source="P_APPDEV_007"; target="CAP_TECH_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_APPDEV_008, CAP_TECH_01, "supported by")
+' aac rel: source="P_APPDEV_008"; target="CAP_TECH_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_APPDEV_008, CAP_TECH_03, "supported by")
+' aac rel: source="P_APPDEV_008"; target="CAP_TECH_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_APPDEV_009, CAP_TECH_01, "supported by")
+' aac rel: source="P_APPDEV_009"; target="CAP_TECH_01"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_TECH, CTL_AUTH_AVAIL, "governed by")
+' aac rel: source="CAP_TECH"; target="CTL_AUTH_AVAIL"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_TECH, CTL_CHG_APPROVAL, "governed by")
+' aac rel: source="CAP_TECH"; target="CTL_CHG_APPROVAL"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_TECH, CTL_DR_TEST, "governed by")
+' aac rel: source="CAP_TECH"; target="CTL_DR_TEST"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_TECH, CTL_MASK_NONPROD, "governed by")
+' aac rel: source="CAP_TECH"; target="CTL_MASK_NONPROD"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_TECH, CTL_VULN_SLA, "governed by")
+' aac rel: source="CAP_TECH"; target="CTL_VULN_SLA"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_TECH_01, CTL_CHG_APPROVAL, "governed by")
+' aac rel: source="CAP_TECH_01"; target="CTL_CHG_APPROVAL"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_TECH_01, CTL_VULN_SLA, "governed by")
+' aac rel: source="CAP_TECH_01"; target="CTL_VULN_SLA"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_TECH_02, CTL_MASK_NONPROD, "governed by")
+' aac rel: source="CAP_TECH_02"; target="CTL_MASK_NONPROD"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_TECH_03, CTL_AUTH_AVAIL, "governed by")
+' aac rel: source="CAP_TECH_03"; target="CTL_AUTH_AVAIL"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_TECH_04, CTL_CHG_APPROVAL, "governed by")
+' aac rel: source="CAP_TECH_04"; target="CTL_CHG_APPROVAL"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_TECH_05, CTL_DR_TEST, "governed by")
+' aac rel: source="CAP_TECH_05"; target="CTL_DR_TEST"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_TECH_08, CTL_CHG_APPROVAL, "governed by")
+' aac rel: source="CAP_TECH_08"; target="CTL_CHG_APPROVAL"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_TECH_08, CTL_MASK_NONPROD, "governed by")
+' aac rel: source="CAP_TECH_08"; target="CTL_MASK_NONPROD"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(SYS_ARCHREPO, CAP_TECH_01, "realizes")
+' aac rel: source="SYS_ARCHREPO"; target="CAP_TECH_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_ARCHREPO, CAP_TECH_02, "realizes")
+' aac rel: source="SYS_ARCHREPO"; target="CAP_TECH_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_ARCHREPO, CAP_TECH_04, "realizes")
+' aac rel: source="SYS_ARCHREPO"; target="CAP_TECH_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_ARCHREPO, CAP_TECH_07, "realizes")
+' aac rel: source="SYS_ARCHREPO"; target="CAP_TECH_07"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_ITSM, CAP_TECH_01, "realizes")
+' aac rel: source="SYS_ITSM"; target="CAP_TECH_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_ITSM, CAP_TECH_03, "realizes")
+' aac rel: source="SYS_ITSM"; target="CAP_TECH_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_ITSM, CAP_TECH_05, "realizes")
+' aac rel: source="SYS_ITSM"; target="CAP_TECH_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_ITSM, CAP_TECH_06, "realizes")
+' aac rel: source="SYS_ITSM"; target="CAP_TECH_06"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_OBSERV, CAP_TECH_04, "realizes")
+' aac rel: source="SYS_OBSERV"; target="CAP_TECH_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_OBSERV, CAP_TECH_08, "realizes")
+' aac rel: source="SYS_OBSERV"; target="CAP_TECH_08"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_SCM, CAP_TECH_01, "realizes")
+' aac rel: source="SYS_SCM"; target="CAP_TECH_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_SCM, CAP_TECH_04, "realizes")
+' aac rel: source="SYS_SCM"; target="CAP_TECH_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_TESTMGMT, CAP_TECH_02, "realizes")
+' aac rel: source="SYS_TESTMGMT"; target="CAP_TECH_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_TESTMGMT, CAP_TECH_04, "realizes")
+' aac rel: source="SYS_TESTMGMT"; target="CAP_TECH_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_TESTMGMT, CAP_TECH_08, "realizes")
+' aac rel: source="SYS_TESTMGMT"; target="CAP_TECH_08"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_WORKTRACK, CAP_TECH_01, "realizes")
+' aac rel: source="SYS_WORKTRACK"; target="CAP_TECH_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_WORKTRACK, CAP_TECH_04, "realizes")
+' aac rel: source="SYS_WORKTRACK"; target="CAP_TECH_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_WORKTRACK, CAP_TECH_08, "realizes")
+' aac rel: source="SYS_WORKTRACK"; target="CAP_TECH_08"; label="realizes"; relation="system_realizes_capability"
+
+SHOW_LEGEND()
+@enduml

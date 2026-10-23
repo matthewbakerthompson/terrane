@@ -1,0 +1,885 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://architecture-as-code/schemas/systems.schema.json",
+  "title": "System",
+  "description": "A system, or a list of them in one file.",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "system_id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+        },
+        "name": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "status": {
+          "enum": [
+            "Proposed",
+            "Planned",
+            "Active",
+            "Deprecated",
+            "Retired"
+          ]
+        },
+        "togaf_layer": {
+          "enum": [
+            "Business",
+            "Application",
+            "Data",
+            "Technology"
+          ]
+        },
+        "architecture_domain": {
+          "enum": [
+            "Business",
+            "Application",
+            "Data",
+            "Technology",
+            "Governance"
+          ]
+        },
+        "abstraction_level": {
+          "enum": [
+            "Contextual",
+            "Conceptual",
+            "Logical",
+            "Physical"
+          ]
+        },
+        "last_reviewed": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "company_domain": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "company_subdomain": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "tags": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "archetype": {
+          "type": "string"
+        },
+        "archetype_instance": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "module": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "source": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "owner_org_id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+        },
+        "criticality": {
+          "enum": [
+            "High",
+            "Medium",
+            "Low"
+          ]
+        },
+        "service_tier": {
+          "enum": [
+            "Tier 1",
+            "Tier 2",
+            "Tier 3"
+          ]
+        },
+        "hosting": {
+          "enum": [
+            "On-prem",
+            "Azure",
+            "AWS",
+            "GCP",
+            "External",
+            "SaaS"
+          ]
+        },
+        "environment": {
+          "enum": [
+            "Production",
+            "UAT",
+            "Test",
+            "Dev"
+          ]
+        },
+        "provider": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "system_category": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "data_classification_supported": {
+          "enum": [
+            "Public",
+            "Internal",
+            "Confidential",
+            "Restricted"
+          ]
+        },
+        "platform_service_dependencies": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "governance_policy_ids": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "control_ids": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "component_type": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "product": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "cmdb_ci_sys_id": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "cmdb_ci_class": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "cloud_provider": {
+          "enum": [
+            "AWS",
+            "Azure",
+            "GCP",
+            "On-prem",
+            "SaaS"
+          ]
+        },
+        "cloud_account": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "region": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "network_zone": {
+          "enum": [
+            "Edge",
+            "Public",
+            "Private-App",
+            "Private-Data",
+            "Shared-Services",
+            "On-prem"
+          ]
+        },
+        "availability_zone": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "deployment_unit": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "resilience": {
+          "enum": [
+            "Multi-region",
+            "Multi-AZ",
+            "Single-AZ",
+            "Single-node"
+          ]
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "overrides": {
+          "type": "object"
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "without": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Parts of the shape this instance does without, by alias."
+        },
+        "modules": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "module"
+                ],
+                "properties": {
+                  "module": {
+                    "type": "string"
+                  },
+                  "as": {
+                    "type": "string"
+                  },
+                  "optional": {
+                    "type": "boolean"
+                  },
+                  "with": {
+                    "type": "object",
+                    "description": "Parameter name to value; a value may use the shape tokens."
+                  }
+                }
+              }
+            ]
+          },
+          "description": "Parts added to the shape, or re-bound, by this instance."
+        },
+        "choose": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Slot name to the option this instance chooses, or `none` for an optional slot."
+        },
+        "ids": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "An id the shape makes to the id the estate already uses for it, so a product moves onto a shape without renaming what points at it."
+        },
+        "extra": {
+          "type": "object"
+        },
+        "compose": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "modules"
+          ],
+          "description": "Assembled from parts with no shape: the parts under `modules`, the provider they resolve against, and the blocks, binds, patterns and relations a shape would carry. Not with `archetype`.",
+          "properties": {
+            "provider": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "modules": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "module"
+                    ],
+                    "properties": {
+                      "module": {
+                        "type": "string"
+                      },
+                      "as": {
+                        "type": "string"
+                      },
+                      "optional": {
+                        "type": "boolean"
+                      },
+                      "with": {
+                        "type": "object",
+                        "description": "Parameter name to value; a value may use the shape tokens."
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "blocks": {
+              "type": "array"
+            },
+            "bind": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "patterns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "relations": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "required": [
+        "system_id"
+      ]
+    },
+    {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "system_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "name": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "description": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "status": {
+            "enum": [
+              "Proposed",
+              "Planned",
+              "Active",
+              "Deprecated",
+              "Retired"
+            ]
+          },
+          "togaf_layer": {
+            "enum": [
+              "Business",
+              "Application",
+              "Data",
+              "Technology"
+            ]
+          },
+          "architecture_domain": {
+            "enum": [
+              "Business",
+              "Application",
+              "Data",
+              "Technology",
+              "Governance"
+            ]
+          },
+          "abstraction_level": {
+            "enum": [
+              "Contextual",
+              "Conceptual",
+              "Logical",
+              "Physical"
+            ]
+          },
+          "last_reviewed": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "company_domain": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "company_subdomain": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "tags": {
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "archetype": {
+            "type": "string"
+          },
+          "archetype_instance": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "module": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "owner_org_id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+          },
+          "criticality": {
+            "enum": [
+              "High",
+              "Medium",
+              "Low"
+            ]
+          },
+          "service_tier": {
+            "enum": [
+              "Tier 1",
+              "Tier 2",
+              "Tier 3"
+            ]
+          },
+          "hosting": {
+            "enum": [
+              "On-prem",
+              "Azure",
+              "AWS",
+              "GCP",
+              "External",
+              "SaaS"
+            ]
+          },
+          "environment": {
+            "enum": [
+              "Production",
+              "UAT",
+              "Test",
+              "Dev"
+            ]
+          },
+          "provider": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "system_category": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "data_classification_supported": {
+            "enum": [
+              "Public",
+              "Internal",
+              "Confidential",
+              "Restricted"
+            ]
+          },
+          "platform_service_dependencies": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "governance_policy_ids": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "control_ids": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "component_type": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "product": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "cmdb_ci_sys_id": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "cmdb_ci_class": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "cloud_provider": {
+            "enum": [
+              "AWS",
+              "Azure",
+              "GCP",
+              "On-prem",
+              "SaaS"
+            ]
+          },
+          "cloud_account": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "region": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "network_zone": {
+            "enum": [
+              "Edge",
+              "Public",
+              "Private-App",
+              "Private-Data",
+              "Shared-Services",
+              "On-prem"
+            ]
+          },
+          "availability_zone": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "deployment_unit": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "resilience": {
+            "enum": [
+              "Multi-region",
+              "Multi-AZ",
+              "Single-AZ",
+              "Single-node"
+            ]
+          },
+          "parameters": {
+            "type": "object"
+          },
+          "overrides": {
+            "type": "object"
+          },
+          "exclude": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "without": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Parts of the shape this instance does without, by alias."
+          },
+          "modules": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "module"
+                  ],
+                  "properties": {
+                    "module": {
+                      "type": "string"
+                    },
+                    "as": {
+                      "type": "string"
+                    },
+                    "optional": {
+                      "type": "boolean"
+                    },
+                    "with": {
+                      "type": "object",
+                      "description": "Parameter name to value; a value may use the shape tokens."
+                    }
+                  }
+                }
+              ]
+            },
+            "description": "Parts added to the shape, or re-bound, by this instance."
+          },
+          "choose": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Slot name to the option this instance chooses, or `none` for an optional slot."
+          },
+          "ids": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "An id the shape makes to the id the estate already uses for it, so a product moves onto a shape without renaming what points at it."
+          },
+          "extra": {
+            "type": "object"
+          },
+          "compose": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "modules"
+            ],
+            "description": "Assembled from parts with no shape: the parts under `modules`, the provider they resolve against, and the blocks, binds, patterns and relations a shape would carry. Not with `archetype`.",
+            "properties": {
+              "provider": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "modules": {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "module"
+                      ],
+                      "properties": {
+                        "module": {
+                          "type": "string"
+                        },
+                        "as": {
+                          "type": "string"
+                        },
+                        "optional": {
+                          "type": "boolean"
+                        },
+                        "with": {
+                          "type": "object",
+                          "description": "Parameter name to value; a value may use the shape tokens."
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "blocks": {
+                "type": "array"
+              },
+              "bind": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "patterns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "relations": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "required": [
+          "system_id"
+        ]
+      }
+    }
+  ]
+}

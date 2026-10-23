@@ -1,0 +1,144 @@
+# Diagnostics and oncology: the departmental systems that take an order
+# from the EHR and send a result back, and the cancer center's own.
+
+- system_id: SYS-LIS
+  name: Laboratory Information System
+  description: >
+    Specimen tracking, the analyzers, result verification and critical-value
+    calls for the core lab, microbiology and pathology. Tests it does not
+    run go to the reference lab and come back through it.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Physical
+  company_domain: Diagnostics
+  tags: [clinical]
+  owner_org_id: ORG-LAB
+  criticality: High
+  service_tier: Tier 1
+  hosting: On-prem
+  environment: Production
+  provider: Licensed
+  system_category: Ancillary
+  data_classification_supported: Restricted
+  cloud_provider: On-prem
+  network_zone: On-prem
+  resilience: Single-AZ
+
+- system_id: SYS-RIS
+  name: Radiology Information System
+  description: Imaging orders, the modality worklist, protocoling and the radiologist's signed report.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Physical
+  company_domain: Diagnostics
+  tags: [clinical, imaging]
+  owner_org_id: ORG-IMAGING
+  criticality: High
+  service_tier: Tier 1
+  hosting: On-prem
+  environment: Production
+  provider: Licensed
+  system_category: Ancillary
+  data_classification_supported: Restricted
+  cloud_provider: On-prem
+  network_zone: On-prem
+  resilience: Single-AZ
+
+- system_id: SYS-PACS
+  name: Picture Archiving and Communication System
+  description: >
+    Where the modalities send their images and where radiologists read
+    them. Holds three years of studies on fast storage; older studies are
+    fetched back from the archive.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Physical
+  company_domain: Diagnostics
+  tags: [clinical, imaging]
+  owner_org_id: ORG-IMAGING
+  criticality: High
+  service_tier: Tier 1
+  hosting: On-prem
+  environment: Production
+  provider: Licensed
+  system_category: Ancillary
+  data_classification_supported: Restricted
+  cloud_provider: On-prem
+  network_zone: On-prem
+  resilience: Single-AZ
+
+- system_id: SYS-VNA
+  name: Vendor Neutral Archive
+  description: >
+    The long-term image archive, in a standard format so that changing the
+    PACS does not mean migrating twenty years of studies. Keeps images for
+    as long as the records retention policy says.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Physical
+  company_domain: Diagnostics
+  tags: [imaging]
+  owner_org_id: ORG-IMAGING
+  criticality: Medium
+  service_tier: Tier 2
+  hosting: On-prem
+  environment: Production
+  provider: Licensed
+  system_category: Ancillary
+  component_type: archive
+  data_classification_supported: Restricted
+  cloud_provider: On-prem
+  network_zone: On-prem
+  resilience: Single-AZ
+
+- system_id: SYS-ONCOLOGY
+  name: Oncology Information System
+  description: >
+    Chemotherapy regimens and cycles, infusion scheduling, and the radiation
+    oncology treatment record. The cancer center works from this and the
+    EHR side by side, so the two are kept in step through the interface
+    engine.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Physical
+  company_domain: Oncology
+  tags: [clinical, oncology]
+  owner_org_id: ORG-CANCER-CENTER
+  criticality: High
+  service_tier: Tier 1
+  hosting: On-prem
+  environment: Production
+  provider: Licensed
+  system_category: Clinical
+  data_classification_supported: Restricted
+  cloud_provider: On-prem
+  network_zone: On-prem
+  resilience: Single-AZ
+
+- system_id: SYS-TUMOR-REGISTRY
+  name: Cancer Registry
+  description: >
+    The registrars' abstracting system: every reportable cancer case,
+    staged and followed up, and the case reports the state registry
+    requires. Bought as a service.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Physical
+  company_domain: Oncology
+  tags: [vendor, third-party, oncology]
+  owner_org_id: ORG-CANCER-CENTER
+  criticality: Medium
+  service_tier: Tier 2
+  hosting: SaaS
+  environment: Production
+  provider: Registry software vendor
+  system_category: Clinical
+  component_type: vendor-saas
+  data_classification_supported: Restricted
+  cloud_provider: SaaS

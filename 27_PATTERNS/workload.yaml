@@ -1,0 +1,76 @@
+# Patterns for the middle of an application.
+
+- pattern_id: stateless-request-service
+  name: Stateless request service
+  status: Approved
+  category: Compute
+  blocks: [stateless-service, transactional-store]
+  intent: >
+    A request-response service that keeps no state of its own, with the
+    state it needs in a transactional store beside it. Any instance can
+    answer any request, which is the property that makes scaling and
+    recovery mechanical rather than heroic.
+  consequences: >
+    The cache is where the stateless claim usually turns out to be false, and
+    it should be treated as a store with a recovery objective rather than an
+    optimization. The database becomes the constraint on scale and on
+    recovery time, and the pattern pushes every difficult question there.
+  when_not_to_use: >
+    Long-running work does not fit a request that has to wait for an answer;
+    that is the event tier or the batch tier. A workload whose state genuinely
+    must live in the process, such as a session-bound protocol, is a
+    different shape and should be modeled as one rather than forced into
+    this.
+  method_ref: PAT-004
+
+- pattern_id: windowed-batch
+  name: Windowed batch
+  status: Approved
+  category: Compute
+  blocks: [batch-tier]
+  intent: >
+    Scheduled work with a deadline: orchestration that knows the window,
+    compute that fits inside it, and object staging for what goes in and
+    comes out. Lateness is a business event here, so the window is modeled
+    rather than assumed.
+  consequences: >
+    The window is usually set by somebody outside the organization, and it
+    does not move when volume grows. Capacity has to be planned against the
+    worst night of the year, and the orchestration becomes the place where
+    every dependency between jobs is either recorded or discovered at three
+    in the morning.
+  when_not_to_use: >
+    Anything a consumer needs within seconds of it happening. A batch that is
+    run every five minutes to fake real time has all the costs of both
+    shapes.
+
+- pattern_id: strangler-facade
+  name: Strangler facade over a system being replaced
+  status: Approved
+  category: Compute
+  blocks: [public-api-tier, stateless-service]
+  intent: >
+    Every consumer of a system being replaced is moved behind one facade
+    that speaks the new contract and, behind it, still calls the old
+    system. Capabilities are then moved one at a time from the old system
+    to services behind the facade, and no consumer notices which side of
+    the line a capability is on today. The old system is retired when the
+    facade's last route to it is removed, and not before. This is how the
+    card platform is being modernized, and it is the only way a Tier 1
+    system of record ever has been.
+  consequences: >
+    The facade is a Tier 1 system from the day it fronts one: it has the
+    old system's availability obligation and the new estate's change
+    cadence. Two implementations of a capability exist during every move,
+    and the data between them has to be reconciled until the old one is
+    retired, which is longer than any plan says. Programs stall with the
+    facade carrying half the routes, and a half-strangled system is more
+    complex than either end state; the pattern needs an owner for the
+    retirement, not just for the facade.
+  when_not_to_use: >
+    A system with one consumer, which should just be replaced; the facade
+    is decoupling for the sake of many consumers and costs a hop when there
+    is one. A system whose data model is the thing being replaced, where
+    routing by capability does not divide the problem and the move is a
+    migration with a cutover, however much everyone would prefer otherwise.
+  method_ref: PAT-009

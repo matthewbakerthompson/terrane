@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="770.4" viewBox="0 0 1100 770.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Lending Portfolio Performance — By part</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Lending Portfolio Performance — By part</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   9 nodes · 10 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One product drawn by the parts it was composed from: each boundary is a part of the library (the API, the web channel, the datastore, the event publisher), and</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">what sits inside it is what that part made. A system in no boundary was written by hand or came from the landing zone. The same product as the architecture view,</text>
+<text x="28" y="118" font-size="14" font-weight="400" fill="#343d50">cut the other way: not where things run, but which decision in the library put them there.</text>
+<line x1="28" y1="132" x2="1072" y2="132" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(160 131.7)">
+<g class="edge" data-id="e0::SYS-LENDPERF-PIPELINE::SYS-LENDPERF-SEMANTIC">
+<title>SQL</title>
+<path d="M355 96 L355 107 A5 5 0 0 1 350 112 L350 112 A5 5 0 0 0 345 117 L345 201 A10 10 0 0 0 355 211 L432 211 A10 10 0 0 1 442 221 L442 235.48" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M442 239 L437.21 229.43 L446.79 229.43 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::SYS-LENDPERF-PIPELINE::SYS-LENDPERF-SEMANTIC">
+<rect x="352.84" y="163.5" width="25.71" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="365.7" y="175.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">SQL</text>
+</g>
+<g class="edge" data-id="e1::SYS-LENDPERF-PIPELINE::TS-GCP-PUBSUB">
+<title>runs on</title>
+<path d="M378 96 L378 122 A10 10 0 0 0 388 132 L466.76 132 A6.24 6.24 0 0 1 473 138.24 L473 144.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M473 148 L468.21 138.43 L477.79 138.43 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e2::SYS-LENDPERF-PIPELINE::TS-GCP-DATAFLOW">
+<title>runs on</title>
+<path d="M287 96 L287 104 A8 8 0 0 1 279 112 L95 112 A10 10 0 0 0 85 122 L85 144.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M85 148 L80.22 138.43 L89.78 138.43 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e3::SYS-LENDPERF-PIPELINE::TS-GCP-COMPOSER">
+<title>runs on</title>
+<path d="M310 96 L310 112 A10 10 0 0 1 300 122 L258 122 A10 10 0 0 0 248 132 L248 144.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M248 148 L243.22 138.43 L252.78 138.43 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e4::SYS-LENDPERF-PIPELINE::TS-GCP-BIGQUERY">
+<title>runs on</title>
+<path d="M423 96 L423 104 A8 8 0 0 0 431 112 L710 112 A10 10 0 0 1 720 122 L720 171.5 L720 278.5 L720 358.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M720 362 L715.22 352.43 L724.78 352.43 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e5::SYS-LENDPERF-PIPELINE::TS-COLLIBRA">
+<title>runs on</title>
+<path d="M401 96 L401 112 A10 10 0 0 0 411 122 L626 122 A10 10 0 0 1 636 132 L636 144.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M636 148 L631.22 138.43 L640.78 138.43 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e6::SYS-LENDPERF-SEMANTIC::TS-GCP-BIGQUERY">
+<title>runs on</title>
+<path d="M488 318 L488 326 A8 8 0 0 0 496 334 L661 334 A10 10 0 0 1 671 344 L671 358.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M671 362 L666.22 352.43 L675.78 352.43 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e7::SYS-LENDPERF-SEMANTIC::TS-GCP-LOOKER">
+<title>runs on</title>
+<path d="M442 318 L442 334 A10 10 0 0 0 452 344 L514.76 344 A7.24 7.24 0 0 1 522 351.24 L522 358.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M522 362 L517.22 352.43 L526.78 352.43 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e8::SYS-LENDPERF-PIPELINE::DA-LENDPERF-CURATED">
+<title>Write</title>
+<path d="M332 96 L332 171.5 L332 385.5 L332 449.48" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M332 453 L327.21 443.43 L336.79 443.43 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e8::SYS-LENDPERF-PIPELINE::DA-LENDPERF-CURATED">
+<rect x="291.05" y="270.5" width="30.91" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="306.5" y="282.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Write</text>
+</g>
+<g class="edge" data-id="e9::SYS-LENDPERF-SEMANTIC::DA-LENDPERF-CURATED">
+<title>Read</title>
+<path d="M397 318 L397 329.5 A4.5 4.5 0 0 1 392.5 334 L392.5 334 A4.5 4.5 0 0 0 388 338.5 L388 449.48" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M388 453 L383.21 443.43 L392.79 443.43 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e9::SYS-LENDPERF-SEMANTIC::DA-LENDPERF-CURATED">
+<rect x="396.56" y="377.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="411.6" y="389.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="node" data-id="DA-LENDPERF-CURATED" data-type="data_assets">
+<title>Lending Portfolio Performance curated dataset</title>
+<path d="M275 456.4 Q283.5 453 317.5 453 L402.5 453 Q436.5 453 445 456.4 L445 517.6 Q436.5 521 402.5 521 L317.5 521 Q283.5 521 275 517.6 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="356" y="479.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Lending Portfolio</text>
+<text x="356" y="491.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Performance curated</text>
+<text x="356" y="503.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">dataset</text>
+<svg x="427" y="458" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="SYS-LENDPERF-PIPELINE" data-type="systems">
+<title>Lending Portfolio Performance Pipeline</title>
+<rect x="264" y="12" width="182" height="84" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="345" y="40.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Lending Portfolio</text>
+<text x="345" y="52.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Performance</text>
+<text x="345" y="64.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Pipeline</text>
+<text x="355" y="90.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">BigQuery · Dataflow +3</text>
+<image x="424" y="16" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0ic3RhbmRhcmRfcHJvZHVjdF9pY29uIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDUxMiA1MTIiPgogIDwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiAyLjEuMCBCdWlsZCAxNDIpICAtLT4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLnN0MCB7CiAgICAgICAgZmlsbDogbm9uZTsKICAgICAgfQoKICAgICAgLnN0MSB7CiAgICAgICAgZmlsbDogIzQyODVmNDsKICAgICAgfQoKICAgICAgLnN0MiB7CiAgICAgICAgZmlsbDogIzM0YTg1MzsKICAgICAgfQoKICAgICAgLnN0MyB7CiAgICAgICAgZmlsbDogI2ZiYmMwNDsKICAgICAgfQoKICAgICAgLnN0NCB7CiAgICAgICAgZmlsbDogI2VhNDMzNTsKICAgICAgfQogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPGcgaWQ9ImJvdW5kaW5nX2JveCI+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIvPgogIDwvZz4KICA8ZyBpZD0iYXJ0Ij4KICAgIDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0zMTEuOSw0MTguOWMtOC44LDAtMTYtNy4yLTE2LTE2di0xNDUuOGMwLTguOCw3LjItMTYsMTYtMTZzMTYsNy4yLDE2LDE2djE0NS44YzAsOC44LTcuMiwxNi0xNiwxNmgwWiIvPgogICAgPHBhdGggY2xhc3M9InN0MiIgZD0iTTE0Ny42LDQxOC45Yy04LjgsMC0xNi03LjItMTYtMTZ2LTIwMC41YzAtOC44LDcuMi0xNiwxNi0xNnMxNiw3LjIsMTYsMTZ2MjAwLjVjMCw4LjgtNy4yLDE2LTE2LDE2WiIvPgogICAgPHBhdGggY2xhc3M9InN0MiIgZD0iTTIyOS44LDQzNy40Yy04LjgsMC0xNi03LjItMTYtMTZWMTQ3LjZjMC04LjgsNy4yLTE2LDE2LTE2czE2LDcuMiwxNiwxNnYyNzMuN2MwLDguOC03LjIsMTYtMTYsMTZoMFoiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDMiIGQ9Ik0yMjkuOCw0MzcuNGMtMTE0LjUsMC0yMDcuNi05My4xLTIwNy42LTIwNy42aDMyYzAsOTYuOCw3OC44LDE3NS42LDE3NS42LDE3NS42czE3NS42LTc4LjgsMTc1LjYtMTc1LjZoMzJjMCwxMTQuNS05My4xLDIwNy42LTIwNy42LDIwNy42aDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3Q0IiBkPSJNNDM3LjQsMjI5LjhoLTMyYzAtOTYuOC03OC44LTE3NS42LTE3NS42LTE3NS42UzU0LjEsMTMyLjksNTQuMSwyMjkuOEgyMi4xYzAtMTE0LjUsOTMuMi0yMDcuNywyMDcuNy0yMDcuN3MyMDcuNiw5My4xLDIwNy42LDIwNy42aDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNNDg3LjQsNDY0LjhsLTEwMC0xMDBjMzIuMy0zNy42LDQ5LjktODUsNDkuOS0xMzUuMXMtMjEuNi0xMDcuNi02MC44LTE0Ni44bC0yMi42LDIyLjZjMzMuMiwzMy4yLDUxLjQsNzcuMyw1MS40LDEyNC4ycy0xOC4zLDkwLjktNTEuNSwxMjQuMWgwYy01LDUtNy41LDctMTEuOCwxMC44bDEyMi44LDEyMi44YzMuMSwzLjEsNy4yLDQuNywxMS4zLDQuN2gwYzQuMSwwLDguMi0xLjYsMTEuMy00LjcsNi4yLTYuMiw2LjItMTYuNCwwLTIyLjZoMFoiLz4KICA8L2c+Cjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-LENDPERF-SEMANTIC" data-type="systems">
+<title>Lending Portfolio Performance Semantic Layer</title>
+<rect x="351" y="239" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="432" y="265.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Lending Portfolio</text>
+<text x="432" y="277.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Performance</text>
+<text x="432" y="289.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Semantic Layer</text>
+<text x="442" y="312.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">BigQuery · Looker</text>
+<image x="511" y="243" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0ic3RhbmRhcmRfcHJvZHVjdF9pY29uIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDUxMiA1MTIiPgogIDwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiAyLjEuMCBCdWlsZCAxNDIpICAtLT4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLnN0MCB7CiAgICAgICAgZmlsbDogbm9uZTsKICAgICAgfQoKICAgICAgLnN0MSB7CiAgICAgICAgZmlsbDogIzQyODVmNDsKICAgICAgfQoKICAgICAgLnN0MiB7CiAgICAgICAgZmlsbDogIzM0YTg1MzsKICAgICAgfQoKICAgICAgLnN0MyB7CiAgICAgICAgZmlsbDogI2ZiYmMwNDsKICAgICAgfQoKICAgICAgLnN0NCB7CiAgICAgICAgZmlsbDogI2VhNDMzNTsKICAgICAgfQogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPGcgaWQ9ImJvdW5kaW5nX2JveCI+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIvPgogIDwvZz4KICA8ZyBpZD0iYXJ0Ij4KICAgIDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0zMTEuOSw0MTguOWMtOC44LDAtMTYtNy4yLTE2LTE2di0xNDUuOGMwLTguOCw3LjItMTYsMTYtMTZzMTYsNy4yLDE2LDE2djE0NS44YzAsOC44LTcuMiwxNi0xNiwxNmgwWiIvPgogICAgPHBhdGggY2xhc3M9InN0MiIgZD0iTTE0Ny42LDQxOC45Yy04LjgsMC0xNi03LjItMTYtMTZ2LTIwMC41YzAtOC44LDcuMi0xNiwxNi0xNnMxNiw3LjIsMTYsMTZ2MjAwLjVjMCw4LjgtNy4yLDE2LTE2LDE2WiIvPgogICAgPHBhdGggY2xhc3M9InN0MiIgZD0iTTIyOS44LDQzNy40Yy04LjgsMC0xNi03LjItMTYtMTZWMTQ3LjZjMC04LjgsNy4yLTE2LDE2LTE2czE2LDcuMiwxNiwxNnYyNzMuN2MwLDguOC03LjIsMTYtMTYsMTZoMFoiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDMiIGQ9Ik0yMjkuOCw0MzcuNGMtMTE0LjUsMC0yMDcuNi05My4xLTIwNy42LTIwNy42aDMyYzAsOTYuOCw3OC44LDE3NS42LDE3NS42LDE3NS42czE3NS42LTc4LjgsMTc1LjYtMTc1LjZoMzJjMCwxMTQuNS05My4xLDIwNy42LTIwNy42LDIwNy42aDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3Q0IiBkPSJNNDM3LjQsMjI5LjhoLTMyYzAtOTYuOC03OC44LTE3NS42LTE3NS42LTE3NS42UzU0LjEsMTMyLjksNTQuMSwyMjkuOEgyMi4xYzAtMTE0LjUsOTMuMi0yMDcuNywyMDcuNy0yMDcuN3MyMDcuNiw5My4xLDIwNy42LDIwNy42aDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNNDg3LjQsNDY0LjhsLTEwMC0xMDBjMzIuMy0zNy42LDQ5LjktODUsNDkuOS0xMzUuMXMtMjEuNi0xMDcuNi02MC44LTE0Ni44bC0yMi42LDIyLjZjMzMuMiwzMy4yLDUxLjQsNzcuMyw1MS40LDEyNC4ycy0xOC4zLDkwLjktNTEuNSwxMjQuMWgwYy01LDUtNy41LDctMTEuOCwxMC44bDEyMi44LDEyMi44YzMuMSwzLjEsNy4yLDQuNywxMS4zLDQuN2gwYzQuMSwwLDguMi0xLjYsMTEuMy00LjcsNi4yLTYuMiw2LjItMTYuNCwwLTIyLjZoMFoiLz4KICA8L2c+Cjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="TS-COLLIBRA" data-type="tech_services">
+<title>Collibra</title>
+<path d="M563 148 L659.64 148 L708 195 L611.36 195 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="631.5" y="170.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Collibra</text>
+<text x="635.5" y="189.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Data catalog</text>
+<svg x="679" y="153" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M8 3c3.3 0 5 .9 5 2s-1.7 2-5 2-5-.9-5-2 1.7-2 5-2z M3 5v6c0 1.1 1.7 2 5 2s5-.9 5-2V5" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="TS-GCP-BIGQUERY" data-type="tech_services">
+<title>BigQuery</title>
+<path d="M623 362 L719.64 362 L768 409 L671.36 409 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="685.5" y="384.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">BigQuery</text>
+<text x="695.5" y="403.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Data warehouse</text>
+<image x="734" y="366" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0ic3RhbmRhcmRfcHJvZHVjdF9pY29uIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDUxMiA1MTIiPgogIDwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiAyLjEuMCBCdWlsZCAxNDIpICAtLT4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLnN0MCB7CiAgICAgICAgZmlsbDogbm9uZTsKICAgICAgfQoKICAgICAgLnN0MSB7CiAgICAgICAgZmlsbDogIzQyODVmNDsKICAgICAgfQoKICAgICAgLnN0MiB7CiAgICAgICAgZmlsbDogIzM0YTg1MzsKICAgICAgfQoKICAgICAgLnN0MyB7CiAgICAgICAgZmlsbDogI2ZiYmMwNDsKICAgICAgfQoKICAgICAgLnN0NCB7CiAgICAgICAgZmlsbDogI2VhNDMzNTsKICAgICAgfQogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPGcgaWQ9ImJvdW5kaW5nX2JveCI+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIvPgogIDwvZz4KICA8ZyBpZD0iYXJ0Ij4KICAgIDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0zMTEuOSw0MTguOWMtOC44LDAtMTYtNy4yLTE2LTE2di0xNDUuOGMwLTguOCw3LjItMTYsMTYtMTZzMTYsNy4yLDE2LDE2djE0NS44YzAsOC44LTcuMiwxNi0xNiwxNmgwWiIvPgogICAgPHBhdGggY2xhc3M9InN0MiIgZD0iTTE0Ny42LDQxOC45Yy04LjgsMC0xNi03LjItMTYtMTZ2LTIwMC41YzAtOC44LDcuMi0xNiwxNi0xNnMxNiw3LjIsMTYsMTZ2MjAwLjVjMCw4LjgtNy4yLDE2LTE2LDE2WiIvPgogICAgPHBhdGggY2xhc3M9InN0MiIgZD0iTTIyOS44LDQzNy40Yy04LjgsMC0xNi03LjItMTYtMTZWMTQ3LjZjMC04LjgsNy4yLTE2LDE2LTE2czE2LDcuMiwxNiwxNnYyNzMuN2MwLDguOC03LjIsMTYtMTYsMTZoMFoiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDMiIGQ9Ik0yMjkuOCw0MzcuNGMtMTE0LjUsMC0yMDcuNi05My4xLTIwNy42LTIwNy42aDMyYzAsOTYuOCw3OC44LDE3NS42LDE3NS42LDE3NS42czE3NS42LTc4LjgsMTc1LjYtMTc1LjZoMzJjMCwxMTQuNS05My4xLDIwNy42LTIwNy42LDIwNy42aDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3Q0IiBkPSJNNDM3LjQsMjI5LjhoLTMyYzAtOTYuOC03OC44LTE3NS42LTE3NS42LTE3NS42UzU0LjEsMTMyLjksNTQuMSwyMjkuOEgyMi4xYzAtMTE0LjUsOTMuMi0yMDcuNywyMDcuNy0yMDcuN3MyMDcuNiw5My4xLDIwNy42LDIwNy42aDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNNDg3LjQsNDY0LjhsLTEwMC0xMDBjMzIuMy0zNy42LDQ5LjktODUsNDkuOS0xMzUuMXMtMjEuNi0xMDcuNi02MC44LTE0Ni44bC0yMi42LDIyLjZjMzMuMiwzMy4yLDUxLjQsNzcuMyw1MS40LDEyNC4ycy0xOC4zLDkwLjktNTEuNSwxMjQuMWgwYy01LDUtNy41LDctMTEuOCwxMC44bDEyMi44LDEyMi44YzMuMSwzLjEsNy4yLDQuNywxMS4zLDQuN2gwYzQuMSwwLDguMi0xLjYsMTEuMy00LjcsNi4yLTYuMiw2LjItMTYuNCwwLTIyLjZoMFoiLz4KICA8L2c+Cjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="TS-GCP-COMPOSER" data-type="tech_services">
+<title>Cloud Composer</title>
+<path d="M175 148 L271.64 148 L320 195 L223.36 195 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="237.5" y="170.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Cloud Composer</text>
+<text x="247.5" y="189.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Workflow orchestration</text>
+<image x="286" y="152" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0ic3RhbmRhcmRfcHJvZHVjdF9pY29uIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDUxMiA1MTIiPgogIDwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiAyLjEuMCBCdWlsZCAxNDIpICAtLT4KICA8ZyBpZD0iYm91bmRpbmdfYm94Ij4KICAgIDxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiBmaWxsPSJub25lIi8+CiAgPC9nPgogIDxnIGlkPSJhcnQiPgogICAgPHBhdGggZD0iTTE1NS4yNCwyNTUuNTIzYy0xMS4xMzUsMC0yMS45OTUsMS43OS0zMi4yNTQsNS4yMjZsLTM4Ljg1LTc0LjE2OWMtNC4wOTYtNy44MTctMTMuNzU0LTEwLjgzNC0yMS41NjgtNi43NDEtNy44MTcsNC4wOTUtMTAuODM1LDEzLjc1Mi02Ljc0MSwyMS41NjhsMzguODY1LDc0LjE5OWMtMy44NjgsMi44OTktNy41NTgsNi4wOS0xMS4wMzcsOS41NjktMTkuMTIyLDE5LjEyLTI5LjY1Miw0NC41NDQtMjkuNjUyLDcxLjU4NXMxMC41MzEsNTIuNDY0LDI5LjY1Miw3MS41ODVjMTkuMTIsMTkuMTIxLDQ0LjU0MywyOS42NTIsNzEuNTg1LDI5LjY1MnM1Mi40NjUtMTAuNTMxLDcxLjU4NS0yOS42NTJjMzkuNDY2LTM5LjQ3MywzOS40NjktMTAzLjcsMC0xNDMuMTctMTkuMTItMTkuMTIxLTQ0LjU0NC0yOS42NTItNzEuNTg1LTI5LjY1MmgwWk0yMDQuMjI5LDQwNS43NDljLTEzLjA4NiwxMy4wODYtMzAuNDg0LDIwLjI5Mi00OC45ODksMjAuMjkycy0zNS45MDMtNy4yMDYtNDguOTg5LTIwLjI5Mi0yMC4yOTItMzAuNDg0LTIwLjI5Mi00OC45ODksNy4yMDYtMzUuOTAzLDIwLjI5Mi00OC45ODljNS01LDEwLjYzMy05LjEzMywxNi43MTMtMTIuMzQyLjAzOS0uMDIuMDc5LS4wMzcuMTE5LS4wNTguMDA5LS4wMDUuMDE2LS4wMS4wMjUtLjAxNSw5Ljc5Ni01LjE0MSwyMC43NTItNy44NzcsMzIuMTMyLTcuODc3LDE4LjUwNiwwLDM1LjkwMyw3LjIwNyw0OC45ODksMjAuMjkyLDEzLjA4NSwxMy4wODYsMjAuMjkyLDMwLjQ4MywyMC4yOTIsNDguOTg5cy03LjIwNywzNS45MDMtMjAuMjkyLDQ4Ljk4OWgwWiIgZmlsbD0iIzlhYTBhNiIvPgogICAgPHBhdGggZD0iTTQ1Ni4xNzIsMzEwLjU5M2wtMzguODY1LTc0LjE5OGMzLjg2OC0yLjg5OSw3LjU1OS02LjA5LDExLjAzOC05LjU3LDE5LjEyMi0xOS4xMiwyOS42NTItNDQuNTQ0LDI5LjY1Mi03MS41ODVzLTEwLjUzLTUyLjQ2NC0yOS42NTItNzEuNTg1Yy0xOS4xMi0xOS4xMi00NC41NDUtMjkuNjUyLTcxLjU4NS0yOS42NTJzLTUyLjQ2NCwxMC41MzEtNzEuNTg1LDI5LjY1MmMtMzkuNDcyLDM5LjQ3Mi0zOS40NzIsMTAzLjY5OCwwLDE0My4xNywxOS4xMiwxOS4xMjEsNDQuNTQ0LDI5LjY1Miw3MS41ODUsMjkuNjUyLDExLjEzNiwwLDIxLjk5NS0xLjc5LDMyLjI1NS01LjIyNmwzOC44NSw3NC4xNjljMi44NTQsNS40NSw4LjQxMyw4LjU2NywxNC4xNjcsOC41NjcsMi40OTksMCw1LjAzNC0uNTg3LDcuNC0xLjgyOCw3LjgxOC00LjA5NCwxMC44MzUtMTMuNzUxLDYuNzQtMjEuNTY3aDBaTTMwNy43NzEsMjA0LjIyOWMtMTMuMDg0LTEzLjA4Ni0yMC4yOTItMzAuNDgzLTIwLjI5Mi00OC45ODlzNy4yMDctMzUuOTAzLDIwLjI5Mi00OC45ODljMTMuMDg2LTEzLjA4NiwzMC40ODQtMjAuMjkyLDQ4Ljk4OS0yMC4yOTJzMzUuOTAzLDcuMjA2LDQ4Ljk4OSwyMC4yOTIsMjAuMjkyLDMwLjQ4NCwyMC4yOTIsNDguOTg5LTcuMjA2LDM1LjkwMy0yMC4yOTIsNDguOTg5Yy01LjAzMSw1LjAzLTEwLjcwMiw5LjE4Mi0xNi44MjUsMTIuMzk5LS4wMDIsMC0uMDA0LjAwMi0uMDA2LjAwMy0uMDAxLDAtLjAwMi4wMDEtLjAwMy4wMDItOS44MDIsNS4xNDktMjAuNzY2LDcuODg4LTMyLjE1NCw3Ljg4OC0xOC41MDYsMC0zNS45MDMtNy4yMDctNDguOTg5LTIwLjI5MmgtLjAwMVoiIGZpbGw9IiM5YWEwYTYiLz4KICAgIDxwYXRoIGQ9Ik0zNTYuNzYsNTQuMDAzYy0yNy4wNDEsMC01Mi40NjUsMTAuNTMxLTcxLjU4NSwyOS42NTItMTkuMTIxLDE5LjEyLTI5LjY1Miw0NC41NDQtMjkuNjUyLDcxLjU4NSwwLDIxLjYzOCw2Ljc0OSw0Mi4yMzUsMTkuMjQsNTkuNDAxbC04My4xMzUsODMuMTM1YzUuMzM3LDMuNTIyLDYuNDk5LDQuMjc3LDEyLjYwMSw5Ljk5NSwyNy44NzksMjYuMTE4LDI3LjAxMiw3MC45NjUsMCw5Ny45NzgtMTMuMDg2LDEzLjA4Ni0zMC40ODQsMjAuMjkyLTQ4Ljk4OSwyMC4yOTJzLTM1LjkwMy03LjIwNi00OC45ODktMjAuMjkybC0yMi41OTYsMjIuNTk2YzE5LjEyLDE5LjEyMSw0NC41NDQsMjkuNjUyLDcxLjU4NSwyOS42NTJzNTIuNDY1LTEwLjUzMSw3MS41ODUtMjkuNjUyYzE5LjEyMS0xOS4xMiwyOS42NTItNDQuNTQ0LDI5LjY1Mi03MS41ODUsMC0yMS42MzgtNi43NDktNDIuMjM1LTE5LjI0LTU5LjQwMWw4My4xMzQtODMuMTM0Yy0zLjg3My0yLjYxOS02LjYxOS00LjEwNy0xMi42LTkuOTk2LTI3LjIyMi0yNi44MDEtMjcuMDEyLTcwLjk2NSwwLTk3Ljk3OCwxMy4wODYtMTMuMDg2LDMwLjQ4NC0yMC4yOTIsNDguOTg5LTIwLjI5MnMzNS45MDMsNy4yMDYsNDguOTg5LDIwLjI5MmwyMi41OTYtMjIuNTk2Yy0xOS4xMi0xOS4xMjEtNDQuNTQ0LTI5LjY1Mi03MS41ODUtMjkuNjUyaDBaIiBmaWxsPSIjNDI4NWY0Ii8+CiAgPC9nPgo8L3N2Zz4="/>
+</g>
+<g class="node" data-id="TS-GCP-DATAFLOW" data-type="tech_services">
+<title>Dataflow</title>
+<path d="M12 148 L108.64 148 L157 195 L60.36 195 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="74.5" y="170.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dataflow</text>
+<text x="84.5" y="189.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Data pipeline</text>
+<image x="123" y="152" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0ic3RhbmRhcmRfcHJvZHVjdF9pY29uIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDUxMiA1MTIiPgogIDwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiAyLjEuMCBCdWlsZCAxNDIpICAtLT4KICA8ZyBpZD0iYm91bmRpbmdfYm94Ij4KICAgIDxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiBmaWxsPSJub25lIi8+CiAgPC9nPgogIDxnIGlkPSJhcnQiPgogICAgPHBhdGggZD0iTTE1NS4yNCwyNTUuNTIzYy0xMS4xMzUsMC0yMS45OTUsMS43OS0zMi4yNTQsNS4yMjZsLTM4Ljg1LTc0LjE2OWMtNC4wOTYtNy44MTctMTMuNzU0LTEwLjgzNC0yMS41NjgtNi43NDEtNy44MTcsNC4wOTUtMTAuODM1LDEzLjc1Mi02Ljc0MSwyMS41NjhsMzguODY1LDc0LjE5OWMtMy44NjgsMi44OTktNy41NTgsNi4wOS0xMS4wMzcsOS41NjktMTkuMTIyLDE5LjEyLTI5LjY1Miw0NC41NDQtMjkuNjUyLDcxLjU4NXMxMC41MzEsNTIuNDY0LDI5LjY1Miw3MS41ODVjMTkuMTIsMTkuMTIxLDQ0LjU0MywyOS42NTIsNzEuNTg1LDI5LjY1MnM1Mi40NjUtMTAuNTMxLDcxLjU4NS0yOS42NTJjMzkuNDY2LTM5LjQ3MywzOS40NjktMTAzLjcsMC0xNDMuMTctMTkuMTItMTkuMTIxLTQ0LjU0NC0yOS42NTItNzEuNTg1LTI5LjY1MmgwWk0yMDQuMjI5LDQwNS43NDljLTEzLjA4NiwxMy4wODYtMzAuNDg0LDIwLjI5Mi00OC45ODksMjAuMjkycy0zNS45MDMtNy4yMDYtNDguOTg5LTIwLjI5Mi0yMC4yOTItMzAuNDg0LTIwLjI5Mi00OC45ODksNy4yMDYtMzUuOTAzLDIwLjI5Mi00OC45ODljNS01LDEwLjYzMy05LjEzMywxNi43MTMtMTIuMzQyLjAzOS0uMDIuMDc5LS4wMzcuMTE5LS4wNTguMDA5LS4wMDUuMDE2LS4wMS4wMjUtLjAxNSw5Ljc5Ni01LjE0MSwyMC43NTItNy44NzcsMzIuMTMyLTcuODc3LDE4LjUwNiwwLDM1LjkwMyw3LjIwNyw0OC45ODksMjAuMjkyLDEzLjA4NSwxMy4wODYsMjAuMjkyLDMwLjQ4MywyMC4yOTIsNDguOTg5cy03LjIwNywzNS45MDMtMjAuMjkyLDQ4Ljk4OWgwWiIgZmlsbD0iIzlhYTBhNiIvPgogICAgPHBhdGggZD0iTTQ1Ni4xNzIsMzEwLjU5M2wtMzguODY1LTc0LjE5OGMzLjg2OC0yLjg5OSw3LjU1OS02LjA5LDExLjAzOC05LjU3LDE5LjEyMi0xOS4xMiwyOS42NTItNDQuNTQ0LDI5LjY1Mi03MS41ODVzLTEwLjUzLTUyLjQ2NC0yOS42NTItNzEuNTg1Yy0xOS4xMi0xOS4xMi00NC41NDUtMjkuNjUyLTcxLjU4NS0yOS42NTJzLTUyLjQ2NCwxMC41MzEtNzEuNTg1LDI5LjY1MmMtMzkuNDcyLDM5LjQ3Mi0zOS40NzIsMTAzLjY5OCwwLDE0My4xNywxOS4xMiwxOS4xMjEsNDQuNTQ0LDI5LjY1Miw3MS41ODUsMjkuNjUyLDExLjEzNiwwLDIxLjk5NS0xLjc5LDMyLjI1NS01LjIyNmwzOC44NSw3NC4xNjljMi44NTQsNS40NSw4LjQxMyw4LjU2NywxNC4xNjcsOC41NjcsMi40OTksMCw1LjAzNC0uNTg3LDcuNC0xLjgyOCw3LjgxOC00LjA5NCwxMC44MzUtMTMuNzUxLDYuNzQtMjEuNTY3aDBaTTMwNy43NzEsMjA0LjIyOWMtMTMuMDg0LTEzLjA4Ni0yMC4yOTItMzAuNDgzLTIwLjI5Mi00OC45ODlzNy4yMDctMzUuOTAzLDIwLjI5Mi00OC45ODljMTMuMDg2LTEzLjA4NiwzMC40ODQtMjAuMjkyLDQ4Ljk4OS0yMC4yOTJzMzUuOTAzLDcuMjA2LDQ4Ljk4OSwyMC4yOTIsMjAuMjkyLDMwLjQ4NCwyMC4yOTIsNDguOTg5LTcuMjA2LDM1LjkwMy0yMC4yOTIsNDguOTg5Yy01LjAzMSw1LjAzLTEwLjcwMiw5LjE4Mi0xNi44MjUsMTIuMzk5LS4wMDIsMC0uMDA0LjAwMi0uMDA2LjAwMy0uMDAxLDAtLjAwMi4wMDEtLjAwMy4wMDItOS44MDIsNS4xNDktMjAuNzY2LDcuODg4LTMyLjE1NCw3Ljg4OC0xOC41MDYsMC0zNS45MDMtNy4yMDctNDguOTg5LTIwLjI5MmgtLjAwMVoiIGZpbGw9IiM5YWEwYTYiLz4KICAgIDxwYXRoIGQ9Ik0zNTYuNzYsNTQuMDAzYy0yNy4wNDEsMC01Mi40NjUsMTAuNTMxLTcxLjU4NSwyOS42NTItMTkuMTIxLDE5LjEyLTI5LjY1Miw0NC41NDQtMjkuNjUyLDcxLjU4NSwwLDIxLjYzOCw2Ljc0OSw0Mi4yMzUsMTkuMjQsNTkuNDAxbC04My4xMzUsODMuMTM1YzUuMzM3LDMuNTIyLDYuNDk5LDQuMjc3LDEyLjYwMSw5Ljk5NSwyNy44NzksMjYuMTE4LDI3LjAxMiw3MC45NjUsMCw5Ny45NzgtMTMuMDg2LDEzLjA4Ni0zMC40ODQsMjAuMjkyLTQ4Ljk4OSwyMC4yOTJzLTM1LjkwMy03LjIwNi00OC45ODktMjAuMjkybC0yMi41OTYsMjIuNTk2YzE5LjEyLDE5LjEyMSw0NC41NDQsMjkuNjUyLDcxLjU4NSwyOS42NTJzNTIuNDY1LTEwLjUzMSw3MS41ODUtMjkuNjUyYzE5LjEyMS0xOS4xMiwyOS42NTItNDQuNTQ0LDI5LjY1Mi03MS41ODUsMC0yMS42MzgtNi43NDktNDIuMjM1LTE5LjI0LTU5LjQwMWw4My4xMzQtODMuMTM0Yy0zLjg3My0yLjYxOS02LjYxOS00LjEwNy0xMi42LTkuOTk2LTI3LjIyMi0yNi44MDEtMjcuMDEyLTcwLjk2NSwwLTk3Ljk3OCwxMy4wODYtMTMuMDg2LDMwLjQ4NC0yMC4yOTIsNDguOTg5LTIwLjI5MnMzNS45MDMsNy4yMDYsNDguOTg5LDIwLjI5MmwyMi41OTYtMjIuNTk2Yy0xOS4xMi0xOS4xMjEtNDQuNTQ0LTI5LjY1Mi03MS41ODUtMjkuNjUyaDBaIiBmaWxsPSIjNDI4NWY0Ii8+CiAgPC9nPgo8L3N2Zz4="/>
+</g>
+<g class="node" data-id="TS-GCP-LOOKER" data-type="tech_services">
+<title>Looker</title>
+<path d="M449 362 L545.64 362 L594 409 L497.36 409 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="511.5" y="384.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Looker</text>
+<text x="521.5" y="403.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Business intelligence</text>
+<image x="560" y="366" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0ic3RhbmRhcmRfcHJvZHVjdF9pY29uIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDUxMiA1MTIiPgogIDwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiAyLjEuMCBCdWlsZCAxNDIpICAtLT4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLnN0MCB7CiAgICAgICAgZmlsbDogbm9uZTsKICAgICAgfQoKICAgICAgLnN0MSB7CiAgICAgICAgZmlsbDogIzQyODVmNDsKICAgICAgfQoKICAgICAgLnN0MiB7CiAgICAgICAgZmlsbDogIzM0YTg1MzsKICAgICAgfQoKICAgICAgLnN0MyB7CiAgICAgICAgZmlsbDogI2ZiYmMwNDsKICAgICAgfQoKICAgICAgLnN0NCB7CiAgICAgICAgZmlsbDogI2VhNDMzNTsKICAgICAgfQogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPGcgaWQ9ImJvdW5kaW5nX2JveCI+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIvPgogIDwvZz4KICA8ZyBpZD0iYXJ0Ij4KICAgIDxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0zMTMuNSwyOTdjNDQuNCwwLDgwLjUsMzYuMSw4MC41LDgwLjVzLTM2LjEsODAuNS04MC41LDgwLjUtODAuNS0zNi4xLTgwLjUtODAuNSwzNi4xLTgwLjUsODAuNS04MC41TTMxMy41LDI2NWMtNjIuMSwwLTExMi41LDUwLjQtMTEyLjUsMTEyLjVzNTAuNCwxMTIuNSwxMTIuNSwxMTIuNSwxMTIuNS01MC40LDExMi41LTExMi41LTUwLjQtMTEyLjUtMTEyLjUtMTEyLjVoMFoiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDQiIGQ9Ik0zMzguMSw0MC45Yy0yNS4xLTI1LjEtNjYuMS0yNS4xLTkxLjIsMC0yMS4yLDIxLjItMjQuNSw1My41LTEwLjEsNzguMmwtNDQuMyw0Mi4zYy02LjQsNi4xLTYuNiwxNi4yLS41LDIyLjYsMy4xLDMuMyw3LjQsNSwxMS42LDVzNy45LTEuNSwxMS00LjRsNDQuNy00Mi43YzEwLjIsNi4xLDIxLjcsOS4xLDMzLjIsOS4xLDE2LjUsMCwzMy02LjMsNDUuNi0xOC45LDI1LjEtMjUuMiwyNS4xLTY2LjEsMC05MS4yaDBaTTMxNS41LDEwOS41Yy0xMi43LDEyLjctMzMuMywxMi43LTQ2LDBzLTEyLjctMzMuMywwLTQ2YzYuMy02LjMsMTQuNy05LjUsMjMtOS41czE2LjYsMy4yLDIzLDkuNWMxMi43LDEyLjcsMTIuNywzMy4zLDAsNDZoMFoiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0zMTMuNSwyNjVjLTIxLjUsMC00Mi4xLDYtNjAuMSwxNy40aDBzLTM4LjYtMzcuOS0zOC42LTM3LjlsLTIyLjQsMjIuOSwzNi42LDM1LjgsMjIuOSwyMi40aDBjMS41LTEuOCwzLTMuNSw0LjctNS4xLDMuMS0zLjEsNi40LTUuOSw5LjgtOC40aDBjMTMuOC05LjksMzAtMTUuMiw0Ny4xLTE1LjIsNDQuNCwwLDgwLjUsMzYuMSw4MC41LDgwLjVoMzJjMC02Mi01MC41LTExMi41LTExMi41LTExMi41aDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QzIiBkPSJNMTYxLjUsMjkwLjVjLTE5LjMsMC0zOC43LTcuNC01My40LTIyLjEtMjkuNC0yOS40LTI5LjQtNzcuMywwLTEwNi44LDI5LjQtMjkuNCw3Ny4zLTI5LjQsMTA2LjgsMCwyOS40LDI5LjQsMjkuNCw3Ny4zLDAsMTA2LjhoMGMtMTQuNywxNC43LTM0LjEsMjIuMS01My40LDIyLjFoMFpNMTYxLjUsMTcxLjVjLTExLjEsMC0yMi4zLDQuMi0zMC44LDEyLjctMTcsMTctMTcsNDQuNiwwLDYxLjUsMTcsMTcsNDQuNiwxNyw2MS41LDAsMTctMTcsMTctNDQuNiwwLTYxLjUtOC41LTguNS0xOS42LTEyLjctMzAuOC0xMi43aDBaIi8+CiAgPC9nPgo8L3N2Zz4="/>
+</g>
+<g class="node" data-id="TS-GCP-PUBSUB" data-type="tech_services">
+<title>Pub/Sub</title>
+<path d="M400 148 L496.64 148 L545 195 L448.36 195 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="462.5" y="170.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Pub/Sub</text>
+<text x="472.5" y="189.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Message queue</text>
+<image x="511" y="152" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0ic3RhbmRhcmRfcHJvZHVjdF9pY29uIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDUxMiA1MTIiPgogIDwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiAyLjEuMCBCdWlsZCAxNDIpICAtLT4KICA8ZyBpZD0iYm91bmRpbmdfYm94Ij4KICAgIDxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiBmaWxsPSJub25lIi8+CiAgPC9nPgogIDxnIGlkPSJhcnQiPgogICAgPHBhdGggZD0iTTM0Ni42ODMsMTEyLjYxMWwtLjAzOS03NS4xNzFjLS4wMDUtOC44MzQtNy4xNjctMTUuOTkyLTE2LTE1Ljk5MmgtLjAwOGMtOC44MzcuMDA0LTE1Ljk5Nyw3LjE3Mi0xNS45OTIsMTYuMDA4bC4wMzksNzUuMTU1SDExOGMtMTcuNjczLDAtMzIsMTQuMzI3LTMyLDMydjExMS44NjVjMCw4OS4wODUsNzYuMjYyLDE2MS41NjIsMTcwLDE2MS41NjJzMTcwLTcyLjQ3NywxNzAtMTYxLjU2MnYtMTExLjg2NWMwLTE3LjY3My0xNC4zMjctMzItMzItMzJoLTQ3LjMxN1pNMzk0LDI1Ni40NzdjMCw3MS40NC02MS45MDYsMTI5LjU2Mi0xMzgsMTI5LjU2MnMtMTM4LTU4LjEyMS0xMzgtMTI5LjU2MnYtMTExLjg2NWgyNzZ2MTExLjg2NVoiIGZpbGw9IiM0Mjg1ZjQiLz4KICAgIDxwYXRoIGQ9Ik0zMTQuNjQ0LDE0NC42MTF2LTMyaC0xMTcuMjk0bC0uMDM5LTc1LjE3MWMtLjAwNS04LjgzNC03LjE2Ny0xNS45OTItMTYtMTUuOTkyaC0uMDA4Yy04LjgzNy4wMDQtMTUuOTk3LDcuMTcyLTE1Ljk5MiwxNi4wMDhsLjAzOSw3NS4xNTVoLTQ3LjM1Yy0xNy42NzMsMC0zMiwxNC4zMjctMzIsMzJ2MTExLjg2NWMwLDgzLjk1OSw2Ny43NDEsMTUzLjE1NSwxNTQuMDA3LDE2MC44NDF2NTYuNjc5YzAsOC42MTYsNi42MjEsMTYuMDI5LDE1LjIyOCwxNi40MzMsOS4xODguNDMyLDE2Ljc3Mi02Ljg4OSwxNi43NzItMTUuOTgydi04OS4yNzdjLTYuNTk0LjYyNy04LjAxNC42NTItMTYsLjg2N2gtLjAwN2MtNzYuMDk0LDAtMTM4LTU4LjEyMS0xMzgtMTI5LjU2MnYtMTExLjg2NWgxOTYuNjQ0LDBaIiBmaWxsPSIjOWFhMGE2Ii8+CiAgPC9nPgo8L3N2Zz4="/>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="668.4" x2="1072" y2="668.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="692.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 681.4)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="93.2" y="692.4" font-size="12" font-weight="400" fill="#343d50">data asset · 1</text>
+<g transform="translate(181.3 681.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="207.3" y="692.4" font-size="12" font-weight="400" fill="#343d50">system · 2</text>
+<g transform="translate(280.74 681.4)" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"><path d="M5 1h14l-4 12H1z"/></g>
+<text x="306.74" y="692.4" font-size="12" font-weight="400" fill="#343d50">technology service · 6</text>
+<text x="28" y="714.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 703.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="714.4" font-size="12" font-weight="400" fill="#343d50">calls</text>
+<g transform="translate(143.05 703.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="169.05" y="714.4" font-size="12" font-weight="400" fill="#343d50">reads / writes</text>
+<g transform="translate(263 703.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="289" y="714.4" font-size="12" font-weight="400" fill="#343d50">runs on</text>
+<text x="28" y="748.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · product-parts--prd-lending-performance · edit the model, not the picture</text></g>
+</svg>

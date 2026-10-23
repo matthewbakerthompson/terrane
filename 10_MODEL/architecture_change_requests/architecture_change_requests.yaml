@@ -1,0 +1,271 @@
+# The decisions that let the work start, and the one that did not.
+#
+# `status` says where a request has got to; `governance_decision` says what the
+# board said. They are separate fields because an undecided request and a
+# rejected one are not the same thing, and a report showing only one of them
+# would read them as the same. A request with no decision recorded has not
+# been decided: there is no Pending value, because it would be a second place
+# to record what `status` already says.
+#
+# The deferred one is here on purpose. A model that only holds the decisions
+# that went through cannot answer why something is still the way it is, and
+# the card servicing datastore is still ungoverned partly because the request
+# to fold it into the lending database has not been taken.
+#
+# Every row is placeholder content drafted against a placeholder estate.
+
+- change_request_id: ACR-2026-014
+  name: Build installment lending on AWS rather than on-premises
+  description: >
+    Whether the new product goes onto the AWS landing zone or onto the
+    existing on-premises estate the card systems run on.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Conceptual
+  company_domain: Lending
+  requestor_org_id: ORG-LENDING
+  approver_org_id: ORG-TECH
+  request_date: 2026-01-19
+  decision_date: 2026-02-09
+  governance_decision: Approved
+  decision_rationale: >
+    The landing zone already carries the controls the product needs, and the
+    on-premises estate has no capacity plan that reaches the launch date.
+  impact_assessment: >
+    Eight new systems, none of them replacing anything live. The ledger, the
+    bureau and the CRM gain a caller through the integration hub rather than
+    changing.
+  principle_alignment: >
+    Buy the platform, build the differentiator.
+
+- change_request_id: ACR-2026-021
+  name: Buy sanctions screening rather than build it
+  description: >
+    Whether to extend the fraud platform with sanctions and adverse-media
+    screening or to onboard a vendor product for it.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  company_domain: Risk and Compliance
+  requestor_org_id: ORG-COMPLIANCE
+  approver_org_id: ORG-TECH
+  request_date: 2026-02-16
+  decision_date: 2026-03-09
+  governance_decision: Approved
+  decision_rationale: >
+    The list management is the product, and maintaining it in-house would be
+    a permanent obligation for a capability that is not a differentiator.
+  impact_assessment: >
+    A vendor tenant outside the estate, reached through a private egress path,
+    and one live system changed: the authorization switch becomes its caller.
+  principle_alignment: >
+    Buy the platform, build the differentiator.
+
+- change_request_id: ACR-2026-030
+  name: Fold the card servicing datastore into the lending database
+  description: >
+    Whether the card servicing operational datastore should be retired into
+    the new lending database once lending is live, rather than run as a second
+    operational store for the same customers.
+  status: Proposed
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Conceptual
+  company_domain: Servicing
+  requestor_org_id: ORG-DIGITAL
+  approver_org_id: ORG-TECH
+  request_date: 2026-05-11
+  decision_date: 2026-06-08
+  governance_decision: Deferred
+  decision_rationale: >
+    Deferred until the lending product has run a full cycle. Consolidating a
+    Restricted store into a system that has not yet been through a release
+    would move the risk rather than remove it.
+  impact_assessment: >
+    Would retire one live system and change one that is not built yet. Until
+    it is taken, the datastore stays as it is: High criticality, Restricted,
+    and recording no control of its own.
+  principle_alignment: >
+    One system of record per kind of data.
+
+- change_request_id: ACR-2026-035
+  name: Buy identity document verification rather than build it
+  description: >
+    Whether to extend the identity service with document capture and liveness
+    checking or to onboard a vendor for it.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  company_domain: Risk and Compliance
+  requestor_org_id: ORG-COMPLIANCE
+  approver_org_id: ORG-TECH
+  request_date: 2026-06-15
+  decision_date: 2026-07-06
+  governance_decision: Approved
+  decision_rationale: >
+    Liveness detection is a model the vendor retrains against fraud patterns
+    we never see; building it would be a permanent obligation for a capability
+    that is not a differentiator.
+  impact_assessment: >
+    A vendor tenancy outside the estate, reached over a private path, and one
+    live system changed: the identity service sends the capture and acts on
+    the callback.
+  principle_alignment: >
+    Buy the platform, build the differentiator.
+
+- change_request_id: ACR-2026-041
+  name: Build rewards redemption on the Azure product shape
+  description: >
+    Whether to add redemption to the card servicing product or to build it as
+    its own product on the Azure digital shape, the first to sit on it.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  company_domain: Card Issuing
+  requestor_org_id: ORG-REWARDS
+  approver_org_id: ORG-TECH
+  request_date: 2026-07-20
+  decision_date: 2026-08-10
+  governance_decision: Approved
+  decision_rationale: >
+    The shape exists to make a new cardholder product a handful of answers
+    rather than a build, and it had never been used. A product that adds one
+    part to it is the test the shape needs, and redemption is the product
+    whose failure costs least while it is proven.
+  impact_assessment: >
+    Five new systems on the Azure landing zone and nothing live changed. One
+    shared service added to the landing zone -- Event Hubs, the event stream
+    the worker consumes -- which every later Azure product with a worker
+    inherits. The proposed rewards ledger stays the source of balances.
+  principle_alignment: >
+    Build on the shape; let the landing zone answer for the parts.
+
+- change_request_id: ACR-2026-047
+  name: Assemble the merchant portal from parts rather than a shape
+  description: >
+    Whether a merchant-facing product needs a shape of its own before it is
+    built, or can be assembled from the parts the digital shapes share and
+    earn a shape when a second one follows.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  company_domain: Payments
+  requestor_org_id: ORG-MERCHANT
+  approver_org_id: ORG-TECH
+  request_date: 2026-09-14
+  decision_date: 2026-10-02
+  governance_decision: Approved
+  decision_rationale: >
+    A shape is worth naming when the second product like it arrives. The
+    first merchant product uses the same parts as the Azure digital shape
+    plus a role, and the library already makes those parts a handful of
+    answers; a shape for a product of one would be a file nobody reuses.
+  impact_assessment: >
+    Four new systems on the Azure landing zone, one new actor, and nothing
+    live changed. The compose block is the record of what was chosen; if a
+    second merchant product is assembled from it, it is promoted to a shape.
+  principle_alignment: >
+    Assemble from the library; name the shape when it repeats.
+
+- change_request_id: ACR-2026-048
+  name: Land the first product on Google Cloud
+  description: >
+    Whether a third cloud is worth a landing zone of its own for one product,
+    or the product should land on Azure beside the other digital products and
+    reach its dealer partners over the internet.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  company_domain: Lending
+  requestor_org_id: ORG-LENDING
+  approver_org_id: ORG-TECH
+  request_date: 2026-09-28
+  decision_date: 2026-10-05
+  governance_decision: Approved
+  decision_rationale: >
+    The dealer platforms that start a point-of-sale application already
+    integrate through Apigee on Google Cloud, and the shortest private path
+    to them is to land beside them. The library made the cost small: the
+    digital shape's parts are the same on every cloud, so the new shape is a
+    provider line and the bindings, and the landing zone is the same kinds
+    of service the AWS and Azure zones carry.
+  impact_assessment: >
+    A Google Cloud landing zone of nineteen services, a third digital shape,
+    four new systems and one data asset; nothing live changed. The zone's
+    kinds are the same as the other two, so every block resolves; the first
+    `library.landing_zone_gap` warning, if one appears, names what the zone
+    still lacks.
+  principle_alignment: >
+    Same parts, different bindings; land beside the partner, not across the
+    internet from it.
+
+- change_request_id: ACR-2026-049
+  name: Buy affordability data on open banking rails
+  description: >
+    Whether point-of-sale finance assesses affordability from the shopper's
+    own bank data, bought from an open banking vendor, or from the bureau
+    data the installment lending product already uses.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  company_domain: Lending
+  requestor_org_id: ORG-LENDING
+  approver_org_id: ORG-TECH
+  request_date: 2026-10-01
+  decision_date: 2026-10-06
+  governance_decision: Approved
+  decision_rationale: >
+    A checkout decision has seconds, and bureau data says what was borrowed,
+    not what is affordable this month. Open banking data, with the shopper's
+    consent, answers the question the regulator asks in the time the sale
+    allows. Bought, because the open banking connections and the
+    categorization are a vendor's whole business and nobody's here.
+  impact_assessment: >
+    One vendor tenancy, a gateway, a private egress and a webhook listener
+    in the lending project on Google Cloud, feeding the point-of-sale API.
+    Restricted data from the first byte, so the path is private and the
+    vendor's retention is contractual. The first bought capability on the
+    Google Cloud side; the vendor shape needed a provider line and nothing
+    else.
+  principle_alignment: >
+    Buy what is a vendor's whole business; land beside the caller; keep
+    restricted data off the public path.
+
+- change_request_id: ACR-2026-050
+  name: Curate Google Cloud data on Google Cloud
+  description: >
+    Whether point-of-sale finance's performance data is curated in BigQuery
+    beside the product, or carried to the enterprise warehouse on the Azure
+    side the way every other data product is.
+  status: Active
+  togaf_layer: Data
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  company_domain: Lending
+  requestor_org_id: ORG-LENDING
+  approver_org_id: ORG-TECH
+  request_date: 2026-10-05
+  decision_date: 2026-10-06
+  governance_decision: Approved
+  decision_rationale: >
+    The data is born on Google Cloud and the analysts who want it sit with
+    the product; carrying it to Snowflake for a nightly curation would cross
+    clouds twice, and pay egress both ways, for a dataset nobody on the
+    Azure side reads. Collibra registers it either way, so governance does
+    not move with the warehouse.
+  impact_assessment: >
+    A second workload project on the Google Cloud hub, four landing-zone
+    services the zone did not list -- BigQuery, Dataflow, Cloud Composer,
+    Looker -- and the first data product shape with a Google binding. The
+    enterprise warehouse gains nothing and loses nothing; the catalog gains
+    a dataset on a second cloud.
+  principle_alignment: >
+    Curate data where it is born; one catalog whichever cloud; land beside
+    the caller.

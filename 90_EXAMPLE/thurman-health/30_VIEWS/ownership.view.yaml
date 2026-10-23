@@ -1,0 +1,34 @@
+view_id: ownership
+title: Who Owns What
+category: Business
+section: People and channels
+kind: report
+description: >
+  Every system and the organizational unit that owns it. This is the "who do I
+  call" lookup for incidents. Check for systems assigned to a unit that does
+  not recognize them.
+node_label: name
+renderers: [mermaid]
+
+group_by: company_domain
+
+scope:
+  include:
+    - type: org_units
+      where:
+        status: [Active]
+    - type: systems
+      where:
+        status: [Active, Planned]
+
+edges:
+  # `owner` is a field rather than a relation row, handled as a pseudo-edge so
+  # accountability can be drawn without duplicating it into a relation table.
+  - via: owner
+    text: owns
+
+style:
+  color_by: criticality
+
+limits:
+  max_nodes: 120

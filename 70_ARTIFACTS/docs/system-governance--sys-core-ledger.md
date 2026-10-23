@@ -1,0 +1,139 @@
+# Core Card Ledger — Governance
+
+One system and everything that governs it: the controls it enforces, the policies it is subject to, and the controls that apply through the capabilities it realizes. A control reached only through a capability means either the system enforces it and nobody recorded that, or it is enforced somewhere else.
+
+```mermaid
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Core Card Ledger — Governance
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Capability["Capability"]
+    direction LR
+    CAP_ORIG_06{{"Account Establishment &<br/>Card Issuance"}}
+    CAP_SERV_02{{"Account Maintenance &<br/>Servicing Requests"}}
+    CAP_CRED_07{{"Account Review & Reissue<br/>Decisioning"}}
+    CAP_ORIG_05{{"Adverse Action & Notice<br/>Generation"}}
+    CAP_PAY_01{{"Authorization Processing"}}
+    CAP_CRED_06{{"Authorization Strategy<br/>Management"}}
+    CAP_BILL_05{{"Billing Adjustment &<br/>Credit Processing"}}
+    CAP_COLL_04{{"Charge-off Processing"}}
+    CAP_PAY_02{{"Clearing & Transaction<br/>Posting"}}
+    CAP_TPS_01{{"Client Program<br/>Configuration & Setup"}}
+    CAP_CRED_03{{"Credit Line Assignment &<br/>Management"}}
+    CAP_SERV{{"Customer Servicing & Care"}}
+    CAP_BILL_02{{"Cycle & Statement<br/>Generation"}}
+    CAP_DATA_02{{"Data Sourcing &<br/>Integration"}}
+    CAP_COLL_01{{"Delinquency Segmentation &<br/>Treatment Strategy"}}
+    CAP_FIN_03{{"Funding & Liquidity<br/>Management"}}
+    CAP_FIN_01{{"General Ledger & Financial<br/>Close"}}
+    CAP_FIN_02{{"Interchange & Revenue<br/>Accounting"}}
+    CAP_BILL_01{{"Interest & Fee Assessment"}}
+    CAP_PART_02{{"Network & Scheme<br/>Relationship"}}
+    CAP_PAY_05{{"Network Settlement &<br/>Interchange"}}
+    CAP_TPS_02{{"Portfolio Conversion &<br/>Deconversion"}}
+    CAP_PROD_02{{"Pricing, Fee & APR<br/>Management"}}
+    CAP_PROD_01{{"Product Design &<br/>Configuration"}}
+    CAP_PROD_05{{"Product Lifecycle &<br/>Retirement"}}
+    CAP_BILL_04{{"Rewards Earn, Accrual &<br/>Redemption"}}
+  end
+
+  subgraph grp_Control["Control"]
+    direction LR
+    CTL_ADVERSE_ACT[["Adverse action notice<br/>completeness"]]
+    CTL_AUTH_AVAIL[["Authorization availability<br/>and stand-in"]]
+    CTL_AUTH_POLICY[["Cardholder authentication<br/>to policy"]]
+    CTL_CHARGEOFF_TIME[["Charge-off timing to<br/>policy"]]
+    CTL_CLIENT_SLA[["Client reporting and feed<br/>monitoring"]]
+    CTL_CLOSE_SIGNOFF[["Close reconciliation<br/>sign-off"]]
+    CTL_COMPLAINT_REG[["Complaint regulatory<br/>routing"]]
+    CTL_CONV_VERIFY[["Conversion balance and<br/>record verification"]]
+    CTL_CYCLE_VALID[["Cycle assessment<br/>validation"]]
+    CTL_DAILY_RECON[["Daily settlement and<br/>clearing reconciliation"]]
+    CTL_DQ_GATE[["Ingestion data quality<br/>gate"]]
+    CTL_CHG_APPROVAL[["Production change approval"]]
+    CTL_DR_TEST[["Recovery test against<br/>committed objectives"]]
+  end
+
+  subgraph grp_System["System"]
+    direction LR
+    SYS_CORE_LEDGER["Core Card Ledger"]
+  end
+
+  SYS_CORE_LEDGER -->|"enforces"| CTL_DAILY_RECON
+  SYS_CORE_LEDGER -->|"enforces"| CTL_CYCLE_VALID
+  SYS_CORE_LEDGER -->|"enforces"| CTL_CHG_APPROVAL
+  SYS_CORE_LEDGER -->|"enforces"| CTL_DR_TEST
+  SYS_CORE_LEDGER -->|"realizes"| CAP_SERV
+  SYS_CORE_LEDGER -->|"realizes"| CAP_ORIG_06
+  SYS_CORE_LEDGER -->|"realizes"| CAP_BILL_01
+  SYS_CORE_LEDGER -->|"realizes"| CAP_BILL_02
+  SYS_CORE_LEDGER -->|"realizes"| CAP_BILL_04
+  SYS_CORE_LEDGER -->|"realizes"| CAP_BILL_05
+  SYS_CORE_LEDGER -->|"realizes"| CAP_COLL_01
+  SYS_CORE_LEDGER -->|"realizes"| CAP_COLL_04
+  SYS_CORE_LEDGER -->|"realizes"| CAP_CRED_03
+  SYS_CORE_LEDGER -->|"realizes"| CAP_CRED_06
+  SYS_CORE_LEDGER -->|"realizes"| CAP_CRED_07
+  SYS_CORE_LEDGER -->|"realizes"| CAP_DATA_02
+  SYS_CORE_LEDGER -->|"realizes"| CAP_FIN_01
+  SYS_CORE_LEDGER -->|"realizes"| CAP_FIN_02
+  SYS_CORE_LEDGER -->|"realizes"| CAP_FIN_03
+  SYS_CORE_LEDGER -->|"realizes"| CAP_ORIG_05
+  SYS_CORE_LEDGER -->|"realizes"| CAP_PART_02
+  SYS_CORE_LEDGER -->|"realizes"| CAP_PAY_01
+  SYS_CORE_LEDGER -->|"realizes"| CAP_PAY_02
+  SYS_CORE_LEDGER -->|"realizes"| CAP_PAY_05
+  SYS_CORE_LEDGER -->|"realizes"| CAP_PROD_01
+  SYS_CORE_LEDGER -->|"realizes"| CAP_PROD_02
+  SYS_CORE_LEDGER -->|"realizes"| CAP_PROD_05
+  SYS_CORE_LEDGER -->|"realizes"| CAP_SERV_02
+  SYS_CORE_LEDGER -->|"realizes"| CAP_TPS_01
+  SYS_CORE_LEDGER -->|"realizes"| CAP_TPS_02
+  CAP_BILL_01 -->|"governed by"| CTL_CYCLE_VALID
+  CAP_BILL_02 -->|"governed by"| CTL_CYCLE_VALID
+  CAP_BILL_04 -->|"governed by"| CTL_CYCLE_VALID
+  CAP_COLL_04 -->|"governed by"| CTL_CHARGEOFF_TIME
+  CAP_CRED_03 -->|"governed by"| CTL_ADVERSE_ACT
+  CAP_CRED_06 -->|"governed by"| CTL_AUTH_AVAIL
+  CAP_DATA_02 -->|"governed by"| CTL_CLIENT_SLA
+  CAP_DATA_02 -->|"governed by"| CTL_CONV_VERIFY
+  CAP_DATA_02 -->|"governed by"| CTL_DQ_GATE
+  CAP_FIN_01 -->|"governed by"| CTL_CHARGEOFF_TIME
+  CAP_FIN_01 -->|"governed by"| CTL_CLOSE_SIGNOFF
+  CAP_FIN_02 -->|"governed by"| CTL_DAILY_RECON
+  CAP_FIN_03 -->|"governed by"| CTL_DAILY_RECON
+  CAP_ORIG_05 -->|"governed by"| CTL_ADVERSE_ACT
+  CAP_ORIG_06 -->|"governed by"| CTL_AUTH_POLICY
+  CAP_PAY_01 -->|"governed by"| CTL_AUTH_AVAIL
+  CAP_PAY_02 -->|"governed by"| CTL_DAILY_RECON
+  CAP_PAY_05 -->|"governed by"| CTL_DAILY_RECON
+  CAP_SERV -->|"governed by"| CTL_COMPLAINT_REG
+  CAP_TPS_01 -->|"governed by"| CTL_CLIENT_SLA
+  CAP_TPS_02 -->|"governed by"| CTL_CONV_VERIFY
+
+  classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
+  classDef s_controls__controls fill:#fca5a5,stroke:#b91c1c,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  class CAP_BILL_01,CAP_BILL_02,CAP_BILL_04,CAP_BILL_05,CAP_COLL_01,CAP_COLL_04,CAP_CRED_03,CAP_CRED_06,CAP_CRED_07,CAP_DATA_02,CAP_FIN_01,CAP_FIN_02,CAP_FIN_03,CAP_ORIG_05,CAP_ORIG_06,CAP_PART_02,CAP_PAY_01,CAP_PAY_02,CAP_PAY_05,CAP_PROD_01,CAP_PROD_02,CAP_PROD_05,CAP_SERV,CAP_SERV_02,CAP_TPS_01,CAP_TPS_02 s_capabilities__capabilities;
+  class CTL_ADVERSE_ACT,CTL_AUTH_AVAIL,CTL_AUTH_POLICY,CTL_CHARGEOFF_TIME,CTL_CHG_APPROVAL,CTL_CLIENT_SLA,CTL_CLOSE_SIGNOFF,CTL_COMPLAINT_REG,CTL_CONV_VERIFY,CTL_CYCLE_VALID,CTL_DAILY_RECON,CTL_DQ_GATE,CTL_DR_TEST s_controls__controls;
+  class SYS_CORE_LEDGER s_systems__systems;
+  classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_Capability,grp_Control,grp_System boundary1;
+```
+
+The same view as the app draws it, written beside the Mermaid by `terrane render`:
+
+![Core Card Ledger — Governance](../svg/system-governance--sys-core-ledger.svg)
+
+**Hue is the entity type.**
+
+| | Entity type |
+|---|---|
+| `#6d28d9` | capabilities |
+| `#b91c1c` | controls |
+| `#4338ca` | systems |
+
+40 entities, 51 relationships. Generated from the model; edit the model, not this file.
+
+> 56 entities matched; showing the 1 the scope names and the first 39 of the rest by id. Narrow the scope or raise limits.max_nodes.

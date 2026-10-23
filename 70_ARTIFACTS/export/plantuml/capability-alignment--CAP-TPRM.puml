@@ -1,0 +1,99 @@
+@startuml
+' Third-Party & Vendor Management — Frameworks, Controls, Systems
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Third-Party & Vendor Management — Frameworks, Controls, Systems
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_TPRM_02, "Contract & SLA Management", "Contract suppliers and hold them to commitments.", $tags="capabilities")
+  ' aac CAP_TPRM_02: company_domain="Cross-Functional Services"
+  System(CAP_TPRM_03, "Ongoing Vendor Risk Monitoring", "Monitor supplier risk through the life of the relationship.", $tags="capabilities")
+  ' aac CAP_TPRM_03: company_domain="Cross-Functional Services"
+  System(CAP_TPRM, "Third-Party & Vendor Management", "Third-Party & Vendor Management. Level 0 enterprise capability domain (Enable tier).", $tags="capabilities")
+  ' aac CAP_TPRM: company_domain="Cross-Functional Services"
+  System(CAP_TPRM_04, "Vendor Exit & Continuity Planning", "Maintain exit and continuity plans for critical suppliers.", $tags="capabilities")
+  ' aac CAP_TPRM_04: company_domain="Cross-Functional Services"
+  System(CAP_TPRM_01, "Vendor Sourcing & Due Diligence", "Select and diligence suppliers.", $tags="capabilities")
+  ' aac CAP_TPRM_01: company_domain="Cross-Functional Services"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_TPRM_DD, "Third-party due diligence before onboarding", "No supplier processes cardholder data before risk-tiered due diligence is complete and accepted.", $tags="controls")
+  ' aac CTL_TPRM_DD: company_domain=""
+}
+Boundary(b_Framework, "Framework") {
+  System(FW_APQC, "APQC Process Classification Framework", "A cross-industry process taxonomy. Used here for the enabling tier, where a card-specific name adds nothing: finance, HR and corporate services look much the same in any industry, and inventing local names for them costs comparability for no benefit.", $tags="frameworks")
+  ' aac FW_APQC: company_domain=""
+  System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
+  ' aac FW_BIAN: company_domain=""
+  System(FW_CRI, "CRI Profile", "The Cyber Risk Institute's Profile: the financial sector's harmonization of NIST CSF, ISO 27001 and the regulators' expectations into one set of diagnostic statements. What a bank is examined against for cyber, and therefore what the security domain is governed by rather than informed by.", $tags="frameworks")
+  ' aac FW_CRI: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_EA_008, "Evaluate and select a technology or platform", "Run the evaluation for a new technology or vendor platform: requirements, options, proof of concept, and a recommendation into procurement.", $tags="processes")
+  ' aac P_EA_008: company_domain=""
+  System(P_VENDORMGMT_003, "Execute supplier exit", "Execute the exit of a supplier, including data return and service transition. Exit executes the termination plan: service transition, data return or destruction with certificate, and access revocation, proving the exit clause was real.", $tags="processes")
+  ' aac P_VENDORMGMT_003: company_domain=""
+  System(P_VENDORMGMT_002, "Monitor supplier risk and performance", "Monitor supplier risk, performance, and service levels through the relationship. Ongoing monitoring covers risk, performance, and financial condition on a tier-driven cadence; findings route to the relationship owner with dates.", $tags="processes")
+  ' aac P_VENDORMGMT_002: company_domain=""
+  System(P_VENDORMGMT_001, "Onboard and diligence supplier", "Assess, diligence, and contract a new supplier with required security and risk terms. Due diligence is risk-tiered per the TPRM policy; no supplier touches cardholder data before security review and contract terms land, which is the EX.DD control.", $tags="processes")
+  ' aac P_VENDORMGMT_001: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_ARCHREPO, "Architecture repository", "Architecture models, standards, decisions, and the application inventory. Built with SaaS.", $tags="systems")
+  ' aac SYS_ARCHREPO: company_domain=""; hosting="SaaS"; technology="SaaS"
+  System(SYS_GRC, "Governance, risk and compliance platform", "Policy, control, issue, and risk register management.", $tags="systems")
+  ' aac SYS_GRC: company_domain=""
+}
+
+Rel(CAP_TPRM_01, CAP_TPRM, "part of")
+Rel(CAP_TPRM_02, CAP_TPRM, "part of")
+Rel(CAP_TPRM_03, CAP_TPRM, "part of")
+Rel(CAP_TPRM_04, CAP_TPRM, "part of")
+Rel(CAP_TPRM, FW_APQC, "Informed by")
+' aac rel: source="CAP_TPRM"; target="FW_APQC"; label="Informed by"; relation="capability_aligns_to_framework"; alignment="Informed by"
+Rel(CAP_TPRM_01, FW_CRI, "Extend > EX.DD-01")
+' aac rel: source="CAP_TPRM_01"; target="FW_CRI"; label="Extend > EX.DD-01"; relation="capability_references_framework"; ref="Extend > EX.DD-01"
+Rel(CAP_TPRM_02, FW_BIAN, "Reference Data > External Agency > Contractor and Supplier Agreement")
+' aac rel: source="CAP_TPRM_02"; target="FW_BIAN"; label="Reference Data > External Agency > Contractor and Supplier Agreement"; relation="capability_references_framework"; ref="Reference Data > External Agency > Contractor and Supplier Agreement"
+Rel(CAP_TPRM_02, FW_CRI, "Extend > EX.CN-01")
+' aac rel: source="CAP_TPRM_02"; target="FW_CRI"; label="Extend > EX.CN-01"; relation="capability_references_framework"; ref="Extend > EX.CN-01"
+Rel(CAP_TPRM_03, FW_CRI, "Extend > EX.MM-01")
+' aac rel: source="CAP_TPRM_03"; target="FW_CRI"; label="Extend > EX.MM-01"; relation="capability_references_framework"; ref="Extend > EX.MM-01"
+Rel(CAP_TPRM_04, FW_CRI, "Extend > EX.TR-01")
+' aac rel: source="CAP_TPRM_04"; target="FW_CRI"; label="Extend > EX.TR-01"; relation="capability_references_framework"; ref="Extend > EX.TR-01"
+Rel(P_VENDORMGMT_001, CAP_TPRM_01, "supported by")
+' aac rel: source="P_VENDORMGMT_001"; target="CAP_TPRM_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_VENDORMGMT_001, CAP_TPRM_02, "supported by")
+' aac rel: source="P_VENDORMGMT_001"; target="CAP_TPRM_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_VENDORMGMT_002, CAP_TPRM_03, "supported by")
+' aac rel: source="P_VENDORMGMT_002"; target="CAP_TPRM_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_VENDORMGMT_003, CAP_TPRM_04, "supported by")
+' aac rel: source="P_VENDORMGMT_003"; target="CAP_TPRM_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_EA_008, CAP_TPRM_01, "supported by")
+' aac rel: source="P_EA_008"; target="CAP_TPRM_01"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_TPRM, CTL_TPRM_DD, "governed by")
+' aac rel: source="CAP_TPRM"; target="CTL_TPRM_DD"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_TPRM_01, CTL_TPRM_DD, "governed by")
+' aac rel: source="CAP_TPRM_01"; target="CTL_TPRM_DD"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_TPRM_02, CTL_TPRM_DD, "governed by")
+' aac rel: source="CAP_TPRM_02"; target="CTL_TPRM_DD"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(SYS_ARCHREPO, CAP_TPRM_01, "realizes")
+' aac rel: source="SYS_ARCHREPO"; target="CAP_TPRM_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_GRC, CAP_TPRM_01, "realizes")
+' aac rel: source="SYS_GRC"; target="CAP_TPRM_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_GRC, CAP_TPRM_02, "realizes")
+' aac rel: source="SYS_GRC"; target="CAP_TPRM_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_GRC, CAP_TPRM_03, "realizes")
+' aac rel: source="SYS_GRC"; target="CAP_TPRM_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_GRC, CAP_TPRM_04, "realizes")
+' aac rel: source="SYS_GRC"; target="CAP_TPRM_04"; label="realizes"; relation="system_realizes_capability"
+
+SHOW_LEGEND()
+@enduml

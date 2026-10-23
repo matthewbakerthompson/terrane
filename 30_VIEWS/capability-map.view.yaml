@@ -1,0 +1,35 @@
+view_id: capability-map
+title: Capability Map
+category: Business
+section: Capabilities
+kind: map
+description: >
+  Everything the business does, on one page: the three tiers, the domains in
+  each, and the capabilities in each domain. It shows what the business needs
+  to be able to do, not which systems do it; Capability Realization says that.
+  Show a framework to see which capabilities are placed in it.
+layout: TB
+node_label: name
+renderers: [mermaid]
+
+# The whole map, rather than the top level on one page and the working
+# level on another: the two halves of one picture were two views, and
+# neither was the picture.
+group_by: [capability_tier, parent_capability_id]
+
+scope:
+  include:
+    - type: capabilities
+      where:
+        capability_level: [L1]
+
+edges: []
+
+style:
+  color_by: strategic_importance
+  # Each capability carries the frameworks it is placed in, which the app
+  # shows on the tiles when a framework is chosen.
+  marks: capability_references_framework
+
+limits:
+  max_nodes: 200

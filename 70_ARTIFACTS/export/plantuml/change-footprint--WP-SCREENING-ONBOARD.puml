@@ -1,0 +1,97 @@
+@startuml
+' Onboard the screening vendor — Footprint
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Onboard the screening vendor — Footprint
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("work_packages", $bgColor="#ccfbf1", $borderColor="#0d9488", $fontColor="#0f172a", $legendText="work package")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_PAY, "Payments & Transaction Processing", "Payments & Transaction Processing. Level 0 enterprise capability domain (Core tier).", $tags="capabilities")
+  ' aac CAP_PAY: company_domain="Servicing"
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_CARD_ACCOUNT, "Card account master", "Account, balance, limit and status records for every card account.", $tags="data_assets")
+  ' aac DA_CARD_ACCOUNT: company_domain="Card Issuing"
+  SystemDb(DA_TRANSACTION, "Card transaction history", "Authorized, cleared and settled card transactions.", $tags="data_assets")
+  ' aac DA_TRANSACTION: company_domain="Payments"
+  SystemDb(DA_SCREENING_OUTCOMES, "NICE Actimize Screening outcomes", "What the vendor decided and why, landed our side. Held because a decision we cannot explain is a decision we cannot defend.", $tags="data_assets")
+  ' aac DA_SCREENING_OUTCOMES: company_domain="Risk and Compliance"
+}
+Boundary(b_Process, "Process") {
+  System(P_SERVICING_001, "Assess interest, fees, and minimum payment", "Calculate interest, fees, and the minimum payment due for the billing cycle. Cycle assessment applies the cardholder agreement exactly: interest method, fee triggers, and minimum-payment formula, because a systematic error here is a remediation event.", $tags="processes")
+  ' aac P_SERVICING_001: company_domain=""
+  System(P_TPS_002, "Convert client portfolio", "Migrate a client portfolio onto the servicing platform with reconciled balances and no cardholder disruption.", $tags="processes")
+  ' aac P_TPS_002: company_domain=""
+  System(P_STMT_GEN_001, "Cut cycle and generate statement", "Cut the billing cycle and generate the cardholder statement including the rewards position. Cycle cut is the hard deadline that sequences assessment, statement generation, and delivery; a late cut cascades into payment due dates and regulatory timing.", $tags="processes")
+  ' aac P_STMT_GEN_001: company_domain=""
+  System(P_FRAUD_001, "Detect and action transaction fraud alert", "Detect a suspected fraudulent transaction, action the alert, and contact the cardholder. Alert handling runs against loss and customer-friction budgets; actions span block, reissue, and contact, and the clock matters because exposure grows per transaction.", $tags="processes")
+  ' aac P_FRAUD_001: company_domain=""
+  System(P_PAYMENTS_002, "Ingest clearing file and post transactions", "Receive network clearing files and post transactions to cardholder accounts. Clearing ingestion matches presentments to authorizations, posts to accounts, and routes exceptions; the file must balance to network totals before posting completes.", $tags="processes")
+  ' aac P_PAYMENTS_002: company_domain=""
+  System(P_PAYMENTS_001, "Process authorization request", "Receive, decision, and respond to a real-time authorization request within the network response window.", $tags="processes")
+  ' aac P_PAYMENTS_001: company_domain=""
+  System(P_DISPUTE_001, "Process cardholder dispute claim", "Take a cardholder dispute claim, apply provisional credit, investigate, determine, and notify within regulatory timers.", $tags="processes")
+  ' aac P_DISPUTE_001: company_domain=""
+  System(P_NETWORK_RECON_001, "Reconcile network settlement", "Reconcile network settlement files against internal transaction and ledger positions and resolve breaks.", $tags="processes")
+  ' aac P_NETWORK_RECON_001: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_AUTH_SWITCH, "Authorization Switch", "Real-time card authorization switch connected to the scheme networks.", $tags="systems")
+  ' aac SYS_AUTH_SWITCH: company_domain="Payments"; hosting="On-prem"
+  System_Ext(SYS_SCREENING_VENDOR, "NICE Actimize Screening", "Financial Crime Screening, operated by NICE Actimize in their own tenancy. Contractually pinned to EU processing; the DPA restricts sub-processors and sets a 90-day retention ceiling. Built with NICE Actimize.", $tags="systems")
+  ' aac SYS_SCREENING_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="NICE Actimize"
+  System(SYS_SCREENING_FEDERATION, "NICE Actimize Screening Identity Federation", "Single sign-on into NICE Actimize: assertions from our identity provider, so access is granted and revoked where the joiner and leaver process already runs.", $tags="systems")
+  ' aac SYS_SCREENING_FEDERATION: company_domain="Enterprise Platform"; hosting="AWS"
+  System(SYS_SCREENING_GATEWAY, "NICE Actimize Screening Integration Gateway", "Our side of the NICE Actimize integration: request mapping, retry and back-off, circuit breaking when the vendor is down, and the audit trail of what we sent them. Built with EKS.", $tags="systems")
+  ' aac SYS_SCREENING_GATEWAY: company_domain="Risk and Compliance"; hosting="AWS"; technology="EKS"
+  System(SYS_SCREENING_EGRESS, "NICE Actimize Screening Private Egress", "PrivateLink endpoint and egress allow-list for NICE Actimize. The control that keeps regulated data off the public internet, and the thing a security review asks to see first.", $tags="systems")
+  ' aac SYS_SCREENING_EGRESS: company_domain="Enterprise Platform"; hosting="AWS"
+}
+Boundary(b_Work_Package, "Work Package") {
+  System(WP_SCREENING_ONBOARD, "Onboard the screening vendor", "Buy sanctions and adverse-media screening rather than build it: the vendor tenant, the integration gateway, the private egress path and the identity federation, plus the change to the authorization switch that calls it.", $tags="work_packages")
+  ' aac WP_SCREENING_ONBOARD: company_domain="Risk and Compliance"
+}
+
+Rel(WP_SCREENING_ONBOARD, SYS_SCREENING_VENDOR, "Builds")
+' aac rel: source="WP_SCREENING_ONBOARD"; target="SYS_SCREENING_VENDOR"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_SCREENING_ONBOARD, SYS_SCREENING_GATEWAY, "Builds")
+' aac rel: source="WP_SCREENING_ONBOARD"; target="SYS_SCREENING_GATEWAY"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_SCREENING_ONBOARD, SYS_SCREENING_EGRESS, "Builds")
+' aac rel: source="WP_SCREENING_ONBOARD"; target="SYS_SCREENING_EGRESS"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_SCREENING_ONBOARD, SYS_SCREENING_FEDERATION, "Builds")
+' aac rel: source="WP_SCREENING_ONBOARD"; target="SYS_SCREENING_FEDERATION"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_SCREENING_ONBOARD, SYS_AUTH_SWITCH, "Changes")
+' aac rel: source="WP_SCREENING_ONBOARD"; target="SYS_AUTH_SWITCH"; label="Changes"; relation="work_package_affects_system"; effect="Changes"
+Rel(SYS_SCREENING_VENDOR, DA_SCREENING_OUTCOMES, "Write")
+' aac rel: source="SYS_SCREENING_VENDOR"; target="DA_SCREENING_OUTCOMES"; label="Write"; relation="system_reads_writes"; operation="Write"
+Rel(SYS_AUTH_SWITCH, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_AUTH_SWITCH"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_AUTH_SWITCH, DA_TRANSACTION, "ReadWrite")
+' aac rel: source="SYS_AUTH_SWITCH"; target="DA_TRANSACTION"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_AUTH_SWITCH, CAP_PAY, "realizes")
+' aac rel: source="SYS_AUTH_SWITCH"; target="CAP_PAY"; label="realizes"; relation="system_realizes_capability"
+Rel(P_DISPUTE_001, DA_TRANSACTION, "Reads")
+' aac rel: source="P_DISPUTE_001"; target="DA_TRANSACTION"; label="Reads"; relation="process_uses_data_asset"; access="Reads"
+Rel(P_PAYMENTS_001, DA_TRANSACTION, "Writes")
+' aac rel: source="P_PAYMENTS_001"; target="DA_TRANSACTION"; label="Writes"; relation="process_uses_data_asset"; access="Writes"
+Rel(P_PAYMENTS_002, DA_TRANSACTION, "Writes")
+' aac rel: source="P_PAYMENTS_002"; target="DA_TRANSACTION"; label="Writes"; relation="process_uses_data_asset"; access="Writes"
+Rel(P_NETWORK_RECON_001, DA_TRANSACTION, "Reads")
+' aac rel: source="P_NETWORK_RECON_001"; target="DA_TRANSACTION"; label="Reads"; relation="process_uses_data_asset"; access="Reads"
+Rel(P_SERVICING_001, DA_TRANSACTION, "Both")
+' aac rel: source="P_SERVICING_001"; target="DA_TRANSACTION"; label="Both"; relation="process_uses_data_asset"; access="Both"
+Rel(P_STMT_GEN_001, DA_TRANSACTION, "Reads")
+' aac rel: source="P_STMT_GEN_001"; target="DA_TRANSACTION"; label="Reads"; relation="process_uses_data_asset"; access="Reads"
+Rel(P_FRAUD_001, DA_TRANSACTION, "Reads")
+' aac rel: source="P_FRAUD_001"; target="DA_TRANSACTION"; label="Reads"; relation="process_uses_data_asset"; access="Reads"
+Rel(P_TPS_002, DA_TRANSACTION, "Writes")
+' aac rel: source="P_TPS_002"; target="DA_TRANSACTION"; label="Writes"; relation="process_uses_data_asset"; access="Writes"
+
+SHOW_LEGEND()
+@enduml

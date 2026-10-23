@@ -1,0 +1,49 @@
+@startuml
+' Treasury management — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Treasury management — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_FIN_06, "Cash & Settlement Reconciliation", "Reconcile cash and settlement positions daily.", $tags="capabilities")
+  ' aac CAP_FIN_06: company_domain="Cross-Functional Services"
+  System(CAP_FIN_03, "Funding & Liquidity Management", "Manage funding positions and liquidity.", $tags="capabilities")
+  ' aac CAP_FIN_03: company_domain="Cross-Functional Services"
+  System(CAP_PAY_05, "Network Settlement & Interchange", "Settle positions with networks and account for interchange.", $tags="capabilities")
+  ' aac CAP_PAY_05: company_domain="Servicing"
+}
+Boundary(b_Process, "Process") {
+  System(P_SETTLEMENT_001, "Fund daily network settlement position", "Determine and fund the daily settlement position with the networks. The settlement position must fund by the network deadline in the settlement currency; a miss is a network compliance event, so the process carries same-day escalation.", $tags="processes")
+  ' aac P_SETTLEMENT_001: company_domain=""
+  System(P_FUNDING_001, "Manage daily funding position", "Determine, fund, and report the daily liquidity and funding position. The daily position covers settlement obligations, deposit flows, and contingency lines; a funding miss is a same-day escalation, not a report.", $tags="processes")
+  ' aac P_FUNDING_001: company_domain=""
+  System(P_SETTLEMENT_002, "Reconcile cash and suspense accounts", "Reconcile cash and suspense account positions and clear aged items. Cash and suspense reconcile daily with aging visible; suspense is a control account, and items that age past threshold escalate to investigation.", $tags="processes")
+  ' aac P_SETTLEMENT_002: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_TREASURY, "Treasury management", "Treasury, funding, and liquidity management.", $tags="systems")
+  ' aac SYS_TREASURY: company_domain=""
+}
+
+Rel(P_SETTLEMENT_001, SYS_TREASURY, "Supporting")
+' aac rel: source="P_SETTLEMENT_001"; target="SYS_TREASURY"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SETTLEMENT_002, SYS_TREASURY, "Supporting")
+' aac rel: source="P_SETTLEMENT_002"; target="SYS_TREASURY"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_FUNDING_001, SYS_TREASURY, "Primary")
+' aac rel: source="P_FUNDING_001"; target="SYS_TREASURY"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_SETTLEMENT_001, CAP_PAY_05, "supports")
+' aac rel: source="P_SETTLEMENT_001"; target="CAP_PAY_05"; label="supports"; relation="process_supports_capability"
+Rel(P_SETTLEMENT_001, CAP_FIN_03, "supports")
+' aac rel: source="P_SETTLEMENT_001"; target="CAP_FIN_03"; label="supports"; relation="process_supports_capability"
+Rel(P_SETTLEMENT_002, CAP_FIN_06, "supports")
+' aac rel: source="P_SETTLEMENT_002"; target="CAP_FIN_06"; label="supports"; relation="process_supports_capability"
+Rel(P_FUNDING_001, CAP_FIN_03, "supports")
+' aac rel: source="P_FUNDING_001"; target="CAP_FIN_03"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

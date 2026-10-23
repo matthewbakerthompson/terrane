@@ -1,0 +1,64 @@
+@startuml
+' Authorization Switch — Governance
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Authorization Switch — Governance
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("policies", $bgColor="#fecaca", $borderColor="#dc2626", $fontColor="#0f172a", $legendText="policy")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_PAY, "Payments & Transaction Processing", "Payments & Transaction Processing. Level 0 enterprise capability domain (Core tier).", $tags="capabilities")
+  ' aac CAP_PAY: company_domain="Servicing"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_AUTH_AVAIL, "Authorization availability and stand-in", "Authorization availability is monitored against the network SLA with tested stand-in arrangements; incidents invoke the resilience playbook.", $tags="controls")
+  ' aac CTL_AUTH_AVAIL: company_domain=""
+  System(CTL_PCI_EVIDENCE, "Cardholder data scope and evidence maintenance", "CDE scope, segmentation, and assessment evidence are maintained continuously against the PCI DSS requirement set.", $tags="controls")
+  ' aac CTL_PCI_EVIDENCE: company_domain=""
+  System(CTL_DAILY_RECON, "Daily settlement and clearing reconciliation", "Network settlement, clearing files, and interchange postings reconcile to network totals daily; unreconciled variances stop downstream posting.", $tags="controls")
+  ' aac CTL_DAILY_RECON: company_domain=""
+  System(CTL_PMT_POSTING, "Payment posting timeliness", "Cardholder payments post as of the day of receipt per Reg Z crediting rules, with cutoff disclosures honored and exceptions reported.", $tags="controls")
+  ' aac CTL_PMT_POSTING: company_domain=""
+}
+Boundary(b_Policy, "Policy") {
+  System(POL_ERROR_RES, "Error Resolution & Billing Dispute Policy", $tags="policies")
+  ' aac POL_ERROR_RES: company_domain=""
+  System(POL_INFOSEC, "Information Security Policy", $tags="policies")
+  ' aac POL_INFOSEC: company_domain=""
+  System(POL_RECORDS, "Records Retention & Disposition Policy", $tags="policies")
+  ' aac POL_RECORDS: company_domain=""
+  System(POL_CHANGE, "Technology Change Management Policy", $tags="policies")
+  ' aac POL_CHANGE: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_AUTH_SWITCH, "Authorization Switch", "Real-time card authorization switch connected to the scheme networks.", $tags="systems")
+  ' aac SYS_AUTH_SWITCH: company_domain="Payments"; hosting="On-prem"
+}
+
+Rel(SYS_AUTH_SWITCH, CTL_AUTH_AVAIL, "enforces")
+' aac rel: source="SYS_AUTH_SWITCH"; target="CTL_AUTH_AVAIL"; label="enforces"; relation="system_governed_by_control"
+Rel(SYS_AUTH_SWITCH, CTL_PCI_EVIDENCE, "enforces")
+' aac rel: source="SYS_AUTH_SWITCH"; target="CTL_PCI_EVIDENCE"; label="enforces"; relation="system_governed_by_control"
+Rel(SYS_AUTH_SWITCH, CAP_PAY, "realizes")
+' aac rel: source="SYS_AUTH_SWITCH"; target="CAP_PAY"; label="realizes"; relation="system_realizes_capability"
+Rel(CAP_PAY, CTL_AUTH_AVAIL, "governed by")
+' aac rel: source="CAP_PAY"; target="CTL_AUTH_AVAIL"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_PAY, CTL_DAILY_RECON, "governed by")
+' aac rel: source="CAP_PAY"; target="CTL_DAILY_RECON"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_PAY, CTL_PMT_POSTING, "governed by")
+' aac rel: source="CAP_PAY"; target="CTL_PMT_POSTING"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(SYS_AUTH_SWITCH, POL_INFOSEC, "subject to")
+' aac rel: source="SYS_AUTH_SWITCH"; target="POL_INFOSEC"; label="subject to"; relation="system_subject_to_policy"
+Rel(SYS_AUTH_SWITCH, POL_CHANGE, "subject to")
+' aac rel: source="SYS_AUTH_SWITCH"; target="POL_CHANGE"; label="subject to"; relation="system_subject_to_policy"
+Rel(CTL_AUTH_AVAIL, POL_CHANGE, "gives effect to")
+Rel(CTL_DAILY_RECON, POL_RECORDS, "gives effect to")
+Rel(CTL_PCI_EVIDENCE, POL_INFOSEC, "gives effect to")
+Rel(CTL_PMT_POSTING, POL_ERROR_RES, "gives effect to")
+
+SHOW_LEGEND()
+@enduml

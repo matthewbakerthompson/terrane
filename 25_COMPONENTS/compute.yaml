@@ -1,0 +1,112 @@
+# Things that run code.
+#
+# The split that matters is not the vendor's, it is who operates it: a
+# container platform is somebody's full-time job, a function is not, and a
+# virtual machine is the one that quietly becomes a pet.
+
+- component_type_id: vm
+  name: Virtual machine
+  category: Compute
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    A general-purpose server instance. The oldest and least specific of these, and the one that quietly becomes a pet.
+  providers:
+    AWS: Amazon EC2
+    Azure: Azure Virtual Machines
+    GCP: Compute Engine
+    On-prem: VMware or KVM
+  defaults:
+    service_category: Compute
+    network_zone: Private-App
+
+- component_type_id: container-platform
+  name: Container platform
+  category: Compute
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Scheduled containers with a control plane somebody has to operate, patch and upgrade.
+  providers:
+    AWS: Amazon EKS or ECS
+    Azure: Azure Kubernetes Service
+    GCP: Google Kubernetes Engine
+    On-prem: OpenShift
+  defaults:
+    service_category: Compute
+    network_zone: Private-App
+
+- component_type_id: serverless-container
+  name: Serverless container
+  category: Compute
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    A container with no cluster to run. Trades control over the node for not having a node.
+  providers:
+    AWS: AWS Fargate
+    Azure: Azure Container Apps
+    GCP: Cloud Run
+  defaults:
+    service_category: Compute
+    network_zone: Private-App
+
+- component_type_id: function
+  name: Function
+  category: Compute
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Event-triggered code with no server of its own. Cheap until it is on a hot path, where the cold start becomes the design.
+  providers:
+    AWS: AWS Lambda
+    Azure: Azure Functions
+    GCP: Cloud Functions
+  defaults:
+    service_category: Compute
+    network_zone: Private-App
+
+- component_type_id: batch-compute
+  name: Batch compute
+  category: Compute
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Scheduled or queued work that is allowed to take as long as it takes.
+  providers:
+    AWS: AWS Batch
+    Azure: Azure Batch
+    GCP: Batch
+  defaults:
+    service_category: Compute
+    network_zone: Private-App
+
+- component_type_id: gpu-compute
+  name: Accelerated compute
+  category: Compute
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    GPUs and AI accelerators for training and serving models. Scarce, expensive, and the capacity an AI roadmap quietly depends on.
+  providers:
+    AWS: Amazon EC2 P and G instances, AWS Trainium and Inferentia
+    Azure: Azure ND and NC virtual machines
+    GCP: Compute Engine A3 and A4 instances and Cloud TPU
+  defaults:
+    service_category: Compute
+    network_zone: Private-App
+
+- component_type_id: virtual-desktop
+  name: Virtual desktop
+  category: Compute
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    A desktop that runs in the data center or the cloud and is streamed to the user. How contractors and call centers reach the estate without a managed laptop.
+  providers:
+    AWS: Amazon WorkSpaces
+    Azure: Azure Virtual Desktop and Windows 365
+    SaaS: Citrix
+  defaults:
+    service_category: Compute
+    network_zone: Private-App

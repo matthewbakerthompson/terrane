@@ -1,0 +1,19 @@
+# The one door into the mainframe ledger for everything that posts to it.
+# Six systems put requests on this queue, and before it was a record of its
+# own each of the six connections was the only place it was described.
+offered_interface_id: OI-LEDGER-QUEUE
+name: Core Ledger request queue
+description: >
+  Postings, holds and balance requests put on the ledger's MQ request queue,
+  answered on the reply queue in the order they arrived.
+status: Active
+togaf_layer: Application
+architecture_domain: Application
+company_domain: Card Issuing
+system_id: SYS-CORE-LEDGER
+owner_org_id: ORG-PAYMENTS
+protocol: MQ
+integration_style: Request-response
+auth_method: MutualTLS
+data_classification: Restricted
+frequency: Realtime

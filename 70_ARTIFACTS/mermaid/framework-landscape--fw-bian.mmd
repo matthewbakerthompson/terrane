@@ -1,0 +1,215 @@
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% BIAN — Landscape
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Business_Support["Business Support"]
+    direction TB
+    subgraph grp_Business_Support__Document_Management_and_Archive["Document Management and Archive"]
+      direction TB
+      CAP_SERV_04{{"Correspondence &<br/>Notification Management"}}
+      CAP_DATA_07{{"Records Retention &<br/>Disposition"}}
+      CAP_BILL_03{{"Statement Delivery &<br/>Archive"}}
+    end
+  end
+
+  subgraph grp_Operations_and_Execution["Operations and Execution"]
+    direction TB
+    subgraph grp_Operations_and_Execution__Account_Management["Account Management"]
+      direction TB
+      CAP_ORIG_03{{"Application Fraud<br/>Screening"}}
+      CAP_FIN_06{{"Cash & Settlement<br/>Reconciliation"}}
+      CAP_TPS_04{{"Client Billing & Revenue<br/>Management"}}
+      CAP_FRAUD_02{{"Fraud Case Investigation"}}
+      CAP_FRAUD_07{{"Fraud Reporting & Network<br/>Compliance"}}
+      CAP_FIN_03{{"Funding & Liquidity<br/>Management"}}
+      CAP_MERCH_06{{"Merchant Monitoring &<br/>Exposure Management"}}
+      CAP_MERCH_04{{"Merchant Settlement &<br/>Funding"}}
+      CAP_PAY_06{{"Network & Merchant<br/>Reconciliation"}}
+      CAP_FRAUD_01{{"Transaction Fraud<br/>Detection & Strategy"}}
+    end
+    subgraph grp_Operations_and_Execution__Cards["Cards"]
+      direction TB
+      CAP_ORIG_06{{"Account Establishment &<br/>Card Issuance"}}
+      CAP_PAY_01_02{{"Authorization Fraud<br/>Screening"}}
+      CAP_PAY_01{{"Authorization Processing"}}
+      CAP_CRED_06{{"Authorization Strategy<br/>Management"}}
+      CAP_PAY_02{{"Clearing & Transaction<br/>Posting"}}
+      CAP_PAY_01_01{{"Credential Authentication"}}
+      CAP_PAY_01_03{{"Credit & Limit Check"}}
+      CAP_BILL_02{{"Cycle & Statement<br/>Generation"}}
+      CAP_BILL_01{{"Interest & Fee Assessment"}}
+      CAP_MERCH_03{{"Merchant Boarding &<br/>Network Sponsorship"}}
+      CAP_PART_02{{"Network & Scheme<br/>Relationship"}}
+      CAP_PAY_03{{"Payment Capture &<br/>Application"}}
+      CAP_PAY_01_04{{"Stand-In Processing"}}
+    end
+    subgraph grp_Operations_and_Execution__Collateral_Administration["Collateral Administration"]
+      direction TB
+      CAP_LEND_04{{"Collateral, Title & Lien<br/>Management"}}
+      CAP_LEND_06{{"Repossession & Asset<br/>Remarketing"}}
+    end
+    subgraph grp_Operations_and_Execution__Consumer_Services["Consumer Services"]
+      direction TB
+      CAP_DEP_03{{"Brokered CD Program<br/>Management"}}
+    end
+    subgraph grp_Operations_and_Execution__Loans_and_Deposits["Loans and Deposits"]
+      direction TB
+      CAP_DEP_02{{"Deposit Account Opening"}}
+      CAP_DEP_01{{"Deposit Product Management"}}
+      CAP_DEP_04{{"Deposit Servicing,<br/>Interest & Maturities"}}
+      CAP_LEND_02{{"Indirect Application &<br/>Underwriting"}}
+      CAP_LEND_03{{"Loan Boarding & Dealer<br/>Funding"}}
+      CAP_MERCH_02{{"Merchant Underwriting &<br/>Risk Vetting"}}
+      CAP_ORIG_04{{"Underwriting & Credit<br/>Decisioning Execution"}}
+    end
+    subgraph grp_Operations_and_Execution__Operational_Services["Operational Services"]
+      direction TB
+      CAP_BILL_05{{"Billing Adjustment &<br/>Credit Processing"}}
+      CAP_ORIG_07{{"Card Production &<br/>Fulfillment"}}
+      CAP_COLL_01{{"Delinquency Segmentation &<br/>Treatment Strategy"}}
+      CAP_ORIG_08{{"Digital Wallet<br/>Provisioning"}}
+      CAP_SERV_07{{"Hardship & Payment<br/>Assistance"}}
+      CAP_COLL_03{{"Payment Arrangement &<br/>Settlement Offers"}}
+      CAP_COLL_03_01{{"Payment Arrangements"}}
+      CAP_BILL_04_03{{"Rewards Delivery"}}
+      CAP_BILL_04_01{{"Rewards Earn & Accrual"}}
+      CAP_BILL_04{{"Rewards Earn, Accrual &<br/>Redemption"}}
+      CAP_PROD_04{{"Rewards Program Design"}}
+      CAP_BILL_04_02{{"Rewards Redemption"}}
+      CAP_COLL_03_02{{"Settlement Offers"}}
+      CAP_PAY_07{{"Tokenization & Credential<br/>Management"}}
+      CAP_PAY_01_05{{"Transaction Switching"}}
+    end
+    subgraph grp_Operations_and_Execution__Payments["Payments"]
+      direction TB
+      CAP_PAY_05{{"Network Settlement &<br/>Interchange"}}
+    end
+    subgraph grp_Operations_and_Execution__Trade_Banking["Trade Banking"]
+      direction TB
+      CAP_CRED_07{{"Account Review & Reissue<br/>Decisioning"}}
+      CAP_CRED_03{{"Credit Line Assignment &<br/>Management"}}
+    end
+  end
+
+  subgraph grp_Reference_Data["Reference Data"]
+    direction TB
+    subgraph grp_Reference_Data__External_Agency["External Agency"]
+      direction TB
+      CAP_TPRM_02{{"Contract & SLA Management"}}
+      CAP_LEND_01{{"Dealer Network & Program<br/>Management"}}
+      CAP_MERCH_01{{"ISO & Agent Program<br/>Management"}}
+      CAP_PART_01{{"Issuing Bank & Sponsor<br/>Relationship"}}
+    end
+    subgraph grp_Reference_Data__Market_Data["Market Data"]
+      direction TB
+      CAP_ACQ_05{{"Acquisition Performance<br/>Analytics"}}
+      CAP_ACQ_01{{"Prospect Data & List<br/>Management"}}
+    end
+    subgraph grp_Reference_Data__Product_Management["Product Management"]
+      direction TB
+      CAP_TPS_01{{"Client Program<br/>Configuration & Setup"}}
+      CAP_TPS_02{{"Portfolio Conversion &<br/>Deconversion"}}
+      CAP_PROD_02{{"Pricing, Fee & APR<br/>Management"}}
+      CAP_PROD_01{{"Product Design &<br/>Configuration"}}
+      CAP_PROD_05{{"Product Lifecycle &<br/>Retirement"}}
+      CAP_PROD_03{{"Terms & Disclosure<br/>Management"}}
+    end
+  end
+
+  subgraph grp_Risk_and_Compliance["Risk and Compliance"]
+    direction TB
+    subgraph grp_Risk_and_Compliance__Business_Analysis["Business Analysis"]
+      direction TB
+      CAP_STRAT_01{{"Market & Competitive<br/>Analysis"}}
+    end
+    subgraph grp_Risk_and_Compliance__Models["Models"]
+      direction TB
+      CAP_DATA_06{{"AI/ML Model Operations"}}
+      CAP_CRED_01{{"Credit Strategy &<br/>Scorecard Management"}}
+      CAP_CRED_05{{"Loss Forecasting &<br/>Allowance"}}
+      CAP_CRED_02{{"Model Development &<br/>Validation"}}
+      CAP_RGOV_08{{"Model Risk Governance"}}
+      CAP_CRED_04{{"Portfolio Risk Monitoring<br/>& Segmentation"}}
+    end
+    subgraph grp_Risk_and_Compliance__Regulations_and_Compliance["Regulations and Compliance"]
+      direction TB
+      CAP_ORIG_05{{"Adverse Action & Notice<br/>Generation"}}
+      CAP_TPS_05{{"Client Audit & Oversight<br/>Support"}}
+      CAP_COLL_07{{"Collections Compliance<br/>Oversight"}}
+      CAP_RGOV_03{{"Compliance Monitoring &<br/>Testing"}}
+      CAP_RGOV_07{{"Financial Crimes & BSA/AML<br/>Compliance"}}
+      CAP_FRAUD_05{{"Fraud Loss Recovery &<br/>Write-off"}}
+      CAP_FIN_01{{"General Ledger & Financial<br/>Close"}}
+      CAP_FRAUD_06{{"Identity Theft & Account<br/>Takeover Response"}}
+      CAP_FIN_02{{"Interchange & Revenue<br/>Accounting"}}
+      CAP_RGOV_05{{"Internal Audit &<br/>Examination Management"}}
+      CAP_RGOV_04{{"Issue & Remediation<br/>Management"}}
+      CAP_ACQ_04{{"Marketing Compliance &<br/>Disclosure Review"}}
+      CAP_FIN_04{{"Regulatory & Financial<br/>Reporting"}}
+      CAP_RGOV_02{{"Regulatory Change<br/>Management"}}
+      CAP_RGOV_01{{"Risk Appetite & Policy<br/>Management"}}
+    end
+  end
+
+  subgraph grp_Sales_and_Service["Sales and Service"]
+    direction TB
+    subgraph grp_Sales_and_Service__Channel_Specific["Channel Specific"]
+      direction TB
+      CAP_SERV_01_01{{"Contact Center Operations"}}
+      CAP_SERV_01{{"Contact Handling & Routing"}}
+      CAP_SERV_01_02{{"Contact Routing"}}
+      CAP_SERV_03{{"Digital Self-Service"}}
+      CAP_COLL_02{{"Outbound Contact<br/>Operations"}}
+      CAP_SERV_08{{"Servicing Quality<br/>Monitoring"}}
+    end
+    subgraph grp_Sales_and_Service__Cross_Channel["Cross Channel"]
+      direction TB
+      CAP_SERV_02{{"Account Maintenance &<br/>Servicing Requests"}}
+      CAP_ORIG_02{{"Identity Verification &<br/>KYC/CIP"}}
+      CAP_SERV_06{{"Servicing Knowledge &<br/>Agent Enablement"}}
+    end
+    subgraph grp_Sales_and_Service__Customer_Management["Customer Management"]
+      direction TB
+      CAP_COLL_06{{"Bankruptcy, Deceased &<br/>Legal Account Handling"}}
+      CAP_COLL_04{{"Charge-off Processing"}}
+      CAP_COLL_08{{"Credit Bureau Reporting &<br/>Dispute Handling"}}
+      CAP_COLL_05{{"Recovery, Agency & Debt<br/>Sale Management"}}
+    end
+    subgraph grp_Sales_and_Service__Marketing["Marketing"]
+      direction TB
+      CAP_STRAT_02{{"Portfolio Strategy &<br/>Investment Planning"}}
+    end
+    subgraph grp_Sales_and_Service__Sales["Sales"]
+      direction TB
+      CAP_ORIG_01{{"Application Capture"}}
+      CAP_ACQ_03{{"Campaign Execution &<br/>Channel Management"}}
+      CAP_LEND_05{{"Installment Loan Servicing"}}
+      CAP_ACQ_02{{"Offer & Pre-Screen<br/>Management"}}
+      CAP_ACQ_02_01{{"Offer Construction"}}
+      CAP_ACQ_02_02{{"Product Matching"}}
+    end
+    subgraph grp_Sales_and_Service__Servicing["Servicing"]
+      direction TB
+      CAP_MERCH_05{{"Acquiring Chargeback<br/>Processing"}}
+      CAP_FRAUD_04_02{{"Arbitration &<br/>Pre-Arbitration"}}
+      CAP_FRAUD_04{{"Chargeback & Representment<br/>Processing"}}
+      CAP_FRAUD_04_01{{"Chargeback Processing"}}
+      CAP_SERV_05{{"Complaint Capture &<br/>Resolution"}}
+      CAP_RGOV_06{{"Complaint Oversight &<br/>UDAAP Management"}}
+      CAP_FRAUD_03{{"Dispute Intake &<br/>Provisional Credit"}}
+      CAP_PAY_04{{"Returned Payment & NSF<br/>Handling"}}
+    end
+  end
+
+
+  classDef s_capabilities__core fill:#d5cafb,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
+  classDef s_capabilities__direct fill:#b79bf1,stroke:#6d28d9,color:#0f172a,stroke-width:2.6px;
+  classDef s_capabilities__enable fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.0px;
+  class CAP_ACQ_01,CAP_ACQ_02,CAP_ACQ_02_01,CAP_ACQ_02_02,CAP_ACQ_03,CAP_ACQ_04,CAP_ACQ_05,CAP_BILL_01,CAP_BILL_02,CAP_BILL_03,CAP_BILL_04,CAP_BILL_04_01,CAP_BILL_04_02,CAP_BILL_04_03,CAP_BILL_05,CAP_COLL_01,CAP_COLL_02,CAP_COLL_03,CAP_COLL_03_01,CAP_COLL_03_02,CAP_COLL_04,CAP_COLL_05,CAP_COLL_06,CAP_COLL_07,CAP_COLL_08,CAP_CRED_01,CAP_CRED_02,CAP_CRED_03,CAP_CRED_04,CAP_CRED_05,CAP_CRED_06,CAP_CRED_07,CAP_DEP_01,CAP_DEP_02,CAP_DEP_03,CAP_DEP_04,CAP_FRAUD_01,CAP_FRAUD_02,CAP_FRAUD_03,CAP_FRAUD_04,CAP_FRAUD_04_01,CAP_FRAUD_04_02,CAP_FRAUD_05,CAP_FRAUD_06,CAP_FRAUD_07,CAP_LEND_01,CAP_LEND_02,CAP_LEND_03,CAP_LEND_04,CAP_LEND_05,CAP_LEND_06,CAP_MERCH_01,CAP_MERCH_02,CAP_MERCH_03,CAP_MERCH_04,CAP_MERCH_05,CAP_MERCH_06,CAP_ORIG_01,CAP_ORIG_02,CAP_ORIG_03,CAP_ORIG_04,CAP_ORIG_05,CAP_ORIG_06,CAP_ORIG_07,CAP_ORIG_08,CAP_PAY_01,CAP_PAY_01_01,CAP_PAY_01_02,CAP_PAY_01_03,CAP_PAY_01_04,CAP_PAY_01_05,CAP_PAY_02,CAP_PAY_03,CAP_PAY_04,CAP_PAY_05,CAP_PAY_06,CAP_PAY_07,CAP_SERV_01,CAP_SERV_01_01,CAP_SERV_01_02,CAP_SERV_02,CAP_SERV_03,CAP_SERV_04,CAP_SERV_05,CAP_SERV_06,CAP_SERV_07,CAP_SERV_08,CAP_TPS_01,CAP_TPS_02,CAP_TPS_04,CAP_TPS_05 s_capabilities__core;
+  class CAP_PART_01,CAP_PART_02,CAP_PROD_01,CAP_PROD_02,CAP_PROD_03,CAP_PROD_04,CAP_PROD_05,CAP_RGOV_01,CAP_RGOV_02,CAP_RGOV_03,CAP_RGOV_04,CAP_RGOV_05,CAP_RGOV_06,CAP_RGOV_07,CAP_RGOV_08,CAP_STRAT_01,CAP_STRAT_02 s_capabilities__direct;
+  class CAP_DATA_06,CAP_DATA_07,CAP_FIN_01,CAP_FIN_02,CAP_FIN_03,CAP_FIN_04,CAP_FIN_06,CAP_TPRM_02 s_capabilities__enable;
+  classDef boundary1 fill:#e7ebf6,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_Business_Support__Document_Management_and_Archive,grp_Operations_and_Execution__Account_Management,grp_Operations_and_Execution__Cards,grp_Operations_and_Execution__Collateral_Administration,grp_Operations_and_Execution__Consumer_Services,grp_Operations_and_Execution__Loans_and_Deposits,grp_Operations_and_Execution__Operational_Services,grp_Operations_and_Execution__Payments,grp_Operations_and_Execution__Trade_Banking,grp_Reference_Data__External_Agency,grp_Reference_Data__Market_Data,grp_Reference_Data__Product_Management,grp_Risk_and_Compliance__Business_Analysis,grp_Risk_and_Compliance__Models,grp_Risk_and_Compliance__Regulations_and_Compliance,grp_Sales_and_Service__Channel_Specific,grp_Sales_and_Service__Cross_Channel,grp_Sales_and_Service__Customer_Management,grp_Sales_and_Service__Marketing,grp_Sales_and_Service__Sales,grp_Sales_and_Service__Servicing boundary1;
+  classDef boundary2 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_Business_Support,grp_Operations_and_Execution,grp_Reference_Data,grp_Risk_and_Compliance,grp_Sales_and_Service boundary2;

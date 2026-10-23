@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="540.4" viewBox="0 0 1100 540.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Process billing adjustment or goodwill credit — Systems, Data and Controls</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Process billing adjustment or goodwill credit — Systems, Data and Controls</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   4 nodes · 3 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(169.72 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="271.72" y="220.3" width="212.57" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="313.72" y="237.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.87" y="105.26" width="212.27" height="119.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.72" y="122.67" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="529.3" y="24.3" width="221.4" height="197.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="559.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-SERVICING-003::SYS-CORE-LEDGER">
+<title>Primary</title>
+<path d="M196 148 L225 148 L233 148 A8 8 0 0 0 241 140 L241 91.98 A10 10 0 0 1 250.98 81.98 L525.99 81.5 A10 10 0 0 1 526.01 81.5 L551.48 81.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 81.5 L545.43 86.28 L545.43 76.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-SERVICING-003::SYS-CORE-LEDGER">
+<rect x="354.32" y="59.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="71.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-SERVICING-003::SYS-CRM">
+<title>Supporting</title>
+<path d="M196 165 L224.99 165 A10 10 0 0 0 225.01 165 L525.99 164.5 A10 10 0 0 1 526.01 164.5 L551.48 164.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 164.5 L545.43 169.28 L545.43 159.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-SERVICING-003::SYS-CRM">
+<rect x="346.46" y="171.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="183.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-SERVICING-003::CAP-BILL-05">
+<title>supports</title>
+<path d="M196 182 L225 182 L233 182 A8 8 0 0 1 241 190 L241 262 A10 10 0 0 0 251 272 L269 272 L294.48 272" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M298 272 L288.43 276.79 L288.43 267.21 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-BILL-05" data-type="capabilities">
+<title>Billing Adjustment &amp; Credit Processing</title>
+<path d="M338 246 L298 272 L338 298 L418 298 L458 272 L418 246 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="378" y="270.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Billing Adjustment &amp;</text>
+<text x="378" y="282.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit Processing</text>
+</g>
+<g class="node" data-id="P-SERVICING-003" data-type="processes">
+<title>Process billing adjustment or goodwill credit</title>
+<path d="M116 131 L36 156.97 L66.56 199 L165.44 199 L196 156.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="157.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Process billing</text>
+<text x="116" y="169.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">adjustment or</text>
+<text x="116" y="181.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">goodwill credit</text>
+</g>
+<g class="node" data-id="SYS-CORE-LEDGER" data-type="systems">
+<title>Core Card Ledger</title>
+<rect x="555" y="50" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="636" y="85.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Core Card Ledger</text>
+<svg x="707" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-CRM" data-type="systems">
+<title>Dynamics 365 Customer Service</title>
+<rect x="555" y="133" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="636" y="157.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dynamics 365</text>
+<text x="636" y="169.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer Service</text>
+<text x="640" y="190.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Microsoft</text>
+<svg x="707" y="138" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="438.4" x2="1072" y2="438.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="462.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 451.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="462.4" font-size="12" font-weight="400" fill="#343d50">capability · 1</text>
+<g transform="translate(177.5 451.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="203.5" y="462.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(277.77 451.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="303.77" y="462.4" font-size="12" font-weight="400" fill="#343d50">system · 2</text>
+<text x="28" y="484.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 473.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="484.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 473.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="484.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="518.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-servicing-003 · edit the model, not the picture</text></g>
+</svg>

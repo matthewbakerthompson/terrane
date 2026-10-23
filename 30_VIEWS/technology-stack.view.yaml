@@ -1,0 +1,35 @@
+view_id: technology-stack
+title: Technology Stack
+category: Technology
+section: Hosting
+kind: map
+description: >
+  Technology services grouped by what they do rather than by vendor. Two
+  services in the same category usually mean one is being retired, or the
+  organization is paying twice for the same thing.
+layout: TB
+node_label: name
+renderers: [mermaid]
+
+group_by: [cloud_provider, service_category]
+
+scope:
+  include:
+    - type: tech_services
+      where:
+        status: [Active, Planned]
+        # Network fabric is topology, not stack, and it has its own diagram.
+        tags_none: [network-fabric]
+        # A product's own WAF ruleset, cache or backup plan is part of that
+        # product, and its architecture diagram shows it. The stack is what
+        # the estate shares.
+        archetype_instance: {exists: false}
+
+# No edges: a stack is a catalog, not a topology. What connects to what is
+# the network diagram, and drawing half of it here would be worse than neither.
+
+style:
+  color_by: service_category
+
+limits:
+  max_nodes: 60

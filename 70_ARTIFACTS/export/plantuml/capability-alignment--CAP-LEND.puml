@@ -1,0 +1,54 @@
+@startuml
+' Consumer & Recreation Lending — Frameworks, Controls, Systems
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Consumer & Recreation Lending — Frameworks, Controls, Systems
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_LEND_04, "Collateral, Title & Lien Management", "Perfect and track liens and titles on financed assets across state regimes; release on payoff.", $tags="capabilities")
+  ' aac CAP_LEND_04: company_domain="Lending"
+  System(CAP_LEND, "Consumer & Recreation Lending", "Consumer & Recreation Lending. Level 0 enterprise capability domain (Core tier). Dealer-originated RV, marine, and powersports lending plus direct consumer loans.", $tags="capabilities")
+  ' aac CAP_LEND: company_domain="Lending"
+  System(CAP_LEND_01, "Dealer Network & Program Management", "Recruit, contract, monitor, and manage the dealer network that originates recreation loans, including program terms and dealer performance.", $tags="capabilities")
+  ' aac CAP_LEND_01: company_domain="Lending"
+  System(CAP_LEND_02, "Indirect Application & Underwriting", "Receive applications through dealers, decision them against credit policy, and return terms while the buyer is at the point of sale.", $tags="capabilities")
+  ' aac CAP_LEND_02: company_domain="Lending"
+  System(CAP_LEND_05, "Installment Loan Servicing", "Bill, post, and service fixed-term installment loans: payments, payoffs, extensions, and customer contact.", $tags="capabilities")
+  ' aac CAP_LEND_05: company_domain="Lending"
+  System(CAP_LEND_03, "Loan Boarding & Dealer Funding", "Board approved loans, verify stipulations and documentation, and fund the dealer.", $tags="capabilities")
+  ' aac CAP_LEND_03: company_domain="Lending"
+  System(CAP_LEND_06, "Repossession & Asset Remarketing", "Recover, recondition, and remarket collateral on defaulted loans; manage deficiency balances.", $tags="capabilities")
+  ' aac CAP_LEND_06: company_domain="Lending"
+}
+Boundary(b_Framework, "Framework") {
+  System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
+  ' aac FW_BIAN: company_domain=""
+}
+
+Rel(CAP_LEND_01, CAP_LEND, "part of")
+Rel(CAP_LEND_02, CAP_LEND, "part of")
+Rel(CAP_LEND_03, CAP_LEND, "part of")
+Rel(CAP_LEND_04, CAP_LEND, "part of")
+Rel(CAP_LEND_05, CAP_LEND, "part of")
+Rel(CAP_LEND_06, CAP_LEND, "part of")
+Rel(CAP_LEND, FW_BIAN, "Aligned to")
+' aac rel: source="CAP_LEND"; target="FW_BIAN"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
+Rel(CAP_LEND_01, FW_BIAN, "Reference Data > External Agency > Partner Administration")
+' aac rel: source="CAP_LEND_01"; target="FW_BIAN"; label="Reference Data > External Agency > Partner Administration"; relation="capability_references_framework"; ref="Reference Data > External Agency > Partner Administration"
+Rel(CAP_LEND_02, FW_BIAN, "Sales and Service > Sales > Consumer Loan")
+' aac rel: source="CAP_LEND_02"; target="FW_BIAN"; label="Sales and Service > Sales > Consumer Loan"; relation="capability_references_framework"; ref="Sales and Service > Sales > Consumer Loan"
+Rel(CAP_LEND_03, FW_BIAN, "Operations and Execution > Loans and Deposits > Merchandising Loan")
+' aac rel: source="CAP_LEND_03"; target="FW_BIAN"; label="Operations and Execution > Loans and Deposits > Merchandising Loan"; relation="capability_references_framework"; ref="Operations and Execution > Loans and Deposits > Merchandising Loan"
+Rel(CAP_LEND_04, FW_BIAN, "Operations and Execution > Collateral Administration > Collateral Asset Administration")
+' aac rel: source="CAP_LEND_04"; target="FW_BIAN"; label="Operations and Execution > Collateral Administration > Collateral Asset Administration"; relation="capability_references_framework"; ref="Operations and Execution > Collateral Administration > Collateral Asset Administration"
+Rel(CAP_LEND_05, FW_BIAN, "Sales and Service > Sales > Consumer Loan")
+' aac rel: source="CAP_LEND_05"; target="FW_BIAN"; label="Sales and Service > Sales > Consumer Loan"; relation="capability_references_framework"; ref="Sales and Service > Sales > Consumer Loan"
+Rel(CAP_LEND_06, FW_BIAN, "Sales and Service > Customer Management > Account Recovery")
+' aac rel: source="CAP_LEND_06"; target="FW_BIAN"; label="Sales and Service > Customer Management > Account Recovery"; relation="capability_references_framework"; ref="Sales and Service > Customer Management > Account Recovery"
+
+SHOW_LEGEND()
+@enduml

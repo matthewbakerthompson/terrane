@@ -1,0 +1,325 @@
+# The standard components of an application.
+#
+# product-parts.yaml holds the handful every digital product has: the channel,
+# the API, the datastore, the worker, the publisher, the front door. These are
+# the components an application is built from beyond them: a mobile channel,
+# an internal console, scheduled jobs, an event consumer, a notification
+# service, a search index, an inference service, a reporting service, an
+# adapter to a partner. Each is a handful of entities with the relations
+# between them, and each wires to the product service, so it needs
+# `api-service` in the same product; a part that calls the service goes
+# through the API that part offers. The standard applications in applications.yaml are
+# kits of these; the application types in 29_TYPES/ say which each kind of
+# application has.
+#
+# None of them names a cloud. What a part runs on is a block or a kind, and
+# the shape or the landing zone answers for it.
+
+- module_id: mobile-channel
+  name: Mobile channel
+  category: Channel
+  needs: [product_name, slug]
+  description: >
+    The product's mobile app, calling the product API through the shared API
+    gateway. A published app has a release cycle you do not control and
+    versions you cannot retire, so it is a system of its own.
+  requires: [api-service]
+  parameters:
+    - name: front_door
+      component: api-gateway
+      description: The shared API gateway the app reaches the API through
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-MOBILE"
+        name: "{product_name} Mobile App"
+        description: "Mobile app for {product_name}, calling the product API through the API gateway."
+        system_category: Channel
+        network_zone: Edge
+        uses: ["{front_door}"]
+    interfaces:
+      - interface_id: "INT-{slug|upper}-MOBILE-API"
+        name: "{product_name} Mobile App to API"
+        source_system_id: "SYS-{slug|upper}-MOBILE"
+        target_system_id: "SYS-{slug|upper}-API"
+        offered_interface_id: "OI-{slug|upper}-API"
+        auth_method: OAuth2
+
+- module_id: admin-console
+  name: Admin console
+  category: Channel
+  needs: [product_name, slug]
+  description: >
+    The internal web application staff use to operate the product, behind
+    the workforce identity provider rather than the public front door.
+  requires: [api-service]
+  parameters:
+    - name: runs_on
+      default: [stateless-service.container-platform, stateless-service.observability]
+    - name: idp
+      component: identity-provider
+      description: The workforce identity provider staff sign in with
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-ADMIN"
+        name: "{product_name} Admin Console"
+        description: "Internal console for operating {product_name}, behind workforce single sign-on."
+        system_category: Channel
+        network_zone: Private-App
+        runs_on: "{runs_on}"
+        uses: ["{idp}"]
+    interfaces:
+      - interface_id: "INT-{slug|upper}-ADMIN-API"
+        name: "{product_name} Admin Console to API"
+        source_system_id: "SYS-{slug|upper}-ADMIN"
+        target_system_id: "SYS-{slug|upper}-API"
+        offered_interface_id: "OI-{slug|upper}-API"
+        auth_method: OAuth2
+
+- module_id: scheduled-job
+  name: Scheduled jobs
+  category: Application
+  needs: [product_name, slug]
+  description: >
+    The product's batch work: the nightly run, the month-end extract, the
+    retry sweep. A deadline that is external and usually non-negotiable, so
+    it is a system with an owner rather than a cron entry nobody can find.
+  requires: [api-service]
+  parameters:
+    - name: runs_on
+      default: [stateless-service.container-platform, stateless-service.observability]
+    - name: schedule
+      default: daily
+      description: How often the jobs run
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-JOBS"
+        name: "{product_name} Scheduled Jobs"
+        description: "Scheduled batch work for {product_name}, run {schedule}."
+        criticality: Medium
+        system_category: Application
+        network_zone: Private-App
+        runs_on: "{runs_on}"
+    interfaces:
+      - interface_id: "INT-{slug|upper}-JOBS-API"
+        name: "{product_name} Scheduled Jobs to API"
+        source_system_id: "SYS-{slug|upper}-JOBS"
+        target_system_id: "SYS-{slug|upper}-API"
+        offered_interface_id: "OI-{slug|upper}-API"
+        integration_style: Batch
+
+- module_id: event-consumer
+  name: Event consumer
+  category: Integration
+  needs: [product_name, slug]
+  description: >
+    Consumes another system's events from the enterprise bus and hands them
+    to the product API. The part that lets this product react to something
+    without being called.
+  requires: [api-service]
+  patterns: [event-fanout]
+  parameters:
+    - name: source_system
+      required: true
+      description: The system whose events this product consumes, as a system id
+    - name: runs_on
+      default: [stateless-service.container-platform, stateless-service.observability]
+    - name: bus
+      component: message-queue
+      description: The enterprise bus the events arrive on
+    - name: protocol
+      default: AMQP
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-CONSUMER"
+        name: "{product_name} Event Consumer"
+        description: "Consumes events from {source_system} for {product_name}."
+        criticality: Medium
+        system_category: Integration
+        network_zone: Private-App
+        runs_on: "{runs_on}"
+        uses: ["{bus}"]
+    interfaces:
+      - interface_id: "INT-{slug|upper}-SOURCE-CONSUMER"
+        name: "{source_system} events to {product_name}"
+        source_system_id: "{source_system}"
+        target_system_id: "SYS-{slug|upper}-CONSUMER"
+        protocol: "{protocol}"
+        integration_style: Event
+        direction: Inbound
+        data_classification: Internal
+      - interface_id: "INT-{slug|upper}-CONSUMER-API"
+        name: "{product_name} Event Consumer to API"
+        source_system_id: "SYS-{slug|upper}-CONSUMER"
+        target_system_id: "SYS-{slug|upper}-API"
+        offered_interface_id: "OI-{slug|upper}-API"
+
+- module_id: notification-service
+  name: Notification service
+  category: Integration
+  needs: [product_name, slug]
+  description: >
+    Turns the product's events into email, text and push messages to the
+    people who asked for them. Kept apart from the API so a slow mail
+    provider slows nothing else.
+  requires: [api-service]
+  parameters:
+    - name: runs_on
+      default: [stateless-service.container-platform, stateless-service.observability]
+    - name: bus
+      component: message-queue
+      description: The bus the notification events arrive on
+    - name: protocol
+      default: AMQP
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-NOTIFY"
+        name: "{product_name} Notifications"
+        description: "Email, text and push notifications for {product_name}."
+        criticality: Medium
+        system_category: Integration
+        network_zone: Private-App
+        runs_on: "{runs_on}"
+        uses: ["{bus}"]
+    interfaces:
+      - interface_id: "INT-{slug|upper}-API-NOTIFY"
+        name: "{product_name} Service to Notifications"
+        source_system_id: "SYS-{slug|upper}-API"
+        target_system_id: "SYS-{slug|upper}-NOTIFY"
+        protocol: "{protocol}"
+        integration_style: Event
+        data_classification: Confidential
+
+- module_id: search-index
+  name: Search index
+  category: Data
+  needs: [product_name, slug]
+  description: >
+    A search index over the product's records, fed from the API and read by
+    it. An index is a copy, so it is a datastore with a source and never the
+    source itself.
+  requires: [api-service]
+  parameters:
+    - name: runs_on
+      default: [stateless-service.container-platform]
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-SEARCH"
+        name: "{product_name} Search Index"
+        description: "Search index over {product_name} records, rebuilt from the API."
+        criticality: Medium
+        system_category: Datastore
+        network_zone: Private-Data
+        runs_on: "{runs_on}"
+    interfaces:
+      - interface_id: "INT-{slug|upper}-API-SEARCH"
+        name: "{product_name} Service to Search Index"
+        source_system_id: "SYS-{slug|upper}-API"
+        target_system_id: "SYS-{slug|upper}-SEARCH"
+
+- module_id: ml-inference-service
+  name: Inference service
+  category: AI
+  needs: [product_name, slug]
+  description: >
+    The service that calls a model on the product's behalf: prompt assembly,
+    retrieval, guardrails and the log of what was asked, in one place rather
+    than in every caller. Runs against the landing zone's foundation model
+    service.
+  requires: [api-service]
+  parameters:
+    - name: runs_on
+      default: [stateless-service.container-platform, stateless-service.observability]
+    - name: models
+      component: foundation-model-service
+      description: The foundation model service the inference service calls
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-INFERENCE"
+        name: "{product_name} Inference Service"
+        description: "Calls foundation models for {product_name}: prompts, retrieval, guardrails and the audit log."
+        system_category: Application
+        network_zone: Private-App
+        runs_on: "{runs_on}"
+        uses: ["{models}"]
+    interfaces:
+      - interface_id: "INT-{slug|upper}-API-INFERENCE"
+        name: "{product_name} Service to Inference Service"
+        source_system_id: "SYS-{slug|upper}-API"
+        target_system_id: "SYS-{slug|upper}-INFERENCE"
+
+- module_id: report-service
+  name: Reporting service
+  category: Analytics
+  needs: [product_name, slug]
+  description: >
+    The product's own reports and extracts, read from its operational data.
+    Separate from the API so a long report never holds up a transaction.
+  requires: [api-service, relational-datastore]
+  parameters:
+    - name: runs_on
+      default: [stateless-service.container-platform, stateless-service.observability]
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-REPORTS"
+        name: "{product_name} Reporting"
+        description: "Reports and extracts over {product_name} operational data."
+        criticality: Medium
+        system_category: Analytics
+        network_zone: Private-App
+        runs_on: "{runs_on}"
+    interfaces:
+      - interface_id: "INT-{slug|upper}-REPORTS-API"
+        name: "{product_name} Reporting to API"
+        source_system_id: "SYS-{slug|upper}-REPORTS"
+        target_system_id: "SYS-{slug|upper}-API"
+        offered_interface_id: "OI-{slug|upper}-API"
+  relations:
+    system_reads_writes:
+      - system_id: "SYS-{slug|upper}-REPORTS"
+        data_asset_id: "DA-{slug|upper}-OPERATIONAL"
+        operation: Read
+
+- module_id: partner-adapter
+  name: Partner adapter
+  category: Integration
+  needs: [product_name, slug]
+  description: >
+    Our side of an integration with a system we do not run and did not buy
+    as a product: mapping, retry and the credentials, so the API never
+    carries another party's protocol. One adapter per partner.
+  requires: [api-service]
+  parameters:
+    - name: partner
+      required: true
+      description: Who is on the other end, as a name
+    - name: target_system
+      required: true
+      description: The partner's system in the model, as a system id
+    - name: adapter_suffix
+      default: ADAPTER
+      description: ADAPTER, or a token that names the partner
+    - name: runs_on
+      default: [stateless-service.container-platform, stateless-service.observability]
+    - name: secrets
+      component: secrets-manager
+      description: Where the partner's credentials live
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-{adapter_suffix}"
+        name: "{product_name} {partner} Adapter"
+        description: "Mapping, retry and credentials for the {partner} integration of {product_name}."
+        system_category: Integration
+        network_zone: Private-App
+        runs_on: "{runs_on}"
+        uses: ["{secrets}"]
+    interfaces:
+      - interface_id: "INT-{slug|upper}-API-{adapter_suffix}"
+        name: "{product_name} Service to {partner} Adapter"
+        source_system_id: "SYS-{slug|upper}-API"
+        target_system_id: "SYS-{slug|upper}-{adapter_suffix}"
+      - interface_id: "INT-{slug|upper}-{adapter_suffix}-PARTNER"
+        name: "{product_name} {partner} Adapter to {partner}"
+        source_system_id: "SYS-{slug|upper}-{adapter_suffix}"
+        target_system_id: "{target_system}"
+        direction: Outbound
+        auth_method: OAuth2

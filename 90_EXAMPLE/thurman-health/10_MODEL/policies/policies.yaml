@@ -1,0 +1,99 @@
+# Thurman Health's policy register.
+#
+# Written here rather than imported: this estate has no business layer
+# repository behind it, so the register is authored with the model. Which
+# policies a vendor tenancy and its landed data are subject to is answered in
+# `model.yaml`; the shipped parts named the card issuer's there, and the
+# business associate policy was `POL-TPRM`, a bank's word, until it could be
+# called what a hospital calls it.
+#
+# Made up, like everything in this estate. The regulations named are real;
+# what Thurman's policies say about them is not anybody's.
+
+- policy_id: POL-PRIVACY
+  name: Patient Privacy Policy
+  purpose: Uses and disclosures of protected health information, minimum necessary, and patients' rights to their own record.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  regulatory_framework: HIPAA Privacy Rule
+  owner_org_id: ORG-COMPLIANCE
+  effective_date: "2025-01-01"
+
+- policy_id: POL-INFOSEC
+  name: Information Security Policy
+  purpose: The administrative, physical and technical safeguards for electronic protected health information.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  regulatory_framework: HIPAA Security Rule; NIST CSF
+  owner_org_id: ORG-INFOSEC
+  effective_date: "2025-01-01"
+
+- policy_id: POL-BUSINESS-ASSOCIATES
+  name: Business Associate and Third-Party Risk Policy
+  purpose: No vendor touches protected health information without due diligence and a signed business associate agreement.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  regulatory_framework: HIPAA Privacy and Security Rules (business associates)
+  owner_org_id: ORG-COMPLIANCE
+  effective_date: "2025-01-01"
+
+- policy_id: POL-RECORDS
+  name: Records Retention Policy
+  purpose: How long the medical record, images and billing records are kept, and how they are destroyed after.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  regulatory_framework: State medical records law; CMS conditions of participation
+  owner_org_id: ORG-HIM
+  effective_date: "2025-01-01"
+
+- policy_id: POL-BREACH
+  name: Breach Response Policy
+  purpose: Assessing an impermissible use or disclosure, and notifying patients and regulators when it is a breach.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  regulatory_framework: HIPAA Breach Notification Rule
+  owner_org_id: ORG-COMPLIANCE
+  effective_date: "2025-01-01"
+
+- policy_id: POL-PATIENT-SAFETY
+  name: Patient Safety Policy
+  purpose: Patient identification, medication safety and the timely communication of critical results.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  regulatory_framework: Joint Commission National Patient Safety Goals
+  owner_org_id: ORG-QUALITY
+  effective_date: "2025-01-01"
+
+- policy_id: POL-INTEROP
+  name: Interoperability and Patient Access Policy
+  purpose: Patients and the providers they choose get their data through standard APIs, and nothing is withheld that the rules say must not be.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  regulatory_framework: 21st Century Cures Act (information blocking); CMS Interoperability and Patient Access
+  owner_org_id: ORG-INTEGRATION
+  effective_date: "2025-01-01"
+
+- policy_id: POL-PUBLIC-HEALTH
+  name: Public Health Reporting Policy
+  purpose: Reportable cancers and conditions reach the state registry complete and on time.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  regulatory_framework: State cancer registry reporting law
+  owner_org_id: ORG-CANCER-CENTER
+  effective_date: "2025-01-01"

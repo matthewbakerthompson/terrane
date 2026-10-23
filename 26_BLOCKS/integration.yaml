@@ -1,0 +1,39 @@
+# How this estate reaches something it does not run.
+#
+# The boundary is the thing being designed. What is on the other side of it is
+# somebody else's architecture, and pretending otherwise is how vendor
+# integrations end up undocumented.
+
+- building_block_id: private-egress-to-saas
+  name: Private egress to SaaS
+  category: Integration
+  description: >
+    A gateway of ours, a private path out, and federated identity. This is the whole of what we own when we buy something: the vendor runs the software, we run the boundary.
+  provides:
+    - component: api-gateway
+    - component: private-egress
+    - component: identity-provider
+  relations:
+    - from: api-gateway
+      to: private-egress
+    - from: api-gateway
+      to: identity-provider
+  defaults:
+    network_zone: Private-App
+
+- building_block_id: file-exchange
+  name: File exchange
+  category: Integration
+  description: >
+    Scheduled files with a party who was never going to build an API. Older than every other block here and still the way most inter-company data actually moves.
+  provides:
+    - component: file-transfer
+    - component: object-store
+    - component: workflow
+  relations:
+    - from: file-transfer
+      to: object-store
+    - from: workflow
+      to: file-transfer
+  defaults:
+    network_zone: Edge

@@ -1,0 +1,46 @@
+change_request_id,name,description,status,togaf_layer,architecture_domain,abstraction_level,last_reviewed,company_domain,company_subdomain,tags,archetype,archetype_instance,module,source,requestor_org_id,approver_org_id,request_date,decision_date,governance_decision,decision_rationale,impact_assessment,principle_alignment,affected_system_ids,affected_process_ids,notes
+ACR-2026-014,Build installment lending on AWS rather than on-premises,"Whether the new product goes onto the AWS landing zone or onto the existing on-premises estate the card systems run on.
+",Active,Application,Application,Conceptual,,Lending,,,,,,,ORG-LENDING,ORG-TECH,2026-01-19,2026-02-09,Approved,"The landing zone already carries the controls the product needs, and the on-premises estate has no capacity plan that reaches the launch date.
+","Eight new systems, none of them replacing anything live. The ledger, the bureau and the CRM gain a caller through the integration hub rather than changing.
+","Buy the platform, build the differentiator.
+",,,
+ACR-2026-021,Buy sanctions screening rather than build it,"Whether to extend the fraud platform with sanctions and adverse-media screening or to onboard a vendor product for it.
+",Active,Application,Governance,Conceptual,,Risk and Compliance,,,,,,,ORG-COMPLIANCE,ORG-TECH,2026-02-16,2026-03-09,Approved,"The list management is the product, and maintaining it in-house would be a permanent obligation for a capability that is not a differentiator.
+","A vendor tenant outside the estate, reached through a private egress path, and one live system changed: the authorization switch becomes its caller.
+","Buy the platform, build the differentiator.
+",,,
+ACR-2026-030,Fold the card servicing datastore into the lending database,"Whether the card servicing operational datastore should be retired into the new lending database once lending is live, rather than run as a second operational store for the same customers.
+",Proposed,Data,Data,Conceptual,,Servicing,,,,,,,ORG-DIGITAL,ORG-TECH,2026-05-11,2026-06-08,Deferred,"Deferred until the lending product has run a full cycle. Consolidating a Restricted store into a system that has not yet been through a release would move the risk rather than remove it.
+","Would retire one live system and change one that is not built yet. Until it is taken, the datastore stays as it is: High criticality, Restricted, and recording no control of its own.
+","One system of record per kind of data.
+",,,
+ACR-2026-035,Buy identity document verification rather than build it,"Whether to extend the identity service with document capture and liveness checking or to onboard a vendor for it.
+",Active,Application,Governance,Conceptual,,Risk and Compliance,,,,,,,ORG-COMPLIANCE,ORG-TECH,2026-06-15,2026-07-06,Approved,"Liveness detection is a model the vendor retrains against fraud patterns we never see; building it would be a permanent obligation for a capability that is not a differentiator.
+","A vendor tenancy outside the estate, reached over a private path, and one live system changed: the identity service sends the capture and acts on the callback.
+","Buy the platform, build the differentiator.
+",,,
+ACR-2026-041,Build rewards redemption on the Azure product shape,"Whether to add redemption to the card servicing product or to build it as its own product on the Azure digital shape, the first to sit on it.
+",Active,Application,Governance,Conceptual,,Card Issuing,,,,,,,ORG-REWARDS,ORG-TECH,2026-07-20,2026-08-10,Approved,"The shape exists to make a new cardholder product a handful of answers rather than a build, and it had never been used. A product that adds one part to it is the test the shape needs, and redemption is the product whose failure costs least while it is proven.
+","Five new systems on the Azure landing zone and nothing live changed. One shared service added to the landing zone -- Event Hubs, the event stream the worker consumes -- which every later Azure product with a worker inherits. The proposed rewards ledger stays the source of balances.
+","Build on the shape; let the landing zone answer for the parts.
+",,,
+ACR-2026-047,Assemble the merchant portal from parts rather than a shape,"Whether a merchant-facing product needs a shape of its own before it is built, or can be assembled from the parts the digital shapes share and earn a shape when a second one follows.
+",Active,Application,Governance,Conceptual,,Payments,,,,,,,ORG-MERCHANT,ORG-TECH,2026-09-14,2026-10-02,Approved,"A shape is worth naming when the second product like it arrives. The first merchant product uses the same parts as the Azure digital shape plus a role, and the library already makes those parts a handful of answers; a shape for a product of one would be a file nobody reuses.
+","Four new systems on the Azure landing zone, one new actor, and nothing live changed. The compose block is the record of what was chosen; if a second merchant product is assembled from it, it is promoted to a shape.
+","Assemble from the library; name the shape when it repeats.
+",,,
+ACR-2026-048,Land the first product on Google Cloud,"Whether a third cloud is worth a landing zone of its own for one product, or the product should land on Azure beside the other digital products and reach its dealer partners over the internet.
+",Active,Application,Governance,Conceptual,,Lending,,,,,,,ORG-LENDING,ORG-TECH,2026-09-28,2026-10-05,Approved,"The dealer platforms that start a point-of-sale application already integrate through Apigee on Google Cloud, and the shortest private path to them is to land beside them. The library made the cost small: the digital shape's parts are the same on every cloud, so the new shape is a provider line and the bindings, and the landing zone is the same kinds of service the AWS and Azure zones carry.
+","A Google Cloud landing zone of nineteen services, a third digital shape, four new systems and one data asset; nothing live changed. The zone's kinds are the same as the other two, so every block resolves; the first `library.landing_zone_gap` warning, if one appears, names what the zone still lacks.
+","Same parts, different bindings; land beside the partner, not across the internet from it.
+",,,
+ACR-2026-049,Buy affordability data on open banking rails,"Whether point-of-sale finance assesses affordability from the shopper's own bank data, bought from an open banking vendor, or from the bureau data the installment lending product already uses.
+",Active,Application,Governance,Conceptual,,Lending,,,,,,,ORG-LENDING,ORG-TECH,2026-10-01,2026-10-06,Approved,"A checkout decision has seconds, and bureau data says what was borrowed, not what is affordable this month. Open banking data, with the shopper's consent, answers the question the regulator asks in the time the sale allows. Bought, because the open banking connections and the categorization are a vendor's whole business and nobody's here.
+","One vendor tenancy, a gateway, a private egress and a webhook listener in the lending project on Google Cloud, feeding the point-of-sale API. Restricted data from the first byte, so the path is private and the vendor's retention is contractual. The first bought capability on the Google Cloud side; the vendor shape needed a provider line and nothing else.
+","Buy what is a vendor's whole business; land beside the caller; keep restricted data off the public path.
+",,,
+ACR-2026-050,Curate Google Cloud data on Google Cloud,"Whether point-of-sale finance's performance data is curated in BigQuery beside the product, or carried to the enterprise warehouse on the Azure side the way every other data product is.
+",Active,Data,Governance,Conceptual,,Lending,,,,,,,ORG-LENDING,ORG-TECH,2026-10-05,2026-10-06,Approved,"The data is born on Google Cloud and the analysts who want it sit with the product; carrying it to Snowflake for a nightly curation would cross clouds twice, and pay egress both ways, for a dataset nobody on the Azure side reads. Collibra registers it either way, so governance does not move with the warehouse.
+","A second workload project on the Google Cloud hub, four landing-zone services the zone did not list -- BigQuery, Dataflow, Cloud Composer, Looker -- and the first data product shape with a Google binding. The enterprise warehouse gains nothing and loses nothing; the catalog gains a dataset on a second cloud.
+","Curate data where it is born; one catalog whichever cloud; land beside the caller.
+",,,

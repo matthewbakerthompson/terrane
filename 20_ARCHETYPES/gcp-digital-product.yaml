@@ -1,0 +1,118 @@
+archetype_id: gcp-digital-product
+title: Google Cloud digital product
+version: 1.1.0
+applies_to: products
+patterns: [api-front-door]
+description: >
+  A customer-facing digital product built in-house on Google Cloud. The same
+  parts as the AWS and Azure digital shapes, a browser front end, an API that
+  backs it, a product datastore and an event publisher onto the enterprise
+  bus, on the same blocks, resolved against the Google Cloud landing zone.
+  That is the claim the library makes, made good a third time: the parts are
+  the same, the bindings differ. The first product to sit on it is the one
+  whose dealer partners already integrate through Apigee. 1.1 binds the
+  landing zone by kind where it named the sample's own services by id.
+parameters:
+  - name: slug
+    required: true
+    description: Short lower-case token used in identifiers, e.g. posfin
+  - name: product_name
+    required: true
+    description: Human-readable product name, e.g. Point-of-Sale Finance
+  - name: owner_org
+    required: true
+    description: Owning org unit id, e.g. ORG-LENDING
+  - name: domain
+    required: true
+    description: Company domain used for grouping in views
+  - name: account
+    required: true
+    description: Workload project id, e.g. gcp-lending-prod
+  - name: region
+    default: europe-west2
+    description: Google Cloud region the product lands in
+  - name: criticality
+    default: Medium
+  - name: classification
+    default: Confidential
+defaults:
+  architecture_domain: Business
+  togaf_layer: Business
+  abstraction_level: Conceptual
+provider: GCP
+entity_defaults:
+  all:
+    status: "{status}"
+    company_domain: "{domain}"
+  systems:
+    tags: [digital]
+    owner_org_id: "{owner_org}"
+    criticality: "{criticality}"
+    hosting: GCP
+    environment: Production
+    cloud_provider: GCP
+    cloud_account: "{account}"
+    region: "{region}"
+    data_classification_supported: "{classification}"
+    togaf_layer: Application
+    architecture_domain: Application
+    abstraction_level: Physical
+  interfaces:
+    owner_org_id: "{owner_org}"
+    protocol: HTTPS
+    direction: Outbound
+    frequency: Realtime
+    integration_style: Request-response
+    auth_method: WorkloadIdentity
+    data_classification: "{classification}"
+    togaf_layer: Application
+    architecture_domain: Application
+  offered_interfaces:
+    owner_org_id: "{owner_org}"
+    data_classification: "{classification}"
+    togaf_layer: Application
+    architecture_domain: Application
+  tech_services:
+    tags: [digital]
+    owner_org_id: "{owner_org}"
+    cloud_provider: GCP
+    cloud_account: "{account}"
+    region: "{region}"
+    togaf_layer: Technology
+    architecture_domain: Technology
+# Bound to the landing zone's services of each kind on Google Cloud, and
+# `uses` by kind, as on the Azure shape: the shape names no estate's records.
+blocks:
+  - block: public-api-tier
+    bind:
+      api-gateway: landing-zone
+  - block: stateless-service
+    bind:
+      container-platform: landing-zone
+      observability: landing-zone
+  - block: transactional-store
+    bind:
+      relational-db: landing-zone
+      kms: landing-zone
+modules:
+  - module: api-service
+    with:
+      runs_on: [public-api-tier.api-gateway, stateless-service]
+      uses: [secrets-manager]
+  - module: web-channel
+    with:
+      runs_on: [public-api-tier.dns, public-api-tier.waf, stateless-service.container-platform]
+      # The enterprise identity provider is the same on every cloud: a
+      # neutral landing-zone service, found from any of them.
+      uses: [identity-provider]
+  - module: relational-datastore
+    with:
+      protocol: PostgreSQL
+      system_suffix: DB
+      risk_level: Medium
+  - module: event-publisher
+relations:
+  system_reads_writes:
+    - system_id: "SYS-{slug|upper}-DB"
+      data_asset_id: "DA-{slug|upper}-OPERATIONAL"
+      operation: ReadWrite

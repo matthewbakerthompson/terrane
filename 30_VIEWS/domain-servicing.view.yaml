@@ -1,0 +1,35 @@
+view_id: domain-servicing
+title: Servicing Domain
+category: Application
+section: Landscape
+kind: diagram
+description: >
+  The Servicing domain and its immediate neighbors: every system in the domain
+  plus everything one interface away. Smaller and easier to read than the full
+  landscape, and it updates as the model changes.
+layout: LR
+group_by: company_domain
+renderers: [mermaid]
+
+scope:
+  include:
+    - type: systems
+      where:
+        company_domain: [Servicing]
+        status: [Active, Planned]
+  expand:
+    - relation: interfaces
+      depth: 1
+      types: [systems]
+
+edges:
+  - via: interfaces
+    label: protocol
+  - via: system_realizes_capability
+    text: realizes
+
+style:
+  color_by: criticality
+
+limits:
+  max_nodes: 30

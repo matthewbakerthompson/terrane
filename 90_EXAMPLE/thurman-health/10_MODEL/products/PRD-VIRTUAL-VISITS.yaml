@@ -1,0 +1,49 @@
+# Video visits, bought, on the shipped vendor shape: the vendor's tenancy,
+# our gateway in front of it, the feed from the EHR that tells it who is
+# booked, and what comes back. The vendor is a business associate under
+# HIPAA, so it is reached privately rather than over the internet -- one
+# line under `choose`, as the card issuer's identity verification does.
+product_id: PRD-VIRTUAL-VISITS
+name: Virtual Visits
+description: >
+  Scheduled and on-demand video visits for the clinics, booked in the EHR
+  and joined from the portal. Visit notes are written in the EHR, not here.
+status: Active
+owner_org_id: ORG-VIRTUAL-CARE
+criticality: Medium
+product_category: Vendor capability
+company_domain: Patient Access
+
+build_type: bought-saas
+archetype: vendor-saas-service
+parameters:
+  slug: telehealth
+  product_name: Virtual Visits
+  vendor: Virtual visit vendor
+  owner_org: ORG-VIRTUAL-CARE
+  domain: Patient Access
+  upstream_system: SYS-EHR
+  account: azure-patient-prod
+  region: eastus2
+  criticality: Medium
+  classification: Restricted
+
+choose:
+  reach: private-egress
+
+# A shipped part the shape does not compose by default: the vendor's audit
+# log into security monitoring, so who opened a visit is answerable from
+# Thurman's side as well as the vendor's.
+modules:
+  - module: audit-forwarding
+
+overrides:
+  SYS-TELEHEALTH-VENDOR:
+    name: Virtual Visit Platform
+    description: The vendor's video visit service, in its own tenancy, under a business associate agreement.
+    tags: [vendor, third-party]
+  DA-TELEHEALTH-OUTCOMES:
+    name: Video visit records
+    description: Who joined each visit, when and for how long, returned nightly for billing the visit and for the access audit.
+    pii_flag: "Yes"
+    pii_types: Name;Medical record number;Dates of service

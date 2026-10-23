@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="487.7" viewBox="0 0 1100 487.7" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Customer Identity Service — Governance</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Customer Identity Service — Governance</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   5 nodes · 8 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One system and everything that governs it: the controls it enforces, the policies it is subject to, and the controls that apply through the capabilities it realizes. A</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">control reached only through a capability means either the system enforces it and nobody recorded that, or it is enforced somewhere else.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(25 108.5)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="293.72" y="67.3" width="212.57" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="335.72" y="84.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Control">
+<rect x="556.3" y="38.3" width="211.4" height="175.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="589.15" y="55.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Control</text>
+</g>
+<g class="boundary" data-id="grp::Policy">
+<rect x="818.3" y="110.3" width="221.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="848.1" y="127.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Policy</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="10.3" y="147.3" width="233.4" height="114.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="40.1" y="164.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::SYS-IDENTITY-SVC::CTL-AUTH-POLICY">
+<title>enforces</title>
+<path d="M218 210.8 L246.97 211 A10 10 0 0 0 247.03 211 L515 211 A10 10 0 0 0 525 201 L525 180.88 A10 10 0 0 1 534.88 170.88 L552.94 170.67 A10 10 0 0 1 553.06 170.67 L578.48 170.67" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M582 170.67 L572.43 175.45 L572.43 165.88 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::SYS-IDENTITY-SVC::CTL-AUTH-POLICY">
+<rect x="376.58" y="188.5" width="46.84" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="400" y="200.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">enforces</text>
+</g>
+<g class="edge" data-id="e1::SYS-IDENTITY-SVC::CTL-ACCESS-CERT">
+<title>enforces</title>
+<path d="M218 185.6 L246.93 186 A10 10 0 0 0 247.07 186 L255 186 A8 8 0 0 0 263 178 L263 46 A10 10 0 0 1 273 36 L515 36 A10 10 0 0 1 525 46 L525 71.12 A10 10 0 0 0 534.88 81.12 L552.94 81.33 A10 10 0 0 0 553.06 81.33 L578.48 81.33" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M582 81.33 L572.43 86.12 L572.43 76.55 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::SYS-IDENTITY-SVC::CTL-ACCESS-CERT">
+<rect x="376.58" y="13.5" width="46.84" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="400" y="25.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">enforces</text>
+</g>
+<g class="edge" data-id="e2::SYS-IDENTITY-SVC::CAP-SEC-01">
+<title>realizes</title>
+<path d="M218 198.2 L246.97 198 A10 10 0 0 1 247.03 198 L263 198 A10 10 0 0 0 273 188 L273 128 A9 9 0 0 1 282 119 L291 119 L316.48 119" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M320 119 L310.43 123.78 L310.43 114.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e3::CAP-SEC-01::CTL-ACCESS-CERT">
+<title>governed by</title>
+<path d="M480 110.33 L508.94 110 A10 10 0 0 1 509.06 110 L519.5 110 A5.5 5.5 0 0 0 525 104.5 L525 104.5 A5.57 5.57 0 0 1 530.5 98.93 L552.94 98.67 A10 10 0 0 1 553.06 98.67 L578.48 98.67" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M582 98.67 L572.43 103.45 L572.43 93.88 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e4::CAP-SEC-01::CTL-AUTH-POLICY">
+<title>governed by</title>
+<path d="M480 127.67 L508.94 128 A10 10 0 0 0 509.06 128 L517 128 A8 8 0 0 1 525 136 L525 143.12 A10 10 0 0 0 534.88 153.12 L552.94 153.33 A10 10 0 0 0 553.06 153.33 L578.48 153.33" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M582 153.33 L572.43 158.12 L572.43 148.55 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e5::SYS-IDENTITY-SVC::POL-INFOSEC">
+<title>subject to</title>
+<path d="M218 223.4 L246.93 223 A10 10 0 0 1 247.07 223 L262.5 223 A0.5 0.5 0 0 1 263 223.5 L263 223.5 A0.5 0.5 0 0 0 263.5 224 L400 224 L662 224 L777 224 A10 10 0 0 0 787 214 L787 185 A10 10 0 0 1 797 175 L815 175 L840.48 175" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M844 175 L834.43 179.78 L834.43 170.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e6::CTL-ACCESS-CERT::POL-INFOSEC">
+<title>gives effect to</title>
+<path d="M742 90 L771 90 L779 90 A8 8 0 0 1 787 98 L787 139 A10 10 0 0 0 797 149 L815 149 L840.48 149" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M844 149 L834.43 153.78 L834.43 144.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e7::CTL-AUTH-POLICY::POL-INFOSEC">
+<title>gives effect to</title>
+<path d="M742 162 L771 162 L815 162 L840.48 162" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M844 162 L834.43 166.78 L834.43 157.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-SEC-01" data-type="capabilities">
+<title>Identity &amp; Access Management</title>
+<path d="M360 93 L320 119 L360 145 L440 145 L480 119 L440 93 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="400" y="117.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Identity &amp; Access</text>
+<text x="400" y="129.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+</g>
+<g class="node" data-id="CTL-ACCESS-CERT" data-type="controls">
+<title>Periodic access certification</title>
+<path d="M628.86 64 L582 79.23 L582 100.77 L628.86 116 L695.14 116 L742 100.77 L742 79.23 L695.14 64 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="662" y="88.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Periodic access</text>
+<text x="662" y="100.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">certification</text>
+</g>
+<g class="node" data-id="CTL-AUTH-POLICY" data-type="controls">
+<title>Cardholder authentication to policy</title>
+<path d="M628.86 136 L582 151.23 L582 172.77 L628.86 188 L695.14 188 L742 172.77 L742 151.23 L695.14 136 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="662" y="154.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Cardholder</text>
+<text x="662" y="166.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">authentication to</text>
+<text x="662" y="178.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">policy</text>
+</g>
+<g class="node" data-id="POL-INFOSEC" data-type="policies">
+<title>Information Security Policy</title>
+<path d="M852 136 L1006 136 L1014 144 L1014 180 L1006 188 L852 188 L844 180 L844 144 Z" fill="#fecaca" stroke="#dc2626" stroke-width="1.4"/>
+<text x="925" y="160.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Information Security</text>
+<text x="925" y="172.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Policy</text>
+<svg x="996" y="141" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg>
+</g>
+<g class="node" data-id="SYS-IDENTITY-SVC" data-type="systems">
+<title>Customer Identity Service</title>
+<rect x="36" y="173" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="117" y="197.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer Identity</text>
+<text x="117" y="209.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Service</text>
+<text x="127" y="230.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AKS</text>
+<image x="196" y="177" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYWY2YTJjNDItYmQ0OC00ODU3LWE0NzktYWVjZjhiM2RlNGY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImI3MGM5Y2YxLWJhYjgtNDdlMC1iYmRiLWNlMWNkNjY0ZDI2OCIgeDE9IjIuOTQiIHkxPSIzLjc0IiB4Mj0iOC42NyIgeTI9IjMuNzQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiZWI2OTk1My1iZDk2LTQ1MTUtODg0My1hYzEyNTQ2YWY5MzYiIHgxPSI5LjEzIiB5MT0iMy43OSIgeDI9IjE0Ljg1IiB5Mj0iMy43OSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImEzOWM3NmU4LTU0N2UtNGViNC1iYzI1LWQ4MWMwZjhjZGE2MiIgeDE9IjAuMDEiIHkxPSI5LjEyIiB4Mj0iNS43MyIgeTI9IjkuMTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJmMGEyYTQ5MS0xN2RjLTRiYjgtYmJmYy1lZTU4YTVjZjQ3ZGEiIHgxPSI2LjE4IiB5MT0iOS4wOCIgeDI9IjExLjkiIHkyPSI5LjA4IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwIiB4MT0iMTIuMzUiIHkxPSI5LjEzIiB4Mj0iMTguMDgiIHkyPSI5LjEzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZTM5OWFhOTMtMzQxZi00ZGYyLTljMDItNjAzYjgyYjQ4NGMyIiB4MT0iMi44NyIgeTE9IjE0LjU2IiB4Mj0iOC42IiB5Mj0iMTQuNTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJhMTUyYmJhMC1iYTJiLTQ4M2EtYjhjMS0wYWU3ZGUzNTU5OTAiIHgxPSI5LjA1IiB5MT0iMTQuNiIgeDI9IjE0Ljc4IiB5Mj0iMTQuNiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPkljb24tY29tcHV0ZS0yMzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSI1LjggMS4yMiAyLjk0IDEuNzUgMi45NCA1LjY1IDUuOCA2LjI2IDguNjcgNS4xMSA4LjY3IDIuMiA1LjggMS4yMiIgZmlsbD0idXJsKCNiNzBjOWNmMS1iYWI4LTQ3ZTAtYmJkYi1jZTFjZDY2NGQyNjgpIiAvPjxwYXRoIGQ9Ik01LjkxLDYuMiw4LjUzLDUuMTRBLjIuMiwwLDAsMCw4LjY1LDVWMi4zNmEuMjEuMjEsMCwwLDAtLjEzLS4xOGwtMi42NS0uOUg1Ljc1bC0yLjYuNDhBLjIuMiwwLDAsMCwzLDEuOTRWNS40N2EuMTkuMTksMCwwLDAsLjE1LjE5bDIuNjMuNTVBLjMyLjMyLDAsMCwwLDUuOTEsNi4yWiIgZmlsbD0ibm9uZSIgLz48cGF0aCBkPSJNMi45NCwxLjc1djMuOWwyLjg5LjYxdi01Wm0xLjIyLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYybC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMTEuOTkgMS4yNyA5LjEzIDEuOCA5LjEzIDUuNyAxMS45OSA2LjMxIDE0Ljg1IDUuMTUgMTQuODUgMi4yNSAxMS45OSAxLjI3IiBmaWxsPSJ1cmwoI2JlYjY5OTUzLWJkOTYtNDUxNS04ODQzLWFjMTI1NDZhZjkzNikiIC8+PHBhdGggZD0iTTkuMTMsMS44VjUuN0wxMiw2LjMxdi01Wm0xLjIxLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYyLjA1bC45My0uMTdaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMi44NyA2LjYgMC4wMSA3LjEzIDAuMDEgMTEuMDMgMi44NyAxMS42NCA1Ljc0IDEwLjQ5IDUuNzQgNy41OCAyLjg3IDYuNiIgZmlsbD0idXJsKCNhMzljNzZlOC01NDdlLTRlYjQtYmMyNS1kODFjMGY4Y2RhNjIpIiAvPjxwYXRoIGQ9Ik0wLDcuMTNWMTFsMi44OS42MXYtNVptMS4yMSwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFpNMi40OCwxMWwtLjkzLS4xNVY3LjM4bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iOS4wNCA2LjU2IDYuMTggNy4wOSA2LjE4IDEwLjk5IDkuMDQgMTEuNjEgMTEuOSAxMC40NSAxMS45IDcuNTQgOS4wNCA2LjU2IiBmaWxsPSJ1cmwoI2YwYTJhNDkxLTE3ZGMtNGJiOC1iYmZjLWVlNThhNWNmNDdkYSkiIC8+PHBhdGggZD0iTTYuMTgsNy4wOVYxMWwyLjg4LjYxdi01Wk03LjM5LDEwLjdsLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjcuMzRsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxNS4yMSA2LjYxIDEyLjM1IDcuMTQgMTIuMzUgMTEuMDQgMTUuMjEgMTEuNjUgMTguMDggMTAuNSAxOC4wOCA3LjU5IDE1LjIxIDYuNjEiIGZpbGw9InVybCgjZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwKSIgLz48cGF0aCBkPSJNMTIuMzUsNy4xNFYxMWwyLjg5LjYxdi01Wm0xLjIyLDMuNjEtLjgxLS4xN3YtM2wuODEtLjE0Wm0xLjI2LjIyLS45My0uMTVWNy4zOWwuOTMtLjE2WiIgZmlsbD0iIzM0MWE2ZSIgLz48cG9seWdvbiBwb2ludHM9IjUuNzMgMTIuMDQgMi44NyAxMi41NiAyLjg3IDE2LjQ2IDUuNzMgMTcuMDggOC42IDE1LjkyIDguNiAxMy4wMiA1LjczIDEyLjA0IiBmaWxsPSJ1cmwoI2UzOTlhYTkzLTM0MWYtNGRmMi05YzAyLTYwM2I4MmI0ODRjMikiIC8+PHBhdGggZD0iTTUuODQsMTcsOC40NSwxNmEuMTguMTgsMCwwLDAsLjEyLS4xOHYtMi42QS4yLjIsMCwwLDAsOC40NCwxM0w1LjgsMTIuMWEuMTcuMTcsMCwwLDAtLjEyLDBsLTIuNi40N2EuMTkuMTksMCwwLDAtLjE2LjE5djMuNTRhLjE5LjE5LDAsMCwwLC4xNS4xOUw1LjcsMTdBLjIzLjIzLDAsMCwwLDUuODQsMTdaIiBmaWxsPSJub25lIiAvPjxwYXRoIGQ9Ik0yLjg3LDEyLjU2djMuOWwyLjg5LjYyVjEyWm0xLjIyLDMuNjFMMy4yOCwxNlYxM2wuODEtLjE0Wm0xLjI2LjIzLS45My0uMTVWMTIuODFsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxMS45MSAxMi4wOCA5LjA1IDEyLjYxIDkuMDUgMTYuNTEgMTEuOTEgMTcuMTIgMTQuNzggMTUuOTcgMTQuNzggMTMuMDYgMTEuOTEgMTIuMDgiIGZpbGw9InVybCgjYTE1MmJiYTAtYmEyYi00ODNhLWI4YzEtMGFlN2RlMzU1OTkwKSIgLz48cGF0aCBkPSJNOS4wNSwxMi42MXYzLjlsMi44OS42MXYtNVptMS4yMiwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjEyLjg2bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjwvc3ZnPg=="/>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="385.7" x2="1072" y2="385.7" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="409.7" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 398.7)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="409.7" font-size="12" font-weight="400" fill="#343d50">capability · 1</text>
+<g transform="translate(177.5 398.7)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="203.5" y="409.7" font-size="12" font-weight="400" fill="#343d50">control · 2</text>
+<g transform="translate(275.87 398.7)" fill="#fecaca" stroke="#dc2626" stroke-width="1.4"><path d="M4 1h12l3 3v6l-3 3H4l-3-3V4z"/></g>
+<text x="301.87" y="409.7" font-size="12" font-weight="400" fill="#343d50">policy · 1</text>
+<g transform="translate(365.34 398.7)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="391.34" y="409.7" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
+<text x="28" y="431.7" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 420.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="431.7" font-size="12" font-weight="400" fill="#343d50">governed by</text>
+<g transform="translate(184.75 420.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="210.75" y="431.7" font-size="12" font-weight="400" fill="#343d50">gives effect to</text>
+<g transform="translate(306.41 420.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="332.41" y="431.7" font-size="12" font-weight="400" fill="#343d50">realizes</text>
+<g transform="translate(392.6 420.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="418.6" y="431.7" font-size="12" font-weight="400" fill="#343d50">subject to</text>
+<text x="28" y="465.7" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-governance--sys-identity-svc · edit the model, not the picture</text></g>
+</svg>

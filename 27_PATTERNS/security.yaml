@@ -1,0 +1,91 @@
+# Patterns for proving who is asking and keeping what must not be read.
+#
+# Three decisions the estate had taken without writing down. Each implements
+# one of the method's reference patterns, named in `method_ref`; the method
+# says what must be captured and which standards it meets, this file says
+# what the house builds it from and when it is the wrong call.
+
+- pattern_id: workforce-identity-lifecycle
+  name: Workforce identity from the people system
+  status: Approved
+  category: Security
+  blocks: [identity-governance]
+  intent: >
+    Every workforce account exists because the people system says a person
+    does, with the access their role implies, and stops existing the day the
+    people system says they left. Applications federate to the one identity
+    provider rather than keeping users of their own; privileged accounts are
+    checked out of a vault rather than owned; and every authentication is
+    read by security monitoring. The access certification a control demands
+    becomes a report rather than a campaign.
+  consequences: >
+    The people system becomes a Tier 1 dependency of everything, and its
+    data quality becomes a security property: a mover whose record is a week
+    late keeps a week of access nobody meant. Applications that cannot
+    federate have to be fronted or replaced, which is a program, not a
+    configuration. The vault adds a step to every privileged action, and the
+    step is the point, so it cannot be optimized away when an incident is
+    in progress.
+  when_not_to_use: >
+    Customer identity, which is a different pattern with a different
+    threat model: a cardholder is not provisioned from a people system and
+    is not certified quarterly. Service and workload identities, which are
+    issued by the platform rather than a person, and should not be given a
+    joiner-mover-leaver process they will never follow.
+  method_ref: PAT-007
+
+- pattern_id: secrets-and-keys
+  name: Secrets and keys from the baseline
+  status: Approved
+  category: Security
+  blocks: [security-baseline]
+  intent: >
+    No credential lives in code, configuration or a person's head. Secrets
+    are issued by the landing zone's secrets manager and rotated by it; keys
+    are generated inside the key management service and never leave it;
+    certificates come from one authority and expire on a schedule something
+    watches. A product inherits all three from the account it is built in,
+    which is why they are in the baseline block and not a block of their own.
+  consequences: >
+    Every workload has a startup dependency on the secrets manager, so the
+    secrets manager has the resilience posture of the most critical thing
+    that reads it. Rotation breaks anything that cached a secret, which is
+    the intended way to find out what cached a secret. Keys that cannot leave
+    the service cannot be used by a vendor's software that wants to hold
+    them, and that constraint has ended more than one procurement late.
+  when_not_to_use: >
+    A bought service that manages its own secrets inside its own boundary,
+    where the pattern applies to the credential we hold for it and nothing
+    else. Development environments with no path to production data, where
+    the cost of the pattern buys nothing, provided the no-path claim has
+    been checked rather than assumed.
+  method_ref: PAT-010
+
+- pattern_id: tokenized-card-data
+  name: Tokenized card data
+  status: Approved
+  category: Security
+  blocks: [token-vault]
+  intent: >
+    A card number is exchanged for a token at the edge of the estate and
+    nothing inside the estate but the vault ever sees the number again. The
+    authorization switch detokenizes on the way to the schemes; a wallet
+    provisioning request is answered with a token the device holds; every
+    other system, including the ledger, carries the token. Cardholder-data
+    scope shrinks from the estate to one service, and the evidence a
+    control demands is about one service.
+  consequences: >
+    The vault is on the critical path of every authorization and has to
+    answer inside the switch's time budget, which makes it the most
+    availability-sensitive thing in the estate after the switch itself.
+    A token is only useful to systems that agree on it, so re-tokenizing
+    a portfolio is a migration touching everything. Reports and
+    investigations that genuinely need the number need a controlled path to
+    the vault, and the path is the first thing an auditor asks about.
+  when_not_to_use: >
+    Data that is not a card number: a tokenization service is not a general
+    encryption service and treating it as one puts customer data in the
+    highest-scope component for no reduction in scope. A system that
+    receives card numbers from a scheme or a processor and can only forward
+    them, where tokenizing in the middle adds a hop and removes nothing.
+  method_ref: PAT-019

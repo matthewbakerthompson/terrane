@@ -1,0 +1,552 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1689.4" height="951.9" viewBox="0 0 1689.4 951.9" font-family="Geist, system-ui, sans-serif" data-layout="dagre">
+<title>Core Card Ledger — Governance</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Core Card Ledger — Governance</text>
+<text x="1661.4" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   40 nodes · 51 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One system and everything that governs it: the controls it enforces, the policies it is subject to, and the controls that apply through the capabilities it realizes. A control reached only through a capability means either the system enforces it and nobody</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">recorded that, or it is enforced somewhere else.</text>
+<line x1="28" y1="112" x2="1661.4" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(31.2 117.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="240.92" y="39.8" width="764.16" height="647.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="282.92" y="57.2" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Control">
+<rect x="1049.3" y="127.8" width="579.4" height="471.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="1082.15" y="145.21" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Control</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="-1.7" y="295.8" width="198.4" height="135.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="28.1" y="313.2" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::SYS-CORE-LEDGER::CTL-DAILY-RECON">
+<title>enforces</title>
+<path d="M171.7 369.66 L182.7 369.66 L222.92 369.66 A10 10 0 0 1 232.92 379.66 L232.92 656.2 A10 10 0 0 0 242.92 666.2 L1229.7 666.2 A10 10 0 0 0 1239.7 656.2 L1239.7 441.45 A3.8 3.8 0 0 1 1243.5 437.65 L1246.55 437.65 A10 10 0 0 1 1248.04 437.76 L1254.82 438.79" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1258.3 439.31 L1248.12 442.61 L1249.55 433.15 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::SYS-CORE-LEDGER::CTL-DAILY-RECON">
+<rect x="1028.89" y="658.2" width="46.84" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="1052.31" y="669.75" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">enforces</text>
+</g>
+<g class="edge" data-id="e1::SYS-CORE-LEDGER::CTL-CYCLE-VALID">
+<title>enforces</title>
+<path d="M171.7 372.12 L182.7 372.12 L248.42 372.12 A10 10 0 0 1 258.42 382.12 L258.42 663.2 A10 10 0 0 0 268.42 673.2 L981.08 673.2 A10 10 0 0 0 991.08 663.2 L991.08 482.5 A10 10 0 0 1 1001.08 472.5 L1062.17 472.5 A10 10 0 0 0 1064.4 472.25 L1077.1 469.34" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1080.53 468.55 L1072.27 475.35 L1070.14 466.03 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::SYS-CORE-LEDGER::CTL-CYCLE-VALID">
+<rect x="1003.77" y="464.5" width="46.84" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="1027.19" y="476.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">enforces</text>
+</g>
+<g class="edge" data-id="e2::SYS-CORE-LEDGER::CTL-CHG-APPROVAL">
+<title>enforces</title>
+<path d="M171.7 357.34 L182.7 357.34 L219.42 357.34 A10 10 0 0 0 229.42 347.34 L229.42 38.3 A10 10 0 0 1 239.42 28.3 L1236.7 28.3 A10 10 0 0 1 1246.7 38.3 L1246.7 275.2 A0.3 0.3 0 0 0 1247 275.5 L1247.3 275.5 L1254.78 275.5" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1258.3 275.5 L1248.73 280.29 L1248.73 270.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::SYS-CORE-LEDGER::CTL-CHG-APPROVAL">
+<rect x="1030.64" y="20.3" width="46.84" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="1054.06" y="31.85" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">enforces</text>
+</g>
+<g class="edge" data-id="e3::SYS-CORE-LEDGER::CTL-DR-TEST">
+<title>enforces</title>
+<path d="M171.7 391.81 L182.7 391.81 L201.7 391.81 A10 10 0 0 1 211.7 401.81 L211.7 672.2 A10 10 0 0 0 221.7 682.2 L986.58 682.2 A10 10 0 0 0 996.58 672.2 L996.58 549.5 A10 10 0 0 1 1006.58 539.5 L1063.3 539.5 L1070.78 539.5" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1074.3 539.5 L1064.73 544.28 L1064.73 534.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::SYS-CORE-LEDGER::CTL-DR-TEST" transform="matrix(0 1 -1 0 778.71 355.31)">
+<rect x="188.28" y="559.01" width="46.84" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="211.7" y="570.56" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">enforces</text>
+</g>
+<g class="edge" data-id="e4::SYS-CORE-LEDGER::CAP-SERV">
+<title>realizes</title>
+<path d="M171.7 394.28 L182.7 394.28 L248.65 394.28 A10 10 0 0 1 258.65 404.28 L258.65 685.2 A10 10 0 0 0 268.65 695.2 L609.58 695.2 A10 10 0 0 0 619.58 685.2 L619.58 541.17 A1.67 1.67 0 0 1 621.25 539.5 L622.92 539.5 L630.78 539.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M634.3 539.5 L624.73 544.28 L624.73 534.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e5::SYS-CORE-LEDGER::CAP-ORIG-06">
+<title>realizes</title>
+<path d="M171.7 367.19 L182.7 367.19 L246.42 367.19 A10 10 0 0 1 256.42 377.19 L256.42 385.7 A10 10 0 0 0 266.42 395.7 L612.92 395.7 A10 10 0 0 0 622.92 385.7 L622.92 367.43 A3.93 3.93 0 0 1 626.85 363.5 L630.78 363.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M634.3 363.5 L624.73 368.29 L624.73 358.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e6::SYS-CORE-LEDGER::CAP-BILL-01">
+<title>realizes</title>
+<path d="M171.7 327.8 L182.7 327.8 L238.15 327.8 A10 10 0 0 0 248.15 317.8 L248.15 102.88 A3.38 3.38 0 0 1 251.53 99.5 L254.92 99.5 L262.78 99.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M266.3 99.5 L256.73 104.28 L256.73 94.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e7::SYS-CORE-LEDGER::CAP-BILL-02">
+<title>realizes</title>
+<path d="M171.7 330.26 L182.7 330.26 L239.42 330.26 A10 10 0 0 0 249.42 320.26 L249.42 14.8 A10 10 0 0 1 259.42 4.8 L428.92 4.8 A10 10 0 0 1 438.92 14.8 L438.92 95.57 A3.93 3.93 0 0 0 442.85 99.5 L446.78 99.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M450.3 99.5 L440.73 104.28 L440.73 94.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e8::SYS-CORE-LEDGER::CAP-BILL-04">
+<title>realizes</title>
+<path d="M171.7 332.72 L182.7 332.72 L201.7 332.72 A10 10 0 0 0 211.7 322.72 L211.7 21.8 A10 10 0 0 1 221.7 11.8 L612.92 11.8 A10 10 0 0 1 622.92 21.8 L622.92 95.57 A3.93 3.93 0 0 0 626.85 99.5 L630.78 99.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M634.3 99.5 L624.73 104.28 L624.73 94.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e9::SYS-CORE-LEDGER::CAP-BILL-05">
+<title>realizes</title>
+<path d="M171.7 335.19 L182.7 335.19 L187.2 335.19 A4.5 4.5 0 0 0 191.7 330.69 L191.7 63.8 A10 10 0 0 1 201.7 53.8 L796.92 53.8 A10 10 0 0 1 806.92 63.8 L806.92 95.57 A3.93 3.93 0 0 0 810.85 99.5 L814.78 99.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M818.3 99.5 L808.73 104.28 L808.73 94.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e10::SYS-CORE-LEDGER::CAP-COLL-01">
+<title>realizes</title>
+<path d="M171.7 337.65 L177.2 337.65 A5.5 5.5 0 0 0 182.7 332.15 L182.7 197.5 A10 10 0 0 1 192.7 187.5 L254.92 187.5 L262.78 187.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M266.3 187.5 L256.73 192.28 L256.73 182.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e11::SYS-CORE-LEDGER::CAP-COLL-04">
+<title>realizes</title>
+<path d="M171.7 340.11 L182.7 340.11 L241.42 340.11 A10 10 0 0 0 251.42 330.11 L251.42 239.8 A10 10 0 0 1 261.42 229.8 L428.92 229.8 A10 10 0 0 0 438.92 219.8 L438.92 191.43 A3.93 3.93 0 0 1 442.85 187.5 L446.78 187.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M450.3 187.5 L440.73 192.28 L440.73 182.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e12::SYS-CORE-LEDGER::CAP-CRED-03">
+<title>realizes</title>
+<path d="M171.7 342.57 L182.7 342.57 L245.15 342.57 A10 10 0 0 0 255.15 332.57 L255.15 243.2 A10 10 0 0 1 265.15 233.2 L612.92 233.2 A10 10 0 0 0 622.92 223.2 L622.92 191.43 A3.93 3.93 0 0 1 626.85 187.5 L630.78 187.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M634.3 187.5 L624.73 192.28 L624.73 182.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e13::SYS-CORE-LEDGER::CAP-CRED-06">
+<title>realizes</title>
+<path d="M171.7 345.03 L177.2 345.03 A5.5 5.5 0 0 0 182.7 339.53 L182.7 58.3 A10 10 0 0 1 192.7 48.3 L796.92 48.3 A10 10 0 0 1 806.92 58.3 L806.92 183.57 A3.93 3.93 0 0 0 810.85 187.5 L814.78 187.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M818.3 187.5 L808.73 192.28 L808.73 182.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e14::SYS-CORE-LEDGER::CAP-CRED-07">
+<title>realizes</title>
+<path d="M171.7 347.5 L182.7 347.5 L232.42 347.5 A10 10 0 0 0 242.42 337.5 L242.42 281.75 A6.25 6.25 0 0 1 248.67 275.5 L254.92 275.5 L262.78 275.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M266.3 275.5 L256.73 280.29 L256.73 270.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e15::SYS-CORE-LEDGER::CAP-DATA-02">
+<title>realizes</title>
+<path d="M171.7 349.96 L182.7 349.96 L194.7 349.96 A10 10 0 0 0 204.7 339.96 L204.7 331.2 A10 10 0 0 1 214.7 321.2 L528.15 321.2 A2.85 2.85 0 0 0 531 318.35 L531 315.5 L531 313.72" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M531 310.2 L535.78 319.77 L526.22 319.77 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e16::SYS-CORE-LEDGER::CAP-FIN-01">
+<title>realizes</title>
+<path d="M171.7 352.42 L182.7 352.42 L183.7 352.42 A1 1 0 0 0 184.7 351.42 L184.7 327.8 A10 10 0 0 1 194.7 317.8 L713.85 317.8 A1.15 1.15 0 0 0 715 316.65 L715 315.5 L715 313.72" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M715 310.2 L719.78 319.77 L710.22 319.77 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e17::SYS-CORE-LEDGER::CAP-FIN-02">
+<title>realizes</title>
+<path d="M171.7 354.88 L182.7 354.88 L248.42 354.88 A10 10 0 0 0 258.42 344.88 L258.42 341.3 A10 10 0 0 1 268.42 331.3 L891.1 331.3 A7.9 7.9 0 0 0 899 323.4 L899 315.5 L899 313.72" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M899 310.2 L903.78 319.77 L894.22 319.77 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e18::SYS-CORE-LEDGER::CAP-FIN-03">
+<title>realizes</title>
+<path d="M171.7 359.81 L182.7 359.81 L249.8 359.81 A1.85 1.85 0 0 1 251.65 361.65 L251.65 361.87 A1.63 1.63 0 0 0 253.28 363.5 L254.92 363.5 L262.78 363.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M266.3 363.5 L256.73 368.29 L256.73 358.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e19::SYS-CORE-LEDGER::CAP-ORIG-05">
+<title>realizes</title>
+<path d="M171.7 362.27 L182.7 362.27 L183.7 362.27 A1 1 0 0 1 184.7 363.27 L184.7 392.3 A10 10 0 0 0 194.7 402.3 L428.92 402.3 A10 10 0 0 0 438.92 392.3 L438.92 367.43 A3.93 3.93 0 0 1 442.85 363.5 L446.78 363.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M450.3 363.5 L440.73 368.29 L440.73 358.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e20::SYS-CORE-LEDGER::CAP-PART-02">
+<title>realizes</title>
+<path d="M171.7 364.73 L177.2 364.73 A5.5 5.5 0 0 1 182.7 370.23 L182.7 399.2 A10 10 0 0 0 192.7 409.2 L796.92 409.2 A10 10 0 0 0 806.92 399.2 L806.92 367.43 A3.93 3.93 0 0 1 810.85 363.5 L814.78 363.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M818.3 363.5 L808.73 368.29 L808.73 358.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e21::SYS-CORE-LEDGER::CAP-PAY-01">
+<title>realizes</title>
+<path d="M171.7 374.58 L182.7 374.58 L234.65 374.58 A10 10 0 0 1 244.65 384.58 L244.65 395.62 A1.12 1.12 0 0 1 243.53 396.74 L243.53 396.74 A1.12 1.12 0 0 0 242.42 397.85 L242.42 445.25 A6.25 6.25 0 0 0 248.67 451.5 L254.92 451.5 L262.78 451.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M266.3 451.5 L256.73 456.29 L256.73 446.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e22::SYS-CORE-LEDGER::CAP-PAY-02">
+<title>realizes</title>
+<path d="M171.7 377.04 L182.7 377.04 L194.7 377.04 A10 10 0 0 1 204.7 387.04 L204.7 392.7 A10 10 0 0 0 214.7 402.7 L526.6 402.7 A4.4 4.4 0 0 1 531 407.1 L531 411.5 L531 413.28" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M531 416.8 L526.22 407.23 L535.78 407.23 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e23::SYS-CORE-LEDGER::CAP-PAY-05">
+<title>realizes</title>
+<path d="M171.7 379.5 L182.7 379.5 L241.42 379.5 A10 10 0 0 1 251.42 389.5 L251.42 399.3 A10 10 0 0 0 261.42 409.3 L713.9 409.3 A1.1 1.1 0 0 1 715 410.4 L715 411.5 L715 413.28" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M715 416.8 L710.22 407.23 L719.78 407.23 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e24::SYS-CORE-LEDGER::CAP-PROD-01">
+<title>realizes</title>
+<path d="M171.7 381.97 L182.7 381.97 L187.2 381.97 A4.5 4.5 0 0 1 191.7 386.47 L191.7 670.2 A10 10 0 0 0 201.7 680.2 L616.58 680.2 A10 10 0 0 0 626.58 670.2 L626.58 641 A10 10 0 0 1 636.58 631 L1006.58 631 A10 10 0 0 0 1016.58 621 L1016.58 419.2 A10 10 0 0 0 1006.58 409.2 L900.15 409.2 A1.15 1.15 0 0 0 899 410.35 L899 411.5 L899 413.28" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M899 416.8 L894.22 407.23 L903.78 407.23 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e25::SYS-CORE-LEDGER::CAP-PROD-02">
+<title>realizes</title>
+<path d="M171.7 384.43 L177.2 384.43 A5.5 5.5 0 0 1 182.7 389.93 L182.7 529.5 A10 10 0 0 0 192.7 539.5 L254.92 539.5 L262.78 539.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M266.3 539.5 L256.73 544.28 L256.73 534.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e26::SYS-CORE-LEDGER::CAP-PROD-05">
+<title>realizes</title>
+<path d="M171.7 386.89 L182.7 386.89 L239.42 386.89 A10 10 0 0 1 249.42 396.89 L249.42 487.2 A10 10 0 0 0 259.42 497.2 L428.92 497.2 A10 10 0 0 1 438.92 507.2 L438.92 535.57 A3.93 3.93 0 0 0 442.85 539.5 L446.78 539.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M450.3 539.5 L440.73 544.28 L440.73 534.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e27::SYS-CORE-LEDGER::CAP-SERV-02">
+<title>realizes</title>
+<path d="M171.7 389.35 L182.7 389.35 L215.92 389.35 A10 10 0 0 1 225.92 399.35 L225.92 487.2 A10 10 0 0 0 235.92 497.2 L239.42 497.2 A10 10 0 0 1 249.42 507.2 L249.42 708.7 A10 10 0 0 0 259.42 718.7 L796.92 718.7 A10 10 0 0 0 806.92 708.7 L806.92 543.43 A3.93 3.93 0 0 1 810.85 539.5 L814.78 539.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M818.3 539.5 L808.73 544.28 L808.73 534.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e28::SYS-CORE-LEDGER::CAP-TPS-01">
+<title>realizes</title>
+<path d="M171.7 396.74 L182.7 396.74 L241.65 396.74 A10 10 0 0 1 251.65 406.74 L251.65 625.87 A1.63 1.63 0 0 0 253.28 627.5 L254.92 627.5 L262.78 627.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M266.3 627.5 L256.73 632.28 L256.73 622.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e29::SYS-CORE-LEDGER::CAP-TPS-02">
+<title>realizes</title>
+<path d="M171.7 399.2 L177.2 399.2 A5.5 5.5 0 0 1 182.7 404.7 L182.7 692.2 A10 10 0 0 0 192.7 702.2 L428.92 702.2 A10 10 0 0 0 438.92 692.2 L438.92 631.43 A3.93 3.93 0 0 1 442.85 627.5 L446.78 627.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M450.3 627.5 L440.73 632.28 L440.73 622.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e30::CAP-BILL-01::CTL-CYCLE-VALID">
+<title>governed by</title>
+<path d="M427.7 99.5 L433.39 99.5 A5.69 5.69 0 0 0 439.08 93.81 L439.08 67.3 A10 10 0 0 1 449.08 57.3 L1048 57.3 A10 10 0 0 1 1058 67.3 L1058 427.85 A2.65 2.65 0 0 0 1060.65 430.5 L1062.17 430.5 A10 10 0 0 1 1064.4 430.75 L1077.1 433.66" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1080.53 434.45 L1070.14 436.97 L1072.27 427.65 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e31::CAP-BILL-02::CTL-CYCLE-VALID">
+<title>governed by</title>
+<path d="M611.7 99.5 L617.39 99.5 A5.69 5.69 0 0 0 623.08 93.81 L623.08 70.8 A10 10 0 0 1 633.08 60.8 L981.08 60.8 A10 10 0 0 1 991.08 70.8 L991.08 434.5 A10 10 0 0 0 1001.08 444.5 L1062.92 444.5 A10 10 0 0 1 1063.68 444.53 L1070.79 445.07" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1074.3 445.34 L1064.39 449.38 L1065.12 439.84 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e32::CAP-BILL-04::CTL-CYCLE-VALID">
+<title>governed by</title>
+<path d="M795.7 99.5 L801.39 99.5 A5.69 5.69 0 0 0 807.08 93.81 L807.08 58.3 A10 10 0 0 1 817.08 48.3 L1047.8 48.3 A10 10 0 0 1 1057.8 58.3 L1057.8 455.75 A2.75 2.75 0 0 0 1060.55 458.5 L1062.92 458.5 A10 10 0 0 0 1063.68 458.47 L1070.79 457.93" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1074.3 457.66 L1065.12 463.16 L1064.39 453.62 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e33::CAP-COLL-04::CTL-CHARGEOFF-TIME">
+<title>governed by</title>
+<path d="M611.7 187.5 L617.39 187.5 A5.69 5.69 0 0 0 623.08 181.81 L623.08 58.3 A10 10 0 0 1 633.08 48.3 L986.58 48.3 A10 10 0 0 1 996.58 58.3 L996.58 258.5 A10 10 0 0 0 1006.58 268.5 L1062.92 268.5 A10 10 0 0 1 1063.68 268.53 L1070.79 269.07" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1074.3 269.34 L1064.39 273.38 L1065.12 263.84 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e34::CAP-CRED-03::CTL-ADVERSE-ACT">
+<title>governed by</title>
+<path d="M795.7 187.5 L801.39 187.5 A5.69 5.69 0 0 0 807.08 181.81 L807.08 158.3 A10 10 0 0 1 817.08 148.3 L1027.8 148.3 A10 10 0 0 1 1037.8 158.3 L1037.8 170.5 A10 10 0 0 0 1047.8 180.5 L1062.92 180.5 A10 10 0 0 1 1063.68 180.53 L1070.79 181.07" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1074.3 181.34 L1064.39 185.38 L1065.12 175.84 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e35::CAP-CRED-06::CTL-AUTH-AVAIL">
+<title>governed by</title>
+<path d="M979.7 187.5 L991.08 187.5 L1006.58 187.5 A10 10 0 0 0 1016.58 177.5 L1016.58 126.3 A10 10 0 0 1 1026.58 116.3 L1237.3 116.3 A10 10 0 0 1 1247.3 126.3 L1247.3 180.5 L1247.3 180.5 L1254.79 181.07" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1258.3 181.34 L1248.39 185.38 L1249.12 175.84 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e36::CAP-DATA-02::CTL-CLIENT-SLA">
+<title>governed by</title>
+<path d="M611.7 275.5 L617.39 275.5 A5.69 5.69 0 0 0 623.08 269.81 L623.08 187.58 A0.08 0.08 0 0 0 623 187.5 L623 187.5 A0.08 0.08 0 0 1 622.92 187.42 L622.92 58.3 A10 10 0 0 1 632.92 48.3 L1417.2 48.3 A10 10 0 0 1 1427.2 58.3 L1427.2 266.45 A2.05 2.05 0 0 0 1429.25 268.5 L1430.92 268.5 A10 10 0 0 1 1431.68 268.53 L1438.79 269.07" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1442.3 269.34 L1432.39 273.38 L1433.12 263.84 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e37::CAP-DATA-02::CTL-CONV-VERIFY">
+<title>governed by</title>
+<path d="M611.7 275.5 L617.39 275.5 A5.69 5.69 0 0 1 623.08 281.19 L623.08 568.2 A10 10 0 0 0 633.08 578.2 L1417.2 578.2 A10 10 0 0 0 1427.2 568.2 L1427.2 358.55 A2.05 2.05 0 0 1 1429.25 356.5 L1430.92 356.5 A10 10 0 0 1 1431.68 356.53 L1438.79 357.07" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1442.3 357.34 L1432.39 361.38 L1433.12 351.84 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e38::CAP-DATA-02::CTL-DQ-GATE">
+<title>governed by</title>
+<path d="M611.7 275.5 L623.08 275.5 L623 275.5 A0.08 0.08 0 0 0 622.92 275.58 L622.92 305.5 A10 10 0 0 0 632.92 315.5 L1053.3 315.5 A10 10 0 0 1 1063.3 325.5 L1063.3 573.7 A10 10 0 0 0 1073.3 583.7 L1424.8 583.7 A10 10 0 0 0 1434.8 573.7 L1434.8 453.25 A1.75 1.75 0 0 0 1433.05 451.5 L1431.3 451.5 L1438.78 451.5" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1442.3 451.5 L1432.73 456.29 L1432.73 446.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e39::CAP-FIN-01::CTL-CHARGEOFF-TIME">
+<title>governed by</title>
+<path d="M795.7 275.5 L801.39 275.5 A5.69 5.69 0 0 1 807.08 281.19 L807.08 306.3 A10 10 0 0 0 817.08 316.3 L1027.8 316.3 A10 10 0 0 0 1037.8 306.3 L1037.8 292.5 A10 10 0 0 1 1047.8 282.5 L1062.92 282.5 A10 10 0 0 0 1063.68 282.47 L1070.79 281.93" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1074.3 281.66 L1065.12 287.16 L1064.39 277.62 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e40::CAP-FIN-01::CTL-CLOSE-SIGNOFF">
+<title>governed by</title>
+<path d="M795.7 275.5 L807.08 275.5 L807 275.5 A0.08 0.08 0 0 0 806.92 275.58 L806.92 307.8 A10 10 0 0 0 816.92 317.8 L1027.8 317.8 A10 10 0 0 1 1037.8 327.8 L1037.8 353.5 A10 10 0 0 0 1047.8 363.5 L1063.3 363.5 L1070.78 363.5" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1074.3 363.5 L1064.73 368.29 L1064.73 358.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e41::CAP-FIN-02::CTL-DAILY-RECON">
+<title>governed by</title>
+<path d="M979.7 275.5 L991.08 275.5 L993.83 275.5 A2.75 2.75 0 0 1 996.58 278.25 L996.58 401.5 A10 10 0 0 0 1006.58 411.5 L1240.55 411.5 A6.15 6.15 0 0 1 1246.7 417.65 L1246.7 423.5 A0.3 0.3 0 0 0 1247 423.8 L1247 423.8 A2.03 2.03 0 0 1 1247.59 423.89 L1268.6 430.23" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1271.97 431.25 L1261.42 433.06 L1264.19 423.9 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e42::CAP-FIN-03::CTL-DAILY-RECON">
+<title>governed by</title>
+<path d="M427.7 363.5 L433.39 363.5 A5.69 5.69 0 0 1 439.08 369.19 L439.08 580.7 A10 10 0 0 0 449.08 590.7 L1233.8 590.7 A10 10 0 0 0 1243.8 580.7 L1243.8 453.25 A1.75 1.75 0 0 1 1245.55 451.5 L1247.3 451.5 L1254.78 451.5" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1258.3 451.5 L1248.73 456.29 L1248.73 446.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e43::CAP-ORIG-05::CTL-ADVERSE-ACT">
+<title>governed by</title>
+<path d="M611.7 363.5 L623.08 363.5 L623 363.5 A0.08 0.08 0 0 1 622.92 363.42 L622.92 331.2 A10 10 0 0 1 632.92 321.2 L1006.58 321.2 A10 10 0 0 0 1016.58 311.2 L1016.58 204.5 A10 10 0 0 1 1026.58 194.5 L1062.92 194.5 A10 10 0 0 0 1063.68 194.47 L1070.79 193.93" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1074.3 193.66 L1065.12 199.16 L1064.39 189.62 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e44::CAP-ORIG-06::CTL-AUTH-POLICY">
+<title>governed by</title>
+<path d="M795.7 363.5 L801.39 363.5 A5.69 5.69 0 0 0 807.08 357.81 L807.08 334.3 A10 10 0 0 1 817.08 324.3 L1046.3 324.3 A10 10 0 0 0 1056.3 314.3 L1056.3 158.3 A10 10 0 0 1 1066.3 148.3 L1103.05 148.3 A3.25 3.25 0 0 0 1106.3 145.05 L1106.3 145.05 A3.25 3.25 0 0 1 1109.55 141.8 L1424.2 141.8 A10 10 0 0 1 1434.2 151.8 L1434.2 186.05 A1.45 1.45 0 0 1 1432.75 187.5 L1431.3 187.5 L1438.78 187.5" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1442.3 187.5 L1432.73 192.28 L1432.73 182.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e45::CAP-PAY-01::CTL-AUTH-AVAIL">
+<title>governed by</title>
+<path d="M427.7 451.5 L439.08 451.5 L439 451.5 A0.08 0.08 0 0 0 438.92 451.58 L438.92 582.2 A10 10 0 0 0 448.92 592.2 L705.75 592.2 A9.25 9.25 0 0 1 715 601.45 L715 601.45 A9.25 9.25 0 0 0 724.25 610.7 L1240.8 610.7 A10 10 0 0 0 1250.8 600.7 L1250.8 196.25 A1.75 1.75 0 0 0 1249.05 194.5 L1249.05 194.5 A0.07 0.07 0 0 1 1249.04 194.37 L1254.79 193.93" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1258.3 193.66 L1249.12 199.16 L1248.39 189.62 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e46::CAP-PAY-02::CTL-DAILY-RECON">
+<title>governed by</title>
+<path d="M611.7 451.5 L623.08 451.5 L623 451.5 A0.08 0.08 0 0 0 622.92 451.58 L622.92 575.2 A10 10 0 0 0 632.92 585.2 L1236.7 585.2 A10 10 0 0 0 1246.7 575.2 L1246.7 465.65 A0.3 0.3 0 0 1 1247 465.35 L1247 465.35 A3.99 3.99 0 0 0 1247.6 465.3 L1254.82 464.21" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1258.3 463.69 L1249.55 469.85 L1248.12 460.39 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e47::CAP-PAY-05::CTL-DAILY-RECON">
+<title>governed by</title>
+<path d="M795.7 451.5 L801.39 451.5 A5.69 5.69 0 0 1 807.08 457.19 L807.08 614 A10 10 0 0 0 817.08 624 L1243.7 624 A10 10 0 0 0 1253.7 614 L1253.7 482.4 A3.2 3.2 0 0 0 1250.5 479.2 L1250.5 479.2 A0.47 0.47 0 0 1 1250.36 478.27 L1268.6 472.77" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1271.97 471.75 L1264.19 479.1 L1261.42 469.94 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e48::CAP-SERV::CTL-COMPLAINT-REG">
+<title>governed by</title>
+<path d="M795.7 539.5 L801.39 539.5 A5.69 5.69 0 0 1 807.08 545.19 L807.08 587.7 A10 10 0 0 0 817.08 597.7 L1027.8 597.7 A10 10 0 0 0 1037.8 587.7 L1037.8 409.2 A10 10 0 0 1 1047.8 399.2 L1236.7 399.2 A10 10 0 0 0 1246.7 389.2 L1246.7 363.8 A0.3 0.3 0 0 1 1247 363.5 L1247.3 363.5 L1254.78 363.5" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1258.3 363.5 L1248.73 368.29 L1248.73 358.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e49::CAP-TPS-01::CTL-CLIENT-SLA">
+<title>governed by</title>
+<path d="M427.7 627.5 L433.39 627.5 A5.69 5.69 0 0 1 439.08 633.19 L439.08 665.2 A10 10 0 0 0 449.08 675.2 L1417.8 675.2 A10 10 0 0 0 1427.8 665.2 L1427.8 284.25 A1.75 1.75 0 0 1 1429.55 282.5 L1430.92 282.5 A10 10 0 0 0 1431.68 282.47 L1438.79 281.93" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1442.3 281.66 L1433.12 287.16 L1432.39 277.62 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e50::CAP-TPS-02::CTL-CONV-VERIFY">
+<title>governed by</title>
+<path d="M611.7 627.5 L623.08 627.5 L705 627.5 A10 10 0 0 1 715 637.5 L715 688.7 A10 10 0 0 0 725 698.7 L1424.2 698.7 A10 10 0 0 0 1434.2 688.7 L1434.2 371.95 A1.45 1.45 0 0 0 1432.75 370.5 L1432.75 370.5 A0.06 0.06 0 0 1 1432.75 370.39 L1438.79 369.93" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1442.3 369.66 L1433.12 375.16 L1432.39 365.62 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-BILL-01" data-type="capabilities">
+<title>Interest &amp; Fee Assessment</title>
+<path d="M307 65.5 L267 99.5 L307 133.5 L387 133.5 L427 99.5 L387 65.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="347" y="97.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Interest &amp; Fee</text>
+<text x="347" y="109.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Assessment</text>
+</g>
+<g class="node" data-id="CAP-BILL-02" data-type="capabilities">
+<title>Cycle &amp; Statement Generation</title>
+<path d="M491 65.5 L451 99.5 L491 133.5 L571 133.5 L611 99.5 L571 65.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="531" y="97.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Cycle &amp; Statement</text>
+<text x="531" y="109.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Generation</text>
+</g>
+<g class="node" data-id="CAP-BILL-04" data-type="capabilities">
+<title>Rewards Earn, Accrual &amp; Redemption</title>
+<path d="M675 65.5 L635 99.5 L675 133.5 L755 133.5 L795 99.5 L755 65.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="715" y="97.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Rewards Earn, Accrual</text>
+<text x="715" y="109.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">&amp; Redemption</text>
+</g>
+<g class="node" data-id="CAP-BILL-05" data-type="capabilities">
+<title>Billing Adjustment &amp; Credit Processing</title>
+<path d="M859 65.5 L819 99.5 L859 133.5 L939 133.5 L979 99.5 L939 65.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="899" y="97.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Billing Adjustment &amp;</text>
+<text x="899" y="109.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit Processing</text>
+</g>
+<g class="node" data-id="CAP-COLL-01" data-type="capabilities">
+<title>Delinquency Segmentation &amp; Treatment Strategy</title>
+<path d="M307 153.5 L267 187.5 L307 221.5 L387 221.5 L427 187.5 L387 153.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="347" y="179.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Delinquency</text>
+<text x="347" y="191.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Segmentation &amp;</text>
+<text x="347" y="203.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Treatment Strategy</text>
+</g>
+<g class="node" data-id="CAP-COLL-04" data-type="capabilities">
+<title>Charge-off Processing</title>
+<path d="M491 153.5 L451 187.5 L491 221.5 L571 221.5 L611 187.5 L571 153.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="531" y="191.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Charge-off Processing</text>
+</g>
+<g class="node" data-id="CAP-CRED-03" data-type="capabilities">
+<title>Credit Line Assignment &amp; Management</title>
+<path d="M675 153.5 L635 187.5 L675 221.5 L755 221.5 L795 187.5 L755 153.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="715" y="179.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit Line</text>
+<text x="715" y="191.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Assignment &amp;</text>
+<text x="715" y="203.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+</g>
+<g class="node" data-id="CAP-CRED-06" data-type="capabilities">
+<title>Authorization Strategy Management</title>
+<path d="M859 153.5 L819 187.5 L859 221.5 L939 221.5 L979 187.5 L939 153.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="899" y="185.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Authorization Strategy</text>
+<text x="899" y="197.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+</g>
+<g class="node" data-id="CAP-CRED-07" data-type="capabilities">
+<title>Account Review &amp; Reissue Decisioning</title>
+<path d="M307 241.5 L267 275.5 L307 309.5 L387 309.5 L427 275.5 L387 241.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="347" y="273.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Account Review &amp;</text>
+<text x="347" y="285.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Reissue Decisioning</text>
+</g>
+<g class="node" data-id="CAP-DATA-02" data-type="capabilities">
+<title>Data Sourcing &amp; Integration</title>
+<path d="M491 241.5 L451 275.5 L491 309.5 L571 309.5 L611 275.5 L571 241.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="531" y="273.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Data Sourcing &amp;</text>
+<text x="531" y="285.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Integration</text>
+</g>
+<g class="node" data-id="CAP-FIN-01" data-type="capabilities">
+<title>General Ledger &amp; Financial Close</title>
+<path d="M675 241.5 L635 275.5 L675 309.5 L755 309.5 L795 275.5 L755 241.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="715" y="273.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">General Ledger &amp;</text>
+<text x="715" y="285.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Financial Close</text>
+</g>
+<g class="node" data-id="CAP-FIN-02" data-type="capabilities">
+<title>Interchange &amp; Revenue Accounting</title>
+<path d="M859 241.5 L819 275.5 L859 309.5 L939 309.5 L979 275.5 L939 241.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="899" y="273.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Interchange &amp;</text>
+<text x="899" y="285.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Revenue Accounting</text>
+</g>
+<g class="node" data-id="CAP-FIN-03" data-type="capabilities">
+<title>Funding &amp; Liquidity Management</title>
+<path d="M307 329.5 L267 363.5 L307 397.5 L387 397.5 L427 363.5 L387 329.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="347" y="361.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Funding &amp; Liquidity</text>
+<text x="347" y="373.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+</g>
+<g class="node" data-id="CAP-ORIG-05" data-type="capabilities">
+<title>Adverse Action &amp; Notice Generation</title>
+<path d="M491 329.5 L451 363.5 L491 397.5 L571 397.5 L611 363.5 L571 329.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="531" y="361.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Adverse Action &amp;</text>
+<text x="531" y="373.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Notice Generation</text>
+</g>
+<g class="node" data-id="CAP-ORIG-06" data-type="capabilities">
+<title>Account Establishment &amp; Card Issuance</title>
+<path d="M675 329.5 L635 363.5 L675 397.5 L755 397.5 L795 363.5 L755 329.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="715" y="355.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Account</text>
+<text x="715" y="367.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Establishment &amp; Card</text>
+<text x="715" y="379.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Issuance</text>
+</g>
+<g class="node" data-id="CAP-PART-02" data-type="capabilities">
+<title>Network &amp; Scheme Relationship</title>
+<path d="M859 329.5 L819 363.5 L859 397.5 L939 397.5 L979 363.5 L939 329.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="899" y="361.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Network &amp; Scheme</text>
+<text x="899" y="373.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Relationship</text>
+</g>
+<g class="node" data-id="CAP-PAY-01" data-type="capabilities">
+<title>Authorization Processing</title>
+<path d="M307 417.5 L267 451.5 L307 485.5 L387 485.5 L427 451.5 L387 417.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="347" y="449.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Authorization</text>
+<text x="347" y="461.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Processing</text>
+</g>
+<g class="node" data-id="CAP-PAY-02" data-type="capabilities">
+<title>Clearing &amp; Transaction Posting</title>
+<path d="M491 417.5 L451 451.5 L491 485.5 L571 485.5 L611 451.5 L571 417.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="531" y="449.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Clearing &amp; Transaction</text>
+<text x="531" y="461.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Posting</text>
+</g>
+<g class="node" data-id="CAP-PAY-05" data-type="capabilities">
+<title>Network Settlement &amp; Interchange</title>
+<path d="M675 417.5 L635 451.5 L675 485.5 L755 485.5 L795 451.5 L755 417.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="715" y="449.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Network Settlement &amp;</text>
+<text x="715" y="461.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Interchange</text>
+</g>
+<g class="node" data-id="CAP-PROD-01" data-type="capabilities">
+<title>Product Design &amp; Configuration</title>
+<path d="M859 417.5 L819 451.5 L859 485.5 L939 485.5 L979 451.5 L939 417.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="899" y="449.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Product Design &amp;</text>
+<text x="899" y="461.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Configuration</text>
+</g>
+<g class="node" data-id="CAP-PROD-02" data-type="capabilities">
+<title>Pricing, Fee &amp; APR Management</title>
+<path d="M307 505.5 L267 539.5 L307 573.5 L387 573.5 L427 539.5 L387 505.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="347" y="537.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Pricing, Fee &amp; APR</text>
+<text x="347" y="549.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+</g>
+<g class="node" data-id="CAP-PROD-05" data-type="capabilities">
+<title>Product Lifecycle &amp; Retirement</title>
+<path d="M491 505.5 L451 539.5 L491 573.5 L571 573.5 L611 539.5 L571 505.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="531" y="537.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Product Lifecycle &amp;</text>
+<text x="531" y="549.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Retirement</text>
+</g>
+<g class="node" data-id="CAP-SERV" data-type="capabilities">
+<title>Customer Servicing &amp; Care</title>
+<path d="M675 505.5 L635 539.5 L675 573.5 L755 573.5 L795 539.5 L755 505.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="715" y="537.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer Servicing &amp;</text>
+<text x="715" y="549.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Care</text>
+</g>
+<g class="node" data-id="CAP-SERV-02" data-type="capabilities">
+<title>Account Maintenance &amp; Servicing Requests</title>
+<path d="M859 505.5 L819 539.5 L859 573.5 L939 573.5 L979 539.5 L939 505.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="899" y="537.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Account Maintenance</text>
+<text x="899" y="549.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">&amp; Servicing Requests</text>
+</g>
+<g class="node" data-id="CAP-TPS-01" data-type="capabilities">
+<title>Client Program Configuration &amp; Setup</title>
+<path d="M307 593.5 L267 627.5 L307 661.5 L387 661.5 L427 627.5 L387 593.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="347" y="625.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Client Program</text>
+<text x="347" y="637.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Configuration &amp; Setup</text>
+</g>
+<g class="node" data-id="CAP-TPS-02" data-type="capabilities">
+<title>Portfolio Conversion &amp; Deconversion</title>
+<path d="M491 593.5 L451 627.5 L491 661.5 L571 661.5 L611 627.5 L571 593.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="531" y="625.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Portfolio Conversion &amp;</text>
+<text x="531" y="637.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Deconversion</text>
+</g>
+<g class="node" data-id="CTL-ADVERSE-ACT" data-type="controls">
+<title>Adverse action notice completeness</title>
+<path d="M1121.86 153.5 L1075 173.42 L1075 201.58 L1121.86 221.5 L1188.14 221.5 L1235 201.58 L1235 173.42 L1188.14 153.5 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="1155" y="185.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Adverse action notice</text>
+<text x="1155" y="197.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">completeness</text>
+</g>
+<g class="node" data-id="CTL-AUTH-AVAIL" data-type="controls">
+<title>Authorization availability and stand-in</title>
+<path d="M1305.86 153.5 L1259 173.42 L1259 201.58 L1305.86 221.5 L1372.14 221.5 L1419 201.58 L1419 173.42 L1372.14 153.5 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="1339" y="179.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Authorization</text>
+<text x="1339" y="191.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">availability and</text>
+<text x="1339" y="203.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">stand-in</text>
+</g>
+<g class="node" data-id="CTL-AUTH-POLICY" data-type="controls">
+<title>Cardholder authentication to policy</title>
+<path d="M1489.86 153.5 L1443 173.42 L1443 201.58 L1489.86 221.5 L1556.14 221.5 L1603 201.58 L1603 173.42 L1556.14 153.5 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="1523" y="179.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Cardholder</text>
+<text x="1523" y="191.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">authentication to</text>
+<text x="1523" y="203.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">policy</text>
+</g>
+<g class="node" data-id="CTL-CHARGEOFF-TIME" data-type="controls">
+<title>Charge-off timing to policy</title>
+<path d="M1121.86 241.5 L1075 261.42 L1075 289.58 L1121.86 309.5 L1188.14 309.5 L1235 289.58 L1235 261.42 L1188.14 241.5 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="1155" y="273.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Charge-off timing to</text>
+<text x="1155" y="285.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">policy</text>
+</g>
+<g class="node" data-id="CTL-CHG-APPROVAL" data-type="controls">
+<title>Production change approval</title>
+<path d="M1305.86 241.5 L1259 261.42 L1259 289.58 L1305.86 309.5 L1372.14 309.5 L1419 289.58 L1419 261.42 L1372.14 241.5 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="1339" y="273.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Production change</text>
+<text x="1339" y="285.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">approval</text>
+</g>
+<g class="node" data-id="CTL-CLIENT-SLA" data-type="controls">
+<title>Client reporting and feed monitoring</title>
+<path d="M1489.86 241.5 L1443 261.42 L1443 289.58 L1489.86 309.5 L1556.14 309.5 L1603 289.58 L1603 261.42 L1556.14 241.5 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="1523" y="273.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Client reporting and</text>
+<text x="1523" y="285.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">feed monitoring</text>
+</g>
+<g class="node" data-id="CTL-CLOSE-SIGNOFF" data-type="controls">
+<title>Close reconciliation sign-off</title>
+<path d="M1121.86 329.5 L1075 349.42 L1075 377.58 L1121.86 397.5 L1188.14 397.5 L1235 377.58 L1235 349.42 L1188.14 329.5 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="1155" y="361.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Close reconciliation</text>
+<text x="1155" y="373.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">sign-off</text>
+</g>
+<g class="node" data-id="CTL-COMPLAINT-REG" data-type="controls">
+<title>Complaint regulatory routing</title>
+<path d="M1305.86 329.5 L1259 349.42 L1259 377.58 L1305.86 397.5 L1372.14 397.5 L1419 377.58 L1419 349.42 L1372.14 329.5 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="1339" y="361.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Complaint regulatory</text>
+<text x="1339" y="373.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">routing</text>
+</g>
+<g class="node" data-id="CTL-CONV-VERIFY" data-type="controls">
+<title>Conversion balance and record verification</title>
+<path d="M1489.86 329.5 L1443 349.42 L1443 377.58 L1489.86 397.5 L1556.14 397.5 L1603 377.58 L1603 349.42 L1556.14 329.5 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="1523" y="361.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Conversion balance</text>
+<text x="1523" y="373.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and record verification</text>
+</g>
+<g class="node" data-id="CTL-CYCLE-VALID" data-type="controls">
+<title>Cycle assessment validation</title>
+<path d="M1121.86 417.5 L1075 437.42 L1075 465.58 L1121.86 485.5 L1188.14 485.5 L1235 465.58 L1235 437.42 L1188.14 417.5 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="1155" y="449.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Cycle assessment</text>
+<text x="1155" y="461.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">validation</text>
+</g>
+<g class="node" data-id="CTL-DAILY-RECON" data-type="controls">
+<title>Daily settlement and clearing reconciliation</title>
+<path d="M1305.86 417.5 L1259 437.42 L1259 465.58 L1305.86 485.5 L1372.14 485.5 L1419 465.58 L1419 437.42 L1372.14 417.5 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="1339" y="449.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Daily settlement and</text>
+<text x="1339" y="461.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">clearing reconciliation</text>
+</g>
+<g class="node" data-id="CTL-DQ-GATE" data-type="controls">
+<title>Ingestion data quality gate</title>
+<path d="M1489.86 417.5 L1443 437.42 L1443 465.58 L1489.86 485.5 L1556.14 485.5 L1603 465.58 L1603 437.42 L1556.14 417.5 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="1523" y="449.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Ingestion data quality</text>
+<text x="1523" y="461.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">gate</text>
+</g>
+<g class="node" data-id="CTL-DR-TEST" data-type="controls">
+<title>Recovery test against committed objectives</title>
+<path d="M1121.86 505.5 L1075 525.42 L1075 553.58 L1121.86 573.5 L1188.14 573.5 L1235 553.58 L1235 525.42 L1188.14 505.5 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="1155" y="537.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Recovery test against</text>
+<text x="1155" y="549.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">committed objectives</text>
+</g>
+<g class="node" data-id="SYS-CORE-LEDGER" data-type="systems">
+<title>Core Card Ledger</title>
+<rect x="24" y="321.5" width="147" height="84" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="93.5" y="367.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Core Card Ledger</text>
+<svg x="153" y="326.5" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="849.9" x2="1661.4" y2="849.9" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="873.9" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 862.9)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="873.9" font-size="12" font-weight="400" fill="#343d50">capability · 26</text>
+<g transform="translate(187.44 862.9)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="213.44" y="873.9" font-size="12" font-weight="400" fill="#343d50">control · 13</text>
+<g transform="translate(290.34 862.9)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="316.34" y="873.9" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
+<text x="28" y="895.9" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 884.9)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="895.9" font-size="12" font-weight="400" fill="#343d50">governed by</text>
+<g transform="translate(184.75 884.9)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="210.75" y="895.9" font-size="12" font-weight="400" fill="#343d50">realizes</text>
+<text x="28" y="929.9" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-governance--sys-core-ledger · edit the model, not the picture</text></g>
+</svg>

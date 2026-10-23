@@ -1,0 +1,48 @@
+@startuml
+' APQC Process Classification Framework — Landscape
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title APQC Process Classification Framework — Landscape
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+
+Boundary(b_1_0_Develop_Vision_and_Strategy, "1.0 Develop Vision and Strategy") {
+  System(CAP_STRAT_03, "Business Performance Management", "Set, track, and act on enterprise performance indicators.", $tags="capabilities")
+  ' aac CAP_STRAT_03: company_domain="Cross-Functional Services"
+  System(CAP_STRAT_05, "Merger, Acquisition & Portfolio Transaction", "Evaluate and integrate acquired portfolios and servicing books.", $tags="capabilities")
+  ' aac CAP_STRAT_05: company_domain="Cross-Functional Services"
+}
+Boundary(b_11_0_Manage_External_Relationships, "11.0 Manage External Relationships") {
+  System(CAP_PART_04, "Client Service Level & Performance Management", "Manage delivery against contracted service levels and report performance.", $tags="capabilities")
+  ' aac CAP_PART_04: company_domain="Cross-Functional Services"
+  System(CAP_PART_05, "Co-Brand & Program Partner Management", "Manage co-brand and program partner economics and obligations.", $tags="capabilities")
+  ' aac CAP_PART_05: company_domain="Cross-Functional Services"
+  System(CAP_CORP_05, "Corporate Communications", "Manage internal and external communications.", $tags="capabilities")
+  ' aac CAP_CORP_05: company_domain="Cross-Functional Services"
+  System(CAP_CORP_03, "Legal & Contract Counsel", "Provide legal advice and contracting support.", $tags="capabilities")
+  ' aac CAP_CORP_03: company_domain="Cross-Functional Services"
+  System(CAP_PART_03, "Servicing Client Origination & Contracting", "Win and contract third-party servicing engagements.", $tags="capabilities")
+  ' aac CAP_PART_03: company_domain="Cross-Functional Services"
+}
+Boundary(b_12_0_Develop_and_Manage_Business_Capabilities, "12.0 Develop and Manage Business Capabilities") {
+  System(CAP_STRAT_04, "Enterprise Architecture & Change Portfolio", "Govern the shape of the estate and the pipeline of change.", $tags="capabilities")
+  ' aac CAP_STRAT_04: company_domain="Cross-Functional Services"
+}
+Boundary(b_6_0_Develop_and_Manage_Human_Capital, "6.0 Develop and Manage Human Capital") {
+  System(CAP_CORP_02, "Learning, Licensing & Certification", "Train the workforce and maintain required certifications.", $tags="capabilities")
+  ' aac CAP_CORP_02: company_domain="Cross-Functional Services"
+  System(CAP_CORP_01, "Workforce Management & HR", "Hire, pay, and manage people.", $tags="capabilities")
+  ' aac CAP_CORP_01: company_domain="Cross-Functional Services"
+}
+Boundary(b_8_0_Manage_Financial_Resources, "8.0 Manage Financial Resources") {
+  System(CAP_FIN_05, "Accounts Payable & Procurement Finance", "Pay suppliers and control discretionary spend.", $tags="capabilities")
+  ' aac CAP_FIN_05: company_domain="Cross-Functional Services"
+}
+Boundary(b_9_0_Acquire__Construct_and_Manage_Assets, "9.0 Acquire, Construct and Manage Assets") {
+  System(CAP_CORP_04, "Facilities & Workplace Operations", "Operate sites and workplace services.", $tags="capabilities")
+  ' aac CAP_CORP_04: company_domain="Cross-Functional Services"
+}
+
+SHOW_LEGEND()
+@enduml

@@ -1,0 +1,235 @@
+# Thurman Health's org structure: accountability, not reporting lines.
+#
+# Who owns what the shipped parts make when a product does not say is
+# answered in `model.yaml`: Infrastructure and Cloud for the private path to
+# a vendor, Data and Analytics Engineering for landed data, Information
+# Security for the audit feed. The parts used to name the card issuer's org
+# units there, and three of the ids below were the sample's for that reason
+# alone; Information Services was `ORG-TECH` until it could be `ORG-IS`.
+
+- org_unit_id: ORG-THURMAN
+  name: Thurman Health
+  description: The health system. Two hospitals, a cancer center and thirty ambulatory clinics.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+
+# --- clinical ----------------------------------------------------------------
+
+- org_unit_id: ORG-CLINICAL
+  name: Clinical Operations
+  description: The care-delivering departments, under the chief nursing and chief medical officers.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-THURMAN
+
+- org_unit_id: ORG-ED
+  name: Emergency Medicine
+  description: Two emergency departments, about ninety thousand visits a year.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-CLINICAL
+  dama_role: Data Owner
+
+- org_unit_id: ORG-INPATIENT
+  name: Inpatient Nursing
+  description: Medical, surgical and intensive care units across both hospitals.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-CLINICAL
+  dama_role: Data Owner
+
+- org_unit_id: ORG-AMBULATORY
+  name: Ambulatory Clinics
+  description: Primary and specialty clinics, scheduling and outpatient registration.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-CLINICAL
+  dama_role: Data Owner
+
+- org_unit_id: ORG-VIRTUAL-CARE
+  name: Virtual Care
+  description: Video visits and remote follow-up, run for the clinics.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-AMBULATORY
+
+- org_unit_id: ORG-CANCER-CENTER
+  name: Cancer Center
+  description: Medical and radiation oncology, infusion, and the tumor registry.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-CLINICAL
+  dama_role: Data Owner
+
+- org_unit_id: ORG-PHARMACY
+  name: Pharmacy
+  description: Inpatient and infusion pharmacy, order verification and dispensing.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-CLINICAL
+  dama_role: Data Owner
+
+- org_unit_id: ORG-LAB
+  name: Laboratory Services
+  description: Core lab, microbiology and anatomic pathology, with send-outs to a reference lab.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-CLINICAL
+  dama_role: Data Owner
+
+- org_unit_id: ORG-IMAGING
+  name: Imaging Services
+  description: Diagnostic radiology, with the reading radiologists and the image archive.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-CLINICAL
+  dama_role: Data Owner
+
+# --- business ------------------------------------------------------------------
+
+- org_unit_id: ORG-REV-CYCLE
+  name: Revenue Cycle
+  description: Patient access, coding, billing, claims and denials.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-THURMAN
+  dama_role: Data Owner
+
+- org_unit_id: ORG-FINANCE
+  name: Finance
+  description: The general ledger, cost accounting and the monthly close.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-THURMAN
+
+- org_unit_id: ORG-QUALITY
+  name: Quality and Population Health
+  description: Quality measures, registries, readmissions and outreach to high-risk patients.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-THURMAN
+  dama_role: Data Governance Council
+
+- org_unit_id: ORG-DIGITAL
+  name: Digital Health
+  description: The patient-facing channels, the portal first.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-THURMAN
+
+- org_unit_id: ORG-COMPLIANCE
+  name: Compliance and Privacy
+  description: The privacy officer, HIPAA compliance, breach assessment and accreditation readiness.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-THURMAN
+  dama_role: Data Governance Council
+
+- org_unit_id: ORG-HIM
+  name: Health Information Management
+  description: The legal medical record, release of information and the master patient index.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-COMPLIANCE
+  dama_role: Data Steward
+
+# --- information services --------------------------------------------------------
+
+- org_unit_id: ORG-IS
+  name: Information Services
+  description: The CIO's organization. Owns the platforms and the plumbing between systems.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-THURMAN
+  dama_role: Data Custodian
+
+- org_unit_id: ORG-CLIN-APPS
+  name: Clinical Applications
+  description: Builds and supports the EHR and the departmental clinical systems.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-IS
+  dama_role: Data Custodian
+
+- org_unit_id: ORG-INTEGRATION
+  name: Integration Services
+  description: The interface engine team. Every HL7 feed and FHIR API is theirs to route and monitor.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-IS
+  dama_role: Data Custodian
+
+- org_unit_id: ORG-DATAENG
+  name: Data and Analytics Engineering
+  description: The ingestion platform, the clinical warehouse and the semantic layer.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-IS
+  dama_role: Data Steward
+
+- org_unit_id: ORG-INFRA
+  name: Infrastructure and Cloud
+  description: The two data centers, the network and the Azure landing zone.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-IS
+
+- org_unit_id: ORG-INFOSEC
+  name: Information Security
+  description: Security monitoring, identity and the HIPAA Security Rule's technical safeguards.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-IS
+
+- org_unit_id: ORG-CLIN-ENG
+  name: Clinical Engineering
+  description: Medical devices and their connection to the clinical systems.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-IS

@@ -1,0 +1,28 @@
+view_id: value-streams
+title: Value Streams
+category: Business
+section: Processes and value streams
+kind: map
+description: >
+  How the organization delivers something a customer or partner wants, as a
+  sequence of stages, each with the condition that must be met to move on. A
+  stage named after a department usually means the stream has turned back into
+  an org chart.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+group_by: value_stream_id
+order_by: stage_order
+
+scope:
+  include:
+    - type: value_stream_stages
+
+edges: []
+
+style:
+  color_by: value_stream_id
+
+limits:
+  max_nodes: 70

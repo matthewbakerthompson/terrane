@@ -1,0 +1,125 @@
+# What each interface carries, and which systems read and write which data.
+#
+# The EHR writes most of the record and the interface engine reads nearly
+# all of it in passing, which is the honest shape of a hospital: the engine
+# is not a system of record for anything, and it holds a copy of
+# everything for as long as its queues and logs keep it.
+
+interface_transports_data_asset:
+  - {interface_id: INT-EHR-ENGINE-ADT, data_asset_id: DA-ENCOUNTER}
+  - {interface_id: INT-EHR-ENGINE-ADT, data_asset_id: DA-PATIENT-IDENTITY}
+  - {interface_id: INT-EHR-ENGINE-ORDERS, data_asset_id: DA-CLINICAL-ORDER}
+  - {interface_id: INT-EHR-ENGINE-ORDERS, data_asset_id: DA-MEDICATION-ORDER}
+  - {interface_id: INT-EHR-ENGINE-CHARGES, data_asset_id: DA-CHARGE}
+  - {interface_id: INT-ENGINE-EHR-RESULTS, data_asset_id: DA-LAB-RESULT}
+  - {interface_id: INT-ENGINE-EHR-RESULTS, data_asset_id: DA-IMAGING-REPORT}
+  - {interface_id: INT-ENGINE-EHR-RESULTS, data_asset_id: DA-VITAL-SIGNS}
+  - {interface_id: INT-ENGINE-LIS-ORDERS, data_asset_id: DA-CLINICAL-ORDER}
+  - {interface_id: INT-LIS-ENGINE-RESULTS, data_asset_id: DA-LAB-RESULT}
+  - {interface_id: INT-ENGINE-RIS-ORDERS, data_asset_id: DA-CLINICAL-ORDER}
+  - {interface_id: INT-RIS-ENGINE-REPORTS, data_asset_id: DA-IMAGING-REPORT}
+  - {interface_id: INT-ENGINE-PHARMACY-ORDERS, data_asset_id: DA-MEDICATION-ORDER}
+  - {interface_id: INT-PHARMACY-ENGINE-DISPENSE, data_asset_id: DA-MEDICATION-ORDER}
+  - {interface_id: INT-ENGINE-ONCOLOGY, data_asset_id: DA-PATIENT-IDENTITY}
+  - {interface_id: INT-ENGINE-ONCOLOGY, data_asset_id: DA-ENCOUNTER}
+  - {interface_id: INT-ENGINE-ONCOLOGY, data_asset_id: DA-LAB-RESULT}
+  - {interface_id: INT-ONCOLOGY-ENGINE, data_asset_id: DA-TREATMENT-PLAN}
+  - {interface_id: INT-ONCOLOGY-ENGINE, data_asset_id: DA-CHARGE}
+  - {interface_id: INT-ENGINE-EMPI-ADT, data_asset_id: DA-PATIENT-IDENTITY}
+  - {interface_id: INT-EMPI-ENGINE-MERGE, data_asset_id: DA-PATIENT-IDENTITY}
+  - {interface_id: INT-DEVICE-ENGINE-VITALS, data_asset_id: DA-VITAL-SIGNS}
+  - {interface_id: INT-ENGINE-BILLING, data_asset_id: DA-CHARGE}
+  - {interface_id: INT-ENGINE-BILLING, data_asset_id: DA-ENCOUNTER}
+  - {interface_id: INT-ENGINE-BED-ADT, data_asset_id: DA-BED-STATUS}
+  - {interface_id: INT-LIS-REFLAB-ORDERS, data_asset_id: DA-CLINICAL-ORDER}
+  - {interface_id: INT-REFLAB-LIS-RESULTS, data_asset_id: DA-LAB-RESULT}
+  - {interface_id: INT-RIS-PACS-WORKLIST, data_asset_id: DA-CLINICAL-ORDER}
+  - {interface_id: INT-PACS-VNA-ARCHIVE, data_asset_id: DA-IMAGING-STUDY}
+  - {interface_id: INT-VNA-PACS-PRIORS, data_asset_id: DA-IMAGING-STUDY}
+  - {interface_id: INT-ENGINE-FHIR-SYNC, data_asset_id: DA-PATIENT-IDENTITY}
+  - {interface_id: INT-ENGINE-FHIR-SYNC, data_asset_id: DA-LAB-RESULT}
+  - {interface_id: INT-ENGINE-FHIR-SYNC, data_asset_id: DA-IMAGING-REPORT}
+  - {interface_id: INT-ENGINE-FHIR-SYNC, data_asset_id: DA-MEDICATION-ORDER}
+  - {interface_id: INT-ENGINE-FHIR-SYNC, data_asset_id: DA-PROBLEM-LIST}
+  - {interface_id: INT-ENGINE-FHIR-SYNC, data_asset_id: DA-APPOINTMENT}
+  - {interface_id: INT-PORTAL-API-FHIR, data_asset_id: DA-LAB-RESULT}
+  - {interface_id: INT-PORTAL-API-FHIR, data_asset_id: DA-IMAGING-REPORT}
+  - {interface_id: INT-PORTAL-API-FHIR, data_asset_id: DA-MEDICATION-ORDER}
+  - {interface_id: INT-PORTAL-API-FHIR, data_asset_id: DA-APPOINTMENT}
+  - {interface_id: INT-FHIR-EHR-WRITEBACK, data_asset_id: DA-APPOINTMENT}
+  - {interface_id: INT-ENGINE-HIE-DOCUMENTS, data_asset_id: DA-CARE-SUMMARY}
+  - {interface_id: INT-HIE-ENGINE-ALERTS, data_asset_id: DA-ENCOUNTER}
+  - {interface_id: INT-LIS-REGISTRY-PATHOLOGY, data_asset_id: DA-LAB-RESULT}
+  - {interface_id: INT-ONCOLOGY-REGISTRY-TREATMENT, data_asset_id: DA-TREATMENT-PLAN}
+  - {interface_id: INT-BILLING-ERP-GL, data_asset_id: DA-GL-JOURNAL}
+  - {interface_id: INT-EHR-INGEST-EXTRACT, data_asset_id: DA-ENCOUNTER}
+  - {interface_id: INT-EHR-INGEST-EXTRACT, data_asset_id: DA-PROBLEM-LIST}
+  - {interface_id: INT-EHR-INGEST-EXTRACT, data_asset_id: DA-MED-ADMIN}
+  - {interface_id: INT-EHR-INGEST-EXTRACT, data_asset_id: DA-LAB-RESULT}
+  - {interface_id: INT-BILLING-INGEST-EXTRACT, data_asset_id: DA-CHARGE}
+  - {interface_id: INT-BILLING-INGEST-EXTRACT, data_asset_id: DA-CLAIM}
+  - {interface_id: INT-ONCOLOGY-INGEST-EXTRACT, data_asset_id: DA-TREATMENT-PLAN}
+  - {interface_id: INT-EHR-SIEM-AUDIT, data_asset_id: DA-ACCESS-AUDIT}
+  - {interface_id: INT-FHIR-SIEM-AUDIT, data_asset_id: DA-ACCESS-AUDIT}
+  # The products' own interfaces, built by their shapes; what they carry
+  # is a fact about this estate, not about the shape.
+  - {interface_id: INT-CLAIMS-CALLER-GATEWAY, data_asset_id: DA-CLAIM}
+  - {interface_id: INT-CLAIMS-GATEWAY-EGRESS, data_asset_id: DA-CLAIM}
+  - {interface_id: INT-CLAIMS-EGRESS-VENDOR, data_asset_id: DA-CLAIM}
+  - {interface_id: INT-TELEHEALTH-CALLER-GATEWAY, data_asset_id: DA-APPOINTMENT}
+  - {interface_id: INT-TELEHEALTH-GATEWAY-EGRESS, data_asset_id: DA-APPOINTMENT}
+  - {interface_id: INT-TELEHEALTH-EGRESS-VENDOR, data_asset_id: DA-APPOINTMENT}
+
+system_reads_writes:
+  # The EHR: most of the record is written here.
+  - {system_id: SYS-EHR, data_asset_id: DA-ENCOUNTER, operation: ReadWrite}
+  - {system_id: SYS-EHR, data_asset_id: DA-APPOINTMENT, operation: ReadWrite}
+  - {system_id: SYS-EHR, data_asset_id: DA-PROBLEM-LIST, operation: ReadWrite}
+  - {system_id: SYS-EHR, data_asset_id: DA-CLINICAL-ORDER, operation: ReadWrite}
+  - {system_id: SYS-EHR, data_asset_id: DA-MEDICATION-ORDER, operation: ReadWrite}
+  - {system_id: SYS-EHR, data_asset_id: DA-MED-ADMIN, operation: ReadWrite}
+  - {system_id: SYS-EHR, data_asset_id: DA-VITAL-SIGNS, operation: ReadWrite}
+  - {system_id: SYS-EHR, data_asset_id: DA-CARE-SUMMARY, operation: ReadWrite}
+  - {system_id: SYS-EHR, data_asset_id: DA-LAB-RESULT, operation: Read}
+  - {system_id: SYS-EHR, data_asset_id: DA-IMAGING-REPORT, operation: Read}
+  - {system_id: SYS-EHR, data_asset_id: DA-PATIENT-IDENTITY, operation: ReadWrite}
+  # Registration happens in the EHR; the index decides who is who.
+  - {system_id: SYS-EMPI, data_asset_id: DA-PATIENT-IDENTITY, operation: ReadWrite}
+  # The engine holds everything it routes, in its queues and logs.
+  - {system_id: SYS-INTERFACE-ENGINE, data_asset_id: DA-PATIENT-IDENTITY, operation: Read}
+  - {system_id: SYS-INTERFACE-ENGINE, data_asset_id: DA-ENCOUNTER, operation: Read}
+  - {system_id: SYS-INTERFACE-ENGINE, data_asset_id: DA-CLINICAL-ORDER, operation: Read}
+  - {system_id: SYS-INTERFACE-ENGINE, data_asset_id: DA-LAB-RESULT, operation: Read}
+  - {system_id: SYS-INTERFACE-ENGINE, data_asset_id: DA-CARE-SUMMARY, operation: Read}
+  - {system_id: SYS-LIS, data_asset_id: DA-CLINICAL-ORDER, operation: Read}
+  - {system_id: SYS-LIS, data_asset_id: DA-LAB-RESULT, operation: ReadWrite}
+  - {system_id: SYS-RIS, data_asset_id: DA-CLINICAL-ORDER, operation: Read}
+  - {system_id: SYS-RIS, data_asset_id: DA-IMAGING-REPORT, operation: ReadWrite}
+  - {system_id: SYS-PACS, data_asset_id: DA-IMAGING-STUDY, operation: ReadWrite}
+  - {system_id: SYS-VNA, data_asset_id: DA-IMAGING-STUDY, operation: ReadWrite}
+  - {system_id: SYS-PHARMACY, data_asset_id: DA-MEDICATION-ORDER, operation: ReadWrite}
+  - {system_id: SYS-DEVICE-GW, data_asset_id: DA-VITAL-SIGNS, operation: Write}
+  - {system_id: SYS-BED-MGMT, data_asset_id: DA-BED-STATUS, operation: ReadWrite}
+  - {system_id: SYS-ONCOLOGY, data_asset_id: DA-TREATMENT-PLAN, operation: ReadWrite}
+  - {system_id: SYS-ONCOLOGY, data_asset_id: DA-LAB-RESULT, operation: Read}
+  - {system_id: SYS-TUMOR-REGISTRY, data_asset_id: DA-CANCER-CASE, operation: ReadWrite}
+  - {system_id: SYS-TUMOR-REGISTRY, data_asset_id: DA-TREATMENT-PLAN, operation: Read}
+  - {system_id: SYS-FHIR-SERVER, data_asset_id: DA-PATIENT-IDENTITY, operation: Read}
+  - {system_id: SYS-FHIR-SERVER, data_asset_id: DA-LAB-RESULT, operation: Read}
+  - {system_id: SYS-FHIR-SERVER, data_asset_id: DA-IMAGING-REPORT, operation: Read}
+  - {system_id: SYS-FHIR-SERVER, data_asset_id: DA-MEDICATION-ORDER, operation: Read}
+  - {system_id: SYS-FHIR-SERVER, data_asset_id: DA-PROBLEM-LIST, operation: Read}
+  - {system_id: SYS-FHIR-SERVER, data_asset_id: DA-APPOINTMENT, operation: ReadWrite}
+  - {system_id: SYS-PORTAL-API, data_asset_id: DA-LAB-RESULT, operation: Read}
+  - {system_id: SYS-PORTAL-API, data_asset_id: DA-APPOINTMENT, operation: ReadWrite}
+  - {system_id: SYS-PATIENT-ACCOUNTING, data_asset_id: DA-CHARGE, operation: ReadWrite}
+  - {system_id: SYS-PATIENT-ACCOUNTING, data_asset_id: DA-CLAIM, operation: ReadWrite}
+  - {system_id: SYS-PATIENT-ACCOUNTING, data_asset_id: DA-ENCOUNTER, operation: Read}
+  - {system_id: SYS-CLAIMS-VENDOR, data_asset_id: DA-CLAIM, operation: Read}
+  - {system_id: SYS-ERP, data_asset_id: DA-GL-JOURNAL, operation: ReadWrite}
+  - {system_id: SYS-CLINICAL-INGEST, data_asset_id: DA-ENCOUNTER, operation: Read}
+  - {system_id: SYS-CLINICAL-INGEST, data_asset_id: DA-LAB-RESULT, operation: Read}
+  - {system_id: SYS-CLINICAL-INGEST, data_asset_id: DA-CHARGE, operation: Read}
+  - {system_id: SYS-CLINICAL-INGEST, data_asset_id: DA-TREATMENT-PLAN, operation: Read}
+  - {system_id: SYS-CDW-PIPELINE, data_asset_id: DA-CLAIMS-OUTCOMES, operation: Read}
+  - {system_id: SYS-SIEM, data_asset_id: DA-ACCESS-AUDIT, operation: ReadWrite}

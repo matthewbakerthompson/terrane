@@ -1,0 +1,38 @@
+@startuml
+' DAMA-DMBOK — Landscape
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title DAMA-DMBOK — Landscape
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+
+Boundary(b_Data_Governance, "Data Governance") {
+  System(CAP_DATA_01, "Data Governance & Stewardship", "Own data policy, ownership, and stewardship across the enterprise.", $tags="capabilities")
+  ' aac CAP_DATA_01: company_domain="Cross-Functional Services"
+}
+Boundary(b_Data_Integration_and_Interoperability, "Data Integration and Interoperability") {
+  System(CAP_TPS_03, "Client Reporting & Data Exchange", "Deliver contracted reporting and data feeds to clients.", $tags="capabilities")
+  ' aac CAP_TPS_03: company_domain="Cross-Functional Services"
+  System(CAP_DATA_02, "Data Sourcing & Integration", "Acquire and integrate internal and third-party data.", $tags="capabilities")
+  ' aac CAP_DATA_02: company_domain="Cross-Functional Services"
+}
+Boundary(b_Data_Quality, "Data Quality") {
+  System(CAP_DATA_03, "Data Quality Management", "Define, measure, and remediate data quality.", $tags="capabilities")
+  ' aac CAP_DATA_03: company_domain="Cross-Functional Services"
+}
+Boundary(b_Data_Warehousing_and_Business_Intelligence, "Data Warehousing and Business Intelligence") {
+  System(CAP_DATA_04, "Analytics, Reporting & BI", "Serve reporting and analysis to the business.", $tags="capabilities")
+  ' aac CAP_DATA_04: company_domain="Cross-Functional Services"
+}
+Boundary(b_Document_and_Content_Management, "Document and Content Management") {
+  System(CAP_DATA_07, "Records Retention & Disposition", "Retain and dispose of records to the retention schedule.", $tags="capabilities")
+  ' aac CAP_DATA_07: company_domain="Cross-Functional Services"
+}
+Boundary(b_Metadata_Management, "Metadata Management") {
+  System(CAP_DATA_05, "Metadata, Lineage & Catalog", "Maintain the governed catalog, metadata, and lineage.", $tags="capabilities")
+  ' aac CAP_DATA_05: company_domain="Cross-Functional Services"
+}
+
+SHOW_LEGEND()
+@enduml

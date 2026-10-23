@@ -1,0 +1,45 @@
+view_id: target-state-change
+title: "Planned Systems and Interfaces"
+category: Change
+section: Plans
+kind: report
+description: >
+  Planned systems and interfaces, what they connect to today, and the work
+  package delivering each one. Planned and live entities share one model, so
+  this is a status filter rather than a separately maintained diagram.
+layout: LR
+group_by: company_domain
+renderers: [mermaid]
+
+scope:
+  include:
+    - type: systems
+      where:
+        status: [Planned]
+  expand:
+    - relation: any
+      depth: 1
+      types: [systems, data_assets]
+    # What is delivering each of them. Without this the report says what is
+    # coming and cannot say when, which is the question anybody looking at a
+    # target state asks second.
+    - relation: work_package_affects_system
+      depth: 1
+      types: [work_packages]
+
+edges:
+  - via: work_package_affects_system
+    label: effect
+  - via: interfaces
+    label: protocol
+  - via: system_reads_writes
+    label: operation
+
+style:
+  color_by: status
+
+limits:
+  # Raised from 25 when the work packages arrived. A report is a table and has
+  # no page to fall off; the limit is here to catch a filter that has stopped
+  # filtering, not to keep the drawing small.
+  max_nodes: 70

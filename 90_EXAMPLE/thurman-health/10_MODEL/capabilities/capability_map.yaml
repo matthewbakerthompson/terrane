@@ -1,0 +1,459 @@
+# Thurman Health's capability map: nine domains and what each is made of.
+#
+# Written with the estate rather than imported, and kept small: two levels,
+# about thirty capabilities, which is the size of map a health system's
+# portfolio review is actually run against. The tiers follow the sample's
+# convention (Direct delivers the care, Core runs the business of care,
+# Enable keeps the lights on) and carry no more meaning here than there.
+# Every capability is Proposed, as the sample's are: a straw man for a
+# workshop, not a ratified map.
+
+# --- Direct ------------------------------------------------------------------------------
+
+- capability_id: CAP-PATIENT-ACCESS
+  name: Patient Access
+  description: Getting a patient to the right care, registered as the right person.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Direct
+  owner_org_id: ORG-AMBULATORY
+  company_domain: Patient Access
+
+- capability_id: CAP-SCHEDULING
+  name: Scheduling and Registration
+  description: Booking clinic, imaging and infusion time, and registering the patient and their coverage.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-PATIENT-ACCESS
+  owner_org_id: ORG-AMBULATORY
+  company_domain: Patient Access
+
+- capability_id: CAP-PATIENT-IDENTITY
+  name: Patient Identity Management
+  description: One person, one record, across every registration point.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-PATIENT-ACCESS
+  owner_org_id: ORG-HIM
+  company_domain: Patient Access
+
+- capability_id: CAP-PATIENT-ENGAGEMENT
+  name: Patient Engagement
+  description: Results, messages, bookings and bills in the patient's hands between visits.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-PATIENT-ACCESS
+  owner_org_id: ORG-DIGITAL
+  company_domain: Patient Access
+
+- capability_id: CAP-VIRTUAL-CARE
+  name: Virtual Care
+  description: Visits by video, and follow-up that does not need a trip.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Advantage
+  parent_capability_id: CAP-PATIENT-ACCESS
+  owner_org_id: ORG-VIRTUAL-CARE
+  company_domain: Patient Access
+
+- capability_id: CAP-CARE-DELIVERY
+  name: Care Delivery
+  description: Caring for the patient in the bed, the bay or the exam room.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Direct
+  owner_org_id: ORG-CLINICAL
+  company_domain: Clinical Care
+
+- capability_id: CAP-CLINICAL-DOCUMENTATION
+  name: Clinical Documentation
+  description: The notes, assessments and flowsheets that make up the legal record of care.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-CARE-DELIVERY
+  owner_org_id: ORG-CLINICAL
+  company_domain: Clinical Care
+
+- capability_id: CAP-ORDER-MANAGEMENT
+  name: Order Management
+  description: Ordering tests, imaging and procedures, with decision support at the point of order.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-CARE-DELIVERY
+  owner_org_id: ORG-CLINICAL
+  company_domain: Clinical Care
+
+- capability_id: CAP-MEDICATION-MANAGEMENT
+  name: Medication Management
+  description: From the order to the dose at the bedside, verified at every step.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-CARE-DELIVERY
+  owner_org_id: ORG-PHARMACY
+  company_domain: Clinical Care
+
+- capability_id: CAP-PATIENT-FLOW
+  name: Patient Flow and Capacity
+  description: Beds, transfers and discharges, so the emergency department is not where admitted patients wait.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Advantage
+  parent_capability_id: CAP-CARE-DELIVERY
+  owner_org_id: ORG-INPATIENT
+  company_domain: Clinical Care
+
+- capability_id: CAP-BEDSIDE-MONITORING
+  name: Bedside Monitoring
+  description: Continuous physiological monitoring, and the readings into the record.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-CARE-DELIVERY
+  owner_org_id: ORG-INPATIENT
+  company_domain: Clinical Care
+
+- capability_id: CAP-DIAGNOSTICS
+  name: Diagnostic Services
+  description: Answering the clinician's question with a test or an image.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Direct
+  owner_org_id: ORG-LAB
+  company_domain: Diagnostics
+
+- capability_id: CAP-LAB-TESTING
+  name: Laboratory Testing
+  description: Collecting, running and verifying tests, in house and sent out.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-DIAGNOSTICS
+  owner_org_id: ORG-LAB
+  company_domain: Diagnostics
+
+- capability_id: CAP-IMAGING
+  name: Medical Imaging
+  description: Acquiring, reading and keeping images.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-DIAGNOSTICS
+  owner_org_id: ORG-IMAGING
+  company_domain: Diagnostics
+
+- capability_id: CAP-RESULTS-MANAGEMENT
+  name: Results Management
+  description: Every result reaching the person who ordered it, and a critical one reaching them now.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-DIAGNOSTICS
+  owner_org_id: ORG-LAB
+  company_domain: Diagnostics
+
+- capability_id: CAP-CANCER-CARE
+  name: Cancer Care
+  description: The cancer center's work, from diagnosis through treatment to survivorship.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Direct
+  owner_org_id: ORG-CANCER-CENTER
+  company_domain: Oncology
+
+- capability_id: CAP-TREATMENT-PLANNING
+  name: Oncology Treatment Planning
+  description: Regimens, cycles and radiation courses, planned and given safely.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-CANCER-CARE
+  owner_org_id: ORG-CANCER-CENTER
+  company_domain: Oncology
+
+- capability_id: CAP-CANCER-REGISTRY
+  name: Cancer Registry and Reporting
+  description: Every reportable case found, abstracted, followed up and reported.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Parity
+  parent_capability_id: CAP-CANCER-CARE
+  owner_org_id: ORG-CANCER-CENTER
+  company_domain: Oncology
+
+# --- Core ---------------------------------------------------------------------------------
+
+- capability_id: CAP-CARE-COORDINATION
+  name: Care Coordination
+  description: Care that continues across settings and organizations.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Core
+  owner_org_id: ORG-QUALITY
+  company_domain: Interoperability
+
+- capability_id: CAP-HEALTH-INFO-EXCHANGE
+  name: Health Information Exchange
+  description: Sending and finding the record across organizations, and to the apps patients choose.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-CARE-COORDINATION
+  owner_org_id: ORG-INTEGRATION
+  company_domain: Interoperability
+
+- capability_id: CAP-POPULATION-HEALTH
+  name: Population Health Management
+  description: Finding the patients at risk and reaching them before they are admitted.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Advantage
+  parent_capability_id: CAP-CARE-COORDINATION
+  owner_org_id: ORG-QUALITY
+  company_domain: Data and Analytics
+
+- capability_id: CAP-REVENUE-CYCLE
+  name: Revenue Cycle
+  description: Being paid for the care given.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Core
+  owner_org_id: ORG-REV-CYCLE
+  company_domain: Revenue Cycle
+
+- capability_id: CAP-CHARGE-CAPTURE
+  name: Charge Capture and Coding
+  description: Every billable service captured and coded from the documentation.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-REVENUE-CYCLE
+  owner_org_id: ORG-REV-CYCLE
+  company_domain: Revenue Cycle
+
+- capability_id: CAP-CLAIMS-MANAGEMENT
+  name: Claims and Remittance
+  description: Clean claims out, remittances in, denials worked.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-REVENUE-CYCLE
+  owner_org_id: ORG-REV-CYCLE
+  company_domain: Revenue Cycle
+
+# --- Enable --------------------------------------------------------------------------------
+
+- capability_id: CAP-DATA-ANALYTICS
+  name: Data and Analytics
+  description: Moving clinical data and making it answer questions.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Enable
+  owner_org_id: ORG-DATAENG
+  company_domain: Data and Analytics
+
+- capability_id: CAP-CLINICAL-INTEGRATION
+  name: Clinical Integration
+  description: Routing, translating and watching the messages between clinical systems.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-DATA-ANALYTICS
+  owner_org_id: ORG-INTEGRATION
+  company_domain: Interoperability
+
+- capability_id: CAP-CLINICAL-ANALYTICS
+  name: Clinical and Quality Analytics
+  description: Quality measures, readmissions, outcomes and the cost of care.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Advantage
+  parent_capability_id: CAP-DATA-ANALYTICS
+  owner_org_id: ORG-DATAENG
+  company_domain: Data and Analytics
+
+- capability_id: CAP-PRIVACY-SECURITY
+  name: Privacy and Security
+  description: Protected health information seen only by those who should, and a trail when it is not.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Enable
+  owner_org_id: ORG-INFOSEC
+  company_domain: Security
+
+- capability_id: CAP-ACCESS-MONITORING
+  name: Access Monitoring and Audit
+  description: Who looked at which record, and whether they had a reason to.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-PRIVACY-SECURITY
+  owner_org_id: ORG-COMPLIANCE
+  company_domain: Security
+
+- capability_id: CAP-WORKFORCE-ACCESS
+  name: Workforce Identity and Access
+  description: The right access on the first day, and none on the last.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Commodity
+  parent_capability_id: CAP-PRIVACY-SECURITY
+  owner_org_id: ORG-INFOSEC
+  company_domain: Security
+
+- capability_id: CAP-FINANCE
+  name: Finance and Supply Chain
+  description: The ledger, purchasing and the supply rooms.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Enable
+  owner_org_id: ORG-FINANCE
+  company_domain: Revenue Cycle
+
+- capability_id: CAP-FINANCIAL-ACCOUNTING
+  name: Financial Accounting
+  description: The general ledger and the monthly close.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Commodity
+  parent_capability_id: CAP-FINANCE
+  owner_org_id: ORG-FINANCE
+  company_domain: Revenue Cycle
+
+- capability_id: CAP-SUPPLY-CHAIN
+  name: Supply Chain
+  description: What the units and the operating rooms use, bought and on the shelf.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Parity
+  parent_capability_id: CAP-FINANCE
+  owner_org_id: ORG-FINANCE
+  company_domain: Revenue Cycle

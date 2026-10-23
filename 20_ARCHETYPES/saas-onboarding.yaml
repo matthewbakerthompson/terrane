@@ -1,0 +1,134 @@
+archetype_id: saas-onboarding
+title: SaaS onboarding
+version: 3.0.0
+applies_to: products
+description: >
+  What onboarding a bought solution actually creates. Almost none of it is the
+  vendor system: it is the identity federation, the private egress, the gateway
+  that owns retries and audit, the return feed, the audit trail into security
+  monitoring, and the dataset that lands in our warehouse. Those are the parts
+  we operate, secure and get audited on, and they are what the onboarding
+  questionnaire is really asking about.
+
+  Deliberately a different shape from `aws-product-onboarding`. Buying moves the
+  work from building components to controlling a boundary, and the diagram
+  should show that rather than making a purchase look like a deployment.
+
+  Version 3 is composed from modules. Each part below is one the vendor either
+  needs or does not: drop the return feed for a vendor that sends nothing back,
+  add webhooks for one that calls us, swap the private path for the public one
+  where the vendor offers no private connectivity. The diagram is chosen, not
+  drawn.
+
+parameters:
+  - name: slug
+    required: true
+    description: Short lower-case token used in identifiers, e.g. screening
+  - name: product_name
+    required: true
+  - name: vendor
+    required: true
+    description: Vendor name, carried onto the system as provider
+  - name: owner_org
+    required: true
+  - name: domain
+    required: true
+  - name: account
+    required: true
+    description: The workload account our side of the integration runs in
+  - name: region
+    default: eu-west-2
+  - name: vendor_region
+    default: eu-west-1
+    description: Where the vendor processes our data. A data residency answer.
+  - name: caller_system
+    required: true
+    description: The system that calls the vendor in line, e.g. SYS-AUTH-SWITCH
+  - name: criticality
+    default: High
+  - name: classification
+    default: Restricted
+
+defaults:
+  architecture_domain: Business
+  togaf_layer: Business
+  abstraction_level: Conceptual
+
+# The landing zone is not written here. A part names the kind of shared
+# service it needs and resolves to the one tagged `landing-zone` of that
+# kind on this provider; `bind` exists to say otherwise.
+provider: AWS
+
+entity_defaults:
+  all:
+    # The product\'s own status. A shape cannot know whether its instance is
+    # planned or live; the first planned product on a shape that said
+    # `Active` here came out with four live systems.
+    status: "{status}"
+    company_domain: "{domain}"
+  systems:
+    tags: [saas, onboarding]
+    owner_org_id: "{owner_org}"
+    criticality: "{criticality}"
+    hosting: AWS
+    environment: Production
+    cloud_provider: AWS
+    cloud_account: "{account}"
+    region: "{region}"
+    deployment_unit: terraform
+    resilience: Multi-AZ
+    data_classification_supported: "{classification}"
+    togaf_layer: Application
+    architecture_domain: Application
+    abstraction_level: Physical
+  interfaces:
+    owner_org_id: "{owner_org}"
+    protocol: HTTPS
+    direction: Outbound
+    frequency: Realtime
+    integration_style: Request-response
+    auth_method: MutualTLS
+    data_classification: "{classification}"
+    togaf_layer: Application
+    architecture_domain: Application
+
+# The parts. The baseline is a kit -- the tenancy, the gateway and the vault
+# -- and cannot be dropped; everything else can. `embedded-ui`,
+# `byok-encryption`, `scim-provisioning`, `operator-access` and
+# `operator-role` can be added on the instance.
+modules:
+  - module: vendor-baseline
+    with:
+      vendor: "{vendor}"
+      vendor_region: "{vendor_region}"
+      caller_system: "{caller_system}"
+  - module: sso-federation
+  - module: audit-forwarding
+  - module: vendor-monitoring
+
+# Where the shape varies. These used to be prose in the description above --
+# "swap the private path for the public one where the vendor offers no private
+# connectivity" -- and a second shape, `vendor-saas-service`, that was this one
+# with the swap made. A slot is that sentence with a default, and an instance
+# chooses under `choose:` instead of editing the composition.
+slots:
+  - name: reach
+    description: >
+      How our side gets to the vendor. Private where the vendor offers a
+      private endpoint; over the public internet, pinned and authenticated,
+      where it does not.
+    options: [private-egress, public-call]
+    default: private-egress
+  - name: return
+    description: >
+      How things come back. A file feed for a vendor that sends a batch;
+      webhooks for one that calls us as things happen; none for a vendor that
+      sends nothing back.
+    options: [sftp-return-feed, webhook-inbound]
+    default: sftp-return-feed
+    optional: true
+    # Chosen, the listener hands the vendor's result to the system that
+    # calls the vendor unless the product says otherwise for the part.
+    with:
+      webhook-inbound:
+        consumer_system: "{caller_system}"

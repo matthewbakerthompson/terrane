@@ -1,0 +1,55 @@
+# What an account has before anything is deployed into it.
+#
+# The unglamorous half of a cloud footprint, and the half a security review is
+# actually about. Modeling it as a block is what stops it being assumed.
+
+- building_block_id: account-baseline
+  name: Account baseline
+  category: Network
+  description: >
+    The network, its tiers, and the services every workload in the account needs whether or not anybody asked for them. What onboarding actually creates before a line of application code lands.
+  provides:
+    - component: vpc
+    - component: subnet
+    - component: dns
+    - component: observability
+    - component: iac
+  relations:
+    - from: vpc
+      to: subnet
+    - from: vpc
+      to: dns
+  defaults:
+    network_zone: Shared-Services
+
+- building_block_id: hybrid-connectivity
+  name: Hybrid connectivity
+  category: Network
+  description: >
+    The paths back to the data center. There are always two, and the failover between them is the thing nobody has tested.
+  provides:
+    - component: hybrid-link
+    - component: dns
+  relations:
+    - from: hybrid-link
+      to: dns
+  defaults:
+    network_zone: Shared-Services
+
+- building_block_id: security-baseline
+  name: Security baseline
+  category: Security
+  description: >
+    Identity, secrets, keys and detection. Four components that are each somebody's whole job at scale, and are each a checkbox at the start.
+  provides:
+    - component: identity-provider
+    - component: secrets-manager
+    - component: kms
+    - component: siem
+  relations:
+    - from: identity-provider
+      to: secrets-manager
+    - from: siem
+      to: identity-provider
+  defaults:
+    network_zone: Shared-Services

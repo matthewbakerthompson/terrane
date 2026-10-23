@@ -1,0 +1,67 @@
+# The second bought product, and the one that shows a shape choosing.
+#
+# Screening sits on the defaults of `saas-onboarding`: the private path out,
+# a file feed back. This one is on the Azure vendor shape and chooses in both
+# of its slots -- the private path, because identity documents are Restricted
+# data and that shape's default is the public internet; and webhooks back,
+# because a verification vendor calls with the result rather than sending a
+# file at the end of the day. Nothing else about it differs from the screening
+# onboarding, which is the point: two lines under `choose` are the whole of
+# the variation, and the Azure services the private path binds come from the
+# shape's `bind`, not from anything written here.
+product_id: PRD-IDV
+name: Identity Document Verification
+description: >
+  Document and liveness verification at onboarding, bought rather than built.
+  The identity service sends the captured document and selfie; the vendor
+  calls back with the result. Restricted from the first byte, so the path to
+  the vendor is private.
+status: Planned
+owner_org_id: ORG-COMPLIANCE
+criticality: High
+product_category: Vendor capability
+company_domain: Risk and Compliance
+launch_date: 2027-01-11
+
+build_type: bought-saas
+archetype: vendor-saas-service
+parameters:
+  slug: idv
+  product_name: Identity Document Verification
+  vendor: Onfido
+  owner_org: ORG-COMPLIANCE
+  domain: Risk and Compliance
+  upstream_system: SYS-IDENTITY-SVC
+  account: azure-risk-prod
+  criticality: High
+  classification: Restricted
+
+# Where this product chooses differently from the shape's defaults.
+choose:
+  reach: private-egress
+  return: webhook-inbound
+
+overrides:
+  # Verification happens at onboarding, not in the authorization path: an
+  # outage delays an application rather than declining a transaction.
+  SYS-IDV-GATEWAY:
+    service_tier: Tier 2
+  SYS-IDV-EGRESS:
+    service_tier: Tier 2
+  SYS-IDV-WEBHOOKS:
+    service_tier: Tier 2
+  SYS-IDV-VENDOR:
+    service_tier: Tier 2
+    description: >
+      Document and liveness verification, operated by Onfido in their own
+      tenancy. Contractually pinned to EU processing; images are deleted at
+      the vendor once the result is returned.
+
+# What this product enforces that its shape cannot know. Identifying the
+# customer is the BSA/AML program's first obligation, so the policy is
+# recorded here, with the product, rather than in the shared governance file.
+extra:
+  relations:
+    system_subject_to_policy:
+      - system_id: SYS-IDV-VENDOR
+        policy_id: POL-BSA-AML

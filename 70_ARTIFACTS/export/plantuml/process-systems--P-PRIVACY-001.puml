@@ -1,0 +1,53 @@
+@startuml
+' Fulfill consumer privacy request — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Fulfill consumer privacy request — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_SEC_05, "Privacy Management", "Operate privacy obligations including consumer rights requests.", $tags="capabilities")
+  ' aac CAP_SEC_05: company_domain="Cross-Functional Services"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_PRIV_REQ, "Consumer privacy request fulfillment", "Access and deletion requests are verified, fulfilled, and evidenced within the applicable statutory window.", $tags="controls")
+  ' aac CTL_PRIV_REQ: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_CUSTOMER_PROFILE, "Customer profile", "Contact details, preferences and servicing history.", $tags="data_assets")
+  ' aac DA_CUSTOMER_PROFILE: company_domain="Servicing"
+}
+Boundary(b_Process, "Process") {
+  System(P_PRIVACY_001, "Fulfill consumer privacy request", "Receive, verify, and fulfill a consumer privacy rights request within the required period. Identity verification precedes any disclosure; state privacy laws set the clocks and the evidence of fulfillment is retained per request.", $tags="processes")
+  ' aac P_PRIVACY_001: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_CRM, "Dynamics 365 Customer Service", "Contact center desktop and case management for servicing agents. Built with Microsoft.", $tags="systems")
+  ' aac SYS_CRM: company_domain="Servicing"; hosting="SaaS"; technology="Microsoft"
+  System(SYS_CATALOG, "Governance catalog", "Governance catalog and metadata system of record. Built with Collibra Data Intelligence.", $tags="systems")
+  ' aac SYS_CATALOG: company_domain=""; technology="Collibra Data Intelligence"
+  System(SYS_GRC, "Governance, risk and compliance platform", "Policy, control, issue, and risk register management.", $tags="systems")
+  ' aac SYS_GRC: company_domain=""
+}
+
+Rel(P_PRIVACY_001, SYS_GRC, "Primary")
+' aac rel: source="P_PRIVACY_001"; target="SYS_GRC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_PRIVACY_001, SYS_CRM, "Supporting")
+' aac rel: source="P_PRIVACY_001"; target="SYS_CRM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PRIVACY_001, SYS_CATALOG, "Supporting")
+' aac rel: source="P_PRIVACY_001"; target="SYS_CATALOG"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PRIVACY_001, DA_CUSTOMER_PROFILE, "Both")
+' aac rel: source="P_PRIVACY_001"; target="DA_CUSTOMER_PROFILE"; label="Both"; relation="process_uses_data_asset"; access="Both"
+Rel(P_PRIVACY_001, CTL_PRIV_REQ, "governed by")
+' aac rel: source="P_PRIVACY_001"; target="CTL_PRIV_REQ"; label="governed by"; relation="process_governed_by_control"
+Rel(P_PRIVACY_001, CAP_SEC_05, "supports")
+' aac rel: source="P_PRIVACY_001"; target="CAP_SEC_05"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

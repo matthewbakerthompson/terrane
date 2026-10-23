@@ -1,0 +1,94 @@
+@startuml
+' Product Management & Pricing — Frameworks, Controls, Systems
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Product Management & Pricing — Frameworks, Controls, Systems
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_PROD_02, "Pricing, Fee & APR Management", "Set and maintain rate, fee, and pricing structures across products.", $tags="capabilities")
+  ' aac CAP_PROD_02: company_domain="Products"
+  System(CAP_PROD_01, "Product Design & Configuration", "Define product features, eligibility, and operating parameters.", $tags="capabilities")
+  ' aac CAP_PROD_01: company_domain="Products"
+  System(CAP_PROD_05, "Product Lifecycle & Retirement", "Launch, amend, sunset, and migrate products through their lifecycle.", $tags="capabilities")
+  ' aac CAP_PROD_05: company_domain="Products"
+  System(CAP_PROD, "Product Management & Pricing", "Product Management & Pricing. Level 0 enterprise capability domain (Direct tier).", $tags="capabilities")
+  ' aac CAP_PROD: company_domain="Products"
+  System(CAP_PROD_04, "Rewards Program Design", "Define earn, accrual, and redemption economics for rewards programs.", $tags="capabilities")
+  ' aac CAP_PROD_04: company_domain="Products"
+  System(CAP_PROD_03, "Terms & Disclosure Management", "Author, version, and control cardholder agreements and disclosures.", $tags="capabilities")
+  ' aac CAP_PROD_03: company_domain="Products"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_NOTICE_CONTENT, "Notice content and delivery evidence", "Required notices use legal-owned templates with version control, and delivery evidence is retained per notice.", $tags="controls")
+  ' aac CTL_NOTICE_CONTENT: company_domain=""
+}
+Boundary(b_Framework, "Framework") {
+  System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
+  ' aac FW_BIAN: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_PRODUCT_002, "Author and version disclosure", "Author, review, approve, and version cardholder agreements and disclosures. Agreements and disclosures are versioned with effective dates; every account references the version it was disclosed under, which is what makes remediation tractable.", $tags="processes")
+  ' aac P_PRODUCT_002: company_domain=""
+  System(P_PRODUCT_001, "Design and approve product change", "Define, price, and obtain approval for a change to a card product. A product change binds pricing, terms, and eligibility; approval spans product, credit, finance, legal, and compliance before configuration starts.", $tags="processes")
+  ' aac P_PRODUCT_001: company_domain=""
+  System(P_PRODUCT_003, "Launch product to market", "Configure, test, and release a product for origination across all affected systems. Launch is a coordinated configuration across origination, core, servicing, and statements, verified in test before the product opens to volume.", $tags="processes")
+  ' aac P_PRODUCT_003: company_domain=""
+  System(P_PRODUCT_004, "Retire or migrate product", "Sunset a product and migrate affected accounts with required notice. Retirement manages the migration and notices for live accounts; terms changes ride the change-in-terms rules, and the product stays resolvable for history.", $tags="processes")
+  ' aac P_PRODUCT_004: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+}
+
+Rel(CAP_PROD_01, CAP_PROD, "part of")
+Rel(CAP_PROD_02, CAP_PROD, "part of")
+Rel(CAP_PROD_03, CAP_PROD, "part of")
+Rel(CAP_PROD_04, CAP_PROD, "part of")
+Rel(CAP_PROD_05, CAP_PROD, "part of")
+Rel(CAP_PROD, FW_BIAN, "Aligned to")
+' aac rel: source="CAP_PROD"; target="FW_BIAN"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
+Rel(CAP_PROD_01, FW_BIAN, "Reference Data > Product Management > Product Deployment")
+' aac rel: source="CAP_PROD_01"; target="FW_BIAN"; label="Reference Data > Product Management > Product Deployment"; relation="capability_references_framework"; ref="Reference Data > Product Management > Product Deployment"
+Rel(CAP_PROD_02, FW_BIAN, "Reference Data > Product Management > Product Directory")
+' aac rel: source="CAP_PROD_02"; target="FW_BIAN"; label="Reference Data > Product Management > Product Directory"; relation="capability_references_framework"; ref="Reference Data > Product Management > Product Directory"
+Rel(CAP_PROD_03, FW_BIAN, "Reference Data > Product Management > Product Directory")
+' aac rel: source="CAP_PROD_03"; target="FW_BIAN"; label="Reference Data > Product Management > Product Directory"; relation="capability_references_framework"; ref="Reference Data > Product Management > Product Directory"
+Rel(CAP_PROD_04, FW_BIAN, "Operations and Execution > Operational Services > Reward Points Awards And Redemption")
+' aac rel: source="CAP_PROD_04"; target="FW_BIAN"; label="Operations and Execution > Operational Services > Reward Points Awards And Redemption"; relation="capability_references_framework"; ref="Operations and Execution > Operational Services > Reward Points Awards And Redemption"
+Rel(CAP_PROD_05, FW_BIAN, "Reference Data > Product Management > Product Deployment")
+' aac rel: source="CAP_PROD_05"; target="FW_BIAN"; label="Reference Data > Product Management > Product Deployment"; relation="capability_references_framework"; ref="Reference Data > Product Management > Product Deployment"
+Rel(P_PRODUCT_001, CAP_PROD_01, "supported by")
+' aac rel: source="P_PRODUCT_001"; target="CAP_PROD_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_PRODUCT_001, CAP_PROD_02, "supported by")
+' aac rel: source="P_PRODUCT_001"; target="CAP_PROD_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_PRODUCT_002, CAP_PROD_03, "supported by")
+' aac rel: source="P_PRODUCT_002"; target="CAP_PROD_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_PRODUCT_003, CAP_PROD_05, "supported by")
+' aac rel: source="P_PRODUCT_003"; target="CAP_PROD_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_PRODUCT_004, CAP_PROD_05, "supported by")
+' aac rel: source="P_PRODUCT_004"; target="CAP_PROD_05"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_PROD, CTL_NOTICE_CONTENT, "governed by")
+' aac rel: source="CAP_PROD"; target="CTL_NOTICE_CONTENT"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_PROD_03, CTL_NOTICE_CONTENT, "governed by")
+' aac rel: source="CAP_PROD_03"; target="CTL_NOTICE_CONTENT"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(SYS_CORE_LEDGER, CAP_PROD_01, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_PROD_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CORE_LEDGER, CAP_PROD_02, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_PROD_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CORE_LEDGER, CAP_PROD_05, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_PROD_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DOC, CAP_PROD_03, "realizes")
+' aac rel: source="SYS_DOC"; target="CAP_PROD_03"; label="realizes"; relation="system_realizes_capability"
+
+SHOW_LEGEND()
+@enduml

@@ -1,0 +1,61 @@
+# Patterns for producing a yes or a no, and for keeping the thing that
+# produces it answerable.
+
+- pattern_id: inline-risk-decision
+  name: Inline risk decision in the transaction path
+  status: Approved
+  category: Decisioning
+  blocks: [realtime-decision]
+  intent: >
+    A fraud or risk score is produced inside the authorization flow, against
+    a time budget the switch enforces, from features that were computed
+    before the transaction arrived. The scorer answers or it does not; when
+    it does not, the switch applies a stated default and the transaction
+    completes. A decision the business can tune in minutes, on a path whose
+    latency the business cannot see, is what the pattern buys.
+  consequences: >
+    A time budget is a contract and every feature, model and network hop in
+    the path spends it; the features that would make the model better are
+    usually the ones that cannot be computed in time. The fail-open or
+    fail-closed default is a business decision with a loss attached either
+    way, and has to be written down, owned and revisited, because the
+    scorer's availability sets how often it is taken. Every model change is a
+    change to the authorization path and goes through that change process,
+    not the analytics one.
+  when_not_to_use: >
+    Decisions with no time budget: an application that takes a day to
+    underwrite does not need a scorer that answers in forty milliseconds,
+    and should use the model platform directly. Decisions whose default is
+    unacceptable in either direction, which means the scorer must never be
+    unavailable, which means the pattern is being asked for a guarantee it
+    cannot give and the switch's own rules should carry the decision.
+  method_ref: PAT-013
+
+- pattern_id: governed-model-lifecycle
+  name: Governed model lifecycle
+  status: Approved
+  category: Decisioning
+  blocks: [model-platform, data-governance]
+  intent: >
+    Every model that affects a customer is trained on data the catalog
+    describes, registered with its version, its training set and its
+    intended use, served from the registry rather than from a laptop, and
+    monitored for drift against the population it was built on. A decision
+    the model made can be explained after the fact from what the registry
+    holds, which is what an adverse action notice and a model risk review
+    both need and neither can reconstruct.
+  consequences: >
+    Registration is a gate and gates slow things: a model that cannot say
+    what it was trained on does not get served, and the data scientist who
+    built it finds that out at the gate. Monitoring produces findings that
+    somebody has to own, and a model with drift nobody acts on is a model
+    with a documented defect. The feature store is a second copy of
+    operational data, with the classification, masking and retention
+    obligations a second copy always has.
+  when_not_to_use: >
+    Analytics that inform a person rather than decide for one, where a
+    dashboard is a dashboard and the registry adds ceremony with no decision
+    to explain. Rules that are rules, written and reviewed as such; dressing
+    a lookup table as a model gives it a lifecycle it does not need and
+    hides the fact that somebody could just read it.
+  method_ref: PAT-017

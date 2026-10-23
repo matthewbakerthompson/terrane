@@ -1,0 +1,26 @@
+# What obliges the security monitoring platform, and what it realizes.
+#
+# Hand-authored, like governance.yaml, and kept apart from the imported
+# business-layer relations so a re-import does not lose it. The SIEM is the
+# destination of every vendor's audit trail (the `audit-forwarding` module),
+# so it is the one shared system a bought capability always touches.
+
+system_realizes_capability:
+  - system_id: SYS-SIEM
+    capability_id: CAP-SEC-02-01
+  - system_id: SYS-SIEM
+    capability_id: CAP-SEC-02-02
+
+system_governed_by_control:
+  - system_id: SYS-SIEM
+    control_id: CTL-IR-PLAYBOOK
+  - system_id: SYS-SIEM
+    control_id: CTL-ACCESS-CERT
+  - system_id: SYS-SIEM
+    control_id: CTL-RETENTION
+
+system_subject_to_policy:
+  - system_id: SYS-SIEM
+    policy_id: POL-INFOSEC
+  - system_id: SYS-SIEM
+    policy_id: POL-RECORDS

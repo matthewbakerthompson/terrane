@@ -1,0 +1,17 @@
+# Imported from interfaces.csv.
+interface_id: INT-LEDGER-INGEST
+name: Core Ledger to Data Ingestion Hub
+description: Nightly extract of accounts, balances and postings.
+status: Active
+togaf_layer: Application
+architecture_domain: Data
+company_domain: Data and Analytics
+source_system_id: SYS-CORE-LEDGER
+target_system_id: SYS-DATA-INGEST
+owner_org_id: ORG-DATAENG
+protocol: FileTransfer
+direction: Outbound
+frequency: Daily
+integration_style: Batch
+auth_method: KeyPair
+data_classification: Restricted

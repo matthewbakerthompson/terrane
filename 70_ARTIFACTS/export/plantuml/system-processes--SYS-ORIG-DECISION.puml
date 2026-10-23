@@ -1,0 +1,109 @@
+@startuml
+' Originations decision engine — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Originations decision engine — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_ORIG_06, "Account Establishment & Card Issuance", "Open the account and issue credentials.", $tags="capabilities")
+  ' aac CAP_ORIG_06: company_domain="Originations"
+  System(CAP_ORIG_05, "Adverse Action & Notice Generation", "Produce compliant decline and counter-offer notices.", $tags="capabilities")
+  ' aac CAP_ORIG_05: company_domain="Originations"
+  System(CAP_ORIG_01, "Application Capture", "Accept applications across web, mobile, phone, mail, and partner channels.", $tags="capabilities")
+  ' aac CAP_ORIG_01: company_domain="Originations"
+  System(CAP_ORIG_03, "Application Fraud Screening", "Detect synthetic, stolen, and first-party application fraud.", $tags="capabilities")
+  ' aac CAP_ORIG_03: company_domain="Originations"
+  System(CAP_CRED_03, "Credit Line Assignment & Management", "Set initial lines and manage increases, decreases, and reallocation.", $tags="capabilities")
+  ' aac CAP_CRED_03: company_domain="Originations"
+  System(CAP_CRED_01, "Credit Strategy & Scorecard Management", "Own the credit decision strategy and its cutoffs.", $tags="capabilities")
+  ' aac CAP_CRED_01: company_domain="Originations"
+  System(CAP_RGOV_07, "Financial Crimes & BSA/AML Compliance", "Operate the KYC/CIP program, transaction monitoring, sanctions screening, and regulatory filing.", $tags="capabilities")
+  ' aac CAP_RGOV_07: company_domain="Cross-Functional Services"
+  System(CAP_ORIG_02, "Identity Verification & KYC/CIP", "Verify applicant identity and satisfy customer identification obligations.", $tags="capabilities")
+  ' aac CAP_ORIG_02: company_domain="Originations"
+  System(CAP_PROD_05, "Product Lifecycle & Retirement", "Launch, amend, sunset, and migrate products through their lifecycle.", $tags="capabilities")
+  ' aac CAP_PROD_05: company_domain="Products"
+  System(CAP_ORIG_04, "Underwriting & Credit Decisioning Execution", "Execute the credit decision against the approved strategy.", $tags="capabilities")
+  ' aac CAP_ORIG_04: company_domain="Originations"
+}
+Boundary(b_Process, "Process") {
+  System(P_ORIG_001, "Capture card application", "Accept and validate a complete card application from any origination channel. Capture is complete when the application has every field decisioning needs and the applicant has the required disclosures; incomplete applications route to cure, not decline.", $tags="processes")
+  ' aac P_ORIG_001: company_domain=""
+  System(P_ORIG_006, "Establish account and issue credentials", "Open the account on the core platform and issue the card credential. Account establishment writes the account of record and triggers credential issuance; a failure here strands an approved applicant, which is why it carries a same-day SLA.", $tags="processes")
+  ' aac P_ORIG_006: company_domain=""
+  System(P_ORIG_004, "Execute credit decision", "Apply the approved credit strategy to render an approve, decline, or counter-offer decision with a line assignment.", $tags="processes")
+  ' aac P_ORIG_004: company_domain=""
+  System(P_CREDIT_003, "Execute credit line increase program", "Identify eligible accounts and execute line increases under the approved strategy. Eligibility, ability-to-pay checks, and notice requirements are built into the program design; execution is batch with opt-out handling.", $tags="processes")
+  ' aac P_CREDIT_003: company_domain=""
+  System(P_ORIG_009, "Handle application withdrawal and abandonment", "Manage applications withdrawn by the applicant or abandoned before completion. Withdrawn and abandoned applications still carry notice, retention, and bureau obligations; this process closes them compliantly instead of letting them age.", $tags="processes")
+  ' aac P_ORIG_009: company_domain=""
+  System(P_ORIG_005, "Issue adverse action notice", "Generate and deliver a compliant adverse action or counter-offer notice within the required period. ECOA and FCRA set the notice content and the clock; the principal reasons must match the actual decision factors, which is exactly what fair-lending testing checks.", $tags="processes")
+  ' aac P_ORIG_005: company_domain=""
+  System(P_PRODUCT_003, "Launch product to market", "Configure, test, and release a product for origination across all affected systems. Launch is a coordinated configuration across origination, core, servicing, and statements, verified in test before the product opens to volume.", $tags="processes")
+  ' aac P_PRODUCT_003: company_domain=""
+  System(P_ORIG_003, "Screen application for fraud", "Score and adjudicate the application for synthetic, stolen, and first-party fraud risk. Fraud screening runs before credit decisioning so stolen and synthetic identities never consume a bureau pull; referred applications go to manual review with an SLA.", $tags="processes")
+  ' aac P_ORIG_003: company_domain=""
+  System(P_CREDIT_001, "Set and deploy credit decision strategy", "Define, test, approve, and deploy changes to the credit decision strategy and its cutoffs. Strategy changes ship through champion-challenger testing with documented approval; the deployed strategy is the single decisioning authority for originations.", $tags="processes")
+  ' aac P_CREDIT_001: company_domain=""
+  System(P_ORIG_002, "Verify applicant identity and satisfy CIP", "Verify the applicant's identity and record evidence satisfying customer identification obligations. CIP evidence is retained per BSA requirements; verification failures route to document request rather than automatic decline, and synthetic identity signals feed fraud screening.", $tags="processes")
+  ' aac P_ORIG_002: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_ORIG_DECISION, "Originations decision engine", "Application processing and credit decision execution.", $tags="systems")
+  ' aac SYS_ORIG_DECISION: company_domain=""
+}
+
+Rel(P_ORIG_001, SYS_ORIG_DECISION, "Primary")
+' aac rel: source="P_ORIG_001"; target="SYS_ORIG_DECISION"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_ORIG_002, SYS_ORIG_DECISION, "Supporting")
+' aac rel: source="P_ORIG_002"; target="SYS_ORIG_DECISION"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_ORIG_003, SYS_ORIG_DECISION, "Supporting")
+' aac rel: source="P_ORIG_003"; target="SYS_ORIG_DECISION"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_ORIG_004, SYS_ORIG_DECISION, "Primary")
+' aac rel: source="P_ORIG_004"; target="SYS_ORIG_DECISION"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_ORIG_005, SYS_ORIG_DECISION, "Supporting")
+' aac rel: source="P_ORIG_005"; target="SYS_ORIG_DECISION"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_ORIG_006, SYS_ORIG_DECISION, "Supporting")
+' aac rel: source="P_ORIG_006"; target="SYS_ORIG_DECISION"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_ORIG_009, SYS_ORIG_DECISION, "Primary")
+' aac rel: source="P_ORIG_009"; target="SYS_ORIG_DECISION"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_CREDIT_001, SYS_ORIG_DECISION, "Primary")
+' aac rel: source="P_CREDIT_001"; target="SYS_ORIG_DECISION"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_CREDIT_003, SYS_ORIG_DECISION, "Supporting")
+' aac rel: source="P_CREDIT_003"; target="SYS_ORIG_DECISION"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PRODUCT_003, SYS_ORIG_DECISION, "Supporting")
+' aac rel: source="P_PRODUCT_003"; target="SYS_ORIG_DECISION"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_ORIG_001, CAP_ORIG_01, "supports")
+' aac rel: source="P_ORIG_001"; target="CAP_ORIG_01"; label="supports"; relation="process_supports_capability"
+Rel(P_ORIG_002, CAP_ORIG_02, "supports")
+' aac rel: source="P_ORIG_002"; target="CAP_ORIG_02"; label="supports"; relation="process_supports_capability"
+Rel(P_ORIG_002, CAP_RGOV_07, "supports")
+' aac rel: source="P_ORIG_002"; target="CAP_RGOV_07"; label="supports"; relation="process_supports_capability"
+Rel(P_ORIG_003, CAP_ORIG_03, "supports")
+' aac rel: source="P_ORIG_003"; target="CAP_ORIG_03"; label="supports"; relation="process_supports_capability"
+Rel(P_ORIG_004, CAP_ORIG_04, "supports")
+' aac rel: source="P_ORIG_004"; target="CAP_ORIG_04"; label="supports"; relation="process_supports_capability"
+Rel(P_ORIG_004, CAP_CRED_01, "supports")
+' aac rel: source="P_ORIG_004"; target="CAP_CRED_01"; label="supports"; relation="process_supports_capability"
+Rel(P_ORIG_004, CAP_CRED_03, "supports")
+' aac rel: source="P_ORIG_004"; target="CAP_CRED_03"; label="supports"; relation="process_supports_capability"
+Rel(P_ORIG_005, CAP_ORIG_05, "supports")
+' aac rel: source="P_ORIG_005"; target="CAP_ORIG_05"; label="supports"; relation="process_supports_capability"
+Rel(P_ORIG_006, CAP_ORIG_06, "supports")
+' aac rel: source="P_ORIG_006"; target="CAP_ORIG_06"; label="supports"; relation="process_supports_capability"
+Rel(P_ORIG_009, CAP_ORIG_01, "supports")
+' aac rel: source="P_ORIG_009"; target="CAP_ORIG_01"; label="supports"; relation="process_supports_capability"
+Rel(P_CREDIT_001, CAP_CRED_01, "supports")
+' aac rel: source="P_CREDIT_001"; target="CAP_CRED_01"; label="supports"; relation="process_supports_capability"
+Rel(P_CREDIT_003, CAP_CRED_03, "supports")
+' aac rel: source="P_CREDIT_003"; target="CAP_CRED_03"; label="supports"; relation="process_supports_capability"
+Rel(P_PRODUCT_003, CAP_PROD_05, "supports")
+' aac rel: source="P_PRODUCT_003"; target="CAP_PROD_05"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

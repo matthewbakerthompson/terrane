@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="602.1" viewBox="0 0 1100 602.1" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>NICE Actimize Screening outcomes — Where It Lives and Who Uses It</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">NICE Actimize Screening outcomes — Where It Lives and Who Uses It</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   6 nodes · 6 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One data asset in full: the system that masters it, the systems that read or write it, the processes that use it, the controls that govern it and the policies it is subject</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">to. The page a privacy or audit question starts from.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(107.5 99.05)">
+<g class="boundary" data-id="grp::Control">
+<rect x="653.45" y="24.45" width="211.1" height="103.1" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="686.3" y="41.86" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Control</text>
+</g>
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="380.7" y="153.7" width="222.6" height="124.6" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="422.7" y="171.1" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Policy">
+<rect x="653.45" y="156.45" width="221.1" height="207.1" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="683.25" y="173.85" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Policy</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="10.45" y="86.45" width="233.1" height="197.1" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="40.25" y="103.86" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::SYS-SCREENING-VENDOR::DA-SCREENING-OUTCOMES">
+<title>masters</title>
+<path d="M218 216 L247 216 L312.5 216 L378 216 L403.48 216" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M407 216 L397.43 220.78 L397.43 211.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e1::SYS-SCREENING-VENDOR::DA-SCREENING-OUTCOMES">
+<title>Write</title>
+<path d="M218 237 L247 237 L261.5 237 A1.5 1.5 0 0 0 263 235.5 L263 235.5 A1.5 1.5 0 0 1 264.5 234 L378 234 L403.48 234" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M407 234 L397.43 238.78 L397.43 229.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::SYS-SCREENING-VENDOR::DA-SCREENING-OUTCOMES">
+<rect x="297.05" y="240.5" width="30.91" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.5" y="252.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Write</text>
+</g>
+<g class="edge" data-id="e2::SYS-DATA-INGEST::DA-SCREENING-OUTCOMES">
+<title>Read</title>
+<path d="M218 143.5 L246.91 144 A10 10 0 0 0 247.09 144 L340 144 A10 10 0 0 1 350 154 L350 188 A10 10 0 0 0 360 198 L378 198 L403.48 198" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M407 198 L397.43 202.78 L397.43 193.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::SYS-DATA-INGEST::DA-SCREENING-OUTCOMES">
+<rect x="297.45" y="150.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.5" y="162.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e3::DA-SCREENING-OUTCOMES::CTL-RETENTION">
+<title>governed by</title>
+<path d="M577 198 L606 198 L614 198 A8 8 0 0 0 622 190 L622 86 A10 10 0 0 1 632 76 L650 76 L675.48 76" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M679 76 L669.43 80.78 L669.43 71.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e4::DA-SCREENING-OUTCOMES::POL-RECORDS">
+<title>subject to</title>
+<path d="M577 216 L606 216 L650 216 L675.48 216" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M679 216 L669.43 220.78 L669.43 211.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e5::DA-SCREENING-OUTCOMES::POL-PRIVACY">
+<title>subject to</title>
+<path d="M577 234 L606 234 L614 234 A8 8 0 0 1 622 242 L622 294 A10 10 0 0 0 632 304 L650 304 L675.48 304" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M679 304 L669.43 308.79 L669.43 299.21 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CTL-RETENTION" data-type="controls">
+<title>Retention schedule enforcement</title>
+<path d="M725.86 50 L679 65.23 L679 86.77 L725.86 102 L792.14 102 L839 86.77 L839 65.23 L792.14 50 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.1"/>
+<text x="759" y="74.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Retention schedule</text>
+<text x="759" y="86.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">enforcement</text>
+</g>
+<g class="node" data-id="DA-SCREENING-OUTCOMES" data-type="data_assets">
+<title>NICE Actimize Screening outcomes</title>
+<path d="M407 183.6 Q415.5 180 449.5 180 L534.5 180 Q568.5 180 577 183.6 L577 248.4 Q568.5 252 534.5 252 L449.5 252 Q415.5 252 407 248.4 Z" fill="#70c9a7" stroke="#047857" stroke-width="2.6"/>
+<text x="488" y="214.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">NICE Actimize</text>
+<text x="488" y="226.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Screening outcomes</text>
+<svg x="559" y="185" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="POL-PRIVACY" data-type="policies">
+<title>Consumer Privacy &amp; Data Handling Policy</title>
+<path d="M687 270 L841 270 L849 278 L849 330 L841 338 L687 338 L679 330 L679 278 Z" fill="#fecaca" stroke="#dc2626" stroke-width="1.1"/>
+<text x="760" y="302.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Consumer Privacy &amp;</text>
+<text x="760" y="314.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Data Handling Policy</text>
+<svg x="831" y="275" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg>
+</g>
+<g class="node" data-id="POL-RECORDS" data-type="policies">
+<title>Records Retention &amp; Disposition Policy</title>
+<path d="M687 182 L841 182 L849 190 L849 242 L841 250 L687 250 L679 242 L679 190 Z" fill="#fecaca" stroke="#dc2626" stroke-width="1.1"/>
+<text x="760" y="214.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Records Retention &amp;</text>
+<text x="760" y="226.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Disposition Policy</text>
+<svg x="831" y="187" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg>
+</g>
+<g class="node" data-id="SYS-DATA-INGEST" data-type="systems">
+<title>Enterprise Data Ingestion Hub</title>
+<rect x="36" y="112" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="117" y="136.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Enterprise Data</text>
+<text x="117" y="148.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Ingestion Hub</text>
+<text x="127" y="169.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Service Bus · Snowflake Data Cloud</text>
+<image x="196" y="116" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJiZDAyODc4LTMwOWEtNDQ5MC04MTk2LTk0NjMzOGQwZjU5MyIgeDE9IjguOTk1IiB5MT0iMTAuMjk5IiB4Mj0iOC45OTUiIHkyPSIxMy4xOTkiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMwMDViYTEiIC8+PHN0b3Agb2Zmc2V0PSIwLjI1OCIgc3RvcC1jb2xvcj0iIzAwNTg5ZCIgLz48c3RvcCBvZmZzZXQ9IjAuNTI1IiBzdG9wLWNvbG9yPSIjMDA0ZjkwIiAvPjxzdG9wIG9mZnNldD0iMC43OTYiIHN0b3AtY29sb3I9IiMwMDNmN2MiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMDAzMDY3IiAvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxnPjxnIGlkPSJiNTMyZTYwMC0zNjIzLTRiZTYtOWZhNi0zMGQwNWZmZjU2YjEiPjxwb2x5Z29uIHBvaW50cz0iMTMuMzg3IDcuNCAxMy4zODIgNy4zOTYgMTMuMzgyIDcuMzg0IDEzLjM2MyA3LjM4NCA4Ljk5NyA0LjQwNSA0LjYzMSA3LjM4NCA0LjYxMiA3LjM4NCA0LjYxMiA3LjM5NiA0LjYwNiA3LjQgNC42MTIgNy40IDQuNjEyIDEzLjIwMSAxMy4zODIgMTMuMjAxIDEzLjM4MiA3LjQgMTMuMzg3IDcuNCIgZmlsbD0iIzUwZTZmZiIgLz48cGF0aCBkPSJNNC42MDYsNy40YzAtLjEuMDA4LDUuNjgxLjAwOCw1LjhMOC45OTUsMTAuM1oiIGZpbGw9IiMzMmJlZGQiIC8+PHBhdGggZD0iTTEzLjM4NCw3LjQsOC45OTUsMTAuMywxMy4zNzYsMTMuMkMxMy4zNzYsMTMuMDgzLDEzLjM4NCw3LjMsMTMuMzg0LDcuNFoiIGZpbGw9IiMxOThhYjMiIC8+PHBvbHlnb24gcG9pbnRzPSI4Ljk5NSAxMC4yOTkgNC42MTQgMTMuMTk0IDQuNjE0IDEzLjE5OSAxMy4zNzYgMTMuMTk5IDEzLjM3NiAxMy4xOTQgOC45OTUgMTAuMjk5IiBmaWxsPSJ1cmwoI2JiZDAyODc4LTMwOWEtNDQ5MC04MTk2LTk0NjMzOGQwZjU5MykiIC8+PGc+PHBhdGggZD0iTTEuMDcyLDEuNDNoMS4yOWEwLDAsMCwwLDEsMCwwdjMuNmEuMjg2LjI4NiwwLDAsMS0uMjg2LjI4NkguNzg2QS4yODYuMjg2LDAsMCwxLC41LDUuMDM1VjJBLjU3Mi41NzIsMCwwLDEsMS4wNzIsMS40M1oiIGZpbGw9IiM5OTkiIC8+PHBhdGggZD0iTTEuMDcyLDEuNDNoMS4yOWEwLDAsMCwwLDEsMCwwdjMuNmEuMjg2LjI4NiwwLDAsMS0uMjg2LjI4NkguNzg2QS4yODYuMjg2LDAsMCwxLC41LDUuMDM1VjJBLjU3Mi41NzIsMCwwLDEsMS4wNzIsMS40M1oiIGZpbGw9IiM5OTkiIG9wYWNpdHk9IjAuNSIgLz48L2c+PGc+PHBhdGggZD0iTTE1LjYzOCwxLjQzaDEuMjlBLjU3Mi41NzIsMCwwLDEsMTcuNSwyVjUuMDM1YS4yODYuMjg2LDAsMCwxLS4yODYuMjg2aC0xLjI5YS4yODYuMjg2LDAsMCwxLS4yODYtLjI4NlYxLjQzQTAsMCwwLDAsMSwxNS42MzgsMS40M1oiIGZpbGw9IiM5OTkiIC8+PHBhdGggZD0iTTE1LjYzOCwxLjQzaDEuMjlBLjU3Mi41NzIsMCwwLDEsMTcuNSwyVjUuMDM1YS4yODYuMjg2LDAsMCwxLS4yODYuMjg2aC0xLjI5YS4yODYuMjg2LDAsMCwxLS4yODYtLjI4NlYxLjQzQTAsMCwwLDAsMSwxNS42MzgsMS40M1oiIGZpbGw9IiM5OTkiIG9wYWNpdHk9IjAuNSIgLz48L2c+PHBhdGggZD0iTTguNjYtNi4xNjNIOS45MDdhMCwwLDAsMCwxLDAsMHYxN2EwLDAsMCwwLDEsMCwwSDguNjZhLjU2Ny41NjcsMCwwLDEtLjU2Ny0uNTY3Vi01LjZBLjU2Ny41NjcsMCwwLDEsOC42Ni02LjE2M1oiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDExLjMzNyAtNi42NjMpIHJvdGF0ZSg5MCkiIGZpbGw9IiM5NDk0OTQiIC8+PGc+PHBhdGggZD0iTS43ODYsMTIuNjc5aDEuMjlhLjI4Ni4yODYsMCwwLDEsLjI4Ni4yODZ2My42YTAsMCwwLDAsMSwwLDBIMS4wNzJBLjU3Mi41NzIsMCwwLDEsLjUsMTZWMTIuOTY1QS4yODYuMjg2LDAsMCwxLC43ODYsMTIuNjc5WiIgZmlsbD0iIzk5OSIgLz48cGF0aCBkPSJNLjc4NiwxMi42NzloMS4yOWEuMjg2LjI4NiwwLDAsMSwuMjg2LjI4NnYzLjZhMCwwLDAsMCwxLDAsMEgxLjA3MkEuNTcyLjU3MiwwLDAsMSwuNSwxNlYxMi45NjVBLjI4Ni4yODYsMCwwLDEsLjc4NiwxMi42NzlaIiBmaWxsPSIjOTk5IiBvcGFjaXR5PSIwLjUiIC8+PC9nPjxnPjxwYXRoIGQ9Ik0xNS45MjQsMTIuNjc5aDEuMjlhLjI4Ni4yODYsMCwwLDEsLjI4Ni4yODZWMTZhLjU3Mi41NzIsMCwwLDEtLjU3Mi41NzJoLTEuMjlhMCwwLDAsMCwxLDAsMHYtMy42QS4yODYuMjg2LDAsMCwxLDE1LjkyNCwxMi42NzlaIiBmaWxsPSIjOTk5IiAvPjxwYXRoIGQ9Ik0xNS45MjQsMTIuNjc5aDEuMjlhLjI4Ni4yODYsMCwwLDEsLjI4Ni4yODZWMTZhLjU3Mi41NzIsMCwwLDEtLjU3Mi41NzJoLTEuMjlhMCwwLDAsMCwxLDAsMHYtMy42QS4yODYuMjg2LDAsMCwxLDE1LjkyNCwxMi42NzlaIiBmaWxsPSIjOTk5IiBvcGFjaXR5PSIwLjUiIC8+PC9nPjxwYXRoIGQ9Ik04LjY2LDcuMTYzSDkuOTA3YTAsMCwwLDAsMSwwLDB2MTdhMCwwLDAsMCwxLDAsMEg4LjY2YS41NjcuNTY3LDAsMCwxLS41NjctLjU2N1Y3LjczQS41NjcuNTY3LDAsMCwxLDguNjYsNy4xNjNaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNi42NjMgMjQuNjYzKSByb3RhdGUoLTkwKSIgZmlsbD0iIzk0OTQ5NCIgLz48L2c+PC9nPjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-SCREENING-VENDOR" data-type="systems">
+<title>NICE Actimize Screening</title>
+<rect x="36" y="195" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="123" y="219.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">NICE Actimize</text>
+<text x="123" y="231.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Screening</text>
+<text x="127" y="252.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">NICE Actimize</text>
+<svg x="200" y="200" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="478.1" x2="1072" y2="478.1" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="502.1" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 491.1)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="93.2" y="502.1" font-size="12" font-weight="400" fill="#343d50">control · 1</text>
+<g transform="translate(162.75 491.1)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="188.75" y="502.1" font-size="12" font-weight="400" fill="#343d50">data asset · 1</text>
+<g transform="translate(276.86 491.1)" fill="#fecaca" stroke="#dc2626" stroke-width="1.4"><path d="M4 1h12l3 3v6l-3 3H4l-3-3V4z"/></g>
+<text x="302.86" y="502.1" font-size="12" font-weight="400" fill="#343d50">policy · 2</text>
+<g transform="translate(369.14 491.1)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="395.14" y="502.1" font-size="12" font-weight="400" fill="#343d50">system · 2</text>
+<text x="28" y="524.1" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">CLASSIFICATION</text>
+<g transform="translate(130.2 513.1)" fill="#e57676" stroke="#b91c1c" stroke-width="2.6"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="156.2" y="524.1" font-size="12" font-weight="400" fill="#343d50">Restricted · 1</text>
+<g transform="translate(243.85 513.1)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.1"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="269.85" y="524.1" font-size="12" font-weight="400" fill="#343d50">not recorded · 5</text>
+<text x="28" y="546.1" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 535.1)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="546.1" font-size="12" font-weight="400" fill="#343d50">governed by</text>
+<g transform="translate(184.75 535.1)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="210.75" y="546.1" font-size="12" font-weight="400" fill="#343d50">subject to</text>
+<g transform="translate(283.5 535.1)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="309.5" y="546.1" font-size="12" font-weight="400" fill="#343d50">masters</text>
+<g transform="translate(371.76 535.1)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="397.76" y="546.1" font-size="12" font-weight="400" fill="#343d50">reads / writes</text>
+<text x="28" y="580.1" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · data-asset-context--da-screening-outcomes · edit the model, not the picture</text></g>
+</svg>

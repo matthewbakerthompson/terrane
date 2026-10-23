@@ -1,0 +1,211 @@
+@startuml
+' Document management and archive — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Document management and archive — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_SERV_02, "Account Maintenance & Servicing Requests", "Execute cardholder-requested account changes.", $tags="capabilities")
+  ' aac CAP_SERV_02: company_domain="Servicing"
+  System(CAP_ORIG_05, "Adverse Action & Notice Generation", "Produce compliant decline and counter-offer notices.", $tags="capabilities")
+  ' aac CAP_ORIG_05: company_domain="Originations"
+  System(CAP_COLL_06, "Bankruptcy, Deceased & Legal Account Handling", "Handle accounts under legal protection or in estate.", $tags="capabilities")
+  ' aac CAP_COLL_06: company_domain="Collections"
+  System(CAP_TPS_05, "Client Audit & Oversight Support", "Support client and client-regulator oversight activity.", $tags="capabilities")
+  ' aac CAP_TPS_05: company_domain="Cross-Functional Services"
+  System(CAP_COLL_07, "Collections Compliance Oversight", "Assure conformance with debt collection, contact, and state-law requirements.", $tags="capabilities")
+  ' aac CAP_COLL_07: company_domain="Collections"
+  System(CAP_SERV_04, "Correspondence & Notification Management", "Generate and deliver required and elective communications.", $tags="capabilities")
+  ' aac CAP_SERV_04: company_domain="Servicing"
+  System(CAP_CRED_03, "Credit Line Assignment & Management", "Set initial lines and manage increases, decreases, and reallocation.", $tags="capabilities")
+  ' aac CAP_CRED_03: company_domain="Originations"
+  System(CAP_FRAUD_03, "Dispute Intake & Provisional Credit", "Take dispute claims and apply provisional credit within regulatory timers.", $tags="capabilities")
+  ' aac CAP_FRAUD_03: company_domain="Servicing"
+  System(CAP_STRAT_04, "Enterprise Architecture & Change Portfolio", "Govern the shape of the estate and the pipeline of change.", $tags="capabilities")
+  ' aac CAP_STRAT_04: company_domain="Cross-Functional Services"
+  System(CAP_RGOV_07, "Financial Crimes & BSA/AML Compliance", "Operate the KYC/CIP program, transaction monitoring, sanctions screening, and regulatory filing.", $tags="capabilities")
+  ' aac CAP_RGOV_07: company_domain="Cross-Functional Services"
+  System(CAP_RGOV_05, "Internal Audit & Examination Management", "Coordinate internal audits and regulatory examinations.", $tags="capabilities")
+  ' aac CAP_RGOV_05: company_domain="Cross-Functional Services"
+  System(CAP_PART_01, "Issuing Bank & Sponsor Relationship", "Manage the issuing bank relationship and its obligations.", $tags="capabilities")
+  ' aac CAP_PART_01: company_domain="Cross-Functional Services"
+  System(CAP_ACQ_04, "Marketing Compliance & Disclosure Review", "Review creative and offers for regulatory adequacy before release.", $tags="capabilities")
+  ' aac CAP_ACQ_04: company_domain="MarTech"
+  System(CAP_PART_02, "Network & Scheme Relationship", "Manage network membership, rules, and mandate adoption.", $tags="capabilities")
+  ' aac CAP_PART_02: company_domain="Cross-Functional Services"
+  System(CAP_TPS_02, "Portfolio Conversion & Deconversion", "Convert client portfolios onto and off the servicing platform.", $tags="capabilities")
+  ' aac CAP_TPS_02: company_domain="Cross-Functional Services"
+  System(CAP_PROD_05, "Product Lifecycle & Retirement", "Launch, amend, sunset, and migrate products through their lifecycle.", $tags="capabilities")
+  ' aac CAP_PROD_05: company_domain="Products"
+  System(CAP_DATA_07, "Records Retention & Disposition", "Retain and dispose of records to the retention schedule.", $tags="capabilities")
+  ' aac CAP_DATA_07: company_domain="Cross-Functional Services"
+  System(CAP_SERV_06, "Servicing Knowledge & Agent Enablement", "Equip agents with current, compliant guidance.", $tags="capabilities")
+  ' aac CAP_SERV_06: company_domain="Servicing"
+  System(CAP_TECH_01, "Solution Delivery & Engineering", "Build and change software.", $tags="capabilities")
+  ' aac CAP_TECH_01: company_domain="Technology"
+  System(CAP_BILL_03, "Statement Delivery & Archive", "Deliver statements by print and electronic channels, and retain and retrieve them.", $tags="capabilities")
+  ' aac CAP_BILL_03: company_domain="Servicing"
+  System(CAP_PROD_03, "Terms & Disclosure Management", "Author, version, and control cardholder agreements and disclosures.", $tags="capabilities")
+  ' aac CAP_PROD_03: company_domain="Products"
+}
+Boundary(b_Process, "Process") {
+  System(P_SERVICING_011, "Administer secured card deposit lifecycle", "Collect, hold, apply, and refund security deposits for secured card accounts, including graduation and charge-off application, with correct accounting and disclosure treatment.", $tags="processes")
+  ' aac P_SERVICING_011: company_domain=""
+  System(P_SERVICING_012, "Apply servicemember and military lending protections", "Identify covered borrowers, apply the required rate and fee protections, and evidence compliance for servicemember accounts.", $tags="processes")
+  ' aac P_SERVICING_012: company_domain=""
+  System(P_PRODUCT_002, "Author and version disclosure", "Author, review, approve, and version cardholder agreements and disclosures. Agreements and disclosures are versioned with effective dates; every account references the version it was disclosed under, which is what makes remediation tractable.", $tags="processes")
+  ' aac P_PRODUCT_002: company_domain=""
+  System(P_RISK_003, "Coordinate regulatory examination", "Coordinate the response to a regulatory examination, including evidence and findings. Exam coordination controls the single flow of requests, evidence, and meetings; every submission is logged and consistent with what other responses have said.", $tags="processes")
+  ' aac P_RISK_003: company_domain=""
+  System(P_APPDEV_009, "Decommission an application", "Retire an application: migrate or archive its data to the retention schedule, remove interfaces and access, and update the inventory.", $tags="processes")
+  ' aac P_APPDEV_009: company_domain=""
+  System(P_TPS_003, "Deconvert client portfolio", "Migrate a client portfolio off the servicing platform and hand over records. Deconversion hands a portfolio off with data, documents, and cutover timing per contract; the obligation to do it well survives the relationship ending.", $tags="processes")
+  ' aac P_TPS_003: company_domain=""
+  System(P_SERVICING_002, "Deliver and archive statement", "Deliver the statement by the cardholder's elected channel and retain it for retrieval. Delivery honors the e-consent election and postal fallback; the archived statement is the legal record retrieved for disputes and subpoenas.", $tags="processes")
+  ' aac P_SERVICING_002: company_domain=""
+  System(P_CREDIT_004, "Execute credit line decrease or account action", "Apply risk-driven line decreases or account actions, with required notice. Adverse action obligations apply to decreases and closures just as they do to declines; the notice must state the principal reasons and bureau information used.", $tags="processes")
+  ' aac P_CREDIT_004: company_domain=""
+  System(P_DATAGOV_004, "Execute records retention and disposition", "Apply the retention schedule and execute defensible disposition of records. Disposition is defensible destruction: eligibility verified against holds, execution evidenced by certificate, and the retention schedule is the single authority.", $tags="processes")
+  ' aac P_DATAGOV_004: company_domain=""
+  System(P_DISPUTE_004, "Finalize dispute determination and notify", "Make the final dispute determination, adjust the account, and issue the compliant notice. The determination closes the Reg E or Reg Z clock: account adjustment, provisional credit disposition, and the written explanation must all land within the window.", $tags="processes")
+  ' aac P_DISPUTE_004: company_domain=""
+  System(P_PARTNERSHIPS_001, "Fulfill issuing bank oversight obligations", "Produce contracted reporting, respond to oversight requests, and manage obligations under the issuing bank agreement.", $tags="processes")
+  ' aac P_PARTNERSHIPS_001: company_domain=""
+  System(P_SERVICING_007, "Generate and deliver required notice", "Generate and deliver a regulatory or contractual notice to the cardholder. Notice generation is driven by account events with content owned by legal and compliance; proof of delivery and version are retained per notice.", $tags="processes")
+  ' aac P_SERVICING_007: company_domain=""
+  System(P_RECOVERY_003, "Handle bankruptcy notification", "Receive, verify, and action a bankruptcy notification with required account treatment. The automatic stay stops collection on notice; verification, claim filing, and account treatment follow bankruptcy chapter rules with dates that are court deadlines.", $tags="processes")
+  ' aac P_RECOVERY_003: company_domain=""
+  System(P_RECOVERY_004, "Handle deceased cardholder and estate", "Verify a deceased notification and manage the account through estate resolution. Estate handling balances recovery with conduct: verified notification stops collection contact, and the claim proceeds through the estate at the estate's pace.", $tags="processes")
+  ' aac P_RECOVERY_004: company_domain=""
+  System(P_PAYMENTS_005, "Implement network mandate release", "Assess and implement network mandate and release changes by the required date. Network mandates carry hard effective dates and fines for misses; assessment, build, and attestation are tracked per mandate from bulletin to production.", $tags="processes")
+  ' aac P_PAYMENTS_005: company_domain=""
+  System(P_COMPLIANCE_004, "Investigate and file suspicious activity report", "Investigate an alert and, where warranted, prepare and file the regulatory report. The SAR decision and filing run on the BSA clock from alert qualification; the investigation file must stand on its own for examiner review, and filing is confidential by law.", $tags="processes")
+  ' aac P_COMPLIANCE_004: company_domain=""
+  System(P_ORIG_005, "Issue adverse action notice", "Generate and deliver a compliant adverse action or counter-offer notice within the required period. ECOA and FCRA set the notice content and the clock; the principal reasons must match the actual decision factors, which is exactly what fair-lending testing checks.", $tags="processes")
+  ' aac P_ORIG_005: company_domain=""
+  System(P_COLLECTIONS_007, "Issue debt validation notice", "Generate and deliver the required validation notice within the prescribed period. The validation notice is a statutory precondition to continued collection on affected accounts; timing and content mistakes surface directly as regulatory findings.", $tags="processes")
+  ' aac P_COLLECTIONS_007: company_domain=""
+  System(P_SERVICING_009, "Maintain servicing knowledge content", "Author, review, and publish agent-facing knowledge and guidance. Knowledge content is the agent's authority in the moment; review cadence and ownership keep it aligned with policy, because stale guidance becomes wrong answers at scale.", $tags="processes")
+  ' aac P_SERVICING_009: company_domain=""
+  System(P_DISPUTE_001, "Process cardholder dispute claim", "Take a cardholder dispute claim, apply provisional credit, investigate, determine, and notify within regulatory timers.", $tags="processes")
+  ' aac P_DISPUTE_001: company_domain=""
+  System(P_PRODUCT_004, "Retire or migrate product", "Sunset a product and migrate affected accounts with required notice. Retirement manages the migration and notices for live accounts; terms changes ride the change-in-terms rules, and the product stays resolvable for history.", $tags="processes")
+  ' aac P_PRODUCT_004: company_domain=""
+  System(P_MARKETING_004, "Review marketing creative for compliance", "Review creative, disclosures, and claims for regulatory adequacy before release. Review covers claims, disclosures, and UDAAP risk across every asset and channel; nothing ships without the documented sign-off this process exists to produce.", $tags="processes")
+  ' aac P_MARKETING_004: company_domain=""
+  System(P_TPS_007, "Support client audit or examination", "Assemble evidence and respond to client and client-regulator oversight requests. Client audits and client-regulator exams get coordinated evidence with the same discipline as the bank's own exams; commitments made in responses are tracked.", $tags="processes")
+  ' aac P_TPS_007: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+}
+
+Rel(P_MARKETING_004, SYS_DOC, "Supporting")
+' aac rel: source="P_MARKETING_004"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_ORIG_005, SYS_DOC, "Primary")
+' aac rel: source="P_ORIG_005"; target="SYS_DOC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_CREDIT_004, SYS_DOC, "Supporting")
+' aac rel: source="P_CREDIT_004"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PAYMENTS_005, SYS_DOC, "Supporting")
+' aac rel: source="P_PAYMENTS_005"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_002, SYS_DOC, "Supporting")
+' aac rel: source="P_SERVICING_002"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_007, SYS_DOC, "Primary")
+' aac rel: source="P_SERVICING_007"; target="SYS_DOC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_SERVICING_009, SYS_DOC, "Supporting")
+' aac rel: source="P_SERVICING_009"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DISPUTE_001, SYS_DOC, "Supporting")
+' aac rel: source="P_DISPUTE_001"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DISPUTE_004, SYS_DOC, "Supporting")
+' aac rel: source="P_DISPUTE_004"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COLLECTIONS_007, SYS_DOC, "Primary")
+' aac rel: source="P_COLLECTIONS_007"; target="SYS_DOC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_RECOVERY_003, SYS_DOC, "Supporting")
+' aac rel: source="P_RECOVERY_003"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_RECOVERY_004, SYS_DOC, "Supporting")
+' aac rel: source="P_RECOVERY_004"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_TPS_003, SYS_DOC, "Supporting")
+' aac rel: source="P_TPS_003"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_TPS_007, SYS_DOC, "Supporting")
+' aac rel: source="P_TPS_007"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COMPLIANCE_004, SYS_DOC, "Supporting")
+' aac rel: source="P_COMPLIANCE_004"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_RISK_003, SYS_DOC, "Supporting")
+' aac rel: source="P_RISK_003"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DATAGOV_004, SYS_DOC, "Primary")
+' aac rel: source="P_DATAGOV_004"; target="SYS_DOC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_PRODUCT_002, SYS_DOC, "Primary")
+' aac rel: source="P_PRODUCT_002"; target="SYS_DOC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_PRODUCT_004, SYS_DOC, "Supporting")
+' aac rel: source="P_PRODUCT_004"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_011, SYS_DOC, "Supporting")
+' aac rel: source="P_SERVICING_011"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_012, SYS_DOC, "Supporting")
+' aac rel: source="P_SERVICING_012"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PARTNERSHIPS_001, SYS_DOC, "Supporting")
+' aac rel: source="P_PARTNERSHIPS_001"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_APPDEV_009, SYS_DOC, "Supporting")
+' aac rel: source="P_APPDEV_009"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_MARKETING_004, CAP_ACQ_04, "supports")
+' aac rel: source="P_MARKETING_004"; target="CAP_ACQ_04"; label="supports"; relation="process_supports_capability"
+Rel(P_ORIG_005, CAP_ORIG_05, "supports")
+' aac rel: source="P_ORIG_005"; target="CAP_ORIG_05"; label="supports"; relation="process_supports_capability"
+Rel(P_CREDIT_004, CAP_CRED_03, "supports")
+' aac rel: source="P_CREDIT_004"; target="CAP_CRED_03"; label="supports"; relation="process_supports_capability"
+Rel(P_CREDIT_004, CAP_ORIG_05, "supports")
+' aac rel: source="P_CREDIT_004"; target="CAP_ORIG_05"; label="supports"; relation="process_supports_capability"
+Rel(P_PAYMENTS_005, CAP_PART_02, "supports")
+' aac rel: source="P_PAYMENTS_005"; target="CAP_PART_02"; label="supports"; relation="process_supports_capability"
+Rel(P_SERVICING_002, CAP_BILL_03, "supports")
+' aac rel: source="P_SERVICING_002"; target="CAP_BILL_03"; label="supports"; relation="process_supports_capability"
+Rel(P_SERVICING_007, CAP_SERV_04, "supports")
+' aac rel: source="P_SERVICING_007"; target="CAP_SERV_04"; label="supports"; relation="process_supports_capability"
+Rel(P_SERVICING_009, CAP_SERV_06, "supports")
+' aac rel: source="P_SERVICING_009"; target="CAP_SERV_06"; label="supports"; relation="process_supports_capability"
+Rel(P_DISPUTE_001, CAP_FRAUD_03, "supports")
+' aac rel: source="P_DISPUTE_001"; target="CAP_FRAUD_03"; label="supports"; relation="process_supports_capability"
+Rel(P_DISPUTE_004, CAP_FRAUD_03, "supports")
+' aac rel: source="P_DISPUTE_004"; target="CAP_FRAUD_03"; label="supports"; relation="process_supports_capability"
+Rel(P_DISPUTE_004, CAP_SERV_04, "supports")
+' aac rel: source="P_DISPUTE_004"; target="CAP_SERV_04"; label="supports"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_007, CAP_COLL_07, "supports")
+' aac rel: source="P_COLLECTIONS_007"; target="CAP_COLL_07"; label="supports"; relation="process_supports_capability"
+Rel(P_RECOVERY_003, CAP_COLL_06, "supports")
+' aac rel: source="P_RECOVERY_003"; target="CAP_COLL_06"; label="supports"; relation="process_supports_capability"
+Rel(P_RECOVERY_004, CAP_COLL_06, "supports")
+' aac rel: source="P_RECOVERY_004"; target="CAP_COLL_06"; label="supports"; relation="process_supports_capability"
+Rel(P_TPS_003, CAP_TPS_02, "supports")
+' aac rel: source="P_TPS_003"; target="CAP_TPS_02"; label="supports"; relation="process_supports_capability"
+Rel(P_TPS_007, CAP_TPS_05, "supports")
+' aac rel: source="P_TPS_007"; target="CAP_TPS_05"; label="supports"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_004, CAP_RGOV_07, "supports")
+' aac rel: source="P_COMPLIANCE_004"; target="CAP_RGOV_07"; label="supports"; relation="process_supports_capability"
+Rel(P_RISK_003, CAP_RGOV_05, "supports")
+' aac rel: source="P_RISK_003"; target="CAP_RGOV_05"; label="supports"; relation="process_supports_capability"
+Rel(P_DATAGOV_004, CAP_DATA_07, "supports")
+' aac rel: source="P_DATAGOV_004"; target="CAP_DATA_07"; label="supports"; relation="process_supports_capability"
+Rel(P_PRODUCT_002, CAP_PROD_03, "supports")
+' aac rel: source="P_PRODUCT_002"; target="CAP_PROD_03"; label="supports"; relation="process_supports_capability"
+Rel(P_PRODUCT_004, CAP_PROD_05, "supports")
+' aac rel: source="P_PRODUCT_004"; target="CAP_PROD_05"; label="supports"; relation="process_supports_capability"
+Rel(P_SERVICING_011, CAP_SERV_02, "supports")
+' aac rel: source="P_SERVICING_011"; target="CAP_SERV_02"; label="supports"; relation="process_supports_capability"
+Rel(P_SERVICING_012, CAP_SERV_02, "supports")
+' aac rel: source="P_SERVICING_012"; target="CAP_SERV_02"; label="supports"; relation="process_supports_capability"
+Rel(P_PARTNERSHIPS_001, CAP_PART_01, "supports")
+' aac rel: source="P_PARTNERSHIPS_001"; target="CAP_PART_01"; label="supports"; relation="process_supports_capability"
+Rel(P_APPDEV_009, CAP_TECH_01, "supports")
+' aac rel: source="P_APPDEV_009"; target="CAP_TECH_01"; label="supports"; relation="process_supports_capability"
+Rel(P_APPDEV_009, CAP_STRAT_04, "supports")
+' aac rel: source="P_APPDEV_009"; target="CAP_STRAT_04"; label="supports"; relation="process_supports_capability"
+Rel(P_APPDEV_009, CAP_DATA_07, "supports")
+' aac rel: source="P_APPDEV_009"; target="CAP_DATA_07"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

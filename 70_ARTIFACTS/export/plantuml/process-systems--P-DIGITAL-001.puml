@@ -1,0 +1,39 @@
+@startuml
+' Enroll cardholder in digital servicing — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Enroll cardholder in digital servicing — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_SERV_03, "Digital Self-Service", "Enable cardholders to self-serve in web and mobile channels.", $tags="capabilities")
+  ' aac CAP_SERV_03: company_domain="Servicing"
+}
+Boundary(b_Process, "Process") {
+  System(P_DIGITAL_001, "Enroll cardholder in digital servicing", "Register and authenticate a cardholder for web and mobile self-service. Enrollment binds the cardholder to a verified identity with step-up options; weak enrollment is the account-takeover front door, so identity proofing follows the fraud strategy.", $tags="processes")
+  ' aac P_DIGITAL_001: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CARDSVC_WEB, "Card Servicing Web", "Browser front end for Card Servicing. Built with AKS.", $tags="systems")
+  ' aac SYS_CARDSVC_WEB: company_domain="Servicing"; hosting="Azure"; technology="AKS"
+  System(SYS_MOBILE, "Cardholder mobile application", "Cardholder mobile self-service.", $tags="systems")
+  ' aac SYS_MOBILE: company_domain=""
+  System(SYS_IAM, "Identity and access management", "Workforce identity, authentication, and access governance.", $tags="systems")
+  ' aac SYS_IAM: company_domain=""
+}
+
+Rel(P_DIGITAL_001, SYS_CARDSVC_WEB, "Primary")
+' aac rel: source="P_DIGITAL_001"; target="SYS_CARDSVC_WEB"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_DIGITAL_001, SYS_MOBILE, "Supporting")
+' aac rel: source="P_DIGITAL_001"; target="SYS_MOBILE"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DIGITAL_001, SYS_IAM, "Supporting")
+' aac rel: source="P_DIGITAL_001"; target="SYS_IAM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DIGITAL_001, CAP_SERV_03, "supports")
+' aac rel: source="P_DIGITAL_001"; target="CAP_SERV_03"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

@@ -1,0 +1,90 @@
+@startuml
+' Open Banking Affordability — Architecture
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Open Banking Affordability — Architecture
+
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("tech_services", $bgColor="#fed7aa", $borderColor="#c2410c", $fontColor="#0f172a", $legendText="technology service")
+AddRelTag("api-call", $legendText="API call")
+AddRelTag("event-over-https", $legendText="Event over HTTPS")
+AddRelTag("private-egress", $legendText="Private path to a vendor")
+
+Boundary(b_GCP, "GCP") {
+  Deployment_Node(TS_GCP_APIGEE, "Apigee", "API gateway", "The API gateway every internal and partner API on Google Cloud is published through; dealer and merchant integrations terminate here.", $tags="tech_services") {
+    ' aac TS_GCP_APIGEE: company_domain="Enterprise Platform"; technology="API gateway"
+  }
+  Deployment_Node(TS_GCP_GKE, "Google Kubernetes Engine", "Container platform", "Managed Kubernetes for the containerized estate on Google Cloud, an Autopilot cluster per workload project.", $tags="tech_services") {
+    ' aac TS_GCP_GKE: company_domain="Enterprise Platform"; technology="Container platform"
+  }
+  Deployment_Node(TS_GCP_PSC, "Private Service Connect", "Private egress", "Private endpoints to Google services and to vendors who publish one, so nothing of ours reaches them over the internet.", $tags="tech_services") {
+    ' aac TS_GCP_PSC: company_domain="Enterprise Platform"; technology="Private egress"
+  }
+  Deployment_Node(TS_GCP_SECRET_MANAGER, "Secret Manager", "Secrets manager", "Application secrets, read by workload identity rather than by key.", $tags="tech_services") {
+    ' aac TS_GCP_SECRET_MANAGER: company_domain="Enterprise Platform"; technology="Secrets manager"
+  }
+  Boundary(b_GCP__gcp_lending_prod, "project gcp-lending-prod") {
+    Boundary(b_GCP__gcp_lending_prod__Public, "Public") {
+      System(SYS_OBAFF_WEBHOOKS, "Open Banking Affordability Webhook Listener", "Receives TrueLayer callbacks, verifies their signature, and forwards the event. Public by necessity, small by design. Built with GKE.", $tags="systems")
+      ' aac SYS_OBAFF_WEBHOOKS: company_domain="Lending"; hosting="GCP"; technology="GKE"
+    }
+    Boundary(b_GCP__gcp_lending_prod__Private_App, "Private-App") {
+      System(SYS_OBAFF_GATEWAY, "Open Banking Affordability Integration Gateway", "Our side of the TrueLayer integration: request mapping, retry and back-off, circuit breaking when the vendor is down, and the audit trail of what we sent them. Built with GKE.", $tags="systems")
+      ' aac SYS_OBAFF_GATEWAY: company_domain="Lending"; hosting="GCP"; technology="GKE"
+      System(SYS_POSFIN_API, "Point-of-Sale Finance Service", "Domain API for point-of-sale finance: dealer applications, shopper identity and consent, decisions, and the payment schedule that follows. Built with GKE · Point-of-Sale Finance Cache.", $tags="systems")
+      ' aac SYS_POSFIN_API: company_domain="Lending"; hosting="GCP"; technology="GKE · Point-of-Sale Finance Cache"
+    }
+    Boundary(b_GCP__gcp_lending_prod__Shared_Services, "Shared-Services") {
+      System(SYS_OBAFF_EGRESS, "Open Banking Affordability Private Egress", "PrivateLink endpoint and egress allow-list for TrueLayer. The control that keeps regulated data off the public internet, and the thing a security review asks to see first.", $tags="systems")
+      ' aac SYS_OBAFF_EGRESS: company_domain="Enterprise Platform"; hosting="GCP"
+    }
+  }
+  Boundary(b_GCP__gcp_shared_network, "project gcp-shared-network") {
+    Boundary(b_GCP__gcp_shared_network__Shared_Services, "Shared-Services") {
+      Deployment_Node(TS_GCP_NCC, "Network Connectivity Center", "Transit hub", "The hub the workload VPC spokes and the interconnect attach to; the transit of the Google Cloud zone.", $tags="tech_services") {
+        ' aac TS_GCP_NCC: company_domain="Enterprise Platform"; technology="Transit hub"
+      }
+    }
+  }
+}
+Boundary(b_SaaS, "SaaS") {
+  Boundary(b_SaaS__Edge, "Edge") {
+    System_Ext(SYS_OBAFF_VENDOR, "Open Banking Affordability", "Open banking data access and affordability categorization, operated by TrueLayer in their own tenancy under the UK open banking framework; bank data is held for the assessment and deleted at the vendor once the result is returned. Built with TrueLayer.", $tags="systems")
+    ' aac SYS_OBAFF_VENDOR: company_domain="Lending"; hosting="SaaS"; technology="TrueLayer"
+  }
+}
+
+Rel(SYS_POSFIN_API, SYS_OBAFF_GATEWAY, "SYS-POSFIN-API to Open Banking Affordability Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_POSFIN_API"; target="SYS_OBAFF_GATEWAY"; label="SYS-POSFIN-API to Open Banking Affordability Gateway"; interface_id="INT-OBAFF-CALLER-GATEWAY"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_OBAFF_GATEWAY, SYS_OBAFF_EGRESS, "Open Banking Affordability Gateway to Private Egress", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_OBAFF_GATEWAY"; target="SYS_OBAFF_EGRESS"; label="Open Banking Affordability Gateway to Private Egress"; interface_id="INT-OBAFF-GATEWAY-EGRESS"; kind="api-call"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_OBAFF_EGRESS, SYS_OBAFF_VENDOR, "Private Egress to TrueLayer", "PrivateLink", $tags="private-egress")
+' aac rel: source="SYS_OBAFF_EGRESS"; target="SYS_OBAFF_VENDOR"; label="Private Egress to TrueLayer"; interface_id="INT-OBAFF-EGRESS-VENDOR"; kind="private-egress"; integration_style="Request-response"; auth_method="WorkloadIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_OBAFF_VENDOR, SYS_OBAFF_WEBHOOKS, "TrueLayer webhooks", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_OBAFF_VENDOR"; target="SYS_OBAFF_WEBHOOKS"; label="TrueLayer webhooks"; interface_id="INT-OBAFF-VENDOR-WEBHOOKS"; kind="event-over-https"; integration_style="Event"; auth_method="HMAC"; frequency="Realtime"; direction="Inbound"
+Rel(SYS_OBAFF_WEBHOOKS, SYS_POSFIN_API, "Open Banking Affordability Webhook Listener to SYS-POSFIN-API", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_OBAFF_WEBHOOKS"; target="SYS_POSFIN_API"; label="Open Banking Affordability Webhook Listener to SYS-POSFIN-API"; interface_id="INT-OBAFF-WEBHOOKS-CONSUMER"; kind="event-over-https"; integration_style="Event"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_OBAFF_GATEWAY, TS_GCP_GKE, "runs on")
+' aac rel: source="SYS_OBAFF_GATEWAY"; target="TS_GCP_GKE"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_OBAFF_GATEWAY, TS_GCP_APIGEE, "runs on")
+' aac rel: source="SYS_OBAFF_GATEWAY"; target="TS_GCP_APIGEE"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_OBAFF_EGRESS, TS_GCP_PSC, "runs on")
+' aac rel: source="SYS_OBAFF_EGRESS"; target="TS_GCP_PSC"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_OBAFF_EGRESS, TS_GCP_NCC, "runs on")
+' aac rel: source="SYS_OBAFF_EGRESS"; target="TS_GCP_NCC"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_OBAFF_WEBHOOKS, TS_GCP_APIGEE, "runs on")
+' aac rel: source="SYS_OBAFF_WEBHOOKS"; target="TS_GCP_APIGEE"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_OBAFF_WEBHOOKS, TS_GCP_GKE, "runs on")
+' aac rel: source="SYS_OBAFF_WEBHOOKS"; target="TS_GCP_GKE"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_OBAFF_GATEWAY, TS_GCP_SECRET_MANAGER, "runs on")
+' aac rel: source="SYS_OBAFF_GATEWAY"; target="TS_GCP_SECRET_MANAGER"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_POSFIN_API, TS_GCP_APIGEE, "runs on")
+' aac rel: source="SYS_POSFIN_API"; target="TS_GCP_APIGEE"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_POSFIN_API, TS_GCP_GKE, "runs on")
+' aac rel: source="SYS_POSFIN_API"; target="TS_GCP_GKE"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_POSFIN_API, TS_GCP_SECRET_MANAGER, "runs on")
+' aac rel: source="SYS_POSFIN_API"; target="TS_GCP_SECRET_MANAGER"; label="runs on"; relation="system_uses_tech_service"
+
+SHOW_LEGEND()
+@enduml

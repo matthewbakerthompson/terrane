@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://architecture-as-code/schemas/component_type.schema.json",
+  "title": "Component type",
+  "description": "A kind of thing an estate is made of, or a list of them in one file.",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "component_type_id",
+        "name",
+        "category",
+        "description"
+      ],
+      "properties": {
+        "component_type_id": {
+          "type": "string"
+        },
+        "replaces": {
+          "type": "string",
+          "description": "This record's own id, said to stand in for the record of that id in a library read before this one. Without it a second record of an id is an error."
+        },
+        "name": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "applies_to": {
+          "enum": [
+            "actors",
+            "architecture_change_requests",
+            "capabilities",
+            "controls",
+            "data_assets",
+            "flows",
+            "frameworks",
+            "interfaces",
+            "offered_interfaces",
+            "org_units",
+            "policies",
+            "processes",
+            "products",
+            "roadmaps",
+            "systems",
+            "tech_services",
+            "value_stream_stages",
+            "value_streams",
+            "work_packages"
+          ]
+        },
+        "shape": {
+          "enum": [
+            "cylinder",
+            "hexagon",
+            "rectangle",
+            "rhomboid",
+            "round-tag"
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "providers": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "What each provider calls it: the solution building block."
+        },
+        "defaults": {
+          "type": "object"
+        }
+      }
+    },
+    {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "component_type_id",
+          "name",
+          "category",
+          "description"
+        ],
+        "properties": {
+          "component_type_id": {
+            "type": "string"
+          },
+          "replaces": {
+            "type": "string",
+            "description": "This record's own id, said to stand in for the record of that id in a library read before this one. Without it a second record of an id is an error."
+          },
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "applies_to": {
+            "enum": [
+              "actors",
+              "architecture_change_requests",
+              "capabilities",
+              "controls",
+              "data_assets",
+              "flows",
+              "frameworks",
+              "interfaces",
+              "offered_interfaces",
+              "org_units",
+              "policies",
+              "processes",
+              "products",
+              "roadmaps",
+              "systems",
+              "tech_services",
+              "value_stream_stages",
+              "value_streams",
+              "work_packages"
+            ]
+          },
+          "shape": {
+            "enum": [
+              "cylinder",
+              "hexagon",
+              "rectangle",
+              "rhomboid",
+              "round-tag"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "providers": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "What each provider calls it: the solution building block."
+          },
+          "defaults": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  ]
+}

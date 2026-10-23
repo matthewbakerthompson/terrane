@@ -1,0 +1,51 @@
+# What each system the estate wrote by hand runs on. The products' systems
+# get theirs from their shapes.
+
+system_uses_tech_service:
+  # The data center: nearly every clinical system is a virtual machine on
+  # the cluster, the departmental ones on the shared database cluster.
+  - {system_id: SYS-EHR, tech_service_id: TS-ONPREM-VMWARE}
+  - {system_id: SYS-EHR, tech_service_id: TS-IDENTITY}
+  - {system_id: SYS-PHARMACY, tech_service_id: TS-ONPREM-VMWARE}
+  - {system_id: SYS-PHARMACY, tech_service_id: TS-ONPREM-SQL}
+  - {system_id: SYS-DEVICE-GW, tech_service_id: TS-ONPREM-VMWARE}
+  - {system_id: SYS-LIS, tech_service_id: TS-ONPREM-VMWARE}
+  - {system_id: SYS-LIS, tech_service_id: TS-ONPREM-SQL}
+  - {system_id: SYS-LIS, tech_service_id: TS-IDENTITY}
+  - {system_id: SYS-RIS, tech_service_id: TS-ONPREM-VMWARE}
+  - {system_id: SYS-RIS, tech_service_id: TS-ONPREM-SQL}
+  - {system_id: SYS-PACS, tech_service_id: TS-ONPREM-VMWARE}
+  - {system_id: SYS-PACS, tech_service_id: TS-ONPREM-IMAGE-STORE}
+  - {system_id: SYS-PACS, tech_service_id: TS-IDENTITY}
+  - {system_id: SYS-VNA, tech_service_id: TS-ONPREM-VMWARE}
+  - {system_id: SYS-VNA, tech_service_id: TS-ONPREM-IMAGE-STORE}
+  - {system_id: SYS-ONCOLOGY, tech_service_id: TS-ONPREM-VMWARE}
+  - {system_id: SYS-ONCOLOGY, tech_service_id: TS-ONPREM-SQL}
+  - {system_id: SYS-ONCOLOGY, tech_service_id: TS-IDENTITY}
+  - {system_id: SYS-INTERFACE-ENGINE, tech_service_id: TS-ONPREM-VMWARE}
+  - {system_id: SYS-INTERFACE-ENGINE, tech_service_id: TS-ONPREM-SQL}
+  # The engine reaches the FHIR server over the private circuit, never the
+  # internet.
+  - {system_id: SYS-INTERFACE-ENGINE, tech_service_id: TS-EXPRESSROUTE}
+  - {system_id: SYS-EMPI, tech_service_id: TS-ONPREM-VMWARE}
+  - {system_id: SYS-EMPI, tech_service_id: TS-ONPREM-SQL}
+  - {system_id: SYS-PATIENT-ACCOUNTING, tech_service_id: TS-ONPREM-VMWARE}
+  - {system_id: SYS-PATIENT-ACCOUNTING, tech_service_id: TS-IDENTITY}
+  # Azure.
+  - {system_id: SYS-FHIR-SERVER, tech_service_id: TS-AZURE-AKS}
+  - {system_id: SYS-FHIR-SERVER, tech_service_id: TS-AZURE-SQL}
+  - {system_id: SYS-FHIR-SERVER, tech_service_id: TS-AZURE-APIM}
+  - {system_id: SYS-FHIR-SERVER, tech_service_id: TS-AZURE-KEYVAULT}
+  - {system_id: SYS-FHIR-SERVER, tech_service_id: TS-AZURE-MONITOR}
+  - {system_id: SYS-CLINICAL-INGEST, tech_service_id: TS-AZURE-DATALAKE}
+  - {system_id: SYS-CLINICAL-INGEST, tech_service_id: TS-EXPRESSROUTE}
+  - {system_id: SYS-CLINICAL-INGEST, tech_service_id: TS-DATA-CATALOG}
+  - {system_id: SYS-SIEM, tech_service_id: TS-AZURE-MONITOR}
+  # Bought, and signed in to with the workforce identity.
+  - {system_id: SYS-ERP, tech_service_id: TS-IDENTITY}
+  - {system_id: SYS-BED-MGMT, tech_service_id: TS-IDENTITY}
+  - {system_id: SYS-TUMOR-REGISTRY, tech_service_id: TS-IDENTITY}
+
+tech_service_connects_to:
+  - {from_tech_service_id: TS-ONPREM-DC, to_tech_service_id: TS-EXPRESSROUTE, connection: Private circuit}
+  - {from_tech_service_id: TS-EXPRESSROUTE, to_tech_service_id: TS-AZURE-VWAN, connection: Hub attachment}

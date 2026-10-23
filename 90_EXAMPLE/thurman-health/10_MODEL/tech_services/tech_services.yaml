@@ -1,0 +1,305 @@
+# Where Thurman Health runs: two data centers it owns, and an Azure landing
+# zone it started three years ago for the patient-facing work.
+#
+# `landing-zone` says a shape or a part may resolve to a service by its kind:
+# the Azure digital product shape binds "the landing zone's API gateway" and
+# finds Thurman's here. The shapes used to bind the card issuer's services by
+# id, and these carried its ids for that reason; they are Thurman's own
+# instances, and an id is unique within an estate, not across estates.
+
+# --- the data centers ---------------------------------------------------------
+
+- tech_service_id: TS-ONPREM-DC
+  name: Primary Data Center
+  service_name: Data Center
+  component_type: vpc
+  description: >
+    The data center beside the main hospital. The EHR, the departmental
+    clinical systems and the interface engine live here, and most of what
+    connects to the cloud connects back to here.
+  status: Active
+  provider: In-house
+  service_category: Network
+  owner_org_id: ORG-INFRA
+  cloud_provider: On-prem
+  network_zone: On-prem
+  cidr: 10.20.0.0/16
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [landing-zone]
+
+- tech_service_id: TS-ONPREM-VMWARE
+  name: Virtualization Cluster
+  service_name: Hypervisor cluster
+  component_type: vm
+  description: The virtualization cluster nearly every on-premises clinical system runs on.
+  status: Active
+  provider: In-house
+  service_category: Compute
+  owner_org_id: ORG-INFRA
+  cloud_provider: On-prem
+  network_zone: On-prem
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+
+- tech_service_id: TS-ONPREM-SQL
+  name: Clinical Database Cluster
+  service_name: Relational database cluster
+  component_type: relational-db
+  description: The shared database cluster under the departmental systems; the EHR has its own.
+  status: Active
+  provider: In-house
+  service_category: Data
+  owner_org_id: ORG-INFRA
+  cloud_provider: On-prem
+  network_zone: On-prem
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+
+- tech_service_id: TS-ONPREM-IMAGE-STORE
+  name: Imaging Storage Array
+  service_name: Storage array
+  component_type: block-store
+  description: >
+    Tiered storage under the image archive. Three years of studies on fast
+    disk, the rest on the archive tier; the largest single consumer of
+    storage the health system has.
+  status: Active
+  provider: In-house
+  service_category: Storage
+  owner_org_id: ORG-INFRA
+  cloud_provider: On-prem
+  network_zone: On-prem
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+
+- tech_service_id: TS-EXPRESSROUTE
+  name: Private Circuit to Azure
+  service_name: ExpressRoute
+  component_type: hybrid-link
+  description: The private circuit from the primary data center to the Azure hub. HL7 never crosses the internet.
+  status: Active
+  provider: Microsoft Azure
+  service_category: Network
+  owner_org_id: ORG-INFRA
+  cloud_provider: Azure
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [landing-zone]
+
+# --- the Azure landing zone -----------------------------------------------------
+
+- tech_service_id: TS-AZURE-AKS
+  name: Azure Kubernetes Service
+  description: Managed Kubernetes for the patient-facing services.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-INFRA
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Compute
+  service_name: AKS
+  component_type: container-platform
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-APIM
+  name: Azure API Management
+  description: >
+    The front door for every API published outside the data center,
+    including the FHIR patient access API third-party apps call.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-INTEGRATION
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Integration
+  service_name: APIM
+  component_type: api-gateway
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-KEYVAULT
+  name: Azure Key Vault
+  description: Secret, key and certificate management; the keys PHI is encrypted with at rest.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-INFOSEC
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Security
+  service_name: Key Vault
+  component_type: secrets-manager
+  answers_for: [kms]
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-SERVICEBUS
+  name: Azure Service Bus
+  description: Messaging between the cloud services.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-INFRA
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Integration
+  service_name: Service Bus
+  component_type: message-queue
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-EVENTHUBS
+  name: Azure Event Hubs
+  description: The event stream the portal publishes appointment and message events to.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-INFRA
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Integration
+  service_name: Event Hubs
+  component_type: event-stream
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-SQL
+  name: Azure SQL Database
+  description: Managed relational databases for the cloud services.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-INFRA
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Data
+  service_name: Azure SQL
+  component_type: relational-db
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-MONITOR
+  name: Azure Monitor
+  description: Metrics, logs and alerting for everything in the landing zone.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-INFRA
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Operations
+  service_name: Azure Monitor
+  component_type: observability
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-PRIVATELINK
+  name: Azure Private Link
+  description: Private endpoints to the vendors that offer them, so PHI reaches a business associate without crossing the internet.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-INFRA
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Network
+  service_name: Private Link
+  component_type: private-egress
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-VWAN
+  name: Azure Virtual WAN Hub
+  description: The hub the workload subscriptions and the private circuit meet at.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-INFRA
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Network
+  service_name: Virtual WAN
+  component_type: transit-gateway
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-DATALAKE
+  name: Azure Data Lake Storage
+  description: The landing and curated zones of the clinical warehouse.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-DATAENG
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Storage
+  service_name: ADLS Gen2
+  component_type: object-store
+  tags: [landing-zone]
+
+# --- the data platform ----------------------------------------------------------
+# The shipped batch data product runs its pipeline on the landing zone's
+# warehouse and registers what it builds in its catalog. Both are SaaS, the
+# same service whichever cloud asks, so neither says a provider.
+
+- tech_service_id: TS-CLOUD-WAREHOUSE
+  name: Cloud Data Warehouse
+  description: The warehouse the clinical data product is built and served in, in Thurman's Azure region.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Data and Analytics
+  owner_org_id: ORG-DATAENG
+  provider: Snowflake
+  service_category: Data
+  service_name: Snowflake
+  component_type: warehouse
+  tags: [landing-zone]
+
+- tech_service_id: TS-DATA-CATALOG
+  name: Data Catalog
+  description: Where every curated dataset is registered with its owner, steward, lineage and HIPAA classification.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Data and Analytics
+  owner_org_id: ORG-DATAENG
+  provider: Collibra
+  service_category: Data
+  service_name: Collibra
+  component_type: catalog
+  tags: [landing-zone]
+
+# --- shared services ---------------------------------------------------------------
+
+# The landing zone's identity provider: the Azure digital product shape's
+# web channel signs people in through whichever one that is. For the patient
+# portal that is the external tenant, which is why this is one identity
+# platform and not a workforce directory alone.
+- tech_service_id: TS-IDENTITY
+  name: Identity Platform
+  description: >
+    Single sign-on for the workforce -- clinicians, staff and contractors --
+    and, through its external tenant, patients signing in to the portal. The
+    EHR, the departmental systems and the cloud services all trust it, so
+    ending a person's access is one change.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-INFOSEC
+  provider: Microsoft
+  service_category: Security
+  service_name: Entra ID
+  component_type: identity-provider
+  tags: [landing-zone]

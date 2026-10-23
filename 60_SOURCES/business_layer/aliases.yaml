@@ -1,0 +1,28 @@
+# Where the business architecture repository and this one name the same
+# thing differently.
+#
+# The business layer harvested its own list of systems in workshops, before
+# this estate existed. Most of them are systems this model does not hold and
+# arrive as harvested systems. A few are the same thing under another id, and
+# a process that uses one must land on the id this model uses, or the
+# capability map and the estate stop being about the same systems. That is
+# what this file says. Anything under `exclude` is a placeholder in the
+# business layer, not a system, and every row that names it is dropped.
+#
+# Read by 50_ENGINE/tools/import_business_layer.py. Ids on the left are the
+# business layer's; on the right, this model's.
+
+systems:
+  SYS-CORE: SYS-CORE-LEDGER          # the core card platform is the ledger
+  SYS-STMT: SYS-STATEMENTS           # statement composition and delivery
+  SYS-DISPUTE: SYS-DISPUTES-SAAS     # dispute and chargeback management
+  SYS-COLLECT: SYS-COLLECT-API       # the collections platform
+  SYS-DW: SYS-DATA-INGEST            # the enterprise data platform
+  SYS-WEB: SYS-CARDSVC-WEB           # cardholder web servicing
+
+data_assets:
+  DA-CARDHOLDER: DA-CUSTOMER-PROFILE
+  DA-TXN-LEDGER: DA-TRANSACTION
+
+exclude:
+  - SYS-MANUAL                       # "manual, no system": a fact, not a system

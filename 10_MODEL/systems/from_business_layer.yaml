@@ -1,0 +1,449 @@
+# Systems the business layer harvested, that this estate did not hold.
+#
+# Imported from the business architecture repository by
+# `50_ENGINE/tools/import_business_layer.py`. The processes were mapped against
+# these in workshops, so they are the systems the organization actually runs
+# on, drafted at low confidence and Proposed until someone who owns one
+# confirms it. A system this estate already holds under another id is mapped
+# in `60_SOURCES/business_layer/aliases.yaml` and does not arrive twice.
+#
+# To promote one: move it into its own file and give it a hosting, an
+# account and a tier; editing it in the app moves it for you. The import
+# leaves alone any system outside this file. Take `source` off it when its
+# owner confirms it, which takes it off the harvested-estate drawing.
+
+- system_id: SYS-AML
+  name: Financial crimes platform
+  description: Sanctions screening, transaction monitoring, and case management.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-COMPLIANCE
+  criticality: Medium
+  service_tier: Tier 1
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-APPFRAUD
+  name: Application fraud screening
+  description: Application fraud and identity risk screening.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-FRAUD
+  criticality: Medium
+  service_tier: Tier 1
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-ARCHREPO
+  name: Architecture repository
+  description: Architecture models, standards, decisions, and the application inventory.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-EA
+  criticality: Medium
+  hosting: SaaS
+  service_tier: Tier 3
+  data_classification_supported: Internal
+  source: Business architecture repository
+
+- system_id: SYS-BUREAU-GW
+  name: Credit bureau gateway
+  description: Credit bureau furnishing and consumer dispute exchange.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-COLLECTIONS
+  criticality: Medium
+  service_tier: Tier 1
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-CARD-FULFILL
+  name: Card production and fulfillment
+  description: Card production, personalization, and fulfillment.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-OPS
+  criticality: Medium
+  hosting: External
+  service_tier: Tier 2
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-CATALOG
+  name: Governance catalog
+  description: Governance catalog and metadata system of record.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-DATAGOV
+  criticality: Medium
+  service_tier: Tier 3
+  data_classification_supported: Internal
+  source: Business architecture repository
+
+- system_id: SYS-CLIENT-PORTAL
+  name: Servicing client portal
+  description: Client reporting, data exchange, and interaction.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-TPS
+  criticality: Medium
+  service_tier: Tier 1
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-CONTACT
+  name: Contact center platform
+  description: Contact center routing, voice, and digital channels.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-SERVICING
+  criticality: Medium
+  service_tier: Tier 1
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-CREDIT-DATA
+  name: Credit data and decisioning environment
+  description: Credit data, analytics, and decisioning environment.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-CREDIT
+  criticality: Medium
+  service_tier: Tier 2
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-DIALER
+  name: Outbound contact platform
+  description: Outbound dialer and contact campaign execution.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-COLLECTIONS
+  criticality: Medium
+  service_tier: Tier 2
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-DOC
+  name: Document management and archive
+  description: Document generation, management, and archive.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-OPS
+  criticality: Medium
+  service_tier: Tier 2
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-FRAUD-DETECT
+  name: Transaction fraud detection
+  description: Real-time transaction fraud scoring and alerting.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-FRAUD
+  criticality: Medium
+  service_tier: Tier 1
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-GL
+  name: General ledger
+  description: General ledger and financial accounting.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-FINANCE
+  criticality: Medium
+  service_tier: Tier 1
+  data_classification_supported: Confidential
+  source: Business architecture repository
+
+- system_id: SYS-GRC
+  name: Governance, risk and compliance platform
+  description: Policy, control, issue, and risk register management.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-RISK
+  criticality: Medium
+  service_tier: Tier 2
+  data_classification_supported: Confidential
+  source: Business architecture repository
+
+- system_id: SYS-HRIS
+  name: Human resources information system
+  description: Human resources information management.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-HR
+  criticality: Medium
+  service_tier: Tier 3
+  data_classification_supported: Confidential
+  source: Business architecture repository
+
+- system_id: SYS-IAM
+  name: Identity and access management
+  description: Workforce identity, authentication, and access governance.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-INFOSEC
+  criticality: Medium
+  service_tier: Tier 1
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-ITSM
+  name: IT service management
+  description: Incident, change, and service management.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-TECH
+  criticality: Medium
+  hosting: SaaS
+  service_tier: Tier 2
+  data_classification_supported: Internal
+  source: Business architecture repository
+
+- system_id: SYS-IVR
+  name: IVR and self-service voice
+  description: Interactive voice response and voice self-service.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-SERVICING
+  criticality: Medium
+  service_tier: Tier 1
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-KYC
+  name: Identity verification
+  description: Identity verification and customer identification program checks.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-ORIG
+  criticality: Medium
+  service_tier: Tier 1
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-MARKETING
+  name: Campaign management
+  description: Campaign management and execution.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-MARKETING
+  criticality: Medium
+  service_tier: Tier 3
+  data_classification_supported: Confidential
+  source: Business architecture repository
+
+- system_id: SYS-MOBILE
+  name: Cardholder mobile application
+  description: Cardholder mobile self-service.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-DIGITAL
+  criticality: Medium
+  service_tier: Tier 1
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-MODEL
+  name: Model platform
+  description: Model development, deployment, and monitoring.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-ANALYTICS
+  criticality: Medium
+  service_tier: Tier 2
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-OBSERV
+  name: Observability platform
+  description: Logs, metrics, traces, and production monitoring.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-TECH
+  criticality: Medium
+  hosting: SaaS
+  service_tier: Tier 2
+  data_classification_supported: Internal
+  source: Business architecture repository
+
+- system_id: SYS-ORIG-DECISION
+  name: Originations decision engine
+  description: Application processing and credit decision execution.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-ORIG
+  criticality: Medium
+  service_tier: Tier 1
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-PAYMENT-GW
+  name: Payment capture gateway
+  description: Payment capture across ACH, debit, lockbox, and wallet channels.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-PAYMENTS
+  criticality: Medium
+  service_tier: Tier 1
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-PROSPECT-DATA
+  name: Prospect and marketing data services
+  description: Prospect and marketing data services.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-MARKETING
+  criticality: Medium
+  service_tier: Tier 3
+  data_classification_supported: Confidential
+  source: Business architecture repository
+
+- system_id: SYS-RECON
+  name: Reconciliation platform
+  description: Automated reconciliation and exception management.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-SETTLEMENT
+  criticality: Medium
+  service_tier: Tier 1
+  data_classification_supported: Confidential
+  source: Business architecture repository
+
+- system_id: SYS-REWARDS
+  name: Rewards ledger
+  description: Rewards accrual ledger and redemption.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-REWARDS
+  criticality: Medium
+  service_tier: Tier 2
+  data_classification_supported: Confidential
+  source: Business architecture repository
+
+- system_id: SYS-SCM
+  name: Source control and CI/CD pipeline
+  description: Source repositories, build, and deployment pipeline.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-APPDEV
+  criticality: Medium
+  hosting: SaaS
+  service_tier: Tier 2
+  data_classification_supported: Internal
+  source: Business architecture repository
+
+- system_id: SYS-TESTMGMT
+  name: Test management and automation
+  description: Test case management, automated test execution, and results.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-QE
+  criticality: Medium
+  hosting: SaaS
+  service_tier: Tier 3
+  data_classification_supported: Internal
+  source: Business architecture repository
+
+- system_id: SYS-TOKEN
+  name: Tokenization and credential management
+  description: Token and credential lifecycle management.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-PAYMENTS
+  criticality: Medium
+  service_tier: Tier 1
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-TREASURY
+  name: Treasury management
+  description: Treasury, funding, and liquidity management.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-TREASURY
+  criticality: Medium
+  service_tier: Tier 1
+  data_classification_supported: Confidential
+  source: Business architecture repository
+
+- system_id: SYS-WORKTRACK
+  name: Work and change tracking
+  description: Work item and change tracking.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-TECH
+  criticality: Medium
+  hosting: SaaS
+  service_tier: Tier 3
+  data_classification_supported: Internal
+  source: Business architecture repository

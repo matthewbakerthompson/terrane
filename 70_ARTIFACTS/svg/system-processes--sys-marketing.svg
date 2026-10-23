@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="642.7" viewBox="0 0 1100 642.7" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Campaign management — Processes and Capabilities</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Campaign management — Processes and Capabilities</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   6 nodes · 5 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One system, every process that uses it and in what role, and the capabilities those processes support. This shows the business impact of changing the system. A</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">long list against a low criticality rating is worth a second look.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(171.22 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="271.92" y="93.3" width="212.16" height="295.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="313.92" y="110.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.87" y="164.26" width="212.27" height="207.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.72" y="181.67" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="529.3" y="24.3" width="218.4" height="87.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="559.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-MARKETING-002::SYS-MARKETING">
+<title>Supporting</title>
+<path d="M196 207 L225 207 L233 207 A8 8 0 0 0 241 199 L241 72 A10 10 0 0 1 251 62 L526 62 L551.48 62" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 62 L545.43 66.78 L545.43 57.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-MARKETING-002::SYS-MARKETING">
+<rect x="346.46" y="39.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="51.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e1::P-MARKETING-003::SYS-MARKETING">
+<title>Primary</title>
+<path d="M196 323.33 L224.94 323 A10 10 0 0 1 225.06 323 L233 323 A8 8 0 0 1 241 331 L241 395 A10 10 0 0 0 251 405 L488 405 A10 10 0 0 0 498 395 L498 84 A10 10 0 0 1 508 74 L526 74 L551.48 74" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 74 L545.43 78.78 L545.43 69.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-MARKETING-003::SYS-MARKETING">
+<rect x="354.32" y="411.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="423.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e2::P-MARKETING-002::CAP-ACQ-02">
+<title>supports</title>
+<path d="M196 224 L225 224 L241 224 A10 10 0 0 0 251 214 L251 162 A9 9 0 0 1 260 153 L269 153 L294.48 153" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M298 153 L288.43 157.78 L288.43 148.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e3::P-MARKETING-002::CAP-ACQ-04">
+<title>supports</title>
+<path d="M196 241 L225 241 L269 241 L294.48 241" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M298 241 L288.43 245.78 L288.43 236.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e4::P-MARKETING-003::CAP-ACQ-03">
+<title>supports</title>
+<path d="M196 300.67 L224.94 301 A10 10 0 0 0 225.06 301 L241 301 A10 10 0 0 1 251 311 L251 320 A9 9 0 0 0 260 329 L269 329 L294.48 329" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M298 329 L288.43 333.79 L288.43 324.21 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-ACQ-02" data-type="capabilities">
+<title>Offer &amp; Pre-Screen Management</title>
+<path d="M338 119 L298 153 L338 187 L418 187 L458 153 L418 119 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="378" y="151.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Offer &amp; Pre-Screen</text>
+<text x="378" y="163.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+</g>
+<g class="node" data-id="CAP-ACQ-03" data-type="capabilities">
+<title>Campaign Execution &amp; Channel Management</title>
+<path d="M338 295 L298 329 L338 363 L418 363 L458 329 L418 295 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="378" y="327.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Campaign Execution &amp;</text>
+<text x="378" y="339.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Channel Management</text>
+</g>
+<g class="node" data-id="CAP-ACQ-04" data-type="capabilities">
+<title>Marketing Compliance &amp; Disclosure Review</title>
+<path d="M338 207 L298 241 L338 275 L418 275 L458 241 L418 207 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="378" y="239.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Marketing Compliance</text>
+<text x="378" y="251.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">&amp; Disclosure Review</text>
+</g>
+<g class="node" data-id="P-MARKETING-002" data-type="processes">
+<title>Construct and approve firm offer of credit</title>
+<path d="M116 190 L36 215.97 L66.56 258 L165.44 258 L196 215.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="222.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Construct and approve</text>
+<text x="116" y="234.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">firm offer of credit</text>
+</g>
+<g class="node" data-id="P-MARKETING-003" data-type="processes">
+<title>Execute acquisition campaign</title>
+<path d="M116 278 L36 303.97 L66.56 346 L165.44 346 L196 303.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="310.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Execute acquisition</text>
+<text x="116" y="322.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">campaign</text>
+</g>
+<g class="node" data-id="SYS-MARKETING" data-type="systems">
+<title>Campaign management</title>
+<rect x="555" y="50" width="167" height="36" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="634.5" y="66.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Campaign</text>
+<text x="634.5" y="78.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">management</text>
+<svg x="704" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="540.7" x2="1072" y2="540.7" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="564.7" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 553.7)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="564.7" font-size="12" font-weight="400" fill="#343d50">capability · 3</text>
+<g transform="translate(180.25 553.7)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="206.25" y="564.7" font-size="12" font-weight="400" fill="#343d50">process · 2</text>
+<g transform="translate(283.34 553.7)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="309.34" y="564.7" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
+<text x="28" y="586.7" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 575.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="586.7" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 575.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="586.7" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="620.7" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-processes--sys-marketing · edit the model, not the picture</text></g>
+</svg>

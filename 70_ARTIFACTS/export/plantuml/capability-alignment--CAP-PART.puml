@@ -1,0 +1,71 @@
+@startuml
+' Partner & Client Relationship Management — Frameworks, Controls, Systems
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Partner & Client Relationship Management — Frameworks, Controls, Systems
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_PART_04, "Client Service Level & Performance Management", "Manage delivery against contracted service levels and report performance.", $tags="capabilities")
+  ' aac CAP_PART_04: company_domain="Cross-Functional Services"
+  System(CAP_PART_05, "Co-Brand & Program Partner Management", "Manage co-brand and program partner economics and obligations.", $tags="capabilities")
+  ' aac CAP_PART_05: company_domain="Cross-Functional Services"
+  System(CAP_PART_01, "Issuing Bank & Sponsor Relationship", "Manage the issuing bank relationship and its obligations.", $tags="capabilities")
+  ' aac CAP_PART_01: company_domain="Cross-Functional Services"
+  System(CAP_PART_02, "Network & Scheme Relationship", "Manage network membership, rules, and mandate adoption.", $tags="capabilities")
+  ' aac CAP_PART_02: company_domain="Cross-Functional Services"
+  System(CAP_PART, "Partner & Client Relationship Management", "Partner & Client Relationship Management. Level 0 enterprise capability domain (Direct tier).", $tags="capabilities")
+  ' aac CAP_PART: company_domain="Cross-Functional Services"
+  System(CAP_PART_03, "Servicing Client Origination & Contracting", "Win and contract third-party servicing engagements.", $tags="capabilities")
+  ' aac CAP_PART_03: company_domain="Cross-Functional Services"
+}
+Boundary(b_Framework, "Framework") {
+  System(FW_APQC, "APQC Process Classification Framework", "A cross-industry process taxonomy. Used here for the enabling tier, where a card-specific name adds nothing: finance, HR and corporate services look much the same in any industry, and inventing local names for them costs comparability for no benefit.", $tags="frameworks")
+  ' aac FW_APQC: company_domain=""
+  System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
+  ' aac FW_BIAN: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_PARTNERSHIPS_001, "Fulfill issuing bank oversight obligations", "Produce contracted reporting, respond to oversight requests, and manage obligations under the issuing bank agreement.", $tags="processes")
+  ' aac P_PARTNERSHIPS_001: company_domain=""
+  System(P_PAYMENTS_005, "Implement network mandate release", "Assess and implement network mandate and release changes by the required date. Network mandates carry hard effective dates and fines for misses; assessment, build, and attestation are tracked per mandate from bulletin to production.", $tags="processes")
+  ' aac P_PAYMENTS_005: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_GRC, "Governance, risk and compliance platform", "Policy, control, issue, and risk register management.", $tags="systems")
+  ' aac SYS_GRC: company_domain=""
+}
+
+Rel(CAP_PART_01, CAP_PART, "part of")
+Rel(CAP_PART_02, CAP_PART, "part of")
+Rel(CAP_PART_03, CAP_PART, "part of")
+Rel(CAP_PART_04, CAP_PART, "part of")
+Rel(CAP_PART_05, CAP_PART, "part of")
+Rel(CAP_PART_01, FW_BIAN, "Reference Data > External Agency > Correspondent Bank Relationship Management")
+' aac rel: source="CAP_PART_01"; target="FW_BIAN"; label="Reference Data > External Agency > Correspondent Bank Relationship Management"; relation="capability_references_framework"; ref="Reference Data > External Agency > Correspondent Bank Relationship Management"
+Rel(CAP_PART_02, FW_BIAN, "Operations and Execution > Cards > Card Network Participant Facility")
+' aac rel: source="CAP_PART_02"; target="FW_BIAN"; label="Operations and Execution > Cards > Card Network Participant Facility"; relation="capability_references_framework"; ref="Operations and Execution > Cards > Card Network Participant Facility"
+Rel(CAP_PART_03, FW_APQC, "11.0 Manage External Relationships")
+' aac rel: source="CAP_PART_03"; target="FW_APQC"; label="11.0 Manage External Relationships"; relation="capability_references_framework"; ref="11.0 Manage External Relationships"
+Rel(CAP_PART_04, FW_APQC, "11.0 Manage External Relationships")
+' aac rel: source="CAP_PART_04"; target="FW_APQC"; label="11.0 Manage External Relationships"; relation="capability_references_framework"; ref="11.0 Manage External Relationships"
+Rel(CAP_PART_05, FW_APQC, "11.0 Manage External Relationships")
+' aac rel: source="CAP_PART_05"; target="FW_APQC"; label="11.0 Manage External Relationships"; relation="capability_references_framework"; ref="11.0 Manage External Relationships"
+Rel(P_PAYMENTS_005, CAP_PART_02, "supported by")
+' aac rel: source="P_PAYMENTS_005"; target="CAP_PART_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_PARTNERSHIPS_001, CAP_PART_01, "supported by")
+' aac rel: source="P_PARTNERSHIPS_001"; target="CAP_PART_01"; label="supported by"; relation="process_supports_capability"
+Rel(SYS_CORE_LEDGER, CAP_PART_02, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_PART_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_GRC, CAP_PART_01, "realizes")
+' aac rel: source="SYS_GRC"; target="CAP_PART_01"; label="realizes"; relation="system_realizes_capability"
+
+SHOW_LEGEND()
+@enduml

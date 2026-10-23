@@ -1,0 +1,76 @@
+# Governance catalog — Processes and Capabilities
+
+One system, every process that uses it and in what role, and the capabilities those processes support. This shows the business impact of changing the system. A long list against a low criticality rating is worth a second look.
+
+```mermaid
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Governance catalog — Processes and Capabilities
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Capability["Capability"]
+    direction LR
+    CAP_DATA_01{{"Data Governance &<br/>Stewardship"}}
+    CAP_DATA_03{{"Data Quality Management"}}
+    CAP_STRAT_04{{"Enterprise Architecture &<br/>Change Portfolio"}}
+    CAP_DATA_05{{"Metadata, Lineage &<br/>Catalog"}}
+    CAP_TECH_02{{"Platform & Infrastructure<br/>Operations"}}
+    CAP_SEC_05{{"Privacy Management"}}
+    CAP_DATA_07{{"Records Retention &<br/>Disposition"}}
+  end
+
+  subgraph grp_Process["Process"]
+    direction LR
+    P_EA_005[\"Assess technology<br/>lifecycle and<br/>rationalization"/]
+    P_DATAGOV_004[\"Execute records retention<br/>and disposition"/]
+    P_PRIVACY_001[\"Fulfill consumer privacy<br/>request"/]
+    P_EA_006[\"Maintain the capability<br/>map and process inventory"/]
+    P_DATAGOV_002[\"Measure and remediate data<br/>quality"/]
+    P_DATAGOV_001[\"Onboard and classify data<br/>asset"/]
+    P_DATAGOV_003[\"Publish metadata and<br/>lineage to catalog"/]
+  end
+
+  subgraph grp_System["System"]
+    direction LR
+    SYS_CATALOG["Governance catalog<br/>[Collibra Data Intelligence]"]
+  end
+
+  P_DATAGOV_001 -->|"Primary"| SYS_CATALOG
+  P_DATAGOV_002 -->|"Supporting"| SYS_CATALOG
+  P_DATAGOV_003 -->|"Primary"| SYS_CATALOG
+  P_DATAGOV_004 -->|"Supporting"| SYS_CATALOG
+  P_PRIVACY_001 -->|"Supporting"| SYS_CATALOG
+  P_EA_005 -->|"Supporting"| SYS_CATALOG
+  P_EA_006 -->|"Supporting"| SYS_CATALOG
+  P_DATAGOV_001 -->|"supports"| CAP_DATA_01
+  P_DATAGOV_002 -->|"supports"| CAP_DATA_03
+  P_DATAGOV_003 -->|"supports"| CAP_DATA_05
+  P_DATAGOV_004 -->|"supports"| CAP_DATA_07
+  P_PRIVACY_001 -->|"supports"| CAP_SEC_05
+  P_EA_005 -->|"supports"| CAP_STRAT_04
+  P_EA_005 -->|"supports"| CAP_TECH_02
+  P_EA_006 -->|"supports"| CAP_STRAT_04
+
+  classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
+  classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  class CAP_DATA_01,CAP_DATA_03,CAP_DATA_05,CAP_DATA_07,CAP_SEC_05,CAP_STRAT_04,CAP_TECH_02 s_capabilities__capabilities;
+  class P_DATAGOV_001,P_DATAGOV_002,P_DATAGOV_003,P_DATAGOV_004,P_EA_005,P_EA_006,P_PRIVACY_001 s_processes__processes;
+  class SYS_CATALOG s_systems__systems;
+  classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_Capability,grp_Process,grp_System boundary1;
+```
+
+The same view as the app draws it, written beside the Mermaid by `terrane render`:
+
+![Governance catalog — Processes and Capabilities](../svg/system-processes--sys-catalog.svg)
+
+**Hue is the entity type.**
+
+| | Entity type |
+|---|---|
+| `#6d28d9` | capabilities |
+| `#0369a1` | processes |
+| `#4338ca` | systems |
+
+15 entities, 15 relationships. Generated from the model; edit the model, not this file.

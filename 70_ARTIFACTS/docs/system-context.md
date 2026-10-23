@@ -1,0 +1,100 @@
+# System Context
+
+External actors and the systems they use, and nothing else. Internal systems are left out on purpose, so the diagram stays small.
+
+```mermaid
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% System Context
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_External_system["External system"]
+    direction LR
+    ACT_CARD_SCHEME(["Card Scheme"])
+  end
+
+  subgraph grp_Organization["Organization"]
+    direction LR
+    ACT_MERCHANT(["Merchant"])
+  end
+
+  subgraph grp_Person["Person"]
+    direction LR
+    ACT_CARDHOLDER(["Cardholder"])
+    ACT_APPLICANT(["Loan Applicant"])
+  end
+
+  subgraph grp_Regulator["Regulator"]
+    direction LR
+    ACT_REGULATOR(["Regulator"])
+  end
+
+  subgraph grp_Role["Role"]
+    direction LR
+    ACT_COLLECTIONS_AGENT(["Collections Agent"])
+    ACT_UNDERWRITER(["Credit Underwriter"])
+    ACT_SERVICING_AGENT(["Servicing Agent"])
+  end
+
+  SYS_AUTH_SWITCH["Authorization Switch"]
+  SYS_CARDSVC_WEB["Card Servicing Web<br/>[AKS]"]
+  SYS_MOBILE["Cardholder mobile<br/>application"]
+  SYS_COLLECT_WEB["Collections Workspace Web<br/>[AKS]"]
+  SYS_CONTACT["Contact center platform"]
+  SYS_CREDIT_DATA["Credit data and<br/>decisioning environment<br/>[Snowflake Data Cloud]"]
+  SYS_CRM["Dynamics 365 Customer<br/>Service<br/>[Microsoft]"]
+  SYS_LENDING_WEB["Installment Lending Web<br/>[EKS]"]
+  SYS_IVR["IVR and self-service voice"]
+  SYS_ORIG_DECISION["Originations decision<br/>engine"]
+  SYS_DIALER["Outbound contact platform"]
+  SYS_DISPUTES_SAAS["Pega Smart Dispute<br/>[Pegasystems]"]
+  SYS_REG_REPORTING["Regulatory Reporting<br/>Engine<br/>[AKS · Snowflake Data Cloud]"]
+  SYS_STATEMENTS["Statement Generation"]
+
+  ACT_APPLICANT -->|"Applies"| SYS_LENDING_WEB
+  ACT_UNDERWRITER -->|"Reviews referrals"| SYS_LENDING_WEB
+  ACT_CARDHOLDER -->|"Self-service"| SYS_CARDSVC_WEB
+  ACT_CARDHOLDER -->|"Receives statements"| SYS_STATEMENTS
+  ACT_SERVICING_AGENT -->|"Handles cases"| SYS_CRM
+  ACT_SERVICING_AGENT -->|"Raises disputes"| SYS_DISPUTES_SAAS
+  ACT_COLLECTIONS_AGENT -->|"Works arrears"| SYS_COLLECT_WEB
+  ACT_MERCHANT -->|"Presents transactions"| SYS_AUTH_SWITCH
+  ACT_CARD_SCHEME -->|"Carries authorization"| SYS_AUTH_SWITCH
+  ACT_REGULATOR -->|"Receives returns"| SYS_REG_REPORTING
+  ACT_CARDHOLDER -->|"Mobile self-service"| SYS_MOBILE
+  ACT_CARDHOLDER -->|"Voice self-service"| SYS_IVR
+  ACT_SERVICING_AGENT -->|"Agent desktop"| SYS_CONTACT
+  ACT_COLLECTIONS_AGENT -->|"Outbound campaigns"| SYS_DIALER
+  ACT_UNDERWRITER -->|"Manual review queue"| SYS_ORIG_DECISION
+  ACT_UNDERWRITER -->|"Strategy analysis"| SYS_CREDIT_DATA
+
+  classDef s_actors__external_system fill:#fde68a,stroke:#b45309,color:#0f172a,stroke-width:1.4px;
+  classDef s_actors__organization fill:#fde68a,stroke:#b45309,color:#0f172a,stroke-width:1.4px;
+  classDef s_actors__person fill:#fde68a,stroke:#b45309,color:#0f172a,stroke-width:1.4px;
+  classDef s_actors__regulator fill:#fde68a,stroke:#b45309,color:#0f172a,stroke-width:1.4px;
+  classDef s_actors__role fill:#fde68a,stroke:#b45309,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__default fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  class ACT_CARD_SCHEME s_actors__external_system;
+  class ACT_MERCHANT s_actors__organization;
+  class ACT_APPLICANT,ACT_CARDHOLDER s_actors__person;
+  class ACT_REGULATOR s_actors__regulator;
+  class ACT_COLLECTIONS_AGENT,ACT_SERVICING_AGENT,ACT_UNDERWRITER s_actors__role;
+  class SYS_AUTH_SWITCH,SYS_CARDSVC_WEB,SYS_COLLECT_WEB,SYS_CONTACT,SYS_CREDIT_DATA,SYS_CRM,SYS_DIALER,SYS_DISPUTES_SAAS,SYS_IVR,SYS_LENDING_WEB,SYS_MOBILE,SYS_ORIG_DECISION,SYS_REG_REPORTING,SYS_STATEMENTS s_systems__default;
+  classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_External_system,grp_Organization,grp_Person,grp_Regulator,grp_Role boundary1;
+```
+
+The same view as the app draws it, written beside the Mermaid by `terrane render`:
+
+![System Context](../svg/system-context.svg)
+
+**Hue is the entity type.**
+
+| | Entity type |
+|---|---|
+| `#b45309` | actors |
+| `#4338ca` | systems |
+
+**actor kind** is the boundary each node sits in.
+
+22 entities, 16 relationships. Generated from the model; edit the model, not this file.

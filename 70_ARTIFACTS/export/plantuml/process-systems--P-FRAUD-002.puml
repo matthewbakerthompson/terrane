@@ -1,0 +1,46 @@
+@startuml
+' Investigate and adjudicate fraud case — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Investigate and adjudicate fraud case — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_FRAUD_02, "Fraud Case Investigation", "Investigate and adjudicate fraud cases.", $tags="capabilities")
+  ' aac CAP_FRAUD_02: company_domain="Servicing"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_FRAUD_SLA, "Fraud alert handling service level", "Fraud alerts are actioned within the loss-budget SLA with disposition quality sampling; Reg E liability decisions are documented per case.", $tags="controls")
+  ' aac CTL_FRAUD_SLA: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_FRAUD_002, "Investigate and adjudicate fraud case", "Investigate a suspected fraud case and reach a documented determination. The case determination separates true fraud from friendly fraud and abuse, drives the Reg E liability decision, and feeds the loss and strategy data.", $tags="processes")
+  ' aac P_FRAUD_002: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_CRM, "Dynamics 365 Customer Service", "Contact center desktop and case management for servicing agents. Built with Microsoft.", $tags="systems")
+  ' aac SYS_CRM: company_domain="Servicing"; hosting="SaaS"; technology="Microsoft"
+  System_Ext(SYS_DISPUTES_SAAS, "Pega Smart Dispute", "Dispute Management Platform, provided by Pegasystems and running in the vendor tenancy. Built with Pegasystems.", $tags="systems")
+  ' aac SYS_DISPUTES_SAAS: company_domain="Servicing"; hosting="SaaS"; technology="Pegasystems"
+  System(SYS_FRAUD_DETECT, "Transaction fraud detection", "Real-time transaction fraud scoring and alerting.", $tags="systems")
+  ' aac SYS_FRAUD_DETECT: company_domain=""
+}
+
+Rel(P_FRAUD_002, SYS_DISPUTES_SAAS, "Primary")
+' aac rel: source="P_FRAUD_002"; target="SYS_DISPUTES_SAAS"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_FRAUD_002, SYS_FRAUD_DETECT, "Supporting")
+' aac rel: source="P_FRAUD_002"; target="SYS_FRAUD_DETECT"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_FRAUD_002, SYS_CRM, "Supporting")
+' aac rel: source="P_FRAUD_002"; target="SYS_CRM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_FRAUD_002, CTL_FRAUD_SLA, "governed by")
+' aac rel: source="P_FRAUD_002"; target="CTL_FRAUD_SLA"; label="governed by"; relation="process_governed_by_control"
+Rel(P_FRAUD_002, CAP_FRAUD_02, "supports")
+' aac rel: source="P_FRAUD_002"; target="CAP_FRAUD_02"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

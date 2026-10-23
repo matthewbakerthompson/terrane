@@ -1,0 +1,200 @@
+# The fabric. What carries traffic and what decides whether it may.
+#
+# Every one of these is somewhere a request can be stopped, which is why they
+# are worth modeling separately from the things they carry traffic to.
+
+- component_type_id: vpc
+  name: Virtual network
+  category: Network
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    The address space an account's workloads live in. The boundary everything else is placed relative to.
+  providers:
+    AWS: Amazon VPC
+    Azure: Azure Virtual Network
+    GCP: VPC network
+  defaults:
+    service_category: Network
+
+- component_type_id: subnet
+  name: Subnet
+  category: Network
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    A slice of a virtual network, usually pinned to one availability zone. Where the resilience claim is made or lost.
+  providers:
+    AWS: Subnet
+    Azure: Subnet
+    GCP: Subnetwork
+  defaults:
+    service_category: Network
+
+- component_type_id: load-balancer
+  name: Load balancer
+  category: Network
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Distributes requests across instances and terminates TLS. The first thing in the path with an opinion about health.
+  providers:
+    AWS: Application Load Balancer
+    Azure: Application Gateway
+    GCP: Cloud Load Balancing
+  defaults:
+    service_category: Network
+    network_zone: Edge
+
+- component_type_id: cdn
+  name: Content delivery network
+  category: Network
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Cached delivery from the edge. Also where a surprising amount of routing and header logic accumulates.
+  providers:
+    AWS: Amazon CloudFront
+    Azure: Azure Front Door
+    GCP: Cloud CDN
+  defaults:
+    service_category: Network
+    network_zone: Edge
+
+- component_type_id: api-gateway
+  name: API gateway
+  category: Network
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    The managed front door for APIs: authentication, throttling, and the place teams route around when it is slow.
+  providers:
+    AWS: Amazon API Gateway
+    Azure: Azure API Management
+    GCP: Apigee
+  defaults:
+    service_category: Integration
+    network_zone: Edge
+
+- component_type_id: private-egress
+  name: Private egress
+  category: Network
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    A private path out to a third party, without traversing the internet. What makes a SaaS integration defensible.
+  providers:
+    AWS: AWS PrivateLink
+    Azure: Azure Private Link
+    GCP: Private Service Connect
+  defaults:
+    service_category: Network
+    network_zone: Private-App
+
+- component_type_id: hybrid-link
+  name: Hybrid link
+  category: Network
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    The path back to the data center. Usually two of them, and usually the thing nobody has tested failing over.
+  providers:
+    AWS: AWS Direct Connect or Site-to-Site VPN
+    Azure: ExpressRoute
+    GCP: Cloud Interconnect
+  defaults:
+    service_category: Network
+    network_zone: Shared-Services
+
+- component_type_id: transit-gateway
+  name: Transit hub
+  category: Network
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    The hub every network attaches to, so any two reach each other through it rather than through a mesh of peerings. The thing that makes a landing zone one network.
+  providers:
+    AWS: AWS Transit Gateway
+    Azure: Azure Virtual WAN hub
+    GCP: Network Connectivity Center
+  defaults:
+    service_category: Network
+    network_zone: Shared-Services
+
+- component_type_id: dns
+  name: DNS
+  category: Network
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Name resolution and, in practice, the failover mechanism of last resort.
+  providers:
+    AWS: Amazon Route 53
+    Azure: Azure DNS
+    GCP: Cloud DNS
+  defaults:
+    service_category: Network
+    network_zone: Edge
+
+- component_type_id: firewall
+  name: Network firewall
+  category: Network
+  applies_to: tech_services
+  shape: rhomboid
+  description: >
+    Stateful inspection between network segments, and the rule base somebody has to own.
+  providers:
+    AWS: AWS Network Firewall
+    Azure: Azure Firewall
+    GCP: Cloud Next Generation Firewall
+    SaaS: Palo Alto Networks VM-Series
+  defaults:
+    service_category: Network
+    network_zone: Shared-Services
+
+- component_type_id: nat-gateway
+  name: NAT gateway
+  category: Network
+  applies_to: tech_services
+  shape: rhomboid
+  description: >
+    Outbound internet access for private subnets without inbound exposure. A single point of egress, which is the point.
+  providers:
+    AWS: NAT Gateway
+    Azure: Azure NAT Gateway
+    GCP: Cloud NAT
+  defaults:
+    service_category: Network
+    network_zone: Public
+
+- component_type_id: remote-access
+  name: Remote access
+  category: Network
+  applies_to: tech_services
+  shape: rhomboid
+  description: >
+    How staff and engineers reach private networks from outside them: a client VPN, or the zero-trust access that replaces it.
+  providers:
+    AWS: AWS Client VPN
+    Azure: Azure VPN Gateway point-to-site
+    GCP: Cloud VPN
+    SaaS: Tailscale
+  defaults:
+    service_category: Network
+    network_zone: Edge
+
+- component_type_id: service-mesh
+  name: Service mesh
+  category: Network
+  applies_to: tech_services
+  shape: rhomboid
+  description: >
+    Service-to-service routing, mutual TLS and telemetry pushed out of the application and into the platform.
+  providers:
+    AWS: Amazon VPC Lattice
+    Azure: Istio add-on for AKS
+    GCP: Cloud Service Mesh
+    SaaS: Istio or Linkerd
+  defaults:
+    service_category: Network
+    network_zone: Private-App

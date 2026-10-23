@@ -1,0 +1,155 @@
+# Data assets the business layer harvested, that this estate did not hold.
+#
+# Imported from the business architecture repository by
+# `50_ENGINE/tools/import_business_layer.py`, with the same aliasing as the
+# systems. Each names the system that is its source of truth.
+
+- data_asset_id: DA-APPLICATION
+  name: Credit application record
+  description: Application content, identity evidence, and decision inputs, including bureau pulls.
+  status: Proposed
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  classification: Restricted
+  pii_flag: "Yes"
+  risk_level: High
+  data_owner_org_id: ORG-ORIG
+  data_steward_org_id: ORG-DATAGOV
+  source_of_truth: SYS-ORIG-DECISION
+  source: Business architecture repository
+
+- data_asset_id: DA-BUREAU-FILE
+  name: Credit bureau furnishing file
+  description: Monthly tradeline furnishing extract and consumer-dispute responses.
+  status: Proposed
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  classification: Restricted
+  pii_flag: "Yes"
+  risk_level: High
+  data_owner_org_id: ORG-COLLECTIONS
+  data_steward_org_id: ORG-DATAGOV
+  source_of_truth: SYS-BUREAU-GW
+  source: Business architecture repository
+
+- data_asset_id: DA-CLIENT-SERV
+  name: Servicing client program data
+  description: Client program configuration, SLAs, and reporting extracts for serviced portfolios.
+  status: Proposed
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  classification: Confidential
+  pii_flag: "No"
+  risk_level: Medium
+  data_owner_org_id: ORG-TPS
+  data_steward_org_id: ORG-DATAGOV
+  source_of_truth: SYS-CLIENT-PORTAL
+  source: Business architecture repository
+
+- data_asset_id: DA-COLLECT-ACT
+  name: Collections activity record
+  description: Contact attempts, dispositions, promises, and arrangement terms.
+  status: Proposed
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  classification: Confidential
+  pii_flag: "Yes"
+  risk_level: Medium
+  data_owner_org_id: ORG-COLLECTIONS
+  data_steward_org_id: ORG-DATAGOV
+  source_of_truth: SYS-COLLECT-API
+  source: Business architecture repository
+
+- data_asset_id: DA-DISPUTE-CASE
+  name: Dispute case file
+  description: Claims, evidence, correspondence, timers, and determinations for error resolution.
+  status: Proposed
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  classification: Confidential
+  pii_flag: "Yes"
+  risk_level: Medium
+  data_owner_org_id: ORG-DISPUTE
+  data_steward_org_id: ORG-DATAGOV
+  source_of_truth: SYS-DISPUTES-SAAS
+  source: Business architecture repository
+
+- data_asset_id: DA-GL
+  name: General ledger entries
+  description: Posted financial entries, settlement and reconciliation balances.
+  status: Proposed
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  classification: Internal
+  pii_flag: "No"
+  risk_level: Medium
+  data_owner_org_id: ORG-FINANCE
+  data_steward_org_id: ORG-DATAGOV
+  source_of_truth: SYS-GL
+  source: Business architecture repository
+
+- data_asset_id: DA-MODEL-FEAT
+  name: Model feature store
+  description: Curated features and scores for credit, fraud, and collections models.
+  status: Proposed
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  classification: Confidential
+  pii_flag: "Yes"
+  risk_level: Medium
+  data_owner_org_id: ORG-ANALYTICS
+  data_steward_org_id: ORG-DATAGOV
+  source_of_truth: SYS-MODEL
+  source: Business architecture repository
+
+- data_asset_id: DA-PAYMENT-INSTR
+  name: Payment instructions
+  description: "Cardholder payment methods and instructions: ACH details, scheduled payments."
+  status: Proposed
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  classification: Restricted
+  pii_flag: "Yes"
+  risk_level: High
+  data_owner_org_id: ORG-PAYMENTS
+  data_steward_org_id: ORG-DATAGOV
+  source_of_truth: SYS-PAYMENT-GW
+  source: Business architecture repository
+
+- data_asset_id: DA-PROSPECT
+  name: Prospect marketing list
+  description: Permissioned prospect records with bureau pre-screen attributes.
+  status: Proposed
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  classification: Confidential
+  pii_flag: "Yes"
+  risk_level: Medium
+  data_owner_org_id: ORG-MARKETING
+  data_steward_org_id: ORG-DATAGOV
+  source_of_truth: SYS-PROSPECT-DATA
+  source: Business architecture repository
+
+- data_asset_id: DA-STATEMENTS
+  name: Statement archive
+  description: Rendered periodic statements and disclosures as delivered.
+  status: Proposed
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  classification: Confidential
+  pii_flag: "Yes"
+  risk_level: Medium
+  data_owner_org_id: ORG-SERVICING
+  data_steward_org_id: ORG-DATAGOV
+  source_of_truth: SYS-STATEMENTS
+  source: Business architecture repository

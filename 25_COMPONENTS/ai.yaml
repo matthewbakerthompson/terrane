@@ -1,0 +1,212 @@
+# AI: models, the platforms that serve them, and the services built on them.
+#
+# Named at the kind, not the version. A model family is still Gemini or Nova
+# next quarter; the version number is not, and a library that carries it goes
+# stale the week it is written. The cloud names move too: Azure AI Foundry
+# became Microsoft Foundry in late 2025 and Vertex AI became the Gemini
+# Enterprise Agent Platform in April 2026. The old names are kept beside the
+# new ones because that is what the estate's documents still say.
+
+- component_type_id: foundation-model-service
+  name: Foundation model service
+  category: AI
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    A managed gateway to hosted foundation models, with the model catalog, tenancy, billing and data handling of the cloud it runs in. What an application calls instead of a model vendor directly.
+  providers:
+    AWS: Amazon Bedrock
+    Azure: Microsoft Foundry Models (formerly Azure OpenAI Service and Azure AI Foundry)
+    GCP: Gemini Enterprise Agent Platform Model Garden (formerly Vertex AI)
+    SaaS: Anthropic API or OpenAI API
+  defaults:
+    service_category: AI
+    network_zone: Shared-Services
+
+- component_type_id: foundation-model
+  name: Foundation model
+  category: AI
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    A model family served through a foundation model service. Recorded as a service so a product can say which model it depends on, and so a model retirement has a list of what it breaks.
+  providers:
+    AWS: Amazon Nova (Micro, Lite, Pro, Premier, Sonic, Canvas, Reel); Claude, Llama, Mistral, Cohere, DeepSeek and OpenAI models on Bedrock
+    Azure: Microsoft MAI; OpenAI GPT and Codex; Claude, Llama, Mistral and Grok on Foundry
+    GCP: Gemini (Pro, Flash), Gemma, Imagen and Veo; Claude and Llama in Model Garden
+    SaaS: Claude (Anthropic), GPT (OpenAI), Llama (Meta), Mistral
+  defaults:
+    service_category: AI
+    network_zone: Shared-Services
+
+- component_type_id: ml-platform
+  name: Machine learning platform
+  category: AI
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Training, experiment tracking, a model registry and deployment for models the organization builds or tunes itself.
+  providers:
+    AWS: Amazon SageMaker AI
+    Azure: Microsoft Foundry (Azure Machine Learning)
+    GCP: Gemini Enterprise Agent Platform (formerly Vertex AI)
+    SaaS: Databricks Mosaic AI
+  defaults:
+    service_category: AI
+    network_zone: Private-App
+
+- component_type_id: agent-platform
+  name: Agent platform
+  category: AI
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Where AI agents are built, run and governed: tool access, memory, identity, observability and the gateway between agents and the estate.
+  providers:
+    AWS: Amazon Bedrock AgentCore
+    Azure: Microsoft Foundry Agent Service
+    GCP: Gemini Enterprise Agent Platform (Agent Studio, Agent Gateway, Agent Registry)
+    SaaS: LangGraph Platform or Salesforce Agentforce
+  defaults:
+    service_category: AI
+    network_zone: Private-App
+
+- component_type_id: ai-gateway
+  name: AI gateway and guardrails
+  category: AI
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    The control point between applications and models: routing, quotas, prompt and output filtering, and the log of what was asked. Where an AI usage policy is enforced rather than hoped for.
+  providers:
+    AWS: Amazon Bedrock Guardrails
+    Azure: Azure API Management AI gateway and Foundry content safety
+    GCP: Model Armor and Agent Gateway
+    SaaS: Portkey or LiteLLM
+  defaults:
+    service_category: AI
+    network_zone: Shared-Services
+
+- component_type_id: vector-database
+  name: Vector database
+  category: AI
+  applies_to: tech_services
+  shape: cylinder
+  description: >
+    Embeddings and similarity search, the retrieval half of a retrieval-augmented application. Often a feature of a database the estate already runs.
+  providers:
+    AWS: Amazon OpenSearch Service vector search or Aurora pgvector
+    Azure: Azure AI Search or Azure Cosmos DB vector search
+    GCP: Vector Search on AlloyDB or BigQuery
+    SaaS: Pinecone, Weaviate or Qdrant
+  defaults:
+    service_category: AI
+    network_zone: Private-Data
+
+- component_type_id: enterprise-search
+  name: Enterprise search
+  category: AI
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Search across the organization's documents and systems with semantic retrieval, usually the ground an assistant answers from.
+  providers:
+    AWS: Amazon Kendra
+    Azure: Azure AI Search
+    GCP: Gemini Enterprise search
+    SaaS: Elastic or Glean
+  defaults:
+    service_category: AI
+    network_zone: Shared-Services
+
+- component_type_id: ai-assistant
+  name: AI assistant
+  category: AI
+  applies_to: systems
+  shape: round-tag
+  description: >
+    An assistant employees use over the organization's own documents and systems. A system with users and a data boundary, not a platform service.
+  providers:
+    AWS: Amazon Q Business
+    Azure: Microsoft 365 Copilot
+    GCP: Gemini Enterprise (formerly Agentspace)
+    SaaS: ChatGPT Enterprise or Claude for Enterprise
+  defaults:
+    network_zone: Public
+
+- component_type_id: coding-assistant
+  name: AI coding assistant
+  category: AI
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Code generation and agentic development tooling. A production dependency of the delivery pipeline, and a data boundary around the source code.
+  providers:
+    AWS: Amazon Q Developer or Kiro
+    Azure: GitHub Copilot
+    GCP: Gemini Code Assist
+    SaaS: Claude Code or Cursor
+  defaults:
+    service_category: AI
+    network_zone: Shared-Services
+
+- component_type_id: conversational-ai
+  name: Conversational AI
+  category: AI
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Chat and voice bots for customer and employee channels, with the dialog design, channels and hand-off to a person.
+  providers:
+    AWS: Amazon Lex
+    Azure: Microsoft Copilot Studio
+    GCP: Dialogflow CX and Customer Engagement Suite
+    SaaS: Kore.ai
+  defaults:
+    service_category: AI
+    network_zone: Private-App
+
+- component_type_id: speech-ai
+  name: Speech and language services
+  category: AI
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Transcription, synthesis and translation as APIs, usually behind a contact center or an accessibility requirement.
+  providers:
+    AWS: Amazon Transcribe, Polly and Translate
+    Azure: Azure AI Speech and Translator
+    GCP: Speech-to-Text, Text-to-Speech and Translation AI
+  defaults:
+    service_category: AI
+    network_zone: Private-App
+
+- component_type_id: document-ai
+  name: Document processing
+  category: AI
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Extracting fields, tables and text from documents and forms. Where onboarding paperwork stops being retyped.
+  providers:
+    AWS: Amazon Textract
+    Azure: Azure AI Document Intelligence
+    GCP: Document AI
+  defaults:
+    service_category: AI
+    network_zone: Private-App
+
+- component_type_id: vision-ai
+  name: Vision
+  category: AI
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Image and video analysis as an API: identity document checks, content moderation, visual search.
+  providers:
+    AWS: Amazon Rekognition
+    Azure: Azure AI Vision
+    GCP: Vision AI and Video AI
+  defaults:
+    service_category: AI
+    network_zone: Private-App

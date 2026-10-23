@@ -1,0 +1,40 @@
+view_id: product-card-servicing
+title: "Card Servicing in Context"
+category: Application
+section: Products and systems
+kind: diagram
+description: >
+  The Card Servicing product, the systems it is made of, and everything one
+  interface away from them. The scope follows the product relationship, so it
+  stays correct whether the product was generated, imported or written by
+  hand.
+layout: LR
+group_by: company_domain
+renderers: [mermaid, structurizr]
+
+scope:
+  # Naming one product is legitimate here: this is a view *of* that product.
+  # Everything below it is still discovered rather than listed.
+  include:
+    - type: products
+      where:
+        id_in: [PRD-CARD-SERVICING]
+  expand:
+    - relation: product_includes_system
+      depth: 1
+      types: [systems]
+    - relation: interfaces
+      depth: 1
+      types: [systems]
+
+edges:
+  - via: product_includes_system
+    text: includes
+  - via: interfaces
+    label: protocol
+
+style:
+  color_by: criticality
+
+limits:
+  max_nodes: 30

@@ -1,0 +1,162 @@
+@startuml
+' Credit Decisioning & Portfolio Management — Frameworks, Controls, Systems
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Credit Decisioning & Portfolio Management — Frameworks, Controls, Systems
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_CRED_07, "Account Review & Reissue Decisioning", "Perform periodic account-level risk review and reissue decisions.", $tags="capabilities")
+  ' aac CAP_CRED_07: company_domain="Originations"
+  System(CAP_CRED_06, "Authorization Strategy Management", "Set the rules governing real-time authorization decisions.", $tags="capabilities")
+  ' aac CAP_CRED_06: company_domain="Originations"
+  System(CAP_CRED, "Credit Decisioning & Portfolio Management", "Credit Decisioning & Portfolio Management. Level 0 enterprise capability domain (Core tier).", $tags="capabilities")
+  ' aac CAP_CRED: company_domain="Originations"
+  System(CAP_CRED_03, "Credit Line Assignment & Management", "Set initial lines and manage increases, decreases, and reallocation.", $tags="capabilities")
+  ' aac CAP_CRED_03: company_domain="Originations"
+  System(CAP_CRED_01, "Credit Strategy & Scorecard Management", "Own the credit decision strategy and its cutoffs.", $tags="capabilities")
+  ' aac CAP_CRED_01: company_domain="Originations"
+  System(CAP_CRED_05, "Loss Forecasting & Allowance", "Forecast credit losses and set the allowance.", $tags="capabilities")
+  ' aac CAP_CRED_05: company_domain="Originations"
+  System(CAP_CRED_02, "Model Development & Validation", "Build, document, and validate credit and fraud models.", $tags="capabilities")
+  ' aac CAP_CRED_02: company_domain="Originations"
+  System(CAP_CRED_04, "Portfolio Risk Monitoring & Segmentation", "Monitor vintage, roll rate, and segment performance across the portfolio.", $tags="capabilities")
+  ' aac CAP_CRED_04: company_domain="Originations"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_ADVERSE_ACT, "Adverse action notice completeness", "Every declined application generates a compliant adverse action notice with the principal reasons, within the required period.", $tags="controls")
+  ' aac CTL_ADVERSE_ACT: company_domain=""
+  System(CTL_AUTH_AVAIL, "Authorization availability and stand-in", "Authorization availability is monitored against the network SLA with tested stand-in arrangements; incidents invoke the resilience playbook.", $tags="controls")
+  ' aac CTL_AUTH_AVAIL: company_domain=""
+  System(CTL_TREATMENT_APPR, "Treatment strategy approval", "Collections treatment strategies and authorization strategies deploy only with documented risk and compliance approval and champion-challenger evidence.", $tags="controls")
+  ' aac CTL_TREATMENT_APPR: company_domain=""
+}
+Boundary(b_Framework, "Framework") {
+  System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
+  ' aac FW_BIAN: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_CREDIT_009, "Acquire and refresh credit bureau data", "Source consumer bureau data for prescreen, account review, and portfolio monitoring under permissible purpose, and manage refresh cadence and quality.", $tags="processes")
+  ' aac P_CREDIT_009: company_domain=""
+  System(P_CREDIT_005, "Conduct monthly portfolio credit review", "Review vintage, roll-rate, and segment performance against risk appetite and record the actions agreed at the portfolio credit review.", $tags="processes")
+  ' aac P_CREDIT_005: company_domain=""
+  System(P_CREDIT_002, "Develop and validate credit model", "Build, document, and validate credit and fraud models prior to production deployment. Development evidence, data lineage, and validation results follow model risk management expectations; nothing reaches production without an independent validation record.", $tags="processes")
+  ' aac P_CREDIT_002: company_domain=""
+  System(P_ORIG_004, "Execute credit decision", "Apply the approved credit strategy to render an approve, decline, or counter-offer decision with a line assignment.", $tags="processes")
+  ' aac P_ORIG_004: company_domain=""
+  System(P_CREDIT_004, "Execute credit line decrease or account action", "Apply risk-driven line decreases or account actions, with required notice. Adverse action obligations apply to decreases and closures just as they do to declines; the notice must state the principal reasons and bureau information used.", $tags="processes")
+  ' aac P_CREDIT_004: company_domain=""
+  System(P_CREDIT_003, "Execute credit line increase program", "Identify eligible accounts and execute line increases under the approved strategy. Eligibility, ability-to-pay checks, and notice requirements are built into the program design; execution is batch with opt-out handling.", $tags="processes")
+  ' aac P_CREDIT_003: company_domain=""
+  System(P_CREDIT_007, "Maintain authorization strategy", "Define and deploy the rules governing real-time authorization decisions. Authorization strategy balances approval rates, fraud losses, and credit exposure in real time; changes deploy through the same testing discipline as origination strategy.", $tags="processes")
+  ' aac P_CREDIT_007: company_domain=""
+  System(P_CREDIT_008, "Perform account review and reissue decision", "Review account risk periodically and decide reissue, close, or continue. Periodic account review drives reissue, line, and closure decisions at card expiry and on risk triggers; decisions carry the same notice obligations as any adverse action.", $tags="processes")
+  ' aac P_CREDIT_008: company_domain=""
+  System(P_PAYMENTS_001, "Process authorization request", "Receive, decision, and respond to a real-time authorization request within the network response window.", $tags="processes")
+  ' aac P_PAYMENTS_001: company_domain=""
+  System(P_CREDIT_006, "Produce loss forecast and allowance", "Produce the credit loss forecast and set the allowance for the reporting period. The CECL forecast and allowance feed the financial statements; assumptions, overlays, and approvals are documented for both auditors and examiners.", $tags="processes")
+  ' aac P_CREDIT_006: company_domain=""
+  System(P_CREDIT_001, "Set and deploy credit decision strategy", "Define, test, approve, and deploy changes to the credit decision strategy and its cutoffs. Strategy changes ship through champion-challenger testing with documented approval; the deployed strategy is the single decisioning authority for originations.", $tags="processes")
+  ' aac P_CREDIT_001: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_CREDIT_DATA, "Credit data and decisioning environment", "Credit data, analytics, and decisioning environment. Built with Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_CREDIT_DATA: company_domain=""; technology="Snowflake Data Cloud"
+  System(SYS_DATA_INGEST, "Enterprise Data Ingestion Hub", "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse. Built with Service Bus · Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_DATA_INGEST: company_domain="Data and Analytics"; hosting="Azure"; technology="Service Bus · Snowflake Data Cloud"
+  System(SYS_MODEL, "Model platform", "Model development, deployment, and monitoring.", $tags="systems")
+  ' aac SYS_MODEL: company_domain=""
+  System(SYS_ORIG_DECISION, "Originations decision engine", "Application processing and credit decision execution.", $tags="systems")
+  ' aac SYS_ORIG_DECISION: company_domain=""
+}
+
+Rel(CAP_CRED_01, CAP_CRED, "part of")
+Rel(CAP_CRED_02, CAP_CRED, "part of")
+Rel(CAP_CRED_03, CAP_CRED, "part of")
+Rel(CAP_CRED_04, CAP_CRED, "part of")
+Rel(CAP_CRED_05, CAP_CRED, "part of")
+Rel(CAP_CRED_06, CAP_CRED, "part of")
+Rel(CAP_CRED_07, CAP_CRED, "part of")
+Rel(CAP_CRED, FW_BIAN, "Aligned to")
+' aac rel: source="CAP_CRED"; target="FW_BIAN"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
+Rel(CAP_CRED_01, FW_BIAN, "Risk and Compliance > Models > Credit Risk Models")
+' aac rel: source="CAP_CRED_01"; target="FW_BIAN"; label="Risk and Compliance > Models > Credit Risk Models"; relation="capability_references_framework"; ref="Risk and Compliance > Models > Credit Risk Models"
+Rel(CAP_CRED_02, FW_BIAN, "Risk and Compliance > Models > Credit Risk Models")
+' aac rel: source="CAP_CRED_02"; target="FW_BIAN"; label="Risk and Compliance > Models > Credit Risk Models"; relation="capability_references_framework"; ref="Risk and Compliance > Models > Credit Risk Models"
+Rel(CAP_CRED_03, FW_BIAN, "Operations and Execution > Trade Banking > Credit Facility")
+' aac rel: source="CAP_CRED_03"; target="FW_BIAN"; label="Operations and Execution > Trade Banking > Credit Facility"; relation="capability_references_framework"; ref="Operations and Execution > Trade Banking > Credit Facility"
+Rel(CAP_CRED_04, FW_BIAN, "Risk and Compliance > Models > Credit Risk Models")
+' aac rel: source="CAP_CRED_04"; target="FW_BIAN"; label="Risk and Compliance > Models > Credit Risk Models"; relation="capability_references_framework"; ref="Risk and Compliance > Models > Credit Risk Models"
+Rel(CAP_CRED_05, FW_BIAN, "Risk and Compliance > Models > Credit Risk Models")
+' aac rel: source="CAP_CRED_05"; target="FW_BIAN"; label="Risk and Compliance > Models > Credit Risk Models"; relation="capability_references_framework"; ref="Risk and Compliance > Models > Credit Risk Models"
+Rel(CAP_CRED_06, FW_BIAN, "Operations and Execution > Cards > Card Authorization")
+' aac rel: source="CAP_CRED_06"; target="FW_BIAN"; label="Operations and Execution > Cards > Card Authorization"; relation="capability_references_framework"; ref="Operations and Execution > Cards > Card Authorization"
+Rel(CAP_CRED_07, FW_BIAN, "Operations and Execution > Trade Banking > Credit Facility")
+' aac rel: source="CAP_CRED_07"; target="FW_BIAN"; label="Operations and Execution > Trade Banking > Credit Facility"; relation="capability_references_framework"; ref="Operations and Execution > Trade Banking > Credit Facility"
+Rel(P_ORIG_004, CAP_CRED_01, "supported by")
+' aac rel: source="P_ORIG_004"; target="CAP_CRED_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_ORIG_004, CAP_CRED_03, "supported by")
+' aac rel: source="P_ORIG_004"; target="CAP_CRED_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_CREDIT_001, CAP_CRED_01, "supported by")
+' aac rel: source="P_CREDIT_001"; target="CAP_CRED_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_CREDIT_002, CAP_CRED_02, "supported by")
+' aac rel: source="P_CREDIT_002"; target="CAP_CRED_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_CREDIT_003, CAP_CRED_03, "supported by")
+' aac rel: source="P_CREDIT_003"; target="CAP_CRED_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_CREDIT_004, CAP_CRED_03, "supported by")
+' aac rel: source="P_CREDIT_004"; target="CAP_CRED_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_CREDIT_005, CAP_CRED_04, "supported by")
+' aac rel: source="P_CREDIT_005"; target="CAP_CRED_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_CREDIT_006, CAP_CRED_05, "supported by")
+' aac rel: source="P_CREDIT_006"; target="CAP_CRED_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_CREDIT_007, CAP_CRED_06, "supported by")
+' aac rel: source="P_CREDIT_007"; target="CAP_CRED_06"; label="supported by"; relation="process_supports_capability"
+Rel(P_CREDIT_008, CAP_CRED_07, "supported by")
+' aac rel: source="P_CREDIT_008"; target="CAP_CRED_07"; label="supported by"; relation="process_supports_capability"
+Rel(P_PAYMENTS_001, CAP_CRED_06, "supported by")
+' aac rel: source="P_PAYMENTS_001"; target="CAP_CRED_06"; label="supported by"; relation="process_supports_capability"
+Rel(P_CREDIT_009, CAP_CRED_04, "supported by")
+' aac rel: source="P_CREDIT_009"; target="CAP_CRED_04"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_CRED, CTL_ADVERSE_ACT, "governed by")
+' aac rel: source="CAP_CRED"; target="CTL_ADVERSE_ACT"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_CRED, CTL_AUTH_AVAIL, "governed by")
+' aac rel: source="CAP_CRED"; target="CTL_AUTH_AVAIL"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_CRED, CTL_TREATMENT_APPR, "governed by")
+' aac rel: source="CAP_CRED"; target="CTL_TREATMENT_APPR"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_CRED_01, CTL_ADVERSE_ACT, "governed by")
+' aac rel: source="CAP_CRED_01"; target="CTL_ADVERSE_ACT"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_CRED_03, CTL_ADVERSE_ACT, "governed by")
+' aac rel: source="CAP_CRED_03"; target="CTL_ADVERSE_ACT"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_CRED_06, CTL_AUTH_AVAIL, "governed by")
+' aac rel: source="CAP_CRED_06"; target="CTL_AUTH_AVAIL"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_CRED_06, CTL_TREATMENT_APPR, "governed by")
+' aac rel: source="CAP_CRED_06"; target="CTL_TREATMENT_APPR"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(SYS_CORE_LEDGER, CAP_CRED_03, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_CRED_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CORE_LEDGER, CAP_CRED_06, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_CRED_06"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CORE_LEDGER, CAP_CRED_07, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_CRED_07"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CREDIT_DATA, CAP_CRED_04, "realizes")
+' aac rel: source="SYS_CREDIT_DATA"; target="CAP_CRED_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DATA_INGEST, CAP_CRED_04, "realizes")
+' aac rel: source="SYS_DATA_INGEST"; target="CAP_CRED_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_MODEL, CAP_CRED_02, "realizes")
+' aac rel: source="SYS_MODEL"; target="CAP_CRED_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_MODEL, CAP_CRED_05, "realizes")
+' aac rel: source="SYS_MODEL"; target="CAP_CRED_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_ORIG_DECISION, CAP_CRED_01, "realizes")
+' aac rel: source="SYS_ORIG_DECISION"; target="CAP_CRED_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_ORIG_DECISION, CAP_CRED_03, "realizes")
+' aac rel: source="SYS_ORIG_DECISION"; target="CAP_CRED_03"; label="realizes"; relation="system_realizes_capability"
+
+SHOW_LEGEND()
+@enduml

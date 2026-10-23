@@ -1,0 +1,45 @@
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Installment Lending Load Balancer — Architecture
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_System["System"]
+    direction LR
+    SYS_LENDING_EDGE["Installment Lending Edge"]
+    SYS_LENDING_ALB["Installment Lending Load<br/>Balancer"]
+    SYS_LENDING_WEB["Installment Lending Web<br/>[EKS]"]
+  end
+
+  subgraph grp_Technology_Service["Technology Service"]
+    direction LR
+    TS_AWS_CLOUDFRONT[/"Amazon CloudFront and WAF<br/>[Content delivery network]"/]
+    TS_AWS_CLOUDWATCH[/"Amazon CloudWatch<br/>[Observability]"/]
+    TS_AWS_EKS[/"Amazon EKS<br/>[Container platform]"/]
+    TS_AWS_ALB[/"Application Load Balancer<br/>[Load balancer]"/]
+    TS_LENDING_DNS[/"Installment Lending DNS<br/>[Amazon Route 53]"/]
+    TS_LENDING_WAF[/"Installment Lending Web<br/>application firewall<br/>[AWS WAF]"/]
+    TS_NET_SUB_LEND_APP_A[/"Lending App Subnet A<br/>[Subnet]"/]
+    TS_NET_SUB_LEND_APP_B[/"Lending App Subnet B<br/>[Subnet]"/]
+    TS_NET_SUB_LEND_PUB_A[/"Lending Public Subnet A<br/>[Subnet]"/]
+    TS_NET_SUB_LEND_PUB_B[/"Lending Public Subnet B<br/>[Subnet]"/]
+  end
+
+  SYS_LENDING_EDGE -->|"HTTPS"| SYS_LENDING_ALB
+  SYS_LENDING_ALB -->|"HTTPS"| SYS_LENDING_WEB
+  SYS_LENDING_WEB -.->|"runs on"| TS_AWS_EKS
+  SYS_LENDING_WEB -.->|"runs on"| TS_AWS_CLOUDWATCH
+  SYS_LENDING_EDGE -.->|"runs on"| TS_AWS_CLOUDFRONT
+  SYS_LENDING_EDGE -.->|"runs on"| TS_LENDING_WAF
+  SYS_LENDING_EDGE -.->|"runs on"| TS_LENDING_DNS
+  SYS_LENDING_ALB -.->|"runs on"| TS_AWS_ALB
+  SYS_LENDING_ALB -.->|"runs on"| TS_NET_SUB_LEND_PUB_A
+  SYS_LENDING_ALB -.->|"runs on"| TS_NET_SUB_LEND_PUB_B
+  SYS_LENDING_WEB -.->|"runs on"| TS_NET_SUB_LEND_APP_A
+  SYS_LENDING_WEB -.->|"runs on"| TS_NET_SUB_LEND_APP_B
+
+  classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  classDef s_tech_services__tech_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
+  class SYS_LENDING_ALB,SYS_LENDING_EDGE,SYS_LENDING_WEB s_systems__systems;
+  class TS_AWS_ALB,TS_AWS_CLOUDFRONT,TS_AWS_CLOUDWATCH,TS_AWS_EKS,TS_LENDING_DNS,TS_LENDING_WAF,TS_NET_SUB_LEND_APP_A,TS_NET_SUB_LEND_APP_B,TS_NET_SUB_LEND_PUB_A,TS_NET_SUB_LEND_PUB_B s_tech_services__tech_services;
+  classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_System,grp_Technology_Service boundary1;

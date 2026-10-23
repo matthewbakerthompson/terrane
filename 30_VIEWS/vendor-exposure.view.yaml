@@ -1,0 +1,34 @@
+view_id: vendor-exposure
+title: Third-Party Exposure
+category: Change
+section: Impact
+kind: map
+description: >
+  Every system run by a vendor rather than by us, and what it connects to. The
+  filter is the vendor tag, so new vendor systems appear automatically. It
+  answers the third-party risk question: if this vendor disappeared, what
+  would stop working?
+layout: LR
+group_by: company_domain
+renderers: [mermaid]
+
+scope:
+  include:
+    - type: systems
+      where:
+        tags_any: [vendor, third-party]
+        status: [Active, Planned]
+  expand:
+    - relation: interfaces
+      depth: 1
+      types: [systems]
+
+edges:
+  - via: interfaces
+    label: protocol
+
+style:
+  color_by: provider
+
+limits:
+  max_nodes: 30

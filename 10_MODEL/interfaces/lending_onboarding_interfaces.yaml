@@ -1,0 +1,77 @@
+# Where the onboarding product meets the estate that already exists. The
+# archetype builds everything inside the new account; these are the crossings,
+# and they are the expensive part of any onboarding.
+- interface_id: INT-LENDING-API-LEDGER
+  name: Installment Lending Service to Core Card Ledger
+  description: >
+    Disbursement and repayment posting. Crosses from the AWS workload account
+    back to the on-premise mainframe over the Transit Gateway and Direct
+    Connect, which makes it the long-lead item in the onboarding plan.
+  status: Planned
+  source_system_id: SYS-LENDING-API
+  target_system_id: SYS-CORE-LEDGER
+  offered_interface_id: OI-LEDGER-QUEUE
+  owner_org_id: ORG-PRODUCT
+  protocol: MQ
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: MutualTLS
+  data_classification: Restricted
+  company_domain: Lending
+  togaf_layer: Application
+  architecture_domain: Application
+
+- interface_id: INT-LENDING-API-IDENTITY
+  name: Installment Lending Service to Identity Service
+  description: Customer authentication, reusing the existing platform service rather than building one.
+  status: Planned
+  source_system_id: SYS-LENDING-API
+  target_system_id: SYS-IDENTITY-SVC
+  offered_interface_id: OI-IDENTITY-API
+  owner_org_id: ORG-PRODUCT
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Confidential
+  company_domain: Lending
+  togaf_layer: Application
+  architecture_domain: Application
+
+- interface_id: INT-LENDING-WORKER-INGEST
+  name: Installment Lending Worker to Data Ingestion Hub
+  description: Nightly extract of loan book positions for the warehouse and regulatory reporting.
+  status: Planned
+  source_system_id: SYS-LENDING-WORKER
+  target_system_id: SYS-DATA-INGEST
+  owner_org_id: ORG-DATAENG
+  protocol: S3
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: IAM
+  data_classification: Restricted
+  company_domain: Data and Analytics
+  togaf_layer: Application
+  architecture_domain: Data
+
+- interface_id: INT-LENDING-API-BUREAU
+  name: Installment Lending Service to Credit Bureau
+  description: >
+    Affordability and bureau search at application time. Egresses through
+    PrivateLink to the bureau endpoint rather than over the internet.
+  status: Planned
+  source_system_id: SYS-LENDING-API
+  target_system_id: SYS-CREDIT-BUREAU
+  owner_org_id: ORG-COMPLIANCE
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: MutualTLS
+  data_classification: Restricted
+  company_domain: Risk and Compliance
+  togaf_layer: Application
+  architecture_domain: Application

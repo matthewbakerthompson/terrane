@@ -1,0 +1,124 @@
+@startuml
+' Installment Lending — Onboarding
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Installment Lending — Onboarding
+
+AddElementTag("offered_interfaces", $bgColor="#e6ecff", $borderColor="#6366f1", $fontColor="#0f172a", $legendText="offered interface")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddRelTag("api-call", $legendText="API call")
+AddRelTag("event", $legendText="Event on the bus")
+AddRelTag("own-datastore", $legendText="Its own datastore")
+AddRelTag("pipeline-load", $legendText="Pipeline load")
+AddRelTag("queued-request", $legendText="Request on a queue")
+AddRelTag("scheduled-file", $legendText="Scheduled file")
+
+Boundary(b_AWS, "AWS") {
+  Boundary(b_AWS__prod_lending, "account prod-lending") {
+    Boundary(b_AWS__prod_lending__eu_west_2, "region eu-west-2") {
+      Boundary(b_AWS__prod_lending__eu_west_2__Public, "Public") {
+        System(SYS_LENDING_ALB, "Installment Lending Load Balancer", "Public load balancer terminating TLS for Installment Lending.", $tags="systems")
+        ' aac SYS_LENDING_ALB: company_domain="Lending"; hosting="AWS"
+      }
+      Boundary(b_AWS__prod_lending__eu_west_2__Private_App, "Private-App") {
+        System(OI_LENDING_API, "Installment Lending API", "The domain API Installment Lending offers its channels, its jobs and its partners. Built with HTTPS.", $tags="offered_interfaces")
+        ' aac OI_LENDING_API: company_domain="Lending"; technology="HTTPS"
+        System(SYS_LENDING_WORKER, "Installment Lending Async Worker", "Consumes Installment Lending domain events and drives long-running work. Built with EKS · MSK.", $tags="systems")
+        ' aac SYS_LENDING_WORKER: company_domain="Lending"; hosting="AWS"; technology="EKS · MSK"
+        System(SYS_LENDING_HUB, "Installment Lending Integration Hub", "Mediates every Installment Lending integration: one place for mapping, routing, retry and the audit trail, so the spokes do not each carry their own.", $tags="systems")
+        ' aac SYS_LENDING_HUB: company_domain="Lending"; hosting="AWS"
+        System(SYS_LENDING_API, "Installment Lending Service", "Domain service for Installment Lending, behind the Installment Lending API. Built with EKS · Installment Lending Cache.", $tags="systems")
+        ' aac SYS_LENDING_API: company_domain="Lending"; hosting="AWS"; technology="EKS · Installment Lending Cache"
+        System(SYS_LENDING_WEB, "Installment Lending Web", "Customer-facing front end for Installment Lending. Built with EKS.", $tags="systems")
+        ' aac SYS_LENDING_WEB: company_domain="Lending"; hosting="AWS"; technology="EKS"
+      }
+      Boundary(b_AWS__prod_lending__eu_west_2__Private_Data, "Private-Data") {
+        System(SYS_LENDING_DB, "Installment Lending Database", "Relational database for Installment Lending, encrypted with a customer managed key. Built with RDS.", $tags="systems")
+        ' aac SYS_LENDING_DB: company_domain="Lending"; hosting="AWS"; technology="RDS"
+        System(SYS_LENDING_BUCKET, "Installment Lending Object Store", "S3 bucket holding signed credit agreements and disbursement evidence. Seven-year retention with Object Lock; a records-management obligation rather than ordinary product storage. Built with S3.", $tags="systems")
+        ' aac SYS_LENDING_BUCKET: company_domain="Lending"; hosting="AWS"; technology="S3"
+      }
+    }
+    Boundary(b_AWS__prod_lending__global, "region global") {
+      Boundary(b_AWS__prod_lending__global__Edge, "Edge") {
+        System(SYS_LENDING_EDGE, "Installment Lending Edge", "CDN distribution and WAF ruleset for Installment Lending.", $tags="systems")
+        ' aac SYS_LENDING_EDGE: company_domain="Lending"; hosting="AWS"
+      }
+    }
+  }
+}
+Boundary(b_Azure, "Azure") {
+  Boundary(b_Azure__azure_data_prod, "subscription azure-data-prod") {
+    Boundary(b_Azure__azure_data_prod__uksouth, "region uksouth") {
+      Boundary(b_Azure__azure_data_prod__uksouth__Private_Data, "Private-Data") {
+        System(SYS_DATA_INGEST, "Enterprise Data Ingestion Hub", "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse. Built with Service Bus · Snowflake Data Cloud.", $tags="systems")
+        ' aac SYS_DATA_INGEST: company_domain="Data and Analytics"; hosting="Azure"; technology="Service Bus · Snowflake Data Cloud"
+      }
+    }
+  }
+  Boundary(b_Azure__azure_platform_prod, "subscription azure-platform-prod") {
+    Boundary(b_Azure__azure_platform_prod__uksouth, "region uksouth") {
+      Boundary(b_Azure__azure_platform_prod__uksouth__Shared_Services, "Shared-Services") {
+        System(OI_IDENTITY_API, "Customer Identity API", "Customer authentication and the profile behind it, for every product that signs a customer in. Built with HTTPS.", $tags="offered_interfaces")
+        ' aac OI_IDENTITY_API: company_domain="Enterprise Platform"; technology="HTTPS"
+        System(SYS_IDENTITY_SVC, "Customer Identity Service", "Shared platform service: Customer Identity Service. Built with AKS.", $tags="systems")
+        ' aac SYS_IDENTITY_SVC: company_domain="Enterprise Platform"; hosting="Azure"; technology="AKS"
+      }
+    }
+  }
+}
+Boundary(b_On_prem, "On-prem") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(OI_LEDGER_QUEUE, "Core Ledger request queue", "Postings, holds and balance requests put on the ledger's MQ request queue, answered on the reply queue in the order they arrived. Built with MQ.", $tags="offered_interfaces")
+  ' aac OI_LEDGER_QUEUE: company_domain="Card Issuing"; technology="MQ"
+}
+Boundary(b_SaaS, "SaaS") {
+  Boundary(b_SaaS__Edge, "Edge") {
+    System_Ext(SYS_CRM, "Dynamics 365 Customer Service", "Contact center desktop and case management for servicing agents. Built with Microsoft.", $tags="systems")
+    ' aac SYS_CRM: company_domain="Servicing"; hosting="SaaS"; technology="Microsoft"
+    System_Ext(SYS_CREDIT_BUREAU, "Experian Credit Bureau", "External credit reference agency used for affordability and bureau search at application time. Reached over PrivateLink from the lending workload account. Built with Experian.", $tags="systems")
+    ' aac SYS_CREDIT_BUREAU: company_domain="Risk and Compliance"; hosting="SaaS"; technology="Experian"
+  }
+}
+
+Rel(SYS_CRM, SYS_CORE_LEDGER, "Servicing CRM to Core Ledger", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CRM"; target="SYS_CORE_LEDGER"; label="Servicing CRM to Core Ledger"; interface_id="INT-CRM-LEDGER"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_CORE_LEDGER, SYS_DATA_INGEST, "Core Ledger to Data Ingestion Hub", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_DATA_INGEST"; label="Core Ledger to Data Ingestion Hub"; interface_id="INT-LEDGER-INGEST"; kind="scheduled-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Outbound"
+Rel(SYS_LENDING_API, OI_LEDGER_QUEUE, "Installment Lending Service to Core Card Ledger", "MQ", $tags="queued-request")
+' aac rel: source="SYS_LENDING_API"; target="OI_LEDGER_QUEUE"; label="Installment Lending Service to Core Card Ledger"; interface_id="INT-LENDING-API-LEDGER"; kind="queued-request"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-LEDGER-QUEUE"
+Rel(SYS_LENDING_API, OI_IDENTITY_API, "Installment Lending Service to Identity Service", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_LENDING_API"; target="OI_IDENTITY_API"; label="Installment Lending Service to Identity Service"; interface_id="INT-LENDING-API-IDENTITY"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-IDENTITY-API"
+Rel(SYS_LENDING_WORKER, SYS_DATA_INGEST, "Installment Lending Worker to Data Ingestion Hub", "S3", $tags="pipeline-load")
+' aac rel: source="SYS_LENDING_WORKER"; target="SYS_DATA_INGEST"; label="Installment Lending Worker to Data Ingestion Hub"; interface_id="INT-LENDING-WORKER-INGEST"; kind="pipeline-load"; integration_style="Batch"; auth_method="IAM"; frequency="Daily"; direction="Outbound"
+Rel(SYS_LENDING_API, SYS_CREDIT_BUREAU, "Installment Lending Service to Credit Bureau", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_LENDING_API"; target="SYS_CREDIT_BUREAU"; label="Installment Lending Service to Credit Bureau"; interface_id="INT-LENDING-API-BUREAU"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_LENDING_WEB, OI_LENDING_API, "Installment Lending Web to API", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_LENDING_WEB"; target="OI_LENDING_API"; label="Installment Lending Web to API"; interface_id="INT-LENDING-WEB-API"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-LENDING-API"
+Rel(SYS_LENDING_EDGE, SYS_LENDING_ALB, "Installment Lending Edge to Load Balancer", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_LENDING_EDGE"; target="SYS_LENDING_ALB"; label="Installment Lending Edge to Load Balancer"; interface_id="INT-LENDING-EDGE-ALB"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Inbound"
+Rel(SYS_LENDING_ALB, SYS_LENDING_WEB, "Installment Lending Load Balancer to Web", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_LENDING_ALB"; target="SYS_LENDING_WEB"; label="Installment Lending Load Balancer to Web"; interface_id="INT-LENDING-ALB-WEB"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Inbound"
+Rel(SYS_LENDING_API, SYS_LENDING_WORKER, "Installment Lending Service to Async Worker", "Kafka", $tags="event")
+' aac rel: source="SYS_LENDING_API"; target="SYS_LENDING_WORKER"; label="Installment Lending Service to Async Worker"; interface_id="INT-LENDING-API-WORKER"; kind="event"; integration_style="Event"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_LENDING_API, SYS_LENDING_DB, "Installment Lending Service to Database", "PostgreSQL", $tags="own-datastore")
+' aac rel: source="SYS_LENDING_API"; target="SYS_LENDING_DB"; label="Installment Lending Service to Database"; interface_id="INT-LENDING-API-DB"; kind="own-datastore"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_LENDING_API, SYS_LENDING_BUCKET, "Installment Lending Service to Object Store", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_LENDING_API"; target="SYS_LENDING_BUCKET"; label="Installment Lending Service to Object Store"; interface_id="INT-LENDING-API-BUCKET"; kind="api-call"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_CORE_LEDGER, SYS_LENDING_HUB, "CORE-LEDGER via Installment Lending hub", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_LENDING_HUB"; label="CORE-LEDGER via Installment Lending hub"; interface_id="INT-LENDING-CORE-LEDGER-HUB"; kind="api-call"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_CREDIT_BUREAU, SYS_LENDING_HUB, "CREDIT-BUREAU via Installment Lending hub", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CREDIT_BUREAU"; target="SYS_LENDING_HUB"; label="CREDIT-BUREAU via Installment Lending hub"; interface_id="INT-LENDING-CREDIT-BUREAU-HUB"; kind="api-call"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_CRM, SYS_LENDING_HUB, "CRM via Installment Lending hub", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CRM"; target="SYS_LENDING_HUB"; label="CRM via Installment Lending hub"; interface_id="INT-LENDING-CRM-HUB"; kind="api-call"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(OI_IDENTITY_API, SYS_IDENTITY_SVC, "offered by")
+' aac rel: source="OI_IDENTITY_API"; target="SYS_IDENTITY_SVC"; label="offered by"; field="system_id"
+Rel(OI_LEDGER_QUEUE, SYS_CORE_LEDGER, "offered by")
+' aac rel: source="OI_LEDGER_QUEUE"; target="SYS_CORE_LEDGER"; label="offered by"; field="system_id"
+Rel(OI_LENDING_API, SYS_LENDING_API, "offered by")
+' aac rel: source="OI_LENDING_API"; target="SYS_LENDING_API"; label="offered by"; field="system_id"
+
+SHOW_LEGEND()
+@enduml

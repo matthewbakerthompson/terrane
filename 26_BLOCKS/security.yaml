@@ -1,0 +1,46 @@
+# Where the estate proves who is asking, and keeps what must not be read.
+#
+# Two blocks that used to be assumed rather than drawn. Every onboarding
+# diagram had an identity provider in a corner and a key vault somewhere; what
+# neither said was how a leaver loses access or how a card number stops being
+# a card number. Drawn, they have owners.
+
+- building_block_id: identity-governance
+  name: Identity governance
+  category: Security
+  description: >
+    The identity provider and the three things that make it governable: a joiner-mover-leaver process that drives it from the people system, a privileged-access vault for the accounts that can do damage, and security monitoring reading every authentication.
+  provides:
+    - component: identity-provider
+    - component: identity-governance
+    - component: privileged-access
+    - component: siem
+  relations:
+    - from: identity-governance
+      to: identity-provider
+    - from: privileged-access
+      to: identity-provider
+    - from: identity-provider
+      to: siem
+  defaults:
+    network_zone: Shared-Services
+
+- building_block_id: token-vault
+  name: Token vault
+  category: Security
+  description: >
+    A service that exchanges a card number for a token and back, the store it keeps the pairing in, the key management the store is encrypted under, and the certificates callers must present. The one place in the estate that is in cardholder-data scope on purpose.
+  provides:
+    - component: container-platform
+    - component: relational-db
+    - component: kms
+    - component: certificate-management
+  relations:
+    - from: container-platform
+      to: relational-db
+    - from: relational-db
+      to: kms
+    - from: container-platform
+      to: certificate-management
+  defaults:
+    network_zone: Private-Data

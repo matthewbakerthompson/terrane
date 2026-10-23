@@ -1,0 +1,73 @@
+@startuml
+' Cardholder mobile application — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Cardholder mobile application — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_ORIG_01, "Application Capture", "Accept applications across web, mobile, phone, mail, and partner channels.", $tags="capabilities")
+  ' aac CAP_ORIG_01: company_domain="Originations"
+  System(CAP_SERV_03, "Digital Self-Service", "Enable cardholders to self-serve in web and mobile channels.", $tags="capabilities")
+  ' aac CAP_SERV_03: company_domain="Servicing"
+  System(CAP_ORIG_08, "Digital Wallet Provisioning", "Provision credentials into wallets and tokenized environments.", $tags="capabilities")
+  ' aac CAP_ORIG_08: company_domain="Originations"
+  System(CAP_FRAUD_03, "Dispute Intake & Provisional Credit", "Take dispute claims and apply provisional credit within regulatory timers.", $tags="capabilities")
+  ' aac CAP_FRAUD_03: company_domain="Servicing"
+  System(CAP_PAY_03, "Payment Capture & Application", "Accept and apply cardholder payments across all channels.", $tags="capabilities")
+  ' aac CAP_PAY_03: company_domain="Servicing"
+  System(CAP_PAY_07, "Tokenization & Credential Management", "Manage tokens, primary account numbers, and credential lifecycle.", $tags="capabilities")
+  ' aac CAP_PAY_07: company_domain="Servicing"
+}
+Boundary(b_Process, "Process") {
+  System(P_CARD_PMT_001, "Capture and apply cardholder payment", "Accept a cardholder payment through any channel and apply it to the account on the correct effective date.", $tags="processes")
+  ' aac P_CARD_PMT_001: company_domain=""
+  System(P_ORIG_001, "Capture card application", "Accept and validate a complete card application from any origination channel. Capture is complete when the application has every field decisioning needs and the applicant has the required disclosures; incomplete applications route to cure, not decline.", $tags="processes")
+  ' aac P_ORIG_001: company_domain=""
+  System(P_DIGITAL_001, "Enroll cardholder in digital servicing", "Register and authenticate a cardholder for web and mobile self-service. Enrollment binds the cardholder to a verified identity with step-up options; weak enrollment is the account-takeover front door, so identity proofing follows the fraud strategy.", $tags="processes")
+  ' aac P_DIGITAL_001: company_domain=""
+  System(P_DISPUTE_001, "Process cardholder dispute claim", "Take a cardholder dispute claim, apply provisional credit, investigate, determine, and notify within regulatory timers.", $tags="processes")
+  ' aac P_DISPUTE_001: company_domain=""
+  System(P_ORIG_008, "Provision credential to digital wallet", "Provision the card credential into a digital wallet or tokenized environment. Wallet provisioning runs the network token flows with step-up verification where risk requires; weak provisioning is a known fraud vector the strategy watches.", $tags="processes")
+  ' aac P_ORIG_008: company_domain=""
+  System(P_DIGITAL_002, "Serve digital self-service transaction", "Execute a cardholder self-service action in web or mobile without agent involvement. Self-service actions execute against the same core services as agent actions, with the same entitlements; the channel changes, the control does not.", $tags="processes")
+  ' aac P_DIGITAL_002: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_MOBILE, "Cardholder mobile application", "Cardholder mobile self-service.", $tags="systems")
+  ' aac SYS_MOBILE: company_domain=""
+}
+
+Rel(P_ORIG_001, SYS_MOBILE, "Supporting")
+' aac rel: source="P_ORIG_001"; target="SYS_MOBILE"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_ORIG_008, SYS_MOBILE, "Supporting")
+' aac rel: source="P_ORIG_008"; target="SYS_MOBILE"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_CARD_PMT_001, SYS_MOBILE, "Supporting")
+' aac rel: source="P_CARD_PMT_001"; target="SYS_MOBILE"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DIGITAL_001, SYS_MOBILE, "Supporting")
+' aac rel: source="P_DIGITAL_001"; target="SYS_MOBILE"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DIGITAL_002, SYS_MOBILE, "Supporting")
+' aac rel: source="P_DIGITAL_002"; target="SYS_MOBILE"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DISPUTE_001, SYS_MOBILE, "Supporting")
+' aac rel: source="P_DISPUTE_001"; target="SYS_MOBILE"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_ORIG_001, CAP_ORIG_01, "supports")
+' aac rel: source="P_ORIG_001"; target="CAP_ORIG_01"; label="supports"; relation="process_supports_capability"
+Rel(P_ORIG_008, CAP_ORIG_08, "supports")
+' aac rel: source="P_ORIG_008"; target="CAP_ORIG_08"; label="supports"; relation="process_supports_capability"
+Rel(P_ORIG_008, CAP_PAY_07, "supports")
+' aac rel: source="P_ORIG_008"; target="CAP_PAY_07"; label="supports"; relation="process_supports_capability"
+Rel(P_CARD_PMT_001, CAP_PAY_03, "supports")
+' aac rel: source="P_CARD_PMT_001"; target="CAP_PAY_03"; label="supports"; relation="process_supports_capability"
+Rel(P_DIGITAL_001, CAP_SERV_03, "supports")
+' aac rel: source="P_DIGITAL_001"; target="CAP_SERV_03"; label="supports"; relation="process_supports_capability"
+Rel(P_DIGITAL_002, CAP_SERV_03, "supports")
+' aac rel: source="P_DIGITAL_002"; target="CAP_SERV_03"; label="supports"; relation="process_supports_capability"
+Rel(P_DISPUTE_001, CAP_FRAUD_03, "supports")
+' aac rel: source="P_DISPUTE_001"; target="CAP_FRAUD_03"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

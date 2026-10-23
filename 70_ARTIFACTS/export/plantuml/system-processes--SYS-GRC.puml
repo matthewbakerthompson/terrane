@@ -1,0 +1,187 @@
+@startuml
+' Governance, risk and compliance platform — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Governance, risk and compliance platform — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_TECH_05, "Business Continuity & Disaster Recovery", "Recover the business to committed objectives.", $tags="capabilities")
+  ' aac CAP_TECH_05: company_domain="Technology"
+  System(CAP_TPS_05, "Client Audit & Oversight Support", "Support client and client-regulator oversight activity.", $tags="capabilities")
+  ' aac CAP_TPS_05: company_domain="Cross-Functional Services"
+  System(CAP_SERV_05, "Complaint Capture & Resolution", "Capture, classify, resolve, and evidence complaints.", $tags="capabilities")
+  ' aac CAP_SERV_05: company_domain="Servicing"
+  System(CAP_RGOV_06, "Complaint Oversight & UDAAP Management", "Aggregate, analyze, and act on complaint signal for unfair practice risk.", $tags="capabilities")
+  ' aac CAP_RGOV_06: company_domain="Cross-Functional Services"
+  System(CAP_RGOV_03, "Compliance Monitoring & Testing", "Test whether controls operate as designed and report the result.", $tags="capabilities")
+  ' aac CAP_RGOV_03: company_domain="Cross-Functional Services"
+  System(CAP_TPRM_02, "Contract & SLA Management", "Contract suppliers and hold them to commitments.", $tags="capabilities")
+  ' aac CAP_TPRM_02: company_domain="Cross-Functional Services"
+  System(CAP_SEC_04, "Data Protection & Cryptography", "Protect data at rest and in transit, and manage keys and cardholder data scope.", $tags="capabilities")
+  ' aac CAP_SEC_04: company_domain="Cross-Functional Services"
+  System(CAP_STRAT_04, "Enterprise Architecture & Change Portfolio", "Govern the shape of the estate and the pipeline of change.", $tags="capabilities")
+  ' aac CAP_STRAT_04: company_domain="Cross-Functional Services"
+  System(CAP_RGOV_05, "Internal Audit & Examination Management", "Coordinate internal audits and regulatory examinations.", $tags="capabilities")
+  ' aac CAP_RGOV_05: company_domain="Cross-Functional Services"
+  System(CAP_RGOV_04, "Issue & Remediation Management", "Track findings and issues to evidenced closure.", $tags="capabilities")
+  ' aac CAP_RGOV_04: company_domain="Cross-Functional Services"
+  System(CAP_PART_01, "Issuing Bank & Sponsor Relationship", "Manage the issuing bank relationship and its obligations.", $tags="capabilities")
+  ' aac CAP_PART_01: company_domain="Cross-Functional Services"
+  System(CAP_RGOV_08, "Model Risk Governance", "Independently validate and monitor models in production use.", $tags="capabilities")
+  ' aac CAP_RGOV_08: company_domain="Cross-Functional Services"
+  System(CAP_TPRM_03, "Ongoing Vendor Risk Monitoring", "Monitor supplier risk through the life of the relationship.", $tags="capabilities")
+  ' aac CAP_TPRM_03: company_domain="Cross-Functional Services"
+  System(CAP_SEC_05, "Privacy Management", "Operate privacy obligations including consumer rights requests.", $tags="capabilities")
+  ' aac CAP_SEC_05: company_domain="Cross-Functional Services"
+  System(CAP_RGOV_02, "Regulatory Change Management", "Detect, interpret, and land regulatory change across the enterprise.", $tags="capabilities")
+  ' aac CAP_RGOV_02: company_domain="Cross-Functional Services"
+  System(CAP_TECH_01, "Solution Delivery & Engineering", "Build and change software.", $tags="capabilities")
+  ' aac CAP_TECH_01: company_domain="Technology"
+  System(CAP_PROD_03, "Terms & Disclosure Management", "Author, version, and control cardholder agreements and disclosures.", $tags="capabilities")
+  ' aac CAP_PROD_03: company_domain="Products"
+  System(CAP_TPRM_04, "Vendor Exit & Continuity Planning", "Maintain exit and continuity plans for critical suppliers.", $tags="capabilities")
+  ' aac CAP_TPRM_04: company_domain="Cross-Functional Services"
+  System(CAP_TPRM_01, "Vendor Sourcing & Due Diligence", "Select and diligence suppliers.", $tags="capabilities")
+  ' aac CAP_TPRM_01: company_domain="Cross-Functional Services"
+  System(CAP_SEC_03, "Vulnerability & Patch Management", "Find and remediate technical exposure.", $tags="capabilities")
+  ' aac CAP_SEC_03: company_domain="Cross-Functional Services"
+}
+Boundary(b_Process, "Process") {
+  System(P_COMPLIANCE_005, "Analyze complaint signal for conduct risk", "Aggregate and analyze complaint data for unfair or deceptive practice risk. Feeds the UDAAP program: complaint taxonomy, root cause, and trend analysis across channels, including complaints held by servicing clients about serviced portfolios.", $tags="processes")
+  ' aac P_COMPLIANCE_005: company_domain=""
+  System(P_COMPLIANCE_001, "Assess and land regulatory change", "Detect a regulatory change, assess applicability and impact, and drive implementation. Starts at horizon scanning and ends when the change is implemented and evidenced in the affected processes; applicability calls are documented even when the answer is not applicable.", $tags="processes")
+  ' aac P_COMPLIANCE_001: company_domain=""
+  System(P_PRODUCT_002, "Author and version disclosure", "Author, review, approve, and version cardholder agreements and disclosures. Agreements and disclosures are versioned with effective dates; every account references the version it was disclosed under, which is what makes remediation tractable.", $tags="processes")
+  ' aac P_PRODUCT_002: company_domain=""
+  System(P_SERVICING_006, "Capture and resolve complaint", "Capture, classify, resolve, and evidence a cardholder complaint. Complaint handling runs intake through evidenced resolution with regulatory routing where required; the taxonomy feeds UDAAP analysis, so classification is not clerical.", $tags="processes")
+  ' aac P_SERVICING_006: company_domain=""
+  System(P_RISK_003, "Coordinate regulatory examination", "Coordinate the response to a regulatory examination, including evidence and findings. Exam coordination controls the single flow of requests, evidence, and meetings; every submission is logged and consistent with what other responses have said.", $tags="processes")
+  ' aac P_RISK_003: company_domain=""
+  System(P_EA_008, "Evaluate and select a technology or platform", "Run the evaluation for a new technology or vendor platform: requirements, options, proof of concept, and a recommendation into procurement.", $tags="processes")
+  ' aac P_EA_008: company_domain=""
+  System(P_COMPLIANCE_002, "Execute compliance monitoring test", "Execute a scheduled control test and record the result and any exceptions. Runs the monitoring schedule agreed with the compliance plan; exceptions become issues in remediation tracking with owners and dates rather than emails.", $tags="processes")
+  ' aac P_COMPLIANCE_002: company_domain=""
+  System(P_TECH_003, "Execute disaster recovery test", "Plan and execute a recovery test against committed recovery objectives. The annual test exercises recovery against committed RTO and RPO with business participation; misses become tracked remediation, and the evidence supports the CRI assessment.", $tags="processes")
+  ' aac P_TECH_003: company_domain=""
+  System(P_VENDORMGMT_003, "Execute supplier exit", "Execute the exit of a supplier, including data return and service transition. Exit executes the termination plan: service transition, data return or destruction with certificate, and access revocation, proving the exit clause was real.", $tags="processes")
+  ' aac P_VENDORMGMT_003: company_domain=""
+  System(P_PRIVACY_001, "Fulfill consumer privacy request", "Receive, verify, and fulfill a consumer privacy rights request within the required period. Identity verification precedes any disclosure; state privacy laws set the clocks and the evidence of fulfillment is retained per request.", $tags="processes")
+  ' aac P_PRIVACY_001: company_domain=""
+  System(P_PARTNERSHIPS_001, "Fulfill issuing bank oversight obligations", "Produce contracted reporting, respond to oversight requests, and manage obligations under the issuing bank agreement.", $tags="processes")
+  ' aac P_PARTNERSHIPS_001: company_domain=""
+  System(P_EA_003, "Grant or decline an architecture exception", "Evaluate a request to deviate from a standard, set conditions and expiry, and track the exception to closure.", $tags="processes")
+  ' aac P_EA_003: company_domain=""
+  System(P_INFOSEC_004, "Maintain cardholder data scope and evidence", "Maintain the cardholder data environment scope and the supporting compliance evidence. PCI scope is maintained continuously: network segmentation, asset inventory, and evidence collection, so assessment is a report, not a scramble.", $tags="processes")
+  ' aac P_INFOSEC_004: company_domain=""
+  System(P_RISK_001, "Manage issue and remediation to closure", "Track an identified issue through remediation to evidenced closure. Issues from any source (audit, compliance, self-identified, exam) run one lifecycle: owner, action plan, dates, and evidenced closure that survives challenge.", $tags="processes")
+  ' aac P_RISK_001: company_domain=""
+  System(P_VENDORMGMT_002, "Monitor supplier risk and performance", "Monitor supplier risk, performance, and service levels through the relationship. Ongoing monitoring covers risk, performance, and financial condition on a tier-driven cadence; findings route to the relationship owner with dates.", $tags="processes")
+  ' aac P_VENDORMGMT_002: company_domain=""
+  System(P_VENDORMGMT_001, "Onboard and diligence supplier", "Assess, diligence, and contract a new supplier with required security and risk terms. Due diligence is risk-tiered per the TPRM policy; no supplier touches cardholder data before security review and contract terms land, which is the EX.DD control.", $tags="processes")
+  ' aac P_VENDORMGMT_001: company_domain=""
+  System(P_APPDEV_005, "Scan code and dependencies for security defects", "Run static, dependency, and secret scanning on every change and remediate findings within the applicable service level.", $tags="processes")
+  ' aac P_APPDEV_005: company_domain=""
+  System(P_TPS_007, "Support client audit or examination", "Assemble evidence and respond to client and client-regulator oversight requests. Client audits and client-regulator exams get coordinated evidence with the same discipline as the bank's own exams; commitments made in responses are tracked.", $tags="processes")
+  ' aac P_TPS_007: company_domain=""
+  System(P_RISK_002, "Validate model independently", "Perform independent validation of a model and record the outcome and conditions. Independent validation is organizationally separate from development; findings condition or block production use, and revalidation triggers are set at approval.", $tags="processes")
+  ' aac P_RISK_002: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_GRC, "Governance, risk and compliance platform", "Policy, control, issue, and risk register management.", $tags="systems")
+  ' aac SYS_GRC: company_domain=""
+}
+
+Rel(P_SERVICING_006, SYS_GRC, "Supporting")
+' aac rel: source="P_SERVICING_006"; target="SYS_GRC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_TPS_007, SYS_GRC, "Primary")
+' aac rel: source="P_TPS_007"; target="SYS_GRC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_COMPLIANCE_001, SYS_GRC, "Primary")
+' aac rel: source="P_COMPLIANCE_001"; target="SYS_GRC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_COMPLIANCE_002, SYS_GRC, "Primary")
+' aac rel: source="P_COMPLIANCE_002"; target="SYS_GRC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_COMPLIANCE_005, SYS_GRC, "Primary")
+' aac rel: source="P_COMPLIANCE_005"; target="SYS_GRC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_RISK_001, SYS_GRC, "Primary")
+' aac rel: source="P_RISK_001"; target="SYS_GRC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_RISK_002, SYS_GRC, "Supporting")
+' aac rel: source="P_RISK_002"; target="SYS_GRC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_RISK_003, SYS_GRC, "Primary")
+' aac rel: source="P_RISK_003"; target="SYS_GRC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_TECH_003, SYS_GRC, "Supporting")
+' aac rel: source="P_TECH_003"; target="SYS_GRC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_INFOSEC_004, SYS_GRC, "Primary")
+' aac rel: source="P_INFOSEC_004"; target="SYS_GRC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_PRIVACY_001, SYS_GRC, "Primary")
+' aac rel: source="P_PRIVACY_001"; target="SYS_GRC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_VENDORMGMT_001, SYS_GRC, "Primary")
+' aac rel: source="P_VENDORMGMT_001"; target="SYS_GRC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_VENDORMGMT_002, SYS_GRC, "Primary")
+' aac rel: source="P_VENDORMGMT_002"; target="SYS_GRC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_VENDORMGMT_003, SYS_GRC, "Primary")
+' aac rel: source="P_VENDORMGMT_003"; target="SYS_GRC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_PRODUCT_002, SYS_GRC, "Supporting")
+' aac rel: source="P_PRODUCT_002"; target="SYS_GRC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PARTNERSHIPS_001, SYS_GRC, "Primary")
+' aac rel: source="P_PARTNERSHIPS_001"; target="SYS_GRC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_EA_003, SYS_GRC, "Supporting")
+' aac rel: source="P_EA_003"; target="SYS_GRC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_EA_008, SYS_GRC, "Supporting")
+' aac rel: source="P_EA_008"; target="SYS_GRC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_APPDEV_005, SYS_GRC, "Supporting")
+' aac rel: source="P_APPDEV_005"; target="SYS_GRC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_006, CAP_SERV_05, "supports")
+' aac rel: source="P_SERVICING_006"; target="CAP_SERV_05"; label="supports"; relation="process_supports_capability"
+Rel(P_SERVICING_006, CAP_RGOV_06, "supports")
+' aac rel: source="P_SERVICING_006"; target="CAP_RGOV_06"; label="supports"; relation="process_supports_capability"
+Rel(P_TPS_007, CAP_TPS_05, "supports")
+' aac rel: source="P_TPS_007"; target="CAP_TPS_05"; label="supports"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_001, CAP_RGOV_02, "supports")
+' aac rel: source="P_COMPLIANCE_001"; target="CAP_RGOV_02"; label="supports"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_002, CAP_RGOV_03, "supports")
+' aac rel: source="P_COMPLIANCE_002"; target="CAP_RGOV_03"; label="supports"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_005, CAP_RGOV_06, "supports")
+' aac rel: source="P_COMPLIANCE_005"; target="CAP_RGOV_06"; label="supports"; relation="process_supports_capability"
+Rel(P_RISK_001, CAP_RGOV_04, "supports")
+' aac rel: source="P_RISK_001"; target="CAP_RGOV_04"; label="supports"; relation="process_supports_capability"
+Rel(P_RISK_002, CAP_RGOV_08, "supports")
+' aac rel: source="P_RISK_002"; target="CAP_RGOV_08"; label="supports"; relation="process_supports_capability"
+Rel(P_RISK_003, CAP_RGOV_05, "supports")
+' aac rel: source="P_RISK_003"; target="CAP_RGOV_05"; label="supports"; relation="process_supports_capability"
+Rel(P_TECH_003, CAP_TECH_05, "supports")
+' aac rel: source="P_TECH_003"; target="CAP_TECH_05"; label="supports"; relation="process_supports_capability"
+Rel(P_INFOSEC_004, CAP_SEC_04, "supports")
+' aac rel: source="P_INFOSEC_004"; target="CAP_SEC_04"; label="supports"; relation="process_supports_capability"
+Rel(P_PRIVACY_001, CAP_SEC_05, "supports")
+' aac rel: source="P_PRIVACY_001"; target="CAP_SEC_05"; label="supports"; relation="process_supports_capability"
+Rel(P_VENDORMGMT_001, CAP_TPRM_01, "supports")
+' aac rel: source="P_VENDORMGMT_001"; target="CAP_TPRM_01"; label="supports"; relation="process_supports_capability"
+Rel(P_VENDORMGMT_001, CAP_TPRM_02, "supports")
+' aac rel: source="P_VENDORMGMT_001"; target="CAP_TPRM_02"; label="supports"; relation="process_supports_capability"
+Rel(P_VENDORMGMT_002, CAP_TPRM_03, "supports")
+' aac rel: source="P_VENDORMGMT_002"; target="CAP_TPRM_03"; label="supports"; relation="process_supports_capability"
+Rel(P_VENDORMGMT_003, CAP_TPRM_04, "supports")
+' aac rel: source="P_VENDORMGMT_003"; target="CAP_TPRM_04"; label="supports"; relation="process_supports_capability"
+Rel(P_PRODUCT_002, CAP_PROD_03, "supports")
+' aac rel: source="P_PRODUCT_002"; target="CAP_PROD_03"; label="supports"; relation="process_supports_capability"
+Rel(P_PARTNERSHIPS_001, CAP_PART_01, "supports")
+' aac rel: source="P_PARTNERSHIPS_001"; target="CAP_PART_01"; label="supports"; relation="process_supports_capability"
+Rel(P_EA_003, CAP_STRAT_04, "supports")
+' aac rel: source="P_EA_003"; target="CAP_STRAT_04"; label="supports"; relation="process_supports_capability"
+Rel(P_EA_003, CAP_RGOV_04, "supports")
+' aac rel: source="P_EA_003"; target="CAP_RGOV_04"; label="supports"; relation="process_supports_capability"
+Rel(P_EA_008, CAP_STRAT_04, "supports")
+' aac rel: source="P_EA_008"; target="CAP_STRAT_04"; label="supports"; relation="process_supports_capability"
+Rel(P_EA_008, CAP_TPRM_01, "supports")
+' aac rel: source="P_EA_008"; target="CAP_TPRM_01"; label="supports"; relation="process_supports_capability"
+Rel(P_APPDEV_005, CAP_TECH_01, "supports")
+' aac rel: source="P_APPDEV_005"; target="CAP_TECH_01"; label="supports"; relation="process_supports_capability"
+Rel(P_APPDEV_005, CAP_SEC_03, "supports")
+' aac rel: source="P_APPDEV_005"; target="CAP_SEC_03"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

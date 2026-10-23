@@ -1,0 +1,34 @@
+view_id: data-dissemination
+title: Systems of Record
+category: Data
+section: Landscape
+kind: diagram
+description: >
+  Each data asset and the one system that masters it. An asset with no line
+  has no system of record, which is a finding about the estate, not a gap in
+  the drawing. Who else reads or writes it is the table and the per-asset view.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+group_by: type
+
+scope:
+  include:
+    - type: data_assets
+      where:
+        status: [Active, Planned, Proposed]
+  expand:
+    - relation: source_of_truth
+      depth: 1
+      types: [systems]
+
+edges:
+  - via: source_of_truth
+    text: masters
+
+style:
+  color_by: classification
+
+limits:
+  max_nodes: 60

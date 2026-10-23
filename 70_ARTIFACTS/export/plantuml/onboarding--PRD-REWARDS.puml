@@ -1,0 +1,60 @@
+@startuml
+' Rewards Redemption — Onboarding
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Rewards Redemption — Onboarding
+
+AddElementTag("offered_interfaces", $bgColor="#e6ecff", $borderColor="#6366f1", $fontColor="#0f172a", $legendText="offered interface")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddRelTag("api-call", $legendText="API call")
+AddRelTag("event", $legendText="Event on the bus")
+AddRelTag("own-datastore", $legendText="Its own datastore")
+AddRelTag("queued-request", $legendText="Request on a queue")
+
+Boundary(b_Azure, "Azure") {
+  Boundary(b_Azure__azure_cards_prod, "subscription azure-cards-prod") {
+    Boundary(b_Azure__azure_cards_prod__uksouth, "region uksouth") {
+      System(SYS_REWARDS_EVENTS, "Rewards Redemption Event Publisher", "Publishes Rewards Redemption domain events onto the enterprise bus. Built with Service Bus.", $tags="systems")
+      ' aac SYS_REWARDS_EVENTS: company_domain="Card Issuing"; hosting="Azure"; technology="Service Bus"
+      Boundary(b_Azure__azure_cards_prod__uksouth__Private_App, "Private-App") {
+        System(OI_REWARDS_API, "Rewards Redemption API", "The domain API Rewards Redemption offers its channels, its jobs and its partners. Built with HTTPS.", $tags="offered_interfaces")
+        ' aac OI_REWARDS_API: company_domain="Card Issuing"; technology="HTTPS"
+        System(SYS_REWARDS_WORKER, "Rewards Redemption Async Worker", "Consumes redemption events and fulfills them: statement credits posted to the ledger, gift-card orders placed with the fulfillment partner. Built with AKS · Event Hubs.", $tags="systems")
+        ' aac SYS_REWARDS_WORKER: company_domain="Card Issuing"; hosting="Azure"; technology="AKS · Event Hubs"
+        System(SYS_REWARDS_API, "Rewards Redemption Service", "Domain service for Rewards Redemption, behind the Rewards Redemption API. Built with AKS · Rewards Redemption Cache.", $tags="systems")
+        ' aac SYS_REWARDS_API: company_domain="Card Issuing"; hosting="Azure"; technology="AKS · Rewards Redemption Cache"
+        System(SYS_REWARDS_WEB, "Rewards Redemption Web", "Customer-facing front end for Rewards Redemption. Built with AKS.", $tags="systems")
+        ' aac SYS_REWARDS_WEB: company_domain="Card Issuing"; hosting="Azure"; technology="AKS"
+      }
+      Boundary(b_Azure__azure_cards_prod__uksouth__Private_Data, "Private-Data") {
+        System(SYS_REWARDS_STORE, "Rewards Redemption Database", "Relational database for Rewards Redemption, encrypted with a customer managed key. Built with Azure SQL.", $tags="systems")
+        ' aac SYS_REWARDS_STORE: company_domain="Card Issuing"; hosting="Azure"; technology="Azure SQL"
+      }
+    }
+  }
+}
+Boundary(b_On_prem, "On-prem") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(OI_LEDGER_QUEUE, "Core Ledger request queue", "Postings, holds and balance requests put on the ledger's MQ request queue, answered on the reply queue in the order they arrived. Built with MQ.", $tags="offered_interfaces")
+  ' aac OI_LEDGER_QUEUE: company_domain="Card Issuing"; technology="MQ"
+}
+
+Rel(SYS_REWARDS_WEB, OI_REWARDS_API, "Rewards Redemption Web to API", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_REWARDS_WEB"; target="OI_REWARDS_API"; label="Rewards Redemption Web to API"; interface_id="INT-REWARDS-WEB-API"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-REWARDS-API"
+Rel(SYS_REWARDS_API, SYS_REWARDS_STORE, "Rewards Redemption Service to Database", "TDS", $tags="own-datastore")
+' aac rel: source="SYS_REWARDS_API"; target="SYS_REWARDS_STORE"; label="Rewards Redemption Service to Database"; interface_id="INT-REWARDS-API-STORE"; kind="own-datastore"; integration_style="Request-response"; auth_method="ManagedIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_REWARDS_API, SYS_REWARDS_EVENTS, "Rewards Redemption Service to Event Publisher", "AMQP", $tags="event")
+' aac rel: source="SYS_REWARDS_API"; target="SYS_REWARDS_EVENTS"; label="Rewards Redemption Service to Event Publisher"; interface_id="INT-REWARDS-API-EVENTS"; kind="event"; integration_style="Event"; auth_method="ManagedIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_REWARDS_API, SYS_REWARDS_WORKER, "Rewards Redemption Service to Async Worker", "Kafka", $tags="event")
+' aac rel: source="SYS_REWARDS_API"; target="SYS_REWARDS_WORKER"; label="Rewards Redemption Service to Async Worker"; interface_id="INT-REWARDS-API-WORKER"; kind="event"; integration_style="Event"; auth_method="ManagedIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_REWARDS_WORKER, OI_LEDGER_QUEUE, "Rewards Redemption Worker to Core Ledger", "MQ", $tags="queued-request")
+' aac rel: source="SYS_REWARDS_WORKER"; target="OI_LEDGER_QUEUE"; label="Rewards Redemption Worker to Core Ledger"; interface_id="INT-REWARDS-WORKER-LEDGER"; kind="queued-request"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-LEDGER-QUEUE"
+Rel(OI_LEDGER_QUEUE, SYS_CORE_LEDGER, "offered by")
+' aac rel: source="OI_LEDGER_QUEUE"; target="SYS_CORE_LEDGER"; label="offered by"; field="system_id"
+Rel(OI_REWARDS_API, SYS_REWARDS_API, "offered by")
+' aac rel: source="OI_REWARDS_API"; target="SYS_REWARDS_API"; label="offered by"; field="system_id"
+
+SHOW_LEGEND()
+@enduml

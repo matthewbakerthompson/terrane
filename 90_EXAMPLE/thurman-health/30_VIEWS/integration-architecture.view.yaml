@@ -1,0 +1,30 @@
+view_id: integration-architecture
+title: Integration Architecture
+category: Application
+section: Integration
+kind: diagram
+description: >
+  Every system grouped by its integration role, with the protocol on each
+  connection. Anything that reaches a core system without going through the
+  integration and gateway layer is a point-to-point coupling.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+group_by: system_category
+
+scope:
+  include:
+    - type: systems
+      where:
+        status: [Active, Planned]
+
+edges:
+  - via: interfaces
+    label: protocol
+
+style:
+  color_by: criticality
+
+limits:
+  max_nodes: 40

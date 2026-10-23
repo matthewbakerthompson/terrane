@@ -1,0 +1,15 @@
+actor_id,name,description,status,togaf_layer,architecture_domain,abstraction_level,last_reviewed,company_domain,company_subdomain,tags,archetype,archetype_instance,module,source,actor_kind,internal,owner_org_id,volume
+ACT-APPLICANT,Loan Applicant,"A prospect applying for installment credit, not yet a customer.",Active,Business,Business,,,Lending,,,,,,,Person,No,,
+ACT-CARD-SCHEME,Card Scheme,"The network carrying authorization and clearing. An external system we integrate with on their terms, not ours, which is why their availability is a design constraint rather than a requirement.
+",Active,Business,Business,,,Payments,,,,,,,External system,No,,
+ACT-CARDHOLDER,Cardholder,"The customer. Uses the self-service channels, and is the reason the authorization path has a latency budget rather than a throughput one.
+",Active,Business,Business,,,Servicing,,,,,,,Person,No,,~2.4M active accounts
+ACT-COLLECTIONS-AGENT,Collections Agent,Handles arrears treatment and payment arrangements.,Active,Business,Business,,,Collections,,,,,,,Role,Yes,ORG-COLLECTIONS,
+ACT-MERCHANT,Merchant,"Accepts the card at point of sale. Reached through the scheme, never directly.",Active,Business,Business,,,Payments,,,,,,,Organization,No,,
+ACT-MERCHANT-ONBOARDING-ANALYST,Merchant Onboarding Analyst,Reviews a merchant's application and the documents behind it before the account opens.,Planned,Business,Business,,,Payments,,,compose:PRD-MERCHANT-PORTAL,PRD-MERCHANT-PORTAL,operator-role,,Role,Yes,ORG-MERCHANT,
+ACT-REGULATOR,Regulator,"Consumes periodic regulatory returns. Never integrates directly; the relationship is a reporting obligation with a deadline.
+",Active,Business,Governance,,,Risk and Compliance,,,,,,,Regulator,No,,
+ACT-SCREENING-ANALYST,Screening Analyst,"Works the alert queue: clears the false positives and escalates the rest. The queue exists because the screening does, and its volume is the number the vendor's tuning is judged on.
+",Planned,Business,Business,,,Risk and Compliance,,,saas-onboarding,PRD-SCREENING,operator-role,,Role,Yes,ORG-COMPLIANCE,
+ACT-SERVICING-AGENT,Servicing Agent,"Contact center staff handling balance, dispute and account queries.",Active,Business,Business,,,Servicing,,,,,,,Role,Yes,ORG-SERVICING,~450 seats
+ACT-UNDERWRITER,Credit Underwriter,Reviews referred applications the automated decision would not take.,Active,Business,Business,,,Risk and Compliance,,,,,,,Role,Yes,ORG-CREDIT,

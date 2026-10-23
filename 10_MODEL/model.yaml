@@ -1,0 +1,150 @@
+# Model-level configuration.
+name: Architecture Model
+description: >
+  The application, data and technology landscape. Populate it with `terrane import
+  csv` from an existing inventory, with the app in `80_APP/`, or by hand.
+
+# The sample estate the repository ships with, and the one the engine's tests
+# are seeded from. While this says true, `terrane refresh` copies the export into
+# 90_EXAMPLE/csv and the spelling test reads this folder's prose. `terrane clear`
+# takes the estate out and this line with it (00_METHOD/AAC-15_ADOPTING.md).
+sample_estate: true
+
+# Libraries of the organization's own, read after the shipped 20_ARCHETYPES
+# to 29_TYPES folders and in the order listed; each holds any of the same
+# layer folders. A record there stands in for a shipped one only when it says
+# `replaces:` with its own id (00_METHOD/AAC-16_EXTENDING_THE_LIBRARY.md).
+# library_paths: [our-library]
+
+metamodel:
+  aligns_to: architecture_method_metamodel.v2
+  contract: 00_METHOD/AAC-07_METAMODEL_CONTRACT.md
+
+# Overrides for the house palette. Anything not listed falls back to the
+# defaults in 50_ENGINE/terrane/palette.py.
+palette:
+  Vendor:
+    fill: "#fff7ed"
+    stroke: "#ea580c"
+
+# What the library asks of this estate, answered once for every product on
+# it. A shape or a part names a role -- who owns the shared network, where a
+# vendor's audit trail goes, which controls govern a vendor tenancy -- and
+# this says which of the estate's records plays it; a product says otherwise
+# for itself with `with` on the part. The shared services are not here: the
+# library names their kind, and the services tagged `landing-zone` answer
+# (50_ENGINE/terrane/estate.py).
+answers:
+  platform_org: ORG-TECH
+  data_org: ORG-DATAENG
+  security_org: ORG-INFOSEC
+  ingest_system: SYS-DATA-INGEST
+  siem_system: SYS-SIEM
+  vendor_controls: [CTL-TPRM-DD]
+  vendor_policies: [POL-TPRM]
+  landed_data_controls: [CTL-RETENTION]
+  landed_data_policies: [POL-RECORDS, POL-PRIVACY]
+  access_controls: [CTL-ACCESS-CERT]
+  access_policies: [POL-INFOSEC]
+  change_controls: [CTL-CHG-APPROVAL]
+  change_policies: [POL-CHANGE]
+
+# Who owns each of the library's patterns here, the decision that approved
+# it, and which controls in the register it is designed to meet. The pattern
+# in 27_PATTERNS says what it is for and what it costs, and goes to any
+# estate; these three are the card issuer's, so they are kept with its
+# model rather than on the pattern, where a second estate heard fifty-one
+# warnings about a register it never had (50_ENGINE/terrane/estate.py).
+patterns:
+  customer-communication-archive:
+    owner_org_id: ORG-SERVICING
+    decision_ref: ADR-0017
+    satisfies: [CTL-NOTICE-CONTENT, CTL-FDCPA-NOTICE, CTL-RETENTION]
+  contact-center-integration:
+    owner_org_id: ORG-SERVICING
+    decision_ref: ADR-0020
+    satisfies: [CTL-CONTACT-LIM, CTL-COMPLAINT-REG, CTL-AUTH-POLICY]
+  analytics-landing-zone:
+    owner_org_id: ORG-DATAGOV
+    decision_ref: ADR-0010
+    satisfies: [CTL-DQ-GATE, CTL-MASK-NONPROD, CTL-RETENTION]
+  inline-risk-decision:
+    owner_org_id: ORG-FRAUD
+    decision_ref: ADR-0014
+    satisfies: [CTL-FRAUD-SLA, CTL-AUTH-AVAIL]
+  governed-model-lifecycle:
+    owner_org_id: ORG-CREDIT
+    decision_ref: ADR-0018
+    satisfies: [CTL-ADVERSE-ACT, CTL-TREATMENT-APPR, CTL-DQ-GATE]
+  public-web-entry:
+    owner_org_id: ORG-INFOSEC
+    decision_ref: ADR-0003
+    satisfies: [CTL-PCI-EVIDENCE]
+  api-front-door:
+    owner_org_id: ORG-TECH
+    decision_ref: ADR-0004
+    satisfies: [CTL-AUTH-POLICY]
+  private-egress-to-saas:
+    owner_org_id: ORG-VENDORMGMT
+    decision_ref: ADR-0007
+    satisfies: [CTL-TPRM-DD, CTL-SANCTIONS]
+  event-fanout:
+    owner_org_id: ORG-APPDEV
+    decision_ref: ADR-0008
+    satisfies: []
+  partner-file-exchange:
+    owner_org_id: ORG-TPS
+    decision_ref: ADR-0009
+    satisfies: [CTL-CLIENT-SLA]
+  shared-database-integration:
+    owner_org_id: ORG-APPDEV
+    decision_ref: ADR-0002
+    satisfies: []
+  regulatory-file-furnishing:
+    owner_org_id: ORG-COLLECTIONS
+    decision_ref: ADR-0022
+    satisfies: [CTL-METRO2-RECON, CTL-BUREAU-ACC, CTL-REGE-ACK]
+  workload-account-baseline:
+    owner_org_id: ORG-TECH
+    decision_ref: ADR-0001
+    satisfies: [CTL-CHG-APPROVAL, CTL-ACCESS-CERT, CTL-VULN-SLA]
+  hybrid-return-path:
+    owner_org_id: ORG-TECH
+    decision_ref: ADR-0011
+    satisfies: [CTL-DR-TEST]
+  observed-service:
+    owner_org_id: ORG-TECH
+    decision_ref: ADR-0015
+    satisfies: [CTL-IR-PLAYBOOK, CTL-AUTH-AVAIL, CTL-DR-TEST]
+  change-evidence-chain:
+    owner_org_id: ORG-EA
+    decision_ref: ADR-0016
+    satisfies: [CTL-CHG-APPROVAL, CTL-REGCHANGE-TRACK]
+  payment-capture-and-posting:
+    owner_org_id: ORG-PAYMENTS
+    decision_ref: ADR-0021
+    satisfies: [CTL-PMT-POSTING, CTL-FUNDING-CONF, CTL-DAILY-RECON]
+  workforce-identity-lifecycle:
+    owner_org_id: ORG-INFOSEC
+    decision_ref: ADR-0012
+    satisfies: [CTL-ACCESS-CERT, CTL-IR-PLAYBOOK]
+  secrets-and-keys:
+    owner_org_id: ORG-INFOSEC
+    decision_ref: ADR-0013
+    satisfies: [CTL-PCI-EVIDENCE]
+  tokenized-card-data:
+    owner_org_id: ORG-INFOSEC
+    decision_ref: ADR-0019
+    satisfies: [CTL-PCI-EVIDENCE, CTL-AUTH-AVAIL]
+  stateless-request-service:
+    owner_org_id: ORG-APPDEV
+    decision_ref: ADR-0005
+    satisfies: []
+  windowed-batch:
+    owner_org_id: ORG-DATAENG
+    decision_ref: ADR-0006
+    satisfies: [CTL-DAILY-RECON]
+  strangler-facade:
+    owner_org_id: ORG-APPDEV
+    decision_ref: ADR-0023
+    satisfies: [CTL-CHG-APPROVAL, CTL-CONV-VERIFY]

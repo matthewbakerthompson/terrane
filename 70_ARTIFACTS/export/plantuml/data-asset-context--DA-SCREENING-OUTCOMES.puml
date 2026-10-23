@@ -1,0 +1,48 @@
+@startuml
+' NICE Actimize Screening outcomes — Where It Lives and Who Uses It
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title NICE Actimize Screening outcomes — Where It Lives and Who Uses It
+
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("policies", $bgColor="#fecaca", $borderColor="#dc2626", $fontColor="#0f172a", $legendText="policy")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Control, "Control") {
+  System(CTL_RETENTION, "Retention schedule enforcement", "Records are retained to schedule and destroyed on expiry with a certificate of disposition.", $tags="controls")
+  ' aac CTL_RETENTION: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_SCREENING_OUTCOMES, "NICE Actimize Screening outcomes", "What the vendor decided and why, landed our side. Held because a decision we cannot explain is a decision we cannot defend.", $tags="data_assets")
+  ' aac DA_SCREENING_OUTCOMES: company_domain="Risk and Compliance"
+}
+Boundary(b_Policy, "Policy") {
+  System(POL_PRIVACY, "Consumer Privacy & Data Handling Policy", $tags="policies")
+  ' aac POL_PRIVACY: company_domain=""
+  System(POL_RECORDS, "Records Retention & Disposition Policy", $tags="policies")
+  ' aac POL_RECORDS: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_DATA_INGEST, "Enterprise Data Ingestion Hub", "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse. Built with Service Bus · Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_DATA_INGEST: company_domain="Data and Analytics"; hosting="Azure"; technology="Service Bus · Snowflake Data Cloud"
+  System_Ext(SYS_SCREENING_VENDOR, "NICE Actimize Screening", "Financial Crime Screening, operated by NICE Actimize in their own tenancy. Contractually pinned to EU processing; the DPA restricts sub-processors and sets a 90-day retention ceiling. Built with NICE Actimize.", $tags="systems")
+  ' aac SYS_SCREENING_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="NICE Actimize"
+}
+
+Rel(SYS_SCREENING_VENDOR, DA_SCREENING_OUTCOMES, "masters")
+' aac rel: source="SYS_SCREENING_VENDOR"; target="DA_SCREENING_OUTCOMES"; label="masters"; field="source_of_truth"
+Rel(SYS_SCREENING_VENDOR, DA_SCREENING_OUTCOMES, "Write")
+' aac rel: source="SYS_SCREENING_VENDOR"; target="DA_SCREENING_OUTCOMES"; label="Write"; relation="system_reads_writes"; operation="Write"
+Rel(SYS_DATA_INGEST, DA_SCREENING_OUTCOMES, "Read")
+' aac rel: source="SYS_DATA_INGEST"; target="DA_SCREENING_OUTCOMES"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(DA_SCREENING_OUTCOMES, CTL_RETENTION, "governed by")
+' aac rel: source="DA_SCREENING_OUTCOMES"; target="CTL_RETENTION"; label="governed by"; relation="data_governed_by_control"
+Rel(DA_SCREENING_OUTCOMES, POL_RECORDS, "subject to")
+' aac rel: source="DA_SCREENING_OUTCOMES"; target="POL_RECORDS"; label="subject to"; relation="data_subject_to_policy"
+Rel(DA_SCREENING_OUTCOMES, POL_PRIVACY, "subject to")
+' aac rel: source="DA_SCREENING_OUTCOMES"; target="POL_PRIVACY"; label="subject to"; relation="data_subject_to_policy"
+
+SHOW_LEGEND()
+@enduml

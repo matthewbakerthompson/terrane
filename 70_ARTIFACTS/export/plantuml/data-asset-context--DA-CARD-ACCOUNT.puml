@@ -1,0 +1,88 @@
+@startuml
+' Card account master — Where It Lives and Who Uses It
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Card account master — Where It Lives and Who Uses It
+
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("policies", $bgColor="#fecaca", $borderColor="#dc2626", $fontColor="#0f172a", $legendText="policy")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Control, "Control") {
+  System(CTL_PCI_EVIDENCE, "Cardholder data scope and evidence maintenance", "CDE scope, segmentation, and assessment evidence are maintained continuously against the PCI DSS requirement set.", $tags="controls")
+  ' aac CTL_PCI_EVIDENCE: company_domain=""
+  System(CTL_RETENTION, "Retention schedule enforcement", "Records are retained to schedule and destroyed on expiry with a certificate of disposition.", $tags="controls")
+  ' aac CTL_RETENTION: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_CARD_ACCOUNT, "Card account master", "Account, balance, limit and status records for every card account.", $tags="data_assets")
+  ' aac DA_CARD_ACCOUNT: company_domain="Card Issuing"
+}
+Boundary(b_Policy, "Policy") {
+  System(POL_PRIVACY, "Consumer Privacy & Data Handling Policy", $tags="policies")
+  ' aac POL_PRIVACY: company_domain=""
+  System(POL_RECORDS, "Records Retention & Disposition Policy", $tags="policies")
+  ' aac POL_RECORDS: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_AUTH_SWITCH, "Authorization Switch", "Real-time card authorization switch connected to the scheme networks.", $tags="systems")
+  ' aac SYS_AUTH_SWITCH: company_domain="Payments"; hosting="On-prem"
+  System_Ext(SYS_CARD_FULFILL, "Card production and fulfillment", "Card production, personalization, and fulfillment. Built with external.", $tags="systems")
+  ' aac SYS_CARD_FULFILL: company_domain=""; hosting="External"; technology="external"
+  System(SYS_CARDSVC_API, "Card Servicing Service", "The service behind the Card Servicing API, backing the channel. Built with AKS · Card Servicing Cache.", $tags="systems")
+  ' aac SYS_CARDSVC_API: company_domain="Servicing"; hosting="Azure"; technology="AKS · Card Servicing Cache"
+  System(SYS_MOBILE, "Cardholder mobile application", "Cardholder mobile self-service.", $tags="systems")
+  ' aac SYS_MOBILE: company_domain=""
+  System(SYS_COLLECT_API, "Collections Workspace Service", "The service behind the Collections Workspace API, backing the channel. Built with AKS · Collections Workspace Cache.", $tags="systems")
+  ' aac SYS_COLLECT_API: company_domain="Collections"; hosting="Azure"; technology="AKS · Collections Workspace Cache"
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_CREDIT_DATA, "Credit data and decisioning environment", "Credit data, analytics, and decisioning environment. Built with Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_CREDIT_DATA: company_domain=""; technology="Snowflake Data Cloud"
+  System(SYS_CUST360_PIPELINE, "Customer 360 Pipeline", "Ingestion and curation jobs building Customer 360. Built with Snowflake Data Cloud +1.", $tags="systems")
+  ' aac SYS_CUST360_PIPELINE: company_domain="Data and Analytics"; hosting="Azure"; technology="Snowflake Data Cloud +1"
+  System(SYS_IVR, "IVR and self-service voice", "Interactive voice response and voice self-service.", $tags="systems")
+  ' aac SYS_IVR: company_domain=""
+  System(SYS_STATEMENTS, "Statement Generation", "Composes, renders and dispatches customer statements.", $tags="systems")
+  ' aac SYS_STATEMENTS: company_domain="Servicing"; hosting="On-prem"
+  System(SYS_TOKEN, "Tokenization and credential management", "Token and credential lifecycle management.", $tags="systems")
+  ' aac SYS_TOKEN: company_domain=""
+}
+
+Rel(SYS_CORE_LEDGER, DA_CARD_ACCOUNT, "masters")
+' aac rel: source="SYS_CORE_LEDGER"; target="DA_CARD_ACCOUNT"; label="masters"; field="source_of_truth"
+Rel(SYS_CREDIT_DATA, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_CREDIT_DATA"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_TOKEN, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_TOKEN"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_MOBILE, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_MOBILE"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_IVR, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_IVR"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_CARD_FULFILL, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_CARD_FULFILL"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_AUTH_SWITCH, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_AUTH_SWITCH"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_CARDSVC_API, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_CARDSVC_API"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_COLLECT_API, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_COLLECT_API"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_CORE_LEDGER, DA_CARD_ACCOUNT, "ReadWrite")
+' aac rel: source="SYS_CORE_LEDGER"; target="DA_CARD_ACCOUNT"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_CUST360_PIPELINE, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_CUST360_PIPELINE"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_STATEMENTS, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_STATEMENTS"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(DA_CARD_ACCOUNT, CTL_PCI_EVIDENCE, "governed by")
+' aac rel: source="DA_CARD_ACCOUNT"; target="CTL_PCI_EVIDENCE"; label="governed by"; relation="data_governed_by_control"
+Rel(DA_CARD_ACCOUNT, CTL_RETENTION, "governed by")
+' aac rel: source="DA_CARD_ACCOUNT"; target="CTL_RETENTION"; label="governed by"; relation="data_governed_by_control"
+Rel(DA_CARD_ACCOUNT, POL_PRIVACY, "subject to")
+' aac rel: source="DA_CARD_ACCOUNT"; target="POL_PRIVACY"; label="subject to"; relation="data_subject_to_policy"
+Rel(DA_CARD_ACCOUNT, POL_RECORDS, "subject to")
+' aac rel: source="DA_CARD_ACCOUNT"; target="POL_RECORDS"; label="subject to"; relation="data_subject_to_policy"
+
+SHOW_LEGEND()
+@enduml

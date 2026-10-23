@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="595.4" viewBox="0 0 1100 595.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Provision credential to digital wallet — Systems, Data and Controls</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Provision credential to digital wallet — Systems, Data and Controls</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   6 nodes · 5 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(165.76 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="279.72" y="203.3" width="212.57" height="175.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="321.72" y="220.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.78" y="67.27" width="212.44" height="111.43" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.63" y="84.68" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="537.3" y="24.3" width="221.4" height="247.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="567.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-ORIG-008::SYS-TOKEN">
+<title>Primary</title>
+<path d="M196 103 L225 103 L233 103 A8 8 0 0 0 241 95 L241 88 A10 10 0 0 1 251 78 L496 78 A10 10 0 0 1 506 88 L506 210 A10 10 0 0 0 516 220 L534 220 L559.48 220" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M563 220 L553.43 224.78 L553.43 215.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-ORIG-008::SYS-TOKEN">
+<rect x="362.32" y="84.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="383.5" y="96.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-ORIG-008::SYS-CORE-LEDGER">
+<title>Supporting</title>
+<path d="M196 113 L225 113 L506 113 A10 10 0 0 0 516 103 L516 85 A9 9 0 0 1 525 76 L534 76 L559.48 76" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M563 76 L553.43 80.78 L553.43 71.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-ORIG-008::SYS-CORE-LEDGER">
+<rect x="354.46" y="119.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="383.5" y="131.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-ORIG-008::SYS-MOBILE">
+<title>Supporting</title>
+<path d="M196 123 L225 123 L251 123 A10 10 0 0 1 261 133 L261 138 A10 10 0 0 0 271 148 L534 148 L559.48 148" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M563 148 L553.43 152.78 L553.43 143.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-ORIG-008::SYS-MOBILE">
+<rect x="354.46" y="154.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="383.5" y="166.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e3::P-ORIG-008::CAP-ORIG-08">
+<title>supports</title>
+<path d="M196 133 L225 133 L241 133 A10 10 0 0 1 251 143 L251 245 A10 10 0 0 0 261 255 L277 255 L302.48 255" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M306 255 L296.43 259.79 L296.43 250.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e4::P-ORIG-008::CAP-PAY-07">
+<title>supports</title>
+<path d="M196 143 L225 143 L233 143 A8 8 0 0 1 241 151 L241 317 A10 10 0 0 0 251 327 L277 327 L302.48 327" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M306 327 L296.43 331.79 L296.43 322.21 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-ORIG-08" data-type="capabilities">
+<title>Digital Wallet Provisioning</title>
+<path d="M346 229 L306 255 L346 281 L426 281 L466 255 L426 229 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="386" y="253.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Digital Wallet</text>
+<text x="386" y="265.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Provisioning</text>
+</g>
+<g class="node" data-id="CAP-PAY-07" data-type="capabilities">
+<title>Tokenization &amp; Credential Management</title>
+<path d="M346 301 L306 327 L346 353 L426 353 L466 327 L426 301 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="386" y="319.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Tokenization &amp;</text>
+<text x="386" y="331.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credential</text>
+<text x="386" y="343.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+</g>
+<g class="node" data-id="P-ORIG-008" data-type="processes">
+<title>Provision credential to digital wallet</title>
+<path d="M116 93 L36 115.92 L66.56 153 L165.44 153 L196 115.92 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="121.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Provision credential to</text>
+<text x="116" y="133.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">digital wallet</text>
+</g>
+<g class="node" data-id="SYS-CORE-LEDGER" data-type="systems">
+<title>Core Card Ledger</title>
+<rect x="563" y="50" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="644" y="80.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Core Card Ledger</text>
+<svg x="715" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-MOBILE" data-type="systems">
+<title>Cardholder mobile application</title>
+<rect x="563" y="122" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="644" y="146.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Cardholder mobile</text>
+<text x="644" y="158.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">application</text>
+<svg x="715" y="127" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-TOKEN" data-type="systems">
+<title>Tokenization and credential management</title>
+<rect x="563" y="194" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="644" y="212.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Tokenization and</text>
+<text x="644" y="224.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">credential</text>
+<text x="644" y="236.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">management</text>
+<svg x="715" y="199" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="493.4" x2="1072" y2="493.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="517.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 506.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="517.4" font-size="12" font-weight="400" fill="#343d50">capability · 2</text>
+<g transform="translate(180.32 506.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="206.32" y="517.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(280.59 506.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="306.59" y="517.4" font-size="12" font-weight="400" fill="#343d50">system · 3</text>
+<text x="28" y="539.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 528.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="539.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 528.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="539.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="573.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-orig-008 · edit the model, not the picture</text></g>
+</svg>

@@ -1,0 +1,66 @@
+@startuml
+' Point-of-Sale Finance — Onboarding
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Point-of-Sale Finance — Onboarding
+
+AddElementTag("offered_interfaces", $bgColor="#e6ecff", $borderColor="#6366f1", $fontColor="#0f172a", $legendText="offered interface")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddRelTag("api-call", $legendText="API call")
+AddRelTag("event", $legendText="Event on the bus")
+AddRelTag("event-over-https", $legendText="Event over HTTPS")
+AddRelTag("own-datastore", $legendText="Its own datastore")
+
+Boundary(b_GCP, "GCP") {
+  Boundary(b_GCP__gcp_analytics_prod, "project gcp-analytics-prod") {
+    Boundary(b_GCP__gcp_analytics_prod__europe_west2, "region europe-west2") {
+      Boundary(b_GCP__gcp_analytics_prod__europe_west2__Private_Data, "Private-Data") {
+        System(SYS_LENDPERF_PIPELINE, "Lending Portfolio Performance Pipeline", "Dataflow jobs on a Composer schedule, ingesting the source events of Lending Portfolio Performance from Pub/Sub and curating them into BigQuery. Built with BigQuery · Dataflow +3.", $tags="systems")
+        ' aac SYS_LENDPERF_PIPELINE: company_domain="Lending"; hosting="GCP"; technology="BigQuery · Dataflow +3"
+      }
+    }
+  }
+  Boundary(b_GCP__gcp_lending_prod, "project gcp-lending-prod") {
+    Boundary(b_GCP__gcp_lending_prod__europe_west2, "region europe-west2") {
+      System(SYS_POSFIN_EVENTS, "Point-of-Sale Finance Event Publisher", "Publishes Point-of-Sale Finance domain events onto the enterprise bus. Built with Pub/Sub.", $tags="systems")
+      ' aac SYS_POSFIN_EVENTS: company_domain="Lending"; hosting="GCP"; technology="Pub/Sub"
+      Boundary(b_GCP__gcp_lending_prod__europe_west2__Public, "Public") {
+        System(SYS_OBAFF_WEBHOOKS, "Open Banking Affordability Webhook Listener", "Receives TrueLayer callbacks, verifies their signature, and forwards the event. Public by necessity, small by design. Built with GKE.", $tags="systems")
+        ' aac SYS_OBAFF_WEBHOOKS: company_domain="Lending"; hosting="GCP"; technology="GKE"
+      }
+      Boundary(b_GCP__gcp_lending_prod__europe_west2__Private_App, "Private-App") {
+        System(SYS_OBAFF_GATEWAY, "Open Banking Affordability Integration Gateway", "Our side of the TrueLayer integration: request mapping, retry and back-off, circuit breaking when the vendor is down, and the audit trail of what we sent them. Built with GKE.", $tags="systems")
+        ' aac SYS_OBAFF_GATEWAY: company_domain="Lending"; hosting="GCP"; technology="GKE"
+        System(OI_POSFIN_API, "Point-of-Sale Finance API", "The domain API Point-of-Sale Finance offers its channels, its jobs and its partners. Built with HTTPS.", $tags="offered_interfaces")
+        ' aac OI_POSFIN_API: company_domain="Lending"; technology="HTTPS"
+        System(SYS_POSFIN_API, "Point-of-Sale Finance Service", "Domain API for point-of-sale finance: dealer applications, shopper identity and consent, decisions, and the payment schedule that follows. Built with GKE · Point-of-Sale Finance Cache.", $tags="systems")
+        ' aac SYS_POSFIN_API: company_domain="Lending"; hosting="GCP"; technology="GKE · Point-of-Sale Finance Cache"
+        System(SYS_POSFIN_WEB, "Point-of-Sale Finance Web", "Customer-facing front end for Point-of-Sale Finance. Built with GKE.", $tags="systems")
+        ' aac SYS_POSFIN_WEB: company_domain="Lending"; hosting="GCP"; technology="GKE"
+      }
+      Boundary(b_GCP__gcp_lending_prod__europe_west2__Private_Data, "Private-Data") {
+        System(SYS_POSFIN_DB, "Point-of-Sale Finance Database", "Relational database for Point-of-Sale Finance, encrypted with a customer managed key. Built with Cloud SQL.", $tags="systems")
+        ' aac SYS_POSFIN_DB: company_domain="Lending"; hosting="GCP"; technology="Cloud SQL"
+      }
+    }
+  }
+}
+
+Rel(SYS_POSFIN_EVENTS, SYS_LENDPERF_PIPELINE, "Source events to Lending Portfolio Performance Pipeline", "Pub/Sub", $tags="event")
+' aac rel: source="SYS_POSFIN_EVENTS"; target="SYS_LENDPERF_PIPELINE"; label="Source events to Lending Portfolio Performance Pipeline"; interface_id="INT-LENDPERF-INGEST"; kind="event"; integration_style="Event"; auth_method="WorkloadIdentity"; frequency="Realtime"; direction="Inbound"
+Rel(SYS_POSFIN_API, SYS_OBAFF_GATEWAY, "SYS-POSFIN-API to Open Banking Affordability Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_POSFIN_API"; target="SYS_OBAFF_GATEWAY"; label="SYS-POSFIN-API to Open Banking Affordability Gateway"; interface_id="INT-OBAFF-CALLER-GATEWAY"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_OBAFF_WEBHOOKS, SYS_POSFIN_API, "Open Banking Affordability Webhook Listener to SYS-POSFIN-API", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_OBAFF_WEBHOOKS"; target="SYS_POSFIN_API"; label="Open Banking Affordability Webhook Listener to SYS-POSFIN-API"; interface_id="INT-OBAFF-WEBHOOKS-CONSUMER"; kind="event-over-https"; integration_style="Event"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_POSFIN_WEB, OI_POSFIN_API, "Point-of-Sale Finance Web to API", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_POSFIN_WEB"; target="OI_POSFIN_API"; label="Point-of-Sale Finance Web to API"; interface_id="INT-POSFIN-WEB-API"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-POSFIN-API"
+Rel(SYS_POSFIN_API, SYS_POSFIN_DB, "Point-of-Sale Finance Service to Database", "PostgreSQL", $tags="own-datastore")
+' aac rel: source="SYS_POSFIN_API"; target="SYS_POSFIN_DB"; label="Point-of-Sale Finance Service to Database"; interface_id="INT-POSFIN-API-DB"; kind="own-datastore"; integration_style="Request-response"; auth_method="WorkloadIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_POSFIN_API, SYS_POSFIN_EVENTS, "Point-of-Sale Finance Service to Event Publisher", "AMQP", $tags="event")
+' aac rel: source="SYS_POSFIN_API"; target="SYS_POSFIN_EVENTS"; label="Point-of-Sale Finance Service to Event Publisher"; interface_id="INT-POSFIN-API-EVENTS"; kind="event"; integration_style="Event"; auth_method="WorkloadIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(OI_POSFIN_API, SYS_POSFIN_API, "offered by")
+' aac rel: source="OI_POSFIN_API"; target="SYS_POSFIN_API"; label="offered by"; field="system_id"
+
+SHOW_LEGEND()
+@enduml

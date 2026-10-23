@@ -1,0 +1,58 @@
+# Patterns for knowing the estate is in trouble, and for proving what it
+# changed.
+
+- pattern_id: observed-service
+  name: Observed service
+  status: Approved
+  category: Operations
+  blocks: [observability-stack]
+  intent: >
+    A service in production emits logs, metrics and traces with a shared
+    correlation id, declares the handful of signals that mean it is healthy,
+    and is paged on them through the same on-call that security monitoring
+    pages. The incident that follows is recorded in service management,
+    reviewed, and closed with what changed. A service whose health cannot
+    be read off a dashboard is not in production yet, whatever the release
+    note says.
+  consequences: >
+    Telemetry has a bill, and verbose logging of a busy service is a real
+    line in the cloud invoice; the pattern expects the signals to be chosen,
+    not everything kept. A page is a promise that somebody answers, so
+    on-call has to be staffed before the alert exists. Security monitoring
+    reading application logs means application logs are now in scope for
+    what must not be logged, and a card number in a debug line is a breach.
+  when_not_to_use: >
+    A batch job that runs once a day and is checked once a day, where a
+    failed-run alert is the whole of what is needed and a dashboard is
+    decoration. A vendor's service, whose observability is theirs; what we
+    observe is our side of the integration and the vendor's status page, and
+    the pattern applies to the first.
+  method_ref: PAT-008
+
+- pattern_id: change-evidence-chain
+  name: Change evidence read off the systems
+  status: Approved
+  category: Governance
+  blocks: [change-evidence]
+  intent: >
+    What reached production is proven by a chain of systems writing to each
+    other: the pipeline records the change it deployed, service management
+    records the approval it was deployed under, and the risk register reads
+    both. A regulatory change is a work item whose closure is evidenced by
+    the deployment that implemented it. Nobody compiles the audit; the audit
+    is a query.
+  consequences: >
+    Every deployment path has to go through the pipeline, including the
+    emergency one, or the chain has a gap exactly where an auditor will
+    look. The service management tool becomes a dependency of releasing
+    software, which teams resent until the first audit they do not have to
+    prepare for. Linking work items, approvals and deployments is a data
+    discipline, and a change raised under the wrong work item is a false
+    statement the chain faithfully preserves.
+  when_not_to_use: >
+    Changes to things outside the estate's control, such as a vendor's
+    release of their own service, where the evidence is their notice and
+    our assessment of it, not a deployment of ours. Prototypes with no path
+    to production data, where the ceremony buys nothing, provided the
+    no-path claim is checked and the prototype is actually retired.
+  method_ref: PAT-012

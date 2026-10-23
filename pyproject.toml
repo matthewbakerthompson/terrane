@@ -1,0 +1,124 @@
+# The project is the repository, not `50_ENGINE/`. The views, the library and
+# the marks the package ships sit beside the engine, and an sdist carries only
+# what is inside its project: with the project in `50_ENGINE/` they were `../`
+# from it, the sdist held the engine alone, and a wheel built from it failed.
+
+[build-system]
+# 1.27 is the first hatchling to write a license expression and the files
+# beside it (PEP 639).
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+# The repository's own name is taken on PyPI by an unrelated project from
+# 2021, so the distribution carries the app's name, and so do the command
+# and the module. Nothing is installed as `aac`: that is AaC's module and
+# command on PyPI, another architecture-as-code tool, and an environment
+# holding both would have lost one of them.
+name = "terrane"
+dynamic = ["version"]
+description = "Enterprise architecture diagrams from a model: the views are queries, the pictures are drawn in Python, with the preset views and the library of parts inside the package."
+# The package's own page, not the repository's README, whose pictures are
+# relative paths PyPI cannot show.
+readme = "50_ENGINE/README.md"
+requires-python = ">=3.10"
+# PolyForm's Required Notice has to travel with every copy, and a wheel is
+# one: the repository's own LICENSE, inside the project now that the
+# project is the repository. SPDX has no id for PolyForm Shield (it lists
+# Noncommercial and Small Business), so the expression names it as a
+# LicenseRef, as PEP 639 allows.
+# The package's own terms first, then what it bundles: Cytoscape, dagre and
+# cytoscape-dagre (MIT), elkjs (EPL-2.0), the Geist and Libre Franklin faces
+# (OFL-1.1), Simple Icons (CC0-1.0), and the AWS, Azure and Google Cloud
+# icons under their owners' published terms, each text in `LICENSES/` and
+# the whole list in THIRD_PARTY_NOTICES.md.
+license = "LicenseRef-PolyForm-Shield-1.0.0 AND MIT AND EPL-2.0 AND OFL-1.1 AND CC0-1.0 AND LicenseRef-AWS-Architecture-Icons AND LicenseRef-Azure-Public-Service-Icons AND LicenseRef-Google-Cloud-Icons"
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md", "LICENSES/*"]
+authors = [{ name = "Matthew Baker Thompson" }]
+keywords = ["architecture", "diagrams", "enterprise-architecture", "svg", "c4", "model-driven"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Console",
+  "Environment :: Web Environment",
+  "Intended Audience :: Information Technology",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development :: Documentation",
+  "Topic :: Multimedia :: Graphics",
+  "Operating System :: OS Independent",
+]
+# Nothing required: the engine runs on a bare interpreter and a bundled
+# reader covers the YAML the model uses.
+dependencies = []
+
+[project.optional-dependencies]
+yaml = ["pyyaml>=6.0"]
+png = ["resvg-py"]
+
+[project.urls]
+Homepage = "https://github.com/matthewbakerthompson/terrane"
+Documentation = "https://github.com/matthewbakerthompson/terrane/tree/main/00_METHOD"
+Changelog = "https://github.com/matthewbakerthompson/terrane/blob/main/CHANGELOG.md"
+Issues = "https://github.com/matthewbakerthompson/terrane/issues"
+
+[project.scripts]
+terrane = "terrane.cli:main"
+
+[tool.hatch.version]
+path = "50_ENGINE/terrane/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+# Installed as `terrane`: the last part of the path names the package.
+packages = ["50_ENGINE/terrane"]
+
+# The shipped folders beside the engine, copied into the package under
+# `terrane/shipped/` laid out the same way, so `terrane draw` and the marks on a
+# drawing work from any folder once installed (`terrane/shipped.py` looks here
+# when the repository is not around the engine). `tests/test_shipped.py`
+# holds this list to what the engine reads.
+[tool.hatch.build.targets.wheel.force-include]
+"30_VIEWS" = "terrane/shipped/30_VIEWS"
+"20_ARCHETYPES" = "terrane/shipped/20_ARCHETYPES"
+"24_CONNECTIONS" = "terrane/shipped/24_CONNECTIONS"
+"25_COMPONENTS" = "terrane/shipped/25_COMPONENTS"
+"26_BLOCKS" = "terrane/shipped/26_BLOCKS"
+"27_PATTERNS" = "terrane/shipped/27_PATTERNS"
+"28_MODULES" = "terrane/shipped/28_MODULES"
+"29_TYPES" = "terrane/shipped/29_TYPES"
+# The whole app: its pages beside its server, as in the repository, so
+# `terrane app` serves them from the package.
+"80_APP/web" = "terrane/shipped/web"
+"80_APP/app/server.py" = "terrane/shipped/app/server.py"
+"90_EXAMPLE/quick" = "terrane/shipped/90_EXAMPLE/quick"
+"10_MODEL/tech_services" = "terrane/shipped/10_MODEL/tech_services"
+"10_MODEL/model.yaml" = "terrane/shipped/10_MODEL/model.yaml"
+
+# What a wheel is built from and nothing else of the repository's: the sdist
+# is the package's source, not the repository's. The tests stay out, since
+# they read the whole repository (the sample estate, the generated pictures)
+# and cannot run from an sdist. `tests/test_shipped.py` holds that every path
+# the wheel takes is in this list.
+[tool.hatch.build.targets.sdist]
+only-include = [
+  "50_ENGINE/terrane",
+  "50_ENGINE/README.md",
+  "LICENSE",
+  "THIRD_PARTY_NOTICES.md",
+  "LICENSES",
+  "30_VIEWS",
+  "20_ARCHETYPES",
+  "24_CONNECTIONS",
+  "25_COMPONENTS",
+  "26_BLOCKS",
+  "27_PATTERNS",
+  "28_MODULES",
+  "29_TYPES",
+  "80_APP/web",
+  "80_APP/app/server.py",
+  "90_EXAMPLE/quick",
+  "10_MODEL/tech_services",
+  "10_MODEL/model.yaml",
+]

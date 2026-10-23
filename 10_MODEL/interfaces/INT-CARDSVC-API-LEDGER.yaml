@@ -1,0 +1,18 @@
+# Imported from interfaces.csv.
+interface_id: INT-CARDSVC-API-LEDGER
+name: Card Servicing Service to Core Ledger
+description: Balance, limit and posting inquiries.
+status: Active
+togaf_layer: Application
+architecture_domain: Application
+company_domain: Servicing
+source_system_id: SYS-CARDSVC-API
+target_system_id: SYS-CORE-LEDGER
+offered_interface_id: OI-LEDGER-QUEUE
+owner_org_id: ORG-DIGITAL
+protocol: MQ
+direction: Outbound
+frequency: Realtime
+integration_style: Request-response
+auth_method: MutualTLS
+data_classification: Restricted

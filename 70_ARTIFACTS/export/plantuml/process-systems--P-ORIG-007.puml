@@ -1,0 +1,35 @@
+@startuml
+' Manage card production and fulfillment — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Manage card production and fulfillment — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_ORIG_07, "Card Production & Fulfillment", "Produce, personalize, and deliver physical and digital cards.", $tags="capabilities")
+  ' aac CAP_ORIG_07: company_domain="Originations"
+}
+Boundary(b_Process, "Process") {
+  System(P_ORIG_007, "Manage card production and fulfillment", "Oversee vendor-executed card personalization, production, and delivery, including inventory, service levels, and exception handling.", $tags="processes")
+  ' aac P_ORIG_007: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_CARD_FULFILL, "Card production and fulfillment", "Card production, personalization, and fulfillment. Built with external.", $tags="systems")
+  ' aac SYS_CARD_FULFILL: company_domain=""; hosting="External"; technology="external"
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+}
+
+Rel(P_ORIG_007, SYS_CARD_FULFILL, "Primary")
+' aac rel: source="P_ORIG_007"; target="SYS_CARD_FULFILL"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_ORIG_007, SYS_CORE_LEDGER, "Supporting")
+' aac rel: source="P_ORIG_007"; target="SYS_CORE_LEDGER"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_ORIG_007, CAP_ORIG_07, "supports")
+' aac rel: source="P_ORIG_007"; target="CAP_ORIG_07"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

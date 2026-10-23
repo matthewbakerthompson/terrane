@@ -1,0 +1,129 @@
+# Governance, risk and compliance platform — Processes and Capabilities
+
+One system, every process that uses it and in what role, and the capabilities those processes support. This shows the business impact of changing the system. A long list against a low criticality rating is worth a second look.
+
+```mermaid
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Governance, risk and compliance platform — Processes and Capabilities
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Capability["Capability"]
+    direction LR
+    CAP_TECH_05{{"Business Continuity &<br/>Disaster Recovery"}}
+    CAP_TPS_05{{"Client Audit & Oversight<br/>Support"}}
+    CAP_SERV_05{{"Complaint Capture &<br/>Resolution"}}
+    CAP_RGOV_06{{"Complaint Oversight &<br/>UDAAP Management"}}
+    CAP_RGOV_03{{"Compliance Monitoring &<br/>Testing"}}
+    CAP_TPRM_02{{"Contract & SLA Management"}}
+    CAP_SEC_04{{"Data Protection &<br/>Cryptography"}}
+    CAP_STRAT_04{{"Enterprise Architecture &<br/>Change Portfolio"}}
+    CAP_RGOV_05{{"Internal Audit &<br/>Examination Management"}}
+    CAP_RGOV_04{{"Issue & Remediation<br/>Management"}}
+    CAP_PART_01{{"Issuing Bank & Sponsor<br/>Relationship"}}
+    CAP_RGOV_08{{"Model Risk Governance"}}
+    CAP_TPRM_03{{"Ongoing Vendor Risk<br/>Monitoring"}}
+    CAP_SEC_05{{"Privacy Management"}}
+    CAP_RGOV_02{{"Regulatory Change<br/>Management"}}
+    CAP_TECH_01{{"Solution Delivery &<br/>Engineering"}}
+    CAP_PROD_03{{"Terms & Disclosure<br/>Management"}}
+    CAP_TPRM_04{{"Vendor Exit & Continuity<br/>Planning"}}
+    CAP_TPRM_01{{"Vendor Sourcing & Due<br/>Diligence"}}
+    CAP_SEC_03{{"Vulnerability & Patch<br/>Management"}}
+  end
+
+  subgraph grp_Process["Process"]
+    direction LR
+    P_COMPLIANCE_005[\"Analyze complaint signal<br/>for conduct risk"/]
+    P_COMPLIANCE_001[\"Assess and land regulatory<br/>change"/]
+    P_PRODUCT_002[\"Author and version<br/>disclosure"/]
+    P_SERVICING_006[\"Capture and resolve<br/>complaint"/]
+    P_RISK_003[\"Coordinate regulatory<br/>examination"/]
+    P_EA_008[\"Evaluate and select a<br/>technology or platform"/]
+    P_COMPLIANCE_002[\"Execute compliance<br/>monitoring test"/]
+    P_TECH_003[\"Execute disaster recovery<br/>test"/]
+    P_VENDORMGMT_003[\"Execute supplier exit"/]
+    P_PRIVACY_001[\"Fulfill consumer privacy<br/>request"/]
+    P_PARTNERSHIPS_001[\"Fulfill issuing bank<br/>oversight obligations"/]
+    P_EA_003[\"Grant or decline an<br/>architecture exception"/]
+    P_INFOSEC_004[\"Maintain cardholder data<br/>scope and evidence"/]
+    P_RISK_001[\"Manage issue and<br/>remediation to closure"/]
+    P_VENDORMGMT_002[\"Monitor supplier risk and<br/>performance"/]
+    P_VENDORMGMT_001[\"Onboard and diligence<br/>supplier"/]
+    P_APPDEV_005[\"Scan code and dependencies<br/>for security defects"/]
+    P_TPS_007[\"Support client audit or<br/>examination"/]
+    P_RISK_002[\"Validate model<br/>independently"/]
+  end
+
+  subgraph grp_System["System"]
+    direction LR
+    SYS_GRC["Governance, risk and<br/>compliance platform"]
+  end
+
+  P_SERVICING_006 -->|"Supporting"| SYS_GRC
+  P_TPS_007 -->|"Primary"| SYS_GRC
+  P_COMPLIANCE_001 -->|"Primary"| SYS_GRC
+  P_COMPLIANCE_002 -->|"Primary"| SYS_GRC
+  P_COMPLIANCE_005 -->|"Primary"| SYS_GRC
+  P_RISK_001 -->|"Primary"| SYS_GRC
+  P_RISK_002 -->|"Supporting"| SYS_GRC
+  P_RISK_003 -->|"Primary"| SYS_GRC
+  P_TECH_003 -->|"Supporting"| SYS_GRC
+  P_INFOSEC_004 -->|"Primary"| SYS_GRC
+  P_PRIVACY_001 -->|"Primary"| SYS_GRC
+  P_VENDORMGMT_001 -->|"Primary"| SYS_GRC
+  P_VENDORMGMT_002 -->|"Primary"| SYS_GRC
+  P_VENDORMGMT_003 -->|"Primary"| SYS_GRC
+  P_PRODUCT_002 -->|"Supporting"| SYS_GRC
+  P_PARTNERSHIPS_001 -->|"Primary"| SYS_GRC
+  P_EA_003 -->|"Supporting"| SYS_GRC
+  P_EA_008 -->|"Supporting"| SYS_GRC
+  P_APPDEV_005 -->|"Supporting"| SYS_GRC
+  P_SERVICING_006 -->|"supports"| CAP_SERV_05
+  P_SERVICING_006 -->|"supports"| CAP_RGOV_06
+  P_TPS_007 -->|"supports"| CAP_TPS_05
+  P_COMPLIANCE_001 -->|"supports"| CAP_RGOV_02
+  P_COMPLIANCE_002 -->|"supports"| CAP_RGOV_03
+  P_COMPLIANCE_005 -->|"supports"| CAP_RGOV_06
+  P_RISK_001 -->|"supports"| CAP_RGOV_04
+  P_RISK_002 -->|"supports"| CAP_RGOV_08
+  P_RISK_003 -->|"supports"| CAP_RGOV_05
+  P_TECH_003 -->|"supports"| CAP_TECH_05
+  P_INFOSEC_004 -->|"supports"| CAP_SEC_04
+  P_PRIVACY_001 -->|"supports"| CAP_SEC_05
+  P_VENDORMGMT_001 -->|"supports"| CAP_TPRM_01
+  P_VENDORMGMT_001 -->|"supports"| CAP_TPRM_02
+  P_VENDORMGMT_002 -->|"supports"| CAP_TPRM_03
+  P_VENDORMGMT_003 -->|"supports"| CAP_TPRM_04
+  P_PRODUCT_002 -->|"supports"| CAP_PROD_03
+  P_PARTNERSHIPS_001 -->|"supports"| CAP_PART_01
+  P_EA_003 -->|"supports"| CAP_STRAT_04
+  P_EA_003 -->|"supports"| CAP_RGOV_04
+  P_EA_008 -->|"supports"| CAP_STRAT_04
+  P_EA_008 -->|"supports"| CAP_TPRM_01
+  P_APPDEV_005 -->|"supports"| CAP_TECH_01
+  P_APPDEV_005 -->|"supports"| CAP_SEC_03
+
+  classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
+  classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  class CAP_PART_01,CAP_PROD_03,CAP_RGOV_02,CAP_RGOV_03,CAP_RGOV_04,CAP_RGOV_05,CAP_RGOV_06,CAP_RGOV_08,CAP_SEC_03,CAP_SEC_04,CAP_SEC_05,CAP_SERV_05,CAP_STRAT_04,CAP_TECH_01,CAP_TECH_05,CAP_TPRM_01,CAP_TPRM_02,CAP_TPRM_03,CAP_TPRM_04,CAP_TPS_05 s_capabilities__capabilities;
+  class P_APPDEV_005,P_COMPLIANCE_001,P_COMPLIANCE_002,P_COMPLIANCE_005,P_EA_003,P_EA_008,P_INFOSEC_004,P_PARTNERSHIPS_001,P_PRIVACY_001,P_PRODUCT_002,P_RISK_001,P_RISK_002,P_RISK_003,P_SERVICING_006,P_TECH_003,P_TPS_007,P_VENDORMGMT_001,P_VENDORMGMT_002,P_VENDORMGMT_003 s_processes__processes;
+  class SYS_GRC s_systems__systems;
+  classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_Capability,grp_Process,grp_System boundary1;
+```
+
+The same view as the app draws it, written beside the Mermaid by `terrane render`:
+
+![Governance, risk and compliance platform — Processes and Capabilities](../svg/system-processes--sys-grc.svg)
+
+**Hue is the entity type.**
+
+| | Entity type |
+|---|---|
+| `#6d28d9` | capabilities |
+| `#0369a1` | processes |
+| `#4338ca` | systems |
+
+40 entities, 43 relationships. Generated from the model; edit the model, not this file.

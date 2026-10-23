@@ -1,0 +1,125 @@
+@startuml
+' Rewards Redemption — By part
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Rewards Redemption — By part
+
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("offered_interfaces", $bgColor="#e6ecff", $borderColor="#6366f1", $fontColor="#0f172a", $legendText="offered interface")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("tech_services", $bgColor="#fed7aa", $borderColor="#c2410c", $fontColor="#0f172a", $legendText="technology service")
+AddRelTag("api-call", $legendText="API call")
+AddRelTag("event", $legendText="Event on the bus")
+AddRelTag("own-datastore", $legendText="Its own datastore")
+
+Boundary(b_api_service, "api-service") {
+  System(OI_REWARDS_API, "Rewards Redemption API", "The domain API Rewards Redemption offers its channels, its jobs and its partners. Built with HTTPS.", $tags="offered_interfaces")
+  ' aac OI_REWARDS_API: company_domain="Card Issuing"; technology="HTTPS"
+  System(SYS_REWARDS_API, "Rewards Redemption Service", "Domain service for Rewards Redemption, behind the Rewards Redemption API. Built with AKS · Rewards Redemption Cache.", $tags="systems")
+  ' aac SYS_REWARDS_API: company_domain="Card Issuing"; hosting="Azure"; technology="AKS · Rewards Redemption Cache"
+}
+Boundary(b_async_worker, "async-worker") {
+  System(SYS_REWARDS_WORKER, "Rewards Redemption Async Worker", "Consumes redemption events and fulfills them: statement credits posted to the ledger, gift-card orders placed with the fulfillment partner. Built with AKS · Event Hubs.", $tags="systems")
+  ' aac SYS_REWARDS_WORKER: company_domain="Card Issuing"; hosting="Azure"; technology="AKS · Event Hubs"
+}
+Boundary(b_event_publisher, "event-publisher") {
+  System(SYS_REWARDS_EVENTS, "Rewards Redemption Event Publisher", "Publishes Rewards Redemption domain events onto the enterprise bus. Built with Service Bus.", $tags="systems")
+  ' aac SYS_REWARDS_EVENTS: company_domain="Card Issuing"; hosting="Azure"; technology="Service Bus"
+}
+Boundary(b_relational_datastore, "relational-datastore") {
+  System(SYS_REWARDS_STORE, "Rewards Redemption Database", "Relational database for Rewards Redemption, encrypted with a customer managed key. Built with Azure SQL.", $tags="systems")
+  ' aac SYS_REWARDS_STORE: company_domain="Card Issuing"; hosting="Azure"; technology="Azure SQL"
+  SystemDb(DA_REWARDS_OPERATIONAL, "Rewards Redemption operational data", "Operational records held by Rewards Redemption.", $tags="data_assets")
+  ' aac DA_REWARDS_OPERATIONAL: company_domain="Card Issuing"
+}
+Boundary(b_web_channel, "web-channel") {
+  System(SYS_REWARDS_WEB, "Rewards Redemption Web", "Customer-facing front end for Rewards Redemption. Built with AKS.", $tags="systems")
+  ' aac SYS_REWARDS_WEB: company_domain="Card Issuing"; hosting="Azure"; technology="AKS"
+}
+Deployment_Node(TS_AZURE_APIM, "Azure API Management", "API gateway", "The API gateway every internal and partner API is published through.", $tags="tech_services") {
+  ' aac TS_AZURE_APIM: company_domain="Enterprise Platform"; technology="API gateway"
+}
+Deployment_Node(TS_AZURE_EVENTHUBS, "Azure Event Hubs", "Event stream", "Managed event streaming carrying a product's domain events to the workers that consume them.", $tags="tech_services") {
+  ' aac TS_AZURE_EVENTHUBS: company_domain="Enterprise Platform"; technology="Event stream"
+}
+Deployment_Node(TS_AZURE_KEYVAULT, "Azure Key Vault", "Secrets manager", "Secret, key and certificate management.", $tags="tech_services") {
+  ' aac TS_AZURE_KEYVAULT: company_domain="Enterprise Platform"; technology="Secrets manager"
+}
+Deployment_Node(TS_AZURE_AKS, "Azure Kubernetes Service", "Container platform", "Managed Kubernetes hosting the containerized estate.", $tags="tech_services") {
+  ' aac TS_AZURE_AKS: company_domain="Enterprise Platform"; technology="Container platform"
+}
+Deployment_Node(TS_AZURE_MONITOR, "Azure Monitor", "Observability", "Metrics, logs and alerts for the Azure-hosted estate.", $tags="tech_services") {
+  ' aac TS_AZURE_MONITOR: company_domain="Enterprise Platform"; technology="Observability"
+}
+Deployment_Node(TS_AZURE_SERVICEBUS, "Azure Service Bus", "Message queue", "Enterprise messaging backbone for domain events.", $tags="tech_services") {
+  ' aac TS_AZURE_SERVICEBUS: company_domain="Enterprise Platform"; technology="Message queue"
+}
+Deployment_Node(TS_AZURE_SQL, "Azure SQL Database", "Relational database", "Managed relational database for operational datastores.", $tags="tech_services") {
+  ' aac TS_AZURE_SQL: company_domain="Enterprise Platform"; technology="Relational database"
+}
+Deployment_Node(TS_ENTRA_ID, "Microsoft Entra ID", "Identity provider", "Workforce and customer identity provider.", $tags="tech_services") {
+  ' aac TS_ENTRA_ID: company_domain="Enterprise Platform"; technology="Identity provider"
+}
+Deployment_Node(TS_REWARDS_BACKUP, "Rewards Redemption Backup and recovery", "Azure Backup", "Copies that survive the thing they came from. The recovery objective is a property of this, not of the database.", $tags="tech_services") {
+  ' aac TS_REWARDS_BACKUP: company_domain="Card Issuing"; technology="Azure Backup"
+}
+Deployment_Node(TS_REWARDS_CACHE, "Rewards Redemption Cache", "Azure Cache for Redis", "In-memory key-value store. Also, in most estates, an accidental database with no backup.", $tags="tech_services") {
+  ' aac TS_REWARDS_CACHE: company_domain="Card Issuing"; technology="Azure Cache for Redis"
+}
+Deployment_Node(TS_REWARDS_DNS, "Rewards Redemption DNS", "Azure DNS", "Name resolution and, in practice, the failover mechanism of last resort.", $tags="tech_services") {
+  ' aac TS_REWARDS_DNS: company_domain="Card Issuing"; technology="Azure DNS"
+}
+Deployment_Node(TS_REWARDS_WAF, "Rewards Redemption Web application firewall", "Azure WAF", "Request inspection at the edge. Blocks the traffic nobody wrote a test for.", $tags="tech_services") {
+  ' aac TS_REWARDS_WAF: company_domain="Card Issuing"; technology="Azure WAF"
+}
+
+Rel(SYS_REWARDS_WEB, OI_REWARDS_API, "Rewards Redemption Web to API", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_REWARDS_WEB"; target="OI_REWARDS_API"; label="Rewards Redemption Web to API"; interface_id="INT-REWARDS-WEB-API"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-REWARDS-API"
+Rel(SYS_REWARDS_API, SYS_REWARDS_STORE, "Rewards Redemption Service to Database", "TDS", $tags="own-datastore")
+' aac rel: source="SYS_REWARDS_API"; target="SYS_REWARDS_STORE"; label="Rewards Redemption Service to Database"; interface_id="INT-REWARDS-API-STORE"; kind="own-datastore"; integration_style="Request-response"; auth_method="ManagedIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_REWARDS_API, SYS_REWARDS_EVENTS, "Rewards Redemption Service to Event Publisher", "AMQP", $tags="event")
+' aac rel: source="SYS_REWARDS_API"; target="SYS_REWARDS_EVENTS"; label="Rewards Redemption Service to Event Publisher"; interface_id="INT-REWARDS-API-EVENTS"; kind="event"; integration_style="Event"; auth_method="ManagedIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_REWARDS_API, SYS_REWARDS_WORKER, "Rewards Redemption Service to Async Worker", "Kafka", $tags="event")
+' aac rel: source="SYS_REWARDS_API"; target="SYS_REWARDS_WORKER"; label="Rewards Redemption Service to Async Worker"; interface_id="INT-REWARDS-API-WORKER"; kind="event"; integration_style="Event"; auth_method="ManagedIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_REWARDS_API, TS_AZURE_APIM, "runs on")
+' aac rel: source="SYS_REWARDS_API"; target="TS_AZURE_APIM"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_REWARDS_API, TS_AZURE_AKS, "runs on")
+' aac rel: source="SYS_REWARDS_API"; target="TS_AZURE_AKS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_REWARDS_API, TS_REWARDS_CACHE, "runs on")
+' aac rel: source="SYS_REWARDS_API"; target="TS_REWARDS_CACHE"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_REWARDS_API, TS_AZURE_MONITOR, "runs on")
+' aac rel: source="SYS_REWARDS_API"; target="TS_AZURE_MONITOR"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_REWARDS_API, TS_AZURE_KEYVAULT, "runs on")
+' aac rel: source="SYS_REWARDS_API"; target="TS_AZURE_KEYVAULT"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_REWARDS_WEB, TS_REWARDS_DNS, "runs on")
+' aac rel: source="SYS_REWARDS_WEB"; target="TS_REWARDS_DNS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_REWARDS_WEB, TS_REWARDS_WAF, "runs on")
+' aac rel: source="SYS_REWARDS_WEB"; target="TS_REWARDS_WAF"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_REWARDS_WEB, TS_AZURE_AKS, "runs on")
+' aac rel: source="SYS_REWARDS_WEB"; target="TS_AZURE_AKS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_REWARDS_WEB, TS_ENTRA_ID, "runs on")
+' aac rel: source="SYS_REWARDS_WEB"; target="TS_ENTRA_ID"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_REWARDS_STORE, TS_AZURE_SQL, "runs on")
+' aac rel: source="SYS_REWARDS_STORE"; target="TS_AZURE_SQL"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_REWARDS_STORE, TS_REWARDS_BACKUP, "runs on")
+' aac rel: source="SYS_REWARDS_STORE"; target="TS_REWARDS_BACKUP"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_REWARDS_STORE, TS_AZURE_KEYVAULT, "runs on")
+' aac rel: source="SYS_REWARDS_STORE"; target="TS_AZURE_KEYVAULT"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_REWARDS_EVENTS, TS_AZURE_SERVICEBUS, "runs on")
+' aac rel: source="SYS_REWARDS_EVENTS"; target="TS_AZURE_SERVICEBUS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_REWARDS_WORKER, TS_AZURE_AKS, "runs on")
+' aac rel: source="SYS_REWARDS_WORKER"; target="TS_AZURE_AKS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_REWARDS_WORKER, TS_AZURE_MONITOR, "runs on")
+' aac rel: source="SYS_REWARDS_WORKER"; target="TS_AZURE_MONITOR"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_REWARDS_WORKER, TS_AZURE_EVENTHUBS, "runs on")
+' aac rel: source="SYS_REWARDS_WORKER"; target="TS_AZURE_EVENTHUBS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_REWARDS_API, DA_REWARDS_OPERATIONAL, "ReadWrite")
+' aac rel: source="SYS_REWARDS_API"; target="DA_REWARDS_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_REWARDS_STORE, DA_REWARDS_OPERATIONAL, "ReadWrite")
+' aac rel: source="SYS_REWARDS_STORE"; target="DA_REWARDS_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(OI_REWARDS_API, SYS_REWARDS_API, "offered by")
+' aac rel: source="OI_REWARDS_API"; target="SYS_REWARDS_API"; label="offered by"; field="system_id"
+
+SHOW_LEGEND()
+@enduml

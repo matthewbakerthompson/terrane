@@ -1,0 +1,167 @@
+# What the change in flight actually touches.
+#
+# The canonical metamodel carries this as `affected_system_ids`, a semicolon
+# list on the work package. The column is declared so an import carrying it is
+# not rejected, and nothing reads it: a list in a cell cannot be joined,
+# filtered or drawn, which is the same call the estate made for `control_ids`.
+#
+# `effect` is the qualifier because Builds and Changes are different risks. A
+# work package that only builds new systems can slip without breaking
+# anything; one that changes a live system is a release against something
+# customers are using. Two of the three below do both.
+#
+# A change request reaches its systems through the work package it authorized,
+# so the approved ones need no rows here. The deferred one has no work package
+# to reach through -- that is what deferred means -- and would otherwise be
+# connected to the estate by nothing at all.
+#
+# Every row is placeholder content drafted against a placeholder estate.
+
+work_package_affects_system:
+  # Eight new systems on the landing zone, nothing live touched. The ledger,
+  # the bureau and the CRM gain a caller through the hub; they are not changed
+  # by it, so they are not listed.
+  - work_package_id: WP-LENDING-AWS
+    system_id: SYS-LENDING-EDGE
+    effect: Builds
+  - work_package_id: WP-LENDING-AWS
+    system_id: SYS-LENDING-ALB
+    effect: Builds
+  - work_package_id: WP-LENDING-AWS
+    system_id: SYS-LENDING-WEB
+    effect: Builds
+  - work_package_id: WP-LENDING-AWS
+    system_id: SYS-LENDING-API
+    effect: Builds
+  - work_package_id: WP-LENDING-AWS
+    system_id: SYS-LENDING-WORKER
+    effect: Builds
+  - work_package_id: WP-LENDING-AWS
+    system_id: SYS-LENDING-DB
+    effect: Builds
+  - work_package_id: WP-LENDING-AWS
+    system_id: SYS-LENDING-BUCKET
+    effect: Builds
+  - work_package_id: WP-LENDING-AWS
+    system_id: SYS-LENDING-HUB
+    effect: Builds
+  # The vendor tenant and the three systems that reach it, plus the one live
+  # system the onboarding changes: the switch becomes its caller.
+  - work_package_id: WP-SCREENING-ONBOARD
+    system_id: SYS-SCREENING-VENDOR
+    effect: Builds
+  - work_package_id: WP-SCREENING-ONBOARD
+    system_id: SYS-SCREENING-GATEWAY
+    effect: Builds
+  - work_package_id: WP-SCREENING-ONBOARD
+    system_id: SYS-SCREENING-EGRESS
+    effect: Builds
+  - work_package_id: WP-SCREENING-ONBOARD
+    system_id: SYS-SCREENING-FEDERATION
+    effect: Builds
+  - work_package_id: WP-SCREENING-ONBOARD
+    system_id: SYS-AUTH-SWITCH
+    effect: Changes
+  # One new engine, and the semantic layer it sources from gains the fields
+  # the return needs.
+  - work_package_id: WP-REG-REPORTING
+    system_id: SYS-REG-REPORTING
+    effect: Builds
+  - work_package_id: WP-REG-REPORTING
+    system_id: SYS-CUST360-SEMANTIC
+    effect: Changes
+
+  # The verification vendor: the tenancy, the gateway, the private path and
+  # the webhook listener are new; the identity service learns to send the
+  # capture and act on the callback.
+  - work_package_id: WP-IDV-ONBOARD
+    system_id: SYS-IDV-VENDOR
+    effect: Builds
+  - work_package_id: WP-IDV-ONBOARD
+    system_id: SYS-IDV-GATEWAY
+    effect: Builds
+  - work_package_id: WP-IDV-ONBOARD
+    system_id: SYS-IDV-EGRESS
+    effect: Builds
+  - work_package_id: WP-IDV-ONBOARD
+    system_id: SYS-IDV-WEBHOOKS
+    effect: Builds
+  - work_package_id: WP-IDV-ONBOARD
+    system_id: SYS-IDENTITY-SVC
+    effect: Changes
+
+  # The first product on the Azure digital shape: five new systems, nothing
+  # live touched. The proposed rewards ledger keeps the balances and is not
+  # changed by a channel in front of it.
+  - work_package_id: WP-REWARDS-BUILD
+    system_id: SYS-REWARDS-WEB
+    effect: Builds
+  - work_package_id: WP-REWARDS-BUILD
+    system_id: SYS-REWARDS-API
+    effect: Builds
+  - work_package_id: WP-REWARDS-BUILD
+    system_id: SYS-REWARDS-STORE
+    effect: Builds
+  - work_package_id: WP-REWARDS-BUILD
+    system_id: SYS-REWARDS-EVENTS
+    effect: Builds
+  - work_package_id: WP-REWARDS-BUILD
+    system_id: SYS-REWARDS-WORKER
+    effect: Builds
+
+  # The merchant portal, assembled from parts with no shape: four new
+  # systems, nothing live touched. The role it creates is an actor, which a
+  # work package does not build.
+  - work_package_id: WP-MERCHANT-PORTAL
+    system_id: SYS-MERCHANT-WEB
+    effect: Builds
+  - work_package_id: WP-MERCHANT-PORTAL
+    system_id: SYS-MERCHANT-API
+    effect: Builds
+  - work_package_id: WP-MERCHANT-PORTAL
+    system_id: SYS-MERCHANT-STORE
+    effect: Builds
+  - work_package_id: WP-MERCHANT-PORTAL
+    system_id: SYS-MERCHANT-EVENTS
+    effect: Builds
+
+  - work_package_id: WP-POS-FINANCE
+    system_id: SYS-POSFIN-WEB
+    effect: Builds
+  - work_package_id: WP-POS-FINANCE
+    system_id: SYS-POSFIN-API
+    effect: Builds
+  - work_package_id: WP-POS-FINANCE
+    system_id: SYS-POSFIN-DB
+    effect: Builds
+  - work_package_id: WP-POS-FINANCE
+    system_id: SYS-POSFIN-EVENTS
+    effect: Builds
+
+  - work_package_id: WP-OB-AFFORDABILITY
+    system_id: SYS-OBAFF-VENDOR
+    effect: Builds
+  - work_package_id: WP-OB-AFFORDABILITY
+    system_id: SYS-OBAFF-GATEWAY
+    effect: Builds
+  - work_package_id: WP-OB-AFFORDABILITY
+    system_id: SYS-OBAFF-EGRESS
+    effect: Builds
+  - work_package_id: WP-OB-AFFORDABILITY
+    system_id: SYS-OBAFF-WEBHOOKS
+    effect: Builds
+
+  - work_package_id: WP-LENDING-PERFORMANCE
+    system_id: SYS-LENDPERF-PIPELINE
+    effect: Builds
+  - work_package_id: WP-LENDING-PERFORMANCE
+    system_id: SYS-LENDPERF-SEMANTIC
+    effect: Builds
+
+change_request_affects_system:
+  # The deferred consolidation. Both ends are named because the question is
+  # about the pair: retire the one, extend the other to carry what it held.
+  - change_request_id: ACR-2026-030
+    system_id: SYS-CARDSVC-STORE
+  - change_request_id: ACR-2026-030
+    system_id: SYS-LENDING-DB

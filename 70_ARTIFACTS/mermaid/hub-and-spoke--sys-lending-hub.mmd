@@ -1,0 +1,17 @@
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Installment Lending Integration Hub — Hub and Spokes
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  SYS_CORE_LEDGER["Core Card Ledger"]
+  SYS_CRM["Dynamics 365 Customer<br/>Service<br/>[Microsoft]"]
+  SYS_CREDIT_BUREAU["Experian Credit Bureau<br/>[Experian]"]
+  SYS_LENDING_HUB["Installment Lending<br/>Integration Hub"]
+
+  SYS_CRM --> SYS_CORE_LEDGER
+  SYS_CORE_LEDGER --> SYS_LENDING_HUB
+  SYS_CREDIT_BUREAU --> SYS_LENDING_HUB
+  SYS_CRM --> SYS_LENDING_HUB
+
+  classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  class SYS_CORE_LEDGER,SYS_CREDIT_BUREAU,SYS_CRM,SYS_LENDING_HUB s_systems__systems;

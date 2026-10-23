@@ -1,0 +1,138 @@
+archetype_id: batch-data-product-gcp
+title: Batch data product on Google Cloud
+version: 2.0.0
+applies_to: products
+patterns: [analytics-landing-zone, windowed-batch]
+description: >
+  A curated analytics data product whose data is born on Google Cloud and
+  stays there: the batch shape with a Google binding. The pipeline reads the
+  source product's events from Pub/Sub, curates them with Dataflow on a
+  Cloud Composer schedule and lands the dataset in BigQuery; the semantic
+  layer is the governed models and metrics analysts query, served from
+  BigQuery through Looker; Collibra registers the dataset the way it
+  registers everything else, whichever cloud it sits in.
+
+  Built on no blocks, like the shape it mirrors: a data product is a tenant
+  of the analytics project, not an instance of its infrastructure. It asks
+  for the workload project and region because that is where its jobs and
+  tables live, and for the source system because a pipeline on this side
+  ingests a product's own event publisher, not the enterprise ingestion hub
+  on the Azure side.
+
+  Version 2 names the services by kind and asks the estate who stewards the
+  data, where it named the sample's own; and every product says who owns
+  it, where this one defaulted to the sample's data engineering team.
+
+parameters:
+  - name: slug
+    required: true
+  - name: product_name
+    required: true
+  - name: owner_org
+    required: true
+  - name: data_org
+    estate: true
+    description: The org unit that stewards the estate's curated data
+  - name: domain
+    required: true
+  - name: source_system
+    required: true
+    description: The system whose events the pipeline ingests from Pub/Sub, e.g. SYS-POSFIN-EVENTS
+  - name: account
+    required: true
+    description: Workload project id the jobs and tables live in, e.g. gcp-analytics-prod
+  - name: region
+    default: europe-west2
+    description: Google Cloud region the dataset and its jobs land in
+  - name: classification
+    default: Confidential
+  - name: contains_pii
+    default: "Yes"
+
+defaults:
+  architecture_domain: Data
+  togaf_layer: Data
+  abstraction_level: Conceptual
+
+provider: GCP
+
+entity_defaults:
+  all:
+    status: "{status}"
+    company_domain: "{domain}"
+  systems:
+    owner_org_id: "{owner_org}"
+    criticality: Medium
+    hosting: GCP
+    environment: Production
+    cloud_provider: GCP
+    cloud_account: "{account}"
+    region: "{region}"
+    data_classification_supported: "{classification}"
+    togaf_layer: Data
+    architecture_domain: Data
+    abstraction_level: Physical
+  interfaces:
+    owner_org_id: "{owner_org}"
+    direction: Outbound
+    frequency: Daily
+    integration_style: Batch
+    auth_method: WorkloadIdentity
+    data_classification: "{classification}"
+    togaf_layer: Data
+    architecture_domain: Data
+
+provides:
+  systems:
+    - system_id: "SYS-{slug|upper}-PIPELINE"
+      name: "{product_name} Pipeline"
+      description: "Dataflow jobs on a Composer schedule, ingesting the source events of {product_name} from Pub/Sub and curating them into BigQuery."
+      system_category: Pipeline
+      network_zone: Private-Data
+      deployment_unit: terraform
+      tags: [data-product, batch]
+      uses: [message-queue, etl, workflow, warehouse, catalog]
+    - system_id: "SYS-{slug|upper}-SEMANTIC"
+      name: "{product_name} Semantic Layer"
+      description: "Governed models and metrics exposed to analysts for {product_name}, served from BigQuery through Looker."
+      system_category: Analytics
+      network_zone: Private-Data
+      tags: [data-product, analytics]
+      uses: [warehouse, bi]
+  interfaces:
+    - interface_id: "INT-{slug|upper}-INGEST"
+      name: "Source events to {product_name} Pipeline"
+      source_system_id: "{source_system}"
+      target_system_id: "SYS-{slug|upper}-PIPELINE"
+      protocol: Pub/Sub
+      direction: Inbound
+      frequency: Realtime
+      integration_style: Event
+    - interface_id: "INT-{slug|upper}-PIPE-SEMANTIC"
+      name: "{product_name} Pipeline to Semantic Layer"
+      source_system_id: "SYS-{slug|upper}-PIPELINE"
+      target_system_id: "SYS-{slug|upper}-SEMANTIC"
+      protocol: SQL
+  data_assets:
+    - data_asset_id: "DA-{slug|upper}-CURATED"
+      name: "{product_name} curated dataset"
+      description: "Curated, governed dataset produced by {product_name}, held in BigQuery."
+      source_of_truth: "SYS-{slug|upper}-PIPELINE"
+      data_owner_org_id: "{owner_org}"
+      data_steward_org_id: "{data_org}"
+      classification: "{classification}"
+      risk_level: Medium
+      pii_flag: "{contains_pii}"
+      togaf_layer: Data
+      architecture_domain: Data
+      lineage_reference: "Registered in Collibra; tables in BigQuery."
+      tags: [data-product, curated]
+
+relations:
+  system_reads_writes:
+    - system_id: "SYS-{slug|upper}-PIPELINE"
+      data_asset_id: "DA-{slug|upper}-CURATED"
+      operation: Write
+    - system_id: "SYS-{slug|upper}-SEMANTIC"
+      data_asset_id: "DA-{slug|upper}-CURATED"
+      operation: Read

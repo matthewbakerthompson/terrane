@@ -1,0 +1,118 @@
+archetype_id: vendor-saas-service
+title: Vendor SaaS service
+version: 3.1.0
+applies_to: products
+description: >
+  A bought capability running in a vendor tenancy, reached from the Azure
+  side over the public internet. The pattern is always the same shape from
+  our side: the vendor system itself, an outbound integration that feeds it,
+  an inbound file feed that comes back, and a landed dataset. Modeling it
+  this way makes vendor replacement an archetype parameter change rather
+  than a re-draw.
+
+  Composed from the same modules as `saas-onboarding`, with the public path
+  in place of private egress and the Azure platform services in place of the
+  AWS ones. That is the claim the module library makes: the parts are the
+  same, the bindings differ.
+
+  3.1 asks for the subscription and region, the way the digital shape has
+  since its 3.1 and the Google vendor shape did from the start: the gateway,
+  the private egress and the listener are ours and live somewhere, and drew
+  loose inside the provider's boundary until the shape could say where.
+
+parameters:
+  - name: slug
+    required: true
+  - name: product_name
+    required: true
+  - name: vendor
+    required: true
+    description: Vendor name, carried onto the system as provider
+  - name: owner_org
+    required: true
+  - name: domain
+    required: true
+  - name: upstream_system
+    required: true
+    description: The internal system that feeds this vendor
+  - name: account
+    required: true
+    description: Workload subscription alias our side of the integration lands in, e.g. azure-risk-prod
+  - name: region
+    default: uksouth
+    description: Azure region our side of the integration lands in
+  - name: criticality
+    default: Medium
+  - name: classification
+    default: Confidential
+
+defaults:
+  architecture_domain: Business
+  togaf_layer: Business
+  abstraction_level: Conceptual
+
+# The landing zone is not written here either: the same parts, the same
+# kinds, resolved against Azure because that is the provider. Nothing but
+# this line and the defaults differs from `saas-onboarding`.
+provider: Azure
+
+entity_defaults:
+  all:
+    # The product\'s own status. A shape cannot know whether its instance is
+    # planned or live; the first planned product on a shape that said
+    # `Active` here came out with four live systems.
+    status: "{status}"
+    company_domain: "{domain}"
+  systems:
+    tags: [vendor]
+    owner_org_id: "{owner_org}"
+    criticality: "{criticality}"
+    hosting: Azure
+    environment: Production
+    cloud_provider: Azure
+    cloud_account: "{account}"
+    region: "{region}"
+    data_classification_supported: "{classification}"
+    togaf_layer: Application
+    architecture_domain: Application
+    abstraction_level: Physical
+  interfaces:
+    owner_org_id: "{owner_org}"
+    protocol: HTTPS
+    direction: Outbound
+    frequency: Realtime
+    integration_style: Request-response
+    data_classification: "{classification}"
+    togaf_layer: Application
+    architecture_domain: Application
+
+modules:
+  # The same baseline as `saas-onboarding`, and nothing cloud-specific passed
+  # to it: the members name the kinds they need, and `bind` above says which
+  # services those are here. That is the claim the kit makes concrete: one
+  # part, two landing zones, and the difference is the `bind`.
+  - module: vendor-baseline
+    with:
+      vendor: "{vendor}"
+      caller_system: "{upstream_system}"
+
+# The same slots as `saas-onboarding`, with the public path as the default:
+# this shape is for the vendor reached over the internet. Choosing
+# `private-egress` here binds Azure Private Link and the Virtual WAN hub,
+# because the part names the kinds and `bind` above says which services
+# those are on this landing zone.
+slots:
+  - name: reach
+    description: How our side gets to the vendor
+    options: [private-egress, public-call]
+    default: public-call
+  - name: return
+    description: How things come back, if anything does
+    options: [sftp-return-feed, webhook-inbound]
+    default: sftp-return-feed
+    optional: true
+    # Chosen, the listener hands the vendor's result to the system that
+    # feeds the vendor unless the product says otherwise for the part.
+    with:
+      webhook-inbound:
+        consumer_system: "{upstream_system}"

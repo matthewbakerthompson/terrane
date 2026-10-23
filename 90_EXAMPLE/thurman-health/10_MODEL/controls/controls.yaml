@@ -1,0 +1,251 @@
+# Thurman Health's control register: an obligation with a mechanism,
+# something that runs to give effect to a policy. Which systems and data
+# enforce each one is in `relations/governance.yaml`.
+#
+# Which controls govern a vendor tenancy and what it lands, and which ones
+# each pattern meets here, are answered in `model.yaml`, for the reason the
+# policies give. The register is what a health system's is mostly about: who
+# may see a record, the trail of who did, and the safety checks a system
+# enforces at the bedside.
+
+# --- privacy and security ------------------------------------------------------
+
+- control_id: CTL-RBAC
+  name: Role-based access to PHI
+  description: Access to the record follows the person's role and their relationship to the patient; nothing is granted to a person by name.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Per event
+  regulatory_framework: HIPAA Security Rule 164.312(a)
+  policy_id: POL-PRIVACY
+  owner_org_id: ORG-INFOSEC
+
+- control_id: CTL-ACCESS-AUDIT
+  name: PHI access audit trail
+  description: Every view and change of a patient's record is logged with who, when and from where, sent to security monitoring, and reviewed for snooping.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Continuous
+  regulatory_framework: HIPAA Security Rule 164.312(b)
+  policy_id: POL-INFOSEC
+  owner_org_id: ORG-INFOSEC
+
+- control_id: CTL-BREAK-GLASS
+  name: Emergency access with review
+  description: A clinician may open a record outside their normal access in an emergency; every such opening asks for a reason and is reviewed after.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Per event
+  regulatory_framework: HIPAA Security Rule 164.312(a)(2)(ii)
+  policy_id: POL-PRIVACY
+  owner_org_id: ORG-COMPLIANCE
+
+- control_id: CTL-ACCESS-CERT
+  name: Periodic access certification
+  description: Access to systems holding PHI is re-certified by the owning manager each quarter; uncertified access is revoked.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Quarterly
+  regulatory_framework: HIPAA Security Rule 164.308(a)(4)
+  policy_id: POL-INFOSEC
+  owner_org_id: ORG-INFOSEC
+
+- control_id: CTL-ENCRYPT-REST
+  name: Encryption of PHI at rest
+  description: Databases, file shares, image stores and backups holding PHI are encrypted, with keys held apart from the data.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Continuous
+  regulatory_framework: HIPAA Security Rule 164.312(a)(2)(iv)
+  policy_id: POL-INFOSEC
+  owner_org_id: ORG-INFRA
+
+- control_id: CTL-ENCRYPT-TRANSIT
+  name: Encryption of PHI in transit
+  description: Every feed and API carrying PHI is encrypted on the wire, including the HL7 feeds inside the data center.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Continuous
+  regulatory_framework: HIPAA Security Rule 164.312(e)
+  policy_id: POL-INFOSEC
+  owner_org_id: ORG-INTEGRATION
+
+- control_id: CTL-MIN-NECESSARY
+  name: Minimum necessary disclosure
+  description: A disclosure for payment or operations carries only the fields its purpose needs; a feed is reviewed for it before it is built.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Per event
+  regulatory_framework: HIPAA Privacy Rule 164.502(b)
+  policy_id: POL-PRIVACY
+  owner_org_id: ORG-COMPLIANCE
+
+- control_id: CTL-BACKUP-DR
+  name: Backup and tested recovery
+  description: Systems holding PHI are backed up and restored in a test at least yearly; the EHR's downtime procedures are rehearsed with the units.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Corrective
+  frequency: Annually
+  regulatory_framework: HIPAA Security Rule 164.308(a)(7)
+  policy_id: POL-INFOSEC
+  owner_org_id: ORG-INFRA
+
+- control_id: CTL-BREACH-ASSESS
+  name: Breach risk assessment
+  description: An impermissible use or disclosure is assessed against the four factors and, if a breach, notified within the rule's sixty days.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Corrective
+  frequency: Per event
+  regulatory_framework: HIPAA Breach Notification Rule 164.402
+  policy_id: POL-BREACH
+  owner_org_id: ORG-COMPLIANCE
+
+# --- third parties and records ------------------------------------------------------
+
+- control_id: CTL-BA-DUE-DILIGENCE
+  name: Business associate due diligence
+  description: A vendor that will create, receive or keep PHI is assessed and signs a business associate agreement before the first feed is turned on.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Annually
+  regulatory_framework: HIPAA Privacy Rule 164.504(e)
+  policy_id: POL-BUSINESS-ASSOCIATES
+  owner_org_id: ORG-COMPLIANCE
+
+- control_id: CTL-RETENTION
+  name: Retention schedule applied
+  description: Records, images and landed vendor data are kept for their scheduled period and destroyed after it, with a certificate.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Quarterly
+  regulatory_framework: State medical records law
+  policy_id: POL-RECORDS
+  owner_org_id: ORG-HIM
+
+# --- patient safety -------------------------------------------------------------------
+
+- control_id: CTL-PATIENT-ID
+  name: Two-identifier patient identification
+  description: Two identifiers before any order, specimen, image or dose, and one enterprise identifier behind every registration.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Per event
+  regulatory_framework: Joint Commission NPSG.01.01.01
+  policy_id: POL-PATIENT-SAFETY
+  owner_org_id: ORG-QUALITY
+
+- control_id: CTL-PHARM-VERIFY
+  name: Pharmacist order verification
+  description: Every medication order is verified by a pharmacist for dose, allergy and interaction before it can be dispensed.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Per event
+  regulatory_framework: Joint Commission MM.05.01.01
+  policy_id: POL-PATIENT-SAFETY
+  owner_org_id: ORG-PHARMACY
+
+- control_id: CTL-BCMA
+  name: Barcode medication administration
+  description: The patient's wristband and the dose are scanned at the bedside and matched to a verified order before the dose is given.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Per event
+  regulatory_framework: Joint Commission NPSG.03
+  policy_id: POL-PATIENT-SAFETY
+  owner_org_id: ORG-PHARMACY
+
+- control_id: CTL-CRITICAL-RESULTS
+  name: Critical result notification
+  description: A critical lab or imaging result is called to the responsible clinician within the set time, and the call is documented.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Per event
+  regulatory_framework: Joint Commission NPSG.02.03.01
+  policy_id: POL-PATIENT-SAFETY
+  owner_org_id: ORG-LAB
+
+- control_id: CTL-INTERFACE-MONITOR
+  name: Interface queue monitoring
+  description: Every clinical feed is watched for stopped queues and rejected messages, around the clock; a result that never arrives is a safety event, not an IT ticket.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Continuous
+  regulatory_framework: Joint Commission NPSG.02.03.01
+  policy_id: POL-PATIENT-SAFETY
+  owner_org_id: ORG-INTEGRATION
+
+# --- interoperability and reporting ----------------------------------------------------
+
+- control_id: CTL-PATIENT-API
+  name: Patient access API conformance
+  description: The patient access API serves the required FHIR resources, authorizes apps the patient chooses, and is tested against the profile on each release.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Per event
+  regulatory_framework: CMS Interoperability and Patient Access; 21st Century Cures Act
+  policy_id: POL-INTEROP
+  owner_org_id: ORG-INTEGRATION
+
+- control_id: CTL-REGISTRY-TIMELINESS
+  name: Cancer case reporting timeliness
+  description: Every reportable case is abstracted and submitted to the state registry within the period the state sets.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Monthly
+  regulatory_framework: State cancer registry reporting law
+  policy_id: POL-PUBLIC-HEALTH
+  owner_org_id: ORG-CANCER-CENTER

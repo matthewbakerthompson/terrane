@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="587" viewBox="0 0 1100 587" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Security Monitoring — Governance</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Security Monitoring — Governance</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   8 nodes · 10 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One system and everything that governs it: the controls it enforces, the policies it is subject to, and the controls that apply through the capabilities it realizes. A</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">control reached only through a capability means either the system enforces it and nobody recorded that, or it is enforced somewhere else.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(25 110)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="298.72" y="37.3" width="212.57" height="175.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="340.72" y="54.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Control">
+<rect x="556.3" y="103.3" width="211.4" height="247.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="589.15" y="120.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Control</text>
+</g>
+<g class="boundary" data-id="grp::Policy">
+<rect x="818.3" y="116.3" width="221.4" height="175.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="848.1" y="133.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Policy</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="10.3" y="161.3" width="230.4" height="135.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="40.1" y="178.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::SYS-SIEM::CTL-IR-PLAYBOOK">
+<title>enforces</title>
+<path d="M215 239.5 L243.91 240 A10 10 0 0 0 244.09 240 L270 240 A10 10 0 0 1 280 250 L280 254 A10 10 0 0 0 290 264 L525 264 A10 10 0 0 0 535 254 L535 236 A9 9 0 0 1 544 227 L553 227 L578.48 227" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M582 227 L572.43 231.78 L572.43 222.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::SYS-SIEM::CTL-IR-PLAYBOOK">
+<rect x="379.08" y="270.5" width="46.84" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="402.5" y="282.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">enforces</text>
+</g>
+<g class="edge" data-id="e1::SYS-SIEM::CTL-ACCESS-CERT">
+<title>enforces</title>
+<path d="M215 250 L244 250 L260 250 A10 10 0 0 1 270 260 L270 289 A10 10 0 0 0 280 299 L553 299 L578.48 299" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M582 299 L572.43 303.79 L572.43 294.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::SYS-SIEM::CTL-ACCESS-CERT">
+<rect x="379.08" y="305.5" width="46.84" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="402.5" y="317.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">enforces</text>
+</g>
+<g class="edge" data-id="e2::SYS-SIEM::CTL-RETENTION">
+<title>enforces</title>
+<path d="M215 229 L244 229 L515 229 A10 10 0 0 0 525 219 L525 165 A10 10 0 0 1 535 155 L553 155 L578.48 155" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M582 155 L572.43 159.78 L572.43 150.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::SYS-SIEM::CTL-RETENTION">
+<rect x="379.08" y="235.5" width="46.84" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="402.5" y="247.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">enforces</text>
+</g>
+<g class="edge" data-id="e3::SYS-SIEM::CAP-SEC-02-01">
+<title>realizes</title>
+<path d="M215 208 L244 208 L260 208 A10 10 0 0 0 270 198 L270 99 A10 10 0 0 1 280 89 L296 89 L321.48 89" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M325 89 L315.43 93.78 L315.43 84.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e4::SYS-SIEM::CAP-SEC-02-02">
+<title>realizes</title>
+<path d="M215 218.5 L243.91 219 A10 10 0 0 0 244.09 219 L270 219 A10 10 0 0 0 280 209 L280 169 A8 8 0 0 1 288 161 L296 161 L321.48 161" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M325 161 L315.43 165.78 L315.43 156.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e5::SYS-SIEM::POL-INFOSEC">
+<title>subject to</title>
+<path d="M215 260.5 L243.91 261 A10 10 0 0 0 244.09 261 L252 261 A8 8 0 0 1 260 269 L260 351 A10 10 0 0 0 270 361 L402.5 361 L662 361 L787 361 A10 10 0 0 0 797 351 L797 262 A9 9 0 0 1 806 253 L815 253 L840.48 253" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M844 253 L834.43 257.79 L834.43 248.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e6::SYS-SIEM::POL-RECORDS">
+<title>subject to</title>
+<path d="M215 197.5 L243.91 198 A10 10 0 0 0 244.09 198 L252 198 A8 8 0 0 0 260 190 L260 22 A10 10 0 0 1 270 12 L402.5 12 L662 12 L787 12 A10 10 0 0 1 797 22 L797 150 A9.17 9.17 0 0 0 806 159.17 L814.91 159.33 A10 10 0 0 0 815.09 159.33 L840.48 159.33" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M844 159.33 L834.43 164.12 L834.43 154.55 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e7::CTL-ACCESS-CERT::POL-INFOSEC">
+<title>gives effect to</title>
+<path d="M742 299 L771 299 L779 299 A8 8 0 0 0 787 291 L787 250 A10 10 0 0 1 797 240 L815 240 L840.48 240" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M844 240 L834.43 244.78 L834.43 235.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e8::CTL-IR-PLAYBOOK::POL-INFOSEC">
+<title>gives effect to</title>
+<path d="M742 227 L771 227 L815 227 L840.48 227" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M844 227 L834.43 231.78 L834.43 222.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e9::CTL-RETENTION::POL-RECORDS">
+<title>gives effect to</title>
+<path d="M742 155 L771 155 L779 155 A8 8 0 0 1 787 163 L787 166.88 A10 10 0 0 0 797.12 176.88 L814.94 176.67 A10 10 0 0 1 815.06 176.67 L840.48 176.67" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M844 176.67 L834.43 181.45 L834.43 171.88 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-SEC-02-01" data-type="capabilities">
+<title>Security Monitoring</title>
+<path d="M365 63 L325 89 L365 115 L445 115 L485 89 L445 63 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="405" y="93.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Security Monitoring</text>
+</g>
+<g class="node" data-id="CAP-SEC-02-02" data-type="capabilities">
+<title>Security Incident Response</title>
+<path d="M365 135 L325 161 L365 187 L445 187 L485 161 L445 135 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="405" y="159.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Security Incident</text>
+<text x="405" y="171.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Response</text>
+</g>
+<g class="node" data-id="CTL-ACCESS-CERT" data-type="controls">
+<title>Periodic access certification</title>
+<path d="M628.86 273 L582 288.23 L582 309.77 L628.86 325 L695.14 325 L742 309.77 L742 288.23 L695.14 273 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="662" y="297.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Periodic access</text>
+<text x="662" y="309.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">certification</text>
+</g>
+<g class="node" data-id="CTL-IR-PLAYBOOK" data-type="controls">
+<title>Security incident response execution</title>
+<path d="M628.86 201 L582 216.23 L582 237.77 L628.86 253 L695.14 253 L742 237.77 L742 216.23 L695.14 201 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="662" y="225.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Security incident</text>
+<text x="662" y="237.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">response execution</text>
+</g>
+<g class="node" data-id="CTL-RETENTION" data-type="controls">
+<title>Retention schedule enforcement</title>
+<path d="M628.86 129 L582 144.23 L582 165.77 L628.86 181 L695.14 181 L742 165.77 L742 144.23 L695.14 129 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="662" y="153.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Retention schedule</text>
+<text x="662" y="165.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">enforcement</text>
+</g>
+<g class="node" data-id="POL-INFOSEC" data-type="policies">
+<title>Information Security Policy</title>
+<path d="M852 214 L1006 214 L1014 222 L1014 258 L1006 266 L852 266 L844 258 L844 222 Z" fill="#fecaca" stroke="#dc2626" stroke-width="1.4"/>
+<text x="925" y="238.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Information Security</text>
+<text x="925" y="250.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Policy</text>
+<svg x="996" y="219" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg>
+</g>
+<g class="node" data-id="POL-RECORDS" data-type="policies">
+<title>Records Retention &amp; Disposition Policy</title>
+<path d="M852 142 L1006 142 L1014 150 L1014 186 L1006 194 L852 194 L844 186 L844 150 Z" fill="#fecaca" stroke="#dc2626" stroke-width="1.4"/>
+<text x="925" y="166.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Records Retention &amp;</text>
+<text x="925" y="178.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Disposition Policy</text>
+<svg x="996" y="147" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg>
+</g>
+<g class="node" data-id="SYS-SIEM" data-type="systems">
+<title>Security Monitoring</title>
+<rect x="36" y="187" width="179" height="84" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="115.5" y="221.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Security</text>
+<text x="115.5" y="233.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Monitoring</text>
+<text x="125.5" y="265.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Microsoft Sentinel</text>
+<image x="193" y="191" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYTc1ZTNmM2EtMjY2MS00MTBiLTgyZmItZDMwMGQzN2RlYTJkIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImFmZjYwZGRmLWVlYzEtNDBiZi04YmY1LWYzZTNiNTBlODgxOCIgeDE9IjkiIHkxPSIxNi4yMSIgeDI9IjkiIHkyPSIwLjYyIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWI5M2ViIiAvPjxzdG9wIG9mZnNldD0iMC4yMSIgc3RvcC1jb2xvcj0iIzIwOTVlYiIgLz48c3RvcCBvZmZzZXQ9IjAuNDQiIHN0b3AtY29sb3I9IiMyZTljZWQiIC8+PHN0b3Agb2Zmc2V0PSIwLjY5IiBzdG9wLWNvbG9yPSIjNDVhN2VmIiAvPjxzdG9wIG9mZnNldD0iMC45NSIgc3RvcC1jb2xvcj0iIzY0YjZmMSIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM2YmI5ZjIiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPkljb24tc2VjdXJpdHktMjQ4PC90aXRsZT48cGF0aCBkPSJNMTYsOC40NGMwLDQuNTctNS41Myw4LjI1LTYuNzMsOWEuNDMuNDMsMCwwLDEtLjQ2LDBDNy41NywxNi42OSwyLDEzLDIsOC40NFYyLjk0YS40NC40NCwwLDAsMSwuNDMtLjQ0QzYuNzcsMi4zOSw1Ljc4LjUsOSwuNXMyLjIzLDEuODksNi41MywyYS40NC40NCwwLDAsMSwuNDMuNDRaIiBmaWxsPSIjMWI5M2ViIiAvPjxwYXRoIGQ9Ik0xNS4zOCw4LjQ4YzAsNC4yLTUuMDcsNy41Ny02LjE3LDguMjVhLjQuNCwwLDAsMS0uNDIsMGMtMS4xLS42OC02LjE3LTQuMDUtNi4xNy04LjI1di01QS40MS40MSwwLDAsMSwzLDNjMy45NC0uMTEsMy0xLjgzLDYtMS44M1MxMS4wNSwyLjkzLDE1LDNhLjQxLjQxLDAsMCwxLC4zOS40WiIgZmlsbD0idXJsKCNhZmY2MGRkZi1lZWMxLTQwYmYtOGJmNS1mM2UzYjUwZTg4MTgpIiAvPjxwYXRoIGQ9Ik05LDYuNTNBMi44OCwyLjg4LDAsMCwxLDExLjg0LDlhLjQ5LjQ5LDAsMCwwLC40OS40aDEuNGEuNDkuNDksMCwwLDAsLjUtLjUzLDUuMjYsNS4yNiwwLDAsMC0xMC40NiwwLC40OS40OSwwLDAsMCwuNS41M2gxLjRBLjQ5LjQ5LDAsMCwwLDYuMTYsOSwyLjg4LDIuODgsMCwwLDEsOSw2LjUzWiIgZmlsbD0iI2MzZjFmZiIgLz48Y2lyY2xlIGN4PSI5IiBjeT0iOS40IiByPSIxLjkxIiBmaWxsPSIjZmZmIiAvPjwvc3ZnPg=="/>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="485" x2="1072" y2="485" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="509" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 498)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="509" font-size="12" font-weight="400" fill="#343d50">capability · 2</text>
+<g transform="translate(180.32 498)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="206.32" y="509" font-size="12" font-weight="400" fill="#343d50">control · 3</text>
+<g transform="translate(278.62 498)" fill="#fecaca" stroke="#dc2626" stroke-width="1.4"><path d="M4 1h12l3 3v6l-3 3H4l-3-3V4z"/></g>
+<text x="304.62" y="509" font-size="12" font-weight="400" fill="#343d50">policy · 2</text>
+<g transform="translate(370.91 498)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="396.91" y="509" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
+<text x="28" y="531" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 520)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="531" font-size="12" font-weight="400" fill="#343d50">gives effect to</text>
+<g transform="translate(195.16 520)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="221.16" y="531" font-size="12" font-weight="400" fill="#343d50">governed by</text>
+<g transform="translate(306.41 520)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="332.41" y="531" font-size="12" font-weight="400" fill="#343d50">realizes</text>
+<g transform="translate(392.6 520)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="418.6" y="531" font-size="12" font-weight="400" fill="#343d50">subject to</text>
+<text x="28" y="565" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-governance--sys-siem · edit the model, not the picture</text></g>
+</svg>

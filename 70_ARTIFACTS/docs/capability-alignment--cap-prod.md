@@ -1,0 +1,96 @@
+# Product Management & Pricing — Frameworks, Controls, Systems
+
+One capability domain and everything connected to it: its level-1 capabilities, the frameworks it aligns to, the controls that govern it, and the systems that realize it. Click any capability to continue from there.
+
+```mermaid
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Product Management & Pricing — Frameworks, Controls, Systems
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Capability["Capability"]
+    direction LR
+    CAP_PROD_02{{"Pricing, Fee & APR<br/>Management"}}
+    CAP_PROD_01{{"Product Design &<br/>Configuration"}}
+    CAP_PROD_05{{"Product Lifecycle &<br/>Retirement"}}
+    CAP_PROD{{"Product Management &<br/>Pricing"}}
+    CAP_PROD_04{{"Rewards Program Design"}}
+    CAP_PROD_03{{"Terms & Disclosure<br/>Management"}}
+  end
+
+  subgraph grp_Control["Control"]
+    direction LR
+    CTL_NOTICE_CONTENT[["Notice content and<br/>delivery evidence"]]
+  end
+
+  subgraph grp_Framework["Framework"]
+    direction LR
+    FW_BIAN["BIAN"]
+  end
+
+  subgraph grp_Process["Process"]
+    direction LR
+    P_PRODUCT_002[\"Author and version<br/>disclosure"/]
+    P_PRODUCT_001[\"Design and approve product<br/>change"/]
+    P_PRODUCT_003[\"Launch product to market"/]
+    P_PRODUCT_004[\"Retire or migrate product"/]
+  end
+
+  subgraph grp_System["System"]
+    direction LR
+    SYS_CORE_LEDGER["Core Card Ledger"]
+    SYS_DOC["Document management and<br/>archive"]
+  end
+
+  CAP_PROD_01 -->|"part of"| CAP_PROD
+  CAP_PROD_02 -->|"part of"| CAP_PROD
+  CAP_PROD_03 -->|"part of"| CAP_PROD
+  CAP_PROD_04 -->|"part of"| CAP_PROD
+  CAP_PROD_05 -->|"part of"| CAP_PROD
+  CAP_PROD -->|"Aligned to"| FW_BIAN
+  CAP_PROD_01 -->|"Reference Data #gt; Pro…"| FW_BIAN
+  CAP_PROD_02 -->|"Reference Data #gt; Pro…"| FW_BIAN
+  CAP_PROD_03 -->|"Reference Data #gt; Pro…"| FW_BIAN
+  CAP_PROD_04 -->|"Operations and Executio…"| FW_BIAN
+  CAP_PROD_05 -->|"Reference Data #gt; Pro…"| FW_BIAN
+  P_PRODUCT_001 -->|"supported by"| CAP_PROD_01
+  P_PRODUCT_001 -->|"supported by"| CAP_PROD_02
+  P_PRODUCT_002 -->|"supported by"| CAP_PROD_03
+  P_PRODUCT_003 -->|"supported by"| CAP_PROD_05
+  P_PRODUCT_004 -->|"supported by"| CAP_PROD_05
+  CAP_PROD -->|"governed by"| CTL_NOTICE_CONTENT
+  CAP_PROD_03 -->|"governed by"| CTL_NOTICE_CONTENT
+  SYS_CORE_LEDGER -->|"realizes"| CAP_PROD_01
+  SYS_CORE_LEDGER -->|"realizes"| CAP_PROD_02
+  SYS_CORE_LEDGER -->|"realizes"| CAP_PROD_05
+  SYS_DOC -->|"realizes"| CAP_PROD_03
+
+  classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
+  classDef s_controls__controls fill:#fca5a5,stroke:#b91c1c,color:#0f172a,stroke-width:1.4px;
+  classDef s_frameworks__frameworks fill:#d9f99d,stroke:#4d7c0f,color:#0f172a,stroke-width:1.4px;
+  classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  class CAP_PROD,CAP_PROD_01,CAP_PROD_02,CAP_PROD_03,CAP_PROD_04,CAP_PROD_05 s_capabilities__capabilities;
+  class CTL_NOTICE_CONTENT s_controls__controls;
+  class FW_BIAN s_frameworks__frameworks;
+  class P_PRODUCT_001,P_PRODUCT_002,P_PRODUCT_003,P_PRODUCT_004 s_processes__processes;
+  class SYS_CORE_LEDGER,SYS_DOC s_systems__systems;
+  classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_Capability,grp_Control,grp_Framework,grp_Process,grp_System boundary1;
+```
+
+The same view as the app draws it, written beside the Mermaid by `terrane render`:
+
+![Product Management & Pricing — Frameworks, Controls, Systems](../svg/capability-alignment--cap-prod.svg)
+
+**Hue is the entity type.**
+
+| | Entity type |
+|---|---|
+| `#6d28d9` | capabilities |
+| `#b91c1c` | controls |
+| `#4d7c0f` | frameworks |
+| `#0369a1` | processes |
+| `#4338ca` | systems |
+
+14 entities, 22 relationships. Generated from the model; edit the model, not this file.

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="470.4" viewBox="0 0 1100 470.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Event tier</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Event tier</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   3 nodes · 2 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">A stream, a bus and the functions that react. What changes here is ownership: once a consumer reads the stream, the producer no longer controls who depends on</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">it.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(458 111.7)">
+<g class="edge" data-id="e0::event-bus::event-stream">
+<path d="M92 59 L92 99.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M92 103 L87.22 93.43 L96.78 93.43 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e1::event-stream::function">
+<path d="M92 150 L92 190.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M92 194 L87.22 184.43 L96.78 184.43 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="event-stream" data-type="tech_services">
+<title>Event stream</title>
+<path d="M12 103 L118.64 103 L172 150 L65.36 150 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="88" y="125.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Event stream</text>
+<text x="92" y="144.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Amazon Kinesis or MSK · Azure Event …</text>
+<svg x="143" y="108" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M2 5.5h9l-2.5-2.5 M14 10.5H5l2.5 2.5" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="event-bus" data-type="tech_services">
+<title>Event bus</title>
+<path d="M12 12 L118.64 12 L172 59 L65.36 59 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="88" y="34.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Event bus</text>
+<text x="92" y="53.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Amazon EventBridge · Azure Event Gri…</text>
+<svg x="143" y="17" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M2 5.5h9l-2.5-2.5 M14 10.5H5l2.5 2.5" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="function" data-type="tech_services">
+<title>Function</title>
+<path d="M12 194 L118.64 194 L172 241 L65.36 241 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="88" y="216.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Function</text>
+<text x="92" y="235.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AWS Lambda · Azure Functions · Cloud…</text>
+<svg x="143" y="199" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M4.5 4.5h7v7h-7z M8 2v2.5 M8 11.5V14 M2 8h2.5 M11.5 8H14" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="368.4" x2="1072" y2="368.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="392.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 381.4)" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"><path d="M5 1h14l-4 12H1z"/></g>
+<text x="93.2" y="392.4" font-size="12" font-weight="400" fill="#343d50">technology service · 3</text>
+<text x="28" y="414.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 403.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="414.4" font-size="12" font-weight="400" fill="#343d50">connects to</text>
+<text x="28" y="448.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · block--event-tier · edit the model, not the picture</text></g>
+</svg>

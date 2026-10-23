@@ -1,0 +1,434 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1398.1" height="906.1" viewBox="0 0 1398.1 906.1" font-family="Geist, system-ui, sans-serif" data-layout="dagre">
+<title>Restricted Data and What Governs It</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Restricted Data and What Governs It</text>
+<text x="1370.1" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   33 nodes · 31 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">The data assets classified Restricted, the system that masters each, the controls that govern them and the policies they are subject to. A Restricted asset with no control is the first thing an auditor will ask</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">about.</text>
+<line x1="28" y1="112" x2="1370.1" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(31.05 155.05)">
+<g class="boundary" data-id="grp::Control">
+<rect x="942.45" y="-1.55" width="395.1" height="295.1" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="975.3" y="15.85" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Control</text>
+</g>
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="481.7" y="24.7" width="416.6" height="560.6" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="523.7" y="42.11" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Policy">
+<rect x="942.45" y="316.45" width="221.1" height="295.1" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="972.25" y="333.85" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Policy</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="-1.55" y="40.45" width="439.1" height="529.1" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="28.25" y="57.86" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::SYS-CORE-LEDGER::DA-CARD-ACCOUNT">
+<title>masters</title>
+<path d="M206.55 263.5 L217.55 263.5 L218 263.5 A0.45 0.45 0 0 0 218.45 263.05 L218.45 64.45 A10 10 0 0 1 228.45 54.45 L480.2 54.45 A10 10 0 0 1 490.2 64.45 L490.2 170.25 A2.75 2.75 0 0 0 492.95 173 L495.7 173 L503.18 173" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M506.7 173 L497.13 177.78 L497.13 168.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e1::SYS-CRM::DA-CUSTOMER-PROFILE">
+<title>masters</title>
+<path d="M412.55 263.5 L423.55 263.5 L480.2 263.5 A10 10 0 0 1 490.2 273.5 L490.2 346.25 A2.75 2.75 0 0 0 492.95 349 L495.7 349 L503.18 349" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M506.7 349 L497.13 353.79 L497.13 344.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e2::SYS-AUTH-SWITCH::DA-TRANSACTION">
+<title>masters</title>
+<path d="M206.55 97.5 L212.05 97.5 A5.5 5.5 0 0 1 217.55 103 L217.55 586.8 A10 10 0 0 0 227.55 596.8 L679.7 596.8 A10 10 0 0 0 689.7 586.8 L689.7 528.74 A3.74 3.74 0 0 1 693.44 525 L697.18 525" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M700.7 525 L691.13 529.78 L691.13 520.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e3::SYS-ORIG-DECISION::DA-APPLICATION">
+<title>masters</title>
+<path d="M412.55 429.5 L423.55 429.5 L460.2 429.5 A10 10 0 0 0 470.2 419.5 L470.2 95 A10 10 0 0 1 480.2 85 L495.7 85 L503.18 85" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M506.7 85 L497.13 89.78 L497.13 80.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e4::SYS-BUREAU-GW::DA-BUREAU-FILE">
+<title>masters</title>
+<path d="M412.55 97.5 L423.55 97.5 L439.05 97.5 A10 10 0 0 0 449.05 87.5 L449.05 23.2 A10 10 0 0 1 459.05 13.2 L679.7 13.2 A10 10 0 0 1 689.7 23.2 L689.7 81.26 A3.74 3.74 0 0 0 693.44 85 L697.18 85" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M700.7 85 L691.13 89.78 L691.13 80.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e5::SYS-PAYMENT-GW::DA-PAYMENT-INSTR">
+<title>masters</title>
+<path d="M206.55 512.5 L217.55 512.5 L219.75 512.5 A2.2 2.2 0 0 1 221.95 514.7 L221.95 587.55 A10 10 0 0 0 231.95 597.55 L680.3 597.55 A10 10 0 0 0 690.3 587.55 L690.3 437.3 A0.3 0.3 0 0 0 690 437 L689.7 437 L697.18 437" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M700.7 437 L691.13 441.79 L691.13 432.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e6::SYS-CARDSVC-STORE::DA-CARDSVC-OPERATIONAL">
+<title>masters</title>
+<path d="M206.55 180.5 L212.05 180.5 A5.5 5.5 0 0 0 217.55 175 L217.55 22.45 A10 10 0 0 1 227.55 12.45 L680.3 12.45 A10 10 0 0 1 690.3 22.45 L690.3 172.7 A0.3 0.3 0 0 1 690 173 L689.7 173 L697.18 173" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M700.7 173 L691.13 177.78 L691.13 168.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e7::SYS-COLLECT-STORE::DA-COLLECT-OPERATIONAL">
+<title>masters</title>
+<path d="M412.55 180.5 L423.55 180.5 L480.2 180.5 A10 10 0 0 1 490.2 190.5 L490.2 258.25 A2.75 2.75 0 0 0 492.95 261 L495.7 261 L503.18 261" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M506.7 261 L497.13 265.79 L497.13 256.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e8::SYS-CUST360-PIPELINE::DA-CUST360-CURATED">
+<title>masters</title>
+<path d="M206.55 346.5 L217.55 346.5 L218 346.5 A0.45 0.45 0 0 0 218.45 346.05 L218.45 312.7 A10 10 0 0 1 228.45 302.7 L679.7 302.7 A10 10 0 0 0 689.7 292.7 L689.7 264.74 A3.74 3.74 0 0 1 693.44 261 L697.18 261" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M700.7 261 L691.13 265.79 L691.13 256.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e9::SYS-DISPUTES-SAAS::DA-DISPUTES-VENDOR-FEED">
+<title>masters</title>
+<path d="M412.55 346.5 L423.55 346.5 L485.7 346.5 A10 10 0 0 1 495.7 356.5 L495.7 376.45 A10 10 0 0 0 505.7 386.45 L679.7 386.45 A10 10 0 0 0 689.7 376.45 L689.7 352.74 A3.74 3.74 0 0 1 693.44 349 L697.18 349" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M700.7 349 L691.13 353.79 L691.13 344.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e10::SYS-LENDING-DB::DA-LENDING-OPERATIONAL">
+<title>masters</title>
+<path d="M206.55 429.5 L217.55 429.5 L216.25 429.5 A1.3 1.3 0 0 0 214.95 430.8 L214.95 545.55 A10 10 0 0 0 224.95 555.55 L480.2 555.55 A10 10 0 0 0 490.2 545.55 L490.2 439.75 A2.75 2.75 0 0 1 492.95 437 L495.7 437 L503.18 437" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M506.7 437 L497.13 441.79 L497.13 432.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e11::SYS-SCREENING-VENDOR::DA-SCREENING-OUTCOMES">
+<title>masters</title>
+<path d="M412.55 512.5 L423.55 512.5 L463.95 512.5 A6.25 6.25 0 0 1 470.2 518.75 L470.2 518.75 A6.25 6.25 0 0 0 476.45 525 L495.7 525 L503.18 525" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M506.7 525 L497.13 529.78 L497.13 520.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e12::DA-DISPUTES-VENDOR-FEED::CTL-RETENTION">
+<title>governed by</title>
+<path d="M873.3 349 L884.3 349 L920.95 349 A10 10 0 0 0 930.95 339 L930.95 293.05 A10 10 0 0 1 940.95 283.05 L1136.55 283.05 A10 10 0 0 0 1146.55 273.05 L1146.55 237.05 A3.05 3.05 0 0 0 1143.5 234 L1140.45 234 L1147.93 234" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1151.45 234 L1141.88 238.78 L1141.88 229.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e13::DA-SCREENING-OUTCOMES::CTL-RETENTION">
+<title>governed by</title>
+<path d="M679.3 525 L684.8 525 A5.5 5.5 0 0 1 690.3 530.5 L690.3 557.8 A10 10 0 0 0 700.3 567.8 L903.3 567.8 A10 10 0 0 0 913.3 557.8 L913.3 295.05 A10 10 0 0 1 923.3 285.05 L1129.55 285.05 A10 10 0 0 0 1139.55 275.05 L1139.55 248.45 A0.45 0.45 0 0 1 1140 248 L1140 248 A5.92 5.92 0 0 0 1140.9 247.93 L1147.97 246.85" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1151.45 246.32 L1142.71 252.49 L1141.27 243.03 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e14::DA-CARD-ACCOUNT::CTL-PCI-EVIDENCE">
+<title>governed by</title>
+<path d="M679.3 173 L690.3 173 L690 173 A0.3 0.3 0 0 1 689.7 172.7 L689.7 48.7 A10 10 0 0 1 699.7 38.7 L941.15 38.7 A10 10 0 0 0 951.15 28.7 L951.15 -3.05 A10 10 0 0 1 961.15 -13.05 L1129.55 -13.05 A10 10 0 0 1 1139.55 -3.05 L1139.55 138.55 A0.45 0.45 0 0 0 1140 139 L1140.07 139 A10 10 0 0 1 1140.83 139.03 L1147.94 139.57" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1151.45 139.84 L1141.54 143.88 L1142.27 134.34 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e15::DA-CARD-ACCOUNT::CTL-RETENTION">
+<title>governed by</title>
+<path d="M679.3 173 L684.8 173 A5.5 5.5 0 0 1 690.3 178.5 L690.3 204.7 A10 10 0 0 0 700.3 214.7 L946.45 214.7 A10 10 0 0 1 956.45 224.7 L956.45 266.05 A10 10 0 0 0 966.45 276.05 L1130.45 276.05 A10 10 0 0 0 1140.45 266.05 L1140.45 220 L1140.45 220 L1147.97 221.15" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1151.45 221.68 L1141.27 224.97 L1142.71 215.51 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e16::DA-CUSTOMER-PROFILE::CTL-PRIV-REQ">
+<title>governed by</title>
+<path d="M679.3 349 L684.8 349 A5.5 5.5 0 0 0 690.3 343.5 L690.3 317.3 A10 10 0 0 1 700.3 307.3 L934.84 307.3 A10 10 0 0 0 944.84 297.3 L944.84 239.8 A5.8 5.8 0 0 1 950.65 234 L956.45 234 L963.93 234" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M967.45 234 L957.88 238.78 L957.88 229.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e17::DA-TRANSACTION::CTL-DAILY-RECON">
+<title>governed by</title>
+<path d="M873.3 525 L884.3 525 L887.05 525 A2.75 2.75 0 0 0 889.8 522.25 L889.8 68 A10 10 0 0 1 899.8 58 L956.45 58 L963.93 58" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M967.45 58 L957.88 62.78 L957.88 53.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e18::DA-TRANSACTION::CTL-PCI-EVIDENCE">
+<title>governed by</title>
+<path d="M873.3 525 L878.8 525 A5.5 5.5 0 0 0 884.3 519.5 L884.3 312.7 A10 10 0 0 1 894.3 302.7 L1122.55 302.7 A10 10 0 0 0 1132.55 292.7 L1132.55 156.95 A3.95 3.95 0 0 1 1136.5 153 L1140.07 153 A10 10 0 0 0 1140.83 152.97 L1147.94 152.43" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1151.45 152.16 L1142.27 157.66 L1141.54 148.12 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e19::DA-CUST360-CURATED::CTL-MASK-NONPROD">
+<title>governed by</title>
+<path d="M873.3 261 L884.3 261 L941.15 261 A10 10 0 0 0 951.15 251 L951.15 148.65 A2.65 2.65 0 0 1 953.8 146 L956.45 146 L963.93 146" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M967.45 146 L957.88 150.78 L957.88 141.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e20::DA-CUST360-CURATED::CTL-DQ-GATE">
+<title>governed by</title>
+<path d="M873.3 261 L878.8 261 A5.5 5.5 0 0 0 884.3 255.5 L884.3 -23.05 A10 10 0 0 1 894.3 -33.05 L1130.45 -33.05 A10 10 0 0 1 1140.45 -23.05 L1140.45 58 L1140.45 58 L1147.93 58" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M1151.45 58 L1141.88 62.78 L1141.88 53.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e21::DA-DISPUTES-VENDOR-FEED::POL-RECORDS">
+<title>subject to</title>
+<path d="M873.3 349 L884.3 349 L938.34 349 A10 10 0 0 1 948.34 359 L948.34 452.95 A4.05 4.05 0 0 0 952.4 457 L956.45 457 L963.93 457" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M967.45 457 L957.88 461.79 L957.88 452.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e22::DA-DISPUTES-VENDOR-FEED::POL-PRIVACY">
+<title>subject to</title>
+<path d="M873.3 349 L878.8 349 A5.5 5.5 0 0 1 884.3 354.5 L884.3 366 A10 10 0 0 0 894.3 376 L956.45 376 L963.93 376" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M967.45 376 L957.88 380.79 L957.88 371.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e23::DA-SCREENING-OUTCOMES::POL-RECORDS">
+<title>subject to</title>
+<path d="M679.3 525 L690.3 525 L690 525 A0.3 0.3 0 0 0 689.7 525.3 L689.7 564.8 A10 10 0 0 0 699.7 574.8 L941.84 574.8 A10 10 0 0 0 951.84 564.8 L951.84 473.3 A2.3 2.3 0 0 1 954.15 471 L956.45 471 L963.93 471" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M967.45 471 L957.88 475.79 L957.88 466.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e24::DA-SCREENING-OUTCOMES::POL-PRIVACY">
+<title>subject to</title>
+<path d="M679.3 525 L684.8 525 A5.5 5.5 0 0 1 690.3 530.5 L690.3 566.8 A10 10 0 0 0 700.3 576.8 L934.15 576.8 A10 10 0 0 0 944.15 566.8 L944.15 409.7 A6.15 6.15 0 0 1 950.3 403.55 L956.45 403.55 L963.93 403.55" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M967.45 403.55 L957.88 408.33 L957.88 398.76 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e25::DA-CARD-ACCOUNT::POL-PRIVACY">
+<title>subject to</title>
+<path d="M679.3 173 L684.8 173 A5.5 5.5 0 0 1 690.3 178.5 L690.3 209.3 A10 10 0 0 0 700.3 219.3 L940.95 219.3 A10 10 0 0 1 950.95 229.3 L950.95 345.7 A2.75 2.75 0 0 0 953.7 348.45 L956.45 348.45 L963.93 348.45" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M967.45 348.45 L957.88 353.24 L957.88 343.67 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e26::DA-CARD-ACCOUNT::POL-RECORDS">
+<title>subject to</title>
+<path d="M679.3 173 L690.3 173 L690 173 A0.3 0.3 0 0 0 689.7 173.3 L689.7 210 A10 10 0 0 0 699.7 220 L896.3 220 A10 10 0 0 1 906.3 230 L906.3 293.45 A10 10 0 0 0 916.3 303.45 L941.15 303.45 A10 10 0 0 1 951.15 313.45 L951.15 440.35 A2.65 2.65 0 0 0 953.8 443 L956.45 443 L963.93 443" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M967.45 443 L957.88 447.79 L957.88 438.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e27::DA-CUSTOMER-PROFILE::POL-PRIVACY">
+<title>subject to</title>
+<path d="M679.3 349 L684.8 349 A5.5 5.5 0 0 1 690.3 354.5 L690.3 379.78 A10 10 0 0 0 700.3 389.78 L956.45 389.78 L963.93 389.78" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M967.45 389.78 L957.88 394.56 L957.88 384.99 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e28::DA-TRANSACTION::POL-RECORDS">
+<title>subject to</title>
+<path d="M873.3 525 L884.3 525 L940.95 525 A10 10 0 0 0 950.95 515 L950.95 487.75 A2.75 2.75 0 0 1 953.7 485 L956.45 485 L963.93 485" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M967.45 485 L957.88 489.79 L957.88 480.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e29::DA-CUST360-CURATED::POL-PRIVACY">
+<title>subject to</title>
+<path d="M873.3 261 L878.8 261 A5.5 5.5 0 0 1 884.3 266.5 L884.3 296.55 A10 10 0 0 0 894.3 306.55 L941.84 306.55 A10 10 0 0 1 951.84 316.55 L951.84 359.92 A2.3 2.3 0 0 0 954.15 362.22 L956.45 362.22 L963.93 362.22" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M967.45 362.22 L957.88 367.01 L957.88 357.44 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e30::DA-DISPUTES-VENDOR-FEED::POL-TPRM">
+<title>subject to</title>
+<path d="M873.3 349 L884.3 349 L920.95 349 A10 10 0 0 1 930.95 359 L930.95 542 A10 10 0 0 0 940.95 552 L956.45 552 L963.93 552" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M967.45 552 L957.88 556.78 L957.88 547.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CTL-DAILY-RECON" data-type="controls">
+<title>Daily settlement and clearing reconciliation</title>
+<path d="M1014.86 24 L968 43.92 L968 72.08 L1014.86 92 L1081.14 92 L1128 72.08 L1128 43.92 L1081.14 24 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.1"/>
+<text x="1048" y="56.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Daily settlement and</text>
+<text x="1048" y="68.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">clearing reconciliation</text>
+</g>
+<g class="node" data-id="CTL-DQ-GATE" data-type="controls">
+<title>Ingestion data quality gate</title>
+<path d="M1198.86 24 L1152 43.92 L1152 72.08 L1198.86 92 L1265.14 92 L1312 72.08 L1312 43.92 L1265.14 24 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.1"/>
+<text x="1232" y="56.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Ingestion data quality</text>
+<text x="1232" y="68.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">gate</text>
+</g>
+<g class="node" data-id="CTL-MASK-NONPROD" data-type="controls">
+<title>Masked data outside production</title>
+<path d="M1014.86 112 L968 131.92 L968 160.08 L1014.86 180 L1081.14 180 L1128 160.08 L1128 131.92 L1081.14 112 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.1"/>
+<text x="1048" y="144.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Masked data outside</text>
+<text x="1048" y="156.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">production</text>
+</g>
+<g class="node" data-id="CTL-PCI-EVIDENCE" data-type="controls">
+<title>Cardholder data scope and evidence maintenance</title>
+<path d="M1198.86 112 L1152 131.92 L1152 160.08 L1198.86 180 L1265.14 180 L1312 160.08 L1312 131.92 L1265.14 112 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.1"/>
+<text x="1232" y="138.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Cardholder data scope</text>
+<text x="1232" y="150.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and evidence</text>
+<text x="1232" y="162.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">maintenance</text>
+</g>
+<g class="node" data-id="CTL-PRIV-REQ" data-type="controls">
+<title>Consumer privacy request fulfillment</title>
+<path d="M1014.86 200 L968 219.92 L968 248.08 L1014.86 268 L1081.14 268 L1128 248.08 L1128 219.92 L1081.14 200 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.1"/>
+<text x="1048" y="232.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Consumer privacy</text>
+<text x="1048" y="244.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">request fulfillment</text>
+</g>
+<g class="node" data-id="CTL-RETENTION" data-type="controls">
+<title>Retention schedule enforcement</title>
+<path d="M1198.86 200 L1152 219.92 L1152 248.08 L1198.86 268 L1265.14 268 L1312 248.08 L1312 219.92 L1265.14 200 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.1"/>
+<text x="1232" y="232.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Retention schedule</text>
+<text x="1232" y="244.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">enforcement</text>
+</g>
+<g class="node" data-id="DA-APPLICATION" data-type="data_assets">
+<title>Credit application record</title>
+<path d="M508 54.4 Q516.5 51 550.5 51 L635.5 51 Q669.5 51 678 54.4 L678 115.6 Q669.5 119 635.5 119 L550.5 119 Q516.5 119 508 115.6 Z" fill="#70c9a7" stroke="#047857" stroke-width="2.6"/>
+<text x="589" y="83.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit application</text>
+<text x="589" y="95.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">record</text>
+<svg x="660" y="56" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-BUREAU-FILE" data-type="data_assets">
+<title>Credit bureau furnishing file</title>
+<path d="M702 54.4 Q710.5 51 744.5 51 L829.5 51 Q863.5 51 872 54.4 L872 115.6 Q863.5 119 829.5 119 L744.5 119 Q710.5 119 702 115.6 Z" fill="#70c9a7" stroke="#047857" stroke-width="2.6"/>
+<text x="783" y="83.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit bureau</text>
+<text x="783" y="95.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">furnishing file</text>
+<svg x="854" y="56" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-CARD-ACCOUNT" data-type="data_assets">
+<title>Card account master</title>
+<path d="M508 142.4 Q516.5 139 550.5 139 L635.5 139 Q669.5 139 678 142.4 L678 203.6 Q669.5 207 635.5 207 L550.5 207 Q516.5 207 508 203.6 Z" fill="#70c9a7" stroke="#047857" stroke-width="2.6"/>
+<text x="589" y="177.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Card account master</text>
+<svg x="660" y="144" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-CARDSVC-OPERATIONAL" data-type="data_assets">
+<title>Card Servicing operational data</title>
+<path d="M702 142.4 Q710.5 139 744.5 139 L829.5 139 Q863.5 139 872 142.4 L872 203.6 Q863.5 207 829.5 207 L744.5 207 Q710.5 207 702 203.6 Z" fill="#70c9a7" stroke="#047857" stroke-width="2.6"/>
+<text x="783" y="171.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Card Servicing</text>
+<text x="783" y="183.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">operational data</text>
+<svg x="854" y="144" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-COLLECT-OPERATIONAL" data-type="data_assets">
+<title>Collections Workspace operational data</title>
+<path d="M508 230.4 Q516.5 227 550.5 227 L635.5 227 Q669.5 227 678 230.4 L678 291.6 Q669.5 295 635.5 295 L550.5 295 Q516.5 295 508 291.6 Z" fill="#70c9a7" stroke="#047857" stroke-width="2.6"/>
+<text x="589" y="253.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Collections</text>
+<text x="589" y="265.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Workspace</text>
+<text x="589" y="277.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">operational data</text>
+<svg x="660" y="232" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-CUST360-CURATED" data-type="data_assets">
+<title>Customer 360 curated dataset</title>
+<path d="M702 230.4 Q710.5 227 744.5 227 L829.5 227 Q863.5 227 872 230.4 L872 291.6 Q863.5 295 829.5 295 L744.5 295 Q710.5 295 702 291.6 Z" fill="#70c9a7" stroke="#047857" stroke-width="2.6"/>
+<text x="783" y="259.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer 360</text>
+<text x="783" y="271.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">curated dataset</text>
+<svg x="854" y="232" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-CUSTOMER-PROFILE" data-type="data_assets">
+<title>Customer profile</title>
+<path d="M508 318.4 Q516.5 315 550.5 315 L635.5 315 Q669.5 315 678 318.4 L678 379.6 Q669.5 383 635.5 383 L550.5 383 Q516.5 383 508 379.6 Z" fill="#70c9a7" stroke="#047857" stroke-width="2.6"/>
+<text x="589" y="353.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer profile</text>
+<svg x="660" y="320" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-DISPUTES-VENDOR-FEED" data-type="data_assets">
+<title>Dispute Management Platform vendor feed</title>
+<path d="M702 318.4 Q710.5 315 744.5 315 L829.5 315 Q863.5 315 872 318.4 L872 379.6 Q863.5 383 829.5 383 L744.5 383 Q710.5 383 702 379.6 Z" fill="#70c9a7" stroke="#047857" stroke-width="2.6"/>
+<text x="783" y="347.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dispute Management</text>
+<text x="783" y="359.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Platform vendor feed</text>
+<svg x="854" y="320" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-LENDING-OPERATIONAL" data-type="data_assets">
+<title>Installment Lending operational data</title>
+<path d="M508 406.4 Q516.5 403 550.5 403 L635.5 403 Q669.5 403 678 406.4 L678 467.6 Q669.5 471 635.5 471 L550.5 471 Q516.5 471 508 467.6 Z" fill="#70c9a7" stroke="#047857" stroke-width="2.6"/>
+<text x="589" y="435.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment Lending</text>
+<text x="589" y="447.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">operational data</text>
+<svg x="660" y="408" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-PAYMENT-INSTR" data-type="data_assets">
+<title>Payment instructions</title>
+<path d="M702 406.4 Q710.5 403 744.5 403 L829.5 403 Q863.5 403 872 406.4 L872 467.6 Q863.5 471 829.5 471 L744.5 471 Q710.5 471 702 467.6 Z" fill="#70c9a7" stroke="#047857" stroke-width="2.6"/>
+<text x="783" y="441.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Payment instructions</text>
+<svg x="854" y="408" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-SCREENING-OUTCOMES" data-type="data_assets">
+<title>NICE Actimize Screening outcomes</title>
+<path d="M508 494.4 Q516.5 491 550.5 491 L635.5 491 Q669.5 491 678 494.4 L678 555.6 Q669.5 559 635.5 559 L550.5 559 Q516.5 559 508 555.6 Z" fill="#70c9a7" stroke="#047857" stroke-width="2.6"/>
+<text x="589" y="523.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">NICE Actimize</text>
+<text x="589" y="535.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Screening outcomes</text>
+<svg x="660" y="496" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-TRANSACTION" data-type="data_assets">
+<title>Card transaction history</title>
+<path d="M702 494.4 Q710.5 491 744.5 491 L829.5 491 Q863.5 491 872 494.4 L872 555.6 Q863.5 559 829.5 559 L744.5 559 Q710.5 559 702 555.6 Z" fill="#70c9a7" stroke="#047857" stroke-width="2.6"/>
+<text x="783" y="523.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Card transaction</text>
+<text x="783" y="535.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">history</text>
+<svg x="854" y="496" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="POL-PRIVACY" data-type="policies">
+<title>Consumer Privacy &amp; Data Handling Policy</title>
+<path d="M976 342 L1130 342 L1138 350 L1138 402 L1130 410 L976 410 L968 402 L968 350 Z" fill="#fecaca" stroke="#dc2626" stroke-width="1.1"/>
+<text x="1049" y="374.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Consumer Privacy &amp;</text>
+<text x="1049" y="386.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Data Handling Policy</text>
+<svg x="1120" y="347" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg>
+</g>
+<g class="node" data-id="POL-RECORDS" data-type="policies">
+<title>Records Retention &amp; Disposition Policy</title>
+<path d="M976 430 L1130 430 L1138 438 L1138 490 L1130 498 L976 498 L968 490 L968 438 Z" fill="#fecaca" stroke="#dc2626" stroke-width="1.1"/>
+<text x="1049" y="462.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Records Retention &amp;</text>
+<text x="1049" y="474.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Disposition Policy</text>
+<svg x="1120" y="435" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg>
+</g>
+<g class="node" data-id="POL-TPRM" data-type="policies">
+<title>Third-Party Risk Management Policy</title>
+<path d="M976 518 L1130 518 L1138 526 L1138 578 L1130 586 L976 586 L968 578 L968 526 Z" fill="#fecaca" stroke="#dc2626" stroke-width="1.1"/>
+<text x="1049" y="550.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Third-Party Risk</text>
+<text x="1049" y="562.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management Policy</text>
+<svg x="1120" y="523" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg>
+</g>
+<g class="node" data-id="SYS-AUTH-SWITCH" data-type="systems">
+<title>Authorization Switch</title>
+<rect x="24" y="66" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="111" y="101.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Authorization Switch</text>
+<svg x="188" y="71" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-BUREAU-GW" data-type="systems">
+<title>Credit bureau gateway</title>
+<rect x="230" y="66" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="317" y="95.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit bureau</text>
+<text x="317" y="107.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">gateway</text>
+<svg x="394" y="71" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-CARDSVC-STORE" data-type="systems">
+<title>Card Servicing Datastore</title>
+<rect x="24" y="149" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="105" y="173.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Card Servicing</text>
+<text x="105" y="185.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Datastore</text>
+<text x="115" y="206.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Azure SQL</text>
+<image x="184" y="153" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYTk2NzkyYjctY2UyOC00Y2EzLTk3NjctNGUwNjVlZjQ4MjBmIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImVmMTZiZjlkLWE4YjYtNDE4MS1iNmNkLTY2ZmM1MjAzZjk1NiIgeDE9IjIuNTkiIHkxPSIxMC4xNiIgeDI9IjE1LjQxIiB5Mj0iMTAuMTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMwMDViYTEiIC8+PHN0b3Agb2Zmc2V0PSIwLjA3IiBzdG9wLWNvbG9yPSIjMDA2MGE5IiAvPjxzdG9wIG9mZnNldD0iMC4zNiIgc3RvcC1jb2xvcj0iIzAwNzFjOCIgLz48c3RvcCBvZmZzZXQ9IjAuNTIiIHN0b3AtY29sb3I9IiMwMDc4ZDQiIC8+PHN0b3Agb2Zmc2V0PSIwLjY0IiBzdG9wLWNvbG9yPSIjMDA3NGNkIiAvPjxzdG9wIG9mZnNldD0iMC44MiIgc3RvcC1jb2xvcj0iIzAwNmFiYiIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwMDViYTEiIC8+PC9saW5lYXJHcmFkaWVudD48cmFkaWFsR3JhZGllbnQgaWQ9ImJmMzg0NmMzLTRkNzQtNDc0My1hYjlhLWYzMzRjMjQ4YmQ5MiIgY3g9IjkuMzYiIGN5PSIxMC41NyIgcj0iNy4wNyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2YyZjJmMiIgLz48c3RvcCBvZmZzZXQ9IjAuNTgiIHN0b3AtY29sb3I9IiNlZWUiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZTZlNmU2IiAvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjx0aXRsZT5JY29uLWRhdGFiYXNlcy0xMzA8L3RpdGxlPjxwYXRoIGQ9Ik05LDUuMTRjLTMuNTQsMC02LjQxLTEtNi40MS0yLjMyVjE1LjE4YzAsMS4yNywyLjgyLDIuMyw2LjMyLDIuMzJIOWMzLjU0LDAsNi40MS0xLDYuNDEtMi4zMlYyLjgyQzE1LjQxLDQuMTEsMTIuNTQsNS4xNCw5LDUuMTRaIiBmaWxsPSJ1cmwoI2VmMTZiZjlkLWE4YjYtNDE4MS1iNmNkLTY2ZmM1MjAzZjk1NikiIC8+PHBhdGggZD0iTTE1LjQxLDIuODJjMCwxLjI5LTIuODcsMi4zMi02LjQxLDIuMzJzLTYuNDEtMS02LjQxLTIuMzJTNS40Ni41LDksLjVzNi40MSwxLDYuNDEsMi4zMiIgZmlsbD0iI2U4ZThlOCIgLz48cGF0aCBkPSJNMTMuOTIsMi42M2MwLC44Mi0yLjIxLDEuNDgtNC45MiwxLjQ4UzQuMDgsMy40NSw0LjA4LDIuNjMsNi4yOSwxLjE2LDksMS4xNnM0LjkyLjY2LDQuOTIsMS40NyIgZmlsbD0iIzUwZTZmZiIgLz48cGF0aCBkPSJNOSwzYTExLjU1LDExLjU1LDAsMCwwLTMuODkuNTdBMTEuNDIsMTEuNDIsMCwwLDAsOSw0LjExYTExLjE1LDExLjE1LDAsMCwwLDMuODktLjU4QTExLjg0LDExLjg0LDAsMCwwLDksM1oiIGZpbGw9IiMxOThhYjMiIC8+PHBhdGggZD0iTTEyLjksMTEuNFY4SDEydjQuMTNoMi40NlYxMS40Wk01Ljc2LDkuNzNhMS44MywxLjgzLDAsMCwxLS41MS0uMzEuNDQuNDQsMCwwLDEtLjEyLS4zMi4zNC4zNCwwLDAsMSwuMTUtLjMuNjguNjgsMCwwLDEsLjQyLS4xMiwxLjYyLDEuNjIsMCwwLDEsMSwuMjlWOC4xMWEyLjU4LDIuNTgsMCwwLDAtMS0uMTYsMS42NCwxLjY0LDAsMCwwLTEuMDkuMzQsMS4wOCwxLjA4LDAsMCwwLS40Mi44OWMwLC41MS4zMi45MSwxLDEuMjFhMi44OCwyLjg4LDAsMCwxLC42Mi4zNi40Mi40MiwwLDAsMSwuMTUuMzIuMzguMzgsMCwwLDEtLjE2LjMxLjgxLjgxLDAsMCwxLS40NS4xMSwxLjY2LDEuNjYsMCwwLDEtMS4wOS0uNDJWMTJhMi4xNywyLjE3LDAsMCwwLDEuMDcuMjQsMS44OCwxLjg4LDAsMCwwLDEuMTgtLjMzQTEuMDgsMS4wOCwwLDAsMCw2Ljg0LDExYTEuMDUsMS4wNSwwLDAsMC0uMjUtLjdBMi40MiwyLjQyLDAsMCwwLDUuNzYsOS43M1pNMTEsMTEuMzJhMi4zNCwyLjM0LDAsMCwwLC4zMy0xLjI2QTIuMzIsMi4zMiwwLDAsMCwxMSw5YTEuODEsMS44MSwwLDAsMC0uNy0uNzUsMiwyLDAsMCwwLTEtLjI2LDIuMTEsMi4xMSwwLDAsMC0xLjA4LjI3QTEuODYsMS44NiwwLDAsMCw3LjQ5LDlhMi40NiwyLjQ2LDAsMCwwLS4yNiwxLjE0LDIuMjYsMi4yNiwwLDAsMCwuMjQsMSwxLjc2LDEuNzYsMCwwLDAsLjY5Ljc0LDIuMDYsMi4wNiwwLDAsMCwxLC4zbC44NiwxaDEuMjFMMTAsMTIuMDhBMS43OSwxLjc5LDAsMCwwLDExLDExLjMyWk0xMCwxMS4wN2EuOTQuOTQsMCwwLDEtLjc2LjM1LjkyLjkyLDAsMCwxLS43Ni0uMzYsMS41MiwxLjUyLDAsMCwxLS4yOS0xLDEuNTMsMS41MywwLDAsMSwuMjktMSwxLDEsMCwwLDEsLjc4LS4zNy44Ny44NywwLDAsMSwuNzUuMzcsMS42MiwxLjYyLDAsMCwxLC4yNywxQTEuNDYsMS40NiwwLDAsMSwxMCwxMS4wN1oiIGZpbGw9InVybCgjYmYzODQ2YzMtNGQ3NC00NzQzLWFiOWEtZjMzNGMyNDhiZDkyKSIgLz48L3N2Zz4="/>
+</g>
+<g class="node" data-id="SYS-COLLECT-STORE" data-type="systems">
+<title>Collections Workspace Datastore</title>
+<rect x="230" y="149" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="311" y="167.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Collections</text>
+<text x="311" y="179.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Workspace</text>
+<text x="311" y="191.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Datastore</text>
+<text x="321" y="206.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Azure SQL</text>
+<image x="390" y="153" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYTk2NzkyYjctY2UyOC00Y2EzLTk3NjctNGUwNjVlZjQ4MjBmIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImVmMTZiZjlkLWE4YjYtNDE4MS1iNmNkLTY2ZmM1MjAzZjk1NiIgeDE9IjIuNTkiIHkxPSIxMC4xNiIgeDI9IjE1LjQxIiB5Mj0iMTAuMTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMwMDViYTEiIC8+PHN0b3Agb2Zmc2V0PSIwLjA3IiBzdG9wLWNvbG9yPSIjMDA2MGE5IiAvPjxzdG9wIG9mZnNldD0iMC4zNiIgc3RvcC1jb2xvcj0iIzAwNzFjOCIgLz48c3RvcCBvZmZzZXQ9IjAuNTIiIHN0b3AtY29sb3I9IiMwMDc4ZDQiIC8+PHN0b3Agb2Zmc2V0PSIwLjY0IiBzdG9wLWNvbG9yPSIjMDA3NGNkIiAvPjxzdG9wIG9mZnNldD0iMC44MiIgc3RvcC1jb2xvcj0iIzAwNmFiYiIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwMDViYTEiIC8+PC9saW5lYXJHcmFkaWVudD48cmFkaWFsR3JhZGllbnQgaWQ9ImJmMzg0NmMzLTRkNzQtNDc0My1hYjlhLWYzMzRjMjQ4YmQ5MiIgY3g9IjkuMzYiIGN5PSIxMC41NyIgcj0iNy4wNyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2YyZjJmMiIgLz48c3RvcCBvZmZzZXQ9IjAuNTgiIHN0b3AtY29sb3I9IiNlZWUiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZTZlNmU2IiAvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjx0aXRsZT5JY29uLWRhdGFiYXNlcy0xMzA8L3RpdGxlPjxwYXRoIGQ9Ik05LDUuMTRjLTMuNTQsMC02LjQxLTEtNi40MS0yLjMyVjE1LjE4YzAsMS4yNywyLjgyLDIuMyw2LjMyLDIuMzJIOWMzLjU0LDAsNi40MS0xLDYuNDEtMi4zMlYyLjgyQzE1LjQxLDQuMTEsMTIuNTQsNS4xNCw5LDUuMTRaIiBmaWxsPSJ1cmwoI2VmMTZiZjlkLWE4YjYtNDE4MS1iNmNkLTY2ZmM1MjAzZjk1NikiIC8+PHBhdGggZD0iTTE1LjQxLDIuODJjMCwxLjI5LTIuODcsMi4zMi02LjQxLDIuMzJzLTYuNDEtMS02LjQxLTIuMzJTNS40Ni41LDksLjVzNi40MSwxLDYuNDEsMi4zMiIgZmlsbD0iI2U4ZThlOCIgLz48cGF0aCBkPSJNMTMuOTIsMi42M2MwLC44Mi0yLjIxLDEuNDgtNC45MiwxLjQ4UzQuMDgsMy40NSw0LjA4LDIuNjMsNi4yOSwxLjE2LDksMS4xNnM0LjkyLjY2LDQuOTIsMS40NyIgZmlsbD0iIzUwZTZmZiIgLz48cGF0aCBkPSJNOSwzYTExLjU1LDExLjU1LDAsMCwwLTMuODkuNTdBMTEuNDIsMTEuNDIsMCwwLDAsOSw0LjExYTExLjE1LDExLjE1LDAsMCwwLDMuODktLjU4QTExLjg0LDExLjg0LDAsMCwwLDksM1oiIGZpbGw9IiMxOThhYjMiIC8+PHBhdGggZD0iTTEyLjksMTEuNFY4SDEydjQuMTNoMi40NlYxMS40Wk01Ljc2LDkuNzNhMS44MywxLjgzLDAsMCwxLS41MS0uMzEuNDQuNDQsMCwwLDEtLjEyLS4zMi4zNC4zNCwwLDAsMSwuMTUtLjMuNjguNjgsMCwwLDEsLjQyLS4xMiwxLjYyLDEuNjIsMCwwLDEsMSwuMjlWOC4xMWEyLjU4LDIuNTgsMCwwLDAtMS0uMTYsMS42NCwxLjY0LDAsMCwwLTEuMDkuMzQsMS4wOCwxLjA4LDAsMCwwLS40Mi44OWMwLC41MS4zMi45MSwxLDEuMjFhMi44OCwyLjg4LDAsMCwxLC42Mi4zNi40Mi40MiwwLDAsMSwuMTUuMzIuMzguMzgsMCwwLDEtLjE2LjMxLjgxLjgxLDAsMCwxLS40NS4xMSwxLjY2LDEuNjYsMCwwLDEtMS4wOS0uNDJWMTJhMi4xNywyLjE3LDAsMCwwLDEuMDcuMjQsMS44OCwxLjg4LDAsMCwwLDEuMTgtLjMzQTEuMDgsMS4wOCwwLDAsMCw2Ljg0LDExYTEuMDUsMS4wNSwwLDAsMC0uMjUtLjdBMi40MiwyLjQyLDAsMCwwLDUuNzYsOS43M1pNMTEsMTEuMzJhMi4zNCwyLjM0LDAsMCwwLC4zMy0xLjI2QTIuMzIsMi4zMiwwLDAsMCwxMSw5YTEuODEsMS44MSwwLDAsMC0uNy0uNzUsMiwyLDAsMCwwLTEtLjI2LDIuMTEsMi4xMSwwLDAsMC0xLjA4LjI3QTEuODYsMS44NiwwLDAsMCw3LjQ5LDlhMi40NiwyLjQ2LDAsMCwwLS4yNiwxLjE0LDIuMjYsMi4yNiwwLDAsMCwuMjQsMSwxLjc2LDEuNzYsMCwwLDAsLjY5Ljc0LDIuMDYsMi4wNiwwLDAsMCwxLC4zbC44NiwxaDEuMjFMMTAsMTIuMDhBMS43OSwxLjc5LDAsMCwwLDExLDExLjMyWk0xMCwxMS4wN2EuOTQuOTQsMCwwLDEtLjc2LjM1LjkyLjkyLDAsMCwxLS43Ni0uMzYsMS41MiwxLjUyLDAsMCwxLS4yOS0xLDEuNTMsMS41MywwLDAsMSwuMjktMSwxLDEsMCwwLDEsLjc4LS4zNy44Ny44NywwLDAsMSwuNzUuMzcsMS42MiwxLjYyLDAsMCwxLC4yNywxQTEuNDYsMS40NiwwLDAsMSwxMCwxMS4wN1oiIGZpbGw9InVybCgjYmYzODQ2YzMtNGQ3NC00NzQzLWFiOWEtZjMzNGMyNDhiZDkyKSIgLz48L3N2Zz4="/>
+</g>
+<g class="node" data-id="SYS-CORE-LEDGER" data-type="systems">
+<title>Core Card Ledger</title>
+<rect x="24" y="232" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="111" y="267.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Core Card Ledger</text>
+<svg x="188" y="237" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-CRM" data-type="systems">
+<title>Dynamics 365 Customer Service</title>
+<rect x="230" y="232" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="317" y="256.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dynamics 365</text>
+<text x="317" y="268.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer Service</text>
+<text x="321" y="289.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Microsoft</text>
+<svg x="394" y="237" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-CUST360-PIPELINE" data-type="systems">
+<title>Customer 360 Pipeline</title>
+<rect x="24" y="315" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="105" y="339.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer 360</text>
+<text x="105" y="351.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Pipeline</text>
+<text x="115" y="372.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Snowflake Data Cloud +1</text>
+<image x="184" y="319" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMjlCNUU4IiByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+U25vd2ZsYWtlPC90aXRsZT48cGF0aCBkPSJNMjQgMy40NTljMCAuNjQ2LS40MTggMS4xOC0xLjE0MSAxLjE4LS43MjMgMC0xLjE0Mi0uNTM0LTEuMTQyLTEuMTggMC0uNjQ3LjQxOS0xLjE4IDEuMTQyLTEuMTguNzIzIDAgMS4xNDEuNTMzIDEuMTQxIDEuMTh6bS0uMjI4IDBjMC0uNTMzLS4zOC0uOTUxLS45MTMtLjk1MXMtLjkxMy4zOC0uOTEzLjk1YzAgLjUzMy4zOC45NTIuOTEzLjk1Mi41NyAwIC45MTMtLjQxOS45MTMtLjk1MXptLTEuMzctLjUzM2guNDk1Yy4yNjYgMCAuNDU2LjE1Mi40NTYuMzggMCAuMTUzLS4wNzYuMjI5LS4xOS4zMDVsLjE5LjI2NnYuMDM4aC0uMjY2bC0uMTktLjI2NmgtLjIyOXYuMjY2aC0uMjY2em0uNDk1LjIyOGgtLjIyOXYuMjY3aC4yMjljLjExNCAwIC4xNTItLjAzOC4xNTItLjExNC4wMzgtLjA3Ny0uMDM4LS4xNTMtLjE1Mi0uMTUzek03LjYwMiAxMi40Yy4wMzgtLjE1MS4wNzYtLjMwNC4wNzYtLjQ1NiAwLS4xMTQtLjAzOC0uMjI4LS4wMzgtLjM0Mi0uMTE0LS4zNDMtLjMwNC0uNjQ3LS42NDYtLjgzOGwtNC44Ny0yLjc3N2MtLjY4NS0uMzgtMS41Ni0uMTUyLTEuOTQuNTMzLS4zODEuNjg1LS4xNTMgMS41Ni41MzIgMS45NGwyLjcwMSAxLjU2LTIuNzAxIDEuNTZjLS42ODUuMzgtLjkxMyAxLjI1Ni0uNTMzIDEuOTQuMzguNjg1IDEuMjU2LjkxNCAxLjk0LjUzM2w0LjgzMi0yLjc3N2MuMzQzLS4yNjcuNTcxLS41MzMuNjQ3LS44NzZ6bTEuMzMyIDIuNjI2Yy0uMjY2LS4wMzgtLjU3LjAzOC0uODM3LjE5bC00LjgzMiAyLjc3N2MtLjY4NS4zOC0uOTEzIDEuMjU2LS41MzIgMS45NC4zOC42ODYgMS4yNTUuOTE0IDEuOTQuNTMzbDIuNzAxLTEuNTZ2My4xMmMwIC44LjY0NyAxLjQwOCAxLjQ0NiAxLjQwOC43OTkgMCAxLjQwNy0uNjQ3IDEuNDA3LTEuNDA4di01LjU5MmMwLS43NjEtLjU3LTEuMzctMS4yOTMtMS40MDh6bTQuOTQ2LTYuMDg4Yy4yNjYuMDM4LjU3LS4wMzguODM3LS4xOWw0LjgzMi0yLjc3N2MuNjg1LS4zOC45MTMtMS4yNTYuNTMyLTEuOTQtLjM4LS42ODYtMS4yNTUtLjkxNC0xLjk0LS41MzNsLTIuNzAxIDEuNTZWMS45NzVjMC0uNzk5LS42NDctMS40MDgtMS40NDYtMS40MDgtLjc5OSAwLTEuNDQ2LjYwOS0xLjQ0NiAxLjQwOFY3LjUzYzAgLjc2LjYwOSAxLjM3IDEuMzMyIDEuNDA3ek0zLjI2NSA1Ljk3bDQuODMyIDIuNzc3Yy4yNjYuMTUyLjUzMy4xOS44MzcuMTkuNzIzLS4wMzggMS4zMzEtLjY4NCAxLjMzMS0xLjQwN1YxLjk3NWMwLS43OTktLjY0Ni0xLjQwOC0xLjQwNy0xLjQwOC0uNzk5IDAtMS40NDYuNjQ3LTEuNDQ2IDEuNDA4djMuMTJsLTIuNzAxLTEuNTZjLS42ODUtLjM4LTEuNTYtLjE1Mi0xLjk0LjUzMy0uNDE5LjY0Ni0uMTkgMS41MjEuNDk0IDEuOTAyem05LjA5MyA2LjAxMWEuNDEyLjQxMiAwIDAwLS4xMTQtLjI2NmwtLjU3LS41NzFhLjM0Ni4zNDYgMCAwMC0uMjY3LS4xMTQuNDEyLjQxMiAwIDAwLS4yNjYuMTE0bC0uNTcxLjU3YS40MTEuNDExIDAgMDAtLjExNC4yNjdjMCAuMDc2LjAzOC4xOS4xMTQuMjY3bC41Ny41N2EuMzQ1LjM0NSAwIDAwLjI2Ny4xMTRjLjA3NiAwIC4xOS0uMDM4LjI2Ni0uMTE0bC41NzEtLjU3YS40MTIuNDEyIDAgMDAuMTE0LS4yNjd6bTEuNTk4LjUzM0wxMS45NCAxNC41M2MtLjAzOS4wMzgtLjE1My4xMTQtLjIyOS4xMTRoLS42MDhhLjQxMS40MTEgMCAwMS0uMjY3LS4xMTRMOC44MiAxMi41MTRhLjQwOC40MDggMCAwMS0uMDc2LS4yMjl2LS42MDhjMC0uMDc2LjAzOC0uMTkuMTE0LS4yNjdsMi4wMTYtMi4wMTZhLjQxLjQxIDAgMDEuMjY3LS4xMTRoLjYwOGEuNDEuNDEgMCAwMS4yNjcuMTE0bDIuMDE2IDIuMDE2YS4zNDcuMzQ3IDAgMDEuMTE0LjI2N3YuNjA4Yy0uMDc2LjA3Ny0uMTE0LjE5LS4xOS4yMjl6bTUuNTkzIDUuNDRsLTQuODMyLTIuNzc3Yy0uMjY2LS4xNTItLjU3LS4xOS0uODM3LS4xNTItLjcyMy4wMzgtMS4zMzIuNjg0LTEuMzMyIDEuNDA4djUuNTU0YzAgLjguNjQ3IDEuNDA4IDEuNDA4IDEuNDA4Ljc5OSAwIDEuNDQ2LS42NDcgMS40NDYtMS40MDh2LTMuMTJsMi43IDEuNTZjLjY4Ni4zOCAxLjU2MS4xNTIgMS45NDEtLjUzMy40MTktLjY0Ni4xOS0xLjUyMS0uNDk0LTEuOTR6bTIuNTQ5LTcuNTMzbC0yLjcwMSAxLjU2IDIuNyAxLjU2Yy42ODYuMzguOTE0IDEuMjU2LjUzMyAxLjk0LS4zOC42ODUtMS4yNTUuOTEzLTEuOTQuNTMzbC00LjgzMi0yLjc3OGExLjY0NCAxLjY0NCAwIDAxLS42NDctLjc5OGMtLjAzNy0uMTUzLS4wNzYtLjMwNS0uMDc2LS40NTcgMC0uMTE0LjAzOS0uMjI4LjAzOS0uMzQyLjExNC0uMzQzLjM0Mi0uNjQ3LjY0Ni0uODM3bDQuODMyLTIuNzc4Yy42ODUtLjM4IDEuNTYtLjE1MiAxLjk0LjUzMy40NTcuNjA5LjE5IDEuNDg0LS40OTQgMS44NjQiLz48L3N2Zz4="/>
+</g>
+<g class="node" data-id="SYS-DISPUTES-SAAS" data-type="systems">
+<title>Pega Smart Dispute</title>
+<rect x="230" y="315" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="317" y="345.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Pega Smart Dispute</text>
+<text x="321" y="372.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Pegasystems</text>
+<svg x="394" y="320" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-LENDING-DB" data-type="systems">
+<title>Installment Lending Database</title>
+<rect x="24" y="398" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="105" y="422.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment</text>
+<text x="105" y="434.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Lending Database</text>
+<text x="115" y="455.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">RDS</text>
+<image x="184" y="402" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNjRweCIgaGVpZ2h0PSI2NHB4IiB2aWV3Qm94PSIwIDAgNjQgNjQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8dGl0bGU+SWNvbi1BcmNoaXRlY3R1cmUvNDgvQXJjaF9BbWF6b24tUkRTXzQ4PC90aXRsZT4KICAgIDxnIGlkPSJJY29uLUFyY2hpdGVjdHVyZS80OC9BcmNoX0FtYXpvbi1SRFNfNDgiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxnIGlkPSJJY29uLUFyY2hpdGVjdHVyZS1CRy80OC9EYXRhYmFzZSIgZmlsbD0iI0M5MjVEMSI+CiAgICAgICAgICAgIDxyZWN0IGlkPSJSZWN0YW5nbGUiIHg9IjAiIHk9IjAiIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PC9yZWN0PgogICAgICAgIDwvZz4KICAgICAgICA8cGF0aCBkPSJNNTQsMTEgTDU0LDE5IEw1MiwxOSBMNTIsMTMuNDE0IEw0NS43MDcsMTkuNzA3IEw0NC4yOTMsMTguMjkzIEw1MC41ODYsMTIgTDQ1LjEyNSwxMiBMNDUuMTI1LDEwIEw1MywxMCBDNTMuNTUzLDEwIDU0LDEwLjQ0OCA1NCwxMSBMNTQsMTEgWiBNMTIsMTguODc1IEwxMCwxOC44NzUgTDEwLDExIEMxMCwxMC40NDggMTAuNDQ3LDEwIDExLDEwIEwxOSwxMCBMMTksMTIgTDEzLjQxNCwxMiBMMTkuNzA3LDE4LjI5MyBMMTguMjkzLDE5LjcwNyBMMTIsMTMuNDE0IEwxMiwxOC44NzUgWiBNMTkuNzA3LDQ1LjcwNyBMMTMuNDE0LDUyIEwxOC44NzUsNTIgTDE4Ljg3NSw1NCBMMTEsNTQgQzEwLjQ0Nyw1NCAxMCw1My41NTIgMTAsNTMgTDEwLDQ1IEwxMiw0NSBMMTIsNTAuNTg2IEwxOC4yOTMsNDQuMjkzIEwxOS43MDcsNDUuNzA3IFogTTUxLjUsMzEuNzgxIEM1MS41LDI5LjM1MiA0OC42MzQsMjYuOTMyIDQzLjgzMywyNS4zMDcgTDQ0LjQ3NCwyMy40MTMgQzUwLjIxLDI1LjM1NCA1My41LDI4LjQwNCA1My41LDMxLjc4MSBDNTMuNSwzNS4xNTggNTAuMjEsMzguMjA4IDQ0LjQ3NCw0MC4xNSBMNDMuODMzLDM4LjI1NSBDNDguNjM0LDM2LjYzMSA1MS41LDM0LjIxIDUxLjUsMzEuNzgxIEw1MS41LDMxLjc4MSBaIE0xMi41NDMsMzEuNzgxIEMxMi41NDMsMzQuMTA1IDE1LjIyNCwzNi40NiAxOS43MTUsMzguMDgxIEwxOS4wMzUsMzkuOTYxIEMxMy42MzksMzguMDE0IDEwLjU0MywzNS4wMzMgMTAuNTQzLDMxLjc4MSBDMTAuNTQzLDI4LjUzIDEzLjYzOSwyNS41NDggMTkuMDM1LDIzLjYwMSBMMTkuNzE1LDI1LjQ4MiBDMTUuMjI0LDI3LjEwMyAxMi41NDMsMjkuNDU4IDEyLjU0MywzMS43ODEgTDEyLjU0MywzMS43ODEgWiBNNTIsNDUuMTI1IEw1NCw0NS4xMjUgTDU0LDUzIEM1NCw1My41NTIgNTMuNTUzLDU0IDUzLDU0IEw0NSw1NCBMNDUsNTIgTDUwLjU4Niw1MiBMNDQuMjkzLDQ1LjcwNyBMNDUuNzA3LDQ0LjI5MyBMNTIsNTAuNTg2IEw1Miw0NS4xMjUgWiBNMzIuMDIyLDMxLjQwMiBDMjYuOTk5LDMxLjQwMiAyNC4xMjYsMzAuMDU5IDI0LDI5LjQ4MyBMMjQsMjYuMjU3IEMyNi4xNTksMjcuMjY2IDI5LjYwOSwyNy41OTMgMzIsMjcuNTkzIEMzNC4zOTEsMjcuNTkzIDM3Ljg0MSwyNy4yNjYgNDAsMjYuMjU3IEw0MCwyOS40ODMgQzM5Ljg5NCwzMC4wNTcgMzcuMDUxLDMxLjQwMiAzMi4wMjIsMzEuNDAyIEwzMi4wMjIsMzEuNDAyIFogTTMyLjAyMiwzNy4xMyBDMjYuOTk5LDM3LjEzIDI0LjEyNiwzNS43ODYgMjQsMzUuMjEgTDI0LDMxLjk1NiBDMjUuOTUzLDMyLjkzNyAyOS4wNTUsMzMuNDAyIDMyLjAyMiwzMy40MDIgQzM0Ljk3MywzMy40MDIgMzguMDU1LDMyLjkzOCA0MCwzMS45NiBMNDAsMzUuMjEgQzM5Ljg5NCwzNS43ODUgMzcuMDUyLDM3LjEzIDMyLjAyMiwzNy4xMyBMMzIuMDIyLDM3LjEzIFogTTMyLDQyLjI2OCBDMjYuOTUsNDIuMjY4IDI0LjEwNCw0MC45MTcgMjQsNDAuMzQ2IEwyNCwzNy42ODMgQzI1Ljk1MywzOC42NjUgMjkuMDU1LDM5LjEzIDMyLjAyMiwzOS4xMyBDMzQuOTczLDM5LjEzIDM4LjA1NSwzOC42NjYgNDAsMzcuNjg3IEw0MCw0MC4zNDIgQzM5Ljg5Niw0MC45MTcgMzcuMDUsNDIuMjY4IDMyLDQyLjI2OCBMMzIsNDIuMjY4IFogTTMyLDIyLjE5MyBDMzYuOTcxLDIyLjE5MyAzOS42NDIsMjMuMzcgMzkuOTgyLDIzLjg5NCBDMzkuNjQyLDI0LjQxNyAzNi45NzEsMjUuNTkzIDMyLDI1LjU5MyBDMjYuOTA5LDI1LjU5MyAyNC4yMzMsMjQuMzYxIDI0LDIzLjk0OSBMMjQsMjMuOTMgQzI0LjIzMywyMy40MjYgMjYuOTA5LDIyLjE5MyAzMiwyMi4xOTMgTDMyLDIyLjE5MyBaIE0zMiwyMC4xOTMgQzI4LjI4NiwyMC4xOTMgMjIsMjAuOTczIDIyLDIzLjg5NCBMMjIsNDAuMzQ2IEMyMiw0My4wNDEgMjcuMTg0LDQ0LjI2OCAzMiw0NC4yNjggQzM2LjgxNiw0NC4yNjggNDIsNDMuMDQxIDQyLDQwLjM0NiBMNDIsMjMuODk0IEM0MiwyMC45NzMgMzUuNzE0LDIwLjE5MyAzMiwyMC4xOTMgTDMyLDIwLjE5MyBaIiBpZD0iQW1hem9uLVJEU19JY29uXzQ4X1NxdWlkIiBmaWxsPSIjRkZGRkZGIj48L3BhdGg+CiAgICA8L2c+Cjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-ORIG-DECISION" data-type="systems">
+<title>Originations decision engine</title>
+<rect x="230" y="398" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="317" y="427.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Originations decision</text>
+<text x="317" y="439.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">engine</text>
+<svg x="394" y="403" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-PAYMENT-GW" data-type="systems">
+<title>Payment capture gateway</title>
+<rect x="24" y="481" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="111" y="510.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Payment capture</text>
+<text x="111" y="522.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">gateway</text>
+<svg x="188" y="486" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-SCREENING-VENDOR" data-type="systems">
+<title>NICE Actimize Screening</title>
+<rect x="230" y="481" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="317" y="505.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">NICE Actimize</text>
+<text x="317" y="517.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Screening</text>
+<text x="321" y="538.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">NICE Actimize</text>
+<svg x="394" y="486" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="782.1" x2="1370.1" y2="782.1" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="806.1" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 795.1)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="93.2" y="806.1" font-size="12" font-weight="400" fill="#343d50">control · 6</text>
+<g transform="translate(165.26 795.1)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="191.26" y="806.1" font-size="12" font-weight="400" fill="#343d50">data asset · 12</text>
+<g transform="translate(286.67 795.1)" fill="#fecaca" stroke="#dc2626" stroke-width="1.4"><path d="M4 1h12l3 3v6l-3 3H4l-3-3V4z"/></g>
+<text x="312.67" y="806.1" font-size="12" font-weight="400" fill="#343d50">policy · 3</text>
+<g transform="translate(378.89 795.1)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="404.89" y="806.1" font-size="12" font-weight="400" fill="#343d50">system · 12</text>
+<text x="28" y="828.1" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">CLASSIFICATION</text>
+<g transform="translate(130.2 817.1)" fill="#e57676" stroke="#b91c1c" stroke-width="2.6"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="156.2" y="828.1" font-size="12" font-weight="400" fill="#343d50">Restricted · 12</text>
+<g transform="translate(251.16 817.1)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.1"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="277.16" y="828.1" font-size="12" font-weight="400" fill="#343d50">not recorded · 21</text>
+<text x="28" y="850.1" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 839.1)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="850.1" font-size="12" font-weight="400" fill="#343d50">governed by</text>
+<g transform="translate(184.75 839.1)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="210.75" y="850.1" font-size="12" font-weight="400" fill="#343d50">subject to</text>
+<g transform="translate(283.5 839.1)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="309.5" y="850.1" font-size="12" font-weight="400" fill="#343d50">masters</text>
+<text x="28" y="884.1" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · restricted-data-governance · edit the model, not the picture</text></g>
+</svg>

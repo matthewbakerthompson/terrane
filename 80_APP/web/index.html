@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terrane</title>
+<link rel="preload" href="fonts/geist-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/geist-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/libre-franklin-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- The icons the chrome uses, once each, from Lucide (ISC). A page under
+     `default-src 'self'` cannot fetch an icon font, and twenty inline copies
+     of the same path are twenty places to get it wrong. -->
+<svg hidden aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-house" viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol>
+  <symbol id="i-blocks" viewBox="0 0 24 24"><path d="M10 22V7a1 1 0 0 0-1-1H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5a1 1 0 0 0-1-1H2"/><rect x="14" y="2" width="8" height="8" rx="1"/></symbol>
+  <symbol id="i-table" viewBox="0 0 24 24"><path d="M3 9h18"/><path d="M9 3v18"/><rect x="3" y="3" width="18" height="18" rx="2"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+  <symbol id="i-panel-left-close" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m16 15-3-3 3-3"/></symbol>
+  <symbol id="i-panel-left-open" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m14 9 3 3-3 3"/></symbol>
+  <symbol id="i-panel-right" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M15 3v18"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-sketch" viewBox="0 0 24 24"><path d="M13 7 8.7 2.7a2.41 2.41 0 0 0-3.4 0L2.7 5.3a2.41 2.41 0 0 0 0 3.4L7 13"/><path d="m8 6 2-2"/><path d="m18 16 2-2"/><path d="m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17"/><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></symbol>
+  <symbol id="i-zoom-in" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M11 8v6"/><path d="M8 11h6"/></symbol>
+  <symbol id="i-fit" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><path d="M10.3 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10l-3.1-3.1a2 2 0 0 0-2.814.014L6 21"/><path d="m14 19 3 3v-5.5"/><path d="m17 22 3-3"/><circle cx="9" cy="9" r="2"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></symbol>
+  <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></symbol>
+  <symbol id="i-list-checks" viewBox="0 0 24 24"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></symbol>
+  <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-file-up" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 12v6"/><path d="m15 15-3-3-3 3"/></symbol>
+  <symbol id="i-file-sheet" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 13h2"/><path d="M14 13h2"/><path d="M8 17h2"/><path d="M14 17h2"/></symbol>
+  <symbol id="i-folder-open" viewBox="0 0 24 24"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/></symbol>
+  <symbol id="i-arrow-down-to-line" viewBox="0 0 24 24"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></symbol>
+  <symbol id="i-compare" viewBox="0 0 24 24"><circle cx="5" cy="6" r="3"/><path d="M12 6h5a2 2 0 0 1 2 2v7"/><path d="m15 9-3-3 3-3"/><circle cx="19" cy="18" r="3"/><path d="M12 18H7a2 2 0 0 1-2-2V9"/><path d="m9 15 3 3-3 3"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol>
+  <symbol id="i-columns" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24"><path d="m4 17 6-6-6-6"/><path d="M12 19h8"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m17 8-5-5-5 5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-app-window" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M10 4v4"/><path d="M2 8h20"/><path d="M6 4v4"/></symbol>
+  <symbol id="i-arrows" viewBox="0 0 24 24"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></symbol>
+  <symbol id="i-pointer" viewBox="0 0 24 24"><path d="M4.04 4.69a.5.5 0 0 1 .65-.65l16 6.5a.5.5 0 0 1-.06.95l-6.13 1.58a2 2 0 0 0-1.43 1.43l-1.58 6.13a.5.5 0 0 1-.95.06z"/></symbol>
+  <symbol id="i-spline" viewBox="0 0 24 24"><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><path d="M5 17A12 12 0 0 1 17 5"/></symbol>
+  <symbol id="i-square-dashed" viewBox="0 0 24 24"><path d="M5 3a2 2 0 0 0-2 2"/><path d="M19 3a2 2 0 0 1 2 2"/><path d="M21 19a2 2 0 0 1-2 2"/><path d="M5 21a2 2 0 0 1-2-2"/><path d="M9 3h1"/><path d="M9 21h1"/><path d="M14 3h1"/><path d="M14 21h1"/><path d="M3 9v1"/><path d="M21 9v1"/><path d="M3 14v1"/><path d="M21 14v1"/></symbol>
+  <symbol id="i-network" viewBox="0 0 24 24"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol>
+  <symbol id="i-circle-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></symbol>
+  <symbol id="i-circle-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+  <symbol id="i-grip" viewBox="0 0 24 24"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></symbol>
+  <symbol id="i-rotate-ccw" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></symbol>
+  <symbol id="i-package" viewBox="0 0 24 24"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><path d="M3.29 7 12 12l8.71-5"/><path d="m7.5 4.27 9 5.15"/></symbol>
+</svg>
+
+<!-- The dotted plate under every picture, defined once. -->
+<svg class="defs-only" aria-hidden="true" focusable="false">
+  <defs><pattern id="il-dots" width="12" height="12" patternUnits="userSpaceOnUse"><rect x="10" y="8" width="1.4" height="1.4"/></pattern></defs>
+</svg>
+
+<div class="shell">
+
+  <!-- The sidebar: who this is, where you are, every diagram by layer, and
+       the one button that makes things. Its colors are the tone's. -->
+  <nav class="rail" id="rail" aria-label="Pages and views">
+    <div class="sb-brand">
+      <span class="sb-mark" aria-hidden="true">
+        <!-- The mark: a block with the seam across it. A terrane is a block of
+             crust with its own history, joined to the rest. -->
+        <svg viewBox="0 0 24 24" width="22" height="22"><rect x="3" y="3" width="18" height="18" rx="4" fill="currentColor"/><path d="M4 16 L10 13 L13 9 L21 6" fill="none" stroke="var(--ink-900)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="sb-wordmark">Terrane</span>
+      <button class="sb-icon" id="btnRail" type="button" aria-pressed="true" aria-label="Hide the sidebar" title="Hide the sidebar">
+        <svg class="i"><use href="#i-panel-left-close"/></svg>
+      </button>
+    </div>
+
+    <button class="sb-ws" id="btnEstate" type="button" aria-haspopup="menu" title="The estate this app is reading; another one, or a new one">
+      <span class="sb-ws-name" id="modelName">Architecture Model</span>
+      <span class="sb-ws-note" id="facts"></span>
+    </button>
+
+    <button class="sb-search" id="btnJump" type="button" aria-label="Jump to a view, a system or an action" title="Jump to anything (Ctrl+K or /)">
+      <svg class="i"><use href="#i-search"/></svg>
+      <span class="sb-search-text">Search</span>
+      <kbd id="jumpKey">Ctrl K</kbd>
+    </button>
+
+    <div class="sb-nav" role="group" aria-label="Pages">
+      <button class="sb-item" id="btnHome" type="button" title="Where to start"><svg class="i"><use href="#i-house"/></svg><span>Home</span></button>
+      <button class="sb-item" id="btnDiagrams" type="button" title="Every diagram, by layer"><svg class="i"><use href="#i-grid"/></svg><span>Diagrams</span></button>
+      <button class="sb-item" id="btnData" type="button" title="Every record and relation as tables"><svg class="i"><use href="#i-database"/></svg><span>Model</span></button>
+      <button class="sb-item" id="btnComponents" type="button" title="Parts, blocks, patterns and component types"><svg class="i"><use href="#i-blocks"/></svg><span>Library</span></button>
+      <!-- The four checks are one page with tabs; the badge is the errors,
+           which block a merge, and nothing when there are none. -->
+      <button class="sb-item" id="btnChecks" type="button" title="Validate, coverage, drift and changes"><svg class="i"><use href="#i-list-checks"/></svg><span>Checks</span><span class="sb-badge" id="checksBadge"></span></button>
+    </div>
+
+    <p class="sb-head"><span>Diagrams by layer</span></p>
+    <div class="viewlist" id="viewList"></div>
+
+    <div class="sb-foot">
+      <button class="btn sb-new" id="btnNew" type="button" aria-haspopup="menu" aria-expanded="false" title="Make a diagram, a system, a connection, a flow or a product, or import"><svg class="i"><use href="#i-plus"/></svg><span>New</span></button>
+      <!-- The tone is under Settings, Appearance: two swatches here were a
+           setting with no word on them. -->
+      <div class="sb-foot-links">
+        <button class="sb-link" id="btnSettings" type="button" title="Where this estate lives, where its records come from, how the app looks"><svg class="i"><use href="#i-settings"/></svg><span>Settings</span></button>
+        <button class="sb-link" id="btnHelp" type="button" title="How to use this app"><svg class="i"><use href="#i-help"/></svg><span>Help</span></button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="stage">
+    <!-- On the stage, not in the drawing's head: every page over the drawing
+         hides the head, and the way back to a hidden sidebar went with it. -->
+    <button class="sb-icon stage-rail-open" id="btnRailOpen" type="button" aria-label="Show the sidebar" title="Show the sidebar"><svg class="i"><use href="#i-panel-left-open"/></svg></button>
+    <div class="stage-head">
+      <div class="stage-title">
+        <p class="crumb" id="viewCrumb"></p>
+        <div class="stage-title-row">
+          <h1 id="viewTitle">Loading…</h1>
+          <span class="kind-tag" id="viewKind" hidden></span>
+        </div>
+        <p class="sub" id="viewDesc" title=""></p>
+      </div>
+      <div class="stage-meta" id="viewMeta"></div>
+      <div class="stage-acts">
+        <button class="btn small" id="btnEditView" type="button" title="Change what this diagram shows and how it groups"><svg class="i"><use href="#i-pencil"/></svg><span>Edit</span></button>
+        <!-- What leaves the app, in one menu: the picture and the text. -->
+        <details class="acts-menu" id="exportMenu">
+          <summary class="btn small"><svg class="i"><use href="#i-download"/></svg><span>Export</span><svg class="i"><use href="#i-chevron-down"/></svg></summary>
+          <div class="acts-list">
+            <button class="btn small" id="btnExportPng" type="button">Picture<span class="note">The drawing as a PNG, with its key</span></button>
+            <button class="btn small" id="btnSource" type="button">Source<span class="note">The Mermaid and Structurizr for what is on screen</span></button>
+          </div>
+        </details>
+        <details class="acts-menu" id="actsMenu">
+          <summary class="btn small icon" aria-label="More" title="More"><svg class="i"><use href="#i-more"/></svg></summary>
+          <div class="acts-list">
+            <button class="btn small" id="btnSketch" type="button">Sketch<span class="note">Draw the things you have selected, and only those</span></button>
+          </div>
+        </details>
+        <button class="btn small icon toggle" id="btnInsp" type="button" aria-pressed="true" aria-label="Show or hide the details panel" title="Show or hide the details panel"><svg class="i"><use href="#i-panel-right"/></svg></button>
+      </div>
+    </div>
+
+    <div class="subject-bar" id="subjectBar" hidden></div>
+
+    <div class="focus-bar" id="focusBar" hidden>
+      <span class="focus-tag">Focus</span>
+      <span class="focus-on" id="focusOn"></span>
+      <span class="focus-step">
+        <button class="btn small" id="btnFocusOut" type="button" aria-label="One hop fewer">&minus;</button>
+        <span class="num" id="focusDepth">1 hop</span>
+        <button class="btn small" id="btnFocusIn" type="button" aria-label="One hop further">+</button>
+      </span>
+      <button class="btn small" id="btnFocusExit" type="button">Back to the view</button>
+    </div>
+
+    <div class="focus-bar sketch-bar" id="sketchBar" hidden>
+      <span class="focus-tag">Sketch</span>
+      <span class="focus-on" id="sketchCount">0 things</span>
+      <span class="focus-step sketch-acts">
+        <button class="btn small" id="btnSketchExpand" type="button" title="Add what is connected to the selected thing">Add connected</button>
+        <button class="btn small" id="btnSketchScreen" type="button" title="Add everything drawn right now">Add all on screen</button>
+        <button class="btn small" id="btnSketchNew" type="button" title="Create something new, placed like the things already picked">New…</button>
+        <button class="btn small" id="btnSketchConnect" type="button" title="Create an interface from the selected system to another picked one">Connect…</button>
+        <span class="sep" aria-hidden="true"></span>
+        <button class="btn small" id="btnSketchDraw" type="button">Draw</button>
+        <button class="btn small" id="btnSketchView" type="button" title="Write the sketch as a view file">Save as view</button>
+        <button class="btn small" id="btnSketchModule" type="button" title="Write the sketch as a part in the library">Save as module</button>
+        <span class="sep" aria-hidden="true"></span>
+        <button class="btn small" id="btnSketchClear" type="button">Clear</button>
+        <button class="btn small" id="btnSketchExit" type="button" hidden>Back to the view</button>
+      </span>
+    </div>
+
+    <section class="panel" id="dataPanel" hidden aria-label="Model data"></section>
+
+    <div class="sheet" id="mapSheet">
+      <div id="cy" class="canvas" role="application" tabindex="0"
+           aria-label="Architecture map. Arrow keys move between nodes, Enter opens one, Escape clears the selection."
+           aria-describedby="inspIdle"></div>
+      <!-- An edgeless map is drawn here as tiles rather than on the canvas. -->
+      <div id="tiles" class="tiles" hidden aria-label="Tile map"></div>
+      <div class="need-strip" id="needStrip" hidden role="status"></div>
+
+      <!-- The canvas: New diagram draws here. Its tools float over the
+           sheet; what is selected shows in the details column. -->
+      <div class="cv-tools" id="cvTools" hidden role="toolbar" aria-label="Drawing tools">
+        <button class="btn small primary cv-add" id="cvAdd" type="button" aria-haspopup="dialog" aria-expanded="false" title="Place a library part, or something the estate already has"><svg class="i"><use href="#i-plus"/></svg><span>Add</span></button>
+        <span class="sep" aria-hidden="true"></span>
+        <button class="cv-tool" id="cvSelect" type="button" aria-pressed="true" title="Click a box to see and change it; drag it into a boundary to move it there"><svg class="i"><use href="#i-pointer"/></svg><span>Select</span></button>
+        <button class="cv-tool" id="cvConnect" type="button" aria-pressed="false" title="Click one box, then the box it connects to"><svg class="i"><use href="#i-spline"/></svg><span>Connect</span></button>
+        <button class="cv-tool" id="cvBoundary" type="button" aria-pressed="false" title="Place a view, an account or a zone as a boundary"><svg class="i"><use href="#i-square-dashed"/></svg><span>Boundary</span></button>
+      </div>
+      <p class="cv-hint" id="cvHint" hidden></p>
+      <div class="cv-chips" id="cvChips" hidden></div>
+      <div class="cv-picker" id="cvPicker" hidden role="dialog" aria-label="Place on the diagram"></div>
+      <div class="cv-empty" id="cvEmpty" hidden>
+        <div class="cv-empty-card">
+          <span class="cv-empty-plus" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span>
+          <h2>Draw this diagram</h2>
+          <p>Press + or drag in a part from the library, or something the estate already has: a system, an account, a zone, or a whole view placed as a boundary.</p>
+          <div class="cv-empty-acts">
+            <button class="btn" id="cvFromLibrary" type="button"><svg class="i"><use href="#i-blocks"/></svg><span>From the library</span></button>
+            <button class="btn" id="cvFromEstate" type="button"><svg class="i"><use href="#i-database"/></svg><span>From this estate</span></button>
+          </div>
+        </div>
+        <p class="cv-empty-drop" id="cvEmptyDrop"></p>
+      </div>
+      <!-- Where a box carried in its boundary lines up with one beside it. -->
+      <div class="cv-guide is-x" id="cvGuideX" hidden></div>
+      <div class="cv-guide is-y" id="cvGuideY" hidden></div>
+
+      <!-- The whole drawing, small, with the part on the sheet marked: there
+           while some of the drawing is off the sheet. -->
+      <div class="overview" id="overview" hidden>
+        <div class="ov-plate"><canvas id="overviewPic" aria-label="The whole drawing. Press a part of it to go there."></canvas></div>
+        <button class="btn small" id="btnWhole" type="button"><svg class="i"><use href="#i-fit"/></svg><span>Whole drawing</span></button>
+      </div>
+      <!-- In the same corner, a drawing too large to read whole that is shown
+           whole: the way back to a size it reads at. -->
+      <div class="overview read-prompt" id="readPrompt" hidden>
+        <div class="rp-top">
+          <p class="rp-why" id="readWhy"></p>
+          <button class="icon-btn rp-close" id="btnReadClose" type="button" aria-label="Close this note" title="Close this note for this drawing">&times;</button>
+        </div>
+        <button class="btn small" id="btnReadSize" type="button"><svg class="i"><use href="#i-zoom-in"/></svg><span>Read at 85%</span></button>
+        <p class="rp-hint">Or double-click the part you want to read.</p>
+        <button class="rp-never" id="btnReadNever" type="button">Don't show this again</button>
+      </div>
+
+      <div class="sheet-foot">
+        <div class="cv-fold" id="cvFold" hidden></div>
+        <div class="legend" id="legend"></div>
+        <!-- On the canvas: laid out automatically, or arranged by hand with
+             the way back to the layout. -->
+        <div class="cv-layout" id="cvLayout" hidden></div>
+
+        <div class="controls">
+          <button class="btn small icon" id="btnZoomOut" type="button" aria-label="Zoom out">&minus;</button>
+          <!-- Empty until a drawing has been fitted: the readout is the last thing a
+               drawing writes, and a figure here before then claimed a drawing
+               that was not on the page yet. -->
+          <span class="zoom-pct num" id="zoomPct"></span>
+          <button class="btn small icon" id="btnZoomIn" type="button" aria-label="Zoom in">+</button>
+          <span class="sep" aria-hidden="true"></span>
+          <button class="btn small icon" id="btnFit" type="button" aria-label="Fit the whole drawing on the sheet" title="The whole drawing on the sheet"><svg class="i"><use href="#i-fit"/></svg></button>
+          <button class="btn small icon toggle" id="btnLabels" type="button" aria-pressed="true" aria-label="Labels on every connection"
+            title="A label on every connection, or on none. Hovering a node always shows the labels of its connections"><svg class="i"><use href="#i-tag"/></svg></button>
+          <button class="btn small icon" id="btnPng" type="button" aria-label="Download the drawing as a picture" title="Download the drawing as a picture"><svg class="i"><use href="#i-image"/></svg></button>
+          <!-- The rest of the controls fold into one menu that opens upward:
+               a floating toolbar has to stay narrower than the key beside it. -->
+          <details class="more" id="moreMenu">
+            <summary class="btn small" aria-label="More controls" title="Layout and fit width">&#8943;</summary>
+            <div class="more-list">
+              <label class="more-row">
+                <span>Layout</span>
+                <select id="layoutPicker" aria-label="Layout">
+                  <option value="auto">Auto layout</option>
+                  <option value="tiles">Tiles</option>
+                  <option value="dagre-lr">Layered →</option>
+                  <option value="dagre-tb">Layered ↓</option>
+                  <option value="packed">Packed</option>
+                  <option value="cose">Organic</option>
+                  <option value="concentric">Concentric</option>
+                  <option value="grid">Grid</option>
+                </select>
+              </label>
+              <button class="btn small" id="btnFitW" type="button"
+                title="Fit the drawing's width to the sheet and scroll for the rest">Fit width</button>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="stage-empty" id="stageEmpty" hidden>
+        <div class="se-plain" id="emptyPlain">
+          <h2>Nothing to draw yet</h2>
+          <p id="emptyWhy">This view matched nothing in the model.</p>
+          <div class="acts">
+            <button class="btn primary" id="btnNewEmpty" type="button">Create a product</button>
+            <button class="btn" id="btnImportEmpty" type="button">Import CSVs</button>
+          </div>
+        </div>
+        <!-- What would fill it, read off the view's own query (terrane/needs.py). -->
+        <div class="se-needs" id="emptyNeeds" hidden></div>
+      </div>
+    </div>
+  </main>
+
+  <aside class="inspector" id="inspector" aria-label="Inspector">
+    <button class="icon-btn insp-close" id="btnInspClose" type="button" aria-label="Close the inspector">&times;</button>
+    <div class="insp-idle" id="inspIdle"></div>
+    <div id="inspBody" hidden></div>
+    <div class="cv-details" id="cvDetails" hidden aria-live="polite"></div>
+  </aside>
+
+</div>
+
+<div class="sr-only" id="live" aria-live="polite"></div>
+<!-- Where a dragged part would land, beside the pointer. -->
+<div class="cv-tip" id="cvTip" hidden></div>
+
+<div class="scrim" id="scrim" hidden></div>
+
+<section class="drawer" id="drawer" hidden role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+  <header class="drawer-head">
+    <h2 id="drawerTitle">New</h2>
+    <button class="icon-btn" id="drawerClose" type="button" aria-label="Close">&times;</button>
+  </header>
+  <div class="drawer-body" id="drawerBody"></div>
+  <footer class="drawer-foot">
+    <span class="hint" id="drawerHint"></span>
+    <span class="spacer"></span>
+    <button class="btn" id="drawerCancel" type="button">Cancel</button>
+    <button class="btn primary" id="drawerSave" type="button">Save</button>
+  </footer>
+</section>
+
+<div class="palette" id="palette" hidden role="dialog" aria-modal="true" aria-label="Jump to anything">
+  <div class="palette-card">
+    <input id="paletteBox" type="text" placeholder="Jump to a view, a system, a capability, an action…" aria-label="Jump to anything" autocomplete="off" spellcheck="false">
+    <div class="palette-list" id="paletteList" role="listbox"></div>
+    <div class="palette-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span></div>
+  </div>
+</div>
+
+<div class="rail-peek" id="railPeek" hidden aria-hidden="true"></div>
+
+<div class="new-menu" id="newMenu" hidden role="menu" aria-label="New"></div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script src="vendor/cytoscape.min.js"></script>
+<script src="vendor/dagre.min.js"></script>
+<script src="vendor/cytoscape-dagre.js"></script>
+<script src="vendor/elk.bundled.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

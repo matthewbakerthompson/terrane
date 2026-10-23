@@ -1,0 +1,36 @@
+# The first product on the Google Cloud landing zone. Point-of-sale finance
+# is sold at a retailer's checkout, and the dealer platforms that start the
+# application already integrate through Apigee; landing the product beside
+# them was the shortest path to the partners, and the test of whether the
+# library's parts really are the same on a third cloud.
+product_id: PRD-POS-FINANCE
+name: Point-of-Sale Finance
+description: >
+  Financing offered at a retailer's checkout. The dealer or merchant starts
+  the application in their own system, the shopper completes it on their
+  phone, and the decision comes back before the sale closes. Built in-house
+  on the Google Cloud landing zone, the first product to land there.
+status: Planned
+owner_org_id: ORG-LENDING
+criticality: Medium
+product_category: Digital channel
+company_domain: Lending
+launch_date: 2027-11-15
+
+build_type: digital-product
+archetype: gcp-digital-product
+parameters:
+  slug: posfin
+  product_name: Point-of-Sale Finance
+  owner_org: ORG-LENDING
+  domain: Lending
+  account: gcp-lending-prod
+  region: europe-west2
+  criticality: Medium
+  classification: Confidential
+
+overrides:
+  SYS-POSFIN-API:
+    description: >
+      Domain API for point-of-sale finance: dealer applications, shopper
+      identity and consent, decisions, and the payment schedule that follows.

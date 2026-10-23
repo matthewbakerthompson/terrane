@@ -1,0 +1,94 @@
+@startuml
+' Channels by Actor
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Channels by Actor
+
+AddElementTag("actors", $bgColor="#fde68a", $borderColor="#b45309", $fontColor="#0f172a", $legendText="actor")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_No, "No") {
+  Person_Ext(ACT_CARD_SCHEME, "Card Scheme", "The network carrying authorization and clearing. An external system we integrate with on their terms, not ours, which is why their availability is a design constraint rather than a requirement.", $tags="actors")
+  ' aac ACT_CARD_SCHEME: company_domain="Payments"; actor_kind="External system"; internal="No"
+  Person_Ext(ACT_CARDHOLDER, "Cardholder", "The customer. Uses the self-service channels, and is the reason the authorization path has a latency budget rather than a throughput one.", $tags="actors")
+  ' aac ACT_CARDHOLDER: company_domain="Servicing"; actor_kind="Person"; internal="No"
+  Person_Ext(ACT_APPLICANT, "Loan Applicant", "A prospect applying for installment credit, not yet a customer.", $tags="actors")
+  ' aac ACT_APPLICANT: company_domain="Lending"; actor_kind="Person"; internal="No"
+  Person_Ext(ACT_MERCHANT, "Merchant", "Accepts the card at point of sale. Reached through the scheme, never directly.", $tags="actors")
+  ' aac ACT_MERCHANT: company_domain="Payments"; actor_kind="Organization"; internal="No"
+  Person_Ext(ACT_REGULATOR, "Regulator", "Consumes periodic regulatory returns. Never integrates directly; the relationship is a reporting obligation with a deadline.", $tags="actors")
+  ' aac ACT_REGULATOR: company_domain="Risk and Compliance"; actor_kind="Regulator"; internal="No"
+}
+Boundary(b_Yes, "Yes") {
+  Person(ACT_COLLECTIONS_AGENT, "Collections Agent", "Handles arrears treatment and payment arrangements.", $tags="actors")
+  ' aac ACT_COLLECTIONS_AGENT: company_domain="Collections"; actor_kind="Role"; internal="Yes"
+  Person(ACT_UNDERWRITER, "Credit Underwriter", "Reviews referred applications the automated decision would not take.", $tags="actors")
+  ' aac ACT_UNDERWRITER: company_domain="Risk and Compliance"; actor_kind="Role"; internal="Yes"
+  Person(ACT_SERVICING_AGENT, "Servicing Agent", "Contact center staff handling balance, dispute and account queries.", $tags="actors")
+  ' aac ACT_SERVICING_AGENT: company_domain="Servicing"; actor_kind="Role"; internal="Yes"
+}
+System(SYS_AUTH_SWITCH, "Authorization Switch", "Real-time card authorization switch connected to the scheme networks.", $tags="systems")
+' aac SYS_AUTH_SWITCH: company_domain="Payments"; hosting="On-prem"
+System(SYS_CARDSVC_WEB, "Card Servicing Web", "Browser front end for Card Servicing. Built with AKS.", $tags="systems")
+' aac SYS_CARDSVC_WEB: company_domain="Servicing"; hosting="Azure"; technology="AKS"
+System(SYS_MOBILE, "Cardholder mobile application", "Cardholder mobile self-service.", $tags="systems")
+' aac SYS_MOBILE: company_domain=""
+System(SYS_COLLECT_WEB, "Collections Workspace Web", "Browser front end for Collections Workspace. Built with AKS.", $tags="systems")
+' aac SYS_COLLECT_WEB: company_domain="Collections"; hosting="Azure"; technology="AKS"
+System(SYS_CONTACT, "Contact center platform", "Contact center routing, voice, and digital channels.", $tags="systems")
+' aac SYS_CONTACT: company_domain=""
+System(SYS_CREDIT_DATA, "Credit data and decisioning environment", "Credit data, analytics, and decisioning environment. Built with Snowflake Data Cloud.", $tags="systems")
+' aac SYS_CREDIT_DATA: company_domain=""; technology="Snowflake Data Cloud"
+System_Ext(SYS_CRM, "Dynamics 365 Customer Service", "Contact center desktop and case management for servicing agents. Built with Microsoft.", $tags="systems")
+' aac SYS_CRM: company_domain="Servicing"; hosting="SaaS"; technology="Microsoft"
+System(SYS_LENDING_WEB, "Installment Lending Web", "Customer-facing front end for Installment Lending. Built with EKS.", $tags="systems")
+' aac SYS_LENDING_WEB: company_domain="Lending"; hosting="AWS"; technology="EKS"
+System(SYS_IVR, "IVR and self-service voice", "Interactive voice response and voice self-service.", $tags="systems")
+' aac SYS_IVR: company_domain=""
+System(SYS_ORIG_DECISION, "Originations decision engine", "Application processing and credit decision execution.", $tags="systems")
+' aac SYS_ORIG_DECISION: company_domain=""
+System(SYS_DIALER, "Outbound contact platform", "Outbound dialer and contact campaign execution.", $tags="systems")
+' aac SYS_DIALER: company_domain=""
+System_Ext(SYS_DISPUTES_SAAS, "Pega Smart Dispute", "Dispute Management Platform, provided by Pegasystems and running in the vendor tenancy. Built with Pegasystems.", $tags="systems")
+' aac SYS_DISPUTES_SAAS: company_domain="Servicing"; hosting="SaaS"; technology="Pegasystems"
+System(SYS_REG_REPORTING, "Regulatory Reporting Engine", "Planned replacement for the spreadsheet-based regulatory reporting process, sourcing from the warehouse rather than from the ledger directly. Built with AKS · Snowflake Data Cloud.", $tags="systems")
+' aac SYS_REG_REPORTING: company_domain="Risk and Compliance"; hosting="Azure"; technology="AKS · Snowflake Data Cloud"
+System(SYS_STATEMENTS, "Statement Generation", "Composes, renders and dispatches customer statements.", $tags="systems")
+' aac SYS_STATEMENTS: company_domain="Servicing"; hosting="On-prem"
+
+Rel(ACT_APPLICANT, SYS_LENDING_WEB, "Applies")
+' aac rel: source="ACT_APPLICANT"; target="SYS_LENDING_WEB"; label="Applies"; relation="actor_uses_system"; interaction="Applies"
+Rel(ACT_UNDERWRITER, SYS_LENDING_WEB, "Reviews referrals")
+' aac rel: source="ACT_UNDERWRITER"; target="SYS_LENDING_WEB"; label="Reviews referrals"; relation="actor_uses_system"; interaction="Reviews referrals"
+Rel(ACT_CARDHOLDER, SYS_CARDSVC_WEB, "Self-service")
+' aac rel: source="ACT_CARDHOLDER"; target="SYS_CARDSVC_WEB"; label="Self-service"; relation="actor_uses_system"; interaction="Self-service"
+Rel(ACT_CARDHOLDER, SYS_STATEMENTS, "Receives statements")
+' aac rel: source="ACT_CARDHOLDER"; target="SYS_STATEMENTS"; label="Receives statements"; relation="actor_uses_system"; interaction="Receives statements"
+Rel(ACT_SERVICING_AGENT, SYS_CRM, "Handles cases")
+' aac rel: source="ACT_SERVICING_AGENT"; target="SYS_CRM"; label="Handles cases"; relation="actor_uses_system"; interaction="Handles cases"
+Rel(ACT_SERVICING_AGENT, SYS_DISPUTES_SAAS, "Raises disputes")
+' aac rel: source="ACT_SERVICING_AGENT"; target="SYS_DISPUTES_SAAS"; label="Raises disputes"; relation="actor_uses_system"; interaction="Raises disputes"
+Rel(ACT_COLLECTIONS_AGENT, SYS_COLLECT_WEB, "Works arrears")
+' aac rel: source="ACT_COLLECTIONS_AGENT"; target="SYS_COLLECT_WEB"; label="Works arrears"; relation="actor_uses_system"; interaction="Works arrears"
+Rel(ACT_MERCHANT, SYS_AUTH_SWITCH, "Presents transactions")
+' aac rel: source="ACT_MERCHANT"; target="SYS_AUTH_SWITCH"; label="Presents transactions"; relation="actor_uses_system"; interaction="Presents transactions"
+Rel(ACT_CARD_SCHEME, SYS_AUTH_SWITCH, "Carries authorization")
+' aac rel: source="ACT_CARD_SCHEME"; target="SYS_AUTH_SWITCH"; label="Carries authorization"; relation="actor_uses_system"; interaction="Carries authorization"
+Rel(ACT_REGULATOR, SYS_REG_REPORTING, "Receives returns")
+' aac rel: source="ACT_REGULATOR"; target="SYS_REG_REPORTING"; label="Receives returns"; relation="actor_uses_system"; interaction="Receives returns"
+Rel(ACT_CARDHOLDER, SYS_MOBILE, "Mobile self-service")
+' aac rel: source="ACT_CARDHOLDER"; target="SYS_MOBILE"; label="Mobile self-service"; relation="actor_uses_system"; interaction="Mobile self-service"
+Rel(ACT_CARDHOLDER, SYS_IVR, "Voice self-service")
+' aac rel: source="ACT_CARDHOLDER"; target="SYS_IVR"; label="Voice self-service"; relation="actor_uses_system"; interaction="Voice self-service"
+Rel(ACT_SERVICING_AGENT, SYS_CONTACT, "Agent desktop")
+' aac rel: source="ACT_SERVICING_AGENT"; target="SYS_CONTACT"; label="Agent desktop"; relation="actor_uses_system"; interaction="Agent desktop"
+Rel(ACT_COLLECTIONS_AGENT, SYS_DIALER, "Outbound campaigns")
+' aac rel: source="ACT_COLLECTIONS_AGENT"; target="SYS_DIALER"; label="Outbound campaigns"; relation="actor_uses_system"; interaction="Outbound campaigns"
+Rel(ACT_UNDERWRITER, SYS_ORIG_DECISION, "Manual review queue")
+' aac rel: source="ACT_UNDERWRITER"; target="SYS_ORIG_DECISION"; label="Manual review queue"; relation="actor_uses_system"; interaction="Manual review queue"
+Rel(ACT_UNDERWRITER, SYS_CREDIT_DATA, "Strategy analysis")
+' aac rel: source="ACT_UNDERWRITER"; target="SYS_CREDIT_DATA"; label="Strategy analysis"; relation="actor_uses_system"; interaction="Strategy analysis"
+
+SHOW_LEGEND()
+@enduml

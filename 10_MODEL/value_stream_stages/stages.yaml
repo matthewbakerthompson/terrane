@@ -1,0 +1,665 @@
+# The stages of each value stream, in order.
+#
+# Every stage carries the exit criterion that has to be true to leave it.
+# Stages without one end up named after departments rather than after progress,
+# which is how a value stream turns back into an org chart.
+
+- stage_id: VS-ACQUIRE-CUSTOMER-S01
+  name: Target & Offer
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  stage_order: "1"
+  exit_criterion: Compliant offer delivered to a permissioned prospect
+  source: Business architecture repository
+
+- stage_id: VS-ACQUIRE-CUSTOMER-S02
+  name: Apply
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  stage_order: "2"
+  exit_criterion: Complete application captured
+  source: Business architecture repository
+
+- stage_id: VS-ACQUIRE-CUSTOMER-S03
+  name: Verify Identity
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  stage_order: "3"
+  exit_criterion: Identity verified; CIP satisfied; application fraud cleared
+  source: Business architecture repository
+
+- stage_id: VS-ACQUIRE-CUSTOMER-S04
+  name: Decide
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  stage_order: "4"
+  exit_criterion: Decision rendered with line assigned
+  source: Business architecture repository
+
+- stage_id: VS-ACQUIRE-CUSTOMER-S05
+  name: Open Account
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  stage_order: "5"
+  exit_criterion: Account established, or compliant adverse action issued
+  source: Business architecture repository
+
+- stage_id: VS-ACQUIRE-CUSTOMER-S06
+  name: Fulfill Card
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  stage_order: "6"
+  exit_criterion: Card delivered; credential provisioned
+  source: Business architecture repository
+
+- stage_id: VS-ACQUIRE-CUSTOMER-S07
+  name: Activate & First Use
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  stage_order: "7"
+  exit_criterion: Card activated and first authorization approved
+  source: Business architecture repository
+
+- stage_id: VS-ENABLE-MERCHANT-S01
+  name: ISO Submits
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-ENABLE-MERCHANT
+  stage_order: "1"
+  exit_criterion: Complete merchant application from a contracted ISO
+  source: Business architecture repository
+
+- stage_id: VS-ENABLE-MERCHANT-S02
+  name: Underwrite Merchant
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-ENABLE-MERCHANT
+  stage_order: "2"
+  exit_criterion: Risk decision inside appetite, documented
+  source: Business architecture repository
+
+- stage_id: VS-ENABLE-MERCHANT-S03
+  name: Board & Sponsor
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-ENABLE-MERCHANT
+  stage_order: "3"
+  exit_criterion: Merchant live on the networks under the bank's BINs
+  source: Business architecture repository
+
+- stage_id: VS-ENABLE-MERCHANT-S04
+  name: Accept & Settle
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-ENABLE-MERCHANT
+  stage_order: "4"
+  exit_criterion: Daily settlement funded; reserves where required
+  source: Business architecture repository
+
+- stage_id: VS-ENABLE-MERCHANT-S05
+  name: Monitor Exposure
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-ENABLE-MERCHANT
+  stage_order: "5"
+  exit_criterion: Exposure inside limits; anomalies actioned
+  source: Business architecture repository
+
+- stage_id: VS-ENABLE-MERCHANT-S06
+  name: Retain or Exit
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-ENABLE-MERCHANT
+  stage_order: "6"
+  exit_criterion: Portfolio decision made with chargeback liability resolved
+  source: Business architecture repository
+
+- stage_id: VS-FINANCE-PURCHASE-S01
+  name: Dealer Submits
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-FINANCE-PURCHASE
+  stage_order: "1"
+  exit_criterion: Complete application received from an active dealer
+  source: Business architecture repository
+
+- stage_id: VS-FINANCE-PURCHASE-S02
+  name: Decision & Terms
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-FINANCE-PURCHASE
+  stage_order: "2"
+  exit_criterion: Decision and terms returned inside the point-of-sale window
+  source: Business architecture repository
+
+- stage_id: VS-FINANCE-PURCHASE-S03
+  name: Docs & Stipulations
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-FINANCE-PURCHASE
+  stage_order: "3"
+  exit_criterion: Contract package complete and compliant
+  source: Business architecture repository
+
+- stage_id: VS-FINANCE-PURCHASE-S04
+  name: Board & Fund Dealer
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-FINANCE-PURCHASE
+  stage_order: "4"
+  exit_criterion: Dealer funded; loan on book
+  source: Business architecture repository
+
+- stage_id: VS-FINANCE-PURCHASE-S05
+  name: Perfect Lien
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-FINANCE-PURCHASE
+  stage_order: "5"
+  exit_criterion: Lien perfected in the titling state
+  source: Business architecture repository
+
+- stage_id: VS-FINANCE-PURCHASE-S06
+  name: Service Loan
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-FINANCE-PURCHASE
+  stage_order: "6"
+  exit_criterion: Payments applied; account current and correct
+  source: Business architecture repository
+
+- stage_id: VS-FINANCE-PURCHASE-S07
+  name: Payoff or Recover
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-FINANCE-PURCHASE
+  stage_order: "7"
+  exit_criterion: Title released on payoff, or collateral recovered and remarketed
+  source: Business architecture repository
+
+- stage_id: VS-GROW-SAVINGS-S01
+  name: Choose Product
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-GROW-SAVINGS
+  stage_order: "1"
+  exit_criterion: Product and rate presented accurately
+  source: Business architecture repository
+
+- stage_id: VS-GROW-SAVINGS-S02
+  name: Open & Verify
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-GROW-SAVINGS
+  stage_order: "2"
+  exit_criterion: Identity verified; disclosures delivered; account open
+  source: Business architecture repository
+
+- stage_id: VS-GROW-SAVINGS-S03
+  name: Fund
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-GROW-SAVINGS
+  stage_order: "3"
+  exit_criterion: Funds received and available — direct or via broker allocation
+  source: Business architecture repository
+
+- stage_id: VS-GROW-SAVINGS-S04
+  name: Accrue & Report
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-GROW-SAVINGS
+  stage_order: "4"
+  exit_criterion: Interest accrued and reported correctly
+  source: Business architecture repository
+
+- stage_id: VS-GROW-SAVINGS-S05
+  name: Mature or Renew
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-GROW-SAVINGS
+  stage_order: "5"
+  exit_criterion: Maturity instruction captured before the grace window closes
+  source: Business architecture repository
+
+- stage_id: VS-GROW-SAVINGS-S06
+  name: Pay Out
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-GROW-SAVINGS
+  stage_order: "6"
+  exit_criterion: Principal and interest paid to the right place on the right day
+  source: Business architecture repository
+
+- stage_id: VS-LAUNCH-PRODUCT-S01
+  name: Concept & Business Case
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-LAUNCH-PRODUCT
+  stage_order: "1"
+  exit_criterion: Case approved
+  source: Business architecture repository
+
+- stage_id: VS-LAUNCH-PRODUCT-S02
+  name: Design & Price
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-LAUNCH-PRODUCT
+  stage_order: "2"
+  exit_criterion: Product parameters defined
+  source: Business architecture repository
+
+- stage_id: VS-LAUNCH-PRODUCT-S03
+  name: Legal & Compliance Review
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-LAUNCH-PRODUCT
+  stage_order: "3"
+  exit_criterion: Disclosures approved
+  source: Business architecture repository
+
+- stage_id: VS-LAUNCH-PRODUCT-S04
+  name: Configure & Test
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-LAUNCH-PRODUCT
+  stage_order: "4"
+  exit_criterion: Configured across originations, servicing, billing, and reporting
+  source: Business architecture repository
+
+- stage_id: VS-LAUNCH-PRODUCT-S05
+  name: Launch
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-LAUNCH-PRODUCT
+  stage_order: "5"
+  exit_criterion: Available to originate
+  source: Business architecture repository
+
+- stage_id: VS-LAUNCH-PRODUCT-S06
+  name: Monitor & Iterate
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-LAUNCH-PRODUCT
+  stage_order: "6"
+  exit_criterion: Early performance and complaint signal reviewed
+  source: Business architecture repository
+
+- stage_id: VS-ONBOARD-CLIENT-S01
+  name: Qualify Opportunity
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-ONBOARD-CLIENT
+  stage_order: "1"
+  exit_criterion: Opportunity qualified and priced
+  source: Business architecture repository
+
+- stage_id: VS-ONBOARD-CLIENT-S02
+  name: Diligence & Contract
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-ONBOARD-CLIENT
+  stage_order: "2"
+  exit_criterion: Contract and SLA executed
+  source: Business architecture repository
+
+- stage_id: VS-ONBOARD-CLIENT-S03
+  name: Design Program
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-ONBOARD-CLIENT
+  stage_order: "3"
+  exit_criterion: Program design signed off by client
+  source: Business architecture repository
+
+- stage_id: VS-ONBOARD-CLIENT-S04
+  name: Configure Platform
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-ONBOARD-CLIENT
+  stage_order: "4"
+  exit_criterion: Configuration complete and tested
+  source: Business architecture repository
+
+- stage_id: VS-ONBOARD-CLIENT-S05
+  name: Convert Portfolio
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-ONBOARD-CLIENT
+  stage_order: "5"
+  exit_criterion: Portfolio converted with reconciled balances
+  source: Business architecture repository
+
+- stage_id: VS-ONBOARD-CLIENT-S06
+  name: Stabilize
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-ONBOARD-CLIENT
+  stage_order: "6"
+  exit_criterion: Post-conversion defect rate inside agreed threshold
+  source: Business architecture repository
+
+- stage_id: VS-ONBOARD-CLIENT-S07
+  name: Steady-State Service
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-ONBOARD-CLIENT
+  stage_order: "7"
+  exit_criterion: Contracted reporting and billing running
+  source: Business architecture repository
+
+- stage_id: VS-RECOVER-VALUE-S01
+  name: Detect Delinquency
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-RECOVER-VALUE
+  stage_order: "1"
+  exit_criterion: Account correctly bucketed
+  source: Business architecture repository
+
+- stage_id: VS-RECOVER-VALUE-S02
+  name: Segment & Strategize
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-RECOVER-VALUE
+  stage_order: "2"
+  exit_criterion: Treatment assigned per strategy
+  source: Business architecture repository
+
+- stage_id: VS-RECOVER-VALUE-S03
+  name: Contact & Treat
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-RECOVER-VALUE
+  stage_order: "3"
+  exit_criterion: Contact attempted within FDCPA/Reg F and TCPA constraints
+  source: Business architecture repository
+
+- stage_id: VS-RECOVER-VALUE-S04
+  name: Arrange or Assist
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-RECOVER-VALUE
+  stage_order: "4"
+  exit_criterion: Arrangement agreed and documented
+  source: Business architecture repository
+
+- stage_id: VS-RECOVER-VALUE-S05
+  name: Charge Off
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-RECOVER-VALUE
+  stage_order: "5"
+  exit_criterion: Charge-off executed on policy timing
+  source: Business architecture repository
+
+- stage_id: VS-RECOVER-VALUE-S06
+  name: Place or Sell
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-RECOVER-VALUE
+  stage_order: "6"
+  exit_criterion: Placed with agency, sold, or routed to legal/estate handling
+  source: Business architecture repository
+
+- stage_id: VS-RECOVER-VALUE-S07
+  name: Recover & Account
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-RECOVER-VALUE
+  stage_order: "7"
+  exit_criterion: Recoveries posted; bureau reporting accurate
+  source: Business architecture repository
+
+- stage_id: VS-RESOLVE-ISSUE-S01
+  name: Contact & Route
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-RESOLVE-ISSUE
+  stage_order: "1"
+  exit_criterion: Contact reaches a qualified handler or self-service path
+  source: Business architecture repository
+
+- stage_id: VS-RESOLVE-ISSUE-S02
+  name: Identify & Authenticate
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-RESOLVE-ISSUE
+  stage_order: "2"
+  exit_criterion: Caller authenticated to policy
+  source: Business architecture repository
+
+- stage_id: VS-RESOLVE-ISSUE-S03
+  name: Classify Issue
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-RESOLVE-ISSUE
+  stage_order: "3"
+  exit_criterion: Issue typed correctly — this determines which regulatory clock starts
+  source: Business architecture repository
+
+- stage_id: VS-RESOLVE-ISSUE-S04
+  name: Investigate
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-RESOLVE-ISSUE
+  stage_order: "4"
+  exit_criterion: Evidence gathered inside the timer
+  source: Business architecture repository
+
+- stage_id: VS-RESOLVE-ISSUE-S05
+  name: Decide & Adjust
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-RESOLVE-ISSUE
+  stage_order: "5"
+  exit_criterion: Determination made; account adjusted
+  source: Business architecture repository
+
+- stage_id: VS-RESOLVE-ISSUE-S06
+  name: Notify
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-RESOLVE-ISSUE
+  stage_order: "6"
+  exit_criterion: Compliant written notice issued
+  source: Business architecture repository
+
+- stage_id: VS-RESOLVE-ISSUE-S07
+  name: Close & Learn
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-RESOLVE-ISSUE
+  stage_order: "7"
+  exit_criterion: Case closed; complaint and quality signal captured
+  source: Business architecture repository
+
+- stage_id: VS-SERVICE-ACCOUNT-S01
+  name: Authorize
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-SERVICE-ACCOUNT
+  stage_order: "1"
+  exit_criterion: Decision returned inside network response window
+  source: Business architecture repository
+
+- stage_id: VS-SERVICE-ACCOUNT-S02
+  name: Clear & Post
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-SERVICE-ACCOUNT
+  stage_order: "2"
+  exit_criterion: Transactions posted to the correct account and balance
+  source: Business architecture repository
+
+- stage_id: VS-SERVICE-ACCOUNT-S03
+  name: Assess Interest & Fees
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-SERVICE-ACCOUNT
+  stage_order: "3"
+  exit_criterion: Reg Z-compliant assessment
+  source: Business architecture repository
+
+- stage_id: VS-SERVICE-ACCOUNT-S04
+  name: Cut Cycle & Statement
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-SERVICE-ACCOUNT
+  stage_order: "4"
+  exit_criterion: Statement generated with correct rewards position
+  source: Business architecture repository
+
+- stage_id: VS-SERVICE-ACCOUNT-S05
+  name: Deliver Statement
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-SERVICE-ACCOUNT
+  stage_order: "5"
+  exit_criterion: Delivered by the cardholder's elected channel and archived
+  source: Business architecture repository
+
+- stage_id: VS-SERVICE-ACCOUNT-S06
+  name: Capture Payment
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-SERVICE-ACCOUNT
+  stage_order: "6"
+  exit_criterion: Payment applied on the correct effective date
+  source: Business architecture repository
+
+- stage_id: VS-SERVICE-ACCOUNT-S07
+  name: Settle & Reconcile
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-SERVICE-ACCOUNT
+  stage_order: "7"
+  exit_criterion: Positions settled and reconciled to the ledger
+  source: Business architecture repository

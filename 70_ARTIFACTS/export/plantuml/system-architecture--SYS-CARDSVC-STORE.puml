@@ -1,0 +1,79 @@
+@startuml
+' Card Servicing Datastore — Architecture
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Card Servicing Datastore — Architecture
+
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("tech_services", $bgColor="#fed7aa", $borderColor="#c2410c", $fontColor="#0f172a", $legendText="technology service")
+AddRelTag("own-datastore", $legendText="Its own datastore")
+
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_CARD_ACCOUNT, "Card account master", "Account, balance, limit and status records for every card account.", $tags="data_assets")
+  ' aac DA_CARD_ACCOUNT: company_domain="Card Issuing"
+  SystemDb(DA_CARDSVC_OPERATIONAL, "Card Servicing operational data", "Operational records held by Card Servicing.", $tags="data_assets")
+  ' aac DA_CARDSVC_OPERATIONAL: company_domain="Servicing"
+  SystemDb(DA_TRANSACTION, "Card transaction history", "Authorized, cleared and settled card transactions.", $tags="data_assets")
+  ' aac DA_TRANSACTION: company_domain="Payments"
+}
+Boundary(b_System, "System") {
+  System(SYS_CARDSVC_STORE, "Card Servicing Datastore", "Operational datastore owned by Card Servicing. Built with Azure SQL.", $tags="systems")
+  ' aac SYS_CARDSVC_STORE: company_domain="Servicing"; hosting="Azure"; technology="Azure SQL"
+  System(SYS_CARDSVC_API, "Card Servicing Service", "The service behind the Card Servicing API, backing the channel. Built with AKS · Card Servicing Cache.", $tags="systems")
+  ' aac SYS_CARDSVC_API: company_domain="Servicing"; hosting="Azure"; technology="AKS · Card Servicing Cache"
+}
+Boundary(b_Technology_Service, "Technology Service") {
+  Deployment_Node(TS_AZURE_APIM, "Azure API Management", "API gateway", "The API gateway every internal and partner API is published through.", $tags="tech_services") {
+    ' aac TS_AZURE_APIM: company_domain="Enterprise Platform"; technology="API gateway"
+  }
+  Deployment_Node(TS_AZURE_KEYVAULT, "Azure Key Vault", "Secrets manager", "Secret, key and certificate management.", $tags="tech_services") {
+    ' aac TS_AZURE_KEYVAULT: company_domain="Enterprise Platform"; technology="Secrets manager"
+  }
+  Deployment_Node(TS_AZURE_AKS, "Azure Kubernetes Service", "Container platform", "Managed Kubernetes hosting the containerized estate.", $tags="tech_services") {
+    ' aac TS_AZURE_AKS: company_domain="Enterprise Platform"; technology="Container platform"
+  }
+  Deployment_Node(TS_AZURE_MONITOR, "Azure Monitor", "Observability", "Metrics, logs and alerts for the Azure-hosted estate.", $tags="tech_services") {
+    ' aac TS_AZURE_MONITOR: company_domain="Enterprise Platform"; technology="Observability"
+  }
+  Deployment_Node(TS_AZURE_SQL, "Azure SQL Database", "Relational database", "Managed relational database for operational datastores.", $tags="tech_services") {
+    ' aac TS_AZURE_SQL: company_domain="Enterprise Platform"; technology="Relational database"
+  }
+  Deployment_Node(TS_CARDSVC_BACKUP, "Card Servicing Backup and recovery", "Azure Backup", "Copies that survive the thing they came from. The recovery objective is a property of this, not of the database.", $tags="tech_services") {
+    ' aac TS_CARDSVC_BACKUP: company_domain="Servicing"; technology="Azure Backup"
+  }
+  Deployment_Node(TS_CARDSVC_CACHE, "Card Servicing Cache", "Azure Cache for Redis", "In-memory key-value store. Also, in most estates, an accidental database with no backup.", $tags="tech_services") {
+    ' aac TS_CARDSVC_CACHE: company_domain="Servicing"; technology="Azure Cache for Redis"
+  }
+}
+
+Rel(SYS_CARDSVC_API, SYS_CARDSVC_STORE, "Card Servicing Service to Datastore", "TDS", $tags="own-datastore")
+' aac rel: source="SYS_CARDSVC_API"; target="SYS_CARDSVC_STORE"; label="Card Servicing Service to Datastore"; interface_id="INT-CARDSVC-API-STORE"; kind="own-datastore"; integration_style="Request-response"; auth_method="ManagedIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_CARDSVC_API, TS_AZURE_APIM, "runs on")
+' aac rel: source="SYS_CARDSVC_API"; target="TS_AZURE_APIM"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_API, TS_AZURE_AKS, "runs on")
+' aac rel: source="SYS_CARDSVC_API"; target="TS_AZURE_AKS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_API, TS_CARDSVC_CACHE, "runs on")
+' aac rel: source="SYS_CARDSVC_API"; target="TS_CARDSVC_CACHE"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_API, TS_AZURE_MONITOR, "runs on")
+' aac rel: source="SYS_CARDSVC_API"; target="TS_AZURE_MONITOR"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_API, TS_AZURE_KEYVAULT, "runs on")
+' aac rel: source="SYS_CARDSVC_API"; target="TS_AZURE_KEYVAULT"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_STORE, TS_AZURE_SQL, "runs on")
+' aac rel: source="SYS_CARDSVC_STORE"; target="TS_AZURE_SQL"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_STORE, TS_CARDSVC_BACKUP, "runs on")
+' aac rel: source="SYS_CARDSVC_STORE"; target="TS_CARDSVC_BACKUP"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_STORE, TS_AZURE_KEYVAULT, "runs on")
+' aac rel: source="SYS_CARDSVC_STORE"; target="TS_AZURE_KEYVAULT"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_API, DA_CARDSVC_OPERATIONAL, "ReadWrite")
+' aac rel: source="SYS_CARDSVC_API"; target="DA_CARDSVC_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_CARDSVC_STORE, DA_CARDSVC_OPERATIONAL, "ReadWrite")
+' aac rel: source="SYS_CARDSVC_STORE"; target="DA_CARDSVC_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_CARDSVC_API, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_CARDSVC_API"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_CARDSVC_API, DA_TRANSACTION, "Read")
+' aac rel: source="SYS_CARDSVC_API"; target="DA_TRANSACTION"; label="Read"; relation="system_reads_writes"; operation="Read"
+
+SHOW_LEGEND()
+@enduml

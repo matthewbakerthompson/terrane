@@ -1,0 +1,53 @@
+# The claims clearinghouse: the same vendor shape as virtual visits and as
+# the card issuer's disputes platform. Claims go out as X12 837s, and the
+# return feed is the 835 remittance advice, landed for the warehouse.
+product_id: PRD-CLAIMS
+name: Claims Clearinghouse
+description: >
+  Scrubs and submits claims to every payer, returns acknowledgments, and
+  brings remittances back for posting. Bought; every health system's
+  clearinghouse is somebody else's.
+status: Active
+owner_org_id: ORG-REV-CYCLE
+criticality: High
+product_category: Vendor capability
+company_domain: Revenue Cycle
+
+build_type: bought-saas
+archetype: vendor-saas-service
+parameters:
+  slug: claims
+  product_name: Claims Clearinghouse
+  vendor: Clearinghouse vendor
+  owner_org: ORG-REV-CYCLE
+  domain: Revenue Cycle
+  upstream_system: SYS-PATIENT-ACCOUNTING
+  account: azure-enterprise-prod
+  region: eastus2
+  criticality: High
+  classification: Restricted
+
+choose:
+  reach: private-egress
+
+modules:
+  - module: audit-forwarding
+
+patterns: [partner-file-exchange]
+
+overrides:
+  # Cash depends on the path out, so all three ends of it are Tier 1.
+  SYS-CLAIMS-VENDOR:
+    name: Clearinghouse
+    description: The clearinghouse's claim scrubbing and payer connectivity, in its own tenancy.
+    tags: [vendor, third-party]
+    service_tier: Tier 1
+  SYS-CLAIMS-GATEWAY:
+    service_tier: Tier 1
+  SYS-CLAIMS-EGRESS:
+    service_tier: Tier 1
+  DA-CLAIMS-OUTCOMES:
+    name: Remittance advice
+    description: Payer remittances (X12 835) returned by the clearinghouse and landed for posting and denial analysis.
+    pii_flag: "Yes"
+    pii_types: Patient name;Member id;Dates of service

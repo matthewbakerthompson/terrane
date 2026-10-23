@@ -1,0 +1,38 @@
+@startuml
+' Review marketing creative for compliance — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Review marketing creative for compliance — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_ACQ_04, "Marketing Compliance & Disclosure Review", "Review creative and offers for regulatory adequacy before release.", $tags="capabilities")
+  ' aac CAP_ACQ_04: company_domain="MarTech"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_MKT_REVIEW, "Marketing material compliance review", "No creative or offer reaches market without documented compliance sign-off.", $tags="controls")
+  ' aac CTL_MKT_REVIEW: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_MARKETING_004, "Review marketing creative for compliance", "Review creative, disclosures, and claims for regulatory adequacy before release. Review covers claims, disclosures, and UDAAP risk across every asset and channel; nothing ships without the documented sign-off this process exists to produce.", $tags="processes")
+  ' aac P_MARKETING_004: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+}
+
+Rel(P_MARKETING_004, SYS_DOC, "Supporting")
+' aac rel: source="P_MARKETING_004"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_MARKETING_004, CTL_MKT_REVIEW, "governed by")
+' aac rel: source="P_MARKETING_004"; target="CTL_MKT_REVIEW"; label="governed by"; relation="process_governed_by_control"
+Rel(P_MARKETING_004, CAP_ACQ_04, "supports")
+' aac rel: source="P_MARKETING_004"; target="CAP_ACQ_04"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

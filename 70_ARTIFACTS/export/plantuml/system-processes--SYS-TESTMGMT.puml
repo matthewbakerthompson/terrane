@@ -1,0 +1,105 @@
+@startuml
+' Test management and automation — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Test management and automation — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_SEC_04, "Data Protection & Cryptography", "Protect data at rest and in transit, and manage keys and cardholder data scope.", $tags="capabilities")
+  ' aac CAP_SEC_04: company_domain="Cross-Functional Services"
+  System(CAP_TECH_02, "Platform & Infrastructure Operations", "Run the technology estate.", $tags="capabilities")
+  ' aac CAP_TECH_02: company_domain="Technology"
+  System(CAP_TECH_08, "Quality Engineering & Testing", "Prove that a change does what it claims before and after it reaches production: test strategy, automation, performance, acceptance, defects, and release certification.", $tags="capabilities")
+  ' aac CAP_TECH_08: company_domain="Technology"
+  System(CAP_TECH_04, "Release & Change Management", "Move change into production safely.", $tags="capabilities")
+  ' aac CAP_TECH_04: company_domain="Technology"
+  System(CAP_TECH_01, "Solution Delivery & Engineering", "Build and change software.", $tags="capabilities")
+  ' aac CAP_TECH_01: company_domain="Technology"
+}
+Boundary(b_Process, "Process") {
+  System(P_QE_002, "Build and maintain the automated regression suite", "Author, review, and prune automated tests so the regression suite stays fast, trusted, and aligned to current behavior.", $tags="processes")
+  ' aac P_QE_002: company_domain=""
+  System(P_QE_008, "Certify a release for production", "Assess test results, open defects, and exit criteria, and issue or withhold the quality certification the change authority relies on.", $tags="processes")
+  ' aac P_QE_008: company_domain=""
+  System(P_QE_003, "Execute functional and regression testing", "Run planned functional tests and the regression suite against a candidate build, and record results against the plan.", $tags="processes")
+  ' aac P_QE_003: company_domain=""
+  System(P_QE_004, "Execute performance and resilience testing", "Load, soak, and failover-test a candidate against stated capacity and recovery objectives before a material release.", $tags="processes")
+  ' aac P_QE_004: company_domain=""
+  System(P_QE_006, "Manage defects to closure", "Triage, prioritize, assign, and verify defects found in test or production, and report defect trends by area.", $tags="processes")
+  ' aac P_QE_006: company_domain=""
+  System(P_QE_001, "Plan the test strategy for a release", "Decide scope, risk-based depth, environments, data, and entry and exit criteria for a release before build starts.", $tags="processes")
+  ' aac P_QE_001: company_domain=""
+  System(P_QE_007, "Provision test environments and masked data", "Stand up and refresh non-production environments with representative, masked data, and retire them on schedule.", $tags="processes")
+  ' aac P_QE_007: company_domain=""
+  System(P_APPDEV_004, "Run the build and deployment pipeline", "Build, package, scan, and promote a change through environments automatically, with gates that stop a failing build.", $tags="processes")
+  ' aac P_APPDEV_004: company_domain=""
+  System(P_QE_005, "Run user acceptance testing with the business", "Prepare scripts and data, run acceptance with business owners, and obtain their sign-off or documented rejection.", $tags="processes")
+  ' aac P_QE_005: company_domain=""
+  System(P_QE_009, "Verify a release in production", "Run post-deployment checks and smoke tests in production, confirm monitoring is green, and trigger rollback if criteria fail.", $tags="processes")
+  ' aac P_QE_009: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_TESTMGMT, "Test management and automation", "Test case management, automated test execution, and results. Built with SaaS.", $tags="systems")
+  ' aac SYS_TESTMGMT: company_domain=""; hosting="SaaS"; technology="SaaS"
+}
+
+Rel(P_QE_001, SYS_TESTMGMT, "Primary")
+' aac rel: source="P_QE_001"; target="SYS_TESTMGMT"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_QE_002, SYS_TESTMGMT, "Primary")
+' aac rel: source="P_QE_002"; target="SYS_TESTMGMT"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_QE_003, SYS_TESTMGMT, "Primary")
+' aac rel: source="P_QE_003"; target="SYS_TESTMGMT"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_QE_004, SYS_TESTMGMT, "Primary")
+' aac rel: source="P_QE_004"; target="SYS_TESTMGMT"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_QE_005, SYS_TESTMGMT, "Primary")
+' aac rel: source="P_QE_005"; target="SYS_TESTMGMT"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_QE_006, SYS_TESTMGMT, "Supporting")
+' aac rel: source="P_QE_006"; target="SYS_TESTMGMT"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_QE_007, SYS_TESTMGMT, "Primary")
+' aac rel: source="P_QE_007"; target="SYS_TESTMGMT"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_QE_008, SYS_TESTMGMT, "Primary")
+' aac rel: source="P_QE_008"; target="SYS_TESTMGMT"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_QE_009, SYS_TESTMGMT, "Supporting")
+' aac rel: source="P_QE_009"; target="SYS_TESTMGMT"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_APPDEV_004, SYS_TESTMGMT, "Supporting")
+' aac rel: source="P_APPDEV_004"; target="SYS_TESTMGMT"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_QE_001, CAP_TECH_08, "supports")
+' aac rel: source="P_QE_001"; target="CAP_TECH_08"; label="supports"; relation="process_supports_capability"
+Rel(P_QE_002, CAP_TECH_08, "supports")
+' aac rel: source="P_QE_002"; target="CAP_TECH_08"; label="supports"; relation="process_supports_capability"
+Rel(P_QE_003, CAP_TECH_08, "supports")
+' aac rel: source="P_QE_003"; target="CAP_TECH_08"; label="supports"; relation="process_supports_capability"
+Rel(P_QE_004, CAP_TECH_08, "supports")
+' aac rel: source="P_QE_004"; target="CAP_TECH_08"; label="supports"; relation="process_supports_capability"
+Rel(P_QE_004, CAP_TECH_02, "supports")
+' aac rel: source="P_QE_004"; target="CAP_TECH_02"; label="supports"; relation="process_supports_capability"
+Rel(P_QE_005, CAP_TECH_08, "supports")
+' aac rel: source="P_QE_005"; target="CAP_TECH_08"; label="supports"; relation="process_supports_capability"
+Rel(P_QE_006, CAP_TECH_08, "supports")
+' aac rel: source="P_QE_006"; target="CAP_TECH_08"; label="supports"; relation="process_supports_capability"
+Rel(P_QE_007, CAP_TECH_08, "supports")
+' aac rel: source="P_QE_007"; target="CAP_TECH_08"; label="supports"; relation="process_supports_capability"
+Rel(P_QE_007, CAP_TECH_02, "supports")
+' aac rel: source="P_QE_007"; target="CAP_TECH_02"; label="supports"; relation="process_supports_capability"
+Rel(P_QE_007, CAP_SEC_04, "supports")
+' aac rel: source="P_QE_007"; target="CAP_SEC_04"; label="supports"; relation="process_supports_capability"
+Rel(P_QE_008, CAP_TECH_08, "supports")
+' aac rel: source="P_QE_008"; target="CAP_TECH_08"; label="supports"; relation="process_supports_capability"
+Rel(P_QE_008, CAP_TECH_04, "supports")
+' aac rel: source="P_QE_008"; target="CAP_TECH_04"; label="supports"; relation="process_supports_capability"
+Rel(P_QE_009, CAP_TECH_08, "supports")
+' aac rel: source="P_QE_009"; target="CAP_TECH_08"; label="supports"; relation="process_supports_capability"
+Rel(P_QE_009, CAP_TECH_04, "supports")
+' aac rel: source="P_QE_009"; target="CAP_TECH_04"; label="supports"; relation="process_supports_capability"
+Rel(P_APPDEV_004, CAP_TECH_01, "supports")
+' aac rel: source="P_APPDEV_004"; target="CAP_TECH_01"; label="supports"; relation="process_supports_capability"
+Rel(P_APPDEV_004, CAP_TECH_04, "supports")
+' aac rel: source="P_APPDEV_004"; target="CAP_TECH_04"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

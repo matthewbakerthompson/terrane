@@ -1,0 +1,64 @@
+# The first live product moved onto a shape without a rename. Card servicing
+# was imported as plain rows -- four systems, three interfaces, a data asset
+# -- and `library.shape_candidate` said for three rounds that they were the
+# Azure digital shape to the part. Moving it is this file rewritten as the
+# shape's answers. The slug is `cardsvc` because the shape makes
+# `SYS-{slug|upper}-API` and the estate has `SYS-CARDSVC-API`: every id the
+# shape makes is one that already existed, so the relations, controls and
+# processes that point at them did not change. What the shape's defaults get
+# wrong about a live product -- the tiers, the CMDB ids, the category tags,
+# a datastore named Datastore rather than Database, an event publisher that
+# carries nothing above Internal -- is overrides. The subscription and
+# region were never recorded for it; they are the ones the other card
+# products use.
+product_id: PRD-CARD-SERVICING
+name: Card Servicing
+description: Self-service balance, statement, limit and payment servicing for cardholders.
+status: Active
+owner_org_id: ORG-DIGITAL
+criticality: High
+product_category: Digital channel
+company_domain: Servicing
+
+build_type: digital-product
+archetype: azure-digital-product
+parameters:
+  slug: cardsvc
+  product_name: Card Servicing
+  owner_org: ORG-DIGITAL
+  domain: Servicing
+  account: azure-cards-prod
+  region: uksouth
+  criticality: High
+  classification: Restricted
+
+# Patterns from 27_PATTERNS/ this product applies beyond its shape's. The
+# facade is the servicing API in front of the ledger, which is how the
+# card platform is being modernized one capability at a time.
+patterns: [stateless-request-service, event-fanout, strangler-facade, observed-service]
+
+overrides:
+  SYS-CARDSVC-API:
+    description: The service behind the Card Servicing API, backing the channel.
+    service_tier: Tier 1
+    tags: [digital, service]
+    cmdb_ci_sys_id: f60718293040506a
+  SYS-CARDSVC-WEB:
+    description: Browser front end for Card Servicing.
+    service_tier: Tier 1
+    tags: [digital, customer-facing]
+    cmdb_ci_sys_id: e5f6071829304050
+  SYS-CARDSVC-STORE:
+    name: Card Servicing Datastore
+    description: Operational datastore owned by Card Servicing.
+    tags: [digital, datastore]
+  SYS-CARDSVC-EVENTS:
+    # Not in the servicing path, and the API's interface to it says the
+    # events carry nothing above Internal.
+    criticality: Medium
+    data_classification_supported: Internal
+    tags: [digital, eventing]
+  INT-CARDSVC-API-STORE:
+    name: Card Servicing Service to Datastore
+  DA-CARDSVC-OPERATIONAL:
+    tags: [digital]

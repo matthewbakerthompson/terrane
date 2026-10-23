@@ -1,0 +1,108 @@
+@startuml
+' Customer Acquisition & Marketing — Frameworks, Controls, Systems
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Customer Acquisition & Marketing — Frameworks, Controls, Systems
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_ACQ_05, "Acquisition Performance Analytics", "Measure response, approval, and vintage economics of acquisition activity.", $tags="capabilities")
+  ' aac CAP_ACQ_05: company_domain="MarTech"
+  System(CAP_ACQ_03, "Campaign Execution & Channel Management", "Execute acquisition campaigns across direct mail, digital, partner, and inbound channels.", $tags="capabilities")
+  ' aac CAP_ACQ_03: company_domain="MarTech"
+  System(CAP_ACQ, "Customer Acquisition & Marketing", "Customer Acquisition & Marketing. Level 0 enterprise capability domain (Core tier).", $tags="capabilities")
+  ' aac CAP_ACQ: company_domain="MarTech"
+  System(CAP_ACQ_04, "Marketing Compliance & Disclosure Review", "Review creative and offers for regulatory adequacy before release.", $tags="capabilities")
+  ' aac CAP_ACQ_04: company_domain="MarTech"
+  System(CAP_ACQ_02, "Offer & Pre-Screen Management", "Construct and govern firm offers of credit and pre-screen criteria.", $tags="capabilities")
+  ' aac CAP_ACQ_02: company_domain="MarTech"
+  System(CAP_ACQ_01, "Prospect Data & List Management", "Source, permission, and manage prospect data.", $tags="capabilities")
+  ' aac CAP_ACQ_01: company_domain="MarTech"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_MKT_REVIEW, "Marketing material compliance review", "No creative or offer reaches market without documented compliance sign-off.", $tags="controls")
+  ' aac CTL_MKT_REVIEW: company_domain=""
+}
+Boundary(b_Framework, "Framework") {
+  System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
+  ' aac FW_BIAN: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_CREDIT_009, "Acquire and refresh credit bureau data", "Source consumer bureau data for prescreen, account review, and portfolio monitoring under permissible purpose, and manage refresh cadence and quality.", $tags="processes")
+  ' aac P_CREDIT_009: company_domain=""
+  System(P_MARKETING_001, "Build and permission prospect list", "Source, screen, and permission prospect data for use in acquisition campaigns. Prospect data carries permissible-purpose and suppression obligations; the list that leaves this process is the compliant universe for everything downstream.", $tags="processes")
+  ' aac P_MARKETING_001: company_domain=""
+  System(P_MARKETING_002, "Construct and approve firm offer of credit", "Define offer criteria and terms, and obtain compliance approval before release. A firm offer of credit commits the bank under FCRA; criteria, terms, and the compliance sign-off are locked before any channel sees the offer.", $tags="processes")
+  ' aac P_MARKETING_002: company_domain=""
+  System(P_MARKETING_003, "Execute acquisition campaign", "Deploy the approved offer across selected channels and manage in-flight performance. In-flight management covers channel performance, budget, and suppression hygiene; changes to a live campaign re-enter compliance review when terms move.", $tags="processes")
+  ' aac P_MARKETING_003: company_domain=""
+  System(P_MARKETING_005, "Review campaign performance and adjust targeting", "Evaluate response, approval, and early vintage economics for in-flight campaigns and decide continue, adjust, or stop.", $tags="processes")
+  ' aac P_MARKETING_005: company_domain=""
+  System(P_MARKETING_004, "Review marketing creative for compliance", "Review creative, disclosures, and claims for regulatory adequacy before release. Review covers claims, disclosures, and UDAAP risk across every asset and channel; nothing ships without the documented sign-off this process exists to produce.", $tags="processes")
+  ' aac P_MARKETING_004: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_MARKETING, "Campaign management", "Campaign management and execution.", $tags="systems")
+  ' aac SYS_MARKETING: company_domain=""
+  System(SYS_CREDIT_DATA, "Credit data and decisioning environment", "Credit data, analytics, and decisioning environment. Built with Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_CREDIT_DATA: company_domain=""; technology="Snowflake Data Cloud"
+  System(SYS_DATA_INGEST, "Enterprise Data Ingestion Hub", "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse. Built with Service Bus · Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_DATA_INGEST: company_domain="Data and Analytics"; hosting="Azure"; technology="Service Bus · Snowflake Data Cloud"
+  System(SYS_PROSPECT_DATA, "Prospect and marketing data services", "Prospect and marketing data services.", $tags="systems")
+  ' aac SYS_PROSPECT_DATA: company_domain=""
+}
+
+Rel(CAP_ACQ_01, CAP_ACQ, "part of")
+Rel(CAP_ACQ_02, CAP_ACQ, "part of")
+Rel(CAP_ACQ_03, CAP_ACQ, "part of")
+Rel(CAP_ACQ_04, CAP_ACQ, "part of")
+Rel(CAP_ACQ_05, CAP_ACQ, "part of")
+Rel(CAP_ACQ, FW_BIAN, "Informed by")
+' aac rel: source="CAP_ACQ"; target="FW_BIAN"; label="Informed by"; relation="capability_aligns_to_framework"; alignment="Informed by"
+Rel(CAP_ACQ_01, FW_BIAN, "Reference Data > Market Data > Market Information Management")
+' aac rel: source="CAP_ACQ_01"; target="FW_BIAN"; label="Reference Data > Market Data > Market Information Management"; relation="capability_references_framework"; ref="Reference Data > Market Data > Market Information Management"
+Rel(CAP_ACQ_02, FW_BIAN, "Sales and Service > Sales > Customer Offer")
+' aac rel: source="CAP_ACQ_02"; target="FW_BIAN"; label="Sales and Service > Sales > Customer Offer"; relation="capability_references_framework"; ref="Sales and Service > Sales > Customer Offer"
+Rel(CAP_ACQ_03, FW_BIAN, "Sales and Service > Sales > Prospect Campaign Execution")
+' aac rel: source="CAP_ACQ_03"; target="FW_BIAN"; label="Sales and Service > Sales > Prospect Campaign Execution"; relation="capability_references_framework"; ref="Sales and Service > Sales > Prospect Campaign Execution"
+Rel(CAP_ACQ_04, FW_BIAN, "Risk and Compliance > Regulations and Compliance > Regulatory Compliance")
+' aac rel: source="CAP_ACQ_04"; target="FW_BIAN"; label="Risk and Compliance > Regulations and Compliance > Regulatory Compliance"; relation="capability_references_framework"; ref="Risk and Compliance > Regulations and Compliance > Regulatory Compliance"
+Rel(CAP_ACQ_05, FW_BIAN, "Reference Data > Market Data > Market Information Management")
+' aac rel: source="CAP_ACQ_05"; target="FW_BIAN"; label="Reference Data > Market Data > Market Information Management"; relation="capability_references_framework"; ref="Reference Data > Market Data > Market Information Management"
+Rel(P_MARKETING_001, CAP_ACQ_01, "supported by")
+' aac rel: source="P_MARKETING_001"; target="CAP_ACQ_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_MARKETING_002, CAP_ACQ_02, "supported by")
+' aac rel: source="P_MARKETING_002"; target="CAP_ACQ_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_MARKETING_002, CAP_ACQ_04, "supported by")
+' aac rel: source="P_MARKETING_002"; target="CAP_ACQ_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_MARKETING_003, CAP_ACQ_03, "supported by")
+' aac rel: source="P_MARKETING_003"; target="CAP_ACQ_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_MARKETING_004, CAP_ACQ_04, "supported by")
+' aac rel: source="P_MARKETING_004"; target="CAP_ACQ_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_MARKETING_005, CAP_ACQ_05, "supported by")
+' aac rel: source="P_MARKETING_005"; target="CAP_ACQ_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_CREDIT_009, CAP_ACQ_02, "supported by")
+' aac rel: source="P_CREDIT_009"; target="CAP_ACQ_02"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_ACQ, CTL_MKT_REVIEW, "governed by")
+' aac rel: source="CAP_ACQ"; target="CTL_MKT_REVIEW"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_ACQ_04, CTL_MKT_REVIEW, "governed by")
+' aac rel: source="CAP_ACQ_04"; target="CTL_MKT_REVIEW"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(SYS_CREDIT_DATA, CAP_ACQ_02, "realizes")
+' aac rel: source="SYS_CREDIT_DATA"; target="CAP_ACQ_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CREDIT_DATA, CAP_ACQ_04, "realizes")
+' aac rel: source="SYS_CREDIT_DATA"; target="CAP_ACQ_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DATA_INGEST, CAP_ACQ_05, "realizes")
+' aac rel: source="SYS_DATA_INGEST"; target="CAP_ACQ_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_MARKETING, CAP_ACQ_03, "realizes")
+' aac rel: source="SYS_MARKETING"; target="CAP_ACQ_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_PROSPECT_DATA, CAP_ACQ_01, "realizes")
+' aac rel: source="SYS_PROSPECT_DATA"; target="CAP_ACQ_01"; label="realizes"; relation="system_realizes_capability"
+
+SHOW_LEGEND()
+@enduml

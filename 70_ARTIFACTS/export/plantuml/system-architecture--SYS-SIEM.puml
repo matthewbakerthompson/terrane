@@ -1,0 +1,51 @@
+@startuml
+' Security Monitoring — Architecture
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Security Monitoring — Architecture
+
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("tech_services", $bgColor="#fed7aa", $borderColor="#c2410c", $fontColor="#0f172a", $legendText="technology service")
+AddRelTag("event-over-https", $legendText="Event over HTTPS")
+AddRelTag("log-stream", $legendText="Log stream")
+
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_SCREENING_OUTCOMES, "NICE Actimize Screening outcomes", "What the vendor decided and why, landed our side. Held because a decision we cannot explain is a decision we cannot defend.", $tags="data_assets")
+  ' aac DA_SCREENING_OUTCOMES: company_domain="Risk and Compliance"
+}
+Boundary(b_System, "System") {
+  System(SYS_IAM, "Identity and access management", "Workforce identity, authentication, and access governance.", $tags="systems")
+  ' aac SYS_IAM: company_domain=""
+  System_Ext(SYS_ITSM, "IT service management", "Incident, change, and service management. Built with SaaS.", $tags="systems")
+  ' aac SYS_ITSM: company_domain=""; hosting="SaaS"; technology="SaaS"
+  System_Ext(SYS_SCREENING_VENDOR, "NICE Actimize Screening", "Financial Crime Screening, operated by NICE Actimize in their own tenancy. Contractually pinned to EU processing; the DPA restricts sub-processors and sets a 90-day retention ceiling. Built with NICE Actimize.", $tags="systems")
+  ' aac SYS_SCREENING_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="NICE Actimize"
+  System_Ext(SYS_SIEM, "Security Monitoring", "Security information and event management: the audit trails of the estate and of every bought service, correlated in one place, and the console the incident response playbook runs from. Built with Microsoft Sentinel.", $tags="systems")
+  ' aac SYS_SIEM: company_domain="Enterprise Platform"; hosting="SaaS"; technology="Microsoft Sentinel"
+}
+Boundary(b_Technology_Service, "Technology Service") {
+  Deployment_Node(TS_ENTRA_ID, "Microsoft Entra ID", "Identity provider", "Workforce and customer identity provider.", $tags="tech_services") {
+    ' aac TS_ENTRA_ID: company_domain="Enterprise Platform"; technology="Identity provider"
+  }
+  Deployment_Node(TS_SERVICENOW, "ServiceNow", "Service management", "Service management and the configuration management database. The CMDB is the intended long-term system of record for the application inventory and is not trusted for that purpose yet. See AAC-06.", $tags="tech_services") {
+    ' aac TS_SERVICENOW: company_domain="Enterprise Platform"; technology="Service management"
+  }
+}
+
+Rel(SYS_IAM, SYS_SIEM, "Identity and Access Management to Security Monitoring", "Syslog", $tags="log-stream")
+' aac rel: source="SYS_IAM"; target="SYS_SIEM"; label="Identity and Access Management to Security Monitoring"; interface_id="INT-IAM-SIEM"; kind="log-stream"; integration_style="Event"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; patterns="workforce-identity-lifecycle;observed-service"
+Rel(SYS_SIEM, SYS_ITSM, "Security Monitoring to IT Service Management", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_SIEM"; target="SYS_ITSM"; label="Security Monitoring to IT Service Management"; interface_id="INT-SIEM-ITSM"; kind="event-over-https"; integration_style="Event"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="observed-service"
+Rel(SYS_SCREENING_VENDOR, SYS_SIEM, "NICE Actimize audit log to security monitoring", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_SCREENING_VENDOR"; target="SYS_SIEM"; label="NICE Actimize audit log to security monitoring"; interface_id="INT-SCREENING-VENDOR-AUDIT"; kind="event-over-https"; integration_style="Event"; auth_method="Token"; frequency="Realtime"; direction="Inbound"
+Rel(SYS_ITSM, TS_SERVICENOW, "runs on")
+' aac rel: source="SYS_ITSM"; target="TS_SERVICENOW"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IAM, TS_ENTRA_ID, "runs on")
+' aac rel: source="SYS_IAM"; target="TS_ENTRA_ID"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_SCREENING_VENDOR, DA_SCREENING_OUTCOMES, "Write")
+' aac rel: source="SYS_SCREENING_VENDOR"; target="DA_SCREENING_OUTCOMES"; label="Write"; relation="system_reads_writes"; operation="Write"
+
+SHOW_LEGEND()
+@enduml

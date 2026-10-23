@@ -1,0 +1,674 @@
+# Where in each framework a capability is placed.
+#
+# Imported from the business architecture repository by
+# `50_ENGINE/tools/import_business_layer.py`. A placement is a path in the
+# framework's own terms, outermost first: BIAN's business area and domain over
+# the service domain, ITIL's group of practices over the practice, CRI's
+# function over the statement, the APQC category, the DMBOK knowledge area. A
+# framework's landscape is drawn from these paths. How firmly a domain follows a
+# framework is the other link, in relations/capability_frameworks.yaml.
+
+capability_references_framework:
+  - capability_id: CAP-ACQ-01
+    framework_id: FW-BIAN
+    ref: Reference Data > Market Data > Market Information Management
+  - capability_id: CAP-ACQ-02
+    framework_id: FW-BIAN
+    ref: Sales and Service > Sales > Customer Offer
+  - capability_id: CAP-ACQ-02
+    framework_id: FW-BIAN
+    ref: Sales and Service > Sales > Product Matching
+  - capability_id: CAP-ACQ-03
+    framework_id: FW-BIAN
+    ref: Sales and Service > Sales > Prospect Campaign Execution
+  - capability_id: CAP-ACQ-04
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Regulations and Compliance > Regulatory Compliance
+  - capability_id: CAP-ACQ-05
+    framework_id: FW-BIAN
+    ref: Reference Data > Market Data > Market Information Management
+  - capability_id: CAP-BILL-01
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Cards > Credit Card / Interest
+  - capability_id: CAP-BILL-01
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Customer Billing
+  - capability_id: CAP-BILL-02
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Cards > Credit Card / Billing
+  - capability_id: CAP-BILL-02
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Customer Billing
+  - capability_id: CAP-BILL-03
+    framework_id: FW-BIAN
+    ref: Business Support > Document Management and Archive > Document Services
+  - capability_id: CAP-BILL-04
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Reward Points Awards And Redemption
+  - capability_id: CAP-BILL-05
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Customer Billing
+  - capability_id: CAP-COLL-01
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Card Collections / Assignment
+  - capability_id: CAP-COLL-01
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Delinquent Account Handling
+  - capability_id: CAP-COLL-02
+    framework_id: FW-BIAN
+    ref: Sales and Service > Channel Specific > Contact Center Operations
+  - capability_id: CAP-COLL-03
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Card Collections / Payment Terms
+  - capability_id: CAP-COLL-03
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Delinquent Account Handling
+  - capability_id: CAP-COLL-04
+    framework_id: FW-BIAN
+    ref: Sales and Service > Customer Management > Account Recovery
+  - capability_id: CAP-COLL-05
+    framework_id: FW-BIAN
+    ref: Sales and Service > Customer Management > Account Recovery
+  - capability_id: CAP-COLL-06
+    framework_id: FW-BIAN
+    ref: Sales and Service > Customer Management > Account Recovery
+  - capability_id: CAP-COLL-07
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Regulations and Compliance > Regulatory Compliance
+  - capability_id: CAP-COLL-08
+    framework_id: FW-BIAN
+    ref: Sales and Service > Customer Management > Customer Credit Rating
+  - capability_id: CAP-CORP-01
+    framework_id: FW-APQC
+    ref: 6.0 Develop and Manage Human Capital
+  - capability_id: CAP-CORP-02
+    framework_id: FW-APQC
+    ref: 6.0 Develop and Manage Human Capital
+  - capability_id: CAP-CORP-03
+    framework_id: FW-APQC
+    ref: 11.0 Manage External Relationships
+  - capability_id: CAP-CORP-04
+    framework_id: FW-APQC
+    ref: 9.0 Acquire, Construct and Manage Assets
+  - capability_id: CAP-CORP-05
+    framework_id: FW-APQC
+    ref: 11.0 Manage External Relationships
+  - capability_id: CAP-CRED-01
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Models > Credit Risk Models
+  - capability_id: CAP-CRED-02
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Models > Credit Risk Models
+  - capability_id: CAP-CRED-02
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Models > Fraud Model
+  - capability_id: CAP-CRED-03
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Trade Banking > Credit Facility
+  - capability_id: CAP-CRED-04
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Models > Credit Risk Models
+  - capability_id: CAP-CRED-05
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Models > Credit Risk Models
+  - capability_id: CAP-CRED-06
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Cards > Card Authorization
+  - capability_id: CAP-CRED-07
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Trade Banking > Credit Facility
+  - capability_id: CAP-DATA-01
+    framework_id: FW-DMBOK
+    ref: Data Governance
+  - capability_id: CAP-DATA-02
+    framework_id: FW-DMBOK
+    ref: Data Integration and Interoperability
+  - capability_id: CAP-DATA-03
+    framework_id: FW-DMBOK
+    ref: Data Quality
+  - capability_id: CAP-DATA-04
+    framework_id: FW-DMBOK
+    ref: Data Warehousing and Business Intelligence
+  - capability_id: CAP-DATA-05
+    framework_id: FW-DMBOK
+    ref: Metadata Management
+  - capability_id: CAP-DATA-06
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Models > Credit Risk Models
+  - capability_id: CAP-DATA-06
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Models > Fraud Model
+  - capability_id: CAP-DATA-07
+    framework_id: FW-BIAN
+    ref: Business Support > Document Management and Archive > Document Services
+  - capability_id: CAP-DATA-07
+    framework_id: FW-DMBOK
+    ref: Document and Content Management
+  - capability_id: CAP-DEP-01
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Loans and Deposits > Sales Product
+  - capability_id: CAP-DEP-01
+    framework_id: FW-BIAN
+    ref: Sales and Service > Sales > Term Deposit Framework Agreement
+  - capability_id: CAP-DEP-02
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Loans and Deposits > Term Deposit
+  - capability_id: CAP-DEP-03
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Consumer Services > Brokered Product Proxy
+  - capability_id: CAP-DEP-03
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Loans and Deposits > Term Deposit
+  - capability_id: CAP-DEP-04
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Loans and Deposits > Term Deposit
+  - capability_id: CAP-DEP-05
+    framework_id: FW-CRI
+    ref: Govern > GV.OC-03
+  - capability_id: CAP-FIN-01
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Regulations and Compliance > Financial Accounting
+  - capability_id: CAP-FIN-02
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Regulations and Compliance > Financial Accounting
+  - capability_id: CAP-FIN-03
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Account Management > Position Management
+  - capability_id: CAP-FIN-04
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Regulations and Compliance > Regulatory Reporting
+  - capability_id: CAP-FIN-05
+    framework_id: FW-APQC
+    ref: 8.0 Manage Financial Resources
+  - capability_id: CAP-FIN-06
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Account Management > Account Reconciliation
+  - capability_id: CAP-FRAUD-01
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Cards > Card Authorization / Fraud Check
+  - capability_id: CAP-FRAUD-01
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Account Management > Fraud Evaluation
+  - capability_id: CAP-FRAUD-01
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Models > Fraud Model
+  - capability_id: CAP-FRAUD-02
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Account Management > Fraud Diagnosis
+  - capability_id: CAP-FRAUD-02
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Regulations and Compliance > Fraud Resolution / Case Determination
+  - capability_id: CAP-FRAUD-03
+    framework_id: FW-BIAN
+    ref: Sales and Service > Servicing > Card Case
+  - capability_id: CAP-FRAUD-03
+    framework_id: FW-BIAN
+    ref: Sales and Service > Servicing > Card Case / Initiate
+  - capability_id: CAP-FRAUD-03
+    framework_id: FW-BIAN
+    ref: Sales and Service > Servicing > Customer Case Management
+  - capability_id: CAP-FRAUD-04
+    framework_id: FW-BIAN
+    ref: Sales and Service > Servicing > Card Case
+  - capability_id: CAP-FRAUD-04
+    framework_id: FW-BIAN
+    ref: Sales and Service > Servicing > Card Case / Arbitration
+  - capability_id: CAP-FRAUD-04
+    framework_id: FW-BIAN
+    ref: Sales and Service > Servicing > Card Case / Chargeback
+  - capability_id: CAP-FRAUD-05
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Regulations and Compliance > Fraud Resolution
+  - capability_id: CAP-FRAUD-06
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Regulations and Compliance > Fraud Resolution
+  - capability_id: CAP-FRAUD-07
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Account Management > Fraud Diagnosis
+  - capability_id: CAP-LEND-01
+    framework_id: FW-BIAN
+    ref: Reference Data > External Agency > Partner Administration
+  - capability_id: CAP-LEND-01
+    framework_id: FW-BIAN
+    ref: Reference Data > External Agency > Partner Agreement
+  - capability_id: CAP-LEND-02
+    framework_id: FW-BIAN
+    ref: Sales and Service > Sales > Consumer Loan
+  - capability_id: CAP-LEND-02
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Loans and Deposits > Underwriting
+  - capability_id: CAP-LEND-03
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Loans and Deposits > Merchandising Loan
+  - capability_id: CAP-LEND-04
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Collateral Administration > Collateral Asset Administration
+  - capability_id: CAP-LEND-05
+    framework_id: FW-BIAN
+    ref: Sales and Service > Sales > Consumer Loan
+  - capability_id: CAP-LEND-06
+    framework_id: FW-BIAN
+    ref: Sales and Service > Customer Management > Account Recovery
+  - capability_id: CAP-LEND-06
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Collateral Administration > Collateral Asset Administration
+  - capability_id: CAP-MERCH-01
+    framework_id: FW-BIAN
+    ref: Reference Data > External Agency > Partner Administration
+  - capability_id: CAP-MERCH-01
+    framework_id: FW-BIAN
+    ref: Reference Data > External Agency > Partner Agreement
+  - capability_id: CAP-MERCH-02
+    framework_id: FW-BIAN
+    ref: Sales and Service > Sales > Merchant Relations
+  - capability_id: CAP-MERCH-02
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Loans and Deposits > Underwriting
+  - capability_id: CAP-MERCH-03
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Cards > Merchant Acquiring Facility
+  - capability_id: CAP-MERCH-04
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Account Management > Account Reconciliation
+  - capability_id: CAP-MERCH-04
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Cards > Merchant Acquiring Facility
+  - capability_id: CAP-MERCH-05
+    framework_id: FW-BIAN
+    ref: Sales and Service > Servicing > Card Case
+  - capability_id: CAP-MERCH-06
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Account Management > Fraud Evaluation
+  - capability_id: CAP-MERCH-06
+    framework_id: FW-BIAN
+    ref: Sales and Service > Sales > Merchant Relations
+  - capability_id: CAP-ORIG-01
+    framework_id: FW-BIAN
+    ref: Sales and Service > Sales > Party Lifecycle Management
+  - capability_id: CAP-ORIG-02
+    framework_id: FW-BIAN
+    ref: Sales and Service > Cross Channel > Party Authentication
+  - capability_id: CAP-ORIG-03
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Account Management > Fraud Evaluation
+  - capability_id: CAP-ORIG-04
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Loans and Deposits > Underwriting
+  - capability_id: CAP-ORIG-05
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Regulations and Compliance > Regulatory Compliance
+  - capability_id: CAP-ORIG-06
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Cards > Credit Card
+  - capability_id: CAP-ORIG-07
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Issued Device Administration
+  - capability_id: CAP-ORIG-07
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Issued Device Administration / Device Assignment
+  - capability_id: CAP-ORIG-08
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Issued Device Administration
+  - capability_id: CAP-PART-01
+    framework_id: FW-BIAN
+    ref: Reference Data > External Agency > Correspondent Bank Relationship Management
+  - capability_id: CAP-PART-02
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Cards > Card Network Participant Facility
+  - capability_id: CAP-PART-03
+    framework_id: FW-APQC
+    ref: 11.0 Manage External Relationships
+  - capability_id: CAP-PART-04
+    framework_id: FW-APQC
+    ref: 11.0 Manage External Relationships
+  - capability_id: CAP-PART-05
+    framework_id: FW-APQC
+    ref: 11.0 Manage External Relationships
+  - capability_id: CAP-PAY-01
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Cards > Card Authorization
+  - capability_id: CAP-PAY-01
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Cards > Card Authorization / Credit Check
+  - capability_id: CAP-PAY-01
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Cards > Card Authorization / Stand In
+  - capability_id: CAP-PAY-01
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Card Transaction Switch
+  - capability_id: CAP-PAY-02
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Payments > Card Clearing
+  - capability_id: CAP-PAY-02
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Cards > Card Transaction Capture
+  - capability_id: CAP-PAY-03
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Cards > Credit Card / Card Payment
+  - capability_id: CAP-PAY-03
+    framework_id: FW-BIAN
+    ref: Sales and Service > Servicing > Payment Order Initiation
+  - capability_id: CAP-PAY-04
+    framework_id: FW-BIAN
+    ref: Sales and Service > Servicing > Payment Order Initiation
+  - capability_id: CAP-PAY-05
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Payments > Card Financial Settlement
+  - capability_id: CAP-PAY-06
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Account Management > Account Reconciliation
+  - capability_id: CAP-PAY-07
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Issued Device Administration
+  - capability_id: CAP-PAY-07
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Issued Device Administration / Token Assignment
+  - capability_id: CAP-PAY-07
+    framework_id: FW-CRI
+    ref: Protect > PR.DS-01
+  - capability_id: CAP-PROD-01
+    framework_id: FW-BIAN
+    ref: Reference Data > Product Management > Product Deployment
+  - capability_id: CAP-PROD-01
+    framework_id: FW-BIAN
+    ref: Reference Data > Product Management > Product Design
+  - capability_id: CAP-PROD-02
+    framework_id: FW-BIAN
+    ref: Reference Data > Product Management > Product Directory
+  - capability_id: CAP-PROD-03
+    framework_id: FW-BIAN
+    ref: Reference Data > Product Management > Product Directory
+  - capability_id: CAP-PROD-04
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Reward Points Awards And Redemption
+  - capability_id: CAP-PROD-05
+    framework_id: FW-BIAN
+    ref: Reference Data > Product Management > Product Deployment
+  - capability_id: CAP-RGOV-01
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Regulations and Compliance > Guideline Compliance
+  - capability_id: CAP-RGOV-02
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Regulations and Compliance > Regulatory Compliance
+  - capability_id: CAP-RGOV-03
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Regulations and Compliance > Compliance Reporting
+  - capability_id: CAP-RGOV-04
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Regulations and Compliance > Guideline Compliance
+  - capability_id: CAP-RGOV-05
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Regulations and Compliance > Regulatory Compliance
+  - capability_id: CAP-RGOV-06
+    framework_id: FW-BIAN
+    ref: Sales and Service > Servicing > Customer Case Management
+  - capability_id: CAP-RGOV-07
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Regulations and Compliance > Regulatory Compliance
+  - capability_id: CAP-RGOV-08
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Models > Credit Risk Models
+  - capability_id: CAP-SEC-01
+    framework_id: FW-CRI
+    ref: Protect > PR.AA-01
+  - capability_id: CAP-SEC-02
+    framework_id: FW-CRI
+    ref: Detect > DE.CM-01
+  - capability_id: CAP-SEC-02
+    framework_id: FW-CRI
+    ref: Respond > RS.MA-01
+  - capability_id: CAP-SEC-03
+    framework_id: FW-CRI
+    ref: Identify > ID.RA-01
+  - capability_id: CAP-SEC-03
+    framework_id: FW-CRI
+    ref: Protect > PR.PS-02
+  - capability_id: CAP-SEC-04
+    framework_id: FW-CRI
+    ref: Protect > PR.DS-01
+  - capability_id: CAP-SEC-04
+    framework_id: FW-CRI
+    ref: Protect > PR.DS-02
+  - capability_id: CAP-SEC-05
+    framework_id: FW-CRI
+    ref: Govern > GV.PO-01
+  - capability_id: CAP-SERV-01
+    framework_id: FW-BIAN
+    ref: Sales and Service > Channel Specific > Contact Center Operations
+  - capability_id: CAP-SERV-01
+    framework_id: FW-BIAN
+    ref: Sales and Service > Channel Specific > Contact Routing
+  - capability_id: CAP-SERV-02
+    framework_id: FW-BIAN
+    ref: Sales and Service > Cross Channel > Customer Workbench
+  - capability_id: CAP-SERV-03
+    framework_id: FW-BIAN
+    ref: Sales and Service > Channel Specific > eBranch Operations
+  - capability_id: CAP-SERV-04
+    framework_id: FW-BIAN
+    ref: Business Support > Document Management and Archive > Document Services
+  - capability_id: CAP-SERV-04
+    framework_id: FW-BIAN
+    ref: Sales and Service > Cross Channel > Session Dialog
+  - capability_id: CAP-SERV-05
+    framework_id: FW-BIAN
+    ref: Sales and Service > Servicing > Customer Case Management
+  - capability_id: CAP-SERV-06
+    framework_id: FW-BIAN
+    ref: Sales and Service > Cross Channel > Interactive Help
+  - capability_id: CAP-SERV-07
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Delinquent Account Handling
+  - capability_id: CAP-SERV-08
+    framework_id: FW-BIAN
+    ref: Sales and Service > Channel Specific > Contact Center Operations
+  - capability_id: CAP-STRAT-01
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Business Analysis > Market Research
+  - capability_id: CAP-STRAT-02
+    framework_id: FW-BIAN
+    ref: Sales and Service > Marketing > Business Development
+  - capability_id: CAP-STRAT-03
+    framework_id: FW-APQC
+    ref: 1.0 Develop Vision and Strategy
+  - capability_id: CAP-STRAT-04
+    framework_id: FW-APQC
+    ref: 12.0 Develop and Manage Business Capabilities
+  - capability_id: CAP-STRAT-04
+    framework_id: FW-ITIL
+    ref: General management > Architecture Management
+  - capability_id: CAP-STRAT-05
+    framework_id: FW-APQC
+    ref: 1.0 Develop Vision and Strategy
+  - capability_id: CAP-TECH-01
+    framework_id: FW-CRI
+    ref: Protect > PR.PS-06
+  - capability_id: CAP-TECH-01
+    framework_id: FW-ITIL
+    ref: Technical management > Software Development and Management
+  - capability_id: CAP-TECH-02
+    framework_id: FW-ITIL
+    ref: Service management > Capacity and Performance Management
+  - capability_id: CAP-TECH-02
+    framework_id: FW-ITIL
+    ref: Technical management > Infrastructure and Platform Management
+  - capability_id: CAP-TECH-03
+    framework_id: FW-ITIL
+    ref: Service management > Incident Management
+  - capability_id: CAP-TECH-03
+    framework_id: FW-ITIL
+    ref: Service management > Problem Management
+  - capability_id: CAP-TECH-03
+    framework_id: FW-ITIL
+    ref: Service management > Service Desk
+  - capability_id: CAP-TECH-04
+    framework_id: FW-ITIL
+    ref: Service management > Change Enablement
+  - capability_id: CAP-TECH-04
+    framework_id: FW-ITIL
+    ref: Technical management > Deployment Management
+  - capability_id: CAP-TECH-04
+    framework_id: FW-ITIL
+    ref: Service management > Release Management
+  - capability_id: CAP-TECH-05
+    framework_id: FW-CRI
+    ref: Recover > RC.RP-01
+  - capability_id: CAP-TECH-05
+    framework_id: FW-ITIL
+    ref: Service management > Service Continuity Management
+  - capability_id: CAP-TECH-06
+    framework_id: FW-ITIL
+    ref: Technical management > Infrastructure and Platform Management
+  - capability_id: CAP-TECH-07
+    framework_id: FW-ITIL
+    ref: Service management > IT Asset Management
+  - capability_id: CAP-TECH-07
+    framework_id: FW-ITIL
+    ref: Service management > Service Request Management
+  - capability_id: CAP-TECH-08
+    framework_id: FW-ITIL
+    ref: Service management > Service Validation and Testing
+  - capability_id: CAP-TPRM-01
+    framework_id: FW-CRI
+    ref: Extend > EX.DD-01
+  - capability_id: CAP-TPRM-02
+    framework_id: FW-BIAN
+    ref: Reference Data > External Agency > Contractor and Supplier Agreement
+  - capability_id: CAP-TPRM-02
+    framework_id: FW-CRI
+    ref: Extend > EX.CN-01
+  - capability_id: CAP-TPRM-03
+    framework_id: FW-CRI
+    ref: Extend > EX.MM-01
+  - capability_id: CAP-TPRM-03
+    framework_id: FW-CRI
+    ref: Extend > EX.MM-02
+  - capability_id: CAP-TPRM-04
+    framework_id: FW-CRI
+    ref: Extend > EX.TR-01
+  - capability_id: CAP-TPS-01
+    framework_id: FW-BIAN
+    ref: Reference Data > Product Management > Product Deployment
+  - capability_id: CAP-TPS-02
+    framework_id: FW-BIAN
+    ref: Reference Data > Product Management > Product Deployment
+  - capability_id: CAP-TPS-03
+    framework_id: FW-DMBOK
+    ref: Data Integration and Interoperability
+  - capability_id: CAP-TPS-04
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Account Management > Accounts Receivable
+  - capability_id: CAP-TPS-05
+    framework_id: FW-BIAN
+    ref: Risk and Compliance > Regulations and Compliance > Regulatory Compliance
+  - capability_id: CAP-TPS-06
+    framework_id: FW-ITIL
+    ref: Service management > Change Enablement
+  - capability_id: CAP-TECH-01-01
+    framework_id: FW-ITIL
+    ref: Technical management > Software Development and Management
+  - capability_id: CAP-TECH-01-02
+    framework_id: FW-CRI
+    ref: Protect > PR.PS-06
+  - capability_id: CAP-TECH-02-01
+    framework_id: FW-ITIL
+    ref: Technical management > Infrastructure and Platform Management
+  - capability_id: CAP-TECH-02-02
+    framework_id: FW-ITIL
+    ref: Service management > Capacity and Performance Management
+  - capability_id: CAP-TECH-03-01
+    framework_id: FW-ITIL
+    ref: Service management > Service Desk
+  - capability_id: CAP-TECH-03-02
+    framework_id: FW-ITIL
+    ref: Service management > Incident Management
+  - capability_id: CAP-TECH-03-03
+    framework_id: FW-ITIL
+    ref: Service management > Problem Management
+  - capability_id: CAP-TECH-04-01
+    framework_id: FW-ITIL
+    ref: Service management > Change Enablement
+  - capability_id: CAP-TECH-04-02
+    framework_id: FW-ITIL
+    ref: Service management > Release Management
+  - capability_id: CAP-TECH-04-03
+    framework_id: FW-ITIL
+    ref: Technical management > Deployment Management
+  - capability_id: CAP-TECH-07-01
+    framework_id: FW-ITIL
+    ref: Service management > IT Asset Management
+  - capability_id: CAP-TECH-07-02
+    framework_id: FW-ITIL
+    ref: Service management > Service Request Management
+  - capability_id: CAP-SEC-02-01
+    framework_id: FW-CRI
+    ref: Detect > DE.CM-01
+  - capability_id: CAP-SEC-02-02
+    framework_id: FW-CRI
+    ref: Respond > RS.MA-01
+  - capability_id: CAP-SEC-03-01
+    framework_id: FW-CRI
+    ref: Identify > ID.RA-01
+  - capability_id: CAP-SEC-03-02
+    framework_id: FW-CRI
+    ref: Protect > PR.PS-02
+  - capability_id: CAP-SEC-04-01
+    framework_id: FW-CRI
+    ref: Protect > PR.DS-01
+  - capability_id: CAP-SEC-04-02
+    framework_id: FW-CRI
+    ref: Protect > PR.DS-02
+  - capability_id: CAP-TPRM-03-01
+    framework_id: FW-CRI
+    ref: Extend > EX.MM-01
+  - capability_id: CAP-TPRM-03-02
+    framework_id: FW-CRI
+    ref: Extend > EX.MM-02
+  - capability_id: CAP-PAY-01-01
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Cards > Card Authorization / Authentication
+  - capability_id: CAP-PAY-01-02
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Cards > Card Authorization / Fraud Check
+  - capability_id: CAP-PAY-01-03
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Cards > Card Authorization / Credit Check
+  - capability_id: CAP-PAY-01-04
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Cards > Card Authorization / Stand In
+  - capability_id: CAP-PAY-01-05
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Card Transaction Switch
+  - capability_id: CAP-FRAUD-04-01
+    framework_id: FW-BIAN
+    ref: Sales and Service > Servicing > Card Case / Chargeback
+  - capability_id: CAP-FRAUD-04-02
+    framework_id: FW-BIAN
+    ref: Sales and Service > Servicing > Card Case / Arbitration
+  - capability_id: CAP-COLL-03-01
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Card Collections / Payment Terms
+  - capability_id: CAP-COLL-03-02
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Card Collections / Resolution
+  - capability_id: CAP-ACQ-02-01
+    framework_id: FW-BIAN
+    ref: Sales and Service > Sales > Customer Offer
+  - capability_id: CAP-ACQ-02-02
+    framework_id: FW-BIAN
+    ref: Sales and Service > Sales > Product Matching
+  - capability_id: CAP-BILL-04-01
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Reward Points Account
+  - capability_id: CAP-BILL-04-02
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Reward Points Awards And Redemption
+  - capability_id: CAP-BILL-04-03
+    framework_id: FW-BIAN
+    ref: Operations and Execution > Operational Services > Rewards Delivery
+  - capability_id: CAP-SERV-01-01
+    framework_id: FW-BIAN
+    ref: Sales and Service > Channel Specific > Contact Center Operations
+  - capability_id: CAP-SERV-01-02
+    framework_id: FW-BIAN
+    ref: Sales and Service > Channel Specific > Contact Routing

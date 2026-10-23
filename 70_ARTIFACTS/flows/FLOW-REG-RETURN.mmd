@@ -1,0 +1,14 @@
+%% Regulatory Return
+%% Generated from the model by `terrane render`. Do not edit by hand.
+sequenceDiagram
+  autonumber
+  participant SYS_CORE_LEDGER as Core Card Ledger
+  participant SYS_DATA_INGEST as Enterprise Data Ingestion Hub
+  participant SYS_CUST360_PIPELINE as Customer 360 Pipeline
+  participant SYS_CUST360_SEMANTIC as Customer 360 Semantic Layer
+  participant SYS_REG_REPORTING as Regulatory Reporting Engine
+  SYS_CORE_LEDGER-)SYS_DATA_INGEST: FileTransfer
+  SYS_DATA_INGEST-)SYS_CUST360_PIPELINE: Snowpipe
+  SYS_CUST360_PIPELINE-)SYS_CUST360_SEMANTIC: SQL
+  SYS_CUST360_SEMANTIC-)SYS_REG_REPORTING: SQL
+  Note over SYS_CORE_LEDGER: filed within 10 working days

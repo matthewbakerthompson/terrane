@@ -1,0 +1,92 @@
+view_id: system-governance
+title: "{system} — Governance"
+category: Governance
+kind: diagram
+description: >
+  One system and everything that governs it: the controls it enforces, the
+  policies it is subject to, and the controls that apply through the
+  capabilities it realizes. A control reached only through a capability means
+  either the system enforces it and nobody recorded that, or it is enforced
+  somewhere else.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+parameters:
+  - name: system
+    type: systems
+    required: true
+    description: The system this diagram is about
+
+group_by: type
+
+scope:
+  include:
+    - type: systems
+      where:
+        id_in: ["{system}"]
+  expand:
+    - relation: system_governed_by_control
+      depth: 1
+      types: [controls]
+    - relation: system_subject_to_policy
+      depth: 1
+      types: [policies]
+    - relation: system_realizes_capability
+      depth: 1
+      types: [capabilities]
+    # From the capabilities just pulled in: what the business says governs
+    # them. This is where an unrecorded control shows up.
+    - relation: capability_governed_by_control
+      depth: 1
+      types: [controls]
+    # And from every control on the page, the policy it gives effect to.
+    - relation: policy_id
+      depth: 1
+      types: [policies]
+
+edges:
+  - via: system_governed_by_control
+    text: enforces
+  - via: system_realizes_capability
+    text: realizes
+  # Said in words. Left to the row's qualifier the label was `Descendant` or
+  # `Process`, the basis of the inference, which reads as a code on a
+  # drawing; the inspector still shows the basis on the row.
+  - via: capability_governed_by_control
+    text: governed by
+  - via: system_subject_to_policy
+    text: subject to
+  - via: policy_id
+    text: gives effect to
+
+style:
+  color_by: type
+
+limits:
+  max_nodes: 40
+
+# One committed diagram per system that would be asked about in an audit:
+# live, high criticality, and handling Restricted data. Planned systems are
+# left out on purpose: a product mid-onboarding has no controls recorded yet,
+# and a committed diagram of one box says nothing the coverage report does
+# not say better.
+#
+# `has_any` says the same thing about a live system, which the status filter
+# could not. A datastore records no control of its own and realizes no
+# capability to inherit one through, so it drew as a single box while the API
+# and web tiers beside it -- equally without a direct control -- drew fully
+# through the capabilities they realize. The gap is not hidden by dropping the
+# diagram: every system here without a control still raises
+# `governance.no_control`, and the coverage report still counts it.
+render_for:
+  parameter: system
+  type: systems
+  where:
+    criticality: [High]
+    status: [Active]
+    data_classification_supported: [Restricted]
+    has_any:
+      - system_governed_by_control
+      - system_subject_to_policy
+      - system_realizes_capability

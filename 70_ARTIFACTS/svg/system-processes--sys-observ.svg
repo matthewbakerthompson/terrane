@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="777.7" viewBox="0 0 1100 777.7" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Observability platform — Processes and Capabilities</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Observability platform — Processes and Capabilities</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   9 nodes · 9 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One system, every process that uses it and in what role, and the capabilities those processes support. This shows the business impact of changing the system. A</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">long list against a low criticality rating is worth a second look.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(165.72 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="279.72" y="132.3" width="212.57" height="391.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="321.72" y="149.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.87" y="179.26" width="212.27" height="295.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.72" y="196.67" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="537.3" y="24.3" width="221.4" height="114.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="567.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-QE-004::SYS-OBSERV">
+<title>Supporting</title>
+<path d="M196 310 L225 310 L241 310 A10 10 0 0 0 251 300 L251 87 A10 10 0 0 1 261 77 L503.5 77 A2.5 2.5 0 0 1 506 79.5 L506 79.5 A2.46 2.46 0 0 0 508.5 81.96 L533.91 81.5 A10 10 0 0 1 534.09 81.5 L559.48 81.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M563 81.5 L553.43 86.28 L553.43 76.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-QE-004::SYS-OBSERV">
+<rect x="354.46" y="83.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="383.5" y="95.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e1::P-QE-009::SYS-OBSERV">
+<title>Primary</title>
+<path d="M196 432 L225 432 L233 432 A8 8 0 0 1 241 440 L241 530 A10 10 0 0 0 251 540 L496 540 A10 10 0 0 0 506 530 L506 107.09 A10 10 0 0 1 516.09 97.09 L533.96 97.25 A10 10 0 0 0 534.04 97.25 L559.48 97.25" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M563 97.25 L553.43 102.03 L553.43 92.47 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-QE-009::SYS-OBSERV">
+<rect x="362.32" y="546.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="383.5" y="558.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e2::P-APPDEV-008::SYS-OBSERV">
+<title>Supporting</title>
+<path d="M196 222 L225 222 L233 222 A8 8 0 0 0 241 214 L241 75.99 A10 10 0 0 1 250.99 65.99 L534 65.75 A10 10 0 0 1 534 65.75 L559.48 65.75" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M563 65.75 L553.43 70.53 L553.43 60.97 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-APPDEV-008::SYS-OBSERV">
+<rect x="354.46" y="43.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="383.5" y="55.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e3::P-QE-004::CAP-TECH-08">
+<title>supports</title>
+<path d="M196 344 L225 344 L233 344 A8 8 0 0 1 241 352 L241 381.09 A10 10 0 0 0 250.91 391.09 L276.95 391.33 A10 10 0 0 0 277.05 391.33 L302.48 391.33" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M306 391.33 L296.43 396.12 L296.43 386.55 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e4::P-QE-004::CAP-TECH-02">
+<title>supports</title>
+<path d="M196 327 L225 327 L240.5 327 A0.5 0.5 0 0 1 241 327.5 L241 327.5 A0.5 0.5 0 0 0 241.5 328 L277 328 L302.48 328" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M306 328 L296.43 332.79 L296.43 323.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e5::P-QE-009::CAP-TECH-08">
+<title>supports</title>
+<path d="M196 398 L225 398 L235.5 398 A5.5 5.5 0 0 1 241 403.5 L241 403.5 A5.45 5.45 0 0 0 246.5 408.95 L276.95 408.67 A10 10 0 0 1 277.05 408.67 L302.48 408.67" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M306 408.67 L296.43 413.45 L296.43 403.88 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e6::P-QE-009::CAP-TECH-04">
+<title>supports</title>
+<path d="M196 415 L225 415 L241 415 A10 10 0 0 1 251 425 L251 462 A10 10 0 0 0 261 472 L277 472 L302.48 472" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M306 472 L296.43 476.79 L296.43 467.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e7::P-APPDEV-008::CAP-TECH-01">
+<title>supports</title>
+<path d="M196 239 L225 239 L251 239 A10 10 0 0 0 261 229 L261 192 A8 8 0 0 1 269 184 L277 184 L302.48 184" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M306 184 L296.43 188.78 L296.43 179.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e8::P-APPDEV-008::CAP-TECH-03">
+<title>supports</title>
+<path d="M196 256 L225 256 L277 256 L302.48 256" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M306 256 L296.43 260.79 L296.43 251.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-TECH-01" data-type="capabilities">
+<title>Solution Delivery &amp; Engineering</title>
+<path d="M346 158 L306 184 L346 210 L426 210 L466 184 L426 158 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="386" y="182.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Solution Delivery &amp;</text>
+<text x="386" y="194.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Engineering</text>
+</g>
+<g class="node" data-id="CAP-TECH-02" data-type="capabilities">
+<title>Platform &amp; Infrastructure Operations</title>
+<path d="M346 302 L306 328 L346 354 L426 354 L466 328 L426 302 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="386" y="320.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Platform &amp;</text>
+<text x="386" y="332.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Infrastructure</text>
+<text x="386" y="344.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Operations</text>
+</g>
+<g class="node" data-id="CAP-TECH-03" data-type="capabilities">
+<title>Service Management &amp; Incident Response</title>
+<path d="M346 230 L306 256 L346 282 L426 282 L466 256 L426 230 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="386" y="254.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Service Management</text>
+<text x="386" y="266.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">&amp; Incident Response</text>
+</g>
+<g class="node" data-id="CAP-TECH-04" data-type="capabilities">
+<title>Release &amp; Change Management</title>
+<path d="M346 446 L306 472 L346 498 L426 498 L466 472 L426 446 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="386" y="470.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Release &amp; Change</text>
+<text x="386" y="482.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+</g>
+<g class="node" data-id="CAP-TECH-08" data-type="capabilities">
+<title>Quality Engineering &amp; Testing</title>
+<path d="M346 374 L306 400 L346 426 L426 426 L466 400 L426 374 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="386" y="398.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Quality Engineering &amp;</text>
+<text x="386" y="410.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Testing</text>
+</g>
+<g class="node" data-id="P-APPDEV-008" data-type="processes">
+<title>Support a production application</title>
+<path d="M116 205 L36 230.97 L66.56 273 L165.44 273 L196 230.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="237.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Support a production</text>
+<text x="116" y="249.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">application</text>
+</g>
+<g class="node" data-id="P-QE-004" data-type="processes">
+<title>Execute performance and resilience testing</title>
+<path d="M116 293 L36 318.97 L66.56 361 L165.44 361 L196 318.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="325.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Execute performance</text>
+<text x="116" y="337.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and resilience testing</text>
+</g>
+<g class="node" data-id="P-QE-009" data-type="processes">
+<title>Verify a release in production</title>
+<path d="M116 381 L36 406.97 L66.56 449 L165.44 449 L196 406.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="413.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Verify a release in</text>
+<text x="116" y="425.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">production</text>
+</g>
+<g class="node" data-id="SYS-OBSERV" data-type="systems">
+<title>Observability platform</title>
+<rect x="563" y="50" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="644" y="74.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Observability</text>
+<text x="644" y="86.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">platform</text>
+<text x="648" y="107.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">SaaS</text>
+<svg x="715" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="675.7" x2="1072" y2="675.7" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="699.7" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 688.7)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="699.7" font-size="12" font-weight="400" fill="#343d50">capability · 5</text>
+<g transform="translate(180.4 688.7)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="206.4" y="699.7" font-size="12" font-weight="400" fill="#343d50">process · 3</text>
+<g transform="translate(283.42 688.7)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="309.42" y="699.7" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
+<text x="28" y="721.7" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 710.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="721.7" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 710.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="721.7" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="755.7" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-processes--sys-observ · edit the model, not the picture</text></g>
+</svg>

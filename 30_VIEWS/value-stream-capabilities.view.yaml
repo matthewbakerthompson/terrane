@@ -1,0 +1,34 @@
+view_id: value-stream-capabilities
+title: "Prospect to Funded Account — Stages and Capabilities"
+category: Business
+section: Processes and value streams
+kind: report
+description: >
+  The Prospect to Funded Account value stream, its stages, and the
+  capabilities each stage depends on. A capability used in several stages is
+  on the stream's critical path: if it fails, every one of those stages stops.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+group_by: type
+
+scope:
+  include:
+    - type: value_stream_stages
+      where:
+        value_stream_id: [VS-ACQUIRE-CUSTOMER]
+  expand:
+    - relation: stage_crosses_capability
+      depth: 1
+      types: [capabilities]
+
+edges:
+  - via: stage_crosses_capability
+    text: needs
+
+style:
+  color_by: capability_tier
+
+limits:
+  max_nodes: 60

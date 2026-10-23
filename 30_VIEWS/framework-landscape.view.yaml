@@ -1,0 +1,48 @@
+view_id: framework-landscape
+title: "{framework} — Landscape"
+category: Business
+section: Frameworks
+kind: map
+description: >
+  The capabilities placed in one framework, laid out in the framework's own
+  terms: BIAN's business areas and domains, ITIL's groups of practices, the
+  CRI Profile's functions. It is drawn for every framework something is
+  placed in, including one an organization adds. A capability placed twice
+  in one framework is drawn at its first placement, and its details list
+  every one.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+parameters:
+  - name: framework
+    type: frameworks
+    required: true
+    description: The framework to lay the capabilities out by
+
+# The first two levels of each placement's path: area and domain for BIAN,
+# group and practice for ITIL, function and statement for CRI. A framework
+# with one level (APQC, DMBOK) nests one deep.
+group_by:
+  - "capability_references_framework@{framework}#1"
+  - "capability_references_framework@{framework}#2"
+
+scope:
+  include:
+    - type: capabilities
+      where:
+        "capability_references_framework@{framework}": {exists: true}
+
+edges: []
+
+style:
+  color_by: capability_tier
+
+limits:
+  max_nodes: 200
+
+# Drawn once for every framework something is placed in.
+render_for:
+  type: frameworks
+  where:
+    has_any: [capability_references_framework]

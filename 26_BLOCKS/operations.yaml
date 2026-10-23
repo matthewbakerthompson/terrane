@@ -1,0 +1,46 @@
+# Where the estate learns it is in trouble, and where it proves what it
+# changed.
+#
+# Both blocks exist because the questions "how did you know" and "who
+# approved that" get asked after the fact, and the answer has to be read off
+# systems rather than remembered by people.
+
+- building_block_id: observability-stack
+  name: Observability stack
+  category: Operations
+  description: >
+    Telemetry from every service, security monitoring beside it, the on-call that is paged from both, and the service management that records what happened. One chain, so an incident has one timeline whether it started as an outage or an intrusion.
+  provides:
+    - component: observability
+    - component: siem
+    - component: incident-management
+    - component: itsm
+  relations:
+    - from: observability
+      to: incident-management
+    - from: siem
+      to: incident-management
+    - from: incident-management
+      to: itsm
+  defaults:
+    network_zone: Shared-Services
+
+- building_block_id: change-evidence
+  name: Change evidence
+  category: Operations
+  description: >
+    Source control, the pipeline that builds from it, the registry that holds what it built, and the service management that records the change the build was deployed under. Every link is a system writing to another system; the moment a person retypes a change number, the chain is a story. The risk register the evidence lands in is an application and sits above the block.
+  provides:
+    - component: source-control
+    - component: ci-cd
+    - component: artifact-registry
+    - component: itsm
+  relations:
+    - from: source-control
+      to: ci-cd
+    - from: ci-cd
+      to: artifact-registry
+    - from: ci-cd
+      to: itsm
+  defaults:
+    network_zone: Shared-Services

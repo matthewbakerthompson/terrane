@@ -1,0 +1,104 @@
+# The clinical core: the EHR and what sits at the bedside with it.
+#
+# One EHR for the hospitals and the clinics, as most health systems of this
+# size have now. Registration, ADT, scheduling, orders, documentation and
+# the medication record are modules of it, not systems beside it, so they
+# are not modeled as systems: what the estate has to know about them is the
+# feeds they emit, and those are the EHR's interfaces.
+
+- system_id: SYS-EHR
+  name: Enterprise EHR
+  description: >
+    The integrated electronic health record for both hospitals and every
+    clinic: registration and ADT, scheduling, orders, clinical documentation
+    and the medication administration record. The source of most of the
+    estate's HL7 traffic and of every encounter.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Physical
+  company_domain: Clinical Care
+  tags: [core, clinical]
+  owner_org_id: ORG-CLIN-APPS
+  criticality: High
+  service_tier: Tier 1
+  hosting: On-prem
+  environment: Production
+  provider: Licensed EHR suite
+  system_category: Clinical
+  component_type: core-platform
+  data_classification_supported: Restricted
+  cloud_provider: On-prem
+  network_zone: On-prem
+  resilience: Multi-AZ
+
+- system_id: SYS-PHARMACY
+  name: Pharmacy and Dispensing
+  description: >
+    Pharmacist verification of medication orders, the formulary, and the
+    automated dispensing cabinets on every unit. Nothing is administered that
+    a pharmacist has not verified here first.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Physical
+  company_domain: Clinical Care
+  tags: [clinical]
+  owner_org_id: ORG-PHARMACY
+  criticality: High
+  service_tier: Tier 1
+  hosting: On-prem
+  environment: Production
+  provider: Licensed
+  system_category: Ancillary
+  data_classification_supported: Restricted
+  cloud_provider: On-prem
+  network_zone: On-prem
+  resilience: Single-AZ
+
+- system_id: SYS-DEVICE-GW
+  name: Medical Device Integration
+  description: >
+    The gateway between bedside devices -- monitors, ventilators, infusion
+    pumps -- and the EHR's flowsheets. A nurse validates what it sends
+    before it becomes part of the record.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Physical
+  company_domain: Clinical Care
+  tags: [device, clinical]
+  owner_org_id: ORG-CLIN-ENG
+  criticality: High
+  service_tier: Tier 1
+  hosting: On-prem
+  environment: Production
+  provider: Licensed
+  system_category: Device
+  data_classification_supported: Restricted
+  cloud_provider: On-prem
+  network_zone: On-prem
+  resilience: Single-AZ
+
+- system_id: SYS-BED-MGMT
+  name: Patient Flow and Bed Board
+  description: >
+    Real-time bed status and placement across both hospitals, fed by the
+    EHR's ADT messages. Bought as a service; it holds names and locations,
+    not the clinical record.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Physical
+  company_domain: Clinical Care
+  tags: [vendor, third-party]
+  owner_org_id: ORG-INPATIENT
+  criticality: Medium
+  service_tier: Tier 2
+  hosting: SaaS
+  environment: Production
+  provider: Patient flow vendor
+  system_category: Clinical
+  component_type: vendor-saas
+  data_classification_supported: Confidential
+  cloud_provider: SaaS

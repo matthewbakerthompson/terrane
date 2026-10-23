@@ -1,0 +1,53 @@
+@startuml
+' Ingest clearing file and post transactions — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Ingest clearing file and post transactions — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_PAY_02, "Clearing & Transaction Posting", "Receive clearing files and post transactions to accounts.", $tags="capabilities")
+  ' aac CAP_PAY_02: company_domain="Servicing"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_DAILY_RECON, "Daily settlement and clearing reconciliation", "Network settlement, clearing files, and interchange postings reconcile to network totals daily; unreconciled variances stop downstream posting.", $tags="controls")
+  ' aac CTL_DAILY_RECON: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_TRANSACTION, "Card transaction history", "Authorized, cleared and settled card transactions.", $tags="data_assets")
+  ' aac DA_TRANSACTION: company_domain="Payments"
+  SystemDb(DA_CUSTOMER_PROFILE, "Customer profile", "Contact details, preferences and servicing history.", $tags="data_assets")
+  ' aac DA_CUSTOMER_PROFILE: company_domain="Servicing"
+  SystemDb(DA_PAYMENT_INSTR, "Payment instructions", "Cardholder payment methods and instructions: ACH details, scheduled payments.", $tags="data_assets")
+  ' aac DA_PAYMENT_INSTR: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_PAYMENTS_002, "Ingest clearing file and post transactions", "Receive network clearing files and post transactions to cardholder accounts. Clearing ingestion matches presentments to authorizations, posts to accounts, and routes exceptions; the file must balance to network totals before posting completes.", $tags="processes")
+  ' aac P_PAYMENTS_002: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+}
+
+Rel(P_PAYMENTS_002, SYS_CORE_LEDGER, "Primary")
+' aac rel: source="P_PAYMENTS_002"; target="SYS_CORE_LEDGER"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_PAYMENTS_002, DA_TRANSACTION, "Writes")
+' aac rel: source="P_PAYMENTS_002"; target="DA_TRANSACTION"; label="Writes"; relation="process_uses_data_asset"; access="Writes"
+Rel(P_PAYMENTS_002, DA_CUSTOMER_PROFILE, "Reads")
+' aac rel: source="P_PAYMENTS_002"; target="DA_CUSTOMER_PROFILE"; label="Reads"; relation="process_uses_data_asset"; access="Reads"
+Rel(P_PAYMENTS_002, DA_PAYMENT_INSTR, "Reads")
+' aac rel: source="P_PAYMENTS_002"; target="DA_PAYMENT_INSTR"; label="Reads"; relation="process_uses_data_asset"; access="Reads"
+Rel(P_PAYMENTS_002, CTL_DAILY_RECON, "governed by")
+' aac rel: source="P_PAYMENTS_002"; target="CTL_DAILY_RECON"; label="governed by"; relation="process_governed_by_control"
+Rel(P_PAYMENTS_002, CAP_PAY_02, "supports")
+' aac rel: source="P_PAYMENTS_002"; target="CAP_PAY_02"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

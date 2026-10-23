@@ -1,0 +1,121 @@
+# Interoperability: the interface engine every HL7 feed goes through, the
+# FHIR API in front of the record, the patient index that says two
+# registrations are one person, and the two parties outside the walls the
+# clinical systems exchange with.
+
+- system_id: SYS-INTERFACE-ENGINE
+  name: HL7 Interface Engine
+  description: >
+    Routes, translates and monitors every HL7 v2 feed between the EHR and
+    the departmental systems, and the document exchange with the regional
+    HIE. A point-to-point feed that bypasses it is one nobody is watching.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Physical
+  company_domain: Interoperability
+  tags: [hub, integration]
+  owner_org_id: ORG-INTEGRATION
+  criticality: High
+  service_tier: Tier 1
+  hosting: On-prem
+  environment: Production
+  provider: Licensed
+  system_category: Integration
+  component_type: ipaas
+  data_classification_supported: Restricted
+  cloud_provider: On-prem
+  network_zone: On-prem
+  resilience: Multi-AZ
+
+- system_id: SYS-FHIR-SERVER
+  name: FHIR API Server
+  description: >
+    FHIR R4 resources for the patient portal and for the third-party apps
+    patients authorize, kept current from the interface engine. The patient
+    access API the interoperability rules require is this, published through
+    API Management.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Physical
+  company_domain: Interoperability
+  tags: [integration, api]
+  owner_org_id: ORG-INTEGRATION
+  criticality: High
+  service_tier: Tier 1
+  hosting: Azure
+  environment: Production
+  provider: In-house
+  system_category: Integration
+  component_type: service-api
+  data_classification_supported: Restricted
+  cloud_provider: Azure
+  cloud_account: azure-clinical-prod
+  region: eastus2
+  network_zone: Private-App
+  resilience: Multi-AZ
+
+- system_id: SYS-EMPI
+  name: Enterprise Master Patient Index
+  description: >
+    One enterprise identifier per person across every registration point.
+    Duplicate and overlaid records are worked here by Health Information
+    Management, and a merge is sent to every system that holds the patient.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Physical
+  company_domain: Interoperability
+  tags: [core, data]
+  owner_org_id: ORG-HIM
+  criticality: High
+  service_tier: Tier 1
+  hosting: On-prem
+  environment: Production
+  provider: Licensed
+  system_category: Data
+  component_type: mdm
+  data_classification_supported: Restricted
+  cloud_provider: On-prem
+  network_zone: On-prem
+  resilience: Multi-AZ
+
+- system_id: SYS-REGIONAL-HIE
+  name: Regional Health Information Exchange
+  description: >
+    The regional exchange the area's hospitals and practices share care
+    summaries through. Outside the estate: Thurman sends documents to it and
+    queries it, and owns neither its data nor its uptime.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Physical
+  company_domain: Interoperability
+  tags: [external, third-party]
+  owner_org_id: ORG-INTEGRATION
+  criticality: Medium
+  service_tier: Tier 2
+  hosting: External
+  environment: Production
+  provider: Regional exchange
+  system_category: External
+  data_classification_supported: Restricted
+
+- system_id: SYS-REFERENCE-LAB
+  name: Reference Laboratory
+  description: The outside lab that runs the esoteric tests. Orders go out and results come back through the LIS.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Physical
+  company_domain: Diagnostics
+  tags: [external, third-party]
+  owner_org_id: ORG-LAB
+  criticality: Medium
+  service_tier: Tier 2
+  hosting: External
+  environment: Production
+  provider: Reference laboratory
+  system_category: External
+  data_classification_supported: Restricted

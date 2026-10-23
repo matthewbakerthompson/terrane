@@ -1,0 +1,69 @@
+view_id: data-asset-context
+title: "{data_asset} — Where It Lives and Who Uses It"
+category: Data
+section: Governance
+kind: diagram
+description: >
+  One data asset in full: the system that masters it, the systems that read
+  or write it, the processes that use it, the controls that govern it and the
+  policies it is subject to. The page a privacy or audit question starts from.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+parameters:
+  - name: data_asset
+    type: data_assets
+    required: true
+    description: The data asset this diagram is about
+
+group_by: type
+
+scope:
+  include:
+    - type: data_assets
+      where:
+        id_in: ["{data_asset}"]
+  expand:
+    - relation: source_of_truth
+      depth: 1
+      types: [systems]
+    - relation: system_reads_writes
+      depth: 1
+      types: [systems]
+    - relation: process_uses_data_asset
+      depth: 1
+      types: [processes]
+    - relation: data_governed_by_control
+      depth: 1
+      types: [controls]
+    - relation: data_subject_to_policy
+      depth: 1
+      types: [policies]
+
+edges:
+  - via: source_of_truth
+    text: masters
+  - via: system_reads_writes
+    label: operation
+  - via: process_uses_data_asset
+    label: access
+  - via: data_governed_by_control
+    text: governed by
+  - via: data_subject_to_policy
+    text: subject to
+
+style:
+  color_by: classification
+
+limits:
+  max_nodes: 50
+
+# Rendered once per Restricted, high-risk asset: the ones an audit asks
+# about first. Any other asset is a pick away in the app.
+render_for:
+  parameter: data_asset
+  type: data_assets
+  where:
+    classification: [Restricted]
+    risk_level: [High]

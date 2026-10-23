@@ -1,0 +1,142 @@
+archetype_id: azure-digital-product
+title: Azure digital product
+version: 3.2.0
+applies_to: products
+# Patterns from 27_PATTERNS/ that every instance of this shape applies. The
+# modules below add their own.
+patterns: [api-front-door]
+description: >
+  A customer-facing digital product built in-house on Azure. Every one of these
+  we have built has the same parts: a browser front end, an API that backs it,
+  a product datastore, and an event publisher onto the enterprise bus.
+  Instantiating this is how a new product enters the landscape without anyone
+  drawing a diagram.
+
+  Version 3 is composed from the same modules as the AWS shape, on the same
+  blocks, resolved against Azure. That is the claim the library makes: the
+  parts are the same, the bindings differ. The first product to sit on it
+  showed the shape asked for no subscription and no region, so its onboarding
+  drew a provider boundary with nothing inside it but the network tiers; 3.1
+  asks for both, the way the AWS shape asks for an account. 3.2 binds the
+  landing zone by kind where it named the sample's own Azure services by id,
+  so an estate builds on it with services called whatever it calls them.
+
+parameters:
+  - name: slug
+    required: true
+    description: Short lower-case token used in identifiers, e.g. cards
+  - name: product_name
+    required: true
+    description: Human-readable product name, e.g. Card Servicing
+  - name: owner_org
+    required: true
+    description: Owning org unit id, e.g. ORG-DIGITAL
+  - name: domain
+    required: true
+    description: Company domain used for grouping in views
+  - name: account
+    required: true
+    description: Workload subscription alias, e.g. azure-cards-prod
+  - name: region
+    default: uksouth
+    description: Azure region the product lands in
+  - name: criticality
+    default: Medium
+  - name: classification
+    default: Confidential
+
+defaults:
+  architecture_domain: Business
+  togaf_layer: Business
+  abstraction_level: Conceptual
+
+provider: Azure
+
+entity_defaults:
+  all:
+    # The product\'s own status. A shape cannot know whether its instance is
+    # planned or live; the first planned product on a shape that said
+    # `Active` here came out with four live systems.
+    status: "{status}"
+    company_domain: "{domain}"
+  systems:
+    tags: [digital]
+    owner_org_id: "{owner_org}"
+    criticality: "{criticality}"
+    hosting: Azure
+    environment: Production
+    cloud_provider: Azure
+    cloud_account: "{account}"
+    region: "{region}"
+    data_classification_supported: "{classification}"
+    togaf_layer: Application
+    architecture_domain: Application
+    abstraction_level: Physical
+  interfaces:
+    owner_org_id: "{owner_org}"
+    protocol: HTTPS
+    direction: Outbound
+    frequency: Realtime
+    integration_style: Request-response
+    auth_method: ManagedIdentity
+    data_classification: "{classification}"
+    togaf_layer: Application
+    architecture_domain: Application
+  offered_interfaces:
+    owner_org_id: "{owner_org}"
+    data_classification: "{classification}"
+    togaf_layer: Application
+    architecture_domain: Application
+  tech_services:
+    tags: [digital]
+    owner_org_id: "{owner_org}"
+    cloud_provider: Azure
+    cloud_account: "{account}"
+    region: "{region}"
+    togaf_layer: Technology
+    architecture_domain: Technology
+
+# `landing-zone` under `bind`: the component is the landing zone's service of
+# that kind on Azure, whatever the estate calls it. The shape named the
+# sample's own services here until a second estate had to hold records under
+# those ids to build on it.
+blocks:
+  - block: public-api-tier
+    bind:
+      api-gateway: landing-zone
+    # dns and waf: the product's own hostname and Front Door policy.
+  - block: stateless-service
+    bind:
+      container-platform: landing-zone
+      observability: landing-zone
+    # cache: created per product.
+  - block: transactional-store
+    bind:
+      relational-db: landing-zone
+      # On Azure the vault holds the keys as well as the secrets, and the
+      # landing zone says so with `answers_for: [kms]` on it.
+      kms: landing-zone
+    # backup: created per product.
+
+# `uses` names a kind where it would name a service, for the same reason.
+modules:
+  - module: api-service
+    with:
+      runs_on: [public-api-tier.api-gateway, stateless-service]
+      uses: [secrets-manager]
+  - module: web-channel
+    with:
+      runs_on: [public-api-tier.dns, public-api-tier.waf, stateless-service.container-platform]
+      uses: [identity-provider]
+  - module: relational-datastore
+    with:
+      protocol: TDS
+      system_suffix: STORE
+      risk_level: Medium
+  - module: event-publisher
+
+relations:
+  system_reads_writes:
+    - system_id: "SYS-{slug|upper}-STORE"
+      data_asset_id: "DA-{slug|upper}-OPERATIONAL"
+      operation: ReadWrite

@@ -1,0 +1,50 @@
+@startuml
+' Respond to account takeover event — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Respond to account takeover event — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_FRAUD_06, "Identity Theft & Account Takeover Response", "Respond to account takeover and identity theft events.", $tags="capabilities")
+  ' aac CAP_FRAUD_06: company_domain="Servicing"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_IR_PLAYBOOK, "Security incident response execution", "Security events run the incident response playbook with severity-driven escalation and post-incident review; the timeline is evidence.", $tags="controls")
+  ' aac CTL_IR_PLAYBOOK: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_FRAUD_003, "Respond to account takeover event", "Contain, remediate, and communicate an account takeover or identity compromise event. Account takeover response contains first, then remediates credentials, reverses fraudulent activity, and communicates with the cardholder; speed limits the loss.", $tags="processes")
+  ' aac P_FRAUD_003: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System_Ext(SYS_CRM, "Dynamics 365 Customer Service", "Contact center desktop and case management for servicing agents. Built with Microsoft.", $tags="systems")
+  ' aac SYS_CRM: company_domain="Servicing"; hosting="SaaS"; technology="Microsoft"
+  System(SYS_IAM, "Identity and access management", "Workforce identity, authentication, and access governance.", $tags="systems")
+  ' aac SYS_IAM: company_domain=""
+  System_Ext(SYS_DISPUTES_SAAS, "Pega Smart Dispute", "Dispute Management Platform, provided by Pegasystems and running in the vendor tenancy. Built with Pegasystems.", $tags="systems")
+  ' aac SYS_DISPUTES_SAAS: company_domain="Servicing"; hosting="SaaS"; technology="Pegasystems"
+}
+
+Rel(P_FRAUD_003, SYS_DISPUTES_SAAS, "Primary")
+' aac rel: source="P_FRAUD_003"; target="SYS_DISPUTES_SAAS"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_FRAUD_003, SYS_IAM, "Supporting")
+' aac rel: source="P_FRAUD_003"; target="SYS_IAM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_FRAUD_003, SYS_CRM, "Supporting")
+' aac rel: source="P_FRAUD_003"; target="SYS_CRM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_FRAUD_003, SYS_CORE_LEDGER, "Supporting")
+' aac rel: source="P_FRAUD_003"; target="SYS_CORE_LEDGER"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_FRAUD_003, CTL_IR_PLAYBOOK, "governed by")
+' aac rel: source="P_FRAUD_003"; target="CTL_IR_PLAYBOOK"; label="governed by"; relation="process_governed_by_control"
+Rel(P_FRAUD_003, CAP_FRAUD_06, "supports")
+' aac rel: source="P_FRAUD_003"; target="CAP_FRAUD_06"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

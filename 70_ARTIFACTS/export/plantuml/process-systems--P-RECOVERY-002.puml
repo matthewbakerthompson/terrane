@@ -1,0 +1,39 @@
+@startuml
+' Execute debt sale — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Execute debt sale — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_COLL_05, "Recovery, Agency & Debt Sale Management", "Place, manage, and settle with agencies, and execute debt sales.", $tags="capabilities")
+  ' aac CAP_COLL_05: company_domain="Collections"
+}
+Boundary(b_Process, "Process") {
+  System(P_RECOVERY_002, "Execute debt sale", "Assemble, price, and execute a sale of charged-off receivables. Debt sale packages carry account-level data quality and documentation warranties; buyer diligence and post-sale complaint routing are part of the process, not after-thoughts.", $tags="processes")
+  ' aac P_RECOVERY_002: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_COLLECT_API, "Collections Workspace Service", "The service behind the Collections Workspace API, backing the channel. Built with AKS · Collections Workspace Cache.", $tags="systems")
+  ' aac SYS_COLLECT_API: company_domain="Collections"; hosting="Azure"; technology="AKS · Collections Workspace Cache"
+  System(SYS_DATA_INGEST, "Enterprise Data Ingestion Hub", "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse. Built with Service Bus · Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_DATA_INGEST: company_domain="Data and Analytics"; hosting="Azure"; technology="Service Bus · Snowflake Data Cloud"
+  System(SYS_GL, "General ledger", "General ledger and financial accounting.", $tags="systems")
+  ' aac SYS_GL: company_domain=""
+}
+
+Rel(P_RECOVERY_002, SYS_COLLECT_API, "Primary")
+' aac rel: source="P_RECOVERY_002"; target="SYS_COLLECT_API"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_RECOVERY_002, SYS_GL, "Supporting")
+' aac rel: source="P_RECOVERY_002"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_RECOVERY_002, SYS_DATA_INGEST, "Supporting")
+' aac rel: source="P_RECOVERY_002"; target="SYS_DATA_INGEST"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_RECOVERY_002, CAP_COLL_05, "supports")
+' aac rel: source="P_RECOVERY_002"; target="CAP_COLL_05"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

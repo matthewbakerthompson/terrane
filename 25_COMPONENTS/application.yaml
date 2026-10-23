@@ -1,0 +1,64 @@
+# Things with users, applied to `systems` rather than to platform services.
+#
+# The distinction is who the thing is for: a customer portal is somebody's
+# front door, a load balancer is nobody's.
+
+- component_type_id: web-app
+  name: Web application
+  category: Application
+  applies_to: systems
+  shape: rectangle
+  description: >
+    A browser front end. Usually the first thing anyone outside the estate touches.
+  defaults:
+    network_zone: Private-App
+
+- component_type_id: mobile-app
+  name: Mobile application
+  category: Application
+  applies_to: systems
+  shape: rectangle
+  description: >
+    A published app with a release cycle you do not control and versions you cannot retire.
+  defaults:
+    network_zone: Edge
+
+- component_type_id: service-api
+  name: Service API
+  category: Application
+  applies_to: systems
+  shape: rectangle
+  description: >
+    A programmatic interface owned by one team. The unit most estates are actually decomposed into.
+  defaults:
+    network_zone: Private-App
+
+- component_type_id: core-platform
+  name: Core platform
+  category: Application
+  applies_to: systems
+  shape: rectangle
+  description: >
+    A system of record other systems depend on. Old, central, and the one nobody wants to be holding during a migration.
+  defaults:
+    network_zone: Private-App
+
+- component_type_id: batch-application
+  name: Batch application
+  category: Application
+  applies_to: systems
+  shape: rectangle
+  description: >
+    Scheduled processing with a window. The deadline is external and usually non-negotiable.
+  defaults:
+    network_zone: Private-App
+
+- component_type_id: vendor-saas
+  name: Vendor SaaS
+  category: Application
+  applies_to: systems
+  shape: round-tag
+  description: >
+    Software somebody else runs. What you own is the boundary around it, not what is inside.
+  defaults:
+    network_zone: Public

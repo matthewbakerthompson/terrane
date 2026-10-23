@@ -1,0 +1,67 @@
+# The first dataset in BigQuery, and the second workload project on Google
+# Cloud. Point-of-sale finance is born on Google Cloud; its arrears, roll
+# rates and vintage curves want curating where the events already are rather
+# than crossing to the warehouse on the Azure side and back. The analytics
+# project is a second spoke on the hub, so the lending product's tenancy and
+# its analytics tenancy are separate projects with separate blast radii.
+product_id: PRD-LENDING-PERFORMANCE
+name: Lending Portfolio Performance
+description: >
+  Arrears, roll rates, vintage curves and payment behavior for point-of-sale
+  finance, curated nightly from the product's own events into BigQuery and
+  served to the lending analysts through Looker. The first data product on
+  the Google Cloud side, in an analytics project of its own.
+status: Planned
+owner_org_id: ORG-LENDING
+criticality: Medium
+product_category: Data product
+company_domain: Lending
+launch_date: 2028-02-15
+
+build_type: data-product
+archetype: batch-data-product-gcp
+parameters:
+  slug: lendperf
+  product_name: Lending Portfolio Performance
+  owner_org: ORG-LENDING
+  domain: Lending
+  source_system: SYS-POSFIN-EVENTS
+  account: gcp-analytics-prod
+  region: europe-west2
+  classification: Confidential
+
+# The first reader of the dataset off Google Cloud. The regulatory returns
+# take their lending aggregates from the dataset where it is born rather
+# than from a copy: the reporting engine on the Azure side reads BigQuery
+# over the internet with workload identity federation, which is the
+# cross-cloud path drawn here so it can be argued with, and the one
+# relation the shape cannot know.
+extra:
+  interfaces:
+    - interface_id: INT-LENDPERF-REGREPORTING
+      name: Lending Portfolio Performance Semantic Layer to Regulatory Reporting Engine
+      description: >
+        Planned. Lending aggregates for the regulatory returns, read from
+        BigQuery across clouds with workload identity federation; no copy of
+        the dataset on the Azure side.
+      status: Planned
+      togaf_layer: Application
+      architecture_domain: Governance
+      company_domain: Risk and Compliance
+      source_system_id: SYS-LENDPERF-SEMANTIC
+      target_system_id: SYS-REG-REPORTING
+      owner_org_id: ORG-COMPLIANCE
+      protocol: HTTPS
+      direction: Outbound
+      frequency: Daily
+      integration_style: Batch
+      auth_method: WorkloadIdentity
+      data_classification: Confidential
+  relations:
+    interface_transports_data_asset:
+      - interface_id: INT-LENDPERF-REGREPORTING
+        data_asset_id: DA-LENDPERF-CURATED
+    system_reads_writes:
+      - system_id: SYS-REG-REPORTING
+        data_asset_id: DA-LENDPERF-CURATED
+        operation: Read

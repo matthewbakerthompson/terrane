@@ -1,0 +1,131 @@
+@startuml
+' Enterprise Strategy & Planning — Frameworks, Controls, Systems
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Enterprise Strategy & Planning — Frameworks, Controls, Systems
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_STRAT_03, "Business Performance Management", "Set, track, and act on enterprise performance indicators.", $tags="capabilities")
+  ' aac CAP_STRAT_03: company_domain="Cross-Functional Services"
+  System(CAP_STRAT_04, "Enterprise Architecture & Change Portfolio", "Govern the shape of the estate and the pipeline of change.", $tags="capabilities")
+  ' aac CAP_STRAT_04: company_domain="Cross-Functional Services"
+  System(CAP_STRAT, "Enterprise Strategy & Planning", "Enterprise Strategy & Planning. Level 0 enterprise capability domain (Direct tier).", $tags="capabilities")
+  ' aac CAP_STRAT: company_domain="Cross-Functional Services"
+  System(CAP_STRAT_01, "Market & Competitive Analysis", "Understand market, competitor, and portfolio economics to inform strategy.", $tags="capabilities")
+  ' aac CAP_STRAT_01: company_domain="Cross-Functional Services"
+  System(CAP_STRAT_05, "Merger, Acquisition & Portfolio Transaction", "Evaluate and integrate acquired portfolios and servicing books.", $tags="capabilities")
+  ' aac CAP_STRAT_05: company_domain="Cross-Functional Services"
+  System(CAP_STRAT_02, "Portfolio Strategy & Investment Planning", "Decide which portfolios and programs receive capital and change capacity.", $tags="capabilities")
+  ' aac CAP_STRAT_02: company_domain="Cross-Functional Services"
+}
+Boundary(b_Framework, "Framework") {
+  System(FW_APQC, "APQC Process Classification Framework", "A cross-industry process taxonomy. Used here for the enabling tier, where a card-specific name adds nothing: finance, HR and corporate services look much the same in any industry, and inventing local names for them costs comparability for no benefit.", $tags="frameworks")
+  ' aac FW_APQC: company_domain=""
+  System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
+  ' aac FW_BIAN: company_domain=""
+  System(FW_BIZBOK, "BIZBOK", "The Business Architecture Guild's body of knowledge. Governs how the capability map and the value streams are built rather than what is in them, which makes it the framework this repository's own business layer answers to.", $tags="frameworks")
+  ' aac FW_BIZBOK: company_domain=""
+  System(FW_ITIL, "ITIL 4", "Service management practice: incident, change, problem, service level. The frame technology operations is actually run and audited against, and the vocabulary a service management tool already speaks.", $tags="frameworks")
+  ' aac FW_ITIL: company_domain=""
+  System(FW_TOGAF, "TOGAF", "The architecture development method and content metamodel this repository's entity types are drawn from. It governs the practice of architecture, not any business domain, which is why nothing but the architecture function maps to it.", $tags="frameworks")
+  ' aac FW_TOGAF: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_EA_007, "Assess change impact of a proposed system change", "Trace a proposed system or interface change to the processes, capabilities, and clients it affects, and brief the change authority.", $tags="processes")
+  ' aac P_EA_007: company_domain=""
+  System(P_EA_005, "Assess technology lifecycle and rationalization", "Rate each application and platform for tolerate, invest, migrate, or eliminate; identify duplication and end-of-support exposure.", $tags="processes")
+  ' aac P_EA_005: company_domain=""
+  System(P_APPDEV_009, "Decommission an application", "Retire an application: migrate or archive its data to the retention schedule, remove interfaces and access, and update the inventory.", $tags="processes")
+  ' aac P_APPDEV_009: company_domain=""
+  System(P_STRATEGY_001, "Evaluate and execute portfolio transaction", "Assess, diligence, price, and execute the acquisition or sale of a card portfolio, through to hand-off into conversion.", $tags="processes")
+  ' aac P_STRATEGY_001: company_domain=""
+  System(P_EA_008, "Evaluate and select a technology or platform", "Run the evaluation for a new technology or vendor platform: requirements, options, proof of concept, and a recommendation into procurement.", $tags="processes")
+  ' aac P_EA_008: company_domain=""
+  System(P_EA_003, "Grant or decline an architecture exception", "Evaluate a request to deviate from a standard, set conditions and expiry, and track the exception to closure.", $tags="processes")
+  ' aac P_EA_003: company_domain=""
+  System(P_EA_004, "Maintain architecture standards and reference models", "Author, review, version, and retire the standards and reference models that solution reviews are judged against.", $tags="processes")
+  ' aac P_EA_004: company_domain=""
+  System(P_EA_001, "Maintain target-state architecture and roadmap", "Define and refresh the target state for each domain and the sequenced roadmap to reach it, aligned to the investment plan.", $tags="processes")
+  ' aac P_EA_001: company_domain=""
+  System(P_EA_009, "Maintain the application and technology inventory", "Keep the inventory of applications, platforms, and interfaces complete and attributed, including owner, tier, hosting, and lifecycle state.", $tags="processes")
+  ' aac P_EA_009: company_domain=""
+  System(P_EA_006, "Maintain the capability map and process inventory", "Keep the business architecture model current: harvest changes, run the quality gates, and publish the refreshed model to its consumers.", $tags="processes")
+  ' aac P_EA_006: company_domain=""
+  System(P_APPDEV_006, "Manage technical debt", "Record, size, and prioritize technical debt, and reserve capacity in each increment to retire it. Debt items live in the same backlog as features so the trade-off is visible at prioritization, not discovered at incident time.", $tags="processes")
+  ' aac P_APPDEV_006: company_domain=""
+  System(P_EA_002, "Review solution architecture for an initiative", "Assess a proposed solution against standards, target state, and risk before funding and again before build; record the decision.", $tags="processes")
+  ' aac P_EA_002: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_ARCHREPO, "Architecture repository", "Architecture models, standards, decisions, and the application inventory. Built with SaaS.", $tags="systems")
+  ' aac SYS_ARCHREPO: company_domain=""; hosting="SaaS"; technology="SaaS"
+  System(SYS_DATA_INGEST, "Enterprise Data Ingestion Hub", "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse. Built with Service Bus · Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_DATA_INGEST: company_domain="Data and Analytics"; hosting="Azure"; technology="Service Bus · Snowflake Data Cloud"
+  System_Ext(SYS_WORKTRACK, "Work and change tracking", "Work item and change tracking. Built with SaaS.", $tags="systems")
+  ' aac SYS_WORKTRACK: company_domain=""; hosting="SaaS"; technology="SaaS"
+}
+
+Rel(CAP_STRAT_01, CAP_STRAT, "part of")
+Rel(CAP_STRAT_02, CAP_STRAT, "part of")
+Rel(CAP_STRAT_03, CAP_STRAT, "part of")
+Rel(CAP_STRAT_04, CAP_STRAT, "part of")
+Rel(CAP_STRAT_05, CAP_STRAT, "part of")
+Rel(CAP_STRAT, FW_TOGAF, "Informed by")
+' aac rel: source="CAP_STRAT"; target="FW_TOGAF"; label="Informed by"; relation="capability_aligns_to_framework"; alignment="Informed by"
+Rel(CAP_STRAT, FW_BIZBOK, "Informed by")
+' aac rel: source="CAP_STRAT"; target="FW_BIZBOK"; label="Informed by"; relation="capability_aligns_to_framework"; alignment="Informed by"
+Rel(CAP_STRAT_01, FW_BIAN, "Risk and Compliance > Business Analysis > Market Research")
+' aac rel: source="CAP_STRAT_01"; target="FW_BIAN"; label="Risk and Compliance > Business Analysis > Market Research"; relation="capability_references_framework"; ref="Risk and Compliance > Business Analysis > Market Research"
+Rel(CAP_STRAT_02, FW_BIAN, "Sales and Service > Marketing > Business Development")
+' aac rel: source="CAP_STRAT_02"; target="FW_BIAN"; label="Sales and Service > Marketing > Business Development"; relation="capability_references_framework"; ref="Sales and Service > Marketing > Business Development"
+Rel(CAP_STRAT_03, FW_APQC, "1.0 Develop Vision and Strategy")
+' aac rel: source="CAP_STRAT_03"; target="FW_APQC"; label="1.0 Develop Vision and Strategy"; relation="capability_references_framework"; ref="1.0 Develop Vision and Strategy"
+Rel(CAP_STRAT_04, FW_APQC, "12.0 Develop and Manage Business Capabilities")
+' aac rel: source="CAP_STRAT_04"; target="FW_APQC"; label="12.0 Develop and Manage Business Capabilities"; relation="capability_references_framework"; ref="12.0 Develop and Manage Business Capabilities"
+Rel(CAP_STRAT_04, FW_ITIL, "General management > Architecture Management")
+' aac rel: source="CAP_STRAT_04"; target="FW_ITIL"; label="General management > Architecture Management"; relation="capability_references_framework"; ref="General management > Architecture Management"
+Rel(CAP_STRAT_05, FW_APQC, "1.0 Develop Vision and Strategy")
+' aac rel: source="CAP_STRAT_05"; target="FW_APQC"; label="1.0 Develop Vision and Strategy"; relation="capability_references_framework"; ref="1.0 Develop Vision and Strategy"
+Rel(P_STRATEGY_001, CAP_STRAT_05, "supported by")
+' aac rel: source="P_STRATEGY_001"; target="CAP_STRAT_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_EA_001, CAP_STRAT_04, "supported by")
+' aac rel: source="P_EA_001"; target="CAP_STRAT_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_EA_001, CAP_STRAT_02, "supported by")
+' aac rel: source="P_EA_001"; target="CAP_STRAT_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_EA_002, CAP_STRAT_04, "supported by")
+' aac rel: source="P_EA_002"; target="CAP_STRAT_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_EA_003, CAP_STRAT_04, "supported by")
+' aac rel: source="P_EA_003"; target="CAP_STRAT_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_EA_004, CAP_STRAT_04, "supported by")
+' aac rel: source="P_EA_004"; target="CAP_STRAT_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_EA_005, CAP_STRAT_04, "supported by")
+' aac rel: source="P_EA_005"; target="CAP_STRAT_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_EA_006, CAP_STRAT_04, "supported by")
+' aac rel: source="P_EA_006"; target="CAP_STRAT_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_EA_007, CAP_STRAT_04, "supported by")
+' aac rel: source="P_EA_007"; target="CAP_STRAT_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_EA_008, CAP_STRAT_04, "supported by")
+' aac rel: source="P_EA_008"; target="CAP_STRAT_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_EA_009, CAP_STRAT_04, "supported by")
+' aac rel: source="P_EA_009"; target="CAP_STRAT_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_APPDEV_006, CAP_STRAT_04, "supported by")
+' aac rel: source="P_APPDEV_006"; target="CAP_STRAT_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_APPDEV_009, CAP_STRAT_04, "supported by")
+' aac rel: source="P_APPDEV_009"; target="CAP_STRAT_04"; label="supported by"; relation="process_supports_capability"
+Rel(SYS_ARCHREPO, CAP_STRAT_02, "realizes")
+' aac rel: source="SYS_ARCHREPO"; target="CAP_STRAT_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_ARCHREPO, CAP_STRAT_04, "realizes")
+' aac rel: source="SYS_ARCHREPO"; target="CAP_STRAT_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DATA_INGEST, CAP_STRAT_05, "realizes")
+' aac rel: source="SYS_DATA_INGEST"; target="CAP_STRAT_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_WORKTRACK, CAP_STRAT_04, "realizes")
+' aac rel: source="SYS_WORKTRACK"; target="CAP_STRAT_04"; label="realizes"; relation="system_realizes_capability"
+
+SHOW_LEGEND()
+@enduml

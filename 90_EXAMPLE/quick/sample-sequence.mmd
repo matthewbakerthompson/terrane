@@ -1,0 +1,20 @@
+sequenceDiagram
+  title Card authorization, as drawn
+  autonumber
+  actor merchant as Merchant
+  participant auth as Authorization switch
+  participant fraud as Fraud scoring
+  participant ledger as Card ledger
+  merchant->>auth: Presents a transaction
+  activate auth
+  auth->>fraud: Score the transaction
+  fraud-->>auth: Score
+  alt approved
+    auth->>ledger: Post the authorization
+    auth-)ledger: Authorization event
+  else declined
+    auth-->>merchant: Decline
+  end
+  deactivate auth
+  Note over auth: under 500ms end to end
+  Note over fraud: The screening call has a circuit breaker, not a retry.

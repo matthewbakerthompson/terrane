@@ -1,0 +1,106 @@
+# Revenue cycle, finance, the data platform's front door and security
+# monitoring. The clearinghouse, the warehouse and the patient-facing
+# systems are built by their products' shapes, in `products/`.
+#
+# `SYS-CLINICAL-INGEST` and `SYS-SIEM` carry the sample's ids on purpose: the
+# shipped batch data product reads from `SYS-CLINICAL-INGEST`, and the shipped
+# `audit-forwarding` part, which both vendor products here take, sends the
+# vendor's audit log to `SYS-SIEM` unless a product says otherwise.
+
+- system_id: SYS-PATIENT-ACCOUNTING
+  name: Patient Accounting
+  description: >
+    Hospital and professional billing: charges from the EHR, coding,
+    claims, payments and patient statements. Claims leave through the
+    clearinghouse; remittances come back the same way.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Physical
+  company_domain: Revenue Cycle
+  tags: [core, finance]
+  owner_org_id: ORG-REV-CYCLE
+  criticality: High
+  service_tier: Tier 1
+  hosting: On-prem
+  environment: Production
+  provider: Licensed EHR suite
+  system_category: Financial
+  data_classification_supported: Restricted
+  cloud_provider: On-prem
+  network_zone: On-prem
+  resilience: Multi-AZ
+
+- system_id: SYS-ERP
+  name: Finance and Supply Chain ERP
+  description: The general ledger, accounts payable, purchasing and inventory for every supply room.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Physical
+  company_domain: Revenue Cycle
+  tags: [vendor, third-party, finance]
+  owner_org_id: ORG-FINANCE
+  criticality: Medium
+  service_tier: Tier 2
+  hosting: SaaS
+  environment: Production
+  provider: ERP vendor
+  system_category: Financial
+  component_type: erp
+  data_classification_supported: Confidential
+  cloud_provider: SaaS
+
+- system_id: SYS-CLINICAL-INGEST
+  name: Clinical Data Ingestion
+  description: >
+    Nightly extracts from the EHR's reporting database and the departmental
+    systems, landed in the lake. Everything the warehouse knows arrives
+    through here, a day late by design.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Data
+  abstraction_level: Physical
+  company_domain: Data and Analytics
+  tags: [data, pipeline]
+  owner_org_id: ORG-DATAENG
+  criticality: Medium
+  service_tier: Tier 2
+  hosting: Azure
+  environment: Production
+  provider: In-house
+  system_category: Data
+  component_type: etl
+  data_classification_supported: Restricted
+  cloud_provider: Azure
+  cloud_account: azure-data-prod
+  region: eastus2
+  network_zone: Private-Data
+  resilience: Single-AZ
+
+- system_id: SYS-SIEM
+  name: Security Monitoring
+  description: >
+    Collects the access audit trail of every system holding PHI, and the
+    security logs of everything else. Who looked at a patient's record, and
+    whether they had a reason to, is answered here.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Technology
+  abstraction_level: Physical
+  company_domain: Security
+  tags: [security]
+  owner_org_id: ORG-INFOSEC
+  criticality: High
+  service_tier: Tier 1
+  hosting: Azure
+  environment: Production
+  provider: Microsoft Azure
+  system_category: Security
+  component_type: siem
+  data_classification_supported: Restricted
+  cloud_provider: Azure
+  cloud_account: azure-security-prod
+  region: eastus2
+  network_zone: Shared-Services
+  resilience: Multi-AZ

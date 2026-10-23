@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="518.4" viewBox="0 0 1100 518.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Identity governance</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Identity governance</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   4 nodes · 3 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">The identity provider and the three things that make it governable: a joiner-mover-leaver process that drives it from the people system, a privileged-access vault for</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">the accounts that can do damage, and security monitoring reading every authentication.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(359 111.7)">
+<g class="edge" data-id="e0::identity-governance::identity-provider">
+<path d="M97 75 L97 115.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M97 119 L92.22 109.43 L101.78 109.43 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e1::privileged-access::identity-provider">
+<path d="M285 75 L285 83 A8 8 0 0 1 277 91 L163 91 A10 10 0 0 0 153 101 L153 115.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M153 119 L148.22 109.43 L157.78 109.43 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e2::identity-provider::siem">
+<path d="M125 182 L125 222.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M125 226 L120.22 216.43 L129.78 216.43 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="identity-provider" data-type="tech_services">
+<title>Identity provider</title>
+<path d="M40 119 L153.31 119 L210 182 L96.69 182 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="121" y="149.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Identity provider</text>
+<text x="125" y="176.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AWS IAM Identity Center · Microsoft Entra…</text>
+<svg x="181" y="124" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M8 2l5 2v4c0 3-2.2 5.2-5 6-2.8-.8-5-3-5-6V4z" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="identity-governance" data-type="tech_services">
+<title>Identity governance</title>
+<path d="M12 12 L125.31 12 L182 75 L68.69 75 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="93" y="42.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Identity governance</text>
+<text x="97" y="69.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Microsoft Entra ID Governance</text>
+<svg x="153" y="17" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M8 2l5 2v4c0 3-2.2 5.2-5 6-2.8-.8-5-3-5-6V4z" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="privileged-access" data-type="tech_services">
+<title>Privileged access management</title>
+<path d="M200 12 L313.31 12 L370 75 L256.69 75 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="281" y="36.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Privileged access</text>
+<text x="281" y="48.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">management</text>
+<text x="285" y="69.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Entra Privileged Identity Management</text>
+<svg x="341" y="17" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M8 2l5 2v4c0 3-2.2 5.2-5 6-2.8-.8-5-3-5-6V4z" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="siem" data-type="tech_services">
+<title>Security monitoring</title>
+<path d="M40 226 L153.31 226 L210 289 L96.69 289 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="121" y="256.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Security monitoring</text>
+<text x="125" y="283.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Amazon Security Lake with OpenSearch ·…</text>
+<svg x="181" y="231" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M8 2l5 2v4c0 3-2.2 5.2-5 6-2.8-.8-5-3-5-6V4z" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="416.4" x2="1072" y2="416.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="440.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 429.4)" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"><path d="M5 1h14l-4 12H1z"/></g>
+<text x="93.2" y="440.4" font-size="12" font-weight="400" fill="#343d50">technology service · 4</text>
+<text x="28" y="462.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 451.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="462.4" font-size="12" font-weight="400" fill="#343d50">connects to</text>
+<text x="28" y="496.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · block--identity-governance · edit the model, not the picture</text></g>
+</svg>

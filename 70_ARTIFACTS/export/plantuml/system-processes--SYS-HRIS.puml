@@ -1,0 +1,16 @@
+@startuml
+' Human resources information system — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Human resources information system — Processes and Capabilities
+
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_System, "System") {
+  System(SYS_HRIS, "Human resources information system", "Human resources information management.", $tags="systems")
+  ' aac SYS_HRIS: company_domain=""
+}
+
+SHOW_LEGEND()
+@enduml

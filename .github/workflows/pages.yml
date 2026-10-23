@@ -1,0 +1,67 @@
+name: Publish read-only demo to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # With history, so the demo can bake what changed since the previous
+      # commit; a shallow clone has nothing to compare with.
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      # No dependencies: the engine runs on a bare interpreter, and the site
+      # bakes every GET by calling the API handlers directly.
+      # Both estates in one run: the sample at the top of the site and
+      # Thurman Health under thurman-health/, each baked by a process of its
+      # own, then each home page told where the other is. One command rather
+      # than two, because the links are written from what both bakes made.
+      - name: Build the static site, both estates
+        run: python 80_APP/tools/export_site.py --out site
+
+      # The deck an architecture practice still makes by hand the night
+      # before the board: one slide per view, from the same model the site
+      # is baked from, so the two cannot disagree. The engine draws it and
+      # writes the deck itself; the one thing it needs beyond the
+      # interpreter is a Chrome for the pictures, which the hosted runner
+      # has. The site is complete without it, so it is its own step. Each
+      # estate gets its own deck in its own folder, so a reader of the
+      # hospital downloads the hospital's and not the card issuer's. The
+      # sample's opens with what this push changed in the model, drawn, when
+      # it changed anything; the checkout above has the history for that.
+      - name: Build the review packs beside the site
+        run: |
+          cd 50_ENGINE
+          python -m terrane pack --since HEAD~1 --out ../site/review-pack.pptx
+          python -m terrane --root ../90_EXAMPLE/thurman-health pack --out ../site/thurman-health/review-pack.pptx
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

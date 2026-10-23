@@ -1,0 +1,92 @@
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Systems of Record
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Data_Asset["Data Asset"]
+    direction LR
+    DA_CARD_ACCOUNT[("Card account master")]
+    DA_CARDSVC_OPERATIONAL[("Card Servicing operational<br/>data")]
+    DA_TRANSACTION[("Card transaction history")]
+    DA_COLLECT_ACT[("Collections activity<br/>record")]
+    DA_COLLECT_OPERATIONAL[("Collections Workspace<br/>operational data")]
+    DA_APPLICATION[("Credit application record")]
+    DA_BUREAU_FILE[("Credit bureau furnishing<br/>file")]
+    DA_CUST360_CURATED[("Customer 360 curated<br/>dataset")]
+    DA_CUSTOMER_PROFILE[("Customer profile")]
+    DA_DISPUTE_CASE[("Dispute case file")]
+    DA_DISPUTES_VENDOR_FEED[("Dispute Management<br/>Platform vendor feed")]
+    DA_GL[("General ledger entries")]
+    DA_LENDING_OPERATIONAL[("Installment Lending<br/>operational data")]
+    DA_LENDPERF_CURATED[("Lending Portfolio<br/>Performance curated<br/>dataset")]
+    DA_MERCHANT_OPERATIONAL[("Merchant Portal<br/>operational data")]
+    DA_MODEL_FEAT[("Model feature store")]
+    DA_SCREENING_OUTCOMES[("NICE Actimize Screening<br/>outcomes")]
+    DA_PAYMENT_INSTR[("Payment instructions")]
+    DA_POSFIN_OPERATIONAL[("Point-of-Sale Finance<br/>operational data")]
+    DA_PROSPECT[("Prospect marketing list")]
+    DA_REWARDS_OPERATIONAL[("Rewards Redemption<br/>operational data")]
+    DA_CLIENT_SERV[("Servicing client program<br/>data")]
+    DA_STATEMENTS[("Statement archive")]
+  end
+
+  subgraph grp_System["System"]
+    direction LR
+    SYS_AUTH_SWITCH["Authorization Switch"]
+    SYS_CARDSVC_STORE["Card Servicing Datastore<br/>[Azure SQL]"]
+    SYS_COLLECT_STORE["Collections Workspace<br/>Datastore<br/>[Azure SQL]"]
+    SYS_COLLECT_API["Collections Workspace<br/>Service<br/>[AKS · Collections Workspace Cache]"]
+    SYS_CORE_LEDGER["Core Card Ledger"]
+    SYS_BUREAU_GW["Credit bureau gateway"]
+    SYS_CUST360_PIPELINE["Customer 360 Pipeline<br/>[Snowflake Data Cloud +1]"]
+    SYS_CRM["Dynamics 365 Customer<br/>Service<br/>[Microsoft]"]
+    SYS_GL["General ledger"]
+    SYS_LENDING_DB["Installment Lending<br/>Database<br/>[RDS]"]
+    SYS_LENDPERF_PIPELINE["Lending Portfolio<br/>Performance Pipeline<br/>[BigQuery · Dataflow +3]"]
+    SYS_MERCHANT_STORE["Merchant Portal Database<br/>[Azure SQL]"]
+    SYS_MODEL["Model platform"]
+    SYS_SCREENING_VENDOR["NICE Actimize Screening<br/>[NICE Actimize]"]
+    SYS_ORIG_DECISION["Originations decision<br/>engine"]
+    SYS_PAYMENT_GW["Payment capture gateway"]
+    SYS_DISPUTES_SAAS["Pega Smart Dispute<br/>[Pegasystems]"]
+    SYS_POSFIN_DB["Point-of-Sale Finance<br/>Database<br/>[Cloud SQL]"]
+    SYS_PROSPECT_DATA["Prospect and marketing<br/>data services"]
+    SYS_REWARDS_STORE["Rewards Redemption<br/>Database<br/>[Azure SQL]"]
+    SYS_CLIENT_PORTAL["Servicing client portal"]
+    SYS_STATEMENTS["Statement Generation"]
+  end
+
+  SYS_CORE_LEDGER -.->|"masters"| DA_CARD_ACCOUNT
+  SYS_CRM -.->|"masters"| DA_CUSTOMER_PROFILE
+  SYS_AUTH_SWITCH -.->|"masters"| DA_TRANSACTION
+  SYS_ORIG_DECISION -.->|"masters"| DA_APPLICATION
+  SYS_BUREAU_GW -.->|"masters"| DA_BUREAU_FILE
+  SYS_CLIENT_PORTAL -.->|"masters"| DA_CLIENT_SERV
+  SYS_COLLECT_API -.->|"masters"| DA_COLLECT_ACT
+  SYS_DISPUTES_SAAS -.->|"masters"| DA_DISPUTE_CASE
+  SYS_GL -.->|"masters"| DA_GL
+  SYS_MODEL -.->|"masters"| DA_MODEL_FEAT
+  SYS_PAYMENT_GW -.->|"masters"| DA_PAYMENT_INSTR
+  SYS_PROSPECT_DATA -.->|"masters"| DA_PROSPECT
+  SYS_STATEMENTS -.->|"masters"| DA_STATEMENTS
+  SYS_CARDSVC_STORE -.->|"masters"| DA_CARDSVC_OPERATIONAL
+  SYS_COLLECT_STORE -.->|"masters"| DA_COLLECT_OPERATIONAL
+  SYS_CUST360_PIPELINE -.->|"masters"| DA_CUST360_CURATED
+  SYS_DISPUTES_SAAS -.->|"masters"| DA_DISPUTES_VENDOR_FEED
+  SYS_LENDING_DB -.->|"masters"| DA_LENDING_OPERATIONAL
+  SYS_LENDPERF_PIPELINE -.->|"masters"| DA_LENDPERF_CURATED
+  SYS_MERCHANT_STORE -.->|"masters"| DA_MERCHANT_OPERATIONAL
+  SYS_POSFIN_DB -.->|"masters"| DA_POSFIN_OPERATIONAL
+  SYS_REWARDS_STORE -.->|"masters"| DA_REWARDS_OPERATIONAL
+  SYS_SCREENING_VENDOR -.->|"masters"| DA_SCREENING_OUTCOMES
+
+  classDef s_data_assets__confidential fill:#8addba,stroke:#047857,color:#0f172a,stroke-width:1.9px;
+  classDef s_data_assets__internal fill:#a7f3d0,stroke:#047857,color:#0f172a,stroke-width:1.1px;
+  classDef s_data_assets__restricted fill:#70c9a7,stroke:#047857,color:#0f172a,stroke-width:2.6px;
+  classDef s_systems__default fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.1px;
+  class DA_CLIENT_SERV,DA_COLLECT_ACT,DA_DISPUTE_CASE,DA_LENDPERF_CURATED,DA_MERCHANT_OPERATIONAL,DA_MODEL_FEAT,DA_POSFIN_OPERATIONAL,DA_PROSPECT,DA_REWARDS_OPERATIONAL,DA_STATEMENTS s_data_assets__confidential;
+  class DA_GL s_data_assets__internal;
+  class DA_APPLICATION,DA_BUREAU_FILE,DA_CARD_ACCOUNT,DA_CARDSVC_OPERATIONAL,DA_COLLECT_OPERATIONAL,DA_CUST360_CURATED,DA_CUSTOMER_PROFILE,DA_DISPUTES_VENDOR_FEED,DA_LENDING_OPERATIONAL,DA_PAYMENT_INSTR,DA_SCREENING_OUTCOMES,DA_TRANSACTION s_data_assets__restricted;
+  class SYS_AUTH_SWITCH,SYS_BUREAU_GW,SYS_CARDSVC_STORE,SYS_CLIENT_PORTAL,SYS_COLLECT_API,SYS_COLLECT_STORE,SYS_CORE_LEDGER,SYS_CRM,SYS_CUST360_PIPELINE,SYS_DISPUTES_SAAS,SYS_GL,SYS_LENDING_DB,SYS_LENDPERF_PIPELINE,SYS_MERCHANT_STORE,SYS_MODEL,SYS_ORIG_DECISION,SYS_PAYMENT_GW,SYS_POSFIN_DB,SYS_PROSPECT_DATA,SYS_REWARDS_STORE,SYS_SCREENING_VENDOR,SYS_STATEMENTS s_systems__default;
+  classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_Data_Asset,grp_System boundary1;

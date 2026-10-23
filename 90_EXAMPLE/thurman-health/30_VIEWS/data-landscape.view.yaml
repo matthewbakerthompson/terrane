@@ -1,0 +1,29 @@
+view_id: data-landscape
+title: Data Landscape
+category: Data
+section: Landscape
+kind: map
+description: >
+  Every data asset, grouped by business domain and shaded by classification.
+  A domain with no data recorded is a gap in the model, not in the business,
+  and the assets with no domain are the ones nobody has placed yet.
+layout: TB
+node_label: name
+renderers: [mermaid]
+
+group_by: company_domain
+
+scope:
+  include:
+    - type: data_assets
+      where:
+        status: [Active, Planned, Proposed]
+
+# No edges: a landscape is scanned, not read along its lines. Where each
+# asset lives and who reads it is the next view.
+
+style:
+  color_by: classification
+
+limits:
+  max_nodes: 60

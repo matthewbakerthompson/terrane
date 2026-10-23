@@ -1,0 +1,193 @@
+@startuml
+' Finance, Treasury & Settlement Accounting — Frameworks, Controls, Systems
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Finance, Treasury & Settlement Accounting — Frameworks, Controls, Systems
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_FIN_05, "Accounts Payable & Procurement Finance", "Pay suppliers and control discretionary spend.", $tags="capabilities")
+  ' aac CAP_FIN_05: company_domain="Cross-Functional Services"
+  System(CAP_FIN_06, "Cash & Settlement Reconciliation", "Reconcile cash and settlement positions daily.", $tags="capabilities")
+  ' aac CAP_FIN_06: company_domain="Cross-Functional Services"
+  System(CAP_FIN, "Finance, Treasury & Settlement Accounting", "Finance, Treasury & Settlement Accounting. Level 0 enterprise capability domain (Enable tier).", $tags="capabilities")
+  ' aac CAP_FIN: company_domain="Cross-Functional Services"
+  System(CAP_FIN_03, "Funding & Liquidity Management", "Manage funding positions and liquidity.", $tags="capabilities")
+  ' aac CAP_FIN_03: company_domain="Cross-Functional Services"
+  System(CAP_FIN_01, "General Ledger & Financial Close", "Operate the general ledger and close the books.", $tags="capabilities")
+  ' aac CAP_FIN_01: company_domain="Cross-Functional Services"
+  System(CAP_FIN_02, "Interchange & Revenue Accounting", "Account for interchange, fees, and servicing revenue.", $tags="capabilities")
+  ' aac CAP_FIN_02: company_domain="Cross-Functional Services"
+  System(CAP_FIN_04, "Regulatory & Financial Reporting", "Produce regulatory and external financial reporting.", $tags="capabilities")
+  ' aac CAP_FIN_04: company_domain="Cross-Functional Services"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_CHARGEOFF_TIME, "Charge-off timing to policy", "Charge-off executes at the policy timing aligned to regulatory guidance, with exceptions approved and documented.", $tags="controls")
+  ' aac CTL_CHARGEOFF_TIME: company_domain=""
+  System(CTL_CLOSE_SIGNOFF, "Close reconciliation sign-off", "Period-end reconciliations and journal approvals complete with segregation of duties before financial sign-off.", $tags="controls")
+  ' aac CTL_CLOSE_SIGNOFF: company_domain=""
+  System(CTL_DAILY_RECON, "Daily settlement and clearing reconciliation", "Network settlement, clearing files, and interchange postings reconcile to network totals daily; unreconciled variances stop downstream posting.", $tags="controls")
+  ' aac CTL_DAILY_RECON: company_domain=""
+  System(CTL_DQ_GATE, "Ingestion data quality gate", "Source ingestion enforces schema and quality thresholds at the boundary; failing loads quarantine rather than land.", $tags="controls")
+  ' aac CTL_DQ_GATE: company_domain=""
+  System(CTL_REGRPT_CERT, "Regulatory report certification", "Regulatory submissions reconcile to the ledger and prior filings and carry a named officer certification before transmission.", $tags="controls")
+  ' aac CTL_REGRPT_CERT: company_domain=""
+  System(CTL_FUNDING_CONF, "Settlement funding confirmation", "The daily funding position is confirmed funded by the network deadline with dual verification and same-day escalation on a miss.", $tags="controls")
+  ' aac CTL_FUNDING_CONF: company_domain=""
+}
+Boundary(b_Framework, "Framework") {
+  System(FW_APQC, "APQC Process Classification Framework", "A cross-industry process taxonomy. Used here for the enabling tier, where a card-specific name adds nothing: finance, HR and corporate services look much the same in any industry, and inventing local names for them costs comparability for no benefit.", $tags="frameworks")
+  ' aac FW_APQC: company_domain=""
+  System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
+  ' aac FW_BIAN: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_COLLECTIONS_004, "Execute charge-off", "Execute charge-off on policy timing and record the accounting effect. Timing follows the charge-off policy aligned to regulatory guidance; the entry moves the balance to charged-off status and hands the account to recovery placement.", $tags="processes")
+  ' aac P_COLLECTIONS_004: company_domain=""
+  System(P_GL_CLOSE_001, "Execute monthly financial close", "Complete the period-end close, including reconciliations, accruals, and reporting sign-off. The close calendar drives reconciliations, accruals, and sign-offs to the reporting deadline; open items age visibly and block sign-off past threshold.", $tags="processes")
+  ' aac P_GL_CLOSE_001: company_domain=""
+  System(P_SETTLEMENT_001, "Fund daily network settlement position", "Determine and fund the daily settlement position with the networks. The settlement position must fund by the network deadline in the settlement currency; a miss is a network compliance event, so the process carries same-day escalation.", $tags="processes")
+  ' aac P_SETTLEMENT_001: company_domain=""
+  System(P_FUNDING_001, "Manage daily funding position", "Determine, fund, and report the daily liquidity and funding position. The daily position covers settlement obligations, deposit flows, and contingency lines; a funding miss is a same-day escalation, not a report.", $tags="processes")
+  ' aac P_FUNDING_001: company_domain=""
+  System(P_SETTLEMENT_004, "Monitor and optimize interchange qualification", "Monitor interchange qualification rates, identify downgrades, and drive corrections in processing configuration.", $tags="processes")
+  ' aac P_SETTLEMENT_004: company_domain=""
+  System(P_INTERCHANGE_POST_001, "Post interchange and settlement entries", "Calculate and post interchange and settlement accounting entries to the ledger. Interchange entries reconcile to network reports before posting; unexplained variances stop the post rather than flowing into revenue.", $tags="processes")
+  ' aac P_INTERCHANGE_POST_001: company_domain=""
+  System(P_RECOVERY_005, "Post recovery and account for proceeds", "Post recoveries and account for proceeds from agency, legal, and sale channels. Proceeds post against charged-off balances with channel attribution; recoveries feed the loss forecast, so mis-posting distorts the allowance.", $tags="processes")
+  ' aac P_RECOVERY_005: company_domain=""
+  System(P_REG_DATA_PREP_001, "Prepare regulatory reporting data", "Assemble, validate, and certify the data supporting regulatory reporting submissions. Report data is assembled from governed sources with reconciliation to the ledger and prior submissions; certification is a named officer's sign-off, not a batch job.", $tags="processes")
+  ' aac P_REG_DATA_PREP_001: company_domain=""
+  System(P_FINANCE_002, "Process supplier payment", "Validate, approve, and execute payment to a supplier. Invoices match to contract and receipt before payment; approval limits and segregation of duties are the fraud controls the audit tests.", $tags="processes")
+  ' aac P_FINANCE_002: company_domain=""
+  System(P_FINANCE_001, "Recognize interchange and servicing revenue", "Calculate and recognize interchange, fee, and servicing revenue for the period. Revenue recognition follows the network and client contract terms; interchange, fees, and servicing revenue post to the ledger with support for audit.", $tags="processes")
+  ' aac P_FINANCE_001: company_domain=""
+  System(P_SETTLEMENT_002, "Reconcile cash and suspense accounts", "Reconcile cash and suspense account positions and clear aged items. Cash and suspense reconcile daily with aging visible; suspense is a control account, and items that age past threshold escalate to investigation.", $tags="processes")
+  ' aac P_SETTLEMENT_002: company_domain=""
+  System(P_REWARDS_003, "Reconcile rewards liability", "Reconcile the rewards ledger to the recorded liability and resolve differences. The rewards liability reconciliation catches earn, redemption, and expiry drift between the ledger and finance; differences are investigated, not plugged.", $tags="processes")
+  ' aac P_REWARDS_003: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_COLLECT_API, "Collections Workspace Service", "The service behind the Collections Workspace API, backing the channel. Built with AKS · Collections Workspace Cache.", $tags="systems")
+  ' aac SYS_COLLECT_API: company_domain="Collections"; hosting="Azure"; technology="AKS · Collections Workspace Cache"
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_DATA_INGEST, "Enterprise Data Ingestion Hub", "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse. Built with Service Bus · Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_DATA_INGEST: company_domain="Data and Analytics"; hosting="Azure"; technology="Service Bus · Snowflake Data Cloud"
+  System(SYS_GL, "General ledger", "General ledger and financial accounting.", $tags="systems")
+  ' aac SYS_GL: company_domain=""
+  System(SYS_RECON, "Reconciliation platform", "Automated reconciliation and exception management.", $tags="systems")
+  ' aac SYS_RECON: company_domain=""
+  System(SYS_REG_REPORTING, "Regulatory Reporting Engine", "Planned replacement for the spreadsheet-based regulatory reporting process, sourcing from the warehouse rather than from the ledger directly. Built with AKS · Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_REG_REPORTING: company_domain="Risk and Compliance"; hosting="Azure"; technology="AKS · Snowflake Data Cloud"
+  System(SYS_REWARDS, "Rewards ledger", "Rewards accrual ledger and redemption.", $tags="systems")
+  ' aac SYS_REWARDS: company_domain=""
+  System(SYS_TREASURY, "Treasury management", "Treasury, funding, and liquidity management.", $tags="systems")
+  ' aac SYS_TREASURY: company_domain=""
+}
+
+Rel(CAP_FIN_01, CAP_FIN, "part of")
+Rel(CAP_FIN_02, CAP_FIN, "part of")
+Rel(CAP_FIN_03, CAP_FIN, "part of")
+Rel(CAP_FIN_04, CAP_FIN, "part of")
+Rel(CAP_FIN_05, CAP_FIN, "part of")
+Rel(CAP_FIN_06, CAP_FIN, "part of")
+Rel(CAP_FIN, FW_APQC, "Aligned to")
+' aac rel: source="CAP_FIN"; target="FW_APQC"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
+Rel(CAP_FIN_01, FW_BIAN, "Risk and Compliance > Regulations and Compliance > Financial Accounting")
+' aac rel: source="CAP_FIN_01"; target="FW_BIAN"; label="Risk and Compliance > Regulations and Compliance > Financial Accounting"; relation="capability_references_framework"; ref="Risk and Compliance > Regulations and Compliance > Financial Accounting"
+Rel(CAP_FIN_02, FW_BIAN, "Risk and Compliance > Regulations and Compliance > Financial Accounting")
+' aac rel: source="CAP_FIN_02"; target="FW_BIAN"; label="Risk and Compliance > Regulations and Compliance > Financial Accounting"; relation="capability_references_framework"; ref="Risk and Compliance > Regulations and Compliance > Financial Accounting"
+Rel(CAP_FIN_03, FW_BIAN, "Operations and Execution > Account Management > Position Management")
+' aac rel: source="CAP_FIN_03"; target="FW_BIAN"; label="Operations and Execution > Account Management > Position Management"; relation="capability_references_framework"; ref="Operations and Execution > Account Management > Position Management"
+Rel(CAP_FIN_04, FW_BIAN, "Risk and Compliance > Regulations and Compliance > Regulatory Reporting")
+' aac rel: source="CAP_FIN_04"; target="FW_BIAN"; label="Risk and Compliance > Regulations and Compliance > Regulatory Reporting"; relation="capability_references_framework"; ref="Risk and Compliance > Regulations and Compliance > Regulatory Reporting"
+Rel(CAP_FIN_05, FW_APQC, "8.0 Manage Financial Resources")
+' aac rel: source="CAP_FIN_05"; target="FW_APQC"; label="8.0 Manage Financial Resources"; relation="capability_references_framework"; ref="8.0 Manage Financial Resources"
+Rel(CAP_FIN_06, FW_BIAN, "Operations and Execution > Account Management > Account Reconciliation")
+' aac rel: source="CAP_FIN_06"; target="FW_BIAN"; label="Operations and Execution > Account Management > Account Reconciliation"; relation="capability_references_framework"; ref="Operations and Execution > Account Management > Account Reconciliation"
+Rel(P_INTERCHANGE_POST_001, CAP_FIN_02, "supported by")
+' aac rel: source="P_INTERCHANGE_POST_001"; target="CAP_FIN_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_SETTLEMENT_001, CAP_FIN_03, "supported by")
+' aac rel: source="P_SETTLEMENT_001"; target="CAP_FIN_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_SETTLEMENT_002, CAP_FIN_06, "supported by")
+' aac rel: source="P_SETTLEMENT_002"; target="CAP_FIN_06"; label="supported by"; relation="process_supports_capability"
+Rel(P_REWARDS_003, CAP_FIN_02, "supported by")
+' aac rel: source="P_REWARDS_003"; target="CAP_FIN_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_004, CAP_FIN_01, "supported by")
+' aac rel: source="P_COLLECTIONS_004"; target="CAP_FIN_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_RECOVERY_005, CAP_FIN_02, "supported by")
+' aac rel: source="P_RECOVERY_005"; target="CAP_FIN_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_GL_CLOSE_001, CAP_FIN_01, "supported by")
+' aac rel: source="P_GL_CLOSE_001"; target="CAP_FIN_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_FUNDING_001, CAP_FIN_03, "supported by")
+' aac rel: source="P_FUNDING_001"; target="CAP_FIN_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_REG_DATA_PREP_001, CAP_FIN_04, "supported by")
+' aac rel: source="P_REG_DATA_PREP_001"; target="CAP_FIN_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_FINANCE_001, CAP_FIN_02, "supported by")
+' aac rel: source="P_FINANCE_001"; target="CAP_FIN_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_FINANCE_002, CAP_FIN_05, "supported by")
+' aac rel: source="P_FINANCE_002"; target="CAP_FIN_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_SETTLEMENT_004, CAP_FIN_02, "supported by")
+' aac rel: source="P_SETTLEMENT_004"; target="CAP_FIN_02"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_FIN, CTL_CHARGEOFF_TIME, "governed by")
+' aac rel: source="CAP_FIN"; target="CTL_CHARGEOFF_TIME"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_FIN, CTL_CLOSE_SIGNOFF, "governed by")
+' aac rel: source="CAP_FIN"; target="CTL_CLOSE_SIGNOFF"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_FIN, CTL_DAILY_RECON, "governed by")
+' aac rel: source="CAP_FIN"; target="CTL_DAILY_RECON"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_FIN, CTL_DQ_GATE, "governed by")
+' aac rel: source="CAP_FIN"; target="CTL_DQ_GATE"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_FIN, CTL_FUNDING_CONF, "governed by")
+' aac rel: source="CAP_FIN"; target="CTL_FUNDING_CONF"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_FIN, CTL_REGRPT_CERT, "governed by")
+' aac rel: source="CAP_FIN"; target="CTL_REGRPT_CERT"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_FIN_01, CTL_CHARGEOFF_TIME, "governed by")
+' aac rel: source="CAP_FIN_01"; target="CTL_CHARGEOFF_TIME"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_FIN_01, CTL_CLOSE_SIGNOFF, "governed by")
+' aac rel: source="CAP_FIN_01"; target="CTL_CLOSE_SIGNOFF"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_FIN_02, CTL_DAILY_RECON, "governed by")
+' aac rel: source="CAP_FIN_02"; target="CTL_DAILY_RECON"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_FIN_03, CTL_DAILY_RECON, "governed by")
+' aac rel: source="CAP_FIN_03"; target="CTL_DAILY_RECON"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_FIN_03, CTL_FUNDING_CONF, "governed by")
+' aac rel: source="CAP_FIN_03"; target="CTL_FUNDING_CONF"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_FIN_04, CTL_DQ_GATE, "governed by")
+' aac rel: source="CAP_FIN_04"; target="CTL_DQ_GATE"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_FIN_04, CTL_REGRPT_CERT, "governed by")
+' aac rel: source="CAP_FIN_04"; target="CTL_REGRPT_CERT"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(SYS_REG_REPORTING, CAP_FIN_04, "realizes")
+' aac rel: source="SYS_REG_REPORTING"; target="CAP_FIN_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_COLLECT_API, CAP_FIN_02, "realizes")
+' aac rel: source="SYS_COLLECT_API"; target="CAP_FIN_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CORE_LEDGER, CAP_FIN_01, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_FIN_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CORE_LEDGER, CAP_FIN_02, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_FIN_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CORE_LEDGER, CAP_FIN_03, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_FIN_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DATA_INGEST, CAP_FIN_02, "realizes")
+' aac rel: source="SYS_DATA_INGEST"; target="CAP_FIN_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DATA_INGEST, CAP_FIN_04, "realizes")
+' aac rel: source="SYS_DATA_INGEST"; target="CAP_FIN_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_GL, CAP_FIN_01, "realizes")
+' aac rel: source="SYS_GL"; target="CAP_FIN_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_GL, CAP_FIN_02, "realizes")
+' aac rel: source="SYS_GL"; target="CAP_FIN_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_GL, CAP_FIN_05, "realizes")
+' aac rel: source="SYS_GL"; target="CAP_FIN_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_RECON, CAP_FIN_06, "realizes")
+' aac rel: source="SYS_RECON"; target="CAP_FIN_06"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_REWARDS, CAP_FIN_02, "realizes")
+' aac rel: source="SYS_REWARDS"; target="CAP_FIN_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_TREASURY, CAP_FIN_03, "realizes")
+' aac rel: source="SYS_TREASURY"; target="CAP_FIN_03"; label="realizes"; relation="system_realizes_capability"
+
+SHOW_LEGEND()
+@enduml

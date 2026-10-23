@@ -1,0 +1,132 @@
+archetype_id: batch-data-product
+title: Batch data product
+version: 3.0.0
+applies_to: products
+# Patterns from 27_PATTERNS/ that every instance of this shape applies.
+patterns: [analytics-landing-zone, windowed-batch]
+description: >
+  A curated analytics data product on Snowflake. An ingestion and curation
+  pipeline, a semantic layer the business actually queries, a curated dataset,
+  and the Collibra registration that makes it governed rather than merely
+  present.
+
+  Built on no blocks, on purpose. The analytics platform is shared: a data
+  product is a tenant of the analytics landing zone, not an instance of its
+  blocks. So the shape applies the pattern, runs on the shared services, and
+  creates no infrastructure of its own.
+
+  Version 3 names none of the sample's records. The warehouse and the catalog
+  are the landing zone's of each kind; where the data lands and who stewards
+  it are the estate's answers (`answers` in `model.yaml`); and every product
+  says who owns it, as on every other shape, where this one defaulted to the
+  sample's data engineering team.
+
+parameters:
+  - name: slug
+    required: true
+  - name: product_name
+    required: true
+  - name: owner_org
+    required: true
+  - name: domain
+    required: true
+  # What the estate answers once for every data product: where the landed
+  # data comes in, and who stewards what comes out. The shape defaulted to
+  # the sample's ingestion hub and data engineering team before.
+  - name: ingest_system
+    estate: true
+    description: The shared ingestion system the pipeline reads what is landed from
+  - name: data_org
+    estate: true
+    description: The org unit that stewards the estate's curated data
+  - name: classification
+    default: Confidential
+  - name: contains_pii
+    default: "Yes"
+
+defaults:
+  architecture_domain: Data
+  togaf_layer: Data
+  abstraction_level: Conceptual
+
+entity_defaults:
+  all:
+    # The product\'s own status. A shape cannot know whether its instance is
+    # planned or live; the first planned product on a shape that said
+    # `Active` here came out with four live systems.
+    status: "{status}"
+    company_domain: "{domain}"
+  systems:
+    owner_org_id: "{owner_org}"
+    criticality: Medium
+    environment: Production
+    data_classification_supported: "{classification}"
+    togaf_layer: Data
+    architecture_domain: Data
+    abstraction_level: Physical
+  interfaces:
+    owner_org_id: "{owner_org}"
+    direction: Outbound
+    frequency: Daily
+    integration_style: Request-response
+    auth_method: KeyPair
+    data_classification: "{classification}"
+    togaf_layer: Data
+    architecture_domain: Data
+
+provides:
+  systems:
+    - system_id: "SYS-{slug|upper}-PIPELINE"
+      name: "{product_name} Pipeline"
+      description: "Ingestion and curation jobs building {product_name}."
+      hosting: Azure
+      system_category: Pipeline
+      tags: [data-product, batch]
+      uses: [warehouse, catalog]
+
+    - system_id: "SYS-{slug|upper}-SEMANTIC"
+      name: "{product_name} Semantic Layer"
+      description: "Governed models and metrics exposed to analysts for {product_name}."
+      hosting: SaaS
+      provider: Snowflake
+      system_category: Analytics
+      tags: [data-product, analytics]
+      uses: [warehouse]
+
+  interfaces:
+    - interface_id: "INT-{slug|upper}-INGEST"
+      name: "Ingest to {product_name} Pipeline"
+      source_system_id: "{ingest_system}"
+      target_system_id: "SYS-{slug|upper}-PIPELINE"
+      protocol: Snowpipe
+      direction: Inbound
+
+    - interface_id: "INT-{slug|upper}-PIPE-SEMANTIC"
+      name: "{product_name} Pipeline to Semantic Layer"
+      source_system_id: "SYS-{slug|upper}-PIPELINE"
+      target_system_id: "SYS-{slug|upper}-SEMANTIC"
+      protocol: SQL
+
+  data_assets:
+    - data_asset_id: "DA-{slug|upper}-CURATED"
+      name: "{product_name} curated dataset"
+      description: "Curated, governed dataset produced by {product_name}."
+      source_of_truth: "SYS-{slug|upper}-PIPELINE"
+      data_owner_org_id: "{owner_org}"
+      data_steward_org_id: "{data_org}"
+      classification: "{classification}"
+      risk_level: Medium
+      pii_flag: "{contains_pii}"
+      togaf_layer: Data
+      architecture_domain: Data
+      lineage_reference: "Registered in Collibra."
+      tags: [data-product, curated]
+
+relations:
+  system_reads_writes:
+    - system_id: "SYS-{slug|upper}-PIPELINE"
+      data_asset_id: "DA-{slug|upper}-CURATED"
+      operation: Write
+    - system_id: "SYS-{slug|upper}-SEMANTIC"
+      data_asset_id: "DA-{slug|upper}-CURATED"
+      operation: Read

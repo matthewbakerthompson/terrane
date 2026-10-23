@@ -1,0 +1,62 @@
+@startuml
+' Dispute Management — Onboarding
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Dispute Management — Onboarding
+
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddRelTag("api-call", $legendText="API call")
+AddRelTag("partner-file", $legendText="Partner file")
+AddRelTag("scheduled-file", $legendText="Scheduled file")
+
+Boundary(b_Azure, "Azure") {
+  Boundary(b_Azure__azure_cards_prod, "subscription azure-cards-prod") {
+    Boundary(b_Azure__azure_cards_prod__uksouth, "region uksouth") {
+      Boundary(b_Azure__azure_cards_prod__uksouth__Private_App, "Private-App") {
+        System(SYS_DISPUTES_GATEWAY, "Dispute Management Platform Integration Gateway", "Our side of the Pegasystems integration: mapping, retry and audit. Built with AKS.", $tags="systems")
+        ' aac SYS_DISPUTES_GATEWAY: company_domain="Servicing"; hosting="Azure"; technology="AKS"
+      }
+    }
+  }
+  Boundary(b_Azure__azure_data_prod, "subscription azure-data-prod") {
+    Boundary(b_Azure__azure_data_prod__uksouth, "region uksouth") {
+      Boundary(b_Azure__azure_data_prod__uksouth__Private_Data, "Private-Data") {
+        System(SYS_DATA_INGEST, "Enterprise Data Ingestion Hub", "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse. Built with Service Bus · Snowflake Data Cloud.", $tags="systems")
+        ' aac SYS_DATA_INGEST: company_domain="Data and Analytics"; hosting="Azure"; technology="Service Bus · Snowflake Data Cloud"
+      }
+    }
+  }
+}
+Boundary(b_On_prem, "On-prem") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+}
+Boundary(b_SaaS, "SaaS") {
+  Boundary(b_SaaS__Edge, "Edge") {
+    System_Ext(SYS_CRM, "Dynamics 365 Customer Service", "Contact center desktop and case management for servicing agents. Built with Microsoft.", $tags="systems")
+    ' aac SYS_CRM: company_domain="Servicing"; hosting="SaaS"; technology="Microsoft"
+  }
+  Boundary(b_SaaS__eu_west_1, "region eu-west-1") {
+    Boundary(b_SaaS__eu_west_1__Edge, "Edge") {
+      System_Ext(SYS_DISPUTES_SAAS, "Pega Smart Dispute", "Dispute Management Platform, provided by Pegasystems and running in the vendor tenancy. Built with Pegasystems.", $tags="systems")
+      ' aac SYS_DISPUTES_SAAS: company_domain="Servicing"; hosting="SaaS"; technology="Pegasystems"
+    }
+  }
+}
+
+Rel(SYS_CRM, SYS_DISPUTES_GATEWAY, "CRM to Dispute Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CRM"; target="SYS_DISPUTES_GATEWAY"; label="CRM to Dispute Gateway"; interface_id="INT-CRM-DISPUTES"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="private-egress-to-saas"
+Rel(SYS_CRM, SYS_CORE_LEDGER, "Servicing CRM to Core Ledger", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CRM"; target="SYS_CORE_LEDGER"; label="Servicing CRM to Core Ledger"; interface_id="INT-CRM-LEDGER"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_CORE_LEDGER, SYS_DATA_INGEST, "Core Ledger to Data Ingestion Hub", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_DATA_INGEST"; label="Core Ledger to Data Ingestion Hub"; interface_id="INT-LEDGER-INGEST"; kind="scheduled-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Outbound"
+Rel(SYS_CORE_LEDGER, SYS_DISPUTES_GATEWAY, "SYS-CORE-LEDGER to Dispute Management Platform Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_DISPUTES_GATEWAY"; label="SYS-CORE-LEDGER to Dispute Management Platform Gateway"; interface_id="INT-DISPUTES-UP-GATEWAY"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_DISPUTES_GATEWAY, SYS_DISPUTES_SAAS, "Dispute Management Platform Gateway to Pegasystems", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_DISPUTES_GATEWAY"; target="SYS_DISPUTES_SAAS"; label="Dispute Management Platform Gateway to Pegasystems"; interface_id="INT-DISPUTES-GATEWAY-SAAS"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_DISPUTES_SAAS, SYS_DATA_INGEST, "Pegasystems return feed", "SFTP", $tags="partner-file")
+' aac rel: source="SYS_DISPUTES_SAAS"; target="SYS_DATA_INGEST"; label="Pegasystems return feed"; interface_id="INT-DISPUTES-SAAS-FEED"; kind="partner-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Inbound"
+
+SHOW_LEGEND()
+@enduml

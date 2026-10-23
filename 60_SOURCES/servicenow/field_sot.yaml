@@ -1,0 +1,28 @@
+# Per-field source of truth for CMDB reconciliation.
+#
+# `model` means the architecture model wins and a difference is CMDB drift.
+# `cmdb`  means ServiceNow wins and a difference is a gap in the model.
+#
+# Everything starts on `model` because the CMDB is not accurate enough to be
+# believed. Flipping a field is a governance decision, recorded here, and needs
+# no code change. Flip one field at a time, and only after the drift report has
+# been clean on that field for a while.
+
+fields:
+  name: model
+  status: model
+  criticality: model
+  owner_org_id: model
+  environment: model
+  hosting: model
+  cmdb_ci_class: cmdb
+
+# Notes on specific fields, for whoever reviews this next:
+#
+# cmdb_ci_class   Already on `cmdb`: the CI class is ServiceNow taxonomy and the
+#                 model has no opinion worth defending about it.
+# environment     A likely early candidate to flip. ServiceNow discovery is
+#                 usually right about which environment something runs in, even
+#                 when it is wrong about what the thing is for.
+# criticality     A late candidate at best. Business criticality in the CMDB is
+#                 typically an unreviewed default.

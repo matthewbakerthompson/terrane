@@ -1,0 +1,9 @@
+flow_id,name,description,status,togaf_layer,architecture_domain,abstraction_level,last_reviewed,company_domain,company_subdomain,tags,archetype,archetype_instance,module,source,owner_org_id,trigger,criticality,target_latency
+FLOW-CARD-AUTH,Card Authorization,"A card presented at a merchant, authorized or declined inside the scheme timeout. The tightest latency budget in the estate, and the reason the screening call has a circuit breaker rather than a retry.
+",Active,Business,Business,,,Payments,,,,,,,ORG-PAYMENTS,Cardholder presents a card at a merchant,High,under 500ms end to end
+FLOW-DISPUTE,Dispute and Chargeback,"A cardholder disputes a transaction. Raised in the contact center, handled in the vendor platform, settled back through the ledger.
+",Active,Business,Business,,,Servicing,,,,,,,ORG-SERVICING,Cardholder disputes a transaction,Medium,"scheme deadline, measured in days"
+FLOW-LOAN-APPLICATION,Installment Loan Application,"An applicant applies for point-of-sale credit. Bureau search, affordability and a decision, with referral to an underwriter when the automated decision declines to take it.
+",Planned,Business,Business,,,Lending,,,,,,,ORG-PRODUCT,Applicant submits an application,High,under 20s to a decision
+FLOW-REG-RETURN,Regulatory Return,"The monthly supervisory return. Entirely batch, and the only flow whose deadline is external and non-negotiable.
+",Planned,Business,Governance,,,Risk and Compliance,,,,,,,ORG-COMPLIANCE,Month end,High,filed within 10 working days

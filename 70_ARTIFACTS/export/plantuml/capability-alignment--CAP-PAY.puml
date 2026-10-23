@@ -1,0 +1,172 @@
+@startuml
+' Payments & Transaction Processing — Frameworks, Controls, Systems
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Payments & Transaction Processing — Frameworks, Controls, Systems
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_PAY_01, "Authorization Processing", "Decision and respond to real-time authorization requests.", $tags="capabilities")
+  ' aac CAP_PAY_01: company_domain="Servicing"
+  System(CAP_PAY_02, "Clearing & Transaction Posting", "Receive clearing files and post transactions to accounts.", $tags="capabilities")
+  ' aac CAP_PAY_02: company_domain="Servicing"
+  System(CAP_PAY_06, "Network & Merchant Reconciliation", "Reconcile network, processor, and internal ledgers.", $tags="capabilities")
+  ' aac CAP_PAY_06: company_domain="Servicing"
+  System(CAP_PAY_05, "Network Settlement & Interchange", "Settle positions with networks and account for interchange.", $tags="capabilities")
+  ' aac CAP_PAY_05: company_domain="Servicing"
+  System(CAP_PAY_03, "Payment Capture & Application", "Accept and apply cardholder payments across all channels.", $tags="capabilities")
+  ' aac CAP_PAY_03: company_domain="Servicing"
+  System(CAP_PAY, "Payments & Transaction Processing", "Payments & Transaction Processing. Level 0 enterprise capability domain (Core tier).", $tags="capabilities")
+  ' aac CAP_PAY: company_domain="Servicing"
+  System(CAP_PAY_04, "Returned Payment & NSF Handling", "Process returns, reversals, and associated fees.", $tags="capabilities")
+  ' aac CAP_PAY_04: company_domain="Servicing"
+  System(CAP_PAY_07, "Tokenization & Credential Management", "Manage tokens, primary account numbers, and credential lifecycle.", $tags="capabilities")
+  ' aac CAP_PAY_07: company_domain="Servicing"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_AUTH_AVAIL, "Authorization availability and stand-in", "Authorization availability is monitored against the network SLA with tested stand-in arrangements; incidents invoke the resilience playbook.", $tags="controls")
+  ' aac CTL_AUTH_AVAIL: company_domain=""
+  System(CTL_DAILY_RECON, "Daily settlement and clearing reconciliation", "Network settlement, clearing files, and interchange postings reconcile to network totals daily; unreconciled variances stop downstream posting.", $tags="controls")
+  ' aac CTL_DAILY_RECON: company_domain=""
+  System(CTL_PMT_POSTING, "Payment posting timeliness", "Cardholder payments post as of the day of receipt per Reg Z crediting rules, with cutoff disclosures honored and exceptions reported.", $tags="controls")
+  ' aac CTL_PMT_POSTING: company_domain=""
+}
+Boundary(b_Framework, "Framework") {
+  System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
+  ' aac FW_BIAN: company_domain=""
+  System(FW_CRI, "CRI Profile", "The Cyber Risk Institute's Profile: the financial sector's harmonization of NIST CSF, ISO 27001 and the regulators' expectations into one set of diagnostic statements. What a bank is examined against for cyber, and therefore what the security domain is governed by rather than informed by.", $tags="frameworks")
+  ' aac FW_CRI: company_domain=""
+  System(FW_PCI_DSS, "PCI DSS", "The card industry's data security standard. Not a framework anybody chose: it is a condition of processing card transactions, which is why it governs the payment and merchant domains whatever anyone thinks of it.", $tags="frameworks")
+  ' aac FW_PCI_DSS: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_CARD_PMT_001, "Capture and apply cardholder payment", "Accept a cardholder payment through any channel and apply it to the account on the correct effective date.", $tags="processes")
+  ' aac P_CARD_PMT_001: company_domain=""
+  System(P_SETTLEMENT_001, "Fund daily network settlement position", "Determine and fund the daily settlement position with the networks. The settlement position must fund by the network deadline in the settlement currency; a miss is a network compliance event, so the process carries same-day escalation.", $tags="processes")
+  ' aac P_SETTLEMENT_001: company_domain=""
+  System(P_PAYMENTS_002, "Ingest clearing file and post transactions", "Receive network clearing files and post transactions to cardholder accounts. Clearing ingestion matches presentments to authorizations, posts to accounts, and routes exceptions; the file must balance to network totals before posting completes.", $tags="processes")
+  ' aac P_PAYMENTS_002: company_domain=""
+  System(P_SETTLEMENT_003, "Investigate and clear settlement exception", "Investigate settlement breaks and exceptions and drive them to resolution. Settlement exceptions are worked to root cause across network reports, the gateway, and the ledger; recurring breaks feed a fix, not a workaround.", $tags="processes")
+  ' aac P_SETTLEMENT_003: company_domain=""
+  System(P_PAYMENTS_004, "Manage token and credential lifecycle", "Issue, update, suspend, and delete payment tokens and credentials. Token lifecycle events flow between networks, wallets, and the account of record; a stale token strands the cardholder's wallet, so lifecycle sync is monitored.", $tags="processes")
+  ' aac P_PAYMENTS_004: company_domain=""
+  System(P_SETTLEMENT_004, "Monitor and optimize interchange qualification", "Monitor interchange qualification rates, identify downgrades, and drive corrections in processing configuration.", $tags="processes")
+  ' aac P_SETTLEMENT_004: company_domain=""
+  System(P_INTERCHANGE_POST_001, "Post interchange and settlement entries", "Calculate and post interchange and settlement accounting entries to the ledger. Interchange entries reconcile to network reports before posting; unexplained variances stop the post rather than flowing into revenue.", $tags="processes")
+  ' aac P_INTERCHANGE_POST_001: company_domain=""
+  System(P_PAYMENTS_001, "Process authorization request", "Receive, decision, and respond to a real-time authorization request within the network response window.", $tags="processes")
+  ' aac P_PAYMENTS_001: company_domain=""
+  System(P_PAYMENTS_003, "Process returned payment and assess NSF", "Handle returned and reversed payments and assess the associated fees. Return handling reverses the payment application, restores the balance, assesses any permitted fee, and feeds NSF patterns to risk; Reg E error claims can start here.", $tags="processes")
+  ' aac P_PAYMENTS_003: company_domain=""
+  System(P_ORIG_008, "Provision credential to digital wallet", "Provision the card credential into a digital wallet or tokenized environment. Wallet provisioning runs the network token flows with step-up verification where risk requires; weak provisioning is a known fraud vector the strategy watches.", $tags="processes")
+  ' aac P_ORIG_008: company_domain=""
+  System(P_NETWORK_RECON_001, "Reconcile network settlement", "Reconcile network settlement files against internal transaction and ledger positions and resolve breaks.", $tags="processes")
+  ' aac P_NETWORK_RECON_001: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_AUTH_SWITCH, "Authorization Switch", "Real-time card authorization switch connected to the scheme networks.", $tags="systems")
+  ' aac SYS_AUTH_SWITCH: company_domain="Payments"; hosting="On-prem"
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_DATA_INGEST, "Enterprise Data Ingestion Hub", "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse. Built with Service Bus · Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_DATA_INGEST: company_domain="Data and Analytics"; hosting="Azure"; technology="Service Bus · Snowflake Data Cloud"
+  System(SYS_PAYMENT_GW, "Payment capture gateway", "Payment capture across ACH, debit, lockbox, and wallet channels.", $tags="systems")
+  ' aac SYS_PAYMENT_GW: company_domain=""
+  System(SYS_RECON, "Reconciliation platform", "Automated reconciliation and exception management.", $tags="systems")
+  ' aac SYS_RECON: company_domain=""
+  System(SYS_TOKEN, "Tokenization and credential management", "Token and credential lifecycle management.", $tags="systems")
+  ' aac SYS_TOKEN: company_domain=""
+}
+
+Rel(CAP_PAY_01, CAP_PAY, "part of")
+Rel(CAP_PAY_02, CAP_PAY, "part of")
+Rel(CAP_PAY_03, CAP_PAY, "part of")
+Rel(CAP_PAY_04, CAP_PAY, "part of")
+Rel(CAP_PAY_05, CAP_PAY, "part of")
+Rel(CAP_PAY_06, CAP_PAY, "part of")
+Rel(CAP_PAY_07, CAP_PAY, "part of")
+Rel(CAP_PAY, FW_BIAN, "Aligned to")
+' aac rel: source="CAP_PAY"; target="FW_BIAN"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
+Rel(CAP_PAY, FW_PCI_DSS, "Governed by")
+' aac rel: source="CAP_PAY"; target="FW_PCI_DSS"; label="Governed by"; relation="capability_aligns_to_framework"; alignment="Governed by"
+Rel(CAP_PAY_01, FW_BIAN, "Operations and Execution > Cards > Card Authorization")
+' aac rel: source="CAP_PAY_01"; target="FW_BIAN"; label="Operations and Execution > Cards > Card Authorization"; relation="capability_references_framework"; ref="Operations and Execution > Cards > Card Authorization"
+Rel(CAP_PAY_02, FW_BIAN, "Operations and Execution > Payments > Card Clearing")
+' aac rel: source="CAP_PAY_02"; target="FW_BIAN"; label="Operations and Execution > Payments > Card Clearing"; relation="capability_references_framework"; ref="Operations and Execution > Payments > Card Clearing"
+Rel(CAP_PAY_03, FW_BIAN, "Operations and Execution > Cards > Credit Card / Card Payment")
+' aac rel: source="CAP_PAY_03"; target="FW_BIAN"; label="Operations and Execution > Cards > Credit Card / Card Payment"; relation="capability_references_framework"; ref="Operations and Execution > Cards > Credit Card / Card Payment"
+Rel(CAP_PAY_04, FW_BIAN, "Sales and Service > Servicing > Payment Order Initiation")
+' aac rel: source="CAP_PAY_04"; target="FW_BIAN"; label="Sales and Service > Servicing > Payment Order Initiation"; relation="capability_references_framework"; ref="Sales and Service > Servicing > Payment Order Initiation"
+Rel(CAP_PAY_05, FW_BIAN, "Operations and Execution > Payments > Card Financial Settlement")
+' aac rel: source="CAP_PAY_05"; target="FW_BIAN"; label="Operations and Execution > Payments > Card Financial Settlement"; relation="capability_references_framework"; ref="Operations and Execution > Payments > Card Financial Settlement"
+Rel(CAP_PAY_06, FW_BIAN, "Operations and Execution > Account Management > Account Reconciliation")
+' aac rel: source="CAP_PAY_06"; target="FW_BIAN"; label="Operations and Execution > Account Management > Account Reconciliation"; relation="capability_references_framework"; ref="Operations and Execution > Account Management > Account Reconciliation"
+Rel(CAP_PAY_07, FW_BIAN, "Operations and Execution > Operational Services > Issued Device Administration")
+' aac rel: source="CAP_PAY_07"; target="FW_BIAN"; label="Operations and Execution > Operational Services > Issued Device Administration"; relation="capability_references_framework"; ref="Operations and Execution > Operational Services > Issued Device Administration"
+Rel(CAP_PAY_07, FW_CRI, "Protect > PR.DS-01")
+' aac rel: source="CAP_PAY_07"; target="FW_CRI"; label="Protect > PR.DS-01"; relation="capability_references_framework"; ref="Protect > PR.DS-01"
+Rel(P_ORIG_008, CAP_PAY_07, "supported by")
+' aac rel: source="P_ORIG_008"; target="CAP_PAY_07"; label="supported by"; relation="process_supports_capability"
+Rel(P_PAYMENTS_001, CAP_PAY_01, "supported by")
+' aac rel: source="P_PAYMENTS_001"; target="CAP_PAY_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_PAYMENTS_002, CAP_PAY_02, "supported by")
+' aac rel: source="P_PAYMENTS_002"; target="CAP_PAY_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_CARD_PMT_001, CAP_PAY_03, "supported by")
+' aac rel: source="P_CARD_PMT_001"; target="CAP_PAY_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_PAYMENTS_003, CAP_PAY_04, "supported by")
+' aac rel: source="P_PAYMENTS_003"; target="CAP_PAY_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_PAYMENTS_004, CAP_PAY_07, "supported by")
+' aac rel: source="P_PAYMENTS_004"; target="CAP_PAY_07"; label="supported by"; relation="process_supports_capability"
+Rel(P_NETWORK_RECON_001, CAP_PAY_06, "supported by")
+' aac rel: source="P_NETWORK_RECON_001"; target="CAP_PAY_06"; label="supported by"; relation="process_supports_capability"
+Rel(P_INTERCHANGE_POST_001, CAP_PAY_05, "supported by")
+' aac rel: source="P_INTERCHANGE_POST_001"; target="CAP_PAY_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_SETTLEMENT_001, CAP_PAY_05, "supported by")
+' aac rel: source="P_SETTLEMENT_001"; target="CAP_PAY_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_SETTLEMENT_003, CAP_PAY_06, "supported by")
+' aac rel: source="P_SETTLEMENT_003"; target="CAP_PAY_06"; label="supported by"; relation="process_supports_capability"
+Rel(P_SETTLEMENT_004, CAP_PAY_05, "supported by")
+' aac rel: source="P_SETTLEMENT_004"; target="CAP_PAY_05"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_PAY, CTL_AUTH_AVAIL, "governed by")
+' aac rel: source="CAP_PAY"; target="CTL_AUTH_AVAIL"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_PAY, CTL_DAILY_RECON, "governed by")
+' aac rel: source="CAP_PAY"; target="CTL_DAILY_RECON"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_PAY, CTL_PMT_POSTING, "governed by")
+' aac rel: source="CAP_PAY"; target="CTL_PMT_POSTING"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_PAY_01, CTL_AUTH_AVAIL, "governed by")
+' aac rel: source="CAP_PAY_01"; target="CTL_AUTH_AVAIL"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_PAY_02, CTL_DAILY_RECON, "governed by")
+' aac rel: source="CAP_PAY_02"; target="CTL_DAILY_RECON"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_PAY_03, CTL_PMT_POSTING, "governed by")
+' aac rel: source="CAP_PAY_03"; target="CTL_PMT_POSTING"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_PAY_05, CTL_DAILY_RECON, "governed by")
+' aac rel: source="CAP_PAY_05"; target="CTL_DAILY_RECON"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_PAY_06, CTL_DAILY_RECON, "governed by")
+' aac rel: source="CAP_PAY_06"; target="CTL_DAILY_RECON"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(SYS_AUTH_SWITCH, CAP_PAY, "realizes")
+' aac rel: source="SYS_AUTH_SWITCH"; target="CAP_PAY"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CORE_LEDGER, CAP_PAY_01, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_PAY_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CORE_LEDGER, CAP_PAY_02, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_PAY_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CORE_LEDGER, CAP_PAY_05, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_PAY_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DATA_INGEST, CAP_PAY_05, "realizes")
+' aac rel: source="SYS_DATA_INGEST"; target="CAP_PAY_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_PAYMENT_GW, CAP_PAY_03, "realizes")
+' aac rel: source="SYS_PAYMENT_GW"; target="CAP_PAY_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_PAYMENT_GW, CAP_PAY_04, "realizes")
+' aac rel: source="SYS_PAYMENT_GW"; target="CAP_PAY_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_RECON, CAP_PAY_06, "realizes")
+' aac rel: source="SYS_RECON"; target="CAP_PAY_06"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_TOKEN, CAP_PAY_07, "realizes")
+' aac rel: source="SYS_TOKEN"; target="CAP_PAY_07"; label="realizes"; relation="system_realizes_capability"
+
+SHOW_LEGEND()
+@enduml

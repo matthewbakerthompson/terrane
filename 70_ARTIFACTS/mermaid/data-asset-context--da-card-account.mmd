@@ -1,0 +1,64 @@
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Card account master — Where It Lives and Who Uses It
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Control["Control"]
+    direction LR
+    CTL_PCI_EVIDENCE[["Cardholder data scope and<br/>evidence maintenance"]]
+    CTL_RETENTION[["Retention schedule<br/>enforcement"]]
+  end
+
+  subgraph grp_Data_Asset["Data Asset"]
+    direction LR
+    DA_CARD_ACCOUNT[("Card account master")]
+  end
+
+  subgraph grp_Policy["Policy"]
+    direction LR
+    POL_PRIVACY[/"Consumer Privacy & Data<br/>Handling Policy"\]
+    POL_RECORDS[/"Records Retention &<br/>Disposition Policy"\]
+  end
+
+  subgraph grp_System["System"]
+    direction LR
+    SYS_AUTH_SWITCH["Authorization Switch"]
+    SYS_CARD_FULFILL["Card production and<br/>fulfillment<br/>[external]"]
+    SYS_CARDSVC_API["Card Servicing Service<br/>[AKS · Card Servicing Cache]"]
+    SYS_MOBILE["Cardholder mobile<br/>application"]
+    SYS_COLLECT_API["Collections Workspace<br/>Service<br/>[AKS · Collections Workspace Cache]"]
+    SYS_CORE_LEDGER["Core Card Ledger"]
+    SYS_CREDIT_DATA["Credit data and<br/>decisioning environment<br/>[Snowflake Data Cloud]"]
+    SYS_CUST360_PIPELINE["Customer 360 Pipeline<br/>[Snowflake Data Cloud +1]"]
+    SYS_IVR["IVR and self-service voice"]
+    SYS_STATEMENTS["Statement Generation"]
+    SYS_TOKEN["Tokenization and<br/>credential management"]
+  end
+
+  SYS_CORE_LEDGER -.->|"masters"| DA_CARD_ACCOUNT
+  SYS_CREDIT_DATA -->|"Read"| DA_CARD_ACCOUNT
+  SYS_TOKEN -->|"Read"| DA_CARD_ACCOUNT
+  SYS_MOBILE -->|"Read"| DA_CARD_ACCOUNT
+  SYS_IVR -->|"Read"| DA_CARD_ACCOUNT
+  SYS_CARD_FULFILL -->|"Read"| DA_CARD_ACCOUNT
+  SYS_AUTH_SWITCH -->|"Read"| DA_CARD_ACCOUNT
+  SYS_CARDSVC_API -->|"Read"| DA_CARD_ACCOUNT
+  SYS_COLLECT_API -->|"Read"| DA_CARD_ACCOUNT
+  SYS_CORE_LEDGER -->|"ReadWrite"| DA_CARD_ACCOUNT
+  SYS_CUST360_PIPELINE -->|"Read"| DA_CARD_ACCOUNT
+  SYS_STATEMENTS -->|"Read"| DA_CARD_ACCOUNT
+  DA_CARD_ACCOUNT -->|"governed by"| CTL_PCI_EVIDENCE
+  DA_CARD_ACCOUNT -->|"governed by"| CTL_RETENTION
+  DA_CARD_ACCOUNT -->|"subject to"| POL_PRIVACY
+  DA_CARD_ACCOUNT -->|"subject to"| POL_RECORDS
+
+  classDef s_controls__default fill:#fca5a5,stroke:#b91c1c,color:#0f172a,stroke-width:1.1px;
+  classDef s_data_assets__restricted fill:#70c9a7,stroke:#047857,color:#0f172a,stroke-width:2.6px;
+  classDef s_policies__default fill:#fecaca,stroke:#dc2626,color:#0f172a,stroke-width:1.1px;
+  classDef s_systems__default fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.1px;
+  class CTL_PCI_EVIDENCE,CTL_RETENTION s_controls__default;
+  class DA_CARD_ACCOUNT s_data_assets__restricted;
+  class POL_PRIVACY,POL_RECORDS s_policies__default;
+  class SYS_AUTH_SWITCH,SYS_CARD_FULFILL,SYS_CARDSVC_API,SYS_COLLECT_API,SYS_CORE_LEDGER,SYS_CREDIT_DATA,SYS_CUST360_PIPELINE,SYS_IVR,SYS_MOBILE,SYS_STATEMENTS,SYS_TOKEN s_systems__default;
+  classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_Control,grp_Data_Asset,grp_Policy,grp_System boundary1;

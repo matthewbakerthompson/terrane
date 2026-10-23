@@ -1,0 +1,90 @@
+archetype_id: core-platform-service
+title: Core platform service
+version: 2.2.0
+applies_to: products
+# Patterns from 27_PATTERNS/ that every instance of this shape applies.
+patterns: [api-front-door]
+description: >
+  An internally built shared service consumed by several products through the
+  API gateway. Deliberately thinner than a digital product: no channel of its
+  own, and its value is measured by who consumes it.
+
+  Version 2.1 asks for the subscription and region, the way the digital
+  shape does, and puts the service in the shared-services tier, which is
+  what makes it a platform service. The first product on it is the identity
+  service the shape was written from. 2.2 names the gateway, the cluster and
+  the vault by kind, where it named the sample's own by id.
+
+parameters:
+  - name: slug
+    required: true
+  - name: product_name
+    required: true
+  - name: owner_org
+    required: true
+  - name: domain
+    default: Enterprise Platform
+  - name: criticality
+    default: High
+  - name: classification
+    default: Confidential
+  - name: account
+    required: true
+    description: Workload subscription alias, e.g. azure-platform-prod
+  - name: region
+    default: uksouth
+    description: Azure region the service lands in
+
+defaults:
+  architecture_domain: Technology
+  togaf_layer: Technology
+  abstraction_level: Conceptual
+
+provider: Azure
+
+entity_defaults:
+  all:
+    # The product\'s own status. A shape cannot know whether its instance is
+    # planned or live; the first planned product on a shape that said
+    # `Active` here came out with four live systems.
+    status: "{status}"
+    company_domain: "{domain}"
+  systems:
+    tags: [platform, shared-service]
+    owner_org_id: "{owner_org}"
+    criticality: "{criticality}"
+    hosting: Azure
+    environment: Production
+    cloud_provider: Azure
+    cloud_account: "{account}"
+    region: "{region}"
+    data_classification_supported: "{classification}"
+    togaf_layer: Application
+    architecture_domain: Application
+    abstraction_level: Physical
+  tech_services:
+    tags: [platform, shared-service]
+    owner_org_id: "{owner_org}"
+    cloud_provider: Azure
+    cloud_account: "{account}"
+    region: "{region}"
+    togaf_layer: Technology
+    architecture_domain: Technology
+
+# A platform service is published the same way a product API is: through the
+# shared gateway, under its own hostname and its own firewall policy.
+blocks:
+  - block: public-api-tier
+    bind:
+      api-gateway: landing-zone
+
+provides:
+  systems:
+    - system_id: "SYS-{slug|upper}-SVC"
+      name: "{product_name}"
+      description: "Shared platform service: {product_name}."
+      service_tier: Tier 1
+      system_category: Platform
+      network_zone: Shared-Services
+      runs_on: [public-api-tier]
+      uses: [container-platform, secrets-manager]

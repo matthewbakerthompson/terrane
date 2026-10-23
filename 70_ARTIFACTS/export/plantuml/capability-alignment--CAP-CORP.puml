@@ -1,0 +1,49 @@
+@startuml
+' People, Legal & Corporate Services — Frameworks, Controls, Systems
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title People, Legal & Corporate Services — Frameworks, Controls, Systems
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_CORP_05, "Corporate Communications", "Manage internal and external communications.", $tags="capabilities")
+  ' aac CAP_CORP_05: company_domain="Cross-Functional Services"
+  System(CAP_CORP_04, "Facilities & Workplace Operations", "Operate sites and workplace services.", $tags="capabilities")
+  ' aac CAP_CORP_04: company_domain="Cross-Functional Services"
+  System(CAP_CORP_02, "Learning, Licensing & Certification", "Train the workforce and maintain required certifications.", $tags="capabilities")
+  ' aac CAP_CORP_02: company_domain="Cross-Functional Services"
+  System(CAP_CORP_03, "Legal & Contract Counsel", "Provide legal advice and contracting support.", $tags="capabilities")
+  ' aac CAP_CORP_03: company_domain="Cross-Functional Services"
+  System(CAP_CORP, "People, Legal & Corporate Services", "People, Legal & Corporate Services. Level 0 enterprise capability domain (Enable tier).", $tags="capabilities")
+  ' aac CAP_CORP: company_domain="Cross-Functional Services"
+  System(CAP_CORP_01, "Workforce Management & HR", "Hire, pay, and manage people.", $tags="capabilities")
+  ' aac CAP_CORP_01: company_domain="Cross-Functional Services"
+}
+Boundary(b_Framework, "Framework") {
+  System(FW_APQC, "APQC Process Classification Framework", "A cross-industry process taxonomy. Used here for the enabling tier, where a card-specific name adds nothing: finance, HR and corporate services look much the same in any industry, and inventing local names for them costs comparability for no benefit.", $tags="frameworks")
+  ' aac FW_APQC: company_domain=""
+}
+
+Rel(CAP_CORP_01, CAP_CORP, "part of")
+Rel(CAP_CORP_02, CAP_CORP, "part of")
+Rel(CAP_CORP_03, CAP_CORP, "part of")
+Rel(CAP_CORP_04, CAP_CORP, "part of")
+Rel(CAP_CORP_05, CAP_CORP, "part of")
+Rel(CAP_CORP, FW_APQC, "Aligned to")
+' aac rel: source="CAP_CORP"; target="FW_APQC"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
+Rel(CAP_CORP_01, FW_APQC, "6.0 Develop and Manage Human Capital")
+' aac rel: source="CAP_CORP_01"; target="FW_APQC"; label="6.0 Develop and Manage Human Capital"; relation="capability_references_framework"; ref="6.0 Develop and Manage Human Capital"
+Rel(CAP_CORP_02, FW_APQC, "6.0 Develop and Manage Human Capital")
+' aac rel: source="CAP_CORP_02"; target="FW_APQC"; label="6.0 Develop and Manage Human Capital"; relation="capability_references_framework"; ref="6.0 Develop and Manage Human Capital"
+Rel(CAP_CORP_03, FW_APQC, "11.0 Manage External Relationships")
+' aac rel: source="CAP_CORP_03"; target="FW_APQC"; label="11.0 Manage External Relationships"; relation="capability_references_framework"; ref="11.0 Manage External Relationships"
+Rel(CAP_CORP_04, FW_APQC, "9.0 Acquire, Construct and Manage Assets")
+' aac rel: source="CAP_CORP_04"; target="FW_APQC"; label="9.0 Acquire, Construct and Manage Assets"; relation="capability_references_framework"; ref="9.0 Acquire, Construct and Manage Assets"
+Rel(CAP_CORP_05, FW_APQC, "11.0 Manage External Relationships")
+' aac rel: source="CAP_CORP_05"; target="FW_APQC"; label="11.0 Manage External Relationships"; relation="capability_references_framework"; ref="11.0 Manage External Relationships"
+
+SHOW_LEGEND()
+@enduml

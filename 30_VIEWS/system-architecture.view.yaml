@@ -1,0 +1,61 @@
+view_id: system-architecture
+title: "{system} — Architecture"
+category: Application
+section: Products and systems
+kind: diagram
+description: >
+  One system, the systems it talks to, and the technology it runs on. The most
+  common whiteboard diagram, generated from the model for any system.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+parameters:
+  - name: system
+    type: systems
+    required: true
+    description: The system this diagram is about
+
+group_by: type
+
+scope:
+  include:
+    - type: systems
+      where:
+        id_in: ["{system}"]
+  expand:
+    # One hop, and only these three relations. A neighborhood is what Focus is
+    # for; this is a designed picture, so what it shows is chosen.
+    - relation: interfaces
+      depth: 1
+      types: [systems]
+    - relation: system_uses_tech_service
+      depth: 1
+      types: [tech_services]
+    - relation: system_reads_writes
+      depth: 1
+      types: [data_assets]
+
+edges:
+  - via: interfaces
+    label: protocol
+  - via: system_uses_tech_service
+    text: runs on
+  - via: system_reads_writes
+    label: operation
+
+style:
+  color_by: type
+
+limits:
+  max_nodes: 40
+
+# One committed diagram per system that matters. A high-criticality system with
+# no architecture diagram is exactly the gap this closes, so the selection is
+# the criticality rather than a hand-kept list.
+render_for:
+  parameter: system
+  type: systems
+  where:
+    criticality: [High]
+    status: [Active, Planned]

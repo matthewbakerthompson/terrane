@@ -1,0 +1,45 @@
+@startuml
+' Merchant Portal — Onboarding
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Merchant Portal — Onboarding
+
+AddElementTag("offered_interfaces", $bgColor="#e6ecff", $borderColor="#6366f1", $fontColor="#0f172a", $legendText="offered interface")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddRelTag("api-call", $legendText="API call")
+AddRelTag("event", $legendText="Event on the bus")
+AddRelTag("own-datastore", $legendText="Its own datastore")
+
+Boundary(b_Azure, "Azure") {
+  Boundary(b_Azure__azure_payments_prod, "subscription azure-payments-prod") {
+    Boundary(b_Azure__azure_payments_prod__uksouth, "region uksouth") {
+      System(SYS_MERCHANT_EVENTS, "Merchant Portal Event Publisher", "Publishes Merchant Portal domain events onto the enterprise bus. Built with Service Bus.", $tags="systems")
+      ' aac SYS_MERCHANT_EVENTS: company_domain="Payments"; hosting="Azure"; technology="Service Bus"
+      Boundary(b_Azure__azure_payments_prod__uksouth__Private_App, "Private-App") {
+        System(OI_MERCHANT_API, "Merchant Portal API", "The domain API Merchant Portal offers its channels, its jobs and its partners. Built with HTTPS.", $tags="offered_interfaces")
+        ' aac OI_MERCHANT_API: company_domain="Payments"; technology="HTTPS"
+        System(SYS_MERCHANT_API, "Merchant Portal Service", "Domain API for the merchant portal: applications, settlement inquiries, chargeback responses and statement downloads. Built with AKS · Merchant Portal Cache.", $tags="systems")
+        ' aac SYS_MERCHANT_API: company_domain="Payments"; hosting="Azure"; technology="AKS · Merchant Portal Cache"
+        System(SYS_MERCHANT_WEB, "Merchant Portal Web", "Customer-facing front end for Merchant Portal. Built with AKS.", $tags="systems")
+        ' aac SYS_MERCHANT_WEB: company_domain="Payments"; hosting="Azure"; technology="AKS"
+      }
+      Boundary(b_Azure__azure_payments_prod__uksouth__Private_Data, "Private-Data") {
+        System(SYS_MERCHANT_STORE, "Merchant Portal Database", "Relational database for Merchant Portal, encrypted with a customer managed key. Built with Azure SQL.", $tags="systems")
+        ' aac SYS_MERCHANT_STORE: company_domain="Payments"; hosting="Azure"; technology="Azure SQL"
+      }
+    }
+  }
+}
+
+Rel(SYS_MERCHANT_WEB, OI_MERCHANT_API, "Merchant Portal Web to API", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_MERCHANT_WEB"; target="OI_MERCHANT_API"; label="Merchant Portal Web to API"; interface_id="INT-MERCHANT-WEB-API"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-MERCHANT-API"
+Rel(SYS_MERCHANT_API, SYS_MERCHANT_STORE, "Merchant Portal Service to Database", "TDS", $tags="own-datastore")
+' aac rel: source="SYS_MERCHANT_API"; target="SYS_MERCHANT_STORE"; label="Merchant Portal Service to Database"; interface_id="INT-MERCHANT-API-STORE"; kind="own-datastore"; integration_style="Request-response"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_MERCHANT_API, SYS_MERCHANT_EVENTS, "Merchant Portal Service to Event Publisher", "AMQP", $tags="event")
+' aac rel: source="SYS_MERCHANT_API"; target="SYS_MERCHANT_EVENTS"; label="Merchant Portal Service to Event Publisher"; interface_id="INT-MERCHANT-API-EVENTS"; kind="event"; integration_style="Event"; frequency="Realtime"; direction="Outbound"
+Rel(OI_MERCHANT_API, SYS_MERCHANT_API, "offered by")
+' aac rel: source="OI_MERCHANT_API"; target="SYS_MERCHANT_API"; label="offered by"; field="system_id"
+
+SHOW_LEGEND()
+@enduml

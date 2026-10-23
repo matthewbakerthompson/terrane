@@ -1,0 +1,58 @@
+@startuml
+' Onboard the identity verification vendor — Footprint
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Onboard the identity verification vendor — Footprint
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("work_packages", $bgColor="#ccfbf1", $borderColor="#0d9488", $fontColor="#0f172a", $legendText="work package")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_SEC_01, "Identity & Access Management", "Govern who can access what, and evidence it.", $tags="capabilities")
+  ' aac CAP_SEC_01: company_domain="Cross-Functional Services"
+}
+Boundary(b_Process, "Process") {
+  System(P_SERVICING_005, "Authenticate cardholder", "Authenticate a cardholder to policy before disclosing information or executing a change. Authentication strength scales with request risk; failures route to step-up rather than disclosure, and the policy is tuned with the fraud team.", $tags="processes")
+  ' aac P_SERVICING_005: company_domain=""
+  System(P_INFOSEC_001, "Provision and certify access", "Grant, review, and certify access to systems and data. Access follows least privilege with owner approval; the quarterly certification and automatic revocation of uncertified access are the controls CRI assesses.", $tags="processes")
+  ' aac P_INFOSEC_001: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_IDENTITY_SVC, "Customer Identity Service", "Shared platform service: Customer Identity Service. Built with AKS.", $tags="systems")
+  ' aac SYS_IDENTITY_SVC: company_domain="Enterprise Platform"; hosting="Azure"; technology="AKS"
+  System_Ext(SYS_IDV_VENDOR, "Identity Document Verification", "Document and liveness verification, operated by Onfido in their own tenancy. Contractually pinned to EU processing; images are deleted at the vendor once the result is returned. Built with Onfido.", $tags="systems")
+  ' aac SYS_IDV_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="Onfido"
+  System(SYS_IDV_GATEWAY, "Identity Document Verification Integration Gateway", "Our side of the Onfido integration: request mapping, retry and back-off, circuit breaking when the vendor is down, and the audit trail of what we sent them. Built with AKS.", $tags="systems")
+  ' aac SYS_IDV_GATEWAY: company_domain="Risk and Compliance"; hosting="Azure"; technology="AKS"
+  System(SYS_IDV_EGRESS, "Identity Document Verification Private Egress", "PrivateLink endpoint and egress allow-list for Onfido. The control that keeps regulated data off the public internet, and the thing a security review asks to see first.", $tags="systems")
+  ' aac SYS_IDV_EGRESS: company_domain="Enterprise Platform"; hosting="Azure"
+  System(SYS_IDV_WEBHOOKS, "Identity Document Verification Webhook Listener", "Receives Onfido callbacks, verifies their signature, and forwards the event. Public by necessity, small by design. Built with AKS.", $tags="systems")
+  ' aac SYS_IDV_WEBHOOKS: company_domain="Risk and Compliance"; hosting="Azure"; technology="AKS"
+}
+Boundary(b_Work_Package, "Work Package") {
+  System(WP_IDV_ONBOARD, "Onboard the identity verification vendor", "Buy document and liveness verification rather than build it: the vendor tenancy, the gateway, the private path to the vendor, and the webhook listener that hands results back to the identity service.", $tags="work_packages")
+  ' aac WP_IDV_ONBOARD: company_domain="Risk and Compliance"
+}
+
+Rel(WP_IDV_ONBOARD, SYS_IDV_VENDOR, "Builds")
+' aac rel: source="WP_IDV_ONBOARD"; target="SYS_IDV_VENDOR"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_IDV_ONBOARD, SYS_IDV_GATEWAY, "Builds")
+' aac rel: source="WP_IDV_ONBOARD"; target="SYS_IDV_GATEWAY"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_IDV_ONBOARD, SYS_IDV_EGRESS, "Builds")
+' aac rel: source="WP_IDV_ONBOARD"; target="SYS_IDV_EGRESS"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_IDV_ONBOARD, SYS_IDV_WEBHOOKS, "Builds")
+' aac rel: source="WP_IDV_ONBOARD"; target="SYS_IDV_WEBHOOKS"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_IDV_ONBOARD, SYS_IDENTITY_SVC, "Changes")
+' aac rel: source="WP_IDV_ONBOARD"; target="SYS_IDENTITY_SVC"; label="Changes"; relation="work_package_affects_system"; effect="Changes"
+Rel(SYS_IDENTITY_SVC, CAP_SEC_01, "realizes")
+' aac rel: source="SYS_IDENTITY_SVC"; target="CAP_SEC_01"; label="realizes"; relation="system_realizes_capability"
+Rel(P_SERVICING_005, CAP_SEC_01, "supports")
+' aac rel: source="P_SERVICING_005"; target="CAP_SEC_01"; label="supports"; relation="process_supports_capability"
+Rel(P_INFOSEC_001, CAP_SEC_01, "supports")
+' aac rel: source="P_INFOSEC_001"; target="CAP_SEC_01"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

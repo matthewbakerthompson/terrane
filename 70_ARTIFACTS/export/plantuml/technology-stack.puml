@@ -1,0 +1,211 @@
+@startuml
+' Technology Stack
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Technology Stack
+
+AddElementTag("tech_services", $bgColor="#fed7aa", $borderColor="#c2410c", $fontColor="#0f172a", $legendText="technology service")
+
+Boundary(b_AWS, "AWS") {
+  Boundary(b_AWS__AI, "AI") {
+    Deployment_Node(TS_AWS_BEDROCK, "Amazon Bedrock", "Foundation model service", "Managed access to foundation models (Amazon Nova, Claude, Llama and others) inside the account's own data boundary.", $tags="tech_services") {
+      ' aac TS_AWS_BEDROCK: company_domain="Enterprise Platform"; technology="Foundation model service"
+    }
+  }
+  Boundary(b_AWS__Compute, "Compute") {
+    Deployment_Node(TS_AWS_EKS, "Amazon EKS", "Container platform", "Managed Kubernetes running the containerized workloads.", $tags="tech_services") {
+      ' aac TS_AWS_EKS: company_domain="Enterprise Platform"; technology="Container platform"
+    }
+  }
+  Boundary(b_AWS__Data, "Data") {
+    Deployment_Node(TS_AWS_RDS, "Amazon RDS for PostgreSQL", "Relational database", "Managed relational database, Multi-AZ, encrypted with a customer managed key.", $tags="tech_services") {
+      ' aac TS_AWS_RDS: company_domain="Enterprise Platform"; technology="Relational database"
+    }
+    Deployment_Node(TS_AWS_S3, "Amazon S3", "Object store", "Object storage for landing zones, artifacts and archives.", $tags="tech_services") {
+      ' aac TS_AWS_S3: company_domain="Enterprise Platform"; technology="Object store"
+    }
+  }
+  Boundary(b_AWS__Governance, "Governance") {
+    Deployment_Node(TS_AWS_ORG, "AWS Organizations", "Infrastructure as code", "Account vending, service control policies and consolidated billing.", $tags="tech_services") {
+      ' aac TS_AWS_ORG: company_domain="Enterprise Platform"; technology="Infrastructure as code"
+    }
+  }
+  Boundary(b_AWS__Integration, "Integration") {
+    Deployment_Node(TS_AWS_APIGW, "Amazon API Gateway", "API gateway", "The managed front door every AWS-hosted API is published through.", $tags="tech_services") {
+      ' aac TS_AWS_APIGW: company_domain="Enterprise Platform"; technology="API gateway"
+    }
+    Deployment_Node(TS_AWS_MSK, "Amazon MSK", "Event stream", "Managed Kafka carrying domain events between products.", $tags="tech_services") {
+      ' aac TS_AWS_MSK: company_domain="Enterprise Platform"; technology="Event stream"
+    }
+    Deployment_Node(TS_AWS_SQS, "Amazon SQS", "Message queue", "Managed queues between a product's own services, where a message is owed to one consumer rather than published to any.", $tags="tech_services") {
+      ' aac TS_AWS_SQS: company_domain="Enterprise Platform"; technology="Message queue"
+    }
+  }
+  Boundary(b_AWS__Network, "Network") {
+    Deployment_Node(TS_AWS_CLOUDFRONT, "Amazon CloudFront and WAF", "Content delivery network", "Edge distribution and the web application firewall in front of it.", $tags="tech_services") {
+      ' aac TS_AWS_CLOUDFRONT: company_domain="Enterprise Platform"; technology="Content delivery network"
+    }
+    Deployment_Node(TS_AWS_ALB, "Application Load Balancer", "Load balancer", "Terminates TLS and routes to the application tier.", $tags="tech_services") {
+      ' aac TS_AWS_ALB: company_domain="Enterprise Platform"; technology="Load balancer"
+    }
+  }
+  Boundary(b_AWS__Operations, "Operations") {
+    Deployment_Node(TS_AWS_CLOUDWATCH, "Amazon CloudWatch", "Observability", "Metrics, logs and alarms for every workload in the landing zone.", $tags="tech_services") {
+      ' aac TS_AWS_CLOUDWATCH: company_domain="Enterprise Platform"; technology="Observability"
+    }
+  }
+  Boundary(b_AWS__Security, "Security") {
+    Deployment_Node(TS_AWS_KMS, "AWS KMS", "Key management", "Customer managed keys for data at rest.", $tags="tech_services") {
+      ' aac TS_AWS_KMS: company_domain="Enterprise Platform"; technology="Key management"
+    }
+    Deployment_Node(TS_AWS_SECRETS, "AWS Secrets Manager", "Secrets manager", "Application credentials and rotation.", $tags="tech_services") {
+      ' aac TS_AWS_SECRETS: company_domain="Enterprise Platform"; technology="Secrets manager"
+    }
+  }
+}
+Boundary(b_Azure, "Azure") {
+  Boundary(b_Azure__AI, "AI") {
+    Deployment_Node(TS_AZURE_FOUNDRY, "Microsoft Foundry", "Foundation model service", "Managed access to foundation models (OpenAI, Microsoft MAI, Claude and others), formerly Azure OpenAI Service and Azure AI Foundry.", $tags="tech_services") {
+      ' aac TS_AZURE_FOUNDRY: company_domain="Enterprise Platform"; technology="Foundation model service"
+    }
+  }
+  Boundary(b_Azure__Compute, "Compute") {
+    Deployment_Node(TS_AZURE_AKS, "Azure Kubernetes Service", "Container platform", "Managed Kubernetes hosting the containerized estate.", $tags="tech_services") {
+      ' aac TS_AZURE_AKS: company_domain="Enterprise Platform"; technology="Container platform"
+    }
+  }
+  Boundary(b_Azure__Data, "Data") {
+    Deployment_Node(TS_AZURE_SQL, "Azure SQL Database", "Relational database", "Managed relational database for operational datastores.", $tags="tech_services") {
+      ' aac TS_AZURE_SQL: company_domain="Enterprise Platform"; technology="Relational database"
+    }
+  }
+  Boundary(b_Azure__Integration, "Integration") {
+    Deployment_Node(TS_AZURE_APIM, "Azure API Management", "API gateway", "The API gateway every internal and partner API is published through.", $tags="tech_services") {
+      ' aac TS_AZURE_APIM: company_domain="Enterprise Platform"; technology="API gateway"
+    }
+    Deployment_Node(TS_AZURE_EVENTHUBS, "Azure Event Hubs", "Event stream", "Managed event streaming carrying a product's domain events to the workers that consume them.", $tags="tech_services") {
+      ' aac TS_AZURE_EVENTHUBS: company_domain="Enterprise Platform"; technology="Event stream"
+    }
+    Deployment_Node(TS_AZURE_SERVICEBUS, "Azure Service Bus", "Message queue", "Enterprise messaging backbone for domain events.", $tags="tech_services") {
+      ' aac TS_AZURE_SERVICEBUS: company_domain="Enterprise Platform"; technology="Message queue"
+    }
+  }
+  Boundary(b_Azure__Network, "Network") {
+    Deployment_Node(TS_AZURE_PRIVATELINK, "Azure Private Link", "Private egress", "Private endpoints to bought services, so the only path our data takes to a vendor never touches the public internet.", $tags="tech_services") {
+      ' aac TS_AZURE_PRIVATELINK: company_domain="Enterprise Platform"; technology="Private egress"
+    }
+    Deployment_Node(TS_AZURE_VWAN, "Azure Virtual WAN hub", "Transit hub", "The hub every virtual network attaches to, and the route back to the data center.", $tags="tech_services") {
+      ' aac TS_AZURE_VWAN: company_domain="Enterprise Platform"; technology="Transit hub"
+    }
+  }
+  Boundary(b_Azure__Operations, "Operations") {
+    Deployment_Node(TS_AZURE_MONITOR, "Azure Monitor", "Observability", "Metrics, logs and alerts for the Azure-hosted estate.", $tags="tech_services") {
+      ' aac TS_AZURE_MONITOR: company_domain="Enterprise Platform"; technology="Observability"
+    }
+  }
+  Boundary(b_Azure__Security, "Security") {
+    Deployment_Node(TS_AZURE_KEYVAULT, "Azure Key Vault", "Secrets manager", "Secret, key and certificate management.", $tags="tech_services") {
+      ' aac TS_AZURE_KEYVAULT: company_domain="Enterprise Platform"; technology="Secrets manager"
+    }
+  }
+}
+Boundary(b_Data, "Data") {
+  Deployment_Node(TS_SNOWFLAKE, "Snowflake", "Data warehouse", "The enterprise warehouse and analytics compute.", $tags="tech_services") {
+    ' aac TS_SNOWFLAKE: company_domain="Data and Analytics"; technology="Data warehouse"
+  }
+}
+Boundary(b_GCP, "GCP") {
+  Boundary(b_GCP__AI, "AI") {
+    Deployment_Node(TS_GCP_GEMINI_PLATFORM, "Gemini Enterprise Agent Platform", "Foundation model service", "Managed access to foundation models (Gemini, Gemma, Claude and others) through Model Garden, formerly Vertex AI.", $tags="tech_services") {
+      ' aac TS_GCP_GEMINI_PLATFORM: company_domain="Enterprise Platform"; technology="Foundation model service"
+    }
+  }
+  Boundary(b_GCP__Compute, "Compute") {
+    Deployment_Node(TS_GCP_GKE, "Google Kubernetes Engine", "Container platform", "Managed Kubernetes for the containerized estate on Google Cloud, an Autopilot cluster per workload project.", $tags="tech_services") {
+      ' aac TS_GCP_GKE: company_domain="Enterprise Platform"; technology="Container platform"
+    }
+  }
+  Boundary(b_GCP__Data, "Data") {
+    Deployment_Node(TS_GCP_BIGQUERY, "BigQuery", "Data warehouse", "Serverless warehouse; one dataset per data product, customer-managed keys, authorized views for the semantic layer.", $tags="tech_services") {
+      ' aac TS_GCP_BIGQUERY: company_domain="Enterprise Platform"; technology="Data warehouse"
+    }
+    Deployment_Node(TS_GCP_CLOUD_SQL, "Cloud SQL for PostgreSQL", "Relational database", "Managed PostgreSQL with regional high availability, the product datastore of the zone.", $tags="tech_services") {
+      ' aac TS_GCP_CLOUD_SQL: company_domain="Enterprise Platform"; technology="Relational database"
+    }
+    Deployment_Node(TS_GCP_DATAFLOW, "Dataflow", "Data pipeline", "Managed batch and streaming jobs, the curation engine of a data product on this side.", $tags="tech_services") {
+      ' aac TS_GCP_DATAFLOW: company_domain="Enterprise Platform"; technology="Data pipeline"
+    }
+    Deployment_Node(TS_GCP_LOOKER, "Looker", "Business intelligence", "The governed semantic layer and the dashboards over BigQuery.", $tags="tech_services") {
+      ' aac TS_GCP_LOOKER: company_domain="Enterprise Platform"; technology="Business intelligence"
+    }
+    Deployment_Node(TS_GCP_MEMORYSTORE, "Memorystore for Redis", "Cache", "Managed Redis for the session and lookup caches a product keeps beside its datastore.", $tags="tech_services") {
+      ' aac TS_GCP_MEMORYSTORE: company_domain="Enterprise Platform"; technology="Cache"
+    }
+  }
+  Boundary(b_GCP__Integration, "Integration") {
+    Deployment_Node(TS_GCP_APIGEE, "Apigee", "API gateway", "The API gateway every internal and partner API on Google Cloud is published through; dealer and merchant integrations terminate here.", $tags="tech_services") {
+      ' aac TS_GCP_APIGEE: company_domain="Enterprise Platform"; technology="API gateway"
+    }
+    Deployment_Node(TS_GCP_COMPOSER, "Cloud Composer", "Workflow orchestration", "Managed Airflow, the schedule a data product's jobs run on.", $tags="tech_services") {
+      ' aac TS_GCP_COMPOSER: company_domain="Enterprise Platform"; technology="Workflow orchestration"
+    }
+    Deployment_Node(TS_GCP_MANAGED_KAFKA, "Managed Service for Apache Kafka", "Event stream", "Ordered, replayable event streams for the products that need to re-read what happened; the stream kind of the landing zone.", $tags="tech_services") {
+      ' aac TS_GCP_MANAGED_KAFKA: company_domain="Enterprise Platform"; technology="Event stream"
+    }
+    Deployment_Node(TS_GCP_PUBSUB, "Pub/Sub", "Message queue", "The enterprise bus on Google Cloud, topics and subscriptions with at-least-once delivery; the queue kind of the landing zone.", $tags="tech_services") {
+      ' aac TS_GCP_PUBSUB: company_domain="Enterprise Platform"; technology="Message queue"
+    }
+  }
+  Boundary(b_GCP__Network, "Network") {
+    Deployment_Node(TS_GCP_CLOUD_CDN, "Cloud CDN", "Content delivery network", "Edge caching for the static parts of a product's channel, in front of the external load balancer.", $tags="tech_services") {
+      ' aac TS_GCP_CLOUD_CDN: company_domain="Enterprise Platform"; technology="Content delivery network"
+    }
+    Deployment_Node(TS_GCP_CLOUD_LB, "Cloud Load Balancing", "Load balancer", "Global external and regional internal load balancers; the external ones carry Cloud Armor.", $tags="tech_services") {
+      ' aac TS_GCP_CLOUD_LB: company_domain="Enterprise Platform"; technology="Load balancer"
+    }
+    Deployment_Node(TS_GCP_PSC, "Private Service Connect", "Private egress", "Private endpoints to Google services and to vendors who publish one, so nothing of ours reaches them over the internet.", $tags="tech_services") {
+      ' aac TS_GCP_PSC: company_domain="Enterprise Platform"; technology="Private egress"
+    }
+  }
+  Boundary(b_GCP__Operations, "Operations") {
+    Deployment_Node(TS_GCP_BACKUP_DR, "Backup and DR Service", "Backup and recovery", "Scheduled backups of the datastores and disks in the zone, retained in a second region.", $tags="tech_services") {
+      ' aac TS_GCP_BACKUP_DR: company_domain="Enterprise Platform"; technology="Backup and recovery"
+    }
+    Deployment_Node(TS_GCP_MONITORING, "Cloud Monitoring", "Observability", "Metrics, logs and traces for everything in the organization, the Cloud Operations suite scoped per workload project.", $tags="tech_services") {
+      ' aac TS_GCP_MONITORING: company_domain="Enterprise Platform"; technology="Observability"
+    }
+  }
+  Boundary(b_GCP__Security, "Security") {
+    Deployment_Node(TS_GCP_CLOUD_ARMOR, "Cloud Armor", "Web application firewall", "Web application firewall and DDoS protection in front of every external load balancer.", $tags="tech_services") {
+      ' aac TS_GCP_CLOUD_ARMOR: company_domain="Enterprise Platform"; technology="Web application firewall"
+    }
+    Deployment_Node(TS_GCP_KMS, "Cloud KMS", "Key management", "Customer-managed encryption keys for every datastore in the zone, one key ring per workload project.", $tags="tech_services") {
+      ' aac TS_GCP_KMS: company_domain="Enterprise Platform"; technology="Key management"
+    }
+    Deployment_Node(TS_GCP_SECRET_MANAGER, "Secret Manager", "Secrets manager", "Application secrets, read by workload identity rather than by key.", $tags="tech_services") {
+      ' aac TS_GCP_SECRET_MANAGER: company_domain="Enterprise Platform"; technology="Secrets manager"
+    }
+  }
+  Boundary(b_GCP__Storage, "Storage") {
+    Deployment_Node(TS_GCP_GCS, "Cloud Storage", "Object store", "Object storage, one bucket per product with uniform access and customer-managed keys.", $tags="tech_services") {
+      ' aac TS_GCP_GCS: company_domain="Enterprise Platform"; technology="Object store"
+    }
+  }
+}
+Boundary(b_Governance, "Governance") {
+  Deployment_Node(TS_COLLIBRA, "Collibra", "Data catalog", "Governance catalog and the intended system of record for metadata.", $tags="tech_services") {
+    ' aac TS_COLLIBRA: company_domain="Data and Analytics"; technology="Data catalog"
+  }
+  Deployment_Node(TS_SERVICENOW, "ServiceNow", "Service management", "Service management and the configuration management database. The CMDB is the intended long-term system of record for the application inventory and is not trusted for that purpose yet. See AAC-06.", $tags="tech_services") {
+    ' aac TS_SERVICENOW: company_domain="Enterprise Platform"; technology="Service management"
+  }
+}
+Boundary(b_Security, "Security") {
+  Deployment_Node(TS_ENTRA_ID, "Microsoft Entra ID", "Identity provider", "Workforce and customer identity provider.", $tags="tech_services") {
+    ' aac TS_ENTRA_ID: company_domain="Enterprise Platform"; technology="Identity provider"
+  }
+}
+
+SHOW_LEGEND()
+@enduml

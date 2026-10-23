@@ -1,0 +1,21 @@
+# How a change reaches production.
+#
+# Missing from most architecture diagrams and present in every incident review,
+# which is a reasonable argument for drawing it.
+
+- building_block_id: delivery-pipeline
+  name: Delivery pipeline
+  category: Operations
+  description: >
+    Build, infrastructure definition, and the service management record of what changed. A production dependency whether or not anybody has drawn it as one.
+  provides:
+    - component: ci-cd
+    - component: iac
+    - component: itsm
+  relations:
+    - from: ci-cd
+      to: iac
+    - from: ci-cd
+      to: itsm
+  defaults:
+    network_zone: Shared-Services

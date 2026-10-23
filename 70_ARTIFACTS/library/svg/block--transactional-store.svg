@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="353.4" viewBox="0 0 1100 353.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Transactional store</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Transactional store</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   3 nodes · 2 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">A relational database with backup and key management. The three arrive together because a database without the other two is a recovery objective nobody can</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">meet and an encryption claim nobody can support.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(349 111.7)">
+<g class="edge" data-id="e0::relational-db::backup">
+<path d="M179 36 L219.48 36" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M223 36 L213.43 40.78 L213.43 31.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e1::relational-db::kms">
+<path d="M179 51 L187 51 A8 8 0 0 1 195 59 L195 91 A10 10 0 0 0 205 101 L219.48 101" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M223 101 L213.43 105.78 L213.43 96.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="relational-db" data-type="tech_services">
+<title>Relational database</title>
+<path d="M12 20 L123.31 20 L179 67 L67.69 67 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="91.5" y="42.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Relational database</text>
+<text x="95.5" y="61.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Amazon RDS or Aurora · Azure SQL Data…</text>
+<svg x="150" y="25" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M8 3c3.3 0 5 .9 5 2s-1.7 2-5 2-5-.9-5-2 1.7-2 5-2z M3 5v6c0 1.1 1.7 2 5 2s5-.9 5-2V5" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="backup" data-type="tech_services">
+<title>Backup and recovery</title>
+<path d="M223 12 L334.31 12 L390 59 L278.69 59 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="302.5" y="34.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Backup and recovery</text>
+<text x="306.5" y="53.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AWS Backup · Azure Backup · Backup an…</text>
+<svg x="361" y="17" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M2.5 11a5.5 5.5 0 0 1 11 0 M8 11l2.5-4" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="kms" data-type="tech_services">
+<title>Key management</title>
+<path d="M223 77 L334.31 77 L390 124 L278.69 124 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="302.5" y="99.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Key management</text>
+<text x="306.5" y="118.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AWS KMS · Azure Key Vault · Cloud KMS</text>
+<svg x="361" y="82" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M8 2l5 2v4c0 3-2.2 5.2-5 6-2.8-.8-5-3-5-6V4z" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="251.4" x2="1072" y2="251.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="275.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 264.4)" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"><path d="M5 1h14l-4 12H1z"/></g>
+<text x="93.2" y="275.4" font-size="12" font-weight="400" fill="#343d50">technology service · 3</text>
+<text x="28" y="297.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 286.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="297.4" font-size="12" font-weight="400" fill="#343d50">connects to</text>
+<text x="28" y="331.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · block--transactional-store · edit the model, not the picture</text></g>
+</svg>

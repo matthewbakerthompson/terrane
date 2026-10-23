@@ -1,0 +1,2609 @@
+# The process inventory.
+#
+# Imported from the business architecture repository by
+# `50_ENGINE/tools/import_business_layer.py`. The steps, the flows and the
+# BPMN stay there; what is here is the process and what it touches, which is
+# enough to draw a system's reach across the organization. Every one is
+# Proposed: a straw-man drafted against the reference frameworks, waiting
+# for the workshop that corrects it.
+
+- process_id: P-APPDEV-001
+  name: Refine and prioritize the product backlog
+  description: Break approved demand into sized, ordered work items with acceptance criteria, and agree the next increment with the business owner.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-APPDEV
+  business_unit: Appdev
+  criticality: Medium
+  risk_level: Low
+  trigger: Scheduled
+  frequency: Weekly
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-APPDEV-002
+  name: Design and build a software increment
+  description: Design, implement, and unit-test a work item to its acceptance criteria within the agreed architecture and standards.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-APPDEV
+  business_unit: Appdev
+  criticality: High
+  risk_level: Medium
+  trigger: Upstream-process
+  frequency: Weekly
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-APPDEV-003
+  name: Review and merge code
+  description: Peer-review a change for correctness, security, and standards before it is merged to the main line. Merge rights sit with reviewers, not authors, which is the segregation the change-control audit tests; review evidence stays on the pull request.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-APPDEV
+  business_unit: Appdev
+  criticality: High
+  risk_level: Medium
+  trigger: Event-driven
+  frequency: Daily
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-APPDEV-004
+  name: Run the build and deployment pipeline
+  description: Build, package, scan, and promote a change through environments automatically, with gates that stop a failing build.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-APPDEV
+  business_unit: Appdev
+  criticality: High
+  risk_level: Medium
+  trigger: Event-driven
+  frequency: Daily
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-APPDEV-005
+  name: Scan code and dependencies for security defects
+  description: Run static, dependency, and secret scanning on every change and remediate findings within the applicable service level.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-APPDEV
+  business_unit: Appdev
+  criticality: High
+  risk_level: High
+  trigger: Event-driven
+  frequency: Daily
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-APPDEV-006
+  name: Manage technical debt
+  description: Record, size, and prioritize technical debt, and reserve capacity in each increment to retire it. Debt items live in the same backlog as features so the trade-off is visible at prioritization, not discovered at incident time.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-APPDEV
+  business_unit: Appdev
+  criticality: Medium
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Quarterly
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-APPDEV-007
+  name: Manage application configuration and feature flags
+  description: Control configuration and feature-flag changes so behavior can be changed or reverted without a code release, with an audit trail.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-APPDEV
+  business_unit: Appdev
+  criticality: Medium
+  risk_level: Medium
+  trigger: Event-driven
+  frequency: Weekly
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-APPDEV-008
+  name: Support a production application
+  description: Diagnose and fix application defects escalated from service management, and feed root causes back into the backlog.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-APPDEV
+  business_unit: Appdev
+  criticality: High
+  risk_level: Medium
+  trigger: Event-driven
+  frequency: Daily
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-APPDEV-009
+  name: Decommission an application
+  description: "Retire an application: migrate or archive its data to the retention schedule, remove interfaces and access, and update the inventory."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-APPDEV
+  business_unit: Appdev
+  criticality: Medium
+  risk_level: Medium
+  trigger: Manual
+  frequency: Ad hoc
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-CARD-PMT-001
+  name: Capture and apply cardholder payment
+  description: Accept a cardholder payment through any channel and apply it to the account on the correct effective date.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-PAYMENTS
+  business_unit: Payments
+  criticality: High
+  risk_level: High
+  trigger: Customer-initiated
+  frequency: Real-time
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-COLLECTIONS-001
+  name: Assign delinquency treatment strategy
+  description: Segment delinquent accounts and assign the contact and treatment strategy. Runs nightly after delinquency bucketing; the strategy drives queue, channel, intensity, and hardship routing, and a wrong assignment is a conduct risk as much as a loss risk.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RECOVER-VALUE
+  owner_org_id: ORG-COLLECTIONS
+  business_unit: Collections
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-COLLECTIONS-002
+  name: Execute outbound collections contact
+  description: Execute outbound contact attempts within contact-frequency and communication constraints. Contact windows, frequency caps, and channel consent come from FDCPA, Reg F, and TCPA; the process starts at queue release and ends when the disposition is recorded.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RECOVER-VALUE
+  owner_org_id: ORG-COLLECTIONS
+  business_unit: Collections
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-COLLECTIONS-003
+  name: Negotiate and administer payment arrangement
+  description: Agree, document, and administer a payment arrangement or settlement. Covers promises to pay, long-term arrangements, and settlements; terms must fit the approved matrix, and the arrangement drives bucket movement and interest treatment downstream.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RECOVER-VALUE
+  owner_org_id: ORG-COLLECTIONS
+  business_unit: Collections
+  criticality: High
+  risk_level: Medium
+  trigger: Customer-initiated
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-COLLECTIONS-004
+  name: Execute charge-off
+  description: Execute charge-off on policy timing and record the accounting effect. Timing follows the charge-off policy aligned to regulatory guidance; the entry moves the balance to charged-off status and hands the account to recovery placement.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RECOVER-VALUE
+  owner_org_id: ORG-COLLECTIONS
+  business_unit: Collections
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-COLLECTIONS-005
+  name: Furnish credit bureau data
+  description: Compile and furnish account data to the consumer reporting agencies. Monthly Metro 2 furnishing to the bureaus; accuracy is an FCRA obligation, and the file must reconcile to the system of record before transmission.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RECOVER-VALUE
+  owner_org_id: ORG-COLLECTIONS
+  business_unit: Collections
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-COLLECTIONS-006
+  name: Handle credit reporting dispute
+  description: Investigate and respond to a consumer credit reporting dispute within the required period. Direct and bureau-routed disputes both land here; FCRA sets the investigation window, and the outcome must correct both the bureau file and the account when the consumer is right.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RESOLVE-ISSUE
+  owner_org_id: ORG-COLLECTIONS
+  business_unit: Collections
+  criticality: High
+  risk_level: High
+  trigger: Regulatory
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-COLLECTIONS-007
+  name: Issue debt validation notice
+  description: Generate and deliver the required validation notice within the prescribed period. The validation notice is a statutory precondition to continued collection on affected accounts; timing and content mistakes surface directly as regulatory findings.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RECOVER-VALUE
+  owner_org_id: ORG-COLLECTIONS
+  business_unit: Collections
+  criticality: High
+  risk_level: High
+  trigger: Event-driven
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-COMPLIANCE-001
+  name: Assess and land regulatory change
+  description: Detect a regulatory change, assess applicability and impact, and drive implementation. Starts at horizon scanning and ends when the change is implemented and evidenced in the affected processes; applicability calls are documented even when the answer is not applicable.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-COMPLIANCE
+  business_unit: Compliance
+  criticality: High
+  risk_level: High
+  trigger: Regulatory
+  frequency: Ad hoc
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-COMPLIANCE-002
+  name: Execute compliance monitoring test
+  description: Execute a scheduled control test and record the result and any exceptions. Runs the monitoring schedule agreed with the compliance plan; exceptions become issues in remediation tracking with owners and dates rather than emails.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-COMPLIANCE
+  business_unit: Compliance
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Quarterly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-COMPLIANCE-003
+  name: Screen for sanctions and watchlists
+  description: Screen parties and transactions against sanctions and watchlists and adjudicate hits. Screening runs at onboarding and on list updates across cardholders, clients, and suppliers; a hit blocks processing until dispositioned, and the disposition is retained as evidence.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-COMPLIANCE
+  business_unit: Compliance
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-COMPLIANCE-004
+  name: Investigate and file suspicious activity report
+  description: Investigate an alert and, where warranted, prepare and file the regulatory report. The SAR decision and filing run on the BSA clock from alert qualification; the investigation file must stand on its own for examiner review, and filing is confidential by law.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-COMPLIANCE
+  business_unit: Compliance
+  criticality: High
+  risk_level: High
+  trigger: Threshold
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-COMPLIANCE-005
+  name: Analyze complaint signal for conduct risk
+  description: "Aggregate and analyze complaint data for unfair or deceptive practice risk. Feeds the UDAAP program: complaint taxonomy, root cause, and trend analysis across channels, including complaints held by servicing clients about serviced portfolios."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RESOLVE-ISSUE
+  owner_org_id: ORG-COMPLIANCE
+  business_unit: Compliance
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-CREDIT-001
+  name: Set and deploy credit decision strategy
+  description: Define, test, approve, and deploy changes to the credit decision strategy and its cutoffs. Strategy changes ship through champion-challenger testing with documented approval; the deployed strategy is the single decisioning authority for originations.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  owner_org_id: ORG-CREDIT
+  business_unit: Credit
+  criticality: High
+  risk_level: Medium
+  trigger: Manual
+  frequency: Quarterly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-CREDIT-002
+  name: Develop and validate credit model
+  description: Build, document, and validate credit and fraud models prior to production deployment. Development evidence, data lineage, and validation results follow model risk management expectations; nothing reaches production without an independent validation record.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-CREDIT
+  business_unit: Credit
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Annually
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-CREDIT-003
+  name: Execute credit line increase program
+  description: Identify eligible accounts and execute line increases under the approved strategy. Eligibility, ability-to-pay checks, and notice requirements are built into the program design; execution is batch with opt-out handling.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-CREDIT
+  business_unit: Credit
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-CREDIT-004
+  name: Execute credit line decrease or account action
+  description: Apply risk-driven line decreases or account actions, with required notice. Adverse action obligations apply to decreases and closures just as they do to declines; the notice must state the principal reasons and bureau information used.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-CREDIT
+  business_unit: Credit
+  criticality: High
+  risk_level: Medium
+  trigger: Threshold
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-CREDIT-005
+  name: Conduct monthly portfolio credit review
+  description: Review vintage, roll-rate, and segment performance against risk appetite and record the actions agreed at the portfolio credit review.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-CREDIT
+  business_unit: Credit
+  criticality: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-19
+  source: Business architecture repository
+
+- process_id: P-CREDIT-006
+  name: Produce loss forecast and allowance
+  description: Produce the credit loss forecast and set the allowance for the reporting period. The CECL forecast and allowance feed the financial statements; assumptions, overlays, and approvals are documented for both auditors and examiners.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-FINANCE
+  business_unit: Finance
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Quarterly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-CREDIT-007
+  name: Maintain authorization strategy
+  description: Define and deploy the rules governing real-time authorization decisions. Authorization strategy balances approval rates, fraud losses, and credit exposure in real time; changes deploy through the same testing discipline as origination strategy.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-CREDIT
+  business_unit: Credit
+  criticality: High
+  risk_level: High
+  trigger: Manual
+  frequency: Quarterly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-CREDIT-008
+  name: Perform account review and reissue decision
+  description: Review account risk periodically and decide reissue, close, or continue. Periodic account review drives reissue, line, and closure decisions at card expiry and on risk triggers; decisions carry the same notice obligations as any adverse action.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-CREDIT
+  business_unit: Credit
+  criticality: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-CREDIT-009
+  name: Acquire and refresh credit bureau data
+  description: Source consumer bureau data for prescreen, account review, and portfolio monitoring under permissible purpose, and manage refresh cadence and quality.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-CREDIT
+  business_unit: Credit
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-19
+  source: Business architecture repository
+
+- process_id: P-CUST-INQ-001
+  name: Handle cardholder inquiry
+  description: Receive, understand, and resolve a cardholder inquiry across any servicing channel. First-contact resolution is the design goal across phone, chat, and secure message; anything unresolved routes to a case with ownership and a promise date.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RESOLVE-ISSUE
+  owner_org_id: ORG-SERVICING
+  business_unit: Servicing
+  criticality: High
+  risk_level: Medium
+  trigger: Customer-initiated
+  frequency: Real-time
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-DATAENG-001
+  name: Ingest and integrate source data
+  description: Acquire, integrate, and land source data into the enterprise data platform. Ingestion lands source extracts into the platform with schema validation, lineage capture, and quality checks at the gate rather than downstream.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-DATAENG
+  business_unit: Dataeng
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-DATAENG-002
+  name: Deploy and monitor production model
+  description: Deploy an approved model to production and monitor its ongoing performance. Deployment follows model risk approval; monitoring covers drift, stability, and performance against the validation baseline, with retirement triggers agreed up front.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-ANALYTICS
+  business_unit: Analytics
+  criticality: High
+  risk_level: Medium
+  trigger: Upstream-process
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-DATAGOV-001
+  name: Onboard and classify data asset
+  description: Register a data asset, assign ownership, and classify it for handling. Onboarding assigns owner, steward, classification, and retention up front; the Collibra registration is the system of record this model's stub points at.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-DATAGOV
+  business_unit: Datagov
+  criticality: High
+  risk_level: Medium
+  trigger: Upstream-process
+  frequency: Weekly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-DATAGOV-002
+  name: Measure and remediate data quality
+  description: Measure data quality against defined expectations and drive remediation. Quality rules run against critical data elements with published thresholds; breaches create remediation work with the data owner, not just a dashboard entry.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-DATAGOV
+  business_unit: Datagov
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-DATAGOV-003
+  name: Publish metadata and lineage to catalog
+  description: Publish metadata, lineage, and ownership into the governance catalog. The catalog is where consumers discover data and its lineage; publication is part of change delivery, not an afterthought, so the catalog stays current by construction.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-DATAGOV
+  business_unit: Datagov
+  criticality: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-DATAGOV-004
+  name: Execute records retention and disposition
+  description: "Apply the retention schedule and execute defensible disposition of records. Disposition is defensible destruction: eligibility verified against holds, execution evidenced by certificate, and the retention schedule is the single authority."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-DATAGOV
+  business_unit: Datagov
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Quarterly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-DELQ-001
+  name: Detect and bucket delinquent account
+  description: Identify accounts that have missed a payment and assign them to the correct delinquency bucket. Bucketing runs in the nightly cycle and is the trigger for every downstream collections treatment; a bucketing error propagates into contact, reporting, and accounting.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RECOVER-VALUE
+  owner_org_id: ORG-COLLECTIONS
+  business_unit: Collections
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-DIGITAL-001
+  name: Enroll cardholder in digital servicing
+  description: Register and authenticate a cardholder for web and mobile self-service. Enrollment binds the cardholder to a verified identity with step-up options; weak enrollment is the account-takeover front door, so identity proofing follows the fraud strategy.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-DIGITAL
+  business_unit: Digital
+  criticality: High
+  risk_level: Medium
+  trigger: Customer-initiated
+  frequency: Real-time
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-DIGITAL-002
+  name: Serve digital self-service transaction
+  description: Execute a cardholder self-service action in web or mobile without agent involvement. Self-service actions execute against the same core services as agent actions, with the same entitlements; the channel changes, the control does not.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-DIGITAL
+  business_unit: Digital
+  criticality: High
+  risk_level: Medium
+  trigger: Customer-initiated
+  frequency: Real-time
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-DISPUTE-001
+  name: Process cardholder dispute claim
+  description: Take a cardholder dispute claim, apply provisional credit, investigate, determine, and notify within regulatory timers.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RESOLVE-ISSUE
+  owner_org_id: ORG-DISPUTE
+  business_unit: Dispute
+  criticality: High
+  risk_level: High
+  trigger: Customer-initiated
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-DISPUTE-002
+  name: Execute network chargeback
+  description: Submit and track a chargeback through the network within the applicable filing window. Chargeback rights and filing windows differ by network and reason code; a missed window converts a recoverable dispute into an issuer loss.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RESOLVE-ISSUE
+  owner_org_id: ORG-DISPUTE
+  business_unit: Dispute
+  criticality: High
+  risk_level: High
+  trigger: Upstream-process
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-DISPUTE-003
+  name: Process representment and pre-arbitration
+  description: Evaluate merchant representment and pursue pre-arbitration where warranted. Representment evidence is weighed against the reason code requirements; pre-arbitration is pursued only where the economics and the evidence support it.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RESOLVE-ISSUE
+  owner_org_id: ORG-DISPUTE
+  business_unit: Dispute
+  criticality: High
+  risk_level: Medium
+  trigger: Event-driven
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-DISPUTE-004
+  name: Finalize dispute determination and notify
+  description: "Make the final dispute determination, adjust the account, and issue the compliant notice. The determination closes the Reg E or Reg Z clock: account adjustment, provisional credit disposition, and the written explanation must all land within the window."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RESOLVE-ISSUE
+  owner_org_id: ORG-DISPUTE
+  business_unit: Dispute
+  criticality: High
+  risk_level: High
+  trigger: Upstream-process
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-EA-001
+  name: Maintain target-state architecture and roadmap
+  description: Define and refresh the target state for each domain and the sequenced roadmap to reach it, aligned to the investment plan.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-EA
+  business_unit: EA
+  criticality: Medium
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Quarterly
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-EA-002
+  name: Review solution architecture for an initiative
+  description: Assess a proposed solution against standards, target state, and risk before funding and again before build; record the decision.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-EA
+  business_unit: EA
+  criticality: High
+  risk_level: Medium
+  trigger: Upstream-process
+  frequency: Weekly
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-EA-003
+  name: Grant or decline an architecture exception
+  description: Evaluate a request to deviate from a standard, set conditions and expiry, and track the exception to closure.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-EA
+  business_unit: EA
+  criticality: Medium
+  risk_level: Medium
+  trigger: Event-driven
+  frequency: Weekly
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-EA-004
+  name: Maintain architecture standards and reference models
+  description: Author, review, version, and retire the standards and reference models that solution reviews are judged against.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-EA
+  business_unit: EA
+  criticality: Medium
+  risk_level: Low
+  trigger: Scheduled
+  frequency: Quarterly
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-EA-005
+  name: Assess technology lifecycle and rationalization
+  description: Rate each application and platform for tolerate, invest, migrate, or eliminate; identify duplication and end-of-support exposure.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-EA
+  business_unit: EA
+  criticality: Medium
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Annually
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-EA-006
+  name: Maintain the capability map and process inventory
+  description: "Keep the business architecture model current: harvest changes, run the quality gates, and publish the refreshed model to its consumers."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-EA
+  business_unit: EA
+  criticality: Medium
+  risk_level: Low
+  trigger: Scheduled
+  frequency: Quarterly
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-EA-007
+  name: Assess change impact of a proposed system change
+  description: Trace a proposed system or interface change to the processes, capabilities, and clients it affects, and brief the change authority.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-EA
+  business_unit: EA
+  criticality: High
+  risk_level: Medium
+  trigger: Event-driven
+  frequency: Weekly
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-EA-008
+  name: Evaluate and select a technology or platform
+  description: "Run the evaluation for a new technology or vendor platform: requirements, options, proof of concept, and a recommendation into procurement."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-EA
+  business_unit: EA
+  criticality: Medium
+  risk_level: Medium
+  trigger: Manual
+  frequency: Ad hoc
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-EA-009
+  name: Maintain the application and technology inventory
+  description: Keep the inventory of applications, platforms, and interfaces complete and attributed, including owner, tier, hosting, and lifecycle state.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-EA
+  business_unit: EA
+  criticality: Medium
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-FINANCE-001
+  name: Recognize interchange and servicing revenue
+  description: Calculate and recognize interchange, fee, and servicing revenue for the period. Revenue recognition follows the network and client contract terms; interchange, fees, and servicing revenue post to the ledger with support for audit.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-FINANCE
+  business_unit: Finance
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-FINANCE-002
+  name: Process supplier payment
+  description: Validate, approve, and execute payment to a supplier. Invoices match to contract and receipt before payment; approval limits and segregation of duties are the fraud controls the audit tests.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-FINANCE
+  business_unit: Finance
+  criticality: Medium
+  trigger: Event-driven
+  frequency: Weekly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-FRAUD-001
+  name: Detect and action transaction fraud alert
+  description: Detect a suspected fraudulent transaction, action the alert, and contact the cardholder. Alert handling runs against loss and customer-friction budgets; actions span block, reissue, and contact, and the clock matters because exposure grows per transaction.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-FRAUD
+  business_unit: Fraud
+  criticality: High
+  risk_level: High
+  trigger: Threshold
+  frequency: Real-time
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-FRAUD-002
+  name: Investigate and adjudicate fraud case
+  description: Investigate a suspected fraud case and reach a documented determination. The case determination separates true fraud from friendly fraud and abuse, drives the Reg E liability decision, and feeds the loss and strategy data.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RESOLVE-ISSUE
+  owner_org_id: ORG-FRAUD
+  business_unit: Fraud
+  criticality: High
+  risk_level: High
+  trigger: Upstream-process
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-FRAUD-003
+  name: Respond to account takeover event
+  description: Contain, remediate, and communicate an account takeover or identity compromise event. Account takeover response contains first, then remediates credentials, reverses fraudulent activity, and communicates with the cardholder; speed limits the loss.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RESOLVE-ISSUE
+  owner_org_id: ORG-FRAUD
+  business_unit: Fraud
+  criticality: High
+  risk_level: High
+  trigger: Event-driven
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-FRAUD-004
+  name: Recover and write off fraud loss
+  description: Pursue recovery of fraud losses and write off the residual with correct accounting. Recovery pursues merchants, networks, and other issuers where rights exist; the residual writes off to the fraud loss line with the accounting evidenced.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-FRAUD
+  business_unit: Fraud
+  criticality: High
+  risk_level: Medium
+  trigger: Upstream-process
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-FRAUD-005
+  name: Submit network fraud reporting
+  description: Compile and submit fraud reporting to the networks within required thresholds. Network fraud reporting (TC40, SAFE) has thresholds and deadlines; late or wrong reporting risks network compliance programs and fines.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-FRAUD
+  business_unit: Fraud
+  criticality: High
+  risk_level: Medium
+  trigger: Regulatory
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-FRAUD-006
+  name: Maintain fraud detection strategy
+  description: Define, test, and deploy changes to fraud detection rules and models. Strategy changes are tested against recent fraud and false-positive performance before deployment; every rule change is versioned and reversible.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-FRAUD
+  business_unit: Fraud
+  criticality: High
+  risk_level: Medium
+  trigger: Manual
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-FUNDING-001
+  name: Manage daily funding position
+  description: Determine, fund, and report the daily liquidity and funding position. The daily position covers settlement obligations, deposit flows, and contingency lines; a funding miss is a same-day escalation, not a report.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-TREASURY
+  business_unit: Treasury
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-GL-CLOSE-001
+  name: Execute monthly financial close
+  description: Complete the period-end close, including reconciliations, accruals, and reporting sign-off. The close calendar drives reconciliations, accruals, and sign-offs to the reporting deadline; open items age visibly and block sign-off past threshold.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-FINANCE
+  business_unit: Finance
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-INFOSEC-001
+  name: Provision and certify access
+  description: Grant, review, and certify access to systems and data. Access follows least privilege with owner approval; the quarterly certification and automatic revocation of uncertified access are the controls CRI assesses.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-INFOSEC
+  business_unit: Infosec
+  criticality: High
+  risk_level: High
+  trigger: Event-driven
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-INFOSEC-002
+  name: Detect and respond to security event
+  description: Detect, investigate, contain, and remediate a security event. Detection through containment runs the incident playbook with severity-driven escalation; the timeline is evidence for both the CRI assessment and any notification duty.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-INFOSEC
+  business_unit: Infosec
+  criticality: High
+  risk_level: High
+  trigger: Event-driven
+  frequency: Real-time
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-INFOSEC-003
+  name: Remediate vulnerability
+  description: Triage and remediate an identified vulnerability within the applicable service level. Severity sets the remediation SLA; breaches escalate rather than languish, and closure requires verification, not just a patch record.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-INFOSEC
+  business_unit: Infosec
+  criticality: High
+  risk_level: Medium
+  trigger: Threshold
+  frequency: Weekly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-INFOSEC-004
+  name: Maintain cardholder data scope and evidence
+  description: "Maintain the cardholder data environment scope and the supporting compliance evidence. PCI scope is maintained continuously: network segmentation, asset inventory, and evidence collection, so assessment is a report, not a scramble."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-INFOSEC
+  business_unit: Infosec
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Quarterly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-INTERCHANGE-POST-001
+  name: Post interchange and settlement entries
+  description: Calculate and post interchange and settlement accounting entries to the ledger. Interchange entries reconcile to network reports before posting; unexplained variances stop the post rather than flowing into revenue.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-SETTLEMENT
+  business_unit: Settlement
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-MARKETING-001
+  name: Build and permission prospect list
+  description: Source, screen, and permission prospect data for use in acquisition campaigns. Prospect data carries permissible-purpose and suppression obligations; the list that leaves this process is the compliant universe for everything downstream.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  owner_org_id: ORG-MARKETING
+  business_unit: Marketing
+  criticality: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-MARKETING-002
+  name: Construct and approve firm offer of credit
+  description: Define offer criteria and terms, and obtain compliance approval before release. A firm offer of credit commits the bank under FCRA; criteria, terms, and the compliance sign-off are locked before any channel sees the offer.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  owner_org_id: ORG-MARKETING
+  business_unit: Marketing
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-MARKETING-003
+  name: Execute acquisition campaign
+  description: Deploy the approved offer across selected channels and manage in-flight performance. In-flight management covers channel performance, budget, and suppression hygiene; changes to a live campaign re-enter compliance review when terms move.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  owner_org_id: ORG-MARKETING
+  business_unit: Marketing
+  criticality: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-MARKETING-004
+  name: Review marketing creative for compliance
+  description: Review creative, disclosures, and claims for regulatory adequacy before release. Review covers claims, disclosures, and UDAAP risk across every asset and channel; nothing ships without the documented sign-off this process exists to produce.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  owner_org_id: ORG-COMPLIANCE
+  business_unit: Compliance
+  criticality: High
+  risk_level: Medium
+  trigger: Upstream-process
+  frequency: Ad hoc
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-MARKETING-005
+  name: Review campaign performance and adjust targeting
+  description: Evaluate response, approval, and early vintage economics for in-flight campaigns and decide continue, adjust, or stop.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  owner_org_id: ORG-MARKETING
+  business_unit: Marketing
+  criticality: Low
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-19
+  source: Business architecture repository
+
+- process_id: P-NETWORK-RECON-001
+  name: Reconcile network settlement
+  description: Reconcile network settlement files against internal transaction and ledger positions and resolve breaks.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-SETTLEMENT
+  business_unit: Settlement
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-ORIG-001
+  name: Capture card application
+  description: Accept and validate a complete card application from any origination channel. Capture is complete when the application has every field decisioning needs and the applicant has the required disclosures; incomplete applications route to cure, not decline.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  owner_org_id: ORG-ORIG
+  business_unit: Orig
+  criticality: High
+  risk_level: High
+  trigger: Customer-initiated
+  frequency: Real-time
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-ORIG-002
+  name: Verify applicant identity and satisfy CIP
+  description: Verify the applicant's identity and record evidence satisfying customer identification obligations. CIP evidence is retained per BSA requirements; verification failures route to document request rather than automatic decline, and synthetic identity signals feed fraud screening.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  owner_org_id: ORG-ORIG
+  business_unit: Orig
+  criticality: High
+  risk_level: High
+  trigger: Upstream-process
+  frequency: Real-time
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-ORIG-003
+  name: Screen application for fraud
+  description: Score and adjudicate the application for synthetic, stolen, and first-party fraud risk. Fraud screening runs before credit decisioning so stolen and synthetic identities never consume a bureau pull; referred applications go to manual review with an SLA.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  owner_org_id: ORG-FRAUD
+  business_unit: Fraud
+  criticality: High
+  risk_level: High
+  trigger: Upstream-process
+  frequency: Real-time
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-ORIG-004
+  name: Execute credit decision
+  description: Apply the approved credit strategy to render an approve, decline, or counter-offer decision with a line assignment.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  owner_org_id: ORG-ORIG
+  business_unit: Orig
+  criticality: High
+  risk_level: High
+  trigger: Upstream-process
+  frequency: Real-time
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-ORIG-005
+  name: Issue adverse action notice
+  description: Generate and deliver a compliant adverse action or counter-offer notice within the required period. ECOA and FCRA set the notice content and the clock; the principal reasons must match the actual decision factors, which is exactly what fair-lending testing checks.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  owner_org_id: ORG-COMPLIANCE
+  business_unit: Compliance
+  criticality: High
+  risk_level: High
+  trigger: Event-driven
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-ORIG-006
+  name: Establish account and issue credentials
+  description: Open the account on the core platform and issue the card credential. Account establishment writes the account of record and triggers credential issuance; a failure here strands an approved applicant, which is why it carries a same-day SLA.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  owner_org_id: ORG-ORIG
+  business_unit: Orig
+  criticality: High
+  risk_level: High
+  trigger: Upstream-process
+  frequency: Real-time
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-ORIG-007
+  name: Manage card production and fulfillment
+  description: Oversee vendor-executed card personalization, production, and delivery, including inventory, service levels, and exception handling.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  owner_org_id: ORG-OPS
+  business_unit: Ops
+  criticality: High
+  risk_level: Medium
+  trigger: Upstream-process
+  frequency: Daily
+  last_reviewed: 2026-08-19
+  source: Business architecture repository
+
+- process_id: P-ORIG-008
+  name: Provision credential to digital wallet
+  description: Provision the card credential into a digital wallet or tokenized environment. Wallet provisioning runs the network token flows with step-up verification where risk requires; weak provisioning is a known fraud vector the strategy watches.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  owner_org_id: ORG-ORIG
+  business_unit: Orig
+  criticality: High
+  risk_level: Medium
+  trigger: Customer-initiated
+  frequency: Real-time
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-ORIG-009
+  name: Handle application withdrawal and abandonment
+  description: Manage applications withdrawn by the applicant or abandoned before completion. Withdrawn and abandoned applications still carry notice, retention, and bureau obligations; this process closes them compliantly instead of letting them age.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ACQUIRE-CUSTOMER
+  owner_org_id: ORG-ORIG
+  business_unit: Orig
+  criticality: Low
+  trigger: Threshold
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-PARTNERSHIPS-001
+  name: Fulfill issuing bank oversight obligations
+  description: Produce contracted reporting, respond to oversight requests, and manage obligations under the issuing bank agreement.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-PARTNERSHIPS
+  business_unit: Partnerships
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-19
+  source: Business architecture repository
+
+- process_id: P-PAYMENTS-001
+  name: Process authorization request
+  description: Receive, decision, and respond to a real-time authorization request within the network response window.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-PAYMENTS
+  business_unit: Payments
+  criticality: High
+  risk_level: High
+  trigger: Event-driven
+  frequency: Real-time
+  last_reviewed: 2026-08-19
+  source: Business architecture repository
+
+- process_id: P-PAYMENTS-002
+  name: Ingest clearing file and post transactions
+  description: Receive network clearing files and post transactions to cardholder accounts. Clearing ingestion matches presentments to authorizations, posts to accounts, and routes exceptions; the file must balance to network totals before posting completes.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-PAYMENTS
+  business_unit: Payments
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-PAYMENTS-003
+  name: Process returned payment and assess NSF
+  description: Handle returned and reversed payments and assess the associated fees. Return handling reverses the payment application, restores the balance, assesses any permitted fee, and feeds NSF patterns to risk; Reg E error claims can start here.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-PAYMENTS
+  business_unit: Payments
+  criticality: High
+  risk_level: Medium
+  trigger: Event-driven
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-PAYMENTS-004
+  name: Manage token and credential lifecycle
+  description: Issue, update, suspend, and delete payment tokens and credentials. Token lifecycle events flow between networks, wallets, and the account of record; a stale token strands the cardholder's wallet, so lifecycle sync is monitored.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-PAYMENTS
+  business_unit: Payments
+  criticality: High
+  risk_level: Medium
+  trigger: Event-driven
+  frequency: Real-time
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-PAYMENTS-005
+  name: Implement network mandate release
+  description: Assess and implement network mandate and release changes by the required date. Network mandates carry hard effective dates and fines for misses; assessment, build, and attestation are tracked per mandate from bulletin to production.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-PAYMENTS
+  business_unit: Payments
+  criticality: High
+  risk_level: Medium
+  trigger: Regulatory
+  frequency: Quarterly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-PRIVACY-001
+  name: Fulfill consumer privacy request
+  description: Receive, verify, and fulfill a consumer privacy rights request within the required period. Identity verification precedes any disclosure; state privacy laws set the clocks and the evidence of fulfillment is retained per request.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RESOLVE-ISSUE
+  owner_org_id: ORG-PRIVACY
+  business_unit: Privacy
+  criticality: High
+  risk_level: High
+  trigger: Customer-initiated
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-PRODUCT-001
+  name: Design and approve product change
+  description: Define, price, and obtain approval for a change to a card product. A product change binds pricing, terms, and eligibility; approval spans product, credit, finance, legal, and compliance before configuration starts.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-LAUNCH-PRODUCT
+  owner_org_id: ORG-PRODUCT
+  business_unit: Product
+  criticality: High
+  risk_level: Medium
+  trigger: Manual
+  frequency: Quarterly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-PRODUCT-002
+  name: Author and version disclosure
+  description: Author, review, approve, and version cardholder agreements and disclosures. Agreements and disclosures are versioned with effective dates; every account references the version it was disclosed under, which is what makes remediation tractable.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-LAUNCH-PRODUCT
+  owner_org_id: ORG-LEGAL
+  business_unit: Legal
+  criticality: High
+  risk_level: High
+  trigger: Upstream-process
+  frequency: Quarterly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-PRODUCT-003
+  name: Launch product to market
+  description: Configure, test, and release a product for origination across all affected systems. Launch is a coordinated configuration across origination, core, servicing, and statements, verified in test before the product opens to volume.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-LAUNCH-PRODUCT
+  owner_org_id: ORG-PRODUCT
+  business_unit: Product
+  criticality: High
+  risk_level: Medium
+  trigger: Upstream-process
+  frequency: Quarterly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-PRODUCT-004
+  name: Retire or migrate product
+  description: Sunset a product and migrate affected accounts with required notice. Retirement manages the migration and notices for live accounts; terms changes ride the change-in-terms rules, and the product stays resolvable for history.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-LAUNCH-PRODUCT
+  owner_org_id: ORG-PRODUCT
+  business_unit: Product
+  criticality: High
+  risk_level: Medium
+  trigger: Manual
+  frequency: Ad hoc
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-QE-001
+  name: Plan the test strategy for a release
+  description: Decide scope, risk-based depth, environments, data, and entry and exit criteria for a release before build starts.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-QE
+  business_unit: QE
+  criticality: High
+  risk_level: Medium
+  trigger: Upstream-process
+  frequency: Weekly
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-QE-002
+  name: Build and maintain the automated regression suite
+  description: Author, review, and prune automated tests so the regression suite stays fast, trusted, and aligned to current behavior.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-QE
+  business_unit: QE
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Weekly
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-QE-003
+  name: Execute functional and regression testing
+  description: Run planned functional tests and the regression suite against a candidate build, and record results against the plan.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-QE
+  business_unit: QE
+  criticality: High
+  risk_level: Medium
+  trigger: Upstream-process
+  frequency: Weekly
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-QE-004
+  name: Execute performance and resilience testing
+  description: Load, soak, and failover-test a candidate against stated capacity and recovery objectives before a material release.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-QE
+  business_unit: QE
+  criticality: High
+  risk_level: High
+  trigger: Upstream-process
+  frequency: Monthly
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-QE-005
+  name: Run user acceptance testing with the business
+  description: Prepare scripts and data, run acceptance with business owners, and obtain their sign-off or documented rejection.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-QE
+  business_unit: QE
+  criticality: High
+  risk_level: Medium
+  trigger: Upstream-process
+  frequency: Monthly
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-QE-006
+  name: Manage defects to closure
+  description: Triage, prioritize, assign, and verify defects found in test or production, and report defect trends by area.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-QE
+  business_unit: QE
+  criticality: High
+  risk_level: Medium
+  trigger: Event-driven
+  frequency: Daily
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-QE-007
+  name: Provision test environments and masked data
+  description: Stand up and refresh non-production environments with representative, masked data, and retire them on schedule.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-QE
+  business_unit: QE
+  criticality: Medium
+  risk_level: High
+  trigger: Scheduled
+  frequency: Weekly
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-QE-008
+  name: Certify a release for production
+  description: Assess test results, open defects, and exit criteria, and issue or withhold the quality certification the change authority relies on.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-QE
+  business_unit: QE
+  criticality: High
+  risk_level: High
+  trigger: Upstream-process
+  frequency: Weekly
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-QE-009
+  name: Verify a release in production
+  description: Run post-deployment checks and smoke tests in production, confirm monitoring is green, and trigger rollback if criteria fail.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-QE
+  business_unit: QE
+  criticality: High
+  risk_level: High
+  trigger: Upstream-process
+  frequency: Weekly
+  last_reviewed: 2026-08-23
+  source: Business architecture repository
+
+- process_id: P-RECOVERY-001
+  name: Place account with collection agency
+  description: Select, place, and monitor charged-off accounts with an external collection agency. Agency placement follows the approved network with performance and conduct oversight; the agency acts in the bank's name, so its conduct is the bank's risk.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RECOVER-VALUE
+  owner_org_id: ORG-RECOVERY
+  business_unit: Recovery
+  criticality: High
+  risk_level: Medium
+  trigger: Upstream-process
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-RECOVERY-002
+  name: Execute debt sale
+  description: Assemble, price, and execute a sale of charged-off receivables. Debt sale packages carry account-level data quality and documentation warranties; buyer diligence and post-sale complaint routing are part of the process, not after-thoughts.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RECOVER-VALUE
+  owner_org_id: ORG-RECOVERY
+  business_unit: Recovery
+  criticality: High
+  risk_level: Medium
+  trigger: Manual
+  frequency: Quarterly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-RECOVERY-003
+  name: Handle bankruptcy notification
+  description: Receive, verify, and action a bankruptcy notification with required account treatment. The automatic stay stops collection on notice; verification, claim filing, and account treatment follow bankruptcy chapter rules with dates that are court deadlines.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RECOVER-VALUE
+  owner_org_id: ORG-RECOVERY
+  business_unit: Recovery
+  criticality: High
+  risk_level: High
+  trigger: Event-driven
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-RECOVERY-004
+  name: Handle deceased cardholder and estate
+  description: "Verify a deceased notification and manage the account through estate resolution. Estate handling balances recovery with conduct: verified notification stops collection contact, and the claim proceeds through the estate at the estate's pace."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RECOVER-VALUE
+  owner_org_id: ORG-RECOVERY
+  business_unit: Recovery
+  criticality: High
+  risk_level: Medium
+  trigger: Event-driven
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-RECOVERY-005
+  name: Post recovery and account for proceeds
+  description: Post recoveries and account for proceeds from agency, legal, and sale channels. Proceeds post against charged-off balances with channel attribution; recoveries feed the loss forecast, so mis-posting distorts the allowance.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RECOVER-VALUE
+  owner_org_id: ORG-RECOVERY
+  business_unit: Recovery
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-REG-DATA-PREP-001
+  name: Prepare regulatory reporting data
+  description: Assemble, validate, and certify the data supporting regulatory reporting submissions. Report data is assembled from governed sources with reconciliation to the ledger and prior submissions; certification is a named officer's sign-off, not a batch job.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-FINANCE
+  business_unit: Finance
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Quarterly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-REWARDS-001
+  name: Accrue rewards earn
+  description: Calculate and post rewards earn to the rewards ledger for qualifying activity. Earn accrues per the program terms with promotional multipliers; the accrual creates the liability finance reconciles, so earn rules and accounting stay in lockstep.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-REWARDS
+  business_unit: Rewards
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-REWARDS-002
+  name: Process rewards redemption
+  description: Execute a cardholder rewards redemption and settle the resulting obligation. Redemption executes across cash, statement credit, and partner channels; partner settlement follows the program contract, and failed redemptions reverse cleanly.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-REWARDS
+  business_unit: Rewards
+  criticality: High
+  risk_level: Medium
+  trigger: Customer-initiated
+  frequency: Real-time
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-REWARDS-003
+  name: Reconcile rewards liability
+  description: Reconcile the rewards ledger to the recorded liability and resolve differences. The rewards liability reconciliation catches earn, redemption, and expiry drift between the ledger and finance; differences are investigated, not plugged.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-REWARDS
+  business_unit: Rewards
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-RISK-001
+  name: Manage issue and remediation to closure
+  description: "Track an identified issue through remediation to evidenced closure. Issues from any source (audit, compliance, self-identified, exam) run one lifecycle: owner, action plan, dates, and evidenced closure that survives challenge."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-RISK
+  business_unit: Risk
+  criticality: High
+  risk_level: Medium
+  trigger: Event-driven
+  frequency: Weekly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-RISK-002
+  name: Validate model independently
+  description: Perform independent validation of a model and record the outcome and conditions. Independent validation is organizationally separate from development; findings condition or block production use, and revalidation triggers are set at approval.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-RISK
+  business_unit: Risk
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Annually
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-RISK-003
+  name: Coordinate regulatory examination
+  description: Coordinate the response to a regulatory examination, including evidence and findings. Exam coordination controls the single flow of requests, evidence, and meetings; every submission is logged and consistent with what other responses have said.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-AUDIT
+  business_unit: Audit
+  criticality: High
+  risk_level: High
+  trigger: Regulatory
+  frequency: Ad hoc
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-SERVICING-001
+  name: Assess interest, fees, and minimum payment
+  description: "Calculate interest, fees, and the minimum payment due for the billing cycle. Cycle assessment applies the cardholder agreement exactly: interest method, fee triggers, and minimum-payment formula, because a systematic error here is a remediation event."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-SERVICING
+  business_unit: Servicing
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-SERVICING-002
+  name: Deliver and archive statement
+  description: Deliver the statement by the cardholder's elected channel and retain it for retrieval. Delivery honors the e-consent election and postal fallback; the archived statement is the legal record retrieved for disputes and subpoenas.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-OPS
+  business_unit: Ops
+  criticality: High
+  risk_level: Medium
+  trigger: Upstream-process
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-SERVICING-003
+  name: Process billing adjustment or goodwill credit
+  description: Apply approved goodwill credits, fee reversals, and billing corrections. Adjustments carry approval limits and reason codes; patterns feed complaint and conduct analysis because repeated goodwill on the same defect is a signal.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-SERVICING
+  business_unit: Servicing
+  criticality: High
+  risk_level: Medium
+  trigger: Manual
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-SERVICING-004
+  name: Execute account maintenance request
+  description: Execute a cardholder-requested change to account details or preferences. Maintenance changes execute after authentication with an audit trail; address changes get extra scrutiny because they precede takeover fraud.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RESOLVE-ISSUE
+  owner_org_id: ORG-SERVICING
+  business_unit: Servicing
+  criticality: High
+  risk_level: Medium
+  trigger: Customer-initiated
+  frequency: Real-time
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-SERVICING-005
+  name: Authenticate cardholder
+  description: Authenticate a cardholder to policy before disclosing information or executing a change. Authentication strength scales with request risk; failures route to step-up rather than disclosure, and the policy is tuned with the fraud team.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RESOLVE-ISSUE
+  owner_org_id: ORG-SERVICING
+  business_unit: Servicing
+  criticality: High
+  risk_level: High
+  trigger: Event-driven
+  frequency: Real-time
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-SERVICING-006
+  name: Capture and resolve complaint
+  description: Capture, classify, resolve, and evidence a cardholder complaint. Complaint handling runs intake through evidenced resolution with regulatory routing where required; the taxonomy feeds UDAAP analysis, so classification is not clerical.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RESOLVE-ISSUE
+  owner_org_id: ORG-SERVICING
+  business_unit: Servicing
+  criticality: High
+  risk_level: High
+  trigger: Customer-initiated
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-SERVICING-007
+  name: Generate and deliver required notice
+  description: Generate and deliver a regulatory or contractual notice to the cardholder. Notice generation is driven by account events with content owned by legal and compliance; proof of delivery and version are retained per notice.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RESOLVE-ISSUE
+  owner_org_id: ORG-OPS
+  business_unit: Ops
+  criticality: High
+  risk_level: High
+  trigger: Event-driven
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-SERVICING-008
+  name: Enroll account in hardship or assistance program
+  description: Assess eligibility and enroll an account into a hardship or payment assistance program. Hardship enrollment applies documented eligibility consistently; program terms change interest, fees, and reporting, so enrollment is evidenced and reviewed.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RECOVER-VALUE
+  owner_org_id: ORG-SERVICING
+  business_unit: Servicing
+  criticality: High
+  risk_level: Medium
+  trigger: Customer-initiated
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-SERVICING-009
+  name: Maintain servicing knowledge content
+  description: Author, review, and publish agent-facing knowledge and guidance. Knowledge content is the agent's authority in the moment; review cadence and ownership keep it aligned with policy, because stale guidance becomes wrong answers at scale.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-SERVICING
+  business_unit: Servicing
+  criticality: Medium
+  trigger: Upstream-process
+  frequency: Weekly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-SERVICING-010
+  name: Monitor and score servicing interactions
+  description: Sample, monitor, score, and calibrate servicing interactions for quality and regulatory compliance signal.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RESOLVE-ISSUE
+  owner_org_id: ORG-SERVICING
+  business_unit: Servicing
+  criticality: Medium
+  trigger: Scheduled
+  frequency: Weekly
+  last_reviewed: 2026-08-19
+  source: Business architecture repository
+
+- process_id: P-SERVICING-011
+  name: Administer secured card deposit lifecycle
+  description: Collect, hold, apply, and refund security deposits for secured card accounts, including graduation and charge-off application, with correct accounting and disclosure treatment.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-SERVICING
+  business_unit: Servicing
+  criticality: High
+  risk_level: Medium
+  trigger: Event-driven
+  frequency: Daily
+  last_reviewed: 2026-08-19
+  source: Business architecture repository
+
+- process_id: P-SERVICING-012
+  name: Apply servicemember and military lending protections
+  description: Identify covered borrowers, apply the required rate and fee protections, and evidence compliance for servicemember accounts.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-SERVICING
+  business_unit: Servicing
+  criticality: High
+  risk_level: High
+  trigger: Event-driven
+  frequency: Daily
+  last_reviewed: 2026-08-19
+  source: Business architecture repository
+
+- process_id: P-SETTLEMENT-001
+  name: Fund daily network settlement position
+  description: Determine and fund the daily settlement position with the networks. The settlement position must fund by the network deadline in the settlement currency; a miss is a network compliance event, so the process carries same-day escalation.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-SETTLEMENT
+  business_unit: Settlement
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-SETTLEMENT-002
+  name: Reconcile cash and suspense accounts
+  description: Reconcile cash and suspense account positions and clear aged items. Cash and suspense reconcile daily with aging visible; suspense is a control account, and items that age past threshold escalate to investigation.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-SETTLEMENT
+  business_unit: Settlement
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-SETTLEMENT-003
+  name: Investigate and clear settlement exception
+  description: Investigate settlement breaks and exceptions and drive them to resolution. Settlement exceptions are worked to root cause across network reports, the gateway, and the ledger; recurring breaks feed a fix, not a workaround.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-SETTLEMENT
+  business_unit: Settlement
+  criticality: High
+  risk_level: Medium
+  trigger: Event-driven
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-SETTLEMENT-004
+  name: Monitor and optimize interchange qualification
+  description: Monitor interchange qualification rates, identify downgrades, and drive corrections in processing configuration.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-SETTLEMENT
+  business_unit: Settlement
+  criticality: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-19
+  source: Business architecture repository
+
+- process_id: P-STMT-GEN-001
+  name: Cut cycle and generate statement
+  description: Cut the billing cycle and generate the cardholder statement including the rewards position. Cycle cut is the hard deadline that sequences assessment, statement generation, and delivery; a late cut cascades into payment due dates and regulatory timing.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-SERVICING
+  business_unit: Servicing
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-STRATEGY-001
+  name: Evaluate and execute portfolio transaction
+  description: Assess, diligence, price, and execute the acquisition or sale of a card portfolio, through to hand-off into conversion.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-STRATEGY
+  business_unit: Strategy
+  criticality: High
+  risk_level: Medium
+  trigger: Manual
+  frequency: Ad hoc
+  last_reviewed: 2026-08-19
+  source: Business architecture repository
+
+- process_id: P-TECH-001
+  name: Deliver software change
+  description: Design, build, test, and release a software change into production. The umbrella delivery flow from approved demand to production release; the engineering-level decomposition lives in the P-APPDEV and P-QE processes it coordinates.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-TECH
+  business_unit: Tech
+  criticality: High
+  risk_level: Medium
+  trigger: Upstream-process
+  frequency: Weekly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-TECH-002
+  name: Respond to service incident
+  description: Detect, triage, resolve, and review a service incident. Incident response runs detect, triage, resolve, and review with severity-driven communication; customer-impacting incidents feed problem management and the resilience picture.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-TECH
+  business_unit: Tech
+  criticality: High
+  risk_level: High
+  trigger: Event-driven
+  frequency: Real-time
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-TECH-003
+  name: Execute disaster recovery test
+  description: Plan and execute a recovery test against committed recovery objectives. The annual test exercises recovery against committed RTO and RPO with business participation; misses become tracked remediation, and the evidence supports the CRI assessment.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-TECH
+  business_unit: Tech
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Annually
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-TECH-004
+  name: Onboard and operate integration
+  description: Design, register, and operate an interface between systems. Integration onboarding registers the interface, its data, and its owners before traffic flows; unregistered interfaces are how impact analysis goes blind.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-TECH
+  business_unit: Tech
+  criticality: High
+  risk_level: Medium
+  trigger: Upstream-process
+  frequency: Weekly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-TPS-001
+  name: Configure client program
+  description: Configure platform, product, treatment, and reporting for a new client program. Program configuration translates the client contract into platform, product, treatment, and reporting settings; every setting traces to a contract clause or a documented default.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ONBOARD-CLIENT
+  owner_org_id: ORG-TPS
+  business_unit: Tps
+  criticality: High
+  risk_level: High
+  trigger: Client-initiated
+  frequency: Ad hoc
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-TPS-002
+  name: Convert client portfolio
+  description: Migrate a client portfolio onto the servicing platform with reconciled balances and no cardholder disruption.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ONBOARD-CLIENT
+  owner_org_id: ORG-TPS
+  business_unit: Tps
+  criticality: High
+  risk_level: High
+  trigger: Client-initiated
+  frequency: Ad hoc
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-TPS-003
+  name: Deconvert client portfolio
+  description: Migrate a client portfolio off the servicing platform and hand over records. Deconversion hands a portfolio off with data, documents, and cutover timing per contract; the obligation to do it well survives the relationship ending.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ONBOARD-CLIENT
+  owner_org_id: ORG-TPS
+  business_unit: Tps
+  criticality: High
+  risk_level: High
+  trigger: Client-initiated
+  frequency: Ad hoc
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-TPS-004
+  name: Produce contracted client reporting
+  description: Produce and deliver reporting to the schedule and specification in the client contract. Contracted reporting ships to specification and schedule; late or wrong reporting is an SLA breach with credits, so production is monitored like any critical batch.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ONBOARD-CLIENT
+  owner_org_id: ORG-TPS
+  business_unit: Tps
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-TPS-005
+  name: Exchange client data feed
+  description: Send and receive contracted data feeds with the client on schedule. Data feeds run both directions on contracted schedules with schema and quality checks at the boundary; feed failures page, because clients reconcile against them.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ONBOARD-CLIENT
+  owner_org_id: ORG-TPS
+  business_unit: Tps
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-TPS-006
+  name: Bill client servicing fees
+  description: Calculate and invoice servicing fees per the contract and recognize the revenue. Fee billing calculates from contracted schedules against actual volumes; invoices carry the detail clients audit, and revenue recognition follows the contract.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ONBOARD-CLIENT
+  owner_org_id: ORG-FINANCE
+  business_unit: Finance
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-TPS-007
+  name: Support client audit or examination
+  description: Assemble evidence and respond to client and client-regulator oversight requests. Client audits and client-regulator exams get coordinated evidence with the same discipline as the bank's own exams; commitments made in responses are tracked.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ONBOARD-CLIENT
+  owner_org_id: ORG-TPS
+  business_unit: Tps
+  criticality: High
+  risk_level: Medium
+  trigger: Client-initiated
+  frequency: Ad hoc
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-TPS-008
+  name: Intake and deliver client-directed change
+  description: Receive, price, approve, and deliver a change requested by a servicing client. Client-directed changes are priced, approved, and delivered under the contract's change provisions; scope discipline here is what keeps serviced portfolios profitable.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ONBOARD-CLIENT
+  owner_org_id: ORG-TPS
+  business_unit: Tps
+  criticality: High
+  risk_level: Medium
+  trigger: Client-initiated
+  frequency: Ad hoc
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-VENDORMGMT-001
+  name: Onboard and diligence supplier
+  description: Assess, diligence, and contract a new supplier with required security and risk terms. Due diligence is risk-tiered per the TPRM policy; no supplier touches cardholder data before security review and contract terms land, which is the EX.DD control.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-VENDORMGMT
+  business_unit: Vendormgmt
+  criticality: High
+  risk_level: Medium
+  trigger: Upstream-process
+  frequency: Monthly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-VENDORMGMT-002
+  name: Monitor supplier risk and performance
+  description: Monitor supplier risk, performance, and service levels through the relationship. Ongoing monitoring covers risk, performance, and financial condition on a tier-driven cadence; findings route to the relationship owner with dates.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-VENDORMGMT
+  business_unit: Vendormgmt
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Quarterly
+  last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-VENDORMGMT-003
+  name: Execute supplier exit
+  description: "Execute the exit of a supplier, including data return and service transition. Exit executes the termination plan: service transition, data return or destruction with certificate, and access revocation, proving the exit clause was real."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-VENDORMGMT
+  business_unit: Vendormgmt
+  criticality: High
+  risk_level: Medium
+  trigger: Manual
+  frequency: Ad hoc
+  last_reviewed: 2026-08-17
+  source: Business architecture repository

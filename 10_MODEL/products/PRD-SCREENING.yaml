@@ -1,0 +1,83 @@
+# A bought capability mid-onboarding, for contrast with PRD-INSTALLMENT-LENDING.
+#
+# Note what this file does not contain: no compute, no database, no front end.
+# Buying moved the work to controlling a boundary, and the four things the
+# archetype creates are all boundary controls.
+product_id: PRD-SCREENING
+name: NICE Actimize Screening
+description: >
+  Sanctions, PEP and adverse media screening, bought rather than built.
+  Called in line by the authorization switch at transaction time, with a nightly
+  rescreen of the book and a return feed for reconciliation and model risk.
+status: Planned
+owner_org_id: ORG-COMPLIANCE
+criticality: High
+product_category: Vendor capability
+company_domain: Risk and Compliance
+launch_date: 2026-10-05
+
+build_type: bought-saas
+archetype: saas-onboarding
+parameters:
+  slug: screening
+  product_name: NICE Actimize Screening
+  vendor: NICE Actimize
+  owner_org: ORG-COMPLIANCE
+  domain: Risk and Compliance
+  account: prod-riskops
+  region: eu-west-2
+  vendor_region: eu-west-1
+  caller_system: SYS-AUTH-SWITCH
+  criticality: High
+  classification: Restricted
+
+# A part the shape does not compose by default, because who works in a bought
+# system is a fact about the product rather than about buying.
+#
+# This one creates its actor rather than naming one. Nobody was reviewing
+# sanctions alerts before this was bought, so the role arrives with the
+# product instead of being hand-added to the actor list first and referred to
+# afterward.
+modules:
+  - module: operator-role
+    with:
+      system: SYS-SCREENING-VENDOR
+      roles:
+        - id: screening-analyst
+          name: Screening Analyst
+          description: >
+            Works the alert queue: clears the false positives and escalates
+            the rest. The queue exists because the screening does, and its
+            volume is the number the vendor's tuning is judged on.
+          interaction: Clears alerts
+
+overrides:
+  # Screening sits in the authorization path, so an outage declines live
+  # transactions. That is the tier, and it is why the gateway carries a circuit
+  # breaker rather than simply retrying.
+  SYS-SCREENING-GATEWAY:
+    service_tier: Tier 1
+    resilience: Multi-region
+  # Data residency is the negotiated term everyone forgets to record. Recording
+  # it on the entity is what makes it show up in a view later.
+  SYS-SCREENING-VENDOR:
+    service_tier: Tier 1
+    description: >
+      Financial Crime Screening, operated by NICE Actimize in their own
+      tenancy. Contractually pinned to EU processing; the DPA restricts
+      sub-processors and sets a 90-day retention ceiling.
+
+# What this product enforces that its shape cannot know. The shape brings the
+# third-party controls; sanctions screening is what this vendor is for, so the
+# control and the policy are recorded here, with the product, rather than in
+# the shared governance file.
+extra:
+  relations:
+    system_governed_by_control:
+      - system_id: SYS-SCREENING-VENDOR
+        control_id: CTL-SANCTIONS
+      - system_id: SYS-SCREENING-GATEWAY
+        control_id: CTL-SANCTIONS
+    system_subject_to_policy:
+      - system_id: SYS-SCREENING-VENDOR
+        policy_id: POL-BSA-AML

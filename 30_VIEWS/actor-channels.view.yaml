@@ -1,0 +1,34 @@
+view_id: actor-channels
+title: Channels by Actor
+category: Business
+section: People and channels
+kind: map
+description: >
+  Every actor and the systems they use, split into external parties
+  (customers, partners, regulators) and internal staff. Use it to see which
+  systems are customer-facing and which are internal tooling.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+group_by: internal
+
+scope:
+  include:
+    - type: actors
+      where:
+        status: [Active]
+  expand:
+    - relation: actor_uses_system
+      depth: 1
+      types: [systems]
+
+edges:
+  - via: actor_uses_system
+    label: interaction
+
+style:
+  color_by: criticality
+
+limits:
+  max_nodes: 30

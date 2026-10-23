@@ -1,0 +1,9 @@
+# The engine has no required dependencies and runs on a bare Python 3.10+.
+#
+# PyYAML is optional. When installed it is used for parsing; otherwise the
+# bundled reader in terrane/yamlish.py handles the subset this repository writes.
+# Installing it is slightly faster and gives you the full YAML grammar.
+#
+#   pip install -r requirements.txt
+#
+pyyaml>=6.0 ; python_version >= "3.10"

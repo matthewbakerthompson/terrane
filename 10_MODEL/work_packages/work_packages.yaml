@@ -1,0 +1,245 @@
+# What is actually being delivered, and when.
+#
+# A work package belongs to one roadmap through `roadmap_id`, which is a
+# canonical foreign key rather than a relation table, so a view follows it
+# with `via: roadmap_id` and nothing has to be kept in step. It names the
+# decision that let it start the same way, through `change_request_id`.
+#
+# The regulatory reporting package names no decision, and that is the honest
+# state rather than a gap in the data: it was funded in the planning round
+# without going to the board, which is exactly the thing a change register is
+# supposed to make visible.
+#
+# What each one touches is recorded in `10_MODEL/relations/change.yaml` as
+# rows, not in the canonical `affected_system_ids` column. A semicolon list in
+# a cell cannot be joined, filtered or drawn, and the estate has made that
+# decision once already for `control_ids`.
+#
+# Between them these five account for every system in the model that is not
+# live: twenty-two of them, across four products and one replacement. A planned
+# system under no work package is a finding, and `change.unscheduled` reports
+# it.
+#
+# Every row is placeholder content drafted against a placeholder estate.
+
+- work_package_id: WP-LENDING-AWS
+  name: Build installment lending on AWS
+  description: >
+    Stand up the installment lending product on the AWS landing zone: the edge
+    and load balancer, the web and API tiers, the database, the object store,
+    the async worker and the integration hub that fronts the ledger, the
+    bureau and the CRM.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  company_domain: Lending
+  tags: [cloud]
+  owner_org_id: ORG-APPDEV
+  roadmap_id: RDM-LENDING-GROWTH
+  change_request_id: ACR-2026-014
+  start_date: 2026-Q1
+  end_date: 2026-Q3
+  budget_usd: 4200000
+  risk_level: High
+  notes: >
+    Ends a quarter before the product launch date so there is a quarter of
+    parallel running against the card estate.
+
+- work_package_id: WP-SCREENING-ONBOARD
+  name: Onboard the screening vendor
+  description: >
+    Buy sanctions and adverse-media screening rather than build it: the
+    vendor tenant, the integration gateway, the private egress path and the
+    identity federation, plus the change to the authorization switch that
+    calls it.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Governance
+  abstraction_level: Logical
+  company_domain: Risk and Compliance
+  tags: [vendor]
+  owner_org_id: ORG-COMPLIANCE
+  roadmap_id: RDM-REG-READINESS
+  change_request_id: ACR-2026-021
+  start_date: 2026-Q2
+  end_date: 2026-Q3
+  budget_usd: 900000
+  risk_level: Medium
+  notes: >
+    The only work package that changes a live system rather than only building
+    new ones, which is why the switch appears with effect Changes.
+
+- work_package_id: WP-REG-REPORTING
+  name: Stand up the regulatory reporting engine
+  description: >
+    Replace the spreadsheet-based return with an engine sourcing from the
+    warehouse, and extend the customer semantic layer with the fields the
+    return needs.
+  status: Planned
+  togaf_layer: Application
+  architecture_domain: Governance
+  abstraction_level: Logical
+  company_domain: Risk and Compliance
+  tags: [regulatory]
+  owner_org_id: ORG-COMPLIANCE
+  roadmap_id: RDM-REG-READINESS
+  start_date: 2026-Q4
+  end_date: 2027-Q2
+  budget_usd: 1600000
+  risk_level: High
+  notes: >
+    Agreed and funded, not started, which is what Planned means here and what
+    Active means on the two above it.
+
+- work_package_id: WP-IDV-ONBOARD
+  name: Onboard the identity verification vendor
+  description: >
+    Buy document and liveness verification rather than build it: the vendor
+    tenancy, the gateway, the private path to the vendor, and the webhook
+    listener that hands results back to the identity service.
+  status: Planned
+  togaf_layer: Application
+  architecture_domain: Governance
+  abstraction_level: Logical
+  company_domain: Risk and Compliance
+  tags: [vendor, regulatory]
+  owner_org_id: ORG-COMPLIANCE
+  roadmap_id: RDM-REG-READINESS
+  change_request_id: ACR-2026-035
+  start_date: 2026-Q4
+  end_date: 2027-Q1
+  budget_usd: 650000
+  risk_level: Medium
+  notes: >
+    The second vendor onboarding, and the first on the Azure landing zone
+    over a private path.
+
+- work_package_id: WP-REWARDS-BUILD
+  name: Build rewards redemption on Azure
+  description: >
+    The first product on the Azure digital shape: the catalog and redemption
+    web front end and API, the product datastore, the event publisher, and
+    the worker that fulfills a redemption after the response. Balances stay
+    with the proposed rewards ledger; this is the channel in front of it.
+  status: Planned
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  company_domain: Card Issuing
+  tags: [cloud, digital]
+  owner_org_id: ORG-APPDEV
+  roadmap_id: RDM-CARD-EXPERIENCE
+  change_request_id: ACR-2026-041
+  start_date: 2026-Q4
+  end_date: 2027-Q1
+  budget_usd: 1800000
+  risk_level: Medium
+  notes: >
+    Five new systems and nothing live touched. The worker asked the Azure
+    landing zone for an event stream it did not have; Event Hubs was added
+    to the landing zone for this package, which is the only thing about it
+    that is not a shape and a handful of answers.
+
+- work_package_id: WP-MERCHANT-PORTAL
+  name: Assemble the merchant portal on Azure
+  description: >
+    The merchant portal from the library's parts: the API, the web channel,
+    the datastore, the event publisher, and the onboarding analyst role the
+    product creates. Assembled as one product file with no shape; the
+    landing zone answers for the gateway, the cluster, the database and the
+    bus.
+  status: Planned
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  company_domain: Payments
+  tags: [cloud, digital]
+  owner_org_id: ORG-APPDEV
+  roadmap_id: RDM-MERCHANT-SERVICES
+  change_request_id: ACR-2026-047
+  start_date: 2027-Q1
+  end_date: 2027-Q3
+  budget_usd: 1400000
+  risk_level: Medium
+  notes: >
+    Four new systems and a role, nothing live touched. The first project
+    assembled from parts; its compose block is the whole architecture.
+
+- work_package_id: WP-POS-FINANCE
+  name: Land point-of-sale finance on Google Cloud
+  description: >
+    The first product on the Google Cloud landing zone: the API, the web
+    channel, the datastore and the event publisher of the digital shape,
+    resolved against GKE, Apigee, Cloud SQL and Pub/Sub. The dealer
+    integrations that start an application already run through Apigee, so
+    the product lands beside its partners.
+  status: Planned
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  company_domain: Lending
+  tags: [cloud, digital]
+  owner_org_id: ORG-APPDEV
+  roadmap_id: RDM-LENDING-GROWTH
+  change_request_id: ACR-2026-048
+  start_date: 2027-Q2
+  end_date: 2027-Q4
+  budget_usd: 1800000
+  risk_level: Medium
+  notes: >
+    Four new systems on a third cloud, nothing live touched. The landing zone
+    is nineteen services the zone owners stand up once; the product is a
+    handful of answers on the shape.
+
+- work_package_id: WP-OB-AFFORDABILITY
+  name: Buy affordability data for point-of-sale finance
+  description: >
+    Open banking affordability from TrueLayer, reached over Private Service
+    Connect from the lending project on Google Cloud and returning its
+    assessment by webhook: the vendor shape's private path and webhook
+    return, resolved against Google Cloud for the first time. Our side is a
+    gateway, an egress and a listener beside the point-of-sale API.
+  status: Planned
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  company_domain: Lending
+  tags: [vendor, cloud]
+  owner_org_id: ORG-APPDEV
+  roadmap_id: RDM-LENDING-GROWTH
+  change_request_id: ACR-2026-049
+  start_date: 2027-Q3
+  end_date: 2027-Q4
+  budget_usd: 450000
+  risk_level: Medium
+  notes: >
+    Three systems of ours and the vendor's, all new; nothing live touched.
+    The long-lead item is the private path, which the zone's Private
+    Service Connect already provides.
+
+- work_package_id: WP-LENDING-PERFORMANCE
+  name: Curate lending performance in BigQuery
+  description: >
+    The first data product on the Google Cloud side: point-of-sale finance's
+    events curated nightly into BigQuery in an analytics project of its own,
+    served through Looker and registered in Collibra. The second workload
+    project on the hub, so the product's tenancy and its analytics tenancy
+    are separate.
+  status: Planned
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  company_domain: Lending
+  tags: [data, cloud]
+  owner_org_id: ORG-DATAENG
+  roadmap_id: RDM-LENDING-GROWTH
+  change_request_id: ACR-2026-050
+  start_date: 2027-Q4
+  end_date: 2028-Q1
+  budget_usd: 380000
+  risk_level: Low
+  notes: >
+    Two systems of ours, a dataset and a project; nothing live touched. The
+    source is the product's own event publisher, so the pipeline waits on
+    point-of-sale finance going live.

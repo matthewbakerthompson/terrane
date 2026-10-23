@@ -1,0 +1,136 @@
+@startuml
+' Third-Party Exposure
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Third-Party Exposure
+
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddRelTag("api-call", $legendText="API call")
+AddRelTag("event", $legendText="Event on the bus")
+AddRelTag("event-over-https", $legendText="Event over HTTPS")
+AddRelTag("log-stream", $legendText="Log stream")
+AddRelTag("partner-file", $legendText="Partner file")
+AddRelTag("private-egress", $legendText="Private path to a vendor")
+AddRelTag("queued-request", $legendText="Request on a queue")
+AddRelTag("scheduled-file", $legendText="Scheduled file")
+AddRelTag("sign-on-federation", $legendText="Sign-on federation")
+
+Boundary(b_Card_Issuing, "Card Issuing") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+}
+Boundary(b_Data_and_Analytics, "Data and Analytics") {
+  System(SYS_DATA_INGEST, "Enterprise Data Ingestion Hub", "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse. Built with Service Bus · Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_DATA_INGEST: company_domain="Data and Analytics"; hosting="Azure"; technology="Service Bus · Snowflake Data Cloud"
+}
+Boundary(b_Enterprise_Platform, "Enterprise Platform") {
+  System(SYS_IDV_EGRESS, "Identity Document Verification Private Egress", "PrivateLink endpoint and egress allow-list for Onfido. The control that keeps regulated data off the public internet, and the thing a security review asks to see first.", $tags="systems")
+  ' aac SYS_IDV_EGRESS: company_domain="Enterprise Platform"; hosting="Azure"
+  System(SYS_SCREENING_FEDERATION, "NICE Actimize Screening Identity Federation", "Single sign-on into NICE Actimize: assertions from our identity provider, so access is granted and revoked where the joiner and leaver process already runs.", $tags="systems")
+  ' aac SYS_SCREENING_FEDERATION: company_domain="Enterprise Platform"; hosting="AWS"
+  System(SYS_SCREENING_EGRESS, "NICE Actimize Screening Private Egress", "PrivateLink endpoint and egress allow-list for NICE Actimize. The control that keeps regulated data off the public internet, and the thing a security review asks to see first.", $tags="systems")
+  ' aac SYS_SCREENING_EGRESS: company_domain="Enterprise Platform"; hosting="AWS"
+  System(SYS_OBAFF_EGRESS, "Open Banking Affordability Private Egress", "PrivateLink endpoint and egress allow-list for TrueLayer. The control that keeps regulated data off the public internet, and the thing a security review asks to see first.", $tags="systems")
+  ' aac SYS_OBAFF_EGRESS: company_domain="Enterprise Platform"; hosting="GCP"
+  System_Ext(SYS_SIEM, "Security Monitoring", "Security information and event management: the audit trails of the estate and of every bought service, correlated in one place, and the console the incident response playbook runs from. Built with Microsoft Sentinel.", $tags="systems")
+  ' aac SYS_SIEM: company_domain="Enterprise Platform"; hosting="SaaS"; technology="Microsoft Sentinel"
+}
+Boundary(b_Lending, "Lending") {
+  System(SYS_LENDING_HUB, "Installment Lending Integration Hub", "Mediates every Installment Lending integration: one place for mapping, routing, retry and the audit trail, so the spokes do not each carry their own.", $tags="systems")
+  ' aac SYS_LENDING_HUB: company_domain="Lending"; hosting="AWS"
+  System(SYS_LENDING_API, "Installment Lending Service", "Domain service for Installment Lending, behind the Installment Lending API. Built with EKS · Installment Lending Cache.", $tags="systems")
+  ' aac SYS_LENDING_API: company_domain="Lending"; hosting="AWS"; technology="EKS · Installment Lending Cache"
+  System_Ext(SYS_OBAFF_VENDOR, "Open Banking Affordability", "Open banking data access and affordability categorization, operated by TrueLayer in their own tenancy under the UK open banking framework; bank data is held for the assessment and deleted at the vendor once the result is returned. Built with TrueLayer.", $tags="systems")
+  ' aac SYS_OBAFF_VENDOR: company_domain="Lending"; hosting="SaaS"; technology="TrueLayer"
+  System(SYS_OBAFF_WEBHOOKS, "Open Banking Affordability Webhook Listener", "Receives TrueLayer callbacks, verifies their signature, and forwards the event. Public by necessity, small by design. Built with GKE.", $tags="systems")
+  ' aac SYS_OBAFF_WEBHOOKS: company_domain="Lending"; hosting="GCP"; technology="GKE"
+}
+Boundary(b_Risk_and_Compliance, "Risk and Compliance") {
+  System_Ext(SYS_CREDIT_BUREAU, "Experian Credit Bureau", "External credit reference agency used for affordability and bureau search at application time. Reached over PrivateLink from the lending workload account. Built with Experian.", $tags="systems")
+  ' aac SYS_CREDIT_BUREAU: company_domain="Risk and Compliance"; hosting="SaaS"; technology="Experian"
+  System_Ext(SYS_IDV_VENDOR, "Identity Document Verification", "Document and liveness verification, operated by Onfido in their own tenancy. Contractually pinned to EU processing; images are deleted at the vendor once the result is returned. Built with Onfido.", $tags="systems")
+  ' aac SYS_IDV_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="Onfido"
+  System(SYS_IDV_WEBHOOKS, "Identity Document Verification Webhook Listener", "Receives Onfido callbacks, verifies their signature, and forwards the event. Public by necessity, small by design. Built with AKS.", $tags="systems")
+  ' aac SYS_IDV_WEBHOOKS: company_domain="Risk and Compliance"; hosting="Azure"; technology="AKS"
+  System_Ext(SYS_SCREENING_VENDOR, "NICE Actimize Screening", "Financial Crime Screening, operated by NICE Actimize in their own tenancy. Contractually pinned to EU processing; the DPA restricts sub-processors and sets a 90-day retention ceiling. Built with NICE Actimize.", $tags="systems")
+  ' aac SYS_SCREENING_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="NICE Actimize"
+}
+Boundary(b_Servicing, "Servicing") {
+  System(SYS_DISPUTES_GATEWAY, "Dispute Management Platform Integration Gateway", "Our side of the Pegasystems integration: mapping, retry and audit. Built with AKS.", $tags="systems")
+  ' aac SYS_DISPUTES_GATEWAY: company_domain="Servicing"; hosting="Azure"; technology="AKS"
+  System_Ext(SYS_CRM, "Dynamics 365 Customer Service", "Contact center desktop and case management for servicing agents. Built with Microsoft.", $tags="systems")
+  ' aac SYS_CRM: company_domain="Servicing"; hosting="SaaS"; technology="Microsoft"
+  System_Ext(SYS_DISPUTES_SAAS, "Pega Smart Dispute", "Dispute Management Platform, provided by Pegasystems and running in the vendor tenancy. Built with Pegasystems.", $tags="systems")
+  ' aac SYS_DISPUTES_SAAS: company_domain="Servicing"; hosting="SaaS"; technology="Pegasystems"
+}
+System(SYS_MARKETING, "Campaign management", "Campaign management and execution.", $tags="systems")
+' aac SYS_MARKETING: company_domain=""
+System(SYS_CONTACT, "Contact center platform", "Contact center routing, voice, and digital channels.", $tags="systems")
+' aac SYS_CONTACT: company_domain=""
+System(SYS_BUREAU_GW, "Credit bureau gateway", "Credit bureau furnishing and consumer dispute exchange.", $tags="systems")
+' aac SYS_BUREAU_GW: company_domain=""
+System(SYS_IAM, "Identity and access management", "Workforce identity, authentication, and access governance.", $tags="systems")
+' aac SYS_IAM: company_domain=""
+System(SYS_FRAUD_DETECT, "Transaction fraud detection", "Real-time transaction fraud scoring and alerting.", $tags="systems")
+' aac SYS_FRAUD_DETECT: company_domain=""
+
+Rel(SYS_FRAUD_DETECT, SYS_CRM, "Transaction Fraud Detection to CRM", "AMQP", $tags="event")
+' aac rel: source="SYS_FRAUD_DETECT"; target="SYS_CRM"; label="Transaction Fraud Detection to CRM"; interface_id="INT-FRAUD-CRM"; kind="event"; integration_style="Event"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="event-fanout"
+Rel(SYS_CORE_LEDGER, SYS_BUREAU_GW, "Core Card Ledger to Credit Bureau Gateway", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_BUREAU_GW"; label="Core Card Ledger to Credit Bureau Gateway"; interface_id="INT-LEDGER-BUREAU-GW"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Monthly"; direction="Outbound"; patterns="regulatory-file-furnishing"
+Rel(SYS_BUREAU_GW, SYS_CREDIT_BUREAU, "Credit Bureau Gateway to Credit Bureau", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_BUREAU_GW"; target="SYS_CREDIT_BUREAU"; label="Credit Bureau Gateway to Credit Bureau"; interface_id="INT-BUREAU-GW-BUREAU"; kind="scheduled-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Monthly"; direction="Outbound"; patterns="regulatory-file-furnishing"
+Rel(SYS_BUREAU_GW, SYS_CRM, "Credit Bureau Gateway to CRM", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_BUREAU_GW"; target="SYS_CRM"; label="Credit Bureau Gateway to CRM"; interface_id="INT-BUREAU-GW-CRM"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="regulatory-file-furnishing"
+Rel(SYS_CONTACT, SYS_CRM, "Contact Center Platform to CRM", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CONTACT"; target="SYS_CRM"; label="Contact Center Platform to CRM"; interface_id="INT-CONTACT-CRM"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="contact-center-integration"
+Rel(SYS_CRM, SYS_DISPUTES_GATEWAY, "CRM to Dispute Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CRM"; target="SYS_DISPUTES_GATEWAY"; label="CRM to Dispute Gateway"; interface_id="INT-CRM-DISPUTES"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="private-egress-to-saas"
+Rel(SYS_MARKETING, SYS_CRM, "Campaign Management to CRM", "AMQP", $tags="event")
+' aac rel: source="SYS_MARKETING"; target="SYS_CRM"; label="Campaign Management to CRM"; interface_id="INT-MARKETING-CRM"; kind="event"; integration_style="Event"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="event-fanout"
+Rel(SYS_IAM, SYS_SIEM, "Identity and Access Management to Security Monitoring", "Syslog", $tags="log-stream")
+' aac rel: source="SYS_IAM"; target="SYS_SIEM"; label="Identity and Access Management to Security Monitoring"; interface_id="INT-IAM-SIEM"; kind="log-stream"; integration_style="Event"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; patterns="workforce-identity-lifecycle;observed-service"
+Rel(SYS_CRM, SYS_IAM, "CRM to Identity and Access Management", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CRM"; target="SYS_IAM"; label="CRM to Identity and Access Management"; interface_id="INT-CRM-IAM"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="workforce-identity-lifecycle"
+Rel(SYS_CONTACT, SYS_IAM, "Contact Center Platform to Identity and Access Management", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CONTACT"; target="SYS_IAM"; label="Contact Center Platform to Identity and Access Management"; interface_id="INT-CONTACT-IAM"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="workforce-identity-lifecycle"
+Rel(SYS_CRM, SYS_CORE_LEDGER, "Servicing CRM to Core Ledger", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CRM"; target="SYS_CORE_LEDGER"; label="Servicing CRM to Core Ledger"; interface_id="INT-CRM-LEDGER"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_CORE_LEDGER, SYS_DATA_INGEST, "Core Ledger to Data Ingestion Hub", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_DATA_INGEST"; label="Core Ledger to Data Ingestion Hub"; interface_id="INT-LEDGER-INGEST"; kind="scheduled-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Outbound"
+Rel(SYS_LENDING_API, SYS_CORE_LEDGER, "Installment Lending Service to Core Card Ledger", "MQ", $tags="queued-request")
+' aac rel: source="SYS_LENDING_API"; target="SYS_CORE_LEDGER"; label="Installment Lending Service to Core Card Ledger"; interface_id="INT-LENDING-API-LEDGER"; kind="queued-request"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-LEDGER-QUEUE"
+Rel(SYS_LENDING_API, SYS_CREDIT_BUREAU, "Installment Lending Service to Credit Bureau", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_LENDING_API"; target="SYS_CREDIT_BUREAU"; label="Installment Lending Service to Credit Bureau"; interface_id="INT-LENDING-API-BUREAU"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_CORE_LEDGER, SYS_DISPUTES_GATEWAY, "SYS-CORE-LEDGER to Dispute Management Platform Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_DISPUTES_GATEWAY"; label="SYS-CORE-LEDGER to Dispute Management Platform Gateway"; interface_id="INT-DISPUTES-UP-GATEWAY"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_DISPUTES_GATEWAY, SYS_DISPUTES_SAAS, "Dispute Management Platform Gateway to Pegasystems", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_DISPUTES_GATEWAY"; target="SYS_DISPUTES_SAAS"; label="Dispute Management Platform Gateway to Pegasystems"; interface_id="INT-DISPUTES-GATEWAY-SAAS"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_DISPUTES_SAAS, SYS_DATA_INGEST, "Pegasystems return feed", "SFTP", $tags="partner-file")
+' aac rel: source="SYS_DISPUTES_SAAS"; target="SYS_DATA_INGEST"; label="Pegasystems return feed"; interface_id="INT-DISPUTES-SAAS-FEED"; kind="partner-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Inbound"
+Rel(SYS_IDV_EGRESS, SYS_IDV_VENDOR, "Private Egress to Onfido", "PrivateLink", $tags="private-egress")
+' aac rel: source="SYS_IDV_EGRESS"; target="SYS_IDV_VENDOR"; label="Private Egress to Onfido"; interface_id="INT-IDV-EGRESS-VENDOR"; kind="private-egress"; integration_style="Request-response"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_IDV_VENDOR, SYS_IDV_WEBHOOKS, "Onfido webhooks", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_IDV_VENDOR"; target="SYS_IDV_WEBHOOKS"; label="Onfido webhooks"; interface_id="INT-IDV-VENDOR-WEBHOOKS"; kind="event-over-https"; integration_style="Event"; auth_method="HMAC"; frequency="Realtime"; direction="Inbound"
+Rel(SYS_CORE_LEDGER, SYS_LENDING_HUB, "CORE-LEDGER via Installment Lending hub", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_LENDING_HUB"; label="CORE-LEDGER via Installment Lending hub"; interface_id="INT-LENDING-CORE-LEDGER-HUB"; kind="api-call"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_CREDIT_BUREAU, SYS_LENDING_HUB, "CREDIT-BUREAU via Installment Lending hub", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CREDIT_BUREAU"; target="SYS_LENDING_HUB"; label="CREDIT-BUREAU via Installment Lending hub"; interface_id="INT-LENDING-CREDIT-BUREAU-HUB"; kind="api-call"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_CRM, SYS_LENDING_HUB, "CRM via Installment Lending hub", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CRM"; target="SYS_LENDING_HUB"; label="CRM via Installment Lending hub"; interface_id="INT-LENDING-CRM-HUB"; kind="api-call"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_OBAFF_EGRESS, SYS_OBAFF_VENDOR, "Private Egress to TrueLayer", "PrivateLink", $tags="private-egress")
+' aac rel: source="SYS_OBAFF_EGRESS"; target="SYS_OBAFF_VENDOR"; label="Private Egress to TrueLayer"; interface_id="INT-OBAFF-EGRESS-VENDOR"; kind="private-egress"; integration_style="Request-response"; auth_method="WorkloadIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_OBAFF_VENDOR, SYS_OBAFF_WEBHOOKS, "TrueLayer webhooks", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_OBAFF_VENDOR"; target="SYS_OBAFF_WEBHOOKS"; label="TrueLayer webhooks"; interface_id="INT-OBAFF-VENDOR-WEBHOOKS"; kind="event-over-https"; integration_style="Event"; auth_method="HMAC"; frequency="Realtime"; direction="Inbound"
+Rel(SYS_SCREENING_FEDERATION, SYS_SCREENING_VENDOR, "Identity Federation to NICE Actimize", "SAML", $tags="sign-on-federation")
+' aac rel: source="SYS_SCREENING_FEDERATION"; target="SYS_SCREENING_VENDOR"; label="Identity Federation to NICE Actimize"; interface_id="INT-SCREENING-FEDERATION-VENDOR"; kind="sign-on-federation"; integration_style="Request-response"; auth_method="Certificate"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_SCREENING_VENDOR, SYS_SIEM, "NICE Actimize audit log to security monitoring", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_SCREENING_VENDOR"; target="SYS_SIEM"; label="NICE Actimize audit log to security monitoring"; interface_id="INT-SCREENING-VENDOR-AUDIT"; kind="event-over-https"; integration_style="Event"; auth_method="Token"; frequency="Realtime"; direction="Inbound"
+Rel(SYS_SCREENING_EGRESS, SYS_SCREENING_VENDOR, "Private Egress to NICE Actimize", "PrivateLink", $tags="private-egress")
+' aac rel: source="SYS_SCREENING_EGRESS"; target="SYS_SCREENING_VENDOR"; label="Private Egress to NICE Actimize"; interface_id="INT-SCREENING-EGRESS-VENDOR"; kind="private-egress"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_SCREENING_VENDOR, SYS_DATA_INGEST, "NICE Actimize return feed", "SFTP", $tags="partner-file")
+' aac rel: source="SYS_SCREENING_VENDOR"; target="SYS_DATA_INGEST"; label="NICE Actimize return feed"; interface_id="INT-SCREENING-VENDOR-RETURN"; kind="partner-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Inbound"
+
+SHOW_LEGEND()
+@enduml

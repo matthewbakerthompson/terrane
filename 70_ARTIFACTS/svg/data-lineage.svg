@@ -1,0 +1,559 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1240" height="2755" viewBox="0 0 1240 2755" font-family="Geist, system-ui, sans-serif" data-layout="table">
+<title>Data Lineage</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Data Lineage</text>
+<text x="1212" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   57 rows · 47 entities</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">Where each data asset is mastered and which systems read or write it. More than one writer for the same asset means there is no single system of record.</text>
+<line x1="28" y1="92" x2="1212" y2="92" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(28 102)">
+<rect x="0" y="0" width="1184" height="30" fill="#f4f6fb"/>
+<text x="10" y="19" font-size="10.5" font-weight="600" fill="#334155" letter-spacing="0.06em">FROM</text>
+<text x="365.2" y="19" font-size="10.5" font-weight="600" fill="#334155" letter-spacing="0.06em">RELATIONSHIP</text>
+<text x="554.64" y="19" font-size="10.5" font-weight="600" fill="#334155" letter-spacing="0.06em">TO</text>
+<text x="909.84" y="19" font-size="10.5" font-weight="600" fill="#334155" letter-spacing="0.06em">DETAIL</text>
+<line x1="0" y1="30" x2="1184" y2="30" stroke="#c9d0dc" stroke-width="1.2"/>
+<g class="row" data-row="1">
+<text x="10" y="49" font-size="12" font-weight="500" fill="#0f172a">Authorization Switch</text>
+<text x="10" y="63" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-AUTH-SWITCH</text>
+<text x="365.2" y="49" font-size="12" font-weight="400" fill="#0f172a">sot</text>
+<text x="554.64" y="49" font-size="12" font-weight="500" fill="#0f172a">Card transaction history</text>
+<text x="554.64" y="63" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-TRANSACTION</text>
+<text x="909.84" y="49" font-size="12" font-weight="400" fill="#0f172a">masters</text>
+</g>
+<line x1="0" y1="75" x2="1184" y2="75" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="75" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="2">
+<text x="10" y="94" font-size="12" font-weight="500" fill="#0f172a">Card Servicing Datastore</text>
+<text x="10" y="108" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CARDSVC-STORE</text>
+<text x="365.2" y="94" font-size="12" font-weight="400" fill="#0f172a">sot</text>
+<text x="554.64" y="94" font-size="12" font-weight="500" fill="#0f172a">Card Servicing operational data</text>
+<text x="554.64" y="108" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CARDSVC-OPERATIONAL</text>
+<text x="909.84" y="94" font-size="12" font-weight="400" fill="#0f172a">masters</text>
+</g>
+<line x1="0" y1="120" x2="1184" y2="120" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="3">
+<text x="10" y="139" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace Datastore</text>
+<text x="10" y="153" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-COLLECT-STORE</text>
+<text x="365.2" y="139" font-size="12" font-weight="400" fill="#0f172a">sot</text>
+<text x="554.64" y="139" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace operational data</text>
+<text x="554.64" y="153" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-COLLECT-OPERATIONAL</text>
+<text x="909.84" y="139" font-size="12" font-weight="400" fill="#0f172a">masters</text>
+</g>
+<line x1="0" y1="165" x2="1184" y2="165" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="165" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="4">
+<text x="10" y="184" font-size="12" font-weight="500" fill="#0f172a">Core Card Ledger</text>
+<text x="10" y="198" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CORE-LEDGER</text>
+<text x="365.2" y="184" font-size="12" font-weight="400" fill="#0f172a">sot</text>
+<text x="554.64" y="184" font-size="12" font-weight="500" fill="#0f172a">Card account master</text>
+<text x="554.64" y="198" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CARD-ACCOUNT</text>
+<text x="909.84" y="184" font-size="12" font-weight="400" fill="#0f172a">masters</text>
+</g>
+<line x1="0" y1="210" x2="1184" y2="210" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="5">
+<text x="10" y="229" font-size="12" font-weight="500" fill="#0f172a">Customer 360 Pipeline</text>
+<text x="10" y="243" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CUST360-PIPELINE</text>
+<text x="365.2" y="229" font-size="12" font-weight="400" fill="#0f172a">sot</text>
+<text x="554.64" y="229" font-size="12" font-weight="500" fill="#0f172a">Customer 360 curated dataset</text>
+<text x="554.64" y="243" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CUST360-CURATED</text>
+<text x="909.84" y="229" font-size="12" font-weight="400" fill="#0f172a">masters</text>
+</g>
+<line x1="0" y1="255" x2="1184" y2="255" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="255" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="6">
+<text x="10" y="274" font-size="12" font-weight="500" fill="#0f172a">Dynamics 365 Customer Service</text>
+<text x="10" y="288" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CRM</text>
+<text x="365.2" y="274" font-size="12" font-weight="400" fill="#0f172a">sot</text>
+<text x="554.64" y="274" font-size="12" font-weight="500" fill="#0f172a">Customer profile</text>
+<text x="554.64" y="288" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CUSTOMER-PROFILE</text>
+<text x="909.84" y="274" font-size="12" font-weight="400" fill="#0f172a">masters</text>
+</g>
+<line x1="0" y1="300" x2="1184" y2="300" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="7">
+<text x="10" y="319" font-size="12" font-weight="500" fill="#0f172a">Installment Lending Database</text>
+<text x="10" y="333" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDING-DB</text>
+<text x="365.2" y="319" font-size="12" font-weight="400" fill="#0f172a">sot</text>
+<text x="554.64" y="319" font-size="12" font-weight="500" fill="#0f172a">Installment Lending operational data</text>
+<text x="554.64" y="333" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-LENDING-OPERATIONAL</text>
+<text x="909.84" y="319" font-size="12" font-weight="400" fill="#0f172a">masters</text>
+</g>
+<line x1="0" y1="345" x2="1184" y2="345" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="345" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="8">
+<text x="10" y="364" font-size="12" font-weight="500" fill="#0f172a">Lending Portfolio Performance Pipeline</text>
+<text x="10" y="378" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDPERF-PIPELINE</text>
+<text x="365.2" y="364" font-size="12" font-weight="400" fill="#0f172a">sot</text>
+<text x="554.64" y="364" font-size="12" font-weight="500" fill="#0f172a">Lending Portfolio Performance curated dataset</text>
+<text x="554.64" y="378" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-LENDPERF-CURATED</text>
+<text x="909.84" y="364" font-size="12" font-weight="400" fill="#0f172a">masters</text>
+</g>
+<line x1="0" y1="390" x2="1184" y2="390" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="9">
+<text x="10" y="409" font-size="12" font-weight="500" fill="#0f172a">Merchant Portal Database</text>
+<text x="10" y="423" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-MERCHANT-STORE</text>
+<text x="365.2" y="409" font-size="12" font-weight="400" fill="#0f172a">sot</text>
+<text x="554.64" y="409" font-size="12" font-weight="500" fill="#0f172a">Merchant Portal operational data</text>
+<text x="554.64" y="423" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-MERCHANT-OPERATIONAL</text>
+<text x="909.84" y="409" font-size="12" font-weight="400" fill="#0f172a">masters</text>
+</g>
+<line x1="0" y1="435" x2="1184" y2="435" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="435" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="10">
+<text x="10" y="454" font-size="12" font-weight="500" fill="#0f172a">NICE Actimize Screening</text>
+<text x="10" y="468" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-SCREENING-VENDOR</text>
+<text x="365.2" y="454" font-size="12" font-weight="400" fill="#0f172a">sot</text>
+<text x="554.64" y="454" font-size="12" font-weight="500" fill="#0f172a">NICE Actimize Screening outcomes</text>
+<text x="554.64" y="468" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-SCREENING-OUTCOMES</text>
+<text x="909.84" y="454" font-size="12" font-weight="400" fill="#0f172a">masters</text>
+</g>
+<line x1="0" y1="480" x2="1184" y2="480" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="11">
+<text x="10" y="499" font-size="12" font-weight="500" fill="#0f172a">Pega Smart Dispute</text>
+<text x="10" y="513" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-DISPUTES-SAAS</text>
+<text x="365.2" y="499" font-size="12" font-weight="400" fill="#0f172a">sot</text>
+<text x="554.64" y="499" font-size="12" font-weight="500" fill="#0f172a">Dispute Management Platform vendor feed</text>
+<text x="554.64" y="513" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-DISPUTES-VENDOR-FEED</text>
+<text x="909.84" y="499" font-size="12" font-weight="400" fill="#0f172a">masters</text>
+</g>
+<line x1="0" y1="525" x2="1184" y2="525" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="525" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="12">
+<text x="10" y="544" font-size="12" font-weight="500" fill="#0f172a">Point-of-Sale Finance Database</text>
+<text x="10" y="558" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-POSFIN-DB</text>
+<text x="365.2" y="544" font-size="12" font-weight="400" fill="#0f172a">sot</text>
+<text x="554.64" y="544" font-size="12" font-weight="500" fill="#0f172a">Point-of-Sale Finance operational data</text>
+<text x="554.64" y="558" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-POSFIN-OPERATIONAL</text>
+<text x="909.84" y="544" font-size="12" font-weight="400" fill="#0f172a">masters</text>
+</g>
+<line x1="0" y1="570" x2="1184" y2="570" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="13">
+<text x="10" y="589" font-size="12" font-weight="500" fill="#0f172a">Rewards Redemption Database</text>
+<text x="10" y="603" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-REWARDS-STORE</text>
+<text x="365.2" y="589" font-size="12" font-weight="400" fill="#0f172a">sot</text>
+<text x="554.64" y="589" font-size="12" font-weight="500" fill="#0f172a">Rewards Redemption operational data</text>
+<text x="554.64" y="603" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-REWARDS-OPERATIONAL</text>
+<text x="909.84" y="589" font-size="12" font-weight="400" fill="#0f172a">masters</text>
+</g>
+<line x1="0" y1="615" x2="1184" y2="615" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="615" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="14">
+<text x="10" y="634" font-size="12" font-weight="500" fill="#0f172a">Authorization Switch</text>
+<text x="10" y="648" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-AUTH-SWITCH</text>
+<text x="365.2" y="634" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="634" font-size="12" font-weight="500" fill="#0f172a">Card account master</text>
+<text x="554.64" y="648" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CARD-ACCOUNT</text>
+<text x="909.84" y="634" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="660" x2="1184" y2="660" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="15">
+<text x="10" y="679" font-size="12" font-weight="500" fill="#0f172a">Authorization Switch</text>
+<text x="10" y="693" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-AUTH-SWITCH</text>
+<text x="365.2" y="679" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="679" font-size="12" font-weight="500" fill="#0f172a">Card transaction history</text>
+<text x="554.64" y="693" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-TRANSACTION</text>
+<text x="909.84" y="679" font-size="12" font-weight="400" fill="#0f172a">ReadWrite</text>
+</g>
+<line x1="0" y1="705" x2="1184" y2="705" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="705" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="16">
+<text x="10" y="724" font-size="12" font-weight="500" fill="#0f172a">Card production and fulfillment</text>
+<text x="10" y="738" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CARD-FULFILL</text>
+<text x="365.2" y="724" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="724" font-size="12" font-weight="500" fill="#0f172a">Card account master</text>
+<text x="554.64" y="738" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CARD-ACCOUNT</text>
+<text x="909.84" y="724" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="750" x2="1184" y2="750" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="17">
+<text x="10" y="769" font-size="12" font-weight="500" fill="#0f172a">Card Servicing Datastore</text>
+<text x="10" y="783" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CARDSVC-STORE</text>
+<text x="365.2" y="769" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="769" font-size="12" font-weight="500" fill="#0f172a">Card Servicing operational data</text>
+<text x="554.64" y="783" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CARDSVC-OPERATIONAL</text>
+<text x="909.84" y="769" font-size="12" font-weight="400" fill="#0f172a">ReadWrite</text>
+</g>
+<line x1="0" y1="795" x2="1184" y2="795" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="795" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="18">
+<text x="10" y="814" font-size="12" font-weight="500" fill="#0f172a">Card Servicing Service</text>
+<text x="10" y="828" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CARDSVC-API</text>
+<text x="365.2" y="814" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="814" font-size="12" font-weight="500" fill="#0f172a">Card Servicing operational data</text>
+<text x="554.64" y="828" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CARDSVC-OPERATIONAL</text>
+<text x="909.84" y="814" font-size="12" font-weight="400" fill="#0f172a">ReadWrite</text>
+</g>
+<line x1="0" y1="840" x2="1184" y2="840" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="19">
+<text x="10" y="859" font-size="12" font-weight="500" fill="#0f172a">Card Servicing Service</text>
+<text x="10" y="873" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CARDSVC-API</text>
+<text x="365.2" y="859" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="859" font-size="12" font-weight="500" fill="#0f172a">Card account master</text>
+<text x="554.64" y="873" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CARD-ACCOUNT</text>
+<text x="909.84" y="859" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="885" x2="1184" y2="885" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="885" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="20">
+<text x="10" y="904" font-size="12" font-weight="500" fill="#0f172a">Card Servicing Service</text>
+<text x="10" y="918" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CARDSVC-API</text>
+<text x="365.2" y="904" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="904" font-size="12" font-weight="500" fill="#0f172a">Card transaction history</text>
+<text x="554.64" y="918" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-TRANSACTION</text>
+<text x="909.84" y="904" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="930" x2="1184" y2="930" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="21">
+<text x="10" y="949" font-size="12" font-weight="500" fill="#0f172a">Cardholder mobile application</text>
+<text x="10" y="963" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-MOBILE</text>
+<text x="365.2" y="949" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="949" font-size="12" font-weight="500" fill="#0f172a">Card account master</text>
+<text x="554.64" y="963" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CARD-ACCOUNT</text>
+<text x="909.84" y="949" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="975" x2="1184" y2="975" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="975" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="22">
+<text x="10" y="994" font-size="12" font-weight="500" fill="#0f172a">Cardholder mobile application</text>
+<text x="10" y="1008" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-MOBILE</text>
+<text x="365.2" y="994" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="994" font-size="12" font-weight="500" fill="#0f172a">Card transaction history</text>
+<text x="554.64" y="1008" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-TRANSACTION</text>
+<text x="909.84" y="994" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="1020" x2="1184" y2="1020" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="23">
+<text x="10" y="1039" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace Datastore</text>
+<text x="10" y="1053" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-COLLECT-STORE</text>
+<text x="365.2" y="1039" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1039" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace operational data</text>
+<text x="554.64" y="1053" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-COLLECT-OPERATIONAL</text>
+<text x="909.84" y="1039" font-size="12" font-weight="400" fill="#0f172a">ReadWrite</text>
+</g>
+<line x1="0" y1="1065" x2="1184" y2="1065" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1065" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="24">
+<text x="10" y="1084" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace Service</text>
+<text x="10" y="1098" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-COLLECT-API</text>
+<text x="365.2" y="1084" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1084" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace operational data</text>
+<text x="554.64" y="1098" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-COLLECT-OPERATIONAL</text>
+<text x="909.84" y="1084" font-size="12" font-weight="400" fill="#0f172a">ReadWrite</text>
+</g>
+<line x1="0" y1="1110" x2="1184" y2="1110" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="25">
+<text x="10" y="1129" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace Service</text>
+<text x="10" y="1143" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-COLLECT-API</text>
+<text x="365.2" y="1129" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1129" font-size="12" font-weight="500" fill="#0f172a">Card account master</text>
+<text x="554.64" y="1143" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CARD-ACCOUNT</text>
+<text x="909.84" y="1129" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="1155" x2="1184" y2="1155" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1155" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="26">
+<text x="10" y="1174" font-size="12" font-weight="500" fill="#0f172a">Contact center platform</text>
+<text x="10" y="1188" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CONTACT</text>
+<text x="365.2" y="1174" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1174" font-size="12" font-weight="500" fill="#0f172a">Customer profile</text>
+<text x="554.64" y="1188" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CUSTOMER-PROFILE</text>
+<text x="909.84" y="1174" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="1200" x2="1184" y2="1200" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="27">
+<text x="10" y="1219" font-size="12" font-weight="500" fill="#0f172a">Core Card Ledger</text>
+<text x="10" y="1233" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CORE-LEDGER</text>
+<text x="365.2" y="1219" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1219" font-size="12" font-weight="500" fill="#0f172a">Card account master</text>
+<text x="554.64" y="1233" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CARD-ACCOUNT</text>
+<text x="909.84" y="1219" font-size="12" font-weight="400" fill="#0f172a">ReadWrite</text>
+</g>
+<line x1="0" y1="1245" x2="1184" y2="1245" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1245" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="28">
+<text x="10" y="1264" font-size="12" font-weight="500" fill="#0f172a">Credit data and decisioning environment</text>
+<text x="10" y="1278" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CREDIT-DATA</text>
+<text x="365.2" y="1264" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1264" font-size="12" font-weight="500" fill="#0f172a">Card account master</text>
+<text x="554.64" y="1278" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CARD-ACCOUNT</text>
+<text x="909.84" y="1264" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="1290" x2="1184" y2="1290" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="29">
+<text x="10" y="1309" font-size="12" font-weight="500" fill="#0f172a">Credit data and decisioning environment</text>
+<text x="10" y="1323" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CREDIT-DATA</text>
+<text x="365.2" y="1309" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1309" font-size="12" font-weight="500" fill="#0f172a">Card transaction history</text>
+<text x="554.64" y="1323" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-TRANSACTION</text>
+<text x="909.84" y="1309" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="1335" x2="1184" y2="1335" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1335" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="30">
+<text x="10" y="1354" font-size="12" font-weight="500" fill="#0f172a">Customer 360 Pipeline</text>
+<text x="10" y="1368" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CUST360-PIPELINE</text>
+<text x="365.2" y="1354" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1354" font-size="12" font-weight="500" fill="#0f172a">Customer 360 curated dataset</text>
+<text x="554.64" y="1368" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CUST360-CURATED</text>
+<text x="909.84" y="1354" font-size="12" font-weight="400" fill="#0f172a">Write</text>
+</g>
+<line x1="0" y1="1380" x2="1184" y2="1380" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="31">
+<text x="10" y="1399" font-size="12" font-weight="500" fill="#0f172a">Customer 360 Pipeline</text>
+<text x="10" y="1413" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CUST360-PIPELINE</text>
+<text x="365.2" y="1399" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1399" font-size="12" font-weight="500" fill="#0f172a">Card account master</text>
+<text x="554.64" y="1413" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CARD-ACCOUNT</text>
+<text x="909.84" y="1399" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="1425" x2="1184" y2="1425" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1425" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="32">
+<text x="10" y="1444" font-size="12" font-weight="500" fill="#0f172a">Customer 360 Pipeline</text>
+<text x="10" y="1458" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CUST360-PIPELINE</text>
+<text x="365.2" y="1444" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1444" font-size="12" font-weight="500" fill="#0f172a">Customer profile</text>
+<text x="554.64" y="1458" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CUSTOMER-PROFILE</text>
+<text x="909.84" y="1444" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="1470" x2="1184" y2="1470" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="33">
+<text x="10" y="1489" font-size="12" font-weight="500" fill="#0f172a">Customer 360 Pipeline</text>
+<text x="10" y="1503" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CUST360-PIPELINE</text>
+<text x="365.2" y="1489" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1489" font-size="12" font-weight="500" fill="#0f172a">Card transaction history</text>
+<text x="554.64" y="1503" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-TRANSACTION</text>
+<text x="909.84" y="1489" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="1515" x2="1184" y2="1515" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1515" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="34">
+<text x="10" y="1534" font-size="12" font-weight="500" fill="#0f172a">Customer 360 Semantic Layer</text>
+<text x="10" y="1548" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CUST360-SEMANTIC</text>
+<text x="365.2" y="1534" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1534" font-size="12" font-weight="500" fill="#0f172a">Customer 360 curated dataset</text>
+<text x="554.64" y="1548" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CUST360-CURATED</text>
+<text x="909.84" y="1534" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="1560" x2="1184" y2="1560" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="35">
+<text x="10" y="1579" font-size="12" font-weight="500" fill="#0f172a">Dynamics 365 Customer Service</text>
+<text x="10" y="1593" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CRM</text>
+<text x="365.2" y="1579" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1579" font-size="12" font-weight="500" fill="#0f172a">Customer profile</text>
+<text x="554.64" y="1593" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CUSTOMER-PROFILE</text>
+<text x="909.84" y="1579" font-size="12" font-weight="400" fill="#0f172a">ReadWrite</text>
+</g>
+<line x1="0" y1="1605" x2="1184" y2="1605" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1605" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="36">
+<text x="10" y="1624" font-size="12" font-weight="500" fill="#0f172a">Enterprise Data Ingestion Hub</text>
+<text x="10" y="1638" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-DATA-INGEST</text>
+<text x="365.2" y="1624" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1624" font-size="12" font-weight="500" fill="#0f172a">Dispute Management Platform vendor feed</text>
+<text x="554.64" y="1638" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-DISPUTES-VENDOR-FEED</text>
+<text x="909.84" y="1624" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="1650" x2="1184" y2="1650" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="37">
+<text x="10" y="1669" font-size="12" font-weight="500" fill="#0f172a">Enterprise Data Ingestion Hub</text>
+<text x="10" y="1683" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-DATA-INGEST</text>
+<text x="365.2" y="1669" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1669" font-size="12" font-weight="500" fill="#0f172a">NICE Actimize Screening outcomes</text>
+<text x="554.64" y="1683" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-SCREENING-OUTCOMES</text>
+<text x="909.84" y="1669" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="1695" x2="1184" y2="1695" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1695" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="38">
+<text x="10" y="1714" font-size="12" font-weight="500" fill="#0f172a">Financial crimes platform</text>
+<text x="10" y="1728" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-AML</text>
+<text x="365.2" y="1714" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1714" font-size="12" font-weight="500" fill="#0f172a">Card transaction history</text>
+<text x="554.64" y="1728" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-TRANSACTION</text>
+<text x="909.84" y="1714" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="1740" x2="1184" y2="1740" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="39">
+<text x="10" y="1759" font-size="12" font-weight="500" fill="#0f172a">Installment Lending Async Worker</text>
+<text x="10" y="1773" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDING-WORKER</text>
+<text x="365.2" y="1759" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1759" font-size="12" font-weight="500" fill="#0f172a">Installment Lending operational data</text>
+<text x="554.64" y="1773" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-LENDING-OPERATIONAL</text>
+<text x="909.84" y="1759" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="1785" x2="1184" y2="1785" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1785" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="40">
+<text x="10" y="1804" font-size="12" font-weight="500" fill="#0f172a">Installment Lending Service</text>
+<text x="10" y="1818" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDING-API</text>
+<text x="365.2" y="1804" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1804" font-size="12" font-weight="500" fill="#0f172a">Installment Lending operational data</text>
+<text x="554.64" y="1818" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-LENDING-OPERATIONAL</text>
+<text x="909.84" y="1804" font-size="12" font-weight="400" fill="#0f172a">ReadWrite</text>
+</g>
+<line x1="0" y1="1830" x2="1184" y2="1830" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="41">
+<text x="10" y="1849" font-size="12" font-weight="500" fill="#0f172a">IVR and self-service voice</text>
+<text x="10" y="1863" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-IVR</text>
+<text x="365.2" y="1849" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1849" font-size="12" font-weight="500" fill="#0f172a">Card account master</text>
+<text x="554.64" y="1863" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CARD-ACCOUNT</text>
+<text x="909.84" y="1849" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="1875" x2="1184" y2="1875" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1875" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="42">
+<text x="10" y="1894" font-size="12" font-weight="500" fill="#0f172a">Lending Portfolio Performance Pipeline</text>
+<text x="10" y="1908" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDPERF-PIPELINE</text>
+<text x="365.2" y="1894" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1894" font-size="12" font-weight="500" fill="#0f172a">Lending Portfolio Performance curated dataset</text>
+<text x="554.64" y="1908" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-LENDPERF-CURATED</text>
+<text x="909.84" y="1894" font-size="12" font-weight="400" fill="#0f172a">Write</text>
+</g>
+<line x1="0" y1="1920" x2="1184" y2="1920" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="43">
+<text x="10" y="1939" font-size="12" font-weight="500" fill="#0f172a">Lending Portfolio Performance Semantic Layer</text>
+<text x="10" y="1953" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDPERF-SEMANTIC</text>
+<text x="365.2" y="1939" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1939" font-size="12" font-weight="500" fill="#0f172a">Lending Portfolio Performance curated dataset</text>
+<text x="554.64" y="1953" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-LENDPERF-CURATED</text>
+<text x="909.84" y="1939" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="1965" x2="1184" y2="1965" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1965" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="44">
+<text x="10" y="1984" font-size="12" font-weight="500" fill="#0f172a">Merchant Portal Service</text>
+<text x="10" y="1998" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-MERCHANT-API</text>
+<text x="365.2" y="1984" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="1984" font-size="12" font-weight="500" fill="#0f172a">Merchant Portal operational data</text>
+<text x="554.64" y="1998" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-MERCHANT-OPERATIONAL</text>
+<text x="909.84" y="1984" font-size="12" font-weight="400" fill="#0f172a">ReadWrite</text>
+</g>
+<line x1="0" y1="2010" x2="1184" y2="2010" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="45">
+<text x="10" y="2029" font-size="12" font-weight="500" fill="#0f172a">NICE Actimize Screening</text>
+<text x="10" y="2043" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-SCREENING-VENDOR</text>
+<text x="365.2" y="2029" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="2029" font-size="12" font-weight="500" fill="#0f172a">NICE Actimize Screening outcomes</text>
+<text x="554.64" y="2043" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-SCREENING-OUTCOMES</text>
+<text x="909.84" y="2029" font-size="12" font-weight="400" fill="#0f172a">Write</text>
+</g>
+<line x1="0" y1="2055" x2="1184" y2="2055" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2055" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="46">
+<text x="10" y="2074" font-size="12" font-weight="500" fill="#0f172a">Pega Smart Dispute</text>
+<text x="10" y="2088" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-DISPUTES-SAAS</text>
+<text x="365.2" y="2074" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="2074" font-size="12" font-weight="500" fill="#0f172a">Dispute Management Platform vendor feed</text>
+<text x="554.64" y="2088" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-DISPUTES-VENDOR-FEED</text>
+<text x="909.84" y="2074" font-size="12" font-weight="400" fill="#0f172a">Write</text>
+</g>
+<line x1="0" y1="2100" x2="1184" y2="2100" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="47">
+<text x="10" y="2119" font-size="12" font-weight="500" fill="#0f172a">Point-of-Sale Finance Database</text>
+<text x="10" y="2133" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-POSFIN-DB</text>
+<text x="365.2" y="2119" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="2119" font-size="12" font-weight="500" fill="#0f172a">Point-of-Sale Finance operational data</text>
+<text x="554.64" y="2133" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-POSFIN-OPERATIONAL</text>
+<text x="909.84" y="2119" font-size="12" font-weight="400" fill="#0f172a">ReadWrite</text>
+</g>
+<line x1="0" y1="2145" x2="1184" y2="2145" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2145" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="48">
+<text x="10" y="2164" font-size="12" font-weight="500" fill="#0f172a">Point-of-Sale Finance Service</text>
+<text x="10" y="2178" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-POSFIN-API</text>
+<text x="365.2" y="2164" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="2164" font-size="12" font-weight="500" fill="#0f172a">Point-of-Sale Finance operational data</text>
+<text x="554.64" y="2178" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-POSFIN-OPERATIONAL</text>
+<text x="909.84" y="2164" font-size="12" font-weight="400" fill="#0f172a">ReadWrite</text>
+</g>
+<line x1="0" y1="2190" x2="1184" y2="2190" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="49">
+<text x="10" y="2209" font-size="12" font-weight="500" fill="#0f172a">Reconciliation platform</text>
+<text x="10" y="2223" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-RECON</text>
+<text x="365.2" y="2209" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="2209" font-size="12" font-weight="500" fill="#0f172a">Card transaction history</text>
+<text x="554.64" y="2223" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-TRANSACTION</text>
+<text x="909.84" y="2209" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="2235" x2="1184" y2="2235" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2235" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="50">
+<text x="10" y="2254" font-size="12" font-weight="500" fill="#0f172a">Regulatory Reporting Engine</text>
+<text x="10" y="2268" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-REG-REPORTING</text>
+<text x="365.2" y="2254" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="2254" font-size="12" font-weight="500" fill="#0f172a">Lending Portfolio Performance curated dataset</text>
+<text x="554.64" y="2268" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-LENDPERF-CURATED</text>
+<text x="909.84" y="2254" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="2280" x2="1184" y2="2280" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="51">
+<text x="10" y="2299" font-size="12" font-weight="500" fill="#0f172a">Regulatory Reporting Engine</text>
+<text x="10" y="2313" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-REG-REPORTING</text>
+<text x="365.2" y="2299" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="2299" font-size="12" font-weight="500" fill="#0f172a">Customer 360 curated dataset</text>
+<text x="554.64" y="2313" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CUST360-CURATED</text>
+<text x="909.84" y="2299" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="2325" x2="1184" y2="2325" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2325" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="52">
+<text x="10" y="2344" font-size="12" font-weight="500" fill="#0f172a">Rewards Redemption Database</text>
+<text x="10" y="2358" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-REWARDS-STORE</text>
+<text x="365.2" y="2344" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="2344" font-size="12" font-weight="500" fill="#0f172a">Rewards Redemption operational data</text>
+<text x="554.64" y="2358" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-REWARDS-OPERATIONAL</text>
+<text x="909.84" y="2344" font-size="12" font-weight="400" fill="#0f172a">ReadWrite</text>
+</g>
+<line x1="0" y1="2370" x2="1184" y2="2370" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="53">
+<text x="10" y="2389" font-size="12" font-weight="500" fill="#0f172a">Rewards Redemption Service</text>
+<text x="10" y="2403" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-REWARDS-API</text>
+<text x="365.2" y="2389" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="2389" font-size="12" font-weight="500" fill="#0f172a">Rewards Redemption operational data</text>
+<text x="554.64" y="2403" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-REWARDS-OPERATIONAL</text>
+<text x="909.84" y="2389" font-size="12" font-weight="400" fill="#0f172a">ReadWrite</text>
+</g>
+<line x1="0" y1="2415" x2="1184" y2="2415" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2415" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="54">
+<text x="10" y="2434" font-size="12" font-weight="500" fill="#0f172a">Statement Generation</text>
+<text x="10" y="2448" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-STATEMENTS</text>
+<text x="365.2" y="2434" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="2434" font-size="12" font-weight="500" fill="#0f172a">Card account master</text>
+<text x="554.64" y="2448" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CARD-ACCOUNT</text>
+<text x="909.84" y="2434" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="2460" x2="1184" y2="2460" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="55">
+<text x="10" y="2479" font-size="12" font-weight="500" fill="#0f172a">Statement Generation</text>
+<text x="10" y="2493" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-STATEMENTS</text>
+<text x="365.2" y="2479" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="2479" font-size="12" font-weight="500" fill="#0f172a">Card transaction history</text>
+<text x="554.64" y="2493" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-TRANSACTION</text>
+<text x="909.84" y="2479" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="2505" x2="1184" y2="2505" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2505" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="56">
+<text x="10" y="2524" font-size="12" font-weight="500" fill="#0f172a">Tokenization and credential management</text>
+<text x="10" y="2538" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-TOKEN</text>
+<text x="365.2" y="2524" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="2524" font-size="12" font-weight="500" fill="#0f172a">Card account master</text>
+<text x="554.64" y="2538" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CARD-ACCOUNT</text>
+<text x="909.84" y="2524" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="2550" x2="1184" y2="2550" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="57">
+<text x="10" y="2569" font-size="12" font-weight="500" fill="#0f172a">Transaction fraud detection</text>
+<text x="10" y="2583" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-FRAUD-DETECT</text>
+<text x="365.2" y="2569" font-size="12" font-weight="400" fill="#0f172a">system reads writes</text>
+<text x="554.64" y="2569" font-size="12" font-weight="500" fill="#0f172a">Card transaction history</text>
+<text x="554.64" y="2583" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-TRANSACTION</text>
+<text x="909.84" y="2569" font-size="12" font-weight="400" fill="#0f172a">Read</text>
+</g>
+<line x1="0" y1="2595" x2="1184" y2="2595" stroke="#c9d0dc" stroke-width="0.6"/>
+</g>
+<g class="foot"><line x1="28" y1="2711" x2="1212" y2="2711" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="2733" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · data-lineage · edit the model, not the picture</text></g>
+</svg>

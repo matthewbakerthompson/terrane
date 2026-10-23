@@ -1,0 +1,50 @@
+@startuml
+' Set and deploy credit decision strategy — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Set and deploy credit decision strategy — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_CRED_01, "Credit Strategy & Scorecard Management", "Own the credit decision strategy and its cutoffs.", $tags="capabilities")
+  ' aac CAP_CRED_01: company_domain="Originations"
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_BUREAU_FILE, "Credit bureau furnishing file", "Monthly tradeline furnishing extract and consumer-dispute responses.", $tags="data_assets")
+  ' aac DA_BUREAU_FILE: company_domain=""
+  SystemDb(DA_MODEL_FEAT, "Model feature store", "Curated features and scores for credit, fraud, and collections models.", $tags="data_assets")
+  ' aac DA_MODEL_FEAT: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_CREDIT_001, "Set and deploy credit decision strategy", "Define, test, approve, and deploy changes to the credit decision strategy and its cutoffs. Strategy changes ship through champion-challenger testing with documented approval; the deployed strategy is the single decisioning authority for originations.", $tags="processes")
+  ' aac P_CREDIT_001: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CREDIT_DATA, "Credit data and decisioning environment", "Credit data, analytics, and decisioning environment. Built with Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_CREDIT_DATA: company_domain=""; technology="Snowflake Data Cloud"
+  System(SYS_MODEL, "Model platform", "Model development, deployment, and monitoring.", $tags="systems")
+  ' aac SYS_MODEL: company_domain=""
+  System(SYS_ORIG_DECISION, "Originations decision engine", "Application processing and credit decision execution.", $tags="systems")
+  ' aac SYS_ORIG_DECISION: company_domain=""
+}
+
+Rel(P_CREDIT_001, SYS_ORIG_DECISION, "Primary")
+' aac rel: source="P_CREDIT_001"; target="SYS_ORIG_DECISION"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_CREDIT_001, SYS_MODEL, "Supporting")
+' aac rel: source="P_CREDIT_001"; target="SYS_MODEL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_CREDIT_001, SYS_CREDIT_DATA, "Supporting")
+' aac rel: source="P_CREDIT_001"; target="SYS_CREDIT_DATA"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_CREDIT_001, DA_BUREAU_FILE, "Reads")
+' aac rel: source="P_CREDIT_001"; target="DA_BUREAU_FILE"; label="Reads"; relation="process_uses_data_asset"; access="Reads"
+Rel(P_CREDIT_001, DA_MODEL_FEAT, "Reads")
+' aac rel: source="P_CREDIT_001"; target="DA_MODEL_FEAT"; label="Reads"; relation="process_uses_data_asset"; access="Reads"
+Rel(P_CREDIT_001, CAP_CRED_01, "supports")
+' aac rel: source="P_CREDIT_001"; target="CAP_CRED_01"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

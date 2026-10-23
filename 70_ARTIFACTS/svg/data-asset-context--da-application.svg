@@ -1,0 +1,213 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="1289.13" viewBox="0 0 1100 1289.13" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Credit application record — Where It Lives and Who Uses It</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Credit application record — Where It Lives and Who Uses It</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   11 nodes · 11 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One data asset in full: the system that masters it, the systems that read or write it, the processes that use it, the controls that govern it and the policies it is subject</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">to. The page a privacy or audit question starts from.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(187.53 99.08)">
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="491.9" y="521.7" width="222.6" height="136.6" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="533.9" y="539.11" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="32.11" y="24.42" width="211.78" height="471.13" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="64.96" y="41.83" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="10.45" y="524.45" width="233.1" height="526.1" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="40.25" y="541.86" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::SYS-ORIG-DECISION::DA-APPLICATION">
+<title>masters</title>
+<path d="M218 972.33 L246.94 972 A10 10 0 0 1 247.06 972 L324.1 972 L393.2 972 A10 10 0 0 0 403.2 962 L403.2 640 A10 10 0 0 1 413.2 630 L429.2 630 L492.2 630 A6 6 0 0 0 498.2 624 L498.2 624 A6 6 0 0 1 504.2 618 L514.68 618" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M518.2 618 L508.63 622.78 L508.63 613.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e1::SYS-ORIG-DECISION::DA-APPLICATION">
+<title>ReadWrite</title>
+<path d="M218 998.67 L246.94 999 A10 10 0 0 0 247.06 999 L403.2 999 A10 10 0 0 0 413.2 989 L413.2 648 A8 8 0 0 1 421.2 640 L429.2 640 L500.7 640 A7.5 7.5 0 0 0 508.2 632.5 L508.2 628.24 A3.24 3.24 0 0 1 511.44 625 L514.68 625" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M518.2 625 L508.63 629.78 L508.63 620.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::SYS-ORIG-DECISION::DA-APPLICATION">
+<rect x="296.71" y="1005.5" width="54.78" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="1017.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">ReadWrite</text>
+</g>
+<g class="edge" data-id="e2::SYS-APPFRAUD::DA-APPLICATION">
+<title>Read</title>
+<path d="M218 787.5 L246.91 788 A10 10 0 0 0 247.09 788 L373.2 788 A10 10 0 0 0 383.2 778 L383.2 620 A10 10 0 0 1 393.2 610 L429.2 610 L475.2 610 A3 3 0 0 0 478.2 607 L478.2 607 A3 3 0 0 1 481.2 604 L514.68 604" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M518.2 604 L508.63 608.78 L508.63 599.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::SYS-APPFRAUD::DA-APPLICATION">
+<rect x="309.06" y="794.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="806.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e3::SYS-KYC::DA-APPLICATION">
+<title>Read</title>
+<path d="M218 886.5 L246.91 887 A10 10 0 0 0 247.09 887 L383.2 887 A10 10 0 0 0 393.2 877 L393.2 630 A10 10 0 0 1 403.2 620 L429.2 620 L483.7 620 A4.5 4.5 0 0 0 488.2 615.5 L488.2 615.5 A4.5 4.5 0 0 1 492.7 611 L514.68 611" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M518.2 611 L508.63 615.78 L508.63 606.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::SYS-KYC::DA-APPLICATION">
+<rect x="309.06" y="893.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="905.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e4::SYS-CREDIT-DATA::DA-APPLICATION">
+<title>Read</title>
+<path d="M218 589.5 L246.91 590 A10 10 0 0 0 247.09 590 L429.2 590 L514.68 590" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M518.2 590 L508.63 594.78 L508.63 585.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::SYS-CREDIT-DATA::DA-APPLICATION">
+<rect x="309.06" y="596.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="608.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e5::SYS-AML::DA-APPLICATION">
+<title>Read</title>
+<path d="M218 688.5 L246.91 689 A10 10 0 0 0 247.09 689 L363.2 689 A10 10 0 0 0 373.2 679 L373.2 610 A10 10 0 0 1 383.2 600 L429.2 600 L466.7 600 A1.5 1.5 0 0 0 468.2 598.5 L468.2 598.5 A1.5 1.5 0 0 1 469.7 597 L514.68 597" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M518.2 597 L508.63 601.78 L508.63 592.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e5::SYS-AML::DA-APPLICATION">
+<rect x="309.06" y="695.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="707.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e6::P-ORIG-001::DA-APPLICATION">
+<title>Writes</title>
+<path d="M218 172 L247 172 L393.2 172 A10 10 0 0 1 403.2 182 L403.2 540 A10 10 0 0 0 413.2 550 L429.2 550 L492.2 550 A6 6 0 0 1 498.2 556 L498.2 556 A6 6 0 0 0 504.2 562 L514.68 562" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M518.2 562 L508.63 566.78 L508.63 557.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e6::P-ORIG-001::DA-APPLICATION">
+<rect x="306.01" y="178.5" width="36.18" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="190.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Writes</text>
+</g>
+<g class="edge" data-id="e7::P-ORIG-002::DA-APPLICATION">
+<title>Both</title>
+<path d="M218 260 L247 260 L383.2 260 A10 10 0 0 1 393.2 270 L393.2 550 A10 10 0 0 0 403.2 560 L429.2 560 L483.7 560 A4.5 4.5 0 0 1 488.2 564.5 L488.2 564.5 A4.5 4.5 0 0 0 492.7 569 L514.68 569" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M518.2 569 L508.63 573.78 L508.63 564.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e7::P-ORIG-002::DA-APPLICATION">
+<rect x="309.95" y="266.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="278.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e8::P-ORIG-003::DA-APPLICATION">
+<title>Reads</title>
+<path d="M218 84 L247 84 L403.2 84 A10 10 0 0 1 413.2 94 L413.2 532 A8 8 0 0 0 421.2 540 L429.2 540 L500.7 540 A7.5 7.5 0 0 1 508.2 547.5 L508.2 551.76 A3.24 3.24 0 0 0 511.44 555 L514.68 555" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M518.2 555 L508.63 559.78 L508.63 550.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e8::P-ORIG-003::DA-APPLICATION">
+<rect x="306.42" y="90.5" width="35.36" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="102.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Reads</text>
+</g>
+<g class="edge" data-id="e9::P-ORIG-004::DA-APPLICATION">
+<title>Both</title>
+<path d="M218 348 L247 348 L373.2 348 A10 10 0 0 1 383.2 358 L383.2 560 A10 10 0 0 0 393.2 570 L429.2 570 L475.2 570 A3 3 0 0 1 478.2 573 L478.2 573 A3 3 0 0 0 481.2 576 L514.68 576" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M518.2 576 L508.63 580.78 L508.63 571.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e9::P-ORIG-004::DA-APPLICATION">
+<rect x="309.95" y="354.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="366.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e10::P-ORIG-005::DA-APPLICATION">
+<title>Reads</title>
+<path d="M218 436 L247 436 L363.2 436 A10 10 0 0 1 373.2 446 L373.2 570 A10 10 0 0 0 383.2 580 L429.2 580 L466.7 580 A1.5 1.5 0 0 1 468.2 581.5 L468.2 581.5 A1.5 1.5 0 0 0 469.7 583 L514.68 583" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M518.2 583 L508.63 587.78 L508.63 578.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e10::P-ORIG-005::DA-APPLICATION">
+<rect x="306.42" y="442.5" width="35.36" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="454.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Reads</text>
+</g>
+<g class="node" data-id="DA-APPLICATION" data-type="data_assets">
+<title>Credit application record</title>
+<path d="M518.2 552.2 Q526.7 548 560.7 548 L645.7 548 Q679.7 548 688.2 552.2 L688.2 627.8 Q679.7 632 645.7 632 L560.7 632 Q526.7 632 518.2 627.8 Z" fill="#70c9a7" stroke="#047857" stroke-width="2.6"/>
+<text x="599.2" y="588.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit application</text>
+<text x="599.2" y="600.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">record</text>
+<svg x="670.2" y="553" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-ORIG-001" data-type="processes">
+<title>Capture card application</title>
+<path d="M138 138 L58 163.97 L88.56 206 L187.44 206 L218 163.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="138" y="170.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Capture card</text>
+<text x="138" y="182.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">application</text>
+</g>
+<g class="node" data-id="P-ORIG-002" data-type="processes">
+<title>Verify applicant identity and satisfy CIP</title>
+<path d="M138 226 L58 251.97 L88.56 294 L187.44 294 L218 251.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="138" y="252.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Verify applicant</text>
+<text x="138" y="264.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">identity and satisfy</text>
+<text x="138" y="276.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">CIP</text>
+</g>
+<g class="node" data-id="P-ORIG-003" data-type="processes">
+<title>Screen application for fraud</title>
+<path d="M138 50 L58 75.97 L88.56 118 L187.44 118 L218 75.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="138" y="82.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Screen application for</text>
+<text x="138" y="94.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">fraud</text>
+</g>
+<g class="node" data-id="P-ORIG-004" data-type="processes">
+<title>Execute credit decision</title>
+<path d="M138 314 L58 339.97 L88.56 382 L187.44 382 L218 339.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="138" y="346.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Execute credit</text>
+<text x="138" y="358.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">decision</text>
+</g>
+<g class="node" data-id="P-ORIG-005" data-type="processes">
+<title>Issue adverse action notice</title>
+<path d="M138 402 L58 427.97 L88.56 470 L187.44 470 L218 427.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="138" y="434.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Issue adverse action</text>
+<text x="138" y="446.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">notice</text>
+</g>
+<g class="node" data-id="SYS-AML" data-type="systems">
+<title>Financial crimes platform</title>
+<rect x="36" y="649" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="123" y="686.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Financial crimes</text>
+<text x="123" y="698.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">platform</text>
+<svg x="200" y="654" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-APPFRAUD" data-type="systems">
+<title>Application fraud screening</title>
+<rect x="36" y="748" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="123" y="785.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Application fraud</text>
+<text x="123" y="797.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">screening</text>
+<svg x="200" y="753" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-CREDIT-DATA" data-type="systems">
+<title>Credit data and decisioning environment</title>
+<rect x="36" y="550" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="117" y="576.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit data and</text>
+<text x="117" y="588.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">decisioning</text>
+<text x="117" y="600.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">environment</text>
+<text x="127" y="623.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Snowflake Data Cloud</text>
+<image x="196" y="554" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMjlCNUU4IiByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+U25vd2ZsYWtlPC90aXRsZT48cGF0aCBkPSJNMjQgMy40NTljMCAuNjQ2LS40MTggMS4xOC0xLjE0MSAxLjE4LS43MjMgMC0xLjE0Mi0uNTM0LTEuMTQyLTEuMTggMC0uNjQ3LjQxOS0xLjE4IDEuMTQyLTEuMTguNzIzIDAgMS4xNDEuNTMzIDEuMTQxIDEuMTh6bS0uMjI4IDBjMC0uNTMzLS4zOC0uOTUxLS45MTMtLjk1MXMtLjkxMy4zOC0uOTEzLjk1YzAgLjUzMy4zOC45NTIuOTEzLjk1Mi41NyAwIC45MTMtLjQxOS45MTMtLjk1MXptLTEuMzctLjUzM2guNDk1Yy4yNjYgMCAuNDU2LjE1Mi40NTYuMzggMCAuMTUzLS4wNzYuMjI5LS4xOS4zMDVsLjE5LjI2NnYuMDM4aC0uMjY2bC0uMTktLjI2NmgtLjIyOXYuMjY2aC0uMjY2em0uNDk1LjIyOGgtLjIyOXYuMjY3aC4yMjljLjExNCAwIC4xNTItLjAzOC4xNTItLjExNC4wMzgtLjA3Ny0uMDM4LS4xNTMtLjE1Mi0uMTUzek03LjYwMiAxMi40Yy4wMzgtLjE1MS4wNzYtLjMwNC4wNzYtLjQ1NiAwLS4xMTQtLjAzOC0uMjI4LS4wMzgtLjM0Mi0uMTE0LS4zNDMtLjMwNC0uNjQ3LS42NDYtLjgzOGwtNC44Ny0yLjc3N2MtLjY4NS0uMzgtMS41Ni0uMTUyLTEuOTQuNTMzLS4zODEuNjg1LS4xNTMgMS41Ni41MzIgMS45NGwyLjcwMSAxLjU2LTIuNzAxIDEuNTZjLS42ODUuMzgtLjkxMyAxLjI1Ni0uNTMzIDEuOTQuMzguNjg1IDEuMjU2LjkxNCAxLjk0LjUzM2w0LjgzMi0yLjc3N2MuMzQzLS4yNjcuNTcxLS41MzMuNjQ3LS44NzZ6bTEuMzMyIDIuNjI2Yy0uMjY2LS4wMzgtLjU3LjAzOC0uODM3LjE5bC00LjgzMiAyLjc3N2MtLjY4NS4zOC0uOTEzIDEuMjU2LS41MzIgMS45NC4zOC42ODYgMS4yNTUuOTE0IDEuOTQuNTMzbDIuNzAxLTEuNTZ2My4xMmMwIC44LjY0NyAxLjQwOCAxLjQ0NiAxLjQwOC43OTkgMCAxLjQwNy0uNjQ3IDEuNDA3LTEuNDA4di01LjU5MmMwLS43NjEtLjU3LTEuMzctMS4yOTMtMS40MDh6bTQuOTQ2LTYuMDg4Yy4yNjYuMDM4LjU3LS4wMzguODM3LS4xOWw0LjgzMi0yLjc3N2MuNjg1LS4zOC45MTMtMS4yNTYuNTMyLTEuOTQtLjM4LS42ODYtMS4yNTUtLjkxNC0xLjk0LS41MzNsLTIuNzAxIDEuNTZWMS45NzVjMC0uNzk5LS42NDctMS40MDgtMS40NDYtMS40MDgtLjc5OSAwLTEuNDQ2LjYwOS0xLjQ0NiAxLjQwOFY3LjUzYzAgLjc2LjYwOSAxLjM3IDEuMzMyIDEuNDA3ek0zLjI2NSA1Ljk3bDQuODMyIDIuNzc3Yy4yNjYuMTUyLjUzMy4xOS44MzcuMTkuNzIzLS4wMzggMS4zMzEtLjY4NCAxLjMzMS0xLjQwN1YxLjk3NWMwLS43OTktLjY0Ni0xLjQwOC0xLjQwNy0xLjQwOC0uNzk5IDAtMS40NDYuNjQ3LTEuNDQ2IDEuNDA4djMuMTJsLTIuNzAxLTEuNTZjLS42ODUtLjM4LTEuNTYtLjE1Mi0xLjk0LjUzMy0uNDE5LjY0Ni0uMTkgMS41MjEuNDk0IDEuOTAyem05LjA5MyA2LjAxMWEuNDEyLjQxMiAwIDAwLS4xMTQtLjI2NmwtLjU3LS41NzFhLjM0Ni4zNDYgMCAwMC0uMjY3LS4xMTQuNDEyLjQxMiAwIDAwLS4yNjYuMTE0bC0uNTcxLjU3YS40MTEuNDExIDAgMDAtLjExNC4yNjdjMCAuMDc2LjAzOC4xOS4xMTQuMjY3bC41Ny41N2EuMzQ1LjM0NSAwIDAwLjI2Ny4xMTRjLjA3NiAwIC4xOS0uMDM4LjI2Ni0uMTE0bC41NzEtLjU3YS40MTIuNDEyIDAgMDAuMTE0LS4yNjd6bTEuNTk4LjUzM0wxMS45NCAxNC41M2MtLjAzOS4wMzgtLjE1My4xMTQtLjIyOS4xMTRoLS42MDhhLjQxMS40MTEgMCAwMS0uMjY3LS4xMTRMOC44MiAxMi41MTRhLjQwOC40MDggMCAwMS0uMDc2LS4yMjl2LS42MDhjMC0uMDc2LjAzOC0uMTkuMTE0LS4yNjdsMi4wMTYtMi4wMTZhLjQxLjQxIDAgMDEuMjY3LS4xMTRoLjYwOGEuNDEuNDEgMCAwMS4yNjcuMTE0bDIuMDE2IDIuMDE2YS4zNDcuMzQ3IDAgMDEuMTE0LjI2N3YuNjA4Yy0uMDc2LjA3Ny0uMTE0LjE5LS4xOS4yMjl6bTUuNTkzIDUuNDRsLTQuODMyLTIuNzc3Yy0uMjY2LS4xNTItLjU3LS4xOS0uODM3LS4xNTItLjcyMy4wMzgtMS4zMzIuNjg0LTEuMzMyIDEuNDA4djUuNTU0YzAgLjguNjQ3IDEuNDA4IDEuNDA4IDEuNDA4Ljc5OSAwIDEuNDQ2LS42NDcgMS40NDYtMS40MDh2LTMuMTJsMi43IDEuNTZjLjY4Ni4zOCAxLjU2MS4xNTIgMS45NDEtLjUzMy40MTktLjY0Ni4xOS0xLjUyMS0uNDk0LTEuOTR6bTIuNTQ5LTcuNTMzbC0yLjcwMSAxLjU2IDIuNyAxLjU2Yy42ODYuMzguOTE0IDEuMjU2LjUzMyAxLjk0LS4zOC42ODUtMS4yNTUuOTEzLTEuOTQuNTMzbC00LjgzMi0yLjc3OGExLjY0NCAxLjY0NCAwIDAxLS42NDctLjc5OGMtLjAzNy0uMTUzLS4wNzYtLjMwNS0uMDc2LS40NTcgMC0uMTE0LjAzOS0uMjI4LjAzOS0uMzQyLjExNC0uMzQzLjM0Mi0uNjQ3LjY0Ni0uODM3bDQuODMyLTIuNzc4Yy42ODUtLjM4IDEuNTYtLjE1MiAxLjk0LjUzMy40NTcuNjA5LjE5IDEuNDg0LS40OTQgMS44NjQiLz48L3N2Zz4="/>
+</g>
+<g class="node" data-id="SYS-KYC" data-type="systems">
+<title>Identity verification</title>
+<rect x="36" y="847" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="123" y="890.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Identity verification</text>
+<svg x="200" y="852" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-ORIG-DECISION" data-type="systems">
+<title>Originations decision engine</title>
+<rect x="36" y="946" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="123" y="983.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Originations decision</text>
+<text x="123" y="995.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">engine</text>
+<svg x="200" y="951" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="1165.13" x2="1072" y2="1165.13" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="1189.13" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 1178.13)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="93.2" y="1189.13" font-size="12" font-weight="400" fill="#343d50">data asset · 1</text>
+<g transform="translate(181.3 1178.13)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="207.3" y="1189.13" font-size="12" font-weight="400" fill="#343d50">process · 5</text>
+<g transform="translate(284.48 1178.13)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="310.48" y="1189.13" font-size="12" font-weight="400" fill="#343d50">system · 5</text>
+<text x="28" y="1211.13" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">CLASSIFICATION</text>
+<g transform="translate(130.2 1200.13)" fill="#70c9a7" stroke="#047857" stroke-width="2.6"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="156.2" y="1211.13" font-size="12" font-weight="400" fill="#343d50">Restricted · 1</text>
+<g transform="translate(243.85 1200.13)" fill="#a7f3d0" stroke="#047857" stroke-width="1.1"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="269.85" y="1211.13" font-size="12" font-weight="400" fill="#343d50">not recorded · 10</text>
+<text x="28" y="1233.13" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 1222.13)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="1233.13" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<g transform="translate(143.25 1222.13)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="169.25" y="1233.13" font-size="12" font-weight="400" fill="#343d50">masters</text>
+<g transform="translate(231.51 1222.13)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="257.51" y="1233.13" font-size="12" font-weight="400" fill="#343d50">reads / writes</text>
+<text x="28" y="1267.13" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · data-asset-context--da-application · edit the model, not the picture</text></g>
+</svg>

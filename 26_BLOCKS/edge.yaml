@@ -1,0 +1,42 @@
+# What sits between the internet and an application.
+#
+# Every one of these is a place a request can be stopped, and the difference
+# between them is what gets to decide. That is a security conversation, so it
+# is worth the boxes being separate rather than one labeled "edge".
+
+- building_block_id: public-web-tier
+  name: Public web tier
+  category: Network
+  description: >
+    Everything between the internet and an application. A load balancer with no WAF in front of it is a different risk posture, and naming the tier is what makes that visible instead of remembered.
+  provides:
+    - component: cdn
+    - component: waf
+    - component: load-balancer
+    - component: dns
+  relations:
+    - from: dns
+      to: cdn
+    - from: cdn
+      to: waf
+    - from: waf
+      to: load-balancer
+  defaults:
+    network_zone: Edge
+
+- building_block_id: public-api-tier
+  name: Public API tier
+  category: Network
+  description: >
+    A programmatic front door. The gateway is where authentication, throttling and versioning live, and where teams route around when it is slow -- which is the thing to watch for.
+  provides:
+    - component: dns
+    - component: waf
+    - component: api-gateway
+  relations:
+    - from: dns
+      to: waf
+    - from: waf
+      to: api-gateway
+  defaults:
+    network_zone: Edge

@@ -1,0 +1,38 @@
+# Where data goes to be asked questions of.
+#
+# Separated from the transactional store on purpose: the two have different
+# owners, different recovery objectives, and different reasons to exist.
+
+- building_block_id: analytics-platform
+  name: Analytics platform
+  category: Data
+  description: >
+    Landing, pipeline, warehouse and the reporting on top. Four components because the boundary between them is where lineage is either recorded or lost.
+  provides:
+    - component: object-store
+    - component: etl
+    - component: warehouse
+    - component: bi
+  relations:
+    - from: object-store
+      to: etl
+    - from: etl
+      to: warehouse
+    - from: warehouse
+      to: bi
+  defaults:
+    network_zone: Private-Data
+
+- building_block_id: data-governance
+  name: Data governance
+  category: Data
+  description: >
+    A catalog and the key management behind it. Small, and the difference between a data platform and a data liability.
+  provides:
+    - component: catalog
+    - component: kms
+  relations:
+    - from: catalog
+      to: kms
+  defaults:
+    network_zone: Shared-Services

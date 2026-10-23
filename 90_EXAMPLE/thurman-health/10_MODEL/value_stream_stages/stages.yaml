@@ -1,0 +1,113 @@
+# The stages of each value stream, in order, each with the criterion that
+# has to be true to leave it.
+
+- stage_id: VS-EMERGENCY-CARE-S01
+  name: Arrive and Triage
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-EMERGENCY-CARE
+  stage_order: "1"
+  exit_criterion: Patient identified, registered and given an acuity
+- stage_id: VS-EMERGENCY-CARE-S02
+  name: Evaluate
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-EMERGENCY-CARE
+  stage_order: "2"
+  exit_criterion: Orders resulted and a working diagnosis documented
+- stage_id: VS-EMERGENCY-CARE-S03
+  name: Treat
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-EMERGENCY-CARE
+  stage_order: "3"
+  exit_criterion: Patient stable, with medications given and recorded
+- stage_id: VS-EMERGENCY-CARE-S04
+  name: Admit or Discharge
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-EMERGENCY-CARE
+  stage_order: "4"
+  exit_criterion: Patient in an inpatient bed, or home with a summary and follow-up
+
+- stage_id: VS-DIAGNOSTICS-S01
+  name: Order
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-DIAGNOSTICS
+  stage_order: "1"
+  exit_criterion: An order the department can fill, for the right patient
+- stage_id: VS-DIAGNOSTICS-S02
+  name: Perform
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-DIAGNOSTICS
+  stage_order: "2"
+  exit_criterion: Specimen run or study acquired and matched to its order
+- stage_id: VS-DIAGNOSTICS-S03
+  name: Interpret
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-DIAGNOSTICS
+  stage_order: "3"
+  exit_criterion: Result verified or report signed
+- stage_id: VS-DIAGNOSTICS-S04
+  name: Deliver
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-DIAGNOSTICS
+  stage_order: "4"
+  exit_criterion: Result in the chart and the portal; a critical one called and documented
+
+- stage_id: VS-CANCER-CARE-S01
+  name: Diagnose and Stage
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-CANCER-CARE
+  stage_order: "1"
+  exit_criterion: Pathology confirmed and the cancer staged
+- stage_id: VS-CANCER-CARE-S02
+  name: Plan
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-CANCER-CARE
+  stage_order: "2"
+  exit_criterion: A treatment plan agreed at tumor board and with the patient
+- stage_id: VS-CANCER-CARE-S03
+  name: Treat
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-CANCER-CARE
+  stage_order: "3"
+  exit_criterion: First course of treatment given as planned
+- stage_id: VS-CANCER-CARE-S04
+  name: Follow and Report
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_id: VS-CANCER-CARE
+  stage_order: "4"
+  exit_criterion: Case abstracted and reported; survivorship plan in place

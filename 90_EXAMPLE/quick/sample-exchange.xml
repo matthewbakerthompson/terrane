@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- An ArchiMate model in the Open Group's exchange format, as any ArchiMate
+     tool exports it: a card payments slice, with two views. Read it with
+     `terrane draw -\-from-archimate sample-exchange.xml`. -->
+<model xmlns="http://www.opengroup.org/xsd/archimate/3.0/"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dc="http://purl.org/dc/elements/1.1/"
+       identifier="id-card-payments">
+  <name xml:lang="en">Card payments, in ArchiMate</name>
+  <elements>
+    <element identifier="id-merchant" xsi:type="BusinessActor">
+      <name xml:lang="en">Merchant</name>
+    </element>
+    <element identifier="id-cardholder" xsi:type="BusinessRole">
+      <name xml:lang="en">Cardholder</name>
+    </element>
+    <element identifier="id-authorize" xsi:type="BusinessProcess">
+      <name xml:lang="en">Authorize a card payment</name>
+    </element>
+    <element identifier="id-cap-payments" xsi:type="Capability">
+      <name xml:lang="en">Payment processing</name>
+    </element>
+    <element identifier="id-cap-fraud" xsi:type="Capability">
+      <name xml:lang="en">Fraud detection</name>
+    </element>
+    <element identifier="id-switch" xsi:type="ApplicationComponent">
+      <name xml:lang="en">Authorization switch</name>
+      <documentation xml:lang="en">Routes every authorization request to the scheme and the ledger.</documentation>
+    </element>
+    <element identifier="id-auth-service" xsi:type="ApplicationService">
+      <name xml:lang="en">Authorization service</name>
+    </element>
+    <element identifier="id-fraud" xsi:type="ApplicationComponent">
+      <name xml:lang="en">Fraud scoring</name>
+    </element>
+    <element identifier="id-ledger" xsi:type="ApplicationComponent">
+      <name xml:lang="en">Card ledger</name>
+    </element>
+    <element identifier="id-portal" xsi:type="ApplicationComponent">
+      <name xml:lang="en">Merchant portal</name>
+    </element>
+    <element identifier="id-transactions" xsi:type="DataObject">
+      <name xml:lang="en">Transactions</name>
+    </element>
+    <element identifier="id-kubernetes" xsi:type="Node">
+      <name xml:lang="en">Kubernetes cluster</name>
+    </element>
+    <element identifier="id-postgres" xsi:type="SystemSoftware">
+      <name xml:lang="en">PostgreSQL</name>
+    </element>
+    <element identifier="id-payments-domain" xsi:type="Grouping">
+      <name xml:lang="en">Payments</name>
+    </element>
+    <element identifier="id-channels-domain" xsi:type="Grouping">
+      <name xml:lang="en">Channels</name>
+    </element>
+    <element identifier="id-pci" xsi:type="Principle">
+      <name xml:lang="en">Card data stays in the PCI zone</name>
+    </element>
+    <element identifier="id-goal" xsi:type="Goal">
+      <name xml:lang="en">Approve in under half a second</name>
+    </element>
+  </elements>
+  <relationships>
+    <relationship identifier="id-r1" source="id-auth-service" target="id-merchant" xsi:type="Serving"/>
+    <relationship identifier="id-r2" source="id-switch" target="id-auth-service" xsi:type="Realization"/>
+    <relationship identifier="id-r3" source="id-switch" target="id-fraud" xsi:type="Flow">
+      <name xml:lang="en">Scores the transaction</name>
+    </relationship>
+    <relationship identifier="id-r4" source="id-switch" target="id-ledger" xsi:type="Flow">
+      <name xml:lang="en">Posts the authorization</name>
+    </relationship>
+    <relationship identifier="id-r5" source="id-ledger" target="id-transactions" xsi:type="Access" accessType="ReadWrite"/>
+    <relationship identifier="id-r6" source="id-fraud" target="id-transactions" xsi:type="Access" accessType="Read"/>
+    <relationship identifier="id-r7" source="id-switch" target="id-cap-payments" xsi:type="Realization"/>
+    <relationship identifier="id-r8" source="id-fraud" target="id-cap-fraud" xsi:type="Realization"/>
+    <relationship identifier="id-r9" source="id-authorize" target="id-cap-payments" xsi:type="Realization"/>
+    <relationship identifier="id-r10" source="id-kubernetes" target="id-switch" xsi:type="Assignment"/>
+    <relationship identifier="id-r11" source="id-kubernetes" target="id-fraud" xsi:type="Assignment"/>
+    <relationship identifier="id-r12" source="id-postgres" target="id-ledger" xsi:type="Assignment"/>
+    <relationship identifier="id-r13" source="id-payments-domain" target="id-switch" xsi:type="Aggregation"/>
+    <relationship identifier="id-r14" source="id-payments-domain" target="id-fraud" xsi:type="Aggregation"/>
+    <relationship identifier="id-r15" source="id-payments-domain" target="id-ledger" xsi:type="Aggregation"/>
+    <relationship identifier="id-r16" source="id-channels-domain" target="id-portal" xsi:type="Aggregation"/>
+    <relationship identifier="id-r17" source="id-portal" target="id-switch" xsi:type="Serving">
+      <name xml:lang="en">Refund requests</name>
+    </relationship>
+    <relationship identifier="id-r18" source="id-portal" target="id-cardholder" xsi:type="Serving"/>
+    <relationship identifier="id-r19" source="id-pci" target="id-ledger" xsi:type="Association"/>
+    <relationship identifier="id-r20" source="id-goal" target="id-authorize" xsi:type="Realization"/>
+  </relationships>
+  <views>
+    <diagrams>
+      <view identifier="id-view-apps" xsi:type="Diagram">
+        <name xml:lang="en">Application cooperation</name>
+        <node identifier="id-n1" elementRef="id-payments-domain" xsi:type="Element" x="10" y="10" w="600" h="300">
+          <node identifier="id-n2" elementRef="id-switch" xsi:type="Element" x="20" y="40" w="120" h="55"/>
+          <node identifier="id-n3" elementRef="id-fraud" xsi:type="Element" x="200" y="40" w="120" h="55"/>
+          <node identifier="id-n4" elementRef="id-ledger" xsi:type="Element" x="380" y="40" w="120" h="55"/>
+        </node>
+        <node identifier="id-n5" elementRef="id-portal" xsi:type="Element" x="20" y="340" w="120" h="55"/>
+        <node identifier="id-n6" elementRef="id-transactions" xsi:type="Element" x="380" y="340" w="120" h="55"/>
+        <connection identifier="id-c1" relationshipRef="id-r3" xsi:type="Relationship" source="id-n2" target="id-n3"/>
+        <connection identifier="id-c2" relationshipRef="id-r4" xsi:type="Relationship" source="id-n2" target="id-n4"/>
+        <connection identifier="id-c3" relationshipRef="id-r5" xsi:type="Relationship" source="id-n4" target="id-n6"/>
+        <connection identifier="id-c4" relationshipRef="id-r17" xsi:type="Relationship" source="id-n5" target="id-n2"/>
+      </view>
+      <view identifier="id-view-caps" xsi:type="Diagram">
+        <name xml:lang="en">Capability realization</name>
+        <node identifier="id-n7" elementRef="id-cap-payments" xsi:type="Element" x="10" y="10" w="120" h="55"/>
+        <node identifier="id-n8" elementRef="id-cap-fraud" xsi:type="Element" x="200" y="10" w="120" h="55"/>
+        <node identifier="id-n9" elementRef="id-switch" xsi:type="Element" x="10" y="120" w="120" h="55"/>
+        <node identifier="id-n10" elementRef="id-fraud" xsi:type="Element" x="200" y="120" w="120" h="55"/>
+        <node identifier="id-n11" elementRef="id-authorize" xsi:type="Element" x="10" y="230" w="120" h="55"/>
+        <connection identifier="id-c5" relationshipRef="id-r7" xsi:type="Relationship" source="id-n9" target="id-n7"/>
+        <connection identifier="id-c6" relationshipRef="id-r8" xsi:type="Relationship" source="id-n10" target="id-n8"/>
+        <connection identifier="id-c7" relationshipRef="id-r9" xsi:type="Relationship" source="id-n11" target="id-n7"/>
+      </view>
+    </diagrams>
+  </views>
+</model>

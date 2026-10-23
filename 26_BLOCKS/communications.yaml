@@ -1,0 +1,46 @@
+# Where what the customer is told is produced, sent and kept, and where the
+# customer talks back.
+#
+# Statements, notices and letters are the most regulated output a card
+# business has, and the contact center is where a complaint becomes a
+# regulatory event. Neither was a block before; each was a box named after a
+# vendor on somebody's diagram. The document platform and the contact center
+# platform themselves are bought applications and sit on these blocks rather
+# than in them: a block is what a product runs on.
+
+- building_block_id: document-services
+  name: Document services
+  category: Communications
+  description: >
+    The orchestration that decides what goes out and when, the rendering service that produces it from a governed template, the store it lands in and the archive it is kept in for as long as the retention schedule says. The archive is the point: a notice that cannot be produced on request was never sent, as far as an examiner is concerned.
+  provides:
+    - component: workflow
+    - component: container-platform
+    - component: object-store
+    - component: archive
+  relations:
+    - from: workflow
+      to: container-platform
+    - from: container-platform
+      to: object-store
+    - from: object-store
+      to: archive
+  defaults:
+    network_zone: Shared-Services
+
+- building_block_id: contact-channel
+  name: Contact channel
+  category: Communications
+  description: >
+    The voice self-service in front of the contact center, the gateway through which it and the agent desktop reach the servicing systems, and the bus the contact outcomes are published to. The gateway is in the block because a contact center that reaches the ledger directly is the integration nobody can turn off.
+  provides:
+    - component: conversational-ai
+    - component: api-gateway
+    - component: event-bus
+  relations:
+    - from: conversational-ai
+      to: api-gateway
+    - from: conversational-ai
+      to: event-bus
+  defaults:
+    network_zone: Private-App

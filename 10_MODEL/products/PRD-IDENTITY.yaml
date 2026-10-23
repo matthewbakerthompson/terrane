@@ -1,0 +1,35 @@
+# The third live product moved onto a shape: the identity service, which the
+# core platform shape was written from -- its template is this record with
+# the name made a parameter -- and which the footprint of a shape built on
+# no parts found the day it had one. The slug `identity` makes
+# `SYS-IDENTITY-SVC`, the id three products' interfaces already point at.
+# What the shape cannot know is overrides: the CMDB id, and that the service
+# runs across availability zones.
+product_id: PRD-IDENTITY
+name: Customer Identity Service
+description: Authentication, session and identity proofing for every customer channel.
+status: Active
+owner_org_id: ORG-TECH
+criticality: High
+product_category: Platform service
+company_domain: Enterprise Platform
+
+build_type: platform-service
+archetype: core-platform-service
+# Beyond the shape's: the keys every channel trusts come from the vault,
+# and a platform service every channel depends on is observed.
+patterns: [secrets-and-keys, observed-service]
+parameters:
+  slug: identity
+  product_name: Customer Identity Service
+  owner_org: ORG-TECH
+  domain: Enterprise Platform
+  account: azure-platform-prod
+  region: uksouth
+  criticality: High
+  classification: Restricted
+
+overrides:
+  SYS-IDENTITY-SVC:
+    cmdb_ci_sys_id: 18293040506a7b8c
+    resilience: Multi-AZ

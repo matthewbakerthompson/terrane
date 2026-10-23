@@ -1,0 +1,39 @@
+# Who touches what, and the order the three flows move in.
+
+actor_uses_system:
+  - {actor_id: ACT-PATIENT, system_id: SYS-PORTAL-WEB, interaction: Self-service}
+  - {actor_id: ACT-PATIENT, system_id: SYS-TELEHEALTH-VENDOR, interaction: Joins video visits}
+  - {actor_id: ACT-PATIENT-APP, system_id: SYS-FHIR-SERVER, interaction: Reads the record the patient authorized}
+  - {actor_id: ACT-CLINICIAN, system_id: SYS-EHR, interaction: Orders and documents}
+  - {actor_id: ACT-CLINICIAN, system_id: SYS-ONCOLOGY, interaction: Plans treatment}
+  - {actor_id: ACT-CLINICIAN, system_id: SYS-TELEHEALTH-VENDOR, interaction: Holds video visits}
+  - {actor_id: ACT-RADIOLOGIST, system_id: SYS-PACS, interaction: Reads studies}
+  - {actor_id: ACT-RADIOLOGIST, system_id: SYS-RIS, interaction: Signs reports}
+  - {actor_id: ACT-PHARMACIST, system_id: SYS-PHARMACY, interaction: Verifies orders}
+  - {actor_id: ACT-PRIVACY-ANALYST, system_id: SYS-SIEM, interaction: Reviews access}
+  - {actor_id: ACT-COMMUNITY-PROVIDER, system_id: SYS-REGIONAL-HIE, interaction: Shares care summaries}
+  - {actor_id: ACT-PAYER, system_id: SYS-CLAIMS-VENDOR, interaction: Adjudicates claims}
+  - {actor_id: ACT-STATE-REGISTRY, system_id: SYS-TUMOR-REGISTRY, interaction: Receives case reports}
+  - {actor_id: ACT-BEDSIDE-DEVICE, system_id: SYS-DEVICE-GW, interaction: Streams readings}
+
+flow_step:
+  # A lab result, from the order to the patient's phone.
+  - {flow_id: FLOW-LAB-RESULT, interface_id: INT-EHR-ENGINE-ORDERS, sequence: 10}
+  - {flow_id: FLOW-LAB-RESULT, interface_id: INT-ENGINE-LIS-ORDERS, sequence: 20}
+  - {flow_id: FLOW-LAB-RESULT, interface_id: INT-LIS-ENGINE-RESULTS, sequence: 30}
+  - {flow_id: FLOW-LAB-RESULT, interface_id: INT-ENGINE-EHR-RESULTS, sequence: 40}
+  - {flow_id: FLOW-LAB-RESULT, interface_id: INT-ENGINE-FHIR-SYNC, sequence: 50}
+  - {flow_id: FLOW-LAB-RESULT, interface_id: INT-PORTAL-API-FHIR, sequence: 60}
+  # An admission, fanned out by the engine.
+  - {flow_id: FLOW-ADMISSION, interface_id: INT-EHR-ENGINE-ADT, sequence: 10}
+  - {flow_id: FLOW-ADMISSION, interface_id: INT-ENGINE-EMPI-ADT, sequence: 20}
+  - {flow_id: FLOW-ADMISSION, interface_id: INT-ENGINE-BED-ADT, sequence: 30}
+  - {flow_id: FLOW-ADMISSION, interface_id: INT-ENGINE-BILLING, sequence: 40}
+  - {flow_id: FLOW-ADMISSION, interface_id: INT-ENGINE-ONCOLOGY, sequence: 50}
+  # A charge, out as a claim and back as a remittance.
+  - {flow_id: FLOW-CLAIM, interface_id: INT-EHR-ENGINE-CHARGES, sequence: 10}
+  - {flow_id: FLOW-CLAIM, interface_id: INT-ENGINE-BILLING, sequence: 20}
+  - {flow_id: FLOW-CLAIM, interface_id: INT-CLAIMS-CALLER-GATEWAY, sequence: 30}
+  - {flow_id: FLOW-CLAIM, interface_id: INT-CLAIMS-GATEWAY-EGRESS, sequence: 40}
+  - {flow_id: FLOW-CLAIM, interface_id: INT-CLAIMS-EGRESS-VENDOR, sequence: 50}
+  - {flow_id: FLOW-CLAIM, interface_id: INT-CLAIMS-VENDOR-RETURN, sequence: 60}

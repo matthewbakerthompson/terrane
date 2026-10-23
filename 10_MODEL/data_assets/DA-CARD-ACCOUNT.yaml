@@ -1,0 +1,17 @@
+# Imported from data_assets.csv.
+data_asset_id: DA-CARD-ACCOUNT
+name: Card account master
+description: Account, balance, limit and status records for every card account.
+status: Active
+togaf_layer: Data
+architecture_domain: Data
+company_domain: Card Issuing
+tags: [enterprise, master-data]
+data_owner_org_id: ORG-PRODUCT
+data_steward_org_id: ORG-DATAENG
+source_of_truth: SYS-CORE-LEDGER
+classification: Restricted
+risk_level: High
+pii_flag: "Yes"
+pii_types: Name;Address;Account number
+table_name: CARD_ACCOUNT

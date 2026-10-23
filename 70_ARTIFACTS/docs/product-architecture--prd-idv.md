@@ -1,0 +1,101 @@
+# Identity Document Verification — Architecture
+
+One product in full: the systems it is made of, what each runs on, the data it masters, who uses it, and everything one hop away that it connects to. For a product built from modules, every box corresponds to a part.
+
+```mermaid
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Identity Document Verification — Architecture
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Azure["Azure"]
+    direction LR
+    TS_AZURE_APIM[/"Azure API Management<br/>[API gateway]"/]
+    TS_AZURE_KEYVAULT[/"Azure Key Vault<br/>[Secrets manager]"/]
+    TS_AZURE_AKS[/"Azure Kubernetes Service<br/>[Container platform]"/]
+    TS_AZURE_PRIVATELINK[/"Azure Private Link<br/>[Private egress]"/]
+    TS_AZURE_VWAN[/"Azure Virtual WAN hub<br/>[Transit hub]"/]
+    subgraph grp_Azure__azure_platform_prod["subscription azure-platform-prod"]
+      direction LR
+      subgraph grp_Azure__azure_platform_prod__Shared_Services["Shared-Services"]
+        direction LR
+        SYS_IDENTITY_SVC["Customer Identity Service<br/>[AKS]"]
+      end
+    end
+    subgraph grp_Azure__azure_risk_prod["subscription azure-risk-prod"]
+      direction LR
+      subgraph grp_Azure__azure_risk_prod__Public["Public"]
+        direction LR
+        SYS_IDV_WEBHOOKS["Identity Document<br/>Verification Webhook<br/>Listener<br/>[AKS]"]
+      end
+      subgraph grp_Azure__azure_risk_prod__Private_App["Private-App"]
+        direction LR
+        SYS_IDV_GATEWAY["Identity Document<br/>Verification Integration<br/>Gateway<br/>[AKS]"]
+      end
+      subgraph grp_Azure__azure_risk_prod__Shared_Services["Shared-Services"]
+        direction LR
+        SYS_IDV_EGRESS["Identity Document<br/>Verification Private<br/>Egress"]
+      end
+    end
+  end
+
+  subgraph grp_SaaS["SaaS"]
+    direction LR
+    subgraph grp_SaaS__Edge["Edge"]
+      direction LR
+      SYS_IDV_VENDOR["Identity Document<br/>Verification<br/>[Onfido]"]
+    end
+  end
+
+  SYS_IDENTITY_SVC -->|"HTTPS"| SYS_IDV_GATEWAY
+  SYS_IDV_GATEWAY -->|"HTTPS"| SYS_IDV_EGRESS
+  SYS_IDV_EGRESS -->|"PrivateLink"| SYS_IDV_VENDOR
+  SYS_IDV_VENDOR -->|"HTTPS"| SYS_IDV_WEBHOOKS
+  SYS_IDV_WEBHOOKS -->|"HTTPS"| SYS_IDENTITY_SVC
+  SYS_IDENTITY_SVC -.->|"runs on"| TS_AZURE_APIM
+  SYS_IDENTITY_SVC -.->|"runs on"| TS_AZURE_AKS
+  SYS_IDENTITY_SVC -.->|"runs on"| TS_AZURE_KEYVAULT
+  SYS_IDV_GATEWAY -.->|"runs on"| TS_AZURE_AKS
+  SYS_IDV_GATEWAY -.->|"runs on"| TS_AZURE_APIM
+  SYS_IDV_EGRESS -.->|"runs on"| TS_AZURE_PRIVATELINK
+  SYS_IDV_EGRESS -.->|"runs on"| TS_AZURE_VWAN
+  SYS_IDV_WEBHOOKS -.->|"runs on"| TS_AZURE_APIM
+  SYS_IDV_WEBHOOKS -.->|"runs on"| TS_AZURE_AKS
+  SYS_IDV_GATEWAY -.->|"runs on"| TS_AZURE_KEYVAULT
+
+  classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  classDef s_tech_services__tech_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
+  class SYS_IDENTITY_SVC,SYS_IDV_EGRESS,SYS_IDV_GATEWAY,SYS_IDV_VENDOR,SYS_IDV_WEBHOOKS s_systems__systems;
+  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT,TS_AZURE_PRIVATELINK,TS_AZURE_VWAN s_tech_services__tech_services;
+  classDef boundary1 fill:#f1f6fb,stroke:#5b9bd5,color:#2f5d8a;
+  class grp_Azure__azure_platform_prod__Shared_Services,grp_Azure__azure_risk_prod__Public,grp_Azure__azure_risk_prod__Private_App,grp_Azure__azure_risk_prod__Shared_Services boundary1;
+  classDef boundary2 fill:#f7fbfe,stroke:#0078d4,color:#1b4b7a,stroke-dasharray:6 3;
+  class grp_Azure__azure_platform_prod,grp_Azure__azure_risk_prod boundary2;
+  classDef boundary3 fill:#f7fbfe,stroke:#0078d4,color:#1b4b7a;
+  class grp_Azure boundary3;
+  classDef boundary4 fill:#fcfbf7,stroke:#9a8f6a,color:#6b6246,stroke-dasharray:6 3;
+  class grp_SaaS,grp_SaaS__Edge boundary4;
+```
+
+The same view as the app draws it, written beside the Mermaid by `terrane render`:
+
+![Identity Document Verification — Architecture](../svg/product-architecture--prd-idv.svg)
+
+**Hue is the entity type.**
+
+| | Entity type |
+|---|---|
+| `#4338ca` | systems |
+| `#c2410c` | tech services |
+
+**Boundaries** are drawn the way their provider draws them.
+
+| Border | Boundary |
+|---|---|
+| solid `#0078d4` | Azure |
+| dashed `#9a8f6a` | SaaS |
+| dashed `#0078d4` | Azure subscription |
+| dashed `#9a8f6a` | vendor tenancy |
+| solid `#5b9bd5` | Azure subnet |
+
+10 entities, 15 relationships. Generated from the model; edit the model, not this file.

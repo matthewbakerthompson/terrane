@@ -1,0 +1,46 @@
+# Patterns at the boundary between the internet and the estate.
+#
+# Every one of these is a decision about what gets to say no to a request
+# before it reaches something that would have to say yes.
+
+- pattern_id: public-web-entry
+  name: Public web entry
+  status: Approved
+  category: Edge
+  blocks: [public-web-tier]
+  intent: >
+    The only way from the internet to a browser-facing application is through
+    a CDN and a WAF, in that order, and nothing behind them is reachable any
+    other way. The point is not caching. It is that the origin has exactly one
+    front door, and that the door has rules.
+  consequences: >
+    Every hostname is a CDN distribution somebody has to own, the WAF ruleset
+    becomes a change-managed artifact with false positives to triage, and a
+    surprising amount of routing logic migrates to the edge where it is
+    harder to test. Budget for the ruleset review as an ongoing cost, not a
+    setup one.
+  when_not_to_use: >
+    An application with no internet exposure gains nothing but a bill. An API
+    consumed only by other systems wants the API front door pattern, which
+    puts authentication and throttling where a browser never goes.
+
+- pattern_id: api-front-door
+  name: API front door
+  status: Approved
+  category: Edge
+  blocks: [public-api-tier]
+  intent: >
+    Every programmatic entry point sits behind one gateway that authenticates,
+    throttles and versions on behalf of the services behind it. Consumers are
+    coupled to a contract at the gateway rather than to a service, which is
+    what makes the service replaceable.
+  consequences: >
+    The gateway is on the critical path of everything, so it needs the
+    resilience posture of the most critical thing behind it. Teams will route
+    around it when it is slow or its change process is heavier than theirs;
+    the pattern only holds while going through it is the easy option.
+  when_not_to_use: >
+    Service-to-service calls inside one workload account do not need a public
+    front door and should not pay its latency. A single internal consumer of a
+    single service is a private endpoint, not a platform.
+  method_ref: PAT-001

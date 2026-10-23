@@ -1,0 +1,346 @@
+# The Google Cloud landing zone: the services every workload project gets
+# whether or not anybody asked for them, tagged `landing-zone` so a shape's
+# blocks resolve against them by kind. The third cloud, and the same kinds as
+# the AWS and Azure zones, which is the library's claim made good: the parts
+# are the same, the bindings differ. A landing zone names one service per
+# kind, so Pub/Sub carries the queue and Managed Service for Apache Kafka the
+# stream.
+- tech_service_id: TS-GCP-GKE
+  name: Google Kubernetes Engine
+  description: Managed Kubernetes for the containerized estate on Google Cloud, an Autopilot cluster per workload project.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Compute
+  service_name: GKE
+  component_type: container-platform
+  tags: [landing-zone]
+- tech_service_id: TS-GCP-APIGEE
+  name: Apigee
+  description: The API gateway every internal and partner API on Google Cloud is published through; dealer and merchant integrations terminate here.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Integration
+  service_name: Apigee
+  component_type: api-gateway
+  tags: [landing-zone]
+- tech_service_id: TS-GCP-SECRET-MANAGER
+  name: Secret Manager
+  description: Application secrets, read by workload identity rather than by key.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Security
+  service_name: Secret Manager
+  component_type: secrets-manager
+  tags: [landing-zone]
+- tech_service_id: TS-GCP-KMS
+  name: Cloud KMS
+  description: Customer-managed encryption keys for every datastore in the zone, one key ring per workload project.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Security
+  service_name: Cloud KMS
+  component_type: kms
+  tags: [landing-zone]
+- tech_service_id: TS-GCP-PUBSUB
+  name: Pub/Sub
+  description: The enterprise bus on Google Cloud, topics and subscriptions with at-least-once delivery; the queue kind of the landing zone.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Integration
+  service_name: Pub/Sub
+  component_type: message-queue
+  tags: [landing-zone]
+- tech_service_id: TS-GCP-MANAGED-KAFKA
+  name: Managed Service for Apache Kafka
+  description: Ordered, replayable event streams for the products that need to re-read what happened; the stream kind of the landing zone.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Integration
+  service_name: Managed Kafka
+  component_type: event-stream
+  tags: [landing-zone]
+- tech_service_id: TS-GCP-CLOUD-SQL
+  name: Cloud SQL for PostgreSQL
+  description: Managed PostgreSQL with regional high availability, the product datastore of the zone.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Data
+  service_name: Cloud SQL
+  component_type: relational-db
+  tags: [landing-zone]
+- tech_service_id: TS-GCP-MONITORING
+  name: Cloud Monitoring
+  description: Metrics, logs and traces for everything in the organization, the Cloud Operations suite scoped per workload project.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Operations
+  service_name: Cloud Monitoring
+  component_type: observability
+  tags: [landing-zone]
+- tech_service_id: TS-GCP-PSC
+  name: Private Service Connect
+  description: Private endpoints to Google services and to vendors who publish one, so nothing of ours reaches them over the internet.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Network
+  service_name: Private Service Connect
+  component_type: private-egress
+  tags: [landing-zone]
+- tech_service_id: TS-GCP-NCC
+  name: Network Connectivity Center
+  description: The hub the workload VPC spokes and the interconnect attach to; the transit of the Google Cloud zone.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Network
+  service_name: Network Connectivity Center
+  component_type: transit-gateway
+  cloud_account: gcp-shared-network
+  region: europe-west2
+  network_zone: Shared-Services
+  tags: [landing-zone, network-fabric]
+- tech_service_id: TS-GCP-CLOUD-DNS
+  name: Cloud DNS
+  description: Public and private zones for the Google Cloud estate, peered to the data center's resolvers.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Network
+  service_name: Cloud DNS
+  component_type: dns
+  cloud_account: gcp-shared-network
+  region: europe-west2
+  network_zone: Shared-Services
+  tags: [landing-zone, network-fabric]
+- tech_service_id: TS-GCP-CLOUD-ARMOR
+  name: Cloud Armor
+  description: Web application firewall and DDoS protection in front of every external load balancer.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Security
+  service_name: Cloud Armor
+  component_type: waf
+  tags: [landing-zone]
+- tech_service_id: TS-GCP-CLOUD-LB
+  name: Cloud Load Balancing
+  description: Global external and regional internal load balancers; the external ones carry Cloud Armor.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Network
+  service_name: Cloud Load Balancing
+  component_type: load-balancer
+  tags: [landing-zone]
+- tech_service_id: TS-GCP-GCS
+  name: Cloud Storage
+  description: Object storage, one bucket per product with uniform access and customer-managed keys.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Storage
+  service_name: Cloud Storage
+  component_type: object-store
+  tags: [landing-zone]
+- tech_service_id: TS-GCP-MEMORYSTORE
+  name: Memorystore for Redis
+  description: Managed Redis for the session and lookup caches a product keeps beside its datastore.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Data
+  service_name: Memorystore
+  component_type: cache
+  tags: [landing-zone]
+- tech_service_id: TS-GCP-BACKUP-DR
+  name: Backup and DR Service
+  description: Scheduled backups of the datastores and disks in the zone, retained in a second region.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Operations
+  service_name: Backup and DR
+  component_type: backup
+  tags: [landing-zone]
+- tech_service_id: TS-GCP-SHARED-VPC
+  name: Shared VPC network
+  description: The host project's network the workload projects attach to, with the tiers as subnetworks.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Network
+  service_name: VPC
+  component_type: vpc
+  cloud_account: gcp-shared-network
+  region: europe-west2
+  network_zone: Shared-Services
+  tags: [landing-zone, network-fabric]
+- tech_service_id: TS-GCP-CLOUD-CDN
+  name: Cloud CDN
+  description: Edge caching for the static parts of a product's channel, in front of the external load balancer.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Network
+  service_name: Cloud CDN
+  component_type: cdn
+  tags: [landing-zone]
+- tech_service_id: TS-GCP-INTERCONNECT
+  name: Cloud Interconnect
+  description: Dedicated Interconnect back to the data center, two attachments in two edge availability domains; the failover between them is tested quarterly.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Network
+  service_name: Cloud Interconnect
+  component_type: hybrid-link
+  cloud_account: gcp-shared-network
+  region: europe-west2
+  network_zone: Shared-Services
+  tags: [landing-zone, network-fabric]
+
+# The data side of the zone, added the day the first dataset landed in
+# BigQuery: a warehouse, the jobs that fill it, the schedule they run on and
+# the layer analysts query. Collibra stays the catalog whichever cloud the
+# dataset sits in, so nothing here is a catalog.
+- tech_service_id: TS-GCP-BIGQUERY
+  name: BigQuery
+  description: Serverless warehouse; one dataset per data product, customer-managed keys, authorized views for the semantic layer.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Data
+  service_name: BigQuery
+  component_type: warehouse
+  tags: [landing-zone]
+- tech_service_id: TS-GCP-DATAFLOW
+  name: Dataflow
+  description: Managed batch and streaming jobs, the curation engine of a data product on this side.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Data
+  service_name: Dataflow
+  component_type: etl
+  tags: [landing-zone]
+- tech_service_id: TS-GCP-COMPOSER
+  name: Cloud Composer
+  description: Managed Airflow, the schedule a data product's jobs run on.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Integration
+  service_name: Cloud Composer
+  component_type: workflow
+  tags: [landing-zone]
+- tech_service_id: TS-GCP-LOOKER
+  name: Looker
+  description: The governed semantic layer and the dashboards over BigQuery.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Data
+  service_name: Looker
+  component_type: bi
+  tags: [landing-zone]

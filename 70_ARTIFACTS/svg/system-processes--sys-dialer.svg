@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="499.4" viewBox="0 0 1100 499.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Outbound contact platform — Processes and Capabilities</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Outbound contact platform — Processes and Capabilities</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   4 nodes · 3 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One system, every process that uses it and in what role, and the capabilities those processes support. This shows the business impact of changing the system. A</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">long list against a low criticality rating is worth a second look.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(169.82 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="271.72" y="107.3" width="212.57" height="175.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="313.72" y="124.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.66" y="37.28" width="212.67" height="103.42" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.51" y="54.68" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="529.3" y="24.3" width="221.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="559.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-COLLECTIONS-002::SYS-DIALER">
+<title>Primary</title>
+<path d="M196 76 L225 76 L526 76 L551.48 76" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 76 L545.43 80.78 L545.43 71.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-COLLECTIONS-002::SYS-DIALER">
+<rect x="354.32" y="53.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="65.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-COLLECTIONS-002::CAP-COLL-02">
+<title>supports</title>
+<path d="M196 89 L225 89 L241 89 A10 10 0 0 1 251 99 L251 150 A9 9 0 0 0 260 159 L269 159 L294.48 159" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M298 159 L288.43 163.78 L288.43 154.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e2::P-COLLECTIONS-002::CAP-COLL-07">
+<title>supports</title>
+<path d="M196 102 L225 102 L233 102 A8 8 0 0 1 241 110 L241 221 A10 10 0 0 0 251 231 L269 231 L294.48 231" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M298 231 L288.43 235.78 L288.43 226.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-COLL-02" data-type="capabilities">
+<title>Outbound Contact Operations</title>
+<path d="M338 133 L298 159 L338 185 L418 185 L458 159 L418 133 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="378" y="157.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Outbound Contact</text>
+<text x="378" y="169.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Operations</text>
+</g>
+<g class="node" data-id="CAP-COLL-07" data-type="capabilities">
+<title>Collections Compliance Oversight</title>
+<path d="M338 205 L298 231 L338 257 L418 257 L458 231 L418 205 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="378" y="229.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Collections</text>
+<text x="378" y="241.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Compliance Oversight</text>
+</g>
+<g class="node" data-id="P-COLLECTIONS-002" data-type="processes">
+<title>Execute outbound collections contact</title>
+<path d="M116 63 L36 82.86 L66.56 115 L165.44 115 L196 82.86 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="87.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Execute outbound</text>
+<text x="116" y="99.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">collections contact</text>
+</g>
+<g class="node" data-id="SYS-DIALER" data-type="systems">
+<title>Outbound contact platform</title>
+<rect x="555" y="50" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="636" y="74.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Outbound contact</text>
+<text x="636" y="86.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">platform</text>
+<svg x="707" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="397.4" x2="1072" y2="397.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="421.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 410.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="421.4" font-size="12" font-weight="400" fill="#343d50">capability · 2</text>
+<g transform="translate(180.32 410.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="206.32" y="421.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(280.59 410.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="306.59" y="421.4" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
+<text x="28" y="443.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 432.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="443.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 432.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="443.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="477.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-processes--sys-dialer · edit the model, not the picture</text></g>
+</svg>

@@ -1,0 +1,41 @@
+view_id: frameworks
+title: Frameworks
+category: Business
+section: Frameworks
+kind: report
+description: >
+  Every framework the model maps to, against every capability domain, in one
+  grid. A ring is how firmly the domain follows the framework: governed by,
+  aligned to or informed by. A number is how many of the domain's
+  capabilities are placed in it, and a domain with neither follows no
+  framework, which is worth confirming rather than filling in.
+layout: LR
+node_label: name
+renderers: [mermaid]
+group_by: type
+
+scope:
+  include:
+    - type: capabilities
+    - type: frameworks
+
+edges:
+  - via: capability_aligns_to_framework
+    label: alignment
+  - via: capability_references_framework
+    label: ref
+
+style:
+  # A report, drawn as the grid it is rather than as a list of pairs: the
+  # domains down the side by tier, the frameworks across the top.
+  matrix:
+    rows: {capability_level: L0}
+    group: capability_tier
+    columns: frameworks
+    column_detail: framework_type
+    roll_up: parent_capability_id
+    mark: capability_aligns_to_framework
+    count: capability_references_framework
+
+limits:
+  max_nodes: 400

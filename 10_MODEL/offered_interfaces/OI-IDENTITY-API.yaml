@@ -1,0 +1,17 @@
+# The identity platform's API, which every product's service calls to sign a
+# customer in rather than building sign-in of its own.
+offered_interface_id: OI-IDENTITY-API
+name: Customer Identity API
+description: Customer authentication and the profile behind it, for every product that signs a customer in.
+status: Active
+togaf_layer: Application
+architecture_domain: Application
+company_domain: Enterprise Platform
+system_id: SYS-IDENTITY-SVC
+owner_org_id: ORG-TECH
+protocol: HTTPS
+integration_style: Request-response
+auth_method: OAuth2
+data_classification: Confidential
+frequency: Realtime
+patterns: [api-front-door]

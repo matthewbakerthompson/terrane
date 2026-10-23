@@ -1,0 +1,175 @@
+@startuml
+' General ledger — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title General ledger — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_SERV_02, "Account Maintenance & Servicing Requests", "Execute cardholder-requested account changes.", $tags="capabilities")
+  ' aac CAP_SERV_02: company_domain="Servicing"
+  System(CAP_FIN_05, "Accounts Payable & Procurement Finance", "Pay suppliers and control discretionary spend.", $tags="capabilities")
+  ' aac CAP_FIN_05: company_domain="Cross-Functional Services"
+  System(CAP_FIN_06, "Cash & Settlement Reconciliation", "Reconcile cash and settlement positions daily.", $tags="capabilities")
+  ' aac CAP_FIN_06: company_domain="Cross-Functional Services"
+  System(CAP_COLL_04, "Charge-off Processing", "Execute charge-off on policy timing with the correct accounting effect.", $tags="capabilities")
+  ' aac CAP_COLL_04: company_domain="Collections"
+  System(CAP_TPS_04, "Client Billing & Revenue Management", "Bill servicing fees and manage revenue recognition.", $tags="capabilities")
+  ' aac CAP_TPS_04: company_domain="Cross-Functional Services"
+  System(CAP_DATA_03, "Data Quality Management", "Define, measure, and remediate data quality.", $tags="capabilities")
+  ' aac CAP_DATA_03: company_domain="Cross-Functional Services"
+  System(CAP_FRAUD_05, "Fraud Loss Recovery & Write-off", "Recover and account for fraud losses.", $tags="capabilities")
+  ' aac CAP_FRAUD_05: company_domain="Servicing"
+  System(CAP_FIN_03, "Funding & Liquidity Management", "Manage funding positions and liquidity.", $tags="capabilities")
+  ' aac CAP_FIN_03: company_domain="Cross-Functional Services"
+  System(CAP_FIN_01, "General Ledger & Financial Close", "Operate the general ledger and close the books.", $tags="capabilities")
+  ' aac CAP_FIN_01: company_domain="Cross-Functional Services"
+  System(CAP_FIN_02, "Interchange & Revenue Accounting", "Account for interchange, fees, and servicing revenue.", $tags="capabilities")
+  ' aac CAP_FIN_02: company_domain="Cross-Functional Services"
+  System(CAP_CRED_05, "Loss Forecasting & Allowance", "Forecast credit losses and set the allowance.", $tags="capabilities")
+  ' aac CAP_CRED_05: company_domain="Originations"
+  System(CAP_PAY_06, "Network & Merchant Reconciliation", "Reconcile network, processor, and internal ledgers.", $tags="capabilities")
+  ' aac CAP_PAY_06: company_domain="Servicing"
+  System(CAP_PAY_05, "Network Settlement & Interchange", "Settle positions with networks and account for interchange.", $tags="capabilities")
+  ' aac CAP_PAY_05: company_domain="Servicing"
+  System(CAP_COLL_05, "Recovery, Agency & Debt Sale Management", "Place, manage, and settle with agencies, and execute debt sales.", $tags="capabilities")
+  ' aac CAP_COLL_05: company_domain="Collections"
+  System(CAP_FIN_04, "Regulatory & Financial Reporting", "Produce regulatory and external financial reporting.", $tags="capabilities")
+  ' aac CAP_FIN_04: company_domain="Cross-Functional Services"
+  System(CAP_BILL_04, "Rewards Earn, Accrual & Redemption", "Operate the rewards ledger, accrual, and redemption.", $tags="capabilities")
+  ' aac CAP_BILL_04: company_domain="Servicing"
+}
+Boundary(b_Process, "Process") {
+  System(P_SERVICING_011, "Administer secured card deposit lifecycle", "Collect, hold, apply, and refund security deposits for secured card accounts, including graduation and charge-off application, with correct accounting and disclosure treatment.", $tags="processes")
+  ' aac P_SERVICING_011: company_domain=""
+  System(P_TPS_006, "Bill client servicing fees", "Calculate and invoice servicing fees per the contract and recognize the revenue. Fee billing calculates from contracted schedules against actual volumes; invoices carry the detail clients audit, and revenue recognition follows the contract.", $tags="processes")
+  ' aac P_TPS_006: company_domain=""
+  System(P_COLLECTIONS_004, "Execute charge-off", "Execute charge-off on policy timing and record the accounting effect. Timing follows the charge-off policy aligned to regulatory guidance; the entry moves the balance to charged-off status and hands the account to recovery placement.", $tags="processes")
+  ' aac P_COLLECTIONS_004: company_domain=""
+  System(P_RECOVERY_002, "Execute debt sale", "Assemble, price, and execute a sale of charged-off receivables. Debt sale packages carry account-level data quality and documentation warranties; buyer diligence and post-sale complaint routing are part of the process, not after-thoughts.", $tags="processes")
+  ' aac P_RECOVERY_002: company_domain=""
+  System(P_GL_CLOSE_001, "Execute monthly financial close", "Complete the period-end close, including reconciliations, accruals, and reporting sign-off. The close calendar drives reconciliations, accruals, and sign-offs to the reporting deadline; open items age visibly and block sign-off past threshold.", $tags="processes")
+  ' aac P_GL_CLOSE_001: company_domain=""
+  System(P_SETTLEMENT_001, "Fund daily network settlement position", "Determine and fund the daily settlement position with the networks. The settlement position must fund by the network deadline in the settlement currency; a miss is a network compliance event, so the process carries same-day escalation.", $tags="processes")
+  ' aac P_SETTLEMENT_001: company_domain=""
+  System(P_FUNDING_001, "Manage daily funding position", "Determine, fund, and report the daily liquidity and funding position. The daily position covers settlement obligations, deposit flows, and contingency lines; a funding miss is a same-day escalation, not a report.", $tags="processes")
+  ' aac P_FUNDING_001: company_domain=""
+  System(P_RECOVERY_001, "Place account with collection agency", "Select, place, and monitor charged-off accounts with an external collection agency. Agency placement follows the approved network with performance and conduct oversight; the agency acts in the bank's name, so its conduct is the bank's risk.", $tags="processes")
+  ' aac P_RECOVERY_001: company_domain=""
+  System(P_INTERCHANGE_POST_001, "Post interchange and settlement entries", "Calculate and post interchange and settlement accounting entries to the ledger. Interchange entries reconcile to network reports before posting; unexplained variances stop the post rather than flowing into revenue.", $tags="processes")
+  ' aac P_INTERCHANGE_POST_001: company_domain=""
+  System(P_RECOVERY_005, "Post recovery and account for proceeds", "Post recoveries and account for proceeds from agency, legal, and sale channels. Proceeds post against charged-off balances with channel attribution; recoveries feed the loss forecast, so mis-posting distorts the allowance.", $tags="processes")
+  ' aac P_RECOVERY_005: company_domain=""
+  System(P_REG_DATA_PREP_001, "Prepare regulatory reporting data", "Assemble, validate, and certify the data supporting regulatory reporting submissions. Report data is assembled from governed sources with reconciliation to the ledger and prior submissions; certification is a named officer's sign-off, not a batch job.", $tags="processes")
+  ' aac P_REG_DATA_PREP_001: company_domain=""
+  System(P_FINANCE_002, "Process supplier payment", "Validate, approve, and execute payment to a supplier. Invoices match to contract and receipt before payment; approval limits and segregation of duties are the fraud controls the audit tests.", $tags="processes")
+  ' aac P_FINANCE_002: company_domain=""
+  System(P_CREDIT_006, "Produce loss forecast and allowance", "Produce the credit loss forecast and set the allowance for the reporting period. The CECL forecast and allowance feed the financial statements; assumptions, overlays, and approvals are documented for both auditors and examiners.", $tags="processes")
+  ' aac P_CREDIT_006: company_domain=""
+  System(P_FINANCE_001, "Recognize interchange and servicing revenue", "Calculate and recognize interchange, fee, and servicing revenue for the period. Revenue recognition follows the network and client contract terms; interchange, fees, and servicing revenue post to the ledger with support for audit.", $tags="processes")
+  ' aac P_FINANCE_001: company_domain=""
+  System(P_SETTLEMENT_002, "Reconcile cash and suspense accounts", "Reconcile cash and suspense account positions and clear aged items. Cash and suspense reconcile daily with aging visible; suspense is a control account, and items that age past threshold escalate to investigation.", $tags="processes")
+  ' aac P_SETTLEMENT_002: company_domain=""
+  System(P_NETWORK_RECON_001, "Reconcile network settlement", "Reconcile network settlement files against internal transaction and ledger positions and resolve breaks.", $tags="processes")
+  ' aac P_NETWORK_RECON_001: company_domain=""
+  System(P_REWARDS_003, "Reconcile rewards liability", "Reconcile the rewards ledger to the recorded liability and resolve differences. The rewards liability reconciliation catches earn, redemption, and expiry drift between the ledger and finance; differences are investigated, not plugged.", $tags="processes")
+  ' aac P_REWARDS_003: company_domain=""
+  System(P_FRAUD_004, "Recover and write off fraud loss", "Pursue recovery of fraud losses and write off the residual with correct accounting. Recovery pursues merchants, networks, and other issuers where rights exist; the residual writes off to the fraud loss line with the accounting evidenced.", $tags="processes")
+  ' aac P_FRAUD_004: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_GL, "General ledger", "General ledger and financial accounting.", $tags="systems")
+  ' aac SYS_GL: company_domain=""
+}
+
+Rel(P_CREDIT_006, SYS_GL, "Supporting")
+' aac rel: source="P_CREDIT_006"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_NETWORK_RECON_001, SYS_GL, "Supporting")
+' aac rel: source="P_NETWORK_RECON_001"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_INTERCHANGE_POST_001, SYS_GL, "Supporting")
+' aac rel: source="P_INTERCHANGE_POST_001"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SETTLEMENT_001, SYS_GL, "Supporting")
+' aac rel: source="P_SETTLEMENT_001"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SETTLEMENT_002, SYS_GL, "Supporting")
+' aac rel: source="P_SETTLEMENT_002"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_REWARDS_003, SYS_GL, "Supporting")
+' aac rel: source="P_REWARDS_003"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_FRAUD_004, SYS_GL, "Supporting")
+' aac rel: source="P_FRAUD_004"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COLLECTIONS_004, SYS_GL, "Supporting")
+' aac rel: source="P_COLLECTIONS_004"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_RECOVERY_001, SYS_GL, "Supporting")
+' aac rel: source="P_RECOVERY_001"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_RECOVERY_002, SYS_GL, "Supporting")
+' aac rel: source="P_RECOVERY_002"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_RECOVERY_005, SYS_GL, "Supporting")
+' aac rel: source="P_RECOVERY_005"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_TPS_006, SYS_GL, "Primary")
+' aac rel: source="P_TPS_006"; target="SYS_GL"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_GL_CLOSE_001, SYS_GL, "Primary")
+' aac rel: source="P_GL_CLOSE_001"; target="SYS_GL"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_FUNDING_001, SYS_GL, "Supporting")
+' aac rel: source="P_FUNDING_001"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_REG_DATA_PREP_001, SYS_GL, "Supporting")
+' aac rel: source="P_REG_DATA_PREP_001"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_FINANCE_001, SYS_GL, "Primary")
+' aac rel: source="P_FINANCE_001"; target="SYS_GL"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_FINANCE_002, SYS_GL, "Primary")
+' aac rel: source="P_FINANCE_002"; target="SYS_GL"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_SERVICING_011, SYS_GL, "Supporting")
+' aac rel: source="P_SERVICING_011"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_CREDIT_006, CAP_CRED_05, "supports")
+' aac rel: source="P_CREDIT_006"; target="CAP_CRED_05"; label="supports"; relation="process_supports_capability"
+Rel(P_NETWORK_RECON_001, CAP_PAY_06, "supports")
+' aac rel: source="P_NETWORK_RECON_001"; target="CAP_PAY_06"; label="supports"; relation="process_supports_capability"
+Rel(P_INTERCHANGE_POST_001, CAP_PAY_05, "supports")
+' aac rel: source="P_INTERCHANGE_POST_001"; target="CAP_PAY_05"; label="supports"; relation="process_supports_capability"
+Rel(P_INTERCHANGE_POST_001, CAP_FIN_02, "supports")
+' aac rel: source="P_INTERCHANGE_POST_001"; target="CAP_FIN_02"; label="supports"; relation="process_supports_capability"
+Rel(P_SETTLEMENT_001, CAP_PAY_05, "supports")
+' aac rel: source="P_SETTLEMENT_001"; target="CAP_PAY_05"; label="supports"; relation="process_supports_capability"
+Rel(P_SETTLEMENT_001, CAP_FIN_03, "supports")
+' aac rel: source="P_SETTLEMENT_001"; target="CAP_FIN_03"; label="supports"; relation="process_supports_capability"
+Rel(P_SETTLEMENT_002, CAP_FIN_06, "supports")
+' aac rel: source="P_SETTLEMENT_002"; target="CAP_FIN_06"; label="supports"; relation="process_supports_capability"
+Rel(P_REWARDS_003, CAP_BILL_04, "supports")
+' aac rel: source="P_REWARDS_003"; target="CAP_BILL_04"; label="supports"; relation="process_supports_capability"
+Rel(P_REWARDS_003, CAP_FIN_02, "supports")
+' aac rel: source="P_REWARDS_003"; target="CAP_FIN_02"; label="supports"; relation="process_supports_capability"
+Rel(P_FRAUD_004, CAP_FRAUD_05, "supports")
+' aac rel: source="P_FRAUD_004"; target="CAP_FRAUD_05"; label="supports"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_004, CAP_COLL_04, "supports")
+' aac rel: source="P_COLLECTIONS_004"; target="CAP_COLL_04"; label="supports"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_004, CAP_FIN_01, "supports")
+' aac rel: source="P_COLLECTIONS_004"; target="CAP_FIN_01"; label="supports"; relation="process_supports_capability"
+Rel(P_RECOVERY_001, CAP_COLL_05, "supports")
+' aac rel: source="P_RECOVERY_001"; target="CAP_COLL_05"; label="supports"; relation="process_supports_capability"
+Rel(P_RECOVERY_002, CAP_COLL_05, "supports")
+' aac rel: source="P_RECOVERY_002"; target="CAP_COLL_05"; label="supports"; relation="process_supports_capability"
+Rel(P_RECOVERY_005, CAP_COLL_05, "supports")
+' aac rel: source="P_RECOVERY_005"; target="CAP_COLL_05"; label="supports"; relation="process_supports_capability"
+Rel(P_RECOVERY_005, CAP_FIN_02, "supports")
+' aac rel: source="P_RECOVERY_005"; target="CAP_FIN_02"; label="supports"; relation="process_supports_capability"
+Rel(P_TPS_006, CAP_TPS_04, "supports")
+' aac rel: source="P_TPS_006"; target="CAP_TPS_04"; label="supports"; relation="process_supports_capability"
+Rel(P_GL_CLOSE_001, CAP_FIN_01, "supports")
+' aac rel: source="P_GL_CLOSE_001"; target="CAP_FIN_01"; label="supports"; relation="process_supports_capability"
+Rel(P_FUNDING_001, CAP_FIN_03, "supports")
+' aac rel: source="P_FUNDING_001"; target="CAP_FIN_03"; label="supports"; relation="process_supports_capability"
+Rel(P_REG_DATA_PREP_001, CAP_FIN_04, "supports")
+' aac rel: source="P_REG_DATA_PREP_001"; target="CAP_FIN_04"; label="supports"; relation="process_supports_capability"
+Rel(P_REG_DATA_PREP_001, CAP_DATA_03, "supports")
+' aac rel: source="P_REG_DATA_PREP_001"; target="CAP_DATA_03"; label="supports"; relation="process_supports_capability"
+Rel(P_FINANCE_001, CAP_FIN_02, "supports")
+' aac rel: source="P_FINANCE_001"; target="CAP_FIN_02"; label="supports"; relation="process_supports_capability"
+Rel(P_FINANCE_002, CAP_FIN_05, "supports")
+' aac rel: source="P_FINANCE_002"; target="CAP_FIN_05"; label="supports"; relation="process_supports_capability"
+Rel(P_SERVICING_011, CAP_SERV_02, "supports")
+' aac rel: source="P_SERVICING_011"; target="CAP_SERV_02"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

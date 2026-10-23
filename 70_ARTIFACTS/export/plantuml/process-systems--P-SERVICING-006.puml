@@ -1,0 +1,50 @@
+@startuml
+' Capture and resolve complaint — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Capture and resolve complaint — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_SERV_05, "Complaint Capture & Resolution", "Capture, classify, resolve, and evidence complaints.", $tags="capabilities")
+  ' aac CAP_SERV_05: company_domain="Servicing"
+  System(CAP_RGOV_06, "Complaint Oversight & UDAAP Management", "Aggregate, analyze, and act on complaint signal for unfair practice risk.", $tags="capabilities")
+  ' aac CAP_RGOV_06: company_domain="Cross-Functional Services"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_COMPLAINT_REG, "Complaint regulatory routing", "Complaints are classified to taxonomy, resolved to SLA, and routed to regulators where required; executive and regulator complaints carry expedited handling.", $tags="controls")
+  ' aac CTL_COMPLAINT_REG: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_SERVICING_006, "Capture and resolve complaint", "Capture, classify, resolve, and evidence a cardholder complaint. Complaint handling runs intake through evidenced resolution with regulatory routing where required; the taxonomy feeds UDAAP analysis, so classification is not clerical.", $tags="processes")
+  ' aac P_SERVICING_006: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CONTACT, "Contact center platform", "Contact center routing, voice, and digital channels.", $tags="systems")
+  ' aac SYS_CONTACT: company_domain=""
+  System_Ext(SYS_CRM, "Dynamics 365 Customer Service", "Contact center desktop and case management for servicing agents. Built with Microsoft.", $tags="systems")
+  ' aac SYS_CRM: company_domain="Servicing"; hosting="SaaS"; technology="Microsoft"
+  System(SYS_GRC, "Governance, risk and compliance platform", "Policy, control, issue, and risk register management.", $tags="systems")
+  ' aac SYS_GRC: company_domain=""
+}
+
+Rel(P_SERVICING_006, SYS_CRM, "Primary")
+' aac rel: source="P_SERVICING_006"; target="SYS_CRM"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_SERVICING_006, SYS_GRC, "Supporting")
+' aac rel: source="P_SERVICING_006"; target="SYS_GRC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_006, SYS_CONTACT, "Supporting")
+' aac rel: source="P_SERVICING_006"; target="SYS_CONTACT"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_006, CTL_COMPLAINT_REG, "governed by")
+' aac rel: source="P_SERVICING_006"; target="CTL_COMPLAINT_REG"; label="governed by"; relation="process_governed_by_control"
+Rel(P_SERVICING_006, CAP_SERV_05, "supports")
+' aac rel: source="P_SERVICING_006"; target="CAP_SERV_05"; label="supports"; relation="process_supports_capability"
+Rel(P_SERVICING_006, CAP_RGOV_06, "supports")
+' aac rel: source="P_SERVICING_006"; target="CAP_RGOV_06"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

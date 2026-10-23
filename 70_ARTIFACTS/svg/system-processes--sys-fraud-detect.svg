@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="755" viewBox="0 0 1100 755" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Transaction fraud detection — Processes and Capabilities</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Transaction fraud detection — Processes and Capabilities</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   10 nodes · 11 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One system, every process that uses it and in what role, and the capabilities those processes support. This shows the business impact of changing the system. A</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">long list against a low criticality rating is worth a second look.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(140.72 108.5)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="329.72" y="102.3" width="212.57" height="319.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="371.72" y="119.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.87" y="27.26" width="212.27" height="471.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.72" y="44.67" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="587.3" y="382.3" width="221.4" height="111.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="617.1" y="399.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-CREDIT-007::SYS-FRAUD-DETECT">
+<title>Supporting</title>
+<path d="M196 362.33 L206 362.33 A10 10 0 0 1 216 372.33 L216 437.72 A10 10 0 0 0 225.94 447.72 L274.97 448 A10 10 0 0 0 275.03 448 L291 448 A10 10 0 0 1 301 458 L301 463 A10 10 0 0 0 311 473 L546 473 A10 10 0 0 0 556 463 L556 458 A10 10 0 0 1 566 448 L584 448 L609.48 448" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M613 448 L603.43 452.79 L603.43 443.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-CREDIT-007::SYS-FRAUD-DETECT">
+<rect x="404.46" y="479.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="491.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e1::P-PAYMENTS-001::SYS-FRAUD-DETECT">
+<title>Supporting</title>
+<path d="M196 158 L275 158 L291 158 A10 10 0 0 0 301 148 L301 57 A10 10 0 0 1 311 47 L546 47 A10 10 0 0 1 556 57 L556 418 A10 10 0 0 0 566 428 L584 428 L609.48 428" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M613 428 L603.43 432.79 L603.43 423.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-PAYMENTS-001::SYS-FRAUD-DETECT">
+<rect x="404.46" y="53.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="65.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-FRAUD-001::SYS-FRAUD-DETECT">
+<title>Primary</title>
+<path d="M196 450.33 L202.33 450.33 A3.67 3.67 0 0 1 206 454 L206 454 A3.68 3.68 0 0 0 209.67 457.68 L274.98 458 A10 10 0 0 0 275.02 458 L283 458 A8 8 0 0 1 291 466 L291 498 A10 10 0 0 0 301 508 L556 508 A10 10 0 0 0 566 498 L566 467 A9 9 0 0 1 575 458 L584 458 L609.48 458" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M613 458 L603.43 462.79 L603.43 453.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-FRAUD-001::SYS-FRAUD-DETECT">
+<rect x="412.32" y="514.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="526.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e3::P-FRAUD-002::SYS-FRAUD-DETECT">
+<title>Supporting</title>
+<path d="M196 75.67 L274.98 76 A10 10 0 0 0 275.02 76 L283 76 A8 8 0 0 0 291 68 L291 46 A10 10 0 0 1 301 36 L556 36 A10 10 0 0 1 566 46 L566 409 A9 9 0 0 0 575 418 L584 418 L609.48 418" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M613 418 L603.43 422.79 L603.43 413.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::P-FRAUD-002::SYS-FRAUD-DETECT">
+<rect x="404.46" y="13.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="25.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e4::P-FRAUD-006::SYS-FRAUD-DETECT">
+<title>Primary</title>
+<path d="M196 274.33 L216 274.33 A10 10 0 0 1 226 284.33 L226 427.73 A10 10 0 0 0 235.93 437.73 L274.97 438 A10 10 0 0 0 275.03 438 L584 438 L609.48 438" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M613 438 L603.43 442.79 L603.43 433.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::P-FRAUD-006::SYS-FRAUD-DETECT">
+<rect x="412.32" y="444.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="456.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e5::P-CREDIT-007::CAP-CRED-06">
+<title>supports</title>
+<path d="M196 339.67 L274.98 340 A10 10 0 0 0 275.02 340 L283 340 A8 8 0 0 0 291 332 L291 316.91 A10 10 0 0 1 300.91 306.91 L326.95 306.67 A10 10 0 0 1 327.05 306.67 L352.48 306.67" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M356 306.67 L346.43 311.45 L346.43 301.88 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e6::P-PAYMENTS-001::CAP-PAY-01">
+<title>supports</title>
+<path d="M196 175 L275 175 L301 175 A10 10 0 0 0 311 165 L311 162 A8 8 0 0 1 319 154 L327 154 L352.48 154" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M356 154 L346.43 158.78 L346.43 149.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e7::P-PAYMENTS-001::CAP-CRED-06">
+<title>supports</title>
+<path d="M196 192 L204.5 192 A1.5 1.5 0 0 1 206 193.5 L206 193.5 A1.5 1.5 0 0 0 207.5 195 L275 195 L283 195 A8 8 0 0 1 291 203 L291 279.09 A10 10 0 0 0 300.91 289.09 L326.95 289.33 A10 10 0 0 0 327.05 289.33 L352.48 289.33" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M356 289.33 L346.43 294.12 L346.43 284.55 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e8::P-FRAUD-001::CAP-FRAUD-01">
+<title>supports</title>
+<path d="M196 427.67 L274.98 428 A10 10 0 0 0 275.02 428 L283 428 A8 8 0 0 0 291 420 L291 388.91 A10 10 0 0 1 300.91 378.91 L326.95 378.67 A10 10 0 0 1 327.05 378.67 L352.48 378.67" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M356 378.67 L346.43 383.45 L346.43 373.88 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e9::P-FRAUD-002::CAP-FRAUD-02">
+<title>supports</title>
+<path d="M196 98.33 L201 98.33 A5 5 0 0 1 206 103.33 L206 175 A10 10 0 0 0 216 185 L275 185 L291 185 A10 10 0 0 1 301 195 L301 216 A10 10 0 0 0 311 226 L327 226 L352.48 226" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M356 226 L346.43 230.78 L346.43 221.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e10::P-FRAUD-006::CAP-FRAUD-01">
+<title>supports</title>
+<path d="M196 251.67 L226 251.67 A10 10 0 0 1 236 261.67 L236 339.75 A10 10 0 0 0 245.91 349.75 L274.96 350 A10 10 0 0 0 275.04 350 L285.5 350 A5.5 5.5 0 0 1 291 355.5 L291 355.5 A5.55 5.55 0 0 0 296.5 361.05 L326.95 361.33 A10 10 0 0 0 327.05 361.33 L352.48 361.33" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M356 361.33 L346.43 366.12 L346.43 356.55 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-CRED-06" data-type="capabilities">
+<title>Authorization Strategy Management</title>
+<path d="M396 272 L356 298 L396 324 L476 324 L516 298 L476 272 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="436" y="296.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Authorization Strategy</text>
+<text x="436" y="308.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+</g>
+<g class="node" data-id="CAP-FRAUD-01" data-type="capabilities">
+<title>Transaction Fraud Detection &amp; Strategy</title>
+<path d="M396 344 L356 370 L396 396 L476 396 L516 370 L476 344 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="436" y="368.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Transaction Fraud</text>
+<text x="436" y="380.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Detection &amp; Strategy</text>
+</g>
+<g class="node" data-id="CAP-FRAUD-02" data-type="capabilities">
+<title>Fraud Case Investigation</title>
+<path d="M396 200 L356 226 L396 252 L476 252 L516 226 L476 200 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="436" y="224.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Fraud Case</text>
+<text x="436" y="236.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Investigation</text>
+</g>
+<g class="node" data-id="CAP-PAY-01" data-type="capabilities">
+<title>Authorization Processing</title>
+<path d="M396 128 L356 154 L396 180 L476 180 L516 154 L476 128 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="436" y="152.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Authorization</text>
+<text x="436" y="164.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Processing</text>
+</g>
+<g class="node" data-id="P-CREDIT-007" data-type="processes">
+<title>Maintain authorization strategy</title>
+<path d="M116 317 L36 342.97 L66.56 385 L165.44 385 L196 342.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="349.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Maintain authorization</text>
+<text x="116" y="361.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">strategy</text>
+</g>
+<g class="node" data-id="P-FRAUD-001" data-type="processes">
+<title>Detect and action transaction fraud alert</title>
+<path d="M116 405 L36 430.97 L66.56 473 L165.44 473 L196 430.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="437.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Detect and action</text>
+<text x="116" y="449.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">transaction fraud alert</text>
+</g>
+<g class="node" data-id="P-FRAUD-002" data-type="processes">
+<title>Investigate and adjudicate fraud case</title>
+<path d="M116 53 L36 78.97 L66.56 121 L165.44 121 L196 78.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="85.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Investigate and</text>
+<text x="116" y="97.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">adjudicate fraud case</text>
+</g>
+<g class="node" data-id="P-FRAUD-006" data-type="processes">
+<title>Maintain fraud detection strategy</title>
+<path d="M116 229 L36 254.97 L66.56 297 L165.44 297 L196 254.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="261.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Maintain fraud</text>
+<text x="116" y="273.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">detection strategy</text>
+</g>
+<g class="node" data-id="P-PAYMENTS-001" data-type="processes">
+<title>Process authorization request</title>
+<path d="M116 141 L36 166.97 L66.56 209 L165.44 209 L196 166.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="173.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Process authorization</text>
+<text x="116" y="185.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">request</text>
+</g>
+<g class="node" data-id="SYS-FRAUD-DETECT" data-type="systems">
+<title>Transaction fraud detection</title>
+<rect x="613" y="408" width="170" height="60" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="694" y="436.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Transaction fraud</text>
+<text x="694" y="448.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">detection</text>
+<svg x="765" y="413" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="653" x2="1072" y2="653" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="677" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 666)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="677" font-size="12" font-weight="400" fill="#343d50">capability · 4</text>
+<g transform="translate(180.27 666)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="206.27" y="677" font-size="12" font-weight="400" fill="#343d50">process · 5</text>
+<g transform="translate(283.44 666)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="309.44" y="677" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
+<text x="28" y="699" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 688)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="699" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 688)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="699" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="733" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-processes--sys-fraud-detect · edit the model, not the picture</text></g>
+</svg>

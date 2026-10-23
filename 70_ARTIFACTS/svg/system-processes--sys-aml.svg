@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="568.74" viewBox="0 0 1100 568.74" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Financial crimes platform — Processes and Capabilities</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Financial crimes platform — Processes and Capabilities</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   6 nodes · 7 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One system, every process that uses it and in what role, and the capabilities those processes support. This shows the business impact of changing the system. A</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">long list against a low criticality rating is worth a second look.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(159.72 99.24)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="291.72" y="139.3" width="212.57" height="175.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="333.72" y="156.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.87" y="24.26" width="212.27" height="295.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.72" y="41.67" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="549.3" y="34.3" width="221.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="579.1" y="51.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-ORIG-002::SYS-AML">
+<title>Supporting</title>
+<path d="M196 277 L245 277 L253 277 A8 8 0 0 1 261 285 L261 321 A10 10 0 0 0 271 331 L508 331 A10 10 0 0 0 518 321 L518 109 A10 10 0 0 1 528 99 L546 99 L571.48 99" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M575 99 L565.43 103.78 L565.43 94.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-ORIG-002::SYS-AML">
+<rect x="366.46" y="337.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="395.5" y="349.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e1::P-COMPLIANCE-003::SYS-AML">
+<title>Primary</title>
+<path d="M196 72.67 L244.97 73 A10 10 0 0 0 245.03 73 L546 73 L571.48 73" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M575 73 L565.43 77.78 L565.43 68.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-COMPLIANCE-003::SYS-AML">
+<rect x="374.32" y="50.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="395.5" y="62.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e2::P-COMPLIANCE-004::SYS-AML">
+<title>Primary</title>
+<path d="M196 160.67 L244.97 161 A10 10 0 0 0 245.03 161 L253 161 A8 8 0 0 0 261 153 L261 94 A10 10 0 0 1 271 84 L517 84 A1 1 0 0 1 518 85 L518 85 A1 1 0 0 0 519 86 L546 86 L571.48 86" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M575 86 L565.43 90.78 L565.43 81.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-COMPLIANCE-004::SYS-AML">
+<rect x="374.32" y="90.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="395.5" y="102.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e3::P-ORIG-002::CAP-ORIG-02">
+<title>supports</title>
+<path d="M196 260 L245 260 L259.5 260 A1.5 1.5 0 0 1 261 261.5 L261 261.5 A1.5 1.5 0 0 0 262.5 263 L289 263 L314.48 263" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M318 263 L308.43 267.79 L308.43 258.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e4::P-ORIG-002::CAP-RGOV-07">
+<title>supports</title>
+<path d="M196 243 L245 243 L253 243 A8 8 0 0 0 261 235 L261 214 A10 10 0 0 1 271 204 L289 204 L314.48 204" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M318 204 L308.43 208.78 L308.43 199.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e5::P-COMPLIANCE-003::CAP-RGOV-07">
+<title>supports</title>
+<path d="M196 95.33 L201 95.33 A5 5 0 0 1 206 100.33 L206 160.75 A10 10 0 0 0 215.91 170.75 L244.96 171 A10 10 0 0 0 245.04 171 L257.5 171 A3.5 3.5 0 0 1 261 174.5 L261 174.5 A3.5 3.5 0 0 0 264.5 178 L289 178 L314.48 178" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M318 178 L308.43 182.78 L308.43 173.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e6::P-COMPLIANCE-004::CAP-RGOV-07">
+<title>supports</title>
+<path d="M196 183.33 L244.97 183 A10 10 0 0 1 245.03 183 L257 183 A4 4 0 0 1 261 187 L261 187 A4 4 0 0 0 265 191 L289 191 L314.48 191" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M318 191 L308.43 195.78 L308.43 186.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-ORIG-02" data-type="capabilities">
+<title>Identity Verification &amp; KYC/CIP</title>
+<path d="M358 237 L318 263 L358 289 L438 289 L478 263 L438 237 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="398" y="261.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Identity Verification &amp;</text>
+<text x="398" y="273.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">KYC/CIP</text>
+</g>
+<g class="node" data-id="CAP-RGOV-07" data-type="capabilities">
+<title>Financial Crimes &amp; BSA/AML Compliance</title>
+<path d="M358 165 L318 191 L358 217 L438 217 L478 191 L438 165 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="398" y="189.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Financial Crimes &amp;</text>
+<text x="398" y="201.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">BSA/AML Compliance</text>
+</g>
+<g class="node" data-id="P-COMPLIANCE-003" data-type="processes">
+<title>Screen for sanctions and watchlists</title>
+<path d="M116 50 L36 75.97 L66.56 118 L165.44 118 L196 75.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="82.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Screen for sanctions</text>
+<text x="116" y="94.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and watchlists</text>
+</g>
+<g class="node" data-id="P-COMPLIANCE-004" data-type="processes">
+<title>Investigate and file suspicious activity report</title>
+<path d="M116 138 L36 163.97 L66.56 206 L165.44 206 L196 163.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="164.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Investigate and file</text>
+<text x="116" y="176.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">suspicious activity</text>
+<text x="116" y="188.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">report</text>
+</g>
+<g class="node" data-id="P-ORIG-002" data-type="processes">
+<title>Verify applicant identity and satisfy CIP</title>
+<path d="M116 226 L36 251.97 L66.56 294 L165.44 294 L196 251.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="252.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Verify applicant</text>
+<text x="116" y="264.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">identity and satisfy</text>
+<text x="116" y="276.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">CIP</text>
+</g>
+<g class="node" data-id="SYS-AML" data-type="systems">
+<title>Financial crimes platform</title>
+<rect x="575" y="60" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="656" y="84.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Financial crimes</text>
+<text x="656" y="96.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">platform</text>
+<svg x="727" y="65" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="466.74" x2="1072" y2="466.74" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="490.74" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 479.74)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="490.74" font-size="12" font-weight="400" fill="#343d50">capability · 2</text>
+<g transform="translate(180.32 479.74)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="206.32" y="490.74" font-size="12" font-weight="400" fill="#343d50">process · 3</text>
+<g transform="translate(283.34 479.74)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="309.34" y="490.74" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
+<text x="28" y="512.74" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 501.74)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="512.74" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 501.74)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="512.74" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="546.74" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-processes--sys-aml · edit the model, not the picture</text></g>
+</svg>

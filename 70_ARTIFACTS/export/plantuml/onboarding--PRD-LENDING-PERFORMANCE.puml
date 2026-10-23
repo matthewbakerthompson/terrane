@@ -1,0 +1,50 @@
+@startuml
+' Lending Portfolio Performance — Onboarding
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Lending Portfolio Performance — Onboarding
+
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddRelTag("event", $legendText="Event on the bus")
+AddRelTag("pipeline-load", $legendText="Pipeline load")
+AddRelTag("scheduled-pull", $legendText="Scheduled API pull")
+
+Boundary(b_Azure, "Azure") {
+  Boundary(b_Azure__azure_risk_prod, "subscription azure-risk-prod") {
+    Boundary(b_Azure__azure_risk_prod__uksouth, "region uksouth") {
+      Boundary(b_Azure__azure_risk_prod__uksouth__Private_App, "Private-App") {
+        System(SYS_REG_REPORTING, "Regulatory Reporting Engine", "Planned replacement for the spreadsheet-based regulatory reporting process, sourcing from the warehouse rather than from the ledger directly. Built with AKS · Snowflake Data Cloud.", $tags="systems")
+        ' aac SYS_REG_REPORTING: company_domain="Risk and Compliance"; hosting="Azure"; technology="AKS · Snowflake Data Cloud"
+      }
+    }
+  }
+}
+Boundary(b_GCP, "GCP") {
+  Boundary(b_GCP__gcp_analytics_prod, "project gcp-analytics-prod") {
+    Boundary(b_GCP__gcp_analytics_prod__europe_west2, "region europe-west2") {
+      Boundary(b_GCP__gcp_analytics_prod__europe_west2__Private_Data, "Private-Data") {
+        System(SYS_LENDPERF_PIPELINE, "Lending Portfolio Performance Pipeline", "Dataflow jobs on a Composer schedule, ingesting the source events of Lending Portfolio Performance from Pub/Sub and curating them into BigQuery. Built with BigQuery · Dataflow +3.", $tags="systems")
+        ' aac SYS_LENDPERF_PIPELINE: company_domain="Lending"; hosting="GCP"; technology="BigQuery · Dataflow +3"
+        System(SYS_LENDPERF_SEMANTIC, "Lending Portfolio Performance Semantic Layer", "Governed models and metrics exposed to analysts for Lending Portfolio Performance, served from BigQuery through Looker. Built with BigQuery · Looker.", $tags="systems")
+        ' aac SYS_LENDPERF_SEMANTIC: company_domain="Lending"; hosting="GCP"; technology="BigQuery · Looker"
+      }
+    }
+  }
+  Boundary(b_GCP__gcp_lending_prod, "project gcp-lending-prod") {
+    Boundary(b_GCP__gcp_lending_prod__europe_west2, "region europe-west2") {
+      System(SYS_POSFIN_EVENTS, "Point-of-Sale Finance Event Publisher", "Publishes Point-of-Sale Finance domain events onto the enterprise bus. Built with Pub/Sub.", $tags="systems")
+      ' aac SYS_POSFIN_EVENTS: company_domain="Lending"; hosting="GCP"; technology="Pub/Sub"
+    }
+  }
+}
+
+Rel(SYS_POSFIN_EVENTS, SYS_LENDPERF_PIPELINE, "Source events to Lending Portfolio Performance Pipeline", "Pub/Sub", $tags="event")
+' aac rel: source="SYS_POSFIN_EVENTS"; target="SYS_LENDPERF_PIPELINE"; label="Source events to Lending Portfolio Performance Pipeline"; interface_id="INT-LENDPERF-INGEST"; kind="event"; integration_style="Event"; auth_method="WorkloadIdentity"; frequency="Realtime"; direction="Inbound"
+Rel(SYS_LENDPERF_PIPELINE, SYS_LENDPERF_SEMANTIC, "Lending Portfolio Performance Pipeline to Semantic Layer", "SQL", $tags="pipeline-load")
+' aac rel: source="SYS_LENDPERF_PIPELINE"; target="SYS_LENDPERF_SEMANTIC"; label="Lending Portfolio Performance Pipeline to Semantic Layer"; interface_id="INT-LENDPERF-PIPE-SEMANTIC"; kind="pipeline-load"; integration_style="Batch"; auth_method="WorkloadIdentity"; frequency="Daily"; direction="Outbound"
+Rel(SYS_LENDPERF_SEMANTIC, SYS_REG_REPORTING, "Lending Portfolio Performance Semantic Layer to Regulatory Reporting Engine", "HTTPS", $tags="scheduled-pull")
+' aac rel: source="SYS_LENDPERF_SEMANTIC"; target="SYS_REG_REPORTING"; label="Lending Portfolio Performance Semantic Layer to Regulatory Reporting Engine"; interface_id="INT-LENDPERF-REGREPORTING"; kind="scheduled-pull"; integration_style="Batch"; auth_method="WorkloadIdentity"; frequency="Daily"; direction="Outbound"
+
+SHOW_LEGEND()
+@enduml

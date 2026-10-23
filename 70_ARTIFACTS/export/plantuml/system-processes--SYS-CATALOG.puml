@@ -1,0 +1,81 @@
+@startuml
+' Governance catalog — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Governance catalog — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_DATA_01, "Data Governance & Stewardship", "Own data policy, ownership, and stewardship across the enterprise.", $tags="capabilities")
+  ' aac CAP_DATA_01: company_domain="Cross-Functional Services"
+  System(CAP_DATA_03, "Data Quality Management", "Define, measure, and remediate data quality.", $tags="capabilities")
+  ' aac CAP_DATA_03: company_domain="Cross-Functional Services"
+  System(CAP_STRAT_04, "Enterprise Architecture & Change Portfolio", "Govern the shape of the estate and the pipeline of change.", $tags="capabilities")
+  ' aac CAP_STRAT_04: company_domain="Cross-Functional Services"
+  System(CAP_DATA_05, "Metadata, Lineage & Catalog", "Maintain the governed catalog, metadata, and lineage.", $tags="capabilities")
+  ' aac CAP_DATA_05: company_domain="Cross-Functional Services"
+  System(CAP_TECH_02, "Platform & Infrastructure Operations", "Run the technology estate.", $tags="capabilities")
+  ' aac CAP_TECH_02: company_domain="Technology"
+  System(CAP_SEC_05, "Privacy Management", "Operate privacy obligations including consumer rights requests.", $tags="capabilities")
+  ' aac CAP_SEC_05: company_domain="Cross-Functional Services"
+  System(CAP_DATA_07, "Records Retention & Disposition", "Retain and dispose of records to the retention schedule.", $tags="capabilities")
+  ' aac CAP_DATA_07: company_domain="Cross-Functional Services"
+}
+Boundary(b_Process, "Process") {
+  System(P_EA_005, "Assess technology lifecycle and rationalization", "Rate each application and platform for tolerate, invest, migrate, or eliminate; identify duplication and end-of-support exposure.", $tags="processes")
+  ' aac P_EA_005: company_domain=""
+  System(P_DATAGOV_004, "Execute records retention and disposition", "Apply the retention schedule and execute defensible disposition of records. Disposition is defensible destruction: eligibility verified against holds, execution evidenced by certificate, and the retention schedule is the single authority.", $tags="processes")
+  ' aac P_DATAGOV_004: company_domain=""
+  System(P_PRIVACY_001, "Fulfill consumer privacy request", "Receive, verify, and fulfill a consumer privacy rights request within the required period. Identity verification precedes any disclosure; state privacy laws set the clocks and the evidence of fulfillment is retained per request.", $tags="processes")
+  ' aac P_PRIVACY_001: company_domain=""
+  System(P_EA_006, "Maintain the capability map and process inventory", "Keep the business architecture model current: harvest changes, run the quality gates, and publish the refreshed model to its consumers.", $tags="processes")
+  ' aac P_EA_006: company_domain=""
+  System(P_DATAGOV_002, "Measure and remediate data quality", "Measure data quality against defined expectations and drive remediation. Quality rules run against critical data elements with published thresholds; breaches create remediation work with the data owner, not just a dashboard entry.", $tags="processes")
+  ' aac P_DATAGOV_002: company_domain=""
+  System(P_DATAGOV_001, "Onboard and classify data asset", "Register a data asset, assign ownership, and classify it for handling. Onboarding assigns owner, steward, classification, and retention up front; the Collibra registration is the system of record this model's stub points at.", $tags="processes")
+  ' aac P_DATAGOV_001: company_domain=""
+  System(P_DATAGOV_003, "Publish metadata and lineage to catalog", "Publish metadata, lineage, and ownership into the governance catalog. The catalog is where consumers discover data and its lineage; publication is part of change delivery, not an afterthought, so the catalog stays current by construction.", $tags="processes")
+  ' aac P_DATAGOV_003: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CATALOG, "Governance catalog", "Governance catalog and metadata system of record. Built with Collibra Data Intelligence.", $tags="systems")
+  ' aac SYS_CATALOG: company_domain=""; technology="Collibra Data Intelligence"
+}
+
+Rel(P_DATAGOV_001, SYS_CATALOG, "Primary")
+' aac rel: source="P_DATAGOV_001"; target="SYS_CATALOG"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_DATAGOV_002, SYS_CATALOG, "Supporting")
+' aac rel: source="P_DATAGOV_002"; target="SYS_CATALOG"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DATAGOV_003, SYS_CATALOG, "Primary")
+' aac rel: source="P_DATAGOV_003"; target="SYS_CATALOG"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_DATAGOV_004, SYS_CATALOG, "Supporting")
+' aac rel: source="P_DATAGOV_004"; target="SYS_CATALOG"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PRIVACY_001, SYS_CATALOG, "Supporting")
+' aac rel: source="P_PRIVACY_001"; target="SYS_CATALOG"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_EA_005, SYS_CATALOG, "Supporting")
+' aac rel: source="P_EA_005"; target="SYS_CATALOG"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_EA_006, SYS_CATALOG, "Supporting")
+' aac rel: source="P_EA_006"; target="SYS_CATALOG"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DATAGOV_001, CAP_DATA_01, "supports")
+' aac rel: source="P_DATAGOV_001"; target="CAP_DATA_01"; label="supports"; relation="process_supports_capability"
+Rel(P_DATAGOV_002, CAP_DATA_03, "supports")
+' aac rel: source="P_DATAGOV_002"; target="CAP_DATA_03"; label="supports"; relation="process_supports_capability"
+Rel(P_DATAGOV_003, CAP_DATA_05, "supports")
+' aac rel: source="P_DATAGOV_003"; target="CAP_DATA_05"; label="supports"; relation="process_supports_capability"
+Rel(P_DATAGOV_004, CAP_DATA_07, "supports")
+' aac rel: source="P_DATAGOV_004"; target="CAP_DATA_07"; label="supports"; relation="process_supports_capability"
+Rel(P_PRIVACY_001, CAP_SEC_05, "supports")
+' aac rel: source="P_PRIVACY_001"; target="CAP_SEC_05"; label="supports"; relation="process_supports_capability"
+Rel(P_EA_005, CAP_STRAT_04, "supports")
+' aac rel: source="P_EA_005"; target="CAP_STRAT_04"; label="supports"; relation="process_supports_capability"
+Rel(P_EA_005, CAP_TECH_02, "supports")
+' aac rel: source="P_EA_005"; target="CAP_TECH_02"; label="supports"; relation="process_supports_capability"
+Rel(P_EA_006, CAP_STRAT_04, "supports")
+' aac rel: source="P_EA_006"; target="CAP_STRAT_04"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

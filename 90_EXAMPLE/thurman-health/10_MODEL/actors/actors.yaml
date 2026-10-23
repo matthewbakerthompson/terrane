@@ -1,0 +1,110 @@
+# Who is outside the estate looking in, or inside it with a role that
+# shapes the architecture. Coarse on purpose, as the sample's are.
+
+- actor_id: ACT-PATIENT
+  name: Patient
+  description: >
+    Uses the portal between visits and joins video visits from home. Also
+    the person every Restricted asset in the estate is about.
+  status: Active
+  actor_kind: Person
+  internal: "No"
+  volume: ~410k patients seen a year
+  company_domain: Patient Access
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-PATIENT-APP
+  name: Patient-authorized App
+  description: >
+    A third-party app a patient points at Thurman to fetch their own record
+    through the FHIR API. Thurman does not choose these apps; the rules say
+    the patient does.
+  status: Active
+  actor_kind: External system
+  internal: "No"
+  company_domain: Interoperability
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-CLINICIAN
+  name: Clinician
+  description: Physicians, nurses and advanced practice providers. Orders, documents and treats, mostly in the EHR.
+  status: Active
+  actor_kind: Role
+  internal: "Yes"
+  volume: ~6,500 clinical staff
+  company_domain: Clinical Care
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-RADIOLOGIST
+  name: Radiologist
+  description: Reads studies in the PACS and signs reports in the RIS, often from home overnight.
+  status: Active
+  actor_kind: Role
+  internal: "Yes"
+  company_domain: Diagnostics
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-PHARMACIST
+  name: Pharmacist
+  description: Verifies every medication order before it can be dispensed.
+  status: Active
+  actor_kind: Role
+  internal: "Yes"
+  company_domain: Clinical Care
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-PRIVACY-ANALYST
+  name: Privacy Analyst
+  description: Works the access audit reports and investigates an inappropriate look at a record.
+  status: Active
+  actor_kind: Role
+  internal: "Yes"
+  company_domain: Security
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-COMMUNITY-PROVIDER
+  name: Community Provider
+  description: A practice or hospital outside Thurman that shares patients with it through the regional exchange.
+  status: Active
+  actor_kind: Organization
+  internal: "No"
+  company_domain: Interoperability
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-PAYER
+  name: Payer
+  description: An insurer or government program. Receives claims and returns remittances, through the clearinghouse.
+  status: Active
+  actor_kind: Organization
+  internal: "No"
+  company_domain: Revenue Cycle
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-STATE-REGISTRY
+  name: State Cancer Registry
+  description: The state's central registry, which every reportable cancer case must reach within the period it sets.
+  status: Active
+  actor_kind: Regulator
+  internal: "No"
+  company_domain: Oncology
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-BEDSIDE-DEVICE
+  name: Bedside Device
+  description: Monitors, ventilators and pumps on the network, each sending readings to the device gateway.
+  status: Active
+  actor_kind: Device
+  internal: "Yes"
+  volume: ~1,800 connected devices
+  company_domain: Clinical Care
+  togaf_layer: Business
+  architecture_domain: Business

@@ -1,0 +1,63 @@
+view_id: process-systems
+title: "{process} — Systems, Data and Controls"
+category: Business
+section: Processes and value streams
+kind: diagram
+description: >
+  One process, the systems it uses and in what role, the data it touches, and
+  the controls and policies that apply to it. The process comes from the
+  business layer; everything around it comes from the technology estate.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+parameters:
+  - name: process
+    type: processes
+    required: true
+    description: The process this diagram is about
+
+group_by: type
+
+scope:
+  include:
+    - type: processes
+      where:
+        id_in: ["{process}"]
+  expand:
+    - relation: process_uses_system
+      depth: 1
+      types: [systems]
+    - relation: process_uses_data_asset
+      depth: 1
+      types: [data_assets]
+    - relation: process_governed_by_control
+      depth: 1
+      types: [controls]
+    - relation: process_supports_capability
+      depth: 1
+      types: [capabilities]
+
+edges:
+  - via: process_uses_system
+    label: role
+  - via: process_uses_data_asset
+    label: access
+  - via: process_governed_by_control
+    text: governed by
+  - via: process_supports_capability
+    text: supports
+
+style:
+  color_by: type
+
+limits:
+  max_nodes: 60
+
+# One committed diagram per critical process that sits in a value stream.
+render_for:
+  parameter: process
+  type: processes
+  where:
+    criticality: [High]
+    value_stream_id: {exists: true}

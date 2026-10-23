@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="655.4" viewBox="0 0 1100 655.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Maintain authorization strategy — Systems, Data and Controls</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Maintain authorization strategy — Systems, Data and Controls</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   5 nodes · 4 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(169.82 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="271.72" y="335.3" width="212.57" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="313.72" y="352.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Control">
+<rect x="272.3" y="203.3" width="211.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="305.15" y="220.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Control</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.66" y="101.28" width="212.67" height="103.42" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.51" y="118.68" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="529.3" y="24.3" width="221.4" height="175.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="559.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-CREDIT-007::SYS-CORE-LEDGER">
+<title>Primary</title>
+<path d="M196 137.4 L224.93 137 A10 10 0 0 1 225.07 137 L233 137 A8 8 0 0 0 241 129 L241 86 A10 10 0 0 1 251 76 L526 76 L551.48 76" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 76 L545.43 80.78 L545.43 71.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-CREDIT-007::SYS-CORE-LEDGER">
+<rect x="354.32" y="53.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="65.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-CREDIT-007::SYS-FRAUD-DETECT">
+<title>Supporting</title>
+<path d="M196 147.8 L224.97 148 A10 10 0 0 0 225.03 148 L526 148 L551.48 148" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 148 L545.43 152.78 L545.43 143.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-CREDIT-007::SYS-FRAUD-DETECT">
+<rect x="346.46" y="154.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="166.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-CREDIT-007::CTL-TREATMENT-APPR">
+<title>governed by</title>
+<path d="M196 158.2 L224.97 158 A10 10 0 0 1 225.03 158 L241 158 A10 10 0 0 1 251 168 L251 246 A9 9 0 0 0 260 255 L269 255 L294.48 255" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M298 255 L288.43 259.79 L288.43 250.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e3::P-CREDIT-007::CAP-CRED-06">
+<title>supports</title>
+<path d="M196 168.6 L224.93 169 A10 10 0 0 0 225.07 169 L233 169 A8 8 0 0 1 241 177 L241 377 A10 10 0 0 0 251 387 L269 387 L294.48 387" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M298 387 L288.43 391.79 L288.43 382.21 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-CRED-06" data-type="capabilities">
+<title>Authorization Strategy Management</title>
+<path d="M338 361 L298 387 L338 413 L418 413 L458 387 L418 361 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="378" y="385.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Authorization Strategy</text>
+<text x="378" y="397.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+</g>
+<g class="node" data-id="CTL-TREATMENT-APPR" data-type="controls">
+<title>Treatment strategy approval</title>
+<path d="M344.86 229 L298 244.23 L298 265.77 L344.86 281 L411.14 281 L458 265.77 L458 244.23 L411.14 229 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="378" y="253.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Treatment strategy</text>
+<text x="378" y="265.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">approval</text>
+</g>
+<g class="node" data-id="P-CREDIT-007" data-type="processes">
+<title>Maintain authorization strategy</title>
+<path d="M116 127 L36 146.86 L66.56 179 L165.44 179 L196 146.86 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="151.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Maintain authorization</text>
+<text x="116" y="163.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">strategy</text>
+</g>
+<g class="node" data-id="SYS-CORE-LEDGER" data-type="systems">
+<title>Core Card Ledger</title>
+<rect x="555" y="50" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="636" y="80.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Core Card Ledger</text>
+<svg x="707" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-FRAUD-DETECT" data-type="systems">
+<title>Transaction fraud detection</title>
+<rect x="555" y="122" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="636" y="146.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Transaction fraud</text>
+<text x="636" y="158.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">detection</text>
+<svg x="707" y="127" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="553.4" x2="1072" y2="553.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="577.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 566.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="577.4" font-size="12" font-weight="400" fill="#343d50">capability · 1</text>
+<g transform="translate(177.5 566.4)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="203.5" y="577.4" font-size="12" font-weight="400" fill="#343d50">control · 1</text>
+<g transform="translate(273.05 566.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="299.05" y="577.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(373.32 566.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="399.32" y="577.4" font-size="12" font-weight="400" fill="#343d50">system · 2</text>
+<text x="28" y="599.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 588.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="599.4" font-size="12" font-weight="400" fill="#343d50">governed by</text>
+<g transform="translate(184.75 588.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="210.75" y="599.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(277.26 588.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="303.26" y="599.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="633.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-credit-007 · edit the model, not the picture</text></g>
+</svg>

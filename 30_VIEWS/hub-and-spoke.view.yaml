@@ -1,0 +1,48 @@
+view_id: hub-and-spoke
+title: "{system} — Hub and Spokes"
+category: Application
+section: Integration
+kind: diagram
+description: >
+  One hub system in the center and every system that connects through it, one
+  interface per spoke. Suited to integration hubs, event buses and identity
+  providers, which have no clear upstream or downstream. Any system tagged as
+  a hub can be chosen.
+layout: concentric
+node_label: name
+renderers: [mermaid]
+
+parameters:
+  - name: system
+    type: systems
+    required: true
+    description: The hub this diagram is about
+
+scope:
+  include:
+    - type: systems
+      where:
+        id_in: ["{system}"]
+  expand:
+    # One hop, through interfaces only. The spokes are what connect to the
+    # hub; what the spokes connect to is their own diagram.
+    - relation: interfaces
+      depth: 1
+      types: [systems]
+
+edges:
+  - via: interfaces
+
+style:
+  color_by: type
+
+limits:
+  max_nodes: 60
+
+# One committed diagram per hub: the systems the hub-and-spoke parts make
+# carry the tag, and so can any hand-authored system that is one.
+render_for:
+  parameter: system
+  type: systems
+  where:
+    tags_any: [hub]

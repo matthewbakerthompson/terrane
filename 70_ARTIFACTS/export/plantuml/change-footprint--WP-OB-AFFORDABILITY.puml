@@ -1,0 +1,36 @@
+@startuml
+' Buy affordability data for point-of-sale finance — Footprint
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Buy affordability data for point-of-sale finance — Footprint
+
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("work_packages", $bgColor="#ccfbf1", $borderColor="#0d9488", $fontColor="#0f172a", $legendText="work package")
+
+Boundary(b_System, "System") {
+  System_Ext(SYS_OBAFF_VENDOR, "Open Banking Affordability", "Open banking data access and affordability categorization, operated by TrueLayer in their own tenancy under the UK open banking framework; bank data is held for the assessment and deleted at the vendor once the result is returned. Built with TrueLayer.", $tags="systems")
+  ' aac SYS_OBAFF_VENDOR: company_domain="Lending"; hosting="SaaS"; technology="TrueLayer"
+  System(SYS_OBAFF_GATEWAY, "Open Banking Affordability Integration Gateway", "Our side of the TrueLayer integration: request mapping, retry and back-off, circuit breaking when the vendor is down, and the audit trail of what we sent them. Built with GKE.", $tags="systems")
+  ' aac SYS_OBAFF_GATEWAY: company_domain="Lending"; hosting="GCP"; technology="GKE"
+  System(SYS_OBAFF_EGRESS, "Open Banking Affordability Private Egress", "PrivateLink endpoint and egress allow-list for TrueLayer. The control that keeps regulated data off the public internet, and the thing a security review asks to see first.", $tags="systems")
+  ' aac SYS_OBAFF_EGRESS: company_domain="Enterprise Platform"; hosting="GCP"
+  System(SYS_OBAFF_WEBHOOKS, "Open Banking Affordability Webhook Listener", "Receives TrueLayer callbacks, verifies their signature, and forwards the event. Public by necessity, small by design. Built with GKE.", $tags="systems")
+  ' aac SYS_OBAFF_WEBHOOKS: company_domain="Lending"; hosting="GCP"; technology="GKE"
+}
+Boundary(b_Work_Package, "Work Package") {
+  System(WP_OB_AFFORDABILITY, "Buy affordability data for point-of-sale finance", "Open banking affordability from TrueLayer, reached over Private Service Connect from the lending project on Google Cloud and returning its assessment by webhook: the vendor shape's private path and webhook return, resolved against Google Cloud for the first time. Our side is a gateway, an egress and a listener beside the point-of-sale API.", $tags="work_packages")
+  ' aac WP_OB_AFFORDABILITY: company_domain="Lending"
+}
+
+Rel(WP_OB_AFFORDABILITY, SYS_OBAFF_VENDOR, "Builds")
+' aac rel: source="WP_OB_AFFORDABILITY"; target="SYS_OBAFF_VENDOR"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_OB_AFFORDABILITY, SYS_OBAFF_GATEWAY, "Builds")
+' aac rel: source="WP_OB_AFFORDABILITY"; target="SYS_OBAFF_GATEWAY"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_OB_AFFORDABILITY, SYS_OBAFF_EGRESS, "Builds")
+' aac rel: source="WP_OB_AFFORDABILITY"; target="SYS_OBAFF_EGRESS"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_OB_AFFORDABILITY, SYS_OBAFF_WEBHOOKS, "Builds")
+' aac rel: source="WP_OB_AFFORDABILITY"; target="SYS_OBAFF_WEBHOOKS"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+
+SHOW_LEGEND()
+@enduml

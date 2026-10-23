@@ -1,0 +1,29 @@
+view_id: hosting-estate
+title: "Where the Estate Runs"
+category: Technology
+section: Hosting
+kind: map
+description: >
+  The same systems as the Application Landscape, grouped by where they are
+  hosted. The on-premise column is the migration backlog. Connections between
+  columns are the integrations that make moving a system harder.
+layout: TB
+group_by: hosting
+node_label: name
+renderers: [mermaid, structurizr]
+
+scope:
+  include:
+    - type: systems
+      where:
+        status: [Active, Planned]
+
+edges:
+  - via: interfaces
+    label: protocol
+
+style:
+  color_by: criticality
+
+limits:
+  max_nodes: 60

@@ -1,0 +1,179 @@
+@startuml
+' Originations & Account Opening — Frameworks, Controls, Systems
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Originations & Account Opening — Frameworks, Controls, Systems
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_ORIG_06, "Account Establishment & Card Issuance", "Open the account and issue credentials.", $tags="capabilities")
+  ' aac CAP_ORIG_06: company_domain="Originations"
+  System(CAP_ORIG_05, "Adverse Action & Notice Generation", "Produce compliant decline and counter-offer notices.", $tags="capabilities")
+  ' aac CAP_ORIG_05: company_domain="Originations"
+  System(CAP_ORIG_01, "Application Capture", "Accept applications across web, mobile, phone, mail, and partner channels.", $tags="capabilities")
+  ' aac CAP_ORIG_01: company_domain="Originations"
+  System(CAP_ORIG_03, "Application Fraud Screening", "Detect synthetic, stolen, and first-party application fraud.", $tags="capabilities")
+  ' aac CAP_ORIG_03: company_domain="Originations"
+  System(CAP_ORIG_07, "Card Production & Fulfillment", "Produce, personalize, and deliver physical and digital cards.", $tags="capabilities")
+  ' aac CAP_ORIG_07: company_domain="Originations"
+  System(CAP_ORIG_08, "Digital Wallet Provisioning", "Provision credentials into wallets and tokenized environments.", $tags="capabilities")
+  ' aac CAP_ORIG_08: company_domain="Originations"
+  System(CAP_ORIG_02, "Identity Verification & KYC/CIP", "Verify applicant identity and satisfy customer identification obligations.", $tags="capabilities")
+  ' aac CAP_ORIG_02: company_domain="Originations"
+  System(CAP_ORIG, "Originations & Account Opening", "Originations & Account Opening. Level 0 enterprise capability domain (Core tier).", $tags="capabilities")
+  ' aac CAP_ORIG: company_domain="Originations"
+  System(CAP_ORIG_04, "Underwriting & Credit Decisioning Execution", "Execute the credit decision against the approved strategy.", $tags="capabilities")
+  ' aac CAP_ORIG_04: company_domain="Originations"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_ADVERSE_ACT, "Adverse action notice completeness", "Every declined application generates a compliant adverse action notice with the principal reasons, within the required period.", $tags="controls")
+  ' aac CTL_ADVERSE_ACT: company_domain=""
+  System(CTL_APP_INTAKE, "Application completeness and disclosure", "Applications are complete and required disclosures delivered before decisioning; incomplete files route to cure with notice-of-incompleteness timing honored.", $tags="controls")
+  ' aac CTL_APP_INTAKE: company_domain=""
+  System(CTL_AUTH_POLICY, "Cardholder authentication to policy", "Cardholder authentication meets the risk-tiered policy before disclosure or account change, across every servicing channel.", $tags="controls")
+  ' aac CTL_AUTH_POLICY: company_domain=""
+  System(CTL_SANCTIONS, "Sanctions and watchlist screening", "Parties are screened at onboarding and on list updates; hits are dispositioned before processing continues.", $tags="controls")
+  ' aac CTL_SANCTIONS: company_domain=""
+  System(CTL_SCRA_MLA, "Servicemember protections screening", "SCRA and MLA eligibility is screened at origination and on notification, with rate and protection application evidenced.", $tags="controls")
+  ' aac CTL_SCRA_MLA: company_domain=""
+}
+Boundary(b_Framework, "Framework") {
+  System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
+  ' aac FW_BIAN: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_ORIG_001, "Capture card application", "Accept and validate a complete card application from any origination channel. Capture is complete when the application has every field decisioning needs and the applicant has the required disclosures; incomplete applications route to cure, not decline.", $tags="processes")
+  ' aac P_ORIG_001: company_domain=""
+  System(P_ORIG_006, "Establish account and issue credentials", "Open the account on the core platform and issue the card credential. Account establishment writes the account of record and triggers credential issuance; a failure here strands an approved applicant, which is why it carries a same-day SLA.", $tags="processes")
+  ' aac P_ORIG_006: company_domain=""
+  System(P_ORIG_004, "Execute credit decision", "Apply the approved credit strategy to render an approve, decline, or counter-offer decision with a line assignment.", $tags="processes")
+  ' aac P_ORIG_004: company_domain=""
+  System(P_CREDIT_004, "Execute credit line decrease or account action", "Apply risk-driven line decreases or account actions, with required notice. Adverse action obligations apply to decreases and closures just as they do to declines; the notice must state the principal reasons and bureau information used.", $tags="processes")
+  ' aac P_CREDIT_004: company_domain=""
+  System(P_ORIG_009, "Handle application withdrawal and abandonment", "Manage applications withdrawn by the applicant or abandoned before completion. Withdrawn and abandoned applications still carry notice, retention, and bureau obligations; this process closes them compliantly instead of letting them age.", $tags="processes")
+  ' aac P_ORIG_009: company_domain=""
+  System(P_ORIG_005, "Issue adverse action notice", "Generate and deliver a compliant adverse action or counter-offer notice within the required period. ECOA and FCRA set the notice content and the clock; the principal reasons must match the actual decision factors, which is exactly what fair-lending testing checks.", $tags="processes")
+  ' aac P_ORIG_005: company_domain=""
+  System(P_ORIG_007, "Manage card production and fulfillment", "Oversee vendor-executed card personalization, production, and delivery, including inventory, service levels, and exception handling.", $tags="processes")
+  ' aac P_ORIG_007: company_domain=""
+  System(P_ORIG_008, "Provision credential to digital wallet", "Provision the card credential into a digital wallet or tokenized environment. Wallet provisioning runs the network token flows with step-up verification where risk requires; weak provisioning is a known fraud vector the strategy watches.", $tags="processes")
+  ' aac P_ORIG_008: company_domain=""
+  System(P_ORIG_003, "Screen application for fraud", "Score and adjudicate the application for synthetic, stolen, and first-party fraud risk. Fraud screening runs before credit decisioning so stolen and synthetic identities never consume a bureau pull; referred applications go to manual review with an SLA.", $tags="processes")
+  ' aac P_ORIG_003: company_domain=""
+  System(P_ORIG_002, "Verify applicant identity and satisfy CIP", "Verify the applicant's identity and record evidence satisfying customer identification obligations. CIP evidence is retained per BSA requirements; verification failures route to document request rather than automatic decline, and synthetic identity signals feed fraud screening.", $tags="processes")
+  ' aac P_ORIG_002: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_APPFRAUD, "Application fraud screening", "Application fraud and identity risk screening.", $tags="systems")
+  ' aac SYS_APPFRAUD: company_domain=""
+  System_Ext(SYS_CARD_FULFILL, "Card production and fulfillment", "Card production, personalization, and fulfillment. Built with external.", $tags="systems")
+  ' aac SYS_CARD_FULFILL: company_domain=""; hosting="External"; technology="external"
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+  System(SYS_KYC, "Identity verification", "Identity verification and customer identification program checks.", $tags="systems")
+  ' aac SYS_KYC: company_domain=""
+  System(SYS_ORIG_DECISION, "Originations decision engine", "Application processing and credit decision execution.", $tags="systems")
+  ' aac SYS_ORIG_DECISION: company_domain=""
+  System(SYS_TOKEN, "Tokenization and credential management", "Token and credential lifecycle management.", $tags="systems")
+  ' aac SYS_TOKEN: company_domain=""
+}
+
+Rel(CAP_ORIG_01, CAP_ORIG, "part of")
+Rel(CAP_ORIG_02, CAP_ORIG, "part of")
+Rel(CAP_ORIG_03, CAP_ORIG, "part of")
+Rel(CAP_ORIG_04, CAP_ORIG, "part of")
+Rel(CAP_ORIG_05, CAP_ORIG, "part of")
+Rel(CAP_ORIG_06, CAP_ORIG, "part of")
+Rel(CAP_ORIG_07, CAP_ORIG, "part of")
+Rel(CAP_ORIG_08, CAP_ORIG, "part of")
+Rel(CAP_ORIG, FW_BIAN, "Aligned to")
+' aac rel: source="CAP_ORIG"; target="FW_BIAN"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
+Rel(CAP_ORIG_01, FW_BIAN, "Sales and Service > Sales > Party Lifecycle Management")
+' aac rel: source="CAP_ORIG_01"; target="FW_BIAN"; label="Sales and Service > Sales > Party Lifecycle Management"; relation="capability_references_framework"; ref="Sales and Service > Sales > Party Lifecycle Management"
+Rel(CAP_ORIG_02, FW_BIAN, "Sales and Service > Cross Channel > Party Authentication")
+' aac rel: source="CAP_ORIG_02"; target="FW_BIAN"; label="Sales and Service > Cross Channel > Party Authentication"; relation="capability_references_framework"; ref="Sales and Service > Cross Channel > Party Authentication"
+Rel(CAP_ORIG_03, FW_BIAN, "Operations and Execution > Account Management > Fraud Evaluation")
+' aac rel: source="CAP_ORIG_03"; target="FW_BIAN"; label="Operations and Execution > Account Management > Fraud Evaluation"; relation="capability_references_framework"; ref="Operations and Execution > Account Management > Fraud Evaluation"
+Rel(CAP_ORIG_04, FW_BIAN, "Operations and Execution > Loans and Deposits > Underwriting")
+' aac rel: source="CAP_ORIG_04"; target="FW_BIAN"; label="Operations and Execution > Loans and Deposits > Underwriting"; relation="capability_references_framework"; ref="Operations and Execution > Loans and Deposits > Underwriting"
+Rel(CAP_ORIG_05, FW_BIAN, "Risk and Compliance > Regulations and Compliance > Regulatory Compliance")
+' aac rel: source="CAP_ORIG_05"; target="FW_BIAN"; label="Risk and Compliance > Regulations and Compliance > Regulatory Compliance"; relation="capability_references_framework"; ref="Risk and Compliance > Regulations and Compliance > Regulatory Compliance"
+Rel(CAP_ORIG_06, FW_BIAN, "Operations and Execution > Cards > Credit Card")
+' aac rel: source="CAP_ORIG_06"; target="FW_BIAN"; label="Operations and Execution > Cards > Credit Card"; relation="capability_references_framework"; ref="Operations and Execution > Cards > Credit Card"
+Rel(CAP_ORIG_07, FW_BIAN, "Operations and Execution > Operational Services > Issued Device Administration")
+' aac rel: source="CAP_ORIG_07"; target="FW_BIAN"; label="Operations and Execution > Operational Services > Issued Device Administration"; relation="capability_references_framework"; ref="Operations and Execution > Operational Services > Issued Device Administration"
+Rel(CAP_ORIG_08, FW_BIAN, "Operations and Execution > Operational Services > Issued Device Administration")
+' aac rel: source="CAP_ORIG_08"; target="FW_BIAN"; label="Operations and Execution > Operational Services > Issued Device Administration"; relation="capability_references_framework"; ref="Operations and Execution > Operational Services > Issued Device Administration"
+Rel(P_ORIG_001, CAP_ORIG_01, "supported by")
+' aac rel: source="P_ORIG_001"; target="CAP_ORIG_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_ORIG_002, CAP_ORIG_02, "supported by")
+' aac rel: source="P_ORIG_002"; target="CAP_ORIG_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_ORIG_003, CAP_ORIG_03, "supported by")
+' aac rel: source="P_ORIG_003"; target="CAP_ORIG_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_ORIG_004, CAP_ORIG_04, "supported by")
+' aac rel: source="P_ORIG_004"; target="CAP_ORIG_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_ORIG_005, CAP_ORIG_05, "supported by")
+' aac rel: source="P_ORIG_005"; target="CAP_ORIG_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_ORIG_006, CAP_ORIG_06, "supported by")
+' aac rel: source="P_ORIG_006"; target="CAP_ORIG_06"; label="supported by"; relation="process_supports_capability"
+Rel(P_ORIG_007, CAP_ORIG_07, "supported by")
+' aac rel: source="P_ORIG_007"; target="CAP_ORIG_07"; label="supported by"; relation="process_supports_capability"
+Rel(P_ORIG_008, CAP_ORIG_08, "supported by")
+' aac rel: source="P_ORIG_008"; target="CAP_ORIG_08"; label="supported by"; relation="process_supports_capability"
+Rel(P_ORIG_009, CAP_ORIG_01, "supported by")
+' aac rel: source="P_ORIG_009"; target="CAP_ORIG_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_CREDIT_004, CAP_ORIG_05, "supported by")
+' aac rel: source="P_CREDIT_004"; target="CAP_ORIG_05"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_ORIG, CTL_ADVERSE_ACT, "governed by")
+' aac rel: source="CAP_ORIG"; target="CTL_ADVERSE_ACT"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_ORIG, CTL_APP_INTAKE, "governed by")
+' aac rel: source="CAP_ORIG"; target="CTL_APP_INTAKE"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_ORIG, CTL_AUTH_POLICY, "governed by")
+' aac rel: source="CAP_ORIG"; target="CTL_AUTH_POLICY"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_ORIG, CTL_SANCTIONS, "governed by")
+' aac rel: source="CAP_ORIG"; target="CTL_SANCTIONS"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_ORIG, CTL_SCRA_MLA, "governed by")
+' aac rel: source="CAP_ORIG"; target="CTL_SCRA_MLA"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_ORIG_01, CTL_APP_INTAKE, "governed by")
+' aac rel: source="CAP_ORIG_01"; target="CTL_APP_INTAKE"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_ORIG_01, CTL_SCRA_MLA, "governed by")
+' aac rel: source="CAP_ORIG_01"; target="CTL_SCRA_MLA"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_ORIG_02, CTL_SANCTIONS, "governed by")
+' aac rel: source="CAP_ORIG_02"; target="CTL_SANCTIONS"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_ORIG_03, CTL_APP_INTAKE, "governed by")
+' aac rel: source="CAP_ORIG_03"; target="CTL_APP_INTAKE"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_ORIG_04, CTL_ADVERSE_ACT, "governed by")
+' aac rel: source="CAP_ORIG_04"; target="CTL_ADVERSE_ACT"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_ORIG_05, CTL_ADVERSE_ACT, "governed by")
+' aac rel: source="CAP_ORIG_05"; target="CTL_ADVERSE_ACT"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_ORIG_06, CTL_AUTH_POLICY, "governed by")
+' aac rel: source="CAP_ORIG_06"; target="CTL_AUTH_POLICY"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(SYS_CORE_LEDGER, CAP_ORIG_06, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_ORIG_06"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_APPFRAUD, CAP_ORIG_03, "realizes")
+' aac rel: source="SYS_APPFRAUD"; target="CAP_ORIG_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CARD_FULFILL, CAP_ORIG_07, "realizes")
+' aac rel: source="SYS_CARD_FULFILL"; target="CAP_ORIG_07"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CORE_LEDGER, CAP_ORIG_05, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_ORIG_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DOC, CAP_ORIG_05, "realizes")
+' aac rel: source="SYS_DOC"; target="CAP_ORIG_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_KYC, CAP_ORIG_02, "realizes")
+' aac rel: source="SYS_KYC"; target="CAP_ORIG_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_ORIG_DECISION, CAP_ORIG_01, "realizes")
+' aac rel: source="SYS_ORIG_DECISION"; target="CAP_ORIG_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_ORIG_DECISION, CAP_ORIG_04, "realizes")
+' aac rel: source="SYS_ORIG_DECISION"; target="CAP_ORIG_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_TOKEN, CAP_ORIG_08, "realizes")
+' aac rel: source="SYS_TOKEN"; target="CAP_ORIG_08"; label="realizes"; relation="system_realizes_capability"
+
+SHOW_LEGEND()
+@enduml

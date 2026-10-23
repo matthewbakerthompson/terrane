@@ -1,0 +1,59 @@
+@startuml
+' Stand up the regulatory reporting engine — Footprint
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Stand up the regulatory reporting engine — Footprint
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("work_packages", $bgColor="#ccfbf1", $borderColor="#0d9488", $fontColor="#0f172a", $legendText="work package")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_DATA_04, "Analytics, Reporting & BI", "Serve reporting and analysis to the business.", $tags="capabilities")
+  ' aac CAP_DATA_04: company_domain="Cross-Functional Services"
+  System(CAP_FIN_04, "Regulatory & Financial Reporting", "Produce regulatory and external financial reporting.", $tags="capabilities")
+  ' aac CAP_FIN_04: company_domain="Cross-Functional Services"
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_CUST360_CURATED, "Customer 360 curated dataset", "Curated, governed dataset produced by Customer 360.", $tags="data_assets")
+  ' aac DA_CUST360_CURATED: company_domain="Data and Analytics"
+  SystemDb(DA_LENDPERF_CURATED, "Lending Portfolio Performance curated dataset", "Curated, governed dataset produced by Lending Portfolio Performance, held in BigQuery.", $tags="data_assets")
+  ' aac DA_LENDPERF_CURATED: company_domain="Lending"
+}
+Boundary(b_Process, "Process") {
+  System(P_REG_DATA_PREP_001, "Prepare regulatory reporting data", "Assemble, validate, and certify the data supporting regulatory reporting submissions. Report data is assembled from governed sources with reconciliation to the ledger and prior submissions; certification is a named officer's sign-off, not a batch job.", $tags="processes")
+  ' aac P_REG_DATA_PREP_001: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_CUST360_SEMANTIC, "Customer 360 Semantic Layer", "Governed models and metrics exposed to analysts for Customer 360. Built with Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_CUST360_SEMANTIC: company_domain="Data and Analytics"; hosting="SaaS"; technology="Snowflake Data Cloud"
+  System(SYS_REG_REPORTING, "Regulatory Reporting Engine", "Planned replacement for the spreadsheet-based regulatory reporting process, sourcing from the warehouse rather than from the ledger directly. Built with AKS · Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_REG_REPORTING: company_domain="Risk and Compliance"; hosting="Azure"; technology="AKS · Snowflake Data Cloud"
+}
+Boundary(b_Work_Package, "Work Package") {
+  System(WP_REG_REPORTING, "Stand up the regulatory reporting engine", "Replace the spreadsheet-based return with an engine sourcing from the warehouse, and extend the customer semantic layer with the fields the return needs.", $tags="work_packages")
+  ' aac WP_REG_REPORTING: company_domain="Risk and Compliance"
+}
+
+Rel(WP_REG_REPORTING, SYS_REG_REPORTING, "Builds")
+' aac rel: source="WP_REG_REPORTING"; target="SYS_REG_REPORTING"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_REG_REPORTING, SYS_CUST360_SEMANTIC, "Changes")
+' aac rel: source="WP_REG_REPORTING"; target="SYS_CUST360_SEMANTIC"; label="Changes"; relation="work_package_affects_system"; effect="Changes"
+Rel(SYS_CUST360_SEMANTIC, DA_CUST360_CURATED, "Read")
+' aac rel: source="SYS_CUST360_SEMANTIC"; target="DA_CUST360_CURATED"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_REG_REPORTING, DA_LENDPERF_CURATED, "Read")
+' aac rel: source="SYS_REG_REPORTING"; target="DA_LENDPERF_CURATED"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_REG_REPORTING, DA_CUST360_CURATED, "Read")
+' aac rel: source="SYS_REG_REPORTING"; target="DA_CUST360_CURATED"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_CUST360_SEMANTIC, CAP_DATA_04, "realizes")
+' aac rel: source="SYS_CUST360_SEMANTIC"; target="CAP_DATA_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_REG_REPORTING, CAP_FIN_04, "realizes")
+' aac rel: source="SYS_REG_REPORTING"; target="CAP_FIN_04"; label="realizes"; relation="system_realizes_capability"
+Rel(P_REG_DATA_PREP_001, CAP_FIN_04, "supports")
+' aac rel: source="P_REG_DATA_PREP_001"; target="CAP_FIN_04"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

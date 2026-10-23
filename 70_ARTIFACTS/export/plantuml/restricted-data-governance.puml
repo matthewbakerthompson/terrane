@@ -1,0 +1,152 @@
+@startuml
+' Restricted Data and What Governs It
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Restricted Data and What Governs It
+
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("policies", $bgColor="#fecaca", $borderColor="#dc2626", $fontColor="#0f172a", $legendText="policy")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Control, "Control") {
+  System(CTL_PCI_EVIDENCE, "Cardholder data scope and evidence maintenance", "CDE scope, segmentation, and assessment evidence are maintained continuously against the PCI DSS requirement set.", $tags="controls")
+  ' aac CTL_PCI_EVIDENCE: company_domain=""
+  System(CTL_PRIV_REQ, "Consumer privacy request fulfillment", "Access and deletion requests are verified, fulfilled, and evidenced within the applicable statutory window.", $tags="controls")
+  ' aac CTL_PRIV_REQ: company_domain=""
+  System(CTL_DAILY_RECON, "Daily settlement and clearing reconciliation", "Network settlement, clearing files, and interchange postings reconcile to network totals daily; unreconciled variances stop downstream posting.", $tags="controls")
+  ' aac CTL_DAILY_RECON: company_domain=""
+  System(CTL_DQ_GATE, "Ingestion data quality gate", "Source ingestion enforces schema and quality thresholds at the boundary; failing loads quarantine rather than land.", $tags="controls")
+  ' aac CTL_DQ_GATE: company_domain=""
+  System(CTL_MASK_NONPROD, "Masked data outside production", "Non-production environments carry masked or synthetic data; unmasked extracts require a time-boxed exception.", $tags="controls")
+  ' aac CTL_MASK_NONPROD: company_domain=""
+  System(CTL_RETENTION, "Retention schedule enforcement", "Records are retained to schedule and destroyed on expiry with a certificate of disposition.", $tags="controls")
+  ' aac CTL_RETENTION: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_CARD_ACCOUNT, "Card account master", "Account, balance, limit and status records for every card account.", $tags="data_assets")
+  ' aac DA_CARD_ACCOUNT: company_domain="Card Issuing"
+  SystemDb(DA_CARDSVC_OPERATIONAL, "Card Servicing operational data", "Operational records held by Card Servicing.", $tags="data_assets")
+  ' aac DA_CARDSVC_OPERATIONAL: company_domain="Servicing"
+  SystemDb(DA_TRANSACTION, "Card transaction history", "Authorized, cleared and settled card transactions.", $tags="data_assets")
+  ' aac DA_TRANSACTION: company_domain="Payments"
+  SystemDb(DA_COLLECT_OPERATIONAL, "Collections Workspace operational data", "Operational records held by Collections Workspace.", $tags="data_assets")
+  ' aac DA_COLLECT_OPERATIONAL: company_domain="Collections"
+  SystemDb(DA_APPLICATION, "Credit application record", "Application content, identity evidence, and decision inputs, including bureau pulls.", $tags="data_assets")
+  ' aac DA_APPLICATION: company_domain=""
+  SystemDb(DA_BUREAU_FILE, "Credit bureau furnishing file", "Monthly tradeline furnishing extract and consumer-dispute responses.", $tags="data_assets")
+  ' aac DA_BUREAU_FILE: company_domain=""
+  SystemDb(DA_CUST360_CURATED, "Customer 360 curated dataset", "Curated, governed dataset produced by Customer 360.", $tags="data_assets")
+  ' aac DA_CUST360_CURATED: company_domain="Data and Analytics"
+  SystemDb(DA_CUSTOMER_PROFILE, "Customer profile", "Contact details, preferences and servicing history.", $tags="data_assets")
+  ' aac DA_CUSTOMER_PROFILE: company_domain="Servicing"
+  SystemDb(DA_DISPUTES_VENDOR_FEED, "Dispute Management Platform vendor feed", "Landed vendor extract from Pegasystems.", $tags="data_assets")
+  ' aac DA_DISPUTES_VENDOR_FEED: company_domain="Servicing"
+  SystemDb(DA_LENDING_OPERATIONAL, "Installment Lending operational data", "Operational records held by Installment Lending.", $tags="data_assets")
+  ' aac DA_LENDING_OPERATIONAL: company_domain="Lending"
+  SystemDb(DA_SCREENING_OUTCOMES, "NICE Actimize Screening outcomes", "What the vendor decided and why, landed our side. Held because a decision we cannot explain is a decision we cannot defend.", $tags="data_assets")
+  ' aac DA_SCREENING_OUTCOMES: company_domain="Risk and Compliance"
+  SystemDb(DA_PAYMENT_INSTR, "Payment instructions", "Cardholder payment methods and instructions: ACH details, scheduled payments.", $tags="data_assets")
+  ' aac DA_PAYMENT_INSTR: company_domain=""
+}
+Boundary(b_Policy, "Policy") {
+  System(POL_PRIVACY, "Consumer Privacy & Data Handling Policy", $tags="policies")
+  ' aac POL_PRIVACY: company_domain=""
+  System(POL_RECORDS, "Records Retention & Disposition Policy", $tags="policies")
+  ' aac POL_RECORDS: company_domain=""
+  System(POL_TPRM, "Third-Party Risk Management Policy", $tags="policies")
+  ' aac POL_TPRM: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_AUTH_SWITCH, "Authorization Switch", "Real-time card authorization switch connected to the scheme networks.", $tags="systems")
+  ' aac SYS_AUTH_SWITCH: company_domain="Payments"; hosting="On-prem"
+  System(SYS_CARDSVC_STORE, "Card Servicing Datastore", "Operational datastore owned by Card Servicing. Built with Azure SQL.", $tags="systems")
+  ' aac SYS_CARDSVC_STORE: company_domain="Servicing"; hosting="Azure"; technology="Azure SQL"
+  System(SYS_COLLECT_STORE, "Collections Workspace Datastore", "Operational datastore owned by Collections Workspace. Built with Azure SQL.", $tags="systems")
+  ' aac SYS_COLLECT_STORE: company_domain="Collections"; hosting="Azure"; technology="Azure SQL"
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_BUREAU_GW, "Credit bureau gateway", "Credit bureau furnishing and consumer dispute exchange.", $tags="systems")
+  ' aac SYS_BUREAU_GW: company_domain=""
+  System(SYS_CUST360_PIPELINE, "Customer 360 Pipeline", "Ingestion and curation jobs building Customer 360. Built with Snowflake Data Cloud +1.", $tags="systems")
+  ' aac SYS_CUST360_PIPELINE: company_domain="Data and Analytics"; hosting="Azure"; technology="Snowflake Data Cloud +1"
+  System_Ext(SYS_CRM, "Dynamics 365 Customer Service", "Contact center desktop and case management for servicing agents. Built with Microsoft.", $tags="systems")
+  ' aac SYS_CRM: company_domain="Servicing"; hosting="SaaS"; technology="Microsoft"
+  System(SYS_LENDING_DB, "Installment Lending Database", "Relational database for Installment Lending, encrypted with a customer managed key. Built with RDS.", $tags="systems")
+  ' aac SYS_LENDING_DB: company_domain="Lending"; hosting="AWS"; technology="RDS"
+  System_Ext(SYS_SCREENING_VENDOR, "NICE Actimize Screening", "Financial Crime Screening, operated by NICE Actimize in their own tenancy. Contractually pinned to EU processing; the DPA restricts sub-processors and sets a 90-day retention ceiling. Built with NICE Actimize.", $tags="systems")
+  ' aac SYS_SCREENING_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="NICE Actimize"
+  System(SYS_ORIG_DECISION, "Originations decision engine", "Application processing and credit decision execution.", $tags="systems")
+  ' aac SYS_ORIG_DECISION: company_domain=""
+  System(SYS_PAYMENT_GW, "Payment capture gateway", "Payment capture across ACH, debit, lockbox, and wallet channels.", $tags="systems")
+  ' aac SYS_PAYMENT_GW: company_domain=""
+  System_Ext(SYS_DISPUTES_SAAS, "Pega Smart Dispute", "Dispute Management Platform, provided by Pegasystems and running in the vendor tenancy. Built with Pegasystems.", $tags="systems")
+  ' aac SYS_DISPUTES_SAAS: company_domain="Servicing"; hosting="SaaS"; technology="Pegasystems"
+}
+
+Rel(SYS_CORE_LEDGER, DA_CARD_ACCOUNT, "masters")
+' aac rel: source="SYS_CORE_LEDGER"; target="DA_CARD_ACCOUNT"; label="masters"; field="source_of_truth"
+Rel(SYS_CRM, DA_CUSTOMER_PROFILE, "masters")
+' aac rel: source="SYS_CRM"; target="DA_CUSTOMER_PROFILE"; label="masters"; field="source_of_truth"
+Rel(SYS_AUTH_SWITCH, DA_TRANSACTION, "masters")
+' aac rel: source="SYS_AUTH_SWITCH"; target="DA_TRANSACTION"; label="masters"; field="source_of_truth"
+Rel(SYS_ORIG_DECISION, DA_APPLICATION, "masters")
+' aac rel: source="SYS_ORIG_DECISION"; target="DA_APPLICATION"; label="masters"; field="source_of_truth"
+Rel(SYS_BUREAU_GW, DA_BUREAU_FILE, "masters")
+' aac rel: source="SYS_BUREAU_GW"; target="DA_BUREAU_FILE"; label="masters"; field="source_of_truth"
+Rel(SYS_PAYMENT_GW, DA_PAYMENT_INSTR, "masters")
+' aac rel: source="SYS_PAYMENT_GW"; target="DA_PAYMENT_INSTR"; label="masters"; field="source_of_truth"
+Rel(SYS_CARDSVC_STORE, DA_CARDSVC_OPERATIONAL, "masters")
+' aac rel: source="SYS_CARDSVC_STORE"; target="DA_CARDSVC_OPERATIONAL"; label="masters"; field="source_of_truth"
+Rel(SYS_COLLECT_STORE, DA_COLLECT_OPERATIONAL, "masters")
+' aac rel: source="SYS_COLLECT_STORE"; target="DA_COLLECT_OPERATIONAL"; label="masters"; field="source_of_truth"
+Rel(SYS_CUST360_PIPELINE, DA_CUST360_CURATED, "masters")
+' aac rel: source="SYS_CUST360_PIPELINE"; target="DA_CUST360_CURATED"; label="masters"; field="source_of_truth"
+Rel(SYS_DISPUTES_SAAS, DA_DISPUTES_VENDOR_FEED, "masters")
+' aac rel: source="SYS_DISPUTES_SAAS"; target="DA_DISPUTES_VENDOR_FEED"; label="masters"; field="source_of_truth"
+Rel(SYS_LENDING_DB, DA_LENDING_OPERATIONAL, "masters")
+' aac rel: source="SYS_LENDING_DB"; target="DA_LENDING_OPERATIONAL"; label="masters"; field="source_of_truth"
+Rel(SYS_SCREENING_VENDOR, DA_SCREENING_OUTCOMES, "masters")
+' aac rel: source="SYS_SCREENING_VENDOR"; target="DA_SCREENING_OUTCOMES"; label="masters"; field="source_of_truth"
+Rel(DA_DISPUTES_VENDOR_FEED, CTL_RETENTION, "governed by")
+' aac rel: source="DA_DISPUTES_VENDOR_FEED"; target="CTL_RETENTION"; label="governed by"; relation="data_governed_by_control"
+Rel(DA_SCREENING_OUTCOMES, CTL_RETENTION, "governed by")
+' aac rel: source="DA_SCREENING_OUTCOMES"; target="CTL_RETENTION"; label="governed by"; relation="data_governed_by_control"
+Rel(DA_CARD_ACCOUNT, CTL_PCI_EVIDENCE, "governed by")
+' aac rel: source="DA_CARD_ACCOUNT"; target="CTL_PCI_EVIDENCE"; label="governed by"; relation="data_governed_by_control"
+Rel(DA_CARD_ACCOUNT, CTL_RETENTION, "governed by")
+' aac rel: source="DA_CARD_ACCOUNT"; target="CTL_RETENTION"; label="governed by"; relation="data_governed_by_control"
+Rel(DA_CUSTOMER_PROFILE, CTL_PRIV_REQ, "governed by")
+' aac rel: source="DA_CUSTOMER_PROFILE"; target="CTL_PRIV_REQ"; label="governed by"; relation="data_governed_by_control"
+Rel(DA_TRANSACTION, CTL_DAILY_RECON, "governed by")
+' aac rel: source="DA_TRANSACTION"; target="CTL_DAILY_RECON"; label="governed by"; relation="data_governed_by_control"
+Rel(DA_TRANSACTION, CTL_PCI_EVIDENCE, "governed by")
+' aac rel: source="DA_TRANSACTION"; target="CTL_PCI_EVIDENCE"; label="governed by"; relation="data_governed_by_control"
+Rel(DA_CUST360_CURATED, CTL_MASK_NONPROD, "governed by")
+' aac rel: source="DA_CUST360_CURATED"; target="CTL_MASK_NONPROD"; label="governed by"; relation="data_governed_by_control"
+Rel(DA_CUST360_CURATED, CTL_DQ_GATE, "governed by")
+' aac rel: source="DA_CUST360_CURATED"; target="CTL_DQ_GATE"; label="governed by"; relation="data_governed_by_control"
+Rel(DA_DISPUTES_VENDOR_FEED, POL_RECORDS, "subject to")
+' aac rel: source="DA_DISPUTES_VENDOR_FEED"; target="POL_RECORDS"; label="subject to"; relation="data_subject_to_policy"
+Rel(DA_DISPUTES_VENDOR_FEED, POL_PRIVACY, "subject to")
+' aac rel: source="DA_DISPUTES_VENDOR_FEED"; target="POL_PRIVACY"; label="subject to"; relation="data_subject_to_policy"
+Rel(DA_SCREENING_OUTCOMES, POL_RECORDS, "subject to")
+' aac rel: source="DA_SCREENING_OUTCOMES"; target="POL_RECORDS"; label="subject to"; relation="data_subject_to_policy"
+Rel(DA_SCREENING_OUTCOMES, POL_PRIVACY, "subject to")
+' aac rel: source="DA_SCREENING_OUTCOMES"; target="POL_PRIVACY"; label="subject to"; relation="data_subject_to_policy"
+Rel(DA_CARD_ACCOUNT, POL_PRIVACY, "subject to")
+' aac rel: source="DA_CARD_ACCOUNT"; target="POL_PRIVACY"; label="subject to"; relation="data_subject_to_policy"
+Rel(DA_CARD_ACCOUNT, POL_RECORDS, "subject to")
+' aac rel: source="DA_CARD_ACCOUNT"; target="POL_RECORDS"; label="subject to"; relation="data_subject_to_policy"
+Rel(DA_CUSTOMER_PROFILE, POL_PRIVACY, "subject to")
+' aac rel: source="DA_CUSTOMER_PROFILE"; target="POL_PRIVACY"; label="subject to"; relation="data_subject_to_policy"
+Rel(DA_TRANSACTION, POL_RECORDS, "subject to")
+' aac rel: source="DA_TRANSACTION"; target="POL_RECORDS"; label="subject to"; relation="data_subject_to_policy"
+Rel(DA_CUST360_CURATED, POL_PRIVACY, "subject to")
+' aac rel: source="DA_CUST360_CURATED"; target="POL_PRIVACY"; label="subject to"; relation="data_subject_to_policy"
+Rel(DA_DISPUTES_VENDOR_FEED, POL_TPRM, "subject to")
+' aac rel: source="DA_DISPUTES_VENDOR_FEED"; target="POL_TPRM"; label="subject to"; relation="data_subject_to_policy"
+
+SHOW_LEGEND()
+@enduml

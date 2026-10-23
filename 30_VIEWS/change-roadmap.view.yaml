@@ -1,0 +1,32 @@
+view_id: change-roadmap
+title: "Roadmap"
+category: Change
+section: Plans
+kind: timeline
+description: >
+  Every work package on a quarterly timeline, grouped by roadmap, with the
+  systems it touches listed under each bar. Bars show the recorded start, end
+  and status. "Builds" creates something new; "Changes" modifies something
+  already in use.
+node_label: name
+group_by: roadmap_id
+order_by: start_date
+renderers: [mermaid]
+
+scope:
+  include:
+    - type: work_packages
+  expand:
+    - relation: work_package_affects_system
+      depth: 1
+      types: [systems]
+
+edges:
+  - via: work_package_affects_system
+    label: effect
+
+style:
+  color_by: type
+
+limits:
+  max_nodes: 50

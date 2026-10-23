@@ -1,0 +1,248 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="1242.5" viewBox="0 0 1100 1242.5" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Identity and access management — Processes and Capabilities</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Identity and access management — Processes and Capabilities</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   16 nodes · 17 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One system, every process that uses it and in what role, and the capabilities those processes support. This shows the business impact of changing the system. A</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">long list against a low criticality rating is worth a second look.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(126.82 110)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="349.92" y="137.3" width="212.16" height="735.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="391.92" y="154.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.66" y="209.28" width="212.67" height="535.42" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.51" y="226.68" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="615.3" y="821.3" width="221.4" height="135.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="645.1" y="838.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-SERVICING-005::SYS-IAM">
+<title>Primary</title>
+<path d="M196 248 L225 248 L233 248 A8 8 0 0 0 241 240 L241 22 A10 10 0 0 1 251 12 L586 12 A10 10 0 0 1 596 22 L596 850 A7.76 7.76 0 0 0 604 857.75 L611.84 857.5 A10 10 0 0 1 612.16 857.5 L637.48 857.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M641 857.5 L631.43 862.28 L631.43 852.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-SERVICING-005::SYS-IAM">
+<rect x="422.32" y="18.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="443.5" y="30.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-DIGITAL-001::SYS-IAM">
+<title>Supporting</title>
+<path d="M196 612.33 L224.94 612 A10 10 0 0 1 225.06 612 L251 612 A10 10 0 0 1 261 622 L261 949 A10 10 0 0 0 271 959 L576 959 A10 10 0 0 0 586 949 L586 920 A10 10 0 0 1 596 910 L612 910 L637.48 910" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M641 910 L631.43 914.78 L631.43 905.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-DIGITAL-001::SYS-IAM">
+<rect x="414.46" y="965.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="443.5" y="977.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-FRAUD-003::SYS-IAM">
+<title>Supporting</title>
+<path d="M196 341.67 L224.94 342 A10 10 0 0 0 225.06 342 L241 342 A10 10 0 0 0 251 332 L251 57 A10 10 0 0 1 261 47 L576 47 A10 10 0 0 1 586 57 L586 858 A10 10 0 0 0 596 868 L612 868 L637.48 868" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M641 868 L631.43 872.78 L631.43 863.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-FRAUD-003::SYS-IAM">
+<rect x="414.46" y="53.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="443.5" y="65.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e3::P-DISPUTE-001::SYS-IAM">
+<title>Supporting</title>
+<path d="M196 701.67 L224.94 702 A10 10 0 0 0 225.06 702 L233 702 A8 8 0 0 1 241 710 L241 984 A10 10 0 0 0 251 994 L586 994 A10 10 0 0 0 596 984 L596 929 A8.26 8.26 0 0 1 604 920.75 L611.84 920.5 A10 10 0 0 1 612.16 920.5 L637.48 920.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M641 920.5 L631.43 925.28 L631.43 915.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::P-DISPUTE-001::SYS-IAM">
+<rect x="414.46" y="1000.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="443.5" y="1012.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e4::P-INFOSEC-001::SYS-IAM">
+<title>Primary</title>
+<path d="M196 396.33 L224.94 396 A10 10 0 0 1 225.06 396 L251 396 A10 10 0 0 0 261 386 L261 92 A10 10 0 0 1 271 82 L566 82 A10 10 0 0 1 576 92 L576 868.86 A10 10 0 0 0 586.14 878.86 L611.93 878.5 A10 10 0 0 1 612.07 878.5 L637.48 878.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M641 878.5 L631.43 883.28 L631.43 873.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::P-INFOSEC-001::SYS-IAM">
+<rect x="422.32" y="88.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="443.5" y="100.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e5::P-INFOSEC-002::SYS-IAM">
+<title>Supporting</title>
+<path d="M196 557.67 L224.94 558 A10 10 0 0 0 225.06 558 L271 558 A10 10 0 0 1 281 568 L281 914 A10 10 0 0 0 291 924 L566 924 A10 10 0 0 0 576 914 L576 909.86 A10 10 0 0 1 585.86 899.86 L611.93 899.5 A10 10 0 0 1 612.07 899.5 L637.48 899.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M641 899.5 L631.43 904.28 L631.43 894.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e5::P-INFOSEC-002::SYS-IAM">
+<rect x="414.46" y="930.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="443.5" y="942.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e6::P-APPDEV-009::SYS-IAM">
+<title>Supporting</title>
+<path d="M196 492.6 L224.93 493 A10 10 0 0 0 225.07 493 L291 493 A10 10 0 0 1 301 503 L301 879 A10 10 0 0 0 311 889 L612 889 L637.48 889" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M641 889 L631.43 893.78 L631.43 884.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e6::P-APPDEV-009::SYS-IAM">
+<rect x="414.46" y="895.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="443.5" y="907.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e7::P-SERVICING-005::CAP-SEC-01">
+<title>supports</title>
+<path d="M196 274 L224.98 274 A10 10 0 0 0 225.02 274 L326.98 273.67 A10 10 0 0 1 327.02 273.67 L372.48 273.67" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M376 273.67 L366.43 278.45 L366.43 268.88 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e8::P-SERVICING-005::CAP-FRAUD-06">
+<title>supports</title>
+<path d="M196 261 L225 261 L261 261 A10 10 0 0 0 271 251 L271 195.94 A10 10 0 0 1 280.94 185.94 L326.97 185.67 A10 10 0 0 1 327.03 185.67 L372.48 185.67" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M376 185.67 L366.43 190.45 L366.43 180.88 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e9::P-DIGITAL-001::CAP-SERV-03">
+<title>supports</title>
+<path d="M196 629.67 L224.94 630 A10 10 0 0 0 225.06 630 L261 630 A10 10 0 0 1 271 640 L271 715 A10 10 0 0 0 281 725 L327 725 L372.48 725" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M376 725 L366.43 729.78 L366.43 720.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e10::P-FRAUD-003::CAP-FRAUD-06">
+<title>supports</title>
+<path d="M196 324.33 L224.94 324 A10 10 0 0 1 225.06 324 L233 324 A8 8 0 0 0 241 316 L241 293.96 A10 10 0 0 1 250.96 283.96 L326.98 283.67 A10 10 0 0 1 327.02 283.67 L356 283.67 A10 10 0 0 0 366 273.67 L366 211.57 A3.24 3.24 0 0 1 369.24 208.33 L372.48 208.33" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M376 208.33 L366.43 213.12 L366.43 203.55 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e11::P-DISPUTE-001::CAP-FRAUD-03">
+<title>supports</title>
+<path d="M196 684.33 L224.94 684 A10 10 0 0 1 225.06 684 L241 684 A10 10 0 0 1 251 694 L251 803 A10 10 0 0 0 261 813 L327 813 L372.48 813" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M376 813 L366.43 817.78 L366.43 808.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e12::P-INFOSEC-001::CAP-SEC-01">
+<title>supports</title>
+<path d="M196 413.67 L224.94 414 A10 10 0 0 0 225.06 414 L261 414 A10 10 0 0 0 271 404 L271 306.06 A10 10 0 0 1 281.06 296.06 L326.97 296.33 A10 10 0 0 0 327.03 296.33 L372.48 296.33" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M376 296.33 L366.43 301.12 L366.43 291.55 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e13::P-INFOSEC-002::CAP-SEC-02">
+<title>supports</title>
+<path d="M196 540.33 L224.94 540 A10 10 0 0 1 225.06 540 L281 540 A10 10 0 0 1 291 550 L291 627 A10 10 0 0 0 301 637 L327 637 L372.48 637" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M376 637 L366.43 641.78 L366.43 632.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e14::P-APPDEV-009::CAP-TECH-01">
+<title>supports</title>
+<path d="M196 482.2 L224.97 482 A10 10 0 0 1 225.03 482 L301 482 A10 10 0 0 1 311 492 L311 541 A8 8 0 0 0 319 549 L327 549 L372.48 549" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M376 549 L366.43 553.78 L366.43 544.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e15::P-APPDEV-009::CAP-STRAT-04">
+<title>supports</title>
+<path d="M196 471.8 L224.97 472 A10 10 0 0 0 225.03 472 L285.5 472 A5.5 5.5 0 0 0 291 466.5 L291 466.5 A5.5 5.5 0 0 1 296.5 461 L327 461 L372.48 461" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M376 461 L366.43 465.79 L366.43 456.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e16::P-APPDEV-009::CAP-DATA-07">
+<title>supports</title>
+<path d="M196 461.4 L224.93 461 A10 10 0 0 1 225.07 461 L271 461 A10 10 0 0 0 281 451 L281 383 A10 10 0 0 1 291 373 L327 373 L372.48 373" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M376 373 L366.43 377.79 L366.43 368.21 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-DATA-07" data-type="capabilities">
+<title>Records Retention &amp; Disposition</title>
+<path d="M416 339 L376 373 L416 407 L496 407 L536 373 L496 339 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="456" y="371.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Records Retention &amp;</text>
+<text x="456" y="383.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Disposition</text>
+</g>
+<g class="node" data-id="CAP-FRAUD-03" data-type="capabilities">
+<title>Dispute Intake &amp; Provisional Credit</title>
+<path d="M416 779 L376 813 L416 847 L496 847 L536 813 L496 779 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="456" y="811.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dispute Intake &amp;</text>
+<text x="456" y="823.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Provisional Credit</text>
+</g>
+<g class="node" data-id="CAP-FRAUD-06" data-type="capabilities">
+<title>Identity Theft &amp; Account Takeover Response</title>
+<path d="M416 163 L376 197 L416 231 L496 231 L536 197 L496 163 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="456" y="189.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Identity Theft &amp;</text>
+<text x="456" y="201.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Account Takeover</text>
+<text x="456" y="213.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Response</text>
+</g>
+<g class="node" data-id="CAP-SEC-01" data-type="capabilities">
+<title>Identity &amp; Access Management</title>
+<path d="M416 251 L376 285 L416 319 L496 319 L536 285 L496 251 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="456" y="283.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Identity &amp; Access</text>
+<text x="456" y="295.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+</g>
+<g class="node" data-id="CAP-SEC-02" data-type="capabilities">
+<title>Threat Detection &amp; Response</title>
+<path d="M416 603 L376 637 L416 671 L496 671 L536 637 L496 603 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="456" y="635.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Threat Detection &amp;</text>
+<text x="456" y="647.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Response</text>
+</g>
+<g class="node" data-id="CAP-SERV-03" data-type="capabilities">
+<title>Digital Self-Service</title>
+<path d="M416 691 L376 725 L416 759 L496 759 L536 725 L496 691 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="456" y="729.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Digital Self-Service</text>
+</g>
+<g class="node" data-id="CAP-STRAT-04" data-type="capabilities">
+<title>Enterprise Architecture &amp; Change Portfolio</title>
+<path d="M416 427 L376 461 L416 495 L496 495 L536 461 L496 427 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="456" y="453.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Enterprise</text>
+<text x="456" y="465.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Architecture &amp; Change</text>
+<text x="456" y="477.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Portfolio</text>
+</g>
+<g class="node" data-id="CAP-TECH-01" data-type="capabilities">
+<title>Solution Delivery &amp; Engineering</title>
+<path d="M416 515 L376 549 L416 583 L496 583 L536 549 L496 515 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="456" y="547.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Solution Delivery &amp;</text>
+<text x="456" y="559.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Engineering</text>
+</g>
+<g class="node" data-id="P-APPDEV-009" data-type="processes">
+<title>Decommission an application</title>
+<path d="M116 451 L36 470.86 L66.56 503 L165.44 503 L196 470.86 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="475.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Decommission an</text>
+<text x="116" y="487.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">application</text>
+</g>
+<g class="node" data-id="P-DIGITAL-001" data-type="processes">
+<title>Enroll cardholder in digital servicing</title>
+<path d="M116 595 L36 614.86 L66.56 647 L165.44 647 L196 614.86 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="619.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Enroll cardholder in</text>
+<text x="116" y="631.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">digital servicing</text>
+</g>
+<g class="node" data-id="P-DISPUTE-001" data-type="processes">
+<title>Process cardholder dispute claim</title>
+<path d="M116 667 L36 686.86 L66.56 719 L165.44 719 L196 686.86 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="691.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Process cardholder</text>
+<text x="116" y="703.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">dispute claim</text>
+</g>
+<g class="node" data-id="P-FRAUD-003" data-type="processes">
+<title>Respond to account takeover event</title>
+<path d="M116 307 L36 326.86 L66.56 359 L165.44 359 L196 326.86 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="331.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Respond to account</text>
+<text x="116" y="343.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">takeover event</text>
+</g>
+<g class="node" data-id="P-INFOSEC-001" data-type="processes">
+<title>Provision and certify access</title>
+<path d="M116 379 L36 398.86 L66.56 431 L165.44 431 L196 398.86 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="403.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Provision and certify</text>
+<text x="116" y="415.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">access</text>
+</g>
+<g class="node" data-id="P-INFOSEC-002" data-type="processes">
+<title>Detect and respond to security event</title>
+<path d="M116 523 L36 542.86 L66.56 575 L165.44 575 L196 542.86 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="547.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Detect and respond to</text>
+<text x="116" y="559.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">security event</text>
+</g>
+<g class="node" data-id="P-SERVICING-005" data-type="processes">
+<title>Authenticate cardholder</title>
+<path d="M116 235 L36 254.86 L66.56 287 L165.44 287 L196 254.86 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="259.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Authenticate</text>
+<text x="116" y="271.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">cardholder</text>
+</g>
+<g class="node" data-id="SYS-IAM" data-type="systems">
+<title>Identity and access management</title>
+<rect x="641" y="847" width="170" height="84" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="722" y="887.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Identity and access</text>
+<text x="722" y="899.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">management</text>
+<svg x="793" y="852" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="1140.5" x2="1072" y2="1140.5" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="1164.5" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 1153.5)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="1164.5" font-size="12" font-weight="400" fill="#343d50">capability · 8</text>
+<g transform="translate(180.14 1153.5)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="206.14" y="1164.5" font-size="12" font-weight="400" fill="#343d50">process · 7</text>
+<g transform="translate(282.09 1153.5)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="308.09" y="1164.5" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
+<text x="28" y="1186.5" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 1175.5)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="1186.5" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 1175.5)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="1186.5" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="1220.5" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-processes--sys-iam · edit the model, not the picture</text></g>
+</svg>

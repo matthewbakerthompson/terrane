@@ -1,0 +1,37 @@
+@startuml
+' A C4-PlantUML container diagram, as teams drew C4 before Mermaid had it.
+' Read it with `terrane draw --from-plantuml sample.puml`.
+!include <C4/C4_Container>
+
+LAYOUT_WITH_LEGEND()
+title Card payments, in C4-PlantUML
+
+AddElementTag("legacy", $bgColor="#999999")
+
+Person(cardholder, "Cardholder", "Holds a card issued here.")
+Person_Ext(merchant, "Merchant", $descr="Presents a card for payment.")
+System_Ext(scheme, "Card scheme", "Visa, Mastercard.")
+
+System_Boundary(payments, "Payments") {
+  Container(switch, "Authorization switch", "Java, Kubernetes", "Routes every authorization request.")
+  Container(fraud, "Fraud scoring", "Python", "Scores a transaction in under 50 ms.", $tags="legacy")
+  ContainerDb(ledger, "Card ledger", "PostgreSQL", "Every transaction, posted.")
+  ContainerQueue(events, "Payment events", "Kafka")
+}
+
+/' a block comment,
+   over two lines '/
+Container(portal, "Merchant portal", $techn="React", $descr="Where a merchant sees settlements.")
+
+Rel(merchant, switch, "Presents a card", "ISO 8583")
+Rel(cardholder, portal, "Checks a statement", "HTTPS")
+Rel(switch, fraud, "Scores", "gRPC")
+Rel(switch, ledger, "Posts", "JDBC")
+Rel_Back(switch, scheme, "Authorizes", "ISO 8583")
+Rel_D(switch, events,
+      "Publishes", "Kafka")
+Rel(portal, ledger, "Reads", "JDBC", $tags="legacy")
+Lay_R(fraud, ledger)
+
+SHOW_LEGEND()
+@enduml

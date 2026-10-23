@@ -1,0 +1,33 @@
+view_id: network-topology
+title: Network Topology
+category: Technology
+section: Network and resilience
+kind: diagram
+description: >
+  The network layer: VPCs, subnets, gateways and the connections back to the
+  data center, grouped by cloud account and region. The transit hub is shown
+  between the workload accounts.
+layout: TB
+node_label: name
+renderers: [mermaid, structurizr]
+
+group_by: [cloud_provider, cloud_account, region, availability_zone]
+
+scope:
+  # Scoped on the tag, not on `service_category: Network`. That category also
+  # holds managed services like the load balancer and the CDN, which have no
+  # account of their own and landed in stray boxes with nothing connected.
+  include:
+    - type: tech_services
+      where:
+        tags_any: [network-fabric]
+
+edges:
+  - via: tech_service_connects_to
+    label: connection
+
+style:
+  color_by: network_zone
+
+limits:
+  max_nodes: 40

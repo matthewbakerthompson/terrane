@@ -1,0 +1,560 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://architecture-as-code/schemas/archetype.schema.json",
+  "title": "Archetype",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "archetype_id"
+  ],
+  "properties": {
+    "archetype_id": {
+      "type": "string"
+    },
+    "replaces": {
+      "type": "string",
+      "description": "This record's own id, said to stand in for the record of that id in a library read before this one. Without it a second record of an id is an error."
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "applies_to": {
+      "enum": [
+        "actors",
+        "architecture_change_requests",
+        "capabilities",
+        "controls",
+        "data_assets",
+        "flows",
+        "frameworks",
+        "interfaces",
+        "offered_interfaces",
+        "org_units",
+        "policies",
+        "processes",
+        "products",
+        "roadmaps",
+        "systems",
+        "tech_services",
+        "value_stream_stages",
+        "value_streams",
+        "work_packages"
+      ]
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "default": {},
+          "description": {
+            "type": "string"
+          },
+          "estate": {
+            "type": "boolean",
+            "description": "Answered by the estate: `answers` in model.yaml holds it under this name, taken ahead of the default."
+          }
+        }
+      }
+    },
+    "defaults": {
+      "type": "object"
+    },
+    "patterns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Patterns from 27_PATTERNS/ that every instance applies."
+    },
+    "provider": {
+      "type": "string",
+      "description": "The cloud every block resolves against, unless an entry says."
+    },
+    "entity_defaults": {
+      "type": "object",
+      "description": "What every entity the shape creates has in common, by entity type, with `all` for the fields every type shares.",
+      "additionalProperties": false,
+      "properties": {
+        "all": {
+          "type": "object"
+        },
+        "actors": {
+          "type": "object"
+        },
+        "architecture_change_requests": {
+          "type": "object"
+        },
+        "capabilities": {
+          "type": "object"
+        },
+        "controls": {
+          "type": "object"
+        },
+        "data_assets": {
+          "type": "object"
+        },
+        "flows": {
+          "type": "object"
+        },
+        "frameworks": {
+          "type": "object"
+        },
+        "interfaces": {
+          "type": "object"
+        },
+        "offered_interfaces": {
+          "type": "object"
+        },
+        "org_units": {
+          "type": "object"
+        },
+        "policies": {
+          "type": "object"
+        },
+        "processes": {
+          "type": "object"
+        },
+        "products": {
+          "type": "object"
+        },
+        "roadmaps": {
+          "type": "object"
+        },
+        "systems": {
+          "type": "object"
+        },
+        "tech_services": {
+          "type": "object"
+        },
+        "value_stream_stages": {
+          "type": "object"
+        },
+        "value_streams": {
+          "type": "object"
+        },
+        "work_packages": {
+          "type": "object"
+        }
+      }
+    },
+    "blocks": {
+      "type": "array",
+      "description": "Building blocks the shape is built on.",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "object",
+            "required": [
+              "block"
+            ],
+            "properties": {
+              "block": {
+                "type": "string"
+              },
+              "as": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "bind": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Component to the shared tech service that already provides it, or to `landing-zone` for the landing zone's service of that kind. Nothing is created for a bound component."
+              }
+            }
+          }
+        ]
+      }
+    },
+    "include_systems": {
+      "type": "boolean",
+      "description": "Include every provided system in the product. On by default."
+    },
+    "bind": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "The landing zone by kind: component type id to the shared service that is that kind here. Block binds count too; this wins."
+    },
+    "modules": {
+      "type": "array",
+      "description": "Modules from 28_MODULES/ the shape is composed from, in order.",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "module"
+            ],
+            "properties": {
+              "module": {
+                "type": "string"
+              },
+              "as": {
+                "type": "string"
+              },
+              "optional": {
+                "type": "boolean"
+              },
+              "with": {
+                "type": "object",
+                "description": "Parameter name to value; a value may use the shape tokens."
+              }
+            }
+          }
+        ]
+      }
+    },
+    "slots": {
+      "type": "array",
+      "description": "Where the shape varies: a need, the parts that can fill it, and the default.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "options"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "default": {
+            "type": "string"
+          },
+          "optional": {
+            "type": "boolean",
+            "description": "Whether an instance may choose `none`."
+          },
+          "with": {
+            "type": "object",
+            "description": "Option to the parameters the shape answers for that part from its own parameters; the instance's own `with` for the part wins.",
+            "additionalProperties": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "provides": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "systems": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "interfaces": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "offered_interfaces": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "data_assets": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "tech_services": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "frameworks": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "value_streams": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "value_stream_stages": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "org_units": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "policies": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "controls": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "actors": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "flows": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "processes": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "roadmaps": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "work_packages": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "architecture_change_requests": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "relations": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "system_uses_tech_service": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "interface_transports_data_asset": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "system_governed_by_control": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "system_subject_to_policy": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "data_governed_by_control": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "data_subject_to_policy": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "process_supports_capability": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "process_uses_system": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "process_uses_data_asset": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "process_governed_by_control": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "process_subject_to_policy": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "capability_references_framework": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "capability_governed_by_control": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "capability_subject_to_policy": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "system_realizes_capability": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "capability_aligns_to_framework": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "stage_crosses_capability": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "system_reads_writes": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "product_includes_system": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "actor_uses_system": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "flow_step": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "tech_service_connects_to": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "product_realizes_capability": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "work_package_affects_system": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "change_request_affects_system": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}

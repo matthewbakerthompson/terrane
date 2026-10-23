@@ -1,0 +1,74 @@
+view_id: capability-alignment
+title: "{capability} — Frameworks, Controls, Systems"
+category: Business
+section: Capabilities
+kind: diagram
+description: >
+  One capability domain and everything connected to it: its level-1
+  capabilities, the frameworks it aligns to, the controls that govern it, and
+  the systems that realize it. Click any capability to continue from there.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+parameters:
+  - name: capability
+    type: capabilities
+    required: true
+    description: The capability domain this diagram is about
+
+group_by: type
+
+scope:
+  include:
+    - type: capabilities
+      where:
+        id_in: ["{capability}"]
+    - type: capabilities
+      where:
+        parent_capability_id: ["{capability}"]
+  expand:
+    - relation: capability_aligns_to_framework
+      depth: 1
+      types: [frameworks]
+    - relation: capability_governed_by_control
+      depth: 1
+      types: [controls]
+    - relation: system_realizes_capability
+      depth: 1
+      types: [systems]
+    # The processes that support the capabilities: how the capability is
+    # actually done, today.
+    - relation: process_supports_capability
+      depth: 1
+      types: [processes]
+    # What in each framework the level-1 capabilities correspond to.
+    - relation: capability_references_framework
+      depth: 1
+      types: [frameworks]
+
+edges:
+  - via: parent_capability_id
+    text: part of
+  - via: capability_aligns_to_framework
+    label: alignment
+  - via: capability_references_framework
+    label: ref
+  - via: process_supports_capability
+    text: supported by
+  - via: capability_governed_by_control
+    text: governed by
+  - via: system_realizes_capability
+    text: realizes
+
+style:
+  color_by: type
+
+limits:
+  max_nodes: 140
+
+render_for:
+  parameter: capability
+  type: capabilities
+  where:
+    capability_level: [L0]

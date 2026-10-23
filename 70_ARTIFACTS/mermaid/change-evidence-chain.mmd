@@ -1,0 +1,40 @@
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Change and Operations Evidence
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  SYS_ARCHREPO["Architecture repository<br/>[SaaS]"]
+  SYS_CONTACT["Contact center platform"]
+  SYS_CRM["Dynamics 365 Customer<br/>Service<br/>[Microsoft]"]
+  SYS_GRC["Governance, risk and<br/>compliance platform"]
+  SYS_HRIS["Human resources<br/>information system"]
+  SYS_IAM["Identity and access<br/>management"]
+  SYS_ITSM["IT service management<br/>[SaaS]"]
+  SYS_SCREENING_VENDOR["NICE Actimize Screening<br/>[NICE Actimize]"]
+  SYS_OBSERV["Observability platform<br/>[SaaS]"]
+  SYS_SIEM["Security Monitoring<br/>[Microsoft Sentinel]"]
+  SYS_SCM["Source control and CI/CD<br/>pipeline<br/>[SaaS]"]
+  SYS_TESTMGMT["Test management and<br/>automation<br/>[SaaS]"]
+  SYS_WORKTRACK["Work and change tracking<br/>[SaaS]"]
+
+  SYS_CONTACT -->|"Request-response"| SYS_CRM
+  SYS_HRIS -->|"Batch"| SYS_IAM
+  SYS_IAM -->|"Event"| SYS_SIEM
+  SYS_CRM -->|"Request-response"| SYS_IAM
+  SYS_CONTACT -->|"Request-response"| SYS_IAM
+  SYS_OBSERV -->|"Event"| SYS_ITSM
+  SYS_SIEM -->|"Event"| SYS_ITSM
+  SYS_SCM -->|"Event"| SYS_ITSM
+  SYS_SCM -->|"Event"| SYS_TESTMGMT
+  SYS_ITSM -->|"Batch"| SYS_GRC
+  SYS_WORKTRACK -->|"Batch"| SYS_GRC
+  SYS_ARCHREPO -->|"Batch"| SYS_GRC
+  SYS_ITSM -->|"Batch"| SYS_ARCHREPO
+  SYS_SCREENING_VENDOR -->|"Event"| SYS_SIEM
+
+  classDef s_systems__active fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__planned fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px,stroke-dasharray:6 3;
+  classDef s_systems__proposed fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px,stroke-dasharray:2 3;
+  class SYS_CRM,SYS_SIEM s_systems__active;
+  class SYS_SCREENING_VENDOR s_systems__planned;
+  class SYS_ARCHREPO,SYS_CONTACT,SYS_GRC,SYS_HRIS,SYS_IAM,SYS_ITSM,SYS_OBSERV,SYS_SCM,SYS_TESTMGMT,SYS_WORKTRACK s_systems__proposed;

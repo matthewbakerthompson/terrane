@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="527.4" viewBox="0 0 1100 527.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Process representment and pre-arbitration — Systems, Data and Controls</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Process representment and pre-arbitration — Systems, Data and Controls</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   4 nodes · 3 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(174.72 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="271.72" y="207.3" width="212.57" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="313.72" y="224.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.87" y="98.26" width="212.27" height="119.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.72" y="115.67" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="529.3" y="24.3" width="211.4" height="165.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="559.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-DISPUTE-003::SYS-DISPUTES-SAAS">
+<title>Primary</title>
+<path d="M196 141 L224.99 141 A10 10 0 0 0 225.01 141 L525.99 140.5 A10 10 0 0 1 526.01 140.5 L551.48 140.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 140.5 L545.43 145.28 L545.43 135.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-DISPUTE-003::SYS-DISPUTES-SAAS">
+<rect x="354.32" y="118.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="130.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-DISPUTE-003::SYS-CORE-LEDGER">
+<title>Supporting</title>
+<path d="M196 158 L225 158 L238 158 A3 3 0 0 0 241 155 L241 155 A3 3 0 0 1 244 152 L488 152 A10 10 0 0 0 498 142 L498 83.82 A10 10 0 0 1 507.82 73.82 L525.91 73.5 A10 10 0 0 1 526.09 73.5 L551.48 73.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 73.5 L545.43 78.28 L545.43 68.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-DISPUTE-003::SYS-CORE-LEDGER">
+<rect x="346.46" y="158.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="170.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-DISPUTE-003::CAP-FRAUD-04">
+<title>supports</title>
+<path d="M196 175 L225 175 L233 175 A8 8 0 0 1 241 183 L241 249 A10 10 0 0 0 251 259 L269 259 L294.48 259" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M298 259 L288.43 263.79 L288.43 254.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-FRAUD-04" data-type="capabilities">
+<title>Chargeback &amp; Representment Processing</title>
+<path d="M338 233 L298 259 L338 285 L418 285 L458 259 L418 233 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="378" y="251.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Chargeback &amp;</text>
+<text x="378" y="263.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Representment</text>
+<text x="378" y="275.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Processing</text>
+</g>
+<g class="node" data-id="P-DISPUTE-003" data-type="processes">
+<title>Process representment and pre-arbitration</title>
+<path d="M116 124 L36 149.97 L66.56 192 L165.44 192 L196 149.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="150.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Process</text>
+<text x="116" y="162.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">representment and</text>
+<text x="116" y="174.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">pre-arbitration</text>
+</g>
+<g class="node" data-id="SYS-CORE-LEDGER" data-type="systems">
+<title>Core Card Ledger</title>
+<rect x="555" y="50" width="160" height="47" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="631" y="77.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Core Card Ledger</text>
+<svg x="697" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-DISPUTES-SAAS" data-type="systems">
+<title>Pega Smart Dispute</title>
+<rect x="555" y="117" width="160" height="47" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="631" y="139.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Pega Smart Dispute</text>
+<text x="635" y="158.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Pegasystems</text>
+<svg x="697" y="122" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="425.4" x2="1072" y2="425.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="449.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 438.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="449.4" font-size="12" font-weight="400" fill="#343d50">capability · 1</text>
+<g transform="translate(177.5 438.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="203.5" y="449.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(277.77 438.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="303.77" y="449.4" font-size="12" font-weight="400" fill="#343d50">system · 2</text>
+<text x="28" y="471.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 460.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="471.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 460.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="471.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="505.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-dispute-003 · edit the model, not the picture</text></g>
+</svg>

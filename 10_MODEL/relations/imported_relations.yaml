@@ -1,0 +1,115 @@
+# Imported relations. Relationship truth lives in rows, not in
+# semicolon-separated columns on the entity.
+
+interface_transports_data_asset:
+  - interface_id: INT-CARDSVC-API-LEDGER
+    data_asset_id: DA-CARD-ACCOUNT
+  - interface_id: INT-COLLECT-API-LEDGER
+    data_asset_id: DA-CARD-ACCOUNT
+  - interface_id: INT-CRM-LEDGER
+    data_asset_id: DA-CUSTOMER-PROFILE
+  - interface_id: INT-CUST360-REGREPORTING
+    data_asset_id: DA-CUST360-CURATED
+  - interface_id: INT-LEDGER-INGEST
+    data_asset_id: DA-CARD-ACCOUNT
+  - interface_id: INT-LEDGER-STATEMENTS
+    data_asset_id: DA-CARD-ACCOUNT
+
+product_includes_system:
+
+product_realizes_capability:
+  - product_id: PRD-CARD-SERVICING
+    capability_id: CAP-SERV
+  - product_id: PRD-COLLECTIONS-WORKSPACE
+    capability_id: CAP-COLL
+  - product_id: PRD-CUSTOMER-360
+    capability_id: CAP-DATA-04
+  - product_id: PRD-DISPUTES
+    capability_id: CAP-FRAUD
+  - product_id: PRD-IDENTITY
+    capability_id: CAP-SEC-01
+
+system_reads_writes:
+  - system_id: SYS-AUTH-SWITCH
+    data_asset_id: DA-CARD-ACCOUNT
+    operation: Read
+  - system_id: SYS-AUTH-SWITCH
+    data_asset_id: DA-TRANSACTION
+    operation: ReadWrite
+  - system_id: SYS-CARDSVC-API
+    data_asset_id: DA-CARD-ACCOUNT
+    operation: Read
+  - system_id: SYS-CARDSVC-API
+    data_asset_id: DA-TRANSACTION
+    operation: Read
+  - system_id: SYS-COLLECT-API
+    data_asset_id: DA-CARD-ACCOUNT
+    operation: Read
+  - system_id: SYS-CORE-LEDGER
+    data_asset_id: DA-CARD-ACCOUNT
+    operation: ReadWrite
+  - system_id: SYS-CRM
+    data_asset_id: DA-CUSTOMER-PROFILE
+    operation: ReadWrite
+  - system_id: SYS-CUST360-PIPELINE
+    data_asset_id: DA-CARD-ACCOUNT
+    operation: Read
+  - system_id: SYS-CUST360-PIPELINE
+    data_asset_id: DA-CUSTOMER-PROFILE
+    operation: Read
+  - system_id: SYS-CUST360-PIPELINE
+    data_asset_id: DA-TRANSACTION
+    operation: Read
+  - system_id: SYS-REG-REPORTING
+    data_asset_id: DA-CUST360-CURATED
+    operation: Read
+  - system_id: SYS-STATEMENTS
+    data_asset_id: DA-CARD-ACCOUNT
+    operation: Read
+  - system_id: SYS-STATEMENTS
+    data_asset_id: DA-TRANSACTION
+    operation: Read
+
+system_realizes_capability:
+  - system_id: SYS-AUTH-SWITCH
+    capability_id: CAP-PAY
+  - system_id: SYS-CARDSVC-API
+    capability_id: CAP-SERV
+  - system_id: SYS-CARDSVC-WEB
+    capability_id: CAP-SERV
+  - system_id: SYS-COLLECT-API
+    capability_id: CAP-COLL
+  - system_id: SYS-COLLECT-WEB
+    capability_id: CAP-COLL
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-SERV
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-ORIG-06
+  - system_id: SYS-CRM
+    capability_id: CAP-SERV
+  - system_id: SYS-CUST360-PIPELINE
+    capability_id: CAP-DATA-04
+  - system_id: SYS-CUST360-SEMANTIC
+    capability_id: CAP-DATA-04
+  - system_id: SYS-DISPUTES-GATEWAY
+    capability_id: CAP-FRAUD
+  - system_id: SYS-DISPUTES-SAAS
+    capability_id: CAP-FRAUD
+  - system_id: SYS-IDENTITY-SVC
+    capability_id: CAP-SEC-01
+  - system_id: SYS-REG-REPORTING
+    capability_id: CAP-FIN-04
+  - system_id: SYS-STATEMENTS
+    capability_id: CAP-SERV
+
+system_uses_tech_service:
+  - system_id: SYS-CRM
+    tech_service_id: TS-ENTRA-ID
+  - system_id: SYS-DATA-INGEST
+    tech_service_id: TS-AZURE-SERVICEBUS
+  - system_id: SYS-DATA-INGEST
+    tech_service_id: TS-SNOWFLAKE
+  - system_id: SYS-REG-REPORTING
+    tech_service_id: TS-AZURE-AKS
+  - system_id: SYS-REG-REPORTING
+    tech_service_id: TS-SNOWFLAKE

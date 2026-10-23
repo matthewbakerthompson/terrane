@@ -1,0 +1,38 @@
+view_id: control-coverage
+title: Controls and Where They Are Enforced
+category: Governance
+kind: report
+description: >
+  Every control in the register and where it is enforced: the systems and data
+  assets it governs directly, and the capabilities it governs through recorded
+  processes. A row with a capability but no system means the model does not
+  say which system enforces that control.
+group_by: type
+node_label: name
+renderers: [mermaid]
+
+scope:
+  include:
+    - type: controls
+  expand:
+    - relation: system_governed_by_control
+      depth: 1
+      types: [systems]
+    - relation: data_governed_by_control
+      depth: 1
+      types: [data_assets]
+    - relation: capability_governed_by_control
+      depth: 1
+      types: [capabilities]
+
+edges:
+  - via: system_governed_by_control
+    text: enforced by
+  - via: data_governed_by_control
+    text: enforced on
+  # The label is the basis: `Process` where a process under the capability is
+  # governed directly, `Descendant` where a capability below it is.
+  - via: capability_governed_by_control
+
+limits:
+  max_nodes: 240

@@ -1,0 +1,72 @@
+# The middle of an application: what runs, and what it keeps state in.
+#
+# Split by how the work arrives, because that is what decides the shape:
+# a request waits for an answer, an event does not, and a batch has a window.
+
+- building_block_id: stateless-service
+  name: Stateless service
+  category: Compute
+  description: >
+    A container platform, its cache, and the observability to know it is alive. Stateless is the claim; the cache is where that claim usually turns out to be false.
+  provides:
+    - component: container-platform
+    - component: cache
+    - component: observability
+  relations:
+    - from: container-platform
+      to: cache
+    - from: container-platform
+      to: observability
+  defaults:
+    network_zone: Private-App
+
+- building_block_id: transactional-store
+  name: Transactional store
+  category: Data
+  description: >
+    A relational database with backup and key management. The three arrive together because a database without the other two is a recovery objective nobody can meet and an encryption claim nobody can support.
+  provides:
+    - component: relational-db
+    - component: backup
+    - component: kms
+  relations:
+    - from: relational-db
+      to: backup
+    - from: relational-db
+      to: kms
+  defaults:
+    network_zone: Private-Data
+
+- building_block_id: event-tier
+  name: Event tier
+  category: Integration
+  description: >
+    A stream, a bus and the functions that react. What changes here is ownership: once a consumer reads the stream, the producer no longer controls who depends on it.
+  provides:
+    - component: event-stream
+    - component: event-bus
+    - component: function
+  relations:
+    - from: event-bus
+      to: event-stream
+    - from: event-stream
+      to: function
+  defaults:
+    network_zone: Private-App
+
+- building_block_id: batch-tier
+  name: Batch tier
+  category: Compute
+  description: >
+    Scheduled work with a window, its object staging area, and orchestration. The deadline is usually external, which makes this the tier where lateness is a business event rather than a metric.
+  provides:
+    - component: batch-compute
+    - component: object-store
+    - component: workflow
+  relations:
+    - from: workflow
+      to: batch-compute
+    - from: batch-compute
+      to: object-store
+  defaults:
+    network_zone: Private-App

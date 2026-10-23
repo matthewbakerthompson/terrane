@@ -1,0 +1,137 @@
+@startuml
+' IT service management — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title IT service management — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_TECH_05, "Business Continuity & Disaster Recovery", "Recover the business to committed objectives.", $tags="capabilities")
+  ' aac CAP_TECH_05: company_domain="Technology"
+  System(CAP_SEC_04, "Data Protection & Cryptography", "Protect data at rest and in transit, and manage keys and cardholder data scope.", $tags="capabilities")
+  ' aac CAP_SEC_04: company_domain="Cross-Functional Services"
+  System(CAP_TECH_07, "End-User Computing & Workplace Technology", "Equip and support the workforce with workplace technology.", $tags="capabilities")
+  ' aac CAP_TECH_07: company_domain="Technology"
+  System(CAP_STRAT_04, "Enterprise Architecture & Change Portfolio", "Govern the shape of the estate and the pipeline of change.", $tags="capabilities")
+  ' aac CAP_STRAT_04: company_domain="Cross-Functional Services"
+  System(CAP_TECH_06, "Enterprise Integration & API Management", "Operate the integration and API estate.", $tags="capabilities")
+  ' aac CAP_TECH_06: company_domain="Technology"
+  System(CAP_SEC_01, "Identity & Access Management", "Govern who can access what, and evidence it.", $tags="capabilities")
+  ' aac CAP_SEC_01: company_domain="Cross-Functional Services"
+  System(CAP_TECH_08, "Quality Engineering & Testing", "Prove that a change does what it claims before and after it reaches production: test strategy, automation, performance, acceptance, defects, and release certification.", $tags="capabilities")
+  ' aac CAP_TECH_08: company_domain="Technology"
+  System(CAP_TECH_04, "Release & Change Management", "Move change into production safely.", $tags="capabilities")
+  ' aac CAP_TECH_04: company_domain="Technology"
+  System(CAP_TECH_03, "Service Management & Incident Response", "Detect, triage, and resolve service incidents.", $tags="capabilities")
+  ' aac CAP_TECH_03: company_domain="Technology"
+  System(CAP_TECH_01, "Solution Delivery & Engineering", "Build and change software.", $tags="capabilities")
+  ' aac CAP_TECH_01: company_domain="Technology"
+  System(CAP_SEC_02, "Threat Detection & Response", "Detect and respond to security events.", $tags="capabilities")
+  ' aac CAP_SEC_02: company_domain="Cross-Functional Services"
+  System(CAP_SEC_03, "Vulnerability & Patch Management", "Find and remediate technical exposure.", $tags="capabilities")
+  ' aac CAP_SEC_03: company_domain="Cross-Functional Services"
+}
+Boundary(b_Process, "Process") {
+  System(P_EA_007, "Assess change impact of a proposed system change", "Trace a proposed system or interface change to the processes, capabilities, and clients it affects, and brief the change authority.", $tags="processes")
+  ' aac P_EA_007: company_domain=""
+  System(P_QE_008, "Certify a release for production", "Assess test results, open defects, and exit criteria, and issue or withhold the quality certification the change authority relies on.", $tags="processes")
+  ' aac P_QE_008: company_domain=""
+  System(P_TECH_001, "Deliver software change", "Design, build, test, and release a software change into production. The umbrella delivery flow from approved demand to production release; the engineering-level decomposition lives in the P-APPDEV and P-QE processes it coordinates.", $tags="processes")
+  ' aac P_TECH_001: company_domain=""
+  System(P_INFOSEC_002, "Detect and respond to security event", "Detect, investigate, contain, and remediate a security event. Detection through containment runs the incident playbook with severity-driven escalation; the timeline is evidence for both the CRI assessment and any notification duty.", $tags="processes")
+  ' aac P_INFOSEC_002: company_domain=""
+  System(P_TECH_003, "Execute disaster recovery test", "Plan and execute a recovery test against committed recovery objectives. The annual test exercises recovery against committed RTO and RPO with business participation; misses become tracked remediation, and the evidence supports the CRI assessment.", $tags="processes")
+  ' aac P_TECH_003: company_domain=""
+  System(P_INFOSEC_004, "Maintain cardholder data scope and evidence", "Maintain the cardholder data environment scope and the supporting compliance evidence. PCI scope is maintained continuously: network segmentation, asset inventory, and evidence collection, so assessment is a report, not a scramble.", $tags="processes")
+  ' aac P_INFOSEC_004: company_domain=""
+  System(P_EA_009, "Maintain the application and technology inventory", "Keep the inventory of applications, platforms, and interfaces complete and attributed, including owner, tier, hosting, and lifecycle state.", $tags="processes")
+  ' aac P_EA_009: company_domain=""
+  System(P_APPDEV_007, "Manage application configuration and feature flags", "Control configuration and feature-flag changes so behavior can be changed or reverted without a code release, with an audit trail.", $tags="processes")
+  ' aac P_APPDEV_007: company_domain=""
+  System(P_TECH_004, "Onboard and operate integration", "Design, register, and operate an interface between systems. Integration onboarding registers the interface, its data, and its owners before traffic flows; unregistered interfaces are how impact analysis goes blind.", $tags="processes")
+  ' aac P_TECH_004: company_domain=""
+  System(P_INFOSEC_001, "Provision and certify access", "Grant, review, and certify access to systems and data. Access follows least privilege with owner approval; the quarterly certification and automatic revocation of uncertified access are the controls CRI assesses.", $tags="processes")
+  ' aac P_INFOSEC_001: company_domain=""
+  System(P_INFOSEC_003, "Remediate vulnerability", "Triage and remediate an identified vulnerability within the applicable service level. Severity sets the remediation SLA; breaches escalate rather than languish, and closure requires verification, not just a patch record.", $tags="processes")
+  ' aac P_INFOSEC_003: company_domain=""
+  System(P_TECH_002, "Respond to service incident", "Detect, triage, resolve, and review a service incident. Incident response runs detect, triage, resolve, and review with severity-driven communication; customer-impacting incidents feed problem management and the resilience picture.", $tags="processes")
+  ' aac P_TECH_002: company_domain=""
+  System(P_APPDEV_008, "Support a production application", "Diagnose and fix application defects escalated from service management, and feed root causes back into the backlog.", $tags="processes")
+  ' aac P_APPDEV_008: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_ITSM, "IT service management", "Incident, change, and service management. Built with SaaS.", $tags="systems")
+  ' aac SYS_ITSM: company_domain=""; hosting="SaaS"; technology="SaaS"
+}
+
+Rel(P_TECH_001, SYS_ITSM, "Supporting")
+' aac rel: source="P_TECH_001"; target="SYS_ITSM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_TECH_002, SYS_ITSM, "Primary")
+' aac rel: source="P_TECH_002"; target="SYS_ITSM"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_TECH_003, SYS_ITSM, "Primary")
+' aac rel: source="P_TECH_003"; target="SYS_ITSM"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_TECH_004, SYS_ITSM, "Primary")
+' aac rel: source="P_TECH_004"; target="SYS_ITSM"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_INFOSEC_001, SYS_ITSM, "Supporting")
+' aac rel: source="P_INFOSEC_001"; target="SYS_ITSM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_INFOSEC_002, SYS_ITSM, "Primary")
+' aac rel: source="P_INFOSEC_002"; target="SYS_ITSM"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_INFOSEC_003, SYS_ITSM, "Primary")
+' aac rel: source="P_INFOSEC_003"; target="SYS_ITSM"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_INFOSEC_004, SYS_ITSM, "Supporting")
+' aac rel: source="P_INFOSEC_004"; target="SYS_ITSM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_EA_007, SYS_ITSM, "Supporting")
+' aac rel: source="P_EA_007"; target="SYS_ITSM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_EA_009, SYS_ITSM, "Supporting")
+' aac rel: source="P_EA_009"; target="SYS_ITSM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_QE_008, SYS_ITSM, "Supporting")
+' aac rel: source="P_QE_008"; target="SYS_ITSM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_APPDEV_007, SYS_ITSM, "Supporting")
+' aac rel: source="P_APPDEV_007"; target="SYS_ITSM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_APPDEV_008, SYS_ITSM, "Primary")
+' aac rel: source="P_APPDEV_008"; target="SYS_ITSM"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_TECH_001, CAP_TECH_01, "supports")
+' aac rel: source="P_TECH_001"; target="CAP_TECH_01"; label="supports"; relation="process_supports_capability"
+Rel(P_TECH_001, CAP_TECH_04, "supports")
+' aac rel: source="P_TECH_001"; target="CAP_TECH_04"; label="supports"; relation="process_supports_capability"
+Rel(P_TECH_002, CAP_TECH_03, "supports")
+' aac rel: source="P_TECH_002"; target="CAP_TECH_03"; label="supports"; relation="process_supports_capability"
+Rel(P_TECH_003, CAP_TECH_05, "supports")
+' aac rel: source="P_TECH_003"; target="CAP_TECH_05"; label="supports"; relation="process_supports_capability"
+Rel(P_TECH_004, CAP_TECH_06, "supports")
+' aac rel: source="P_TECH_004"; target="CAP_TECH_06"; label="supports"; relation="process_supports_capability"
+Rel(P_INFOSEC_001, CAP_SEC_01, "supports")
+' aac rel: source="P_INFOSEC_001"; target="CAP_SEC_01"; label="supports"; relation="process_supports_capability"
+Rel(P_INFOSEC_002, CAP_SEC_02, "supports")
+' aac rel: source="P_INFOSEC_002"; target="CAP_SEC_02"; label="supports"; relation="process_supports_capability"
+Rel(P_INFOSEC_003, CAP_SEC_03, "supports")
+' aac rel: source="P_INFOSEC_003"; target="CAP_SEC_03"; label="supports"; relation="process_supports_capability"
+Rel(P_INFOSEC_004, CAP_SEC_04, "supports")
+' aac rel: source="P_INFOSEC_004"; target="CAP_SEC_04"; label="supports"; relation="process_supports_capability"
+Rel(P_EA_007, CAP_STRAT_04, "supports")
+' aac rel: source="P_EA_007"; target="CAP_STRAT_04"; label="supports"; relation="process_supports_capability"
+Rel(P_EA_007, CAP_TECH_04, "supports")
+' aac rel: source="P_EA_007"; target="CAP_TECH_04"; label="supports"; relation="process_supports_capability"
+Rel(P_EA_009, CAP_STRAT_04, "supports")
+' aac rel: source="P_EA_009"; target="CAP_STRAT_04"; label="supports"; relation="process_supports_capability"
+Rel(P_EA_009, CAP_TECH_07, "supports")
+' aac rel: source="P_EA_009"; target="CAP_TECH_07"; label="supports"; relation="process_supports_capability"
+Rel(P_QE_008, CAP_TECH_08, "supports")
+' aac rel: source="P_QE_008"; target="CAP_TECH_08"; label="supports"; relation="process_supports_capability"
+Rel(P_QE_008, CAP_TECH_04, "supports")
+' aac rel: source="P_QE_008"; target="CAP_TECH_04"; label="supports"; relation="process_supports_capability"
+Rel(P_APPDEV_007, CAP_TECH_01, "supports")
+' aac rel: source="P_APPDEV_007"; target="CAP_TECH_01"; label="supports"; relation="process_supports_capability"
+Rel(P_APPDEV_007, CAP_TECH_04, "supports")
+' aac rel: source="P_APPDEV_007"; target="CAP_TECH_04"; label="supports"; relation="process_supports_capability"
+Rel(P_APPDEV_008, CAP_TECH_01, "supports")
+' aac rel: source="P_APPDEV_008"; target="CAP_TECH_01"; label="supports"; relation="process_supports_capability"
+Rel(P_APPDEV_008, CAP_TECH_03, "supports")
+' aac rel: source="P_APPDEV_008"; target="CAP_TECH_03"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

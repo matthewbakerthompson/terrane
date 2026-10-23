@@ -1,0 +1,82 @@
+@startuml
+' Multi-AZ Deployment
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Multi-AZ Deployment
+
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("tech_services", $bgColor="#fed7aa", $borderColor="#c2410c", $fontColor="#0f172a", $legendText="technology service")
+
+Boundary(b_eu_west_2, "region eu-west-2") {
+  System(SYS_LENDING_WORKER, "Installment Lending Async Worker", "Consumes Installment Lending domain events and drives long-running work. Built with EKS · MSK.", $tags="systems")
+  ' aac SYS_LENDING_WORKER: company_domain="Lending"; hosting="AWS"; technology="EKS · MSK"
+  System(SYS_LENDING_DB, "Installment Lending Database", "Relational database for Installment Lending, encrypted with a customer managed key. Built with RDS.", $tags="systems")
+  ' aac SYS_LENDING_DB: company_domain="Lending"; hosting="AWS"; technology="RDS"
+  System(SYS_LENDING_ALB, "Installment Lending Load Balancer", "Public load balancer terminating TLS for Installment Lending.", $tags="systems")
+  ' aac SYS_LENDING_ALB: company_domain="Lending"; hosting="AWS"
+  System(SYS_LENDING_BUCKET, "Installment Lending Object Store", "S3 bucket holding signed credit agreements and disbursement evidence. Seven-year retention with Object Lock; a records-management obligation rather than ordinary product storage. Built with S3.", $tags="systems")
+  ' aac SYS_LENDING_BUCKET: company_domain="Lending"; hosting="AWS"; technology="S3"
+  System(SYS_LENDING_API, "Installment Lending Service", "Domain service for Installment Lending, behind the Installment Lending API. Built with EKS · Installment Lending Cache.", $tags="systems")
+  ' aac SYS_LENDING_API: company_domain="Lending"; hosting="AWS"; technology="EKS · Installment Lending Cache"
+  System(SYS_LENDING_WEB, "Installment Lending Web", "Customer-facing front end for Installment Lending. Built with EKS.", $tags="systems")
+  ' aac SYS_LENDING_WEB: company_domain="Lending"; hosting="AWS"; technology="EKS"
+  Boundary(b_eu_west_2__eu_west_2a, "zone eu-west-2a") {
+    Deployment_Node(TS_NET_SUB_LEND_APP_A, "Lending App Subnet A", "Subnet", $tags="tech_services") {
+      ' aac TS_NET_SUB_LEND_APP_A: company_domain="Lending"; technology="Subnet"
+    }
+    Deployment_Node(TS_NET_SUB_LEND_DATA_A, "Lending Data Subnet A", "Subnet", $tags="tech_services") {
+      ' aac TS_NET_SUB_LEND_DATA_A: company_domain="Lending"; technology="Subnet"
+    }
+    Deployment_Node(TS_NET_NAT_LEND_A, "Lending NAT Gateway A", "Private egress", "Outbound-only egress for the private tiers. One per zone, so a zone loss is not an outage.", $tags="tech_services") {
+      ' aac TS_NET_NAT_LEND_A: company_domain="Lending"; technology="Private egress"
+    }
+    Deployment_Node(TS_NET_SUB_LEND_PUB_A, "Lending Public Subnet A", "Subnet", $tags="tech_services") {
+      ' aac TS_NET_SUB_LEND_PUB_A: company_domain="Lending"; technology="Subnet"
+    }
+  }
+  Boundary(b_eu_west_2__eu_west_2b, "zone eu-west-2b") {
+    Deployment_Node(TS_NET_SUB_LEND_APP_B, "Lending App Subnet B", "Subnet", $tags="tech_services") {
+      ' aac TS_NET_SUB_LEND_APP_B: company_domain="Lending"; technology="Subnet"
+    }
+    Deployment_Node(TS_NET_SUB_LEND_DATA_B, "Lending Data Subnet B", "Subnet", $tags="tech_services") {
+      ' aac TS_NET_SUB_LEND_DATA_B: company_domain="Lending"; technology="Subnet"
+    }
+    Deployment_Node(TS_NET_NAT_LEND_B, "Lending NAT Gateway B", "Private egress", $tags="tech_services") {
+      ' aac TS_NET_NAT_LEND_B: company_domain="Lending"; technology="Private egress"
+    }
+    Deployment_Node(TS_NET_SUB_LEND_PUB_B, "Lending Public Subnet B", "Subnet", $tags="tech_services") {
+      ' aac TS_NET_SUB_LEND_PUB_B: company_domain="Lending"; technology="Subnet"
+    }
+  }
+}
+
+Rel(SYS_LENDING_ALB, TS_NET_SUB_LEND_PUB_A, "deployed in")
+' aac rel: source="SYS_LENDING_ALB"; target="TS_NET_SUB_LEND_PUB_A"; label="deployed in"; relation="system_uses_tech_service"
+Rel(SYS_LENDING_ALB, TS_NET_SUB_LEND_PUB_B, "deployed in")
+' aac rel: source="SYS_LENDING_ALB"; target="TS_NET_SUB_LEND_PUB_B"; label="deployed in"; relation="system_uses_tech_service"
+Rel(SYS_LENDING_WEB, TS_NET_SUB_LEND_APP_A, "deployed in")
+' aac rel: source="SYS_LENDING_WEB"; target="TS_NET_SUB_LEND_APP_A"; label="deployed in"; relation="system_uses_tech_service"
+Rel(SYS_LENDING_WEB, TS_NET_SUB_LEND_APP_B, "deployed in")
+' aac rel: source="SYS_LENDING_WEB"; target="TS_NET_SUB_LEND_APP_B"; label="deployed in"; relation="system_uses_tech_service"
+Rel(SYS_LENDING_API, TS_NET_SUB_LEND_APP_A, "deployed in")
+' aac rel: source="SYS_LENDING_API"; target="TS_NET_SUB_LEND_APP_A"; label="deployed in"; relation="system_uses_tech_service"
+Rel(SYS_LENDING_API, TS_NET_SUB_LEND_APP_B, "deployed in")
+' aac rel: source="SYS_LENDING_API"; target="TS_NET_SUB_LEND_APP_B"; label="deployed in"; relation="system_uses_tech_service"
+Rel(SYS_LENDING_WORKER, TS_NET_SUB_LEND_APP_A, "deployed in")
+' aac rel: source="SYS_LENDING_WORKER"; target="TS_NET_SUB_LEND_APP_A"; label="deployed in"; relation="system_uses_tech_service"
+Rel(SYS_LENDING_WORKER, TS_NET_SUB_LEND_APP_B, "deployed in")
+' aac rel: source="SYS_LENDING_WORKER"; target="TS_NET_SUB_LEND_APP_B"; label="deployed in"; relation="system_uses_tech_service"
+Rel(SYS_LENDING_DB, TS_NET_SUB_LEND_DATA_A, "deployed in")
+' aac rel: source="SYS_LENDING_DB"; target="TS_NET_SUB_LEND_DATA_A"; label="deployed in"; relation="system_uses_tech_service"
+Rel(SYS_LENDING_DB, TS_NET_SUB_LEND_DATA_B, "deployed in")
+' aac rel: source="SYS_LENDING_DB"; target="TS_NET_SUB_LEND_DATA_B"; label="deployed in"; relation="system_uses_tech_service"
+Rel(SYS_LENDING_BUCKET, TS_NET_SUB_LEND_DATA_A, "deployed in")
+' aac rel: source="SYS_LENDING_BUCKET"; target="TS_NET_SUB_LEND_DATA_A"; label="deployed in"; relation="system_uses_tech_service"
+Rel(TS_NET_SUB_LEND_APP_A, TS_NET_NAT_LEND_A, "egress route")
+' aac rel: source="TS_NET_SUB_LEND_APP_A"; target="TS_NET_NAT_LEND_A"; label="egress route"; relation="tech_service_connects_to"; connection="egress route"
+Rel(TS_NET_SUB_LEND_APP_B, TS_NET_NAT_LEND_B, "egress route")
+' aac rel: source="TS_NET_SUB_LEND_APP_B"; target="TS_NET_NAT_LEND_B"; label="egress route"; relation="tech_service_connects_to"; connection="egress route"
+
+SHOW_LEGEND()
+@enduml

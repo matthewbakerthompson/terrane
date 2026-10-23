@@ -1,0 +1,70 @@
+@startuml
+' Identity Document Verification Integration Gateway — Architecture
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Identity Document Verification Integration Gateway — Architecture
+
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("tech_services", $bgColor="#fed7aa", $borderColor="#c2410c", $fontColor="#0f172a", $legendText="technology service")
+AddRelTag("api-call", $legendText="API call")
+
+Boundary(b_System, "System") {
+  System(SYS_IDENTITY_SVC, "Customer Identity Service", "Shared platform service: Customer Identity Service. Built with AKS.", $tags="systems")
+  ' aac SYS_IDENTITY_SVC: company_domain="Enterprise Platform"; hosting="Azure"; technology="AKS"
+  System(SYS_IDV_GATEWAY, "Identity Document Verification Integration Gateway", "Our side of the Onfido integration: request mapping, retry and back-off, circuit breaking when the vendor is down, and the audit trail of what we sent them. Built with AKS.", $tags="systems")
+  ' aac SYS_IDV_GATEWAY: company_domain="Risk and Compliance"; hosting="Azure"; technology="AKS"
+  System(SYS_IDV_EGRESS, "Identity Document Verification Private Egress", "PrivateLink endpoint and egress allow-list for Onfido. The control that keeps regulated data off the public internet, and the thing a security review asks to see first.", $tags="systems")
+  ' aac SYS_IDV_EGRESS: company_domain="Enterprise Platform"; hosting="Azure"
+}
+Boundary(b_Technology_Service, "Technology Service") {
+  Deployment_Node(TS_AZURE_APIM, "Azure API Management", "API gateway", "The API gateway every internal and partner API is published through.", $tags="tech_services") {
+    ' aac TS_AZURE_APIM: company_domain="Enterprise Platform"; technology="API gateway"
+  }
+  Deployment_Node(TS_AZURE_KEYVAULT, "Azure Key Vault", "Secrets manager", "Secret, key and certificate management.", $tags="tech_services") {
+    ' aac TS_AZURE_KEYVAULT: company_domain="Enterprise Platform"; technology="Secrets manager"
+  }
+  Deployment_Node(TS_AZURE_AKS, "Azure Kubernetes Service", "Container platform", "Managed Kubernetes hosting the containerized estate.", $tags="tech_services") {
+    ' aac TS_AZURE_AKS: company_domain="Enterprise Platform"; technology="Container platform"
+  }
+  Deployment_Node(TS_AZURE_PRIVATELINK, "Azure Private Link", "Private egress", "Private endpoints to bought services, so the only path our data takes to a vendor never touches the public internet.", $tags="tech_services") {
+    ' aac TS_AZURE_PRIVATELINK: company_domain="Enterprise Platform"; technology="Private egress"
+  }
+  Deployment_Node(TS_AZURE_VWAN, "Azure Virtual WAN hub", "Transit hub", "The hub every virtual network attaches to, and the route back to the data center.", $tags="tech_services") {
+    ' aac TS_AZURE_VWAN: company_domain="Enterprise Platform"; technology="Transit hub"
+  }
+  Deployment_Node(TS_IDENTITY_DNS, "Customer Identity Service DNS", "Azure DNS", "Name resolution and, in practice, the failover mechanism of last resort.", $tags="tech_services") {
+    ' aac TS_IDENTITY_DNS: company_domain="Enterprise Platform"; technology="Azure DNS"
+  }
+  Deployment_Node(TS_IDENTITY_WAF, "Customer Identity Service Web application firewall", "Azure WAF", "Request inspection at the edge. Blocks the traffic nobody wrote a test for.", $tags="tech_services") {
+    ' aac TS_IDENTITY_WAF: company_domain="Enterprise Platform"; technology="Azure WAF"
+  }
+}
+
+Rel(SYS_IDENTITY_SVC, SYS_IDV_GATEWAY, "SYS-IDENTITY-SVC to Identity Document Verification Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_IDENTITY_SVC"; target="SYS_IDV_GATEWAY"; label="SYS-IDENTITY-SVC to Identity Document Verification Gateway"; interface_id="INT-IDV-CALLER-GATEWAY"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_IDV_GATEWAY, SYS_IDV_EGRESS, "Identity Document Verification Gateway to Private Egress", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_IDV_GATEWAY"; target="SYS_IDV_EGRESS"; label="Identity Document Verification Gateway to Private Egress"; interface_id="INT-IDV-GATEWAY-EGRESS"; kind="api-call"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_IDENTITY_SVC, TS_IDENTITY_DNS, "runs on")
+' aac rel: source="SYS_IDENTITY_SVC"; target="TS_IDENTITY_DNS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDENTITY_SVC, TS_IDENTITY_WAF, "runs on")
+' aac rel: source="SYS_IDENTITY_SVC"; target="TS_IDENTITY_WAF"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDENTITY_SVC, TS_AZURE_APIM, "runs on")
+' aac rel: source="SYS_IDENTITY_SVC"; target="TS_AZURE_APIM"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDENTITY_SVC, TS_AZURE_AKS, "runs on")
+' aac rel: source="SYS_IDENTITY_SVC"; target="TS_AZURE_AKS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDENTITY_SVC, TS_AZURE_KEYVAULT, "runs on")
+' aac rel: source="SYS_IDENTITY_SVC"; target="TS_AZURE_KEYVAULT"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDV_GATEWAY, TS_AZURE_AKS, "runs on")
+' aac rel: source="SYS_IDV_GATEWAY"; target="TS_AZURE_AKS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDV_GATEWAY, TS_AZURE_APIM, "runs on")
+' aac rel: source="SYS_IDV_GATEWAY"; target="TS_AZURE_APIM"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDV_EGRESS, TS_AZURE_PRIVATELINK, "runs on")
+' aac rel: source="SYS_IDV_EGRESS"; target="TS_AZURE_PRIVATELINK"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDV_EGRESS, TS_AZURE_VWAN, "runs on")
+' aac rel: source="SYS_IDV_EGRESS"; target="TS_AZURE_VWAN"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDV_GATEWAY, TS_AZURE_KEYVAULT, "runs on")
+' aac rel: source="SYS_IDV_GATEWAY"; target="TS_AZURE_KEYVAULT"; label="runs on"; relation="system_uses_tech_service"
+
+SHOW_LEGEND()
+@enduml

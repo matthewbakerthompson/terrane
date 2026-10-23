@@ -1,0 +1,33 @@
+view_id: capability-realization
+title: Capability Realization
+category: Application
+section: Capabilities and processes
+kind: report
+description: >
+  Which systems realize which capabilities, listed by system. Only
+  capabilities with at least one system appear here; capabilities with none
+  are listed in Coverage.
+layout: LR
+group_by: type
+node_label: name
+renderers: [mermaid]
+
+scope:
+  include:
+    - type: systems
+      where:
+        status: [Active, Planned]
+  expand:
+    - relation: system_realizes_capability
+      depth: 1
+      types: [capabilities]
+
+edges:
+  - via: system_realizes_capability
+    text: realizes
+
+style:
+  color_by: architecture_domain
+
+limits:
+  max_nodes: 60

@@ -1,0 +1,57 @@
+@startuml
+' Observability platform — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Observability platform — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_TECH_02, "Platform & Infrastructure Operations", "Run the technology estate.", $tags="capabilities")
+  ' aac CAP_TECH_02: company_domain="Technology"
+  System(CAP_TECH_08, "Quality Engineering & Testing", "Prove that a change does what it claims before and after it reaches production: test strategy, automation, performance, acceptance, defects, and release certification.", $tags="capabilities")
+  ' aac CAP_TECH_08: company_domain="Technology"
+  System(CAP_TECH_04, "Release & Change Management", "Move change into production safely.", $tags="capabilities")
+  ' aac CAP_TECH_04: company_domain="Technology"
+  System(CAP_TECH_03, "Service Management & Incident Response", "Detect, triage, and resolve service incidents.", $tags="capabilities")
+  ' aac CAP_TECH_03: company_domain="Technology"
+  System(CAP_TECH_01, "Solution Delivery & Engineering", "Build and change software.", $tags="capabilities")
+  ' aac CAP_TECH_01: company_domain="Technology"
+}
+Boundary(b_Process, "Process") {
+  System(P_QE_004, "Execute performance and resilience testing", "Load, soak, and failover-test a candidate against stated capacity and recovery objectives before a material release.", $tags="processes")
+  ' aac P_QE_004: company_domain=""
+  System(P_APPDEV_008, "Support a production application", "Diagnose and fix application defects escalated from service management, and feed root causes back into the backlog.", $tags="processes")
+  ' aac P_APPDEV_008: company_domain=""
+  System(P_QE_009, "Verify a release in production", "Run post-deployment checks and smoke tests in production, confirm monitoring is green, and trigger rollback if criteria fail.", $tags="processes")
+  ' aac P_QE_009: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_OBSERV, "Observability platform", "Logs, metrics, traces, and production monitoring. Built with SaaS.", $tags="systems")
+  ' aac SYS_OBSERV: company_domain=""; hosting="SaaS"; technology="SaaS"
+}
+
+Rel(P_QE_004, SYS_OBSERV, "Supporting")
+' aac rel: source="P_QE_004"; target="SYS_OBSERV"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_QE_009, SYS_OBSERV, "Primary")
+' aac rel: source="P_QE_009"; target="SYS_OBSERV"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_APPDEV_008, SYS_OBSERV, "Supporting")
+' aac rel: source="P_APPDEV_008"; target="SYS_OBSERV"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_QE_004, CAP_TECH_08, "supports")
+' aac rel: source="P_QE_004"; target="CAP_TECH_08"; label="supports"; relation="process_supports_capability"
+Rel(P_QE_004, CAP_TECH_02, "supports")
+' aac rel: source="P_QE_004"; target="CAP_TECH_02"; label="supports"; relation="process_supports_capability"
+Rel(P_QE_009, CAP_TECH_08, "supports")
+' aac rel: source="P_QE_009"; target="CAP_TECH_08"; label="supports"; relation="process_supports_capability"
+Rel(P_QE_009, CAP_TECH_04, "supports")
+' aac rel: source="P_QE_009"; target="CAP_TECH_04"; label="supports"; relation="process_supports_capability"
+Rel(P_APPDEV_008, CAP_TECH_01, "supports")
+' aac rel: source="P_APPDEV_008"; target="CAP_TECH_01"; label="supports"; relation="process_supports_capability"
+Rel(P_APPDEV_008, CAP_TECH_03, "supports")
+' aac rel: source="P_APPDEV_008"; target="CAP_TECH_03"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

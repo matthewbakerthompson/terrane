@@ -1,0 +1,15 @@
+%% A diagram someone already has
+flowchart LR
+  subgraph Channels
+    web[Web portal]
+    mobile(Mobile app)
+  end
+  subgraph Core [Core banking]
+    api[Account API] --> ledger[(Ledger)]
+    api -- gRPC --> fraud{{Fraud scoring}}
+  end
+  cust((Customer)) -->|uses| web & mobile
+  web & mobile -->|HTTPS| api
+  api -. events .-> bus[Event bus]
+  classDef x fill:#fff
+  click api "https://example.com"

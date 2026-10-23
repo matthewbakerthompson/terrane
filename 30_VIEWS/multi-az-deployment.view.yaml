@@ -1,0 +1,43 @@
+view_id: multi-az-deployment
+title: Multi-AZ Deployment
+category: Technology
+section: Network and resilience
+kind: diagram
+description: >
+  One workload account laid out for a resilience review: region, then
+  availability zone, then tier. Each tier should appear in both zones. A tier
+  that appears in only one zone is a resilience gap.
+layout: TB
+node_label: name
+renderers: [mermaid, structurizr]
+
+# Region then zone, and no tier level. A system deployed across both zones has
+# no single zone of its own, so it collapses up to the region box and connects
+# down into each subnet -- which is the honest picture, and better than the
+# usual drawing that implies two separate instances. Adding a tier level here
+# made `Private-App` appear at two different depths, which read as a bug.
+group_by: [region, availability_zone]
+
+scope:
+  include:
+    - type: tech_services
+      where:
+        cloud_account: [prod-lending]
+        availability_zone: {exists: true}
+  expand:
+    # The systems that land in those subnets, one hop out.
+    - relation: system_uses_tech_service
+      depth: 1
+      types: [systems]
+
+edges:
+  - via: system_uses_tech_service
+    text: deployed in
+  - via: tech_service_connects_to
+    label: connection
+
+style:
+  color_by: network_zone
+
+limits:
+  max_nodes: 30

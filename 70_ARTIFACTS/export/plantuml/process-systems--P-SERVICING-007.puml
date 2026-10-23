@@ -1,0 +1,42 @@
+@startuml
+' Generate and deliver required notice — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Generate and deliver required notice — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_SERV_04, "Correspondence & Notification Management", "Generate and deliver required and elective communications.", $tags="capabilities")
+  ' aac CAP_SERV_04: company_domain="Servicing"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_NOTICE_CONTENT, "Notice content and delivery evidence", "Required notices use legal-owned templates with version control, and delivery evidence is retained per notice.", $tags="controls")
+  ' aac CTL_NOTICE_CONTENT: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_SERVICING_007, "Generate and deliver required notice", "Generate and deliver a regulatory or contractual notice to the cardholder. Notice generation is driven by account events with content owned by legal and compliance; proof of delivery and version are retained per notice.", $tags="processes")
+  ' aac P_SERVICING_007: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+  System(SYS_STATEMENTS, "Statement Generation", "Composes, renders and dispatches customer statements.", $tags="systems")
+  ' aac SYS_STATEMENTS: company_domain="Servicing"; hosting="On-prem"
+}
+
+Rel(P_SERVICING_007, SYS_DOC, "Primary")
+' aac rel: source="P_SERVICING_007"; target="SYS_DOC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_SERVICING_007, SYS_STATEMENTS, "Supporting")
+' aac rel: source="P_SERVICING_007"; target="SYS_STATEMENTS"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_007, CTL_NOTICE_CONTENT, "governed by")
+' aac rel: source="P_SERVICING_007"; target="CTL_NOTICE_CONTENT"; label="governed by"; relation="process_governed_by_control"
+Rel(P_SERVICING_007, CAP_SERV_04, "supports")
+' aac rel: source="P_SERVICING_007"; target="CAP_SERV_04"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

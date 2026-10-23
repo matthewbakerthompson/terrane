@@ -1,0 +1,44 @@
+# Patterns for what an account is before anything is deployed into it.
+
+- pattern_id: workload-account-baseline
+  name: Workload account baseline
+  status: Approved
+  category: Landing zone
+  blocks: [account-baseline, security-baseline, delivery-pipeline]
+  intent: >
+    Every workload account arrives with the same network tiers, the same
+    identity, secrets, keys and detection, and the same route to production,
+    before a line of application code lands. Onboarding creates this; the
+    product team never has to think about it, which is the point.
+  consequences: >
+    The baseline is a product with a release cadence, and a change to it
+    reaches every account at once. That is the feature, and it means the
+    baseline needs a change process stricter than any single workload's. The
+    unglamorous half of a cloud footprint, and the half a security review is
+    actually about.
+  when_not_to_use: >
+    A sandbox or a proof of concept that will be deleted in a month, which
+    should be a sandbox account with a deletion date rather than a workload
+    account with a baseline it will never use.
+  method_ref: PAT-004
+
+- pattern_id: hybrid-return-path
+  name: Hybrid return path
+  status: Candidate
+  category: Landing zone
+  blocks: [hybrid-connectivity]
+  intent: >
+    Two independent paths from the cloud estate back to the data center, with
+    failover between them, so that the mainframe stays reachable when one
+    carrier does not.
+  consequences: >
+    Two circuits, two carriers, two contracts, and a failover that is a
+    claim until it has been exercised. The pattern is a candidate rather than
+    approved for exactly that reason: the recovery test has not been run
+    against it, and a resilience pattern that has not been tested is a
+    diagram.
+  when_not_to_use: >
+    A workload with no dependency on anything in the data center, which
+    should not be given a path to it. Every hybrid path is an attack surface
+    as well as a resilience measure.
+  method_ref: PAT-008

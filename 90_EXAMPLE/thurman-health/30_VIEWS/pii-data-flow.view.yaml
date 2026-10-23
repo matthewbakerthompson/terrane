@@ -1,0 +1,38 @@
+view_id: pii-data-flow
+title: Personal Data and the Systems That Hold It
+category: Data
+section: Lineage and flow
+kind: report
+description: >
+  Every data asset flagged as personal data, its system of record, and the
+  systems that read or write it. This is the information a privacy assessment
+  needs, kept current from the model instead of maintained by hand.
+layout: LR
+group_by: company_domain
+renderers: [mermaid]
+
+scope:
+  include:
+    - type: data_assets
+      where:
+        pii_flag: "Yes"
+        status: [Active]
+  expand:
+    - relation: system_reads_writes
+      depth: 1
+      types: [systems]
+    - relation: source_of_truth
+      depth: 1
+      types: [systems]
+
+edges:
+  - via: source_of_truth
+    text: system of record
+  - via: system_reads_writes
+    label: operation
+
+style:
+  color_by: classification
+
+limits:
+  max_nodes: 50

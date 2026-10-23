@@ -1,0 +1,39 @@
+@startuml
+' Execute credit line decrease or account action — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Execute credit line decrease or account action — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_ORIG_05, "Adverse Action & Notice Generation", "Produce compliant decline and counter-offer notices.", $tags="capabilities")
+  ' aac CAP_ORIG_05: company_domain="Originations"
+  System(CAP_CRED_03, "Credit Line Assignment & Management", "Set initial lines and manage increases, decreases, and reallocation.", $tags="capabilities")
+  ' aac CAP_CRED_03: company_domain="Originations"
+}
+Boundary(b_Process, "Process") {
+  System(P_CREDIT_004, "Execute credit line decrease or account action", "Apply risk-driven line decreases or account actions, with required notice. Adverse action obligations apply to decreases and closures just as they do to declines; the notice must state the principal reasons and bureau information used.", $tags="processes")
+  ' aac P_CREDIT_004: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+}
+
+Rel(P_CREDIT_004, SYS_CORE_LEDGER, "Primary")
+' aac rel: source="P_CREDIT_004"; target="SYS_CORE_LEDGER"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_CREDIT_004, SYS_DOC, "Supporting")
+' aac rel: source="P_CREDIT_004"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_CREDIT_004, CAP_CRED_03, "supports")
+' aac rel: source="P_CREDIT_004"; target="CAP_CRED_03"; label="supports"; relation="process_supports_capability"
+Rel(P_CREDIT_004, CAP_ORIG_05, "supports")
+' aac rel: source="P_CREDIT_004"; target="CAP_ORIG_05"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

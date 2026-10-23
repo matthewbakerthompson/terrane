@@ -1,0 +1,40 @@
+view_id: change-register
+title: "Change Register"
+category: Change
+section: Plans
+kind: report
+description: >
+  Every work package, the roadmap it belongs to, and the decision behind it,
+  plus decisions that have no work package yet. Deferred requests are included
+  because they explain why systems are the way they are.
+layout: LR
+node_label: name
+group_by: type
+renderers: [mermaid]
+
+scope:
+  include:
+    - type: roadmaps
+    - type: work_packages
+    - type: architecture_change_requests
+  expand:
+    - relation: change_request_affects_system
+      depth: 1
+      types: [systems]
+
+edges:
+  # Quoted, all three. Bare `on` is a boolean in YAML and this column read
+  # "True" until it was quoted, which is the kind of thing that survives
+  # review because it looks like a value rather than a mistake.
+  - via: roadmap_id
+    text: "planned under"
+  - via: change_request_id
+    text: "authorized by"
+  - via: change_request_affects_system
+    text: "about"
+
+style:
+  color_by: type
+
+limits:
+  max_nodes: 40

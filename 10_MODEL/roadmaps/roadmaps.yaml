@@ -1,0 +1,95 @@
+# The roadmaps the planned estate sits on.
+#
+# `status` on a system says it is not live yet. It cannot say when it lands,
+# what it lands with, or who is accountable for it landing, and until these
+# arrived nothing in the model could. A roadmap is the initiative; the work
+# packages under it are the deliveries; the change requests beside them are
+# the decisions that let the work start.
+#
+# Quarters, not dates. The field dictionary says YYYY-Qn, and a plan written
+# in a quarter that names the day is claiming precision nobody has.
+#
+# `time_horizon_years` is the horizon the roadmap was drawn for, which is not
+# the span of what is currently scheduled on it: the regulatory program is a
+# three-year commitment whose first year is the only part with work packages
+# against it. If the two were always equal the field would be redundant.
+#
+# Every row is placeholder content drafted against a placeholder estate.
+
+- roadmap_id: RDM-LENDING-GROWTH
+  name: Consumer Lending Growth
+  description: >
+    Take the card business into installment lending, on the cloud landing zone
+    rather than the on-premises estate, and prove the landing zone can carry a
+    regulated product before anything else is asked to move onto it.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  company_domain: Lending
+  tags: [strategic]
+  owner_org_id: ORG-LENDING
+  start_date: 2026-Q1
+  end_date: 2028-Q1
+  time_horizon_years: 1
+  governance_board: Architecture Review Board
+  last_reviewed: 2026-07-14
+
+- roadmap_id: RDM-REG-READINESS
+  name: Regulatory Reporting Readiness
+  description: >
+    Replace the spreadsheet-based regulatory return and the manual sanctions
+    check with systems the estate can evidence, ahead of the reporting
+    obligations that fall due through 2027 and 2028.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  company_domain: Risk and Compliance
+  tags: [regulatory]
+  owner_org_id: ORG-COMPLIANCE
+  start_date: 2026-Q2
+  end_date: 2027-Q2
+  time_horizon_years: 3
+  governance_board: Architecture Review Board
+  last_reviewed: 2026-08-03
+
+- roadmap_id: RDM-CARD-EXPERIENCE
+  name: Cardholder Experience
+  description: >
+    Move the cardholder-facing products off the servicing monolith and onto
+    the Azure product shape one at a time, rewards first, so each is a shape
+    and a handful of answers rather than a build.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  company_domain: Card Issuing
+  tags: [strategic, digital]
+  owner_org_id: ORG-PRODUCT
+  start_date: 2026-Q3
+  end_date: 2027-Q4
+  time_horizon_years: 2
+  governance_board: Architecture Review Board
+  last_reviewed: 2026-08-24
+
+- roadmap_id: RDM-MERCHANT-SERVICES
+  name: Merchant Self-Service
+  description: >
+    Give merchants a channel of their own: sign-up, settlement and chargeback
+    visibility, and statements, without a call to the acquiring desk. The
+    first program assembled from the library's parts rather than built on a
+    shape, because no merchant-facing shape existed yet; if a second
+    merchant product follows, its parts become one.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  company_domain: Payments
+  tags: [strategic, digital]
+  owner_org_id: ORG-MERCHANT
+  start_date: 2027-Q1
+  end_date: 2027-Q4
+  time_horizon_years: 1
+  governance_board: Architecture Review Board
+  last_reviewed: 2026-10-02

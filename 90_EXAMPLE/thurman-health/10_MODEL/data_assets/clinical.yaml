@@ -1,0 +1,186 @@
+# The clinical record, as the data the estate moves around.
+#
+# Each asset is named for what it is to the health system, and its tags say
+# which standard it travels in: `fhir` for the R4 resources the FHIR server
+# serves, `hl7v2` for the feeds through the interface engine, `dicom` for
+# images, `ccda` for documents exchanged with the HIE. Nearly all of it is
+# protected health information, so nearly all of it is Restricted; the
+# classification is the sample's four-level scale, and PHI sits at the top
+# of it.
+
+- data_asset_id: DA-PATIENT-IDENTITY
+  name: Enterprise patient identity
+  description: >
+    Who the patient is: names, date of birth, addresses, identifiers and
+    coverage, with the enterprise identifier that links every registration
+    of the same person. Travels as HL7 ADT and the FHIR Patient resource.
+  status: Active
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  company_domain: Patient Access
+  tags: [master, fhir, hl7v2]
+  data_owner_org_id: ORG-HIM
+  data_steward_org_id: ORG-HIM
+  source_of_truth: SYS-EMPI
+  classification: Restricted
+  risk_level: High
+  pii_flag: "Yes"
+  pii_types: Name;Date of birth;Address;Medical record number;Member id
+  quality_rules: One enterprise identifier per person; duplicate rate reviewed weekly
+
+- data_asset_id: DA-ENCOUNTER
+  name: Encounters and ADT events
+  description: Every admission, discharge, transfer and visit, with location, attending clinician and status.
+  status: Active
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  company_domain: Clinical Care
+  tags: [transactional, fhir, hl7v2]
+  data_owner_org_id: ORG-INPATIENT
+  data_steward_org_id: ORG-HIM
+  source_of_truth: SYS-EHR
+  classification: Restricted
+  risk_level: High
+  pii_flag: "Yes"
+  pii_types: Medical record number;Dates of service;Location
+
+- data_asset_id: DA-APPOINTMENT
+  name: Appointments
+  description: Clinic, imaging, infusion and video visit appointments. Travels as HL7 SIU and the FHIR Appointment resource.
+  status: Active
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  company_domain: Patient Access
+  tags: [transactional, fhir, hl7v2]
+  data_owner_org_id: ORG-AMBULATORY
+  data_steward_org_id: ORG-HIM
+  source_of_truth: SYS-EHR
+  classification: Restricted
+  risk_level: Medium
+  pii_flag: "Yes"
+  pii_types: Name;Medical record number;Dates of service
+
+- data_asset_id: DA-PROBLEM-LIST
+  name: Diagnoses and problem list
+  description: Encounter diagnoses and the running problem list, coded in ICD-10-CM and SNOMED CT.
+  status: Active
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  company_domain: Clinical Care
+  tags: [clinical, fhir]
+  data_owner_org_id: ORG-CLINICAL
+  data_steward_org_id: ORG-HIM
+  source_of_truth: SYS-EHR
+  classification: Restricted
+  risk_level: High
+  pii_flag: "Yes"
+  pii_types: Medical record number;Diagnoses
+
+- data_asset_id: DA-CLINICAL-ORDER
+  name: Lab and imaging orders
+  description: What a clinician asked for, for whom, why and how urgently. Leaves the EHR as HL7 ORM and returns as a result.
+  status: Active
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  company_domain: Clinical Care
+  tags: [transactional, hl7v2]
+  data_owner_org_id: ORG-CLINICAL
+  data_steward_org_id: ORG-HIM
+  source_of_truth: SYS-EHR
+  classification: Restricted
+  risk_level: High
+  pii_flag: "Yes"
+  pii_types: Medical record number;Diagnoses
+
+- data_asset_id: DA-MEDICATION-ORDER
+  name: Medication orders
+  description: Prescriptions and inpatient medication orders, with the pharmacist's verification. The FHIR MedicationRequest resource.
+  status: Active
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  company_domain: Clinical Care
+  tags: [transactional, fhir, hl7v2]
+  data_owner_org_id: ORG-PHARMACY
+  data_steward_org_id: ORG-PHARMACY
+  source_of_truth: SYS-EHR
+  classification: Restricted
+  risk_level: High
+  pii_flag: "Yes"
+  pii_types: Medical record number;Medications
+
+- data_asset_id: DA-MED-ADMIN
+  name: Medication administrations
+  description: Every dose given, scanned at the bedside against a verified order. The medication administration record.
+  status: Active
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  company_domain: Clinical Care
+  tags: [transactional, fhir]
+  data_owner_org_id: ORG-INPATIENT
+  data_steward_org_id: ORG-PHARMACY
+  source_of_truth: SYS-EHR
+  classification: Restricted
+  risk_level: High
+  pii_flag: "Yes"
+  pii_types: Medical record number;Medications
+
+- data_asset_id: DA-VITAL-SIGNS
+  name: Device vital signs
+  description: >
+    Heart rate, blood pressure, saturation and ventilator settings captured
+    from bedside devices. Raw in the device gateway; part of the record once
+    a nurse validates them in the EHR, which is why the EHR is the system
+    of record and not the gateway.
+  status: Active
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Physical
+  company_domain: Clinical Care
+  tags: [clinical, hl7v2, device]
+  data_owner_org_id: ORG-INPATIENT
+  data_steward_org_id: ORG-CLIN-ENG
+  source_of_truth: SYS-EHR
+  classification: Restricted
+  risk_level: Medium
+  pii_flag: "Yes"
+  pii_types: Medical record number;Location
+
+- data_asset_id: DA-CARE-SUMMARY
+  name: Continuity of care documents
+  description: The C-CDA summary sent to the regional exchange at every discharge and fetched from it when a patient arrives from elsewhere.
+  status: Active
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Physical
+  company_domain: Interoperability
+  tags: [document, ccda]
+  data_owner_org_id: ORG-HIM
+  data_steward_org_id: ORG-HIM
+  source_of_truth: SYS-EHR
+  classification: Restricted
+  risk_level: High
+  pii_flag: "Yes"
+  pii_types: Name;Date of birth;Diagnoses;Medications
+
+- data_asset_id: DA-BED-STATUS
+  name: Bed status and placement
+  description: Which bed is clean, occupied or blocked, and who is waiting for one.
+  status: Active
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Physical
+  company_domain: Clinical Care
+  tags: [operational]
+  data_owner_org_id: ORG-INPATIENT
+  source_of_truth: SYS-BED-MGMT
+  classification: Confidential
+  risk_level: Low
+  pii_flag: "Yes"
+  pii_types: Name;Location

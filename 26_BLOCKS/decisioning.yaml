@@ -1,0 +1,49 @@
+# Where a yes or a no is produced, and where the thing that produces it is
+# kept honest.
+#
+# A decision in the transaction path has a time budget measured in tens of
+# milliseconds; a model that produces it has a lifecycle measured in months.
+# Two blocks, because the two are owned and operated by different people and
+# fail in different ways.
+
+- building_block_id: realtime-decision
+  name: Real-time decision
+  category: Decisioning
+  description: >
+    A stream of events to score, a feature cache warm enough to answer inside the time budget, the model serving that scores them, and the observability that says when the budget is being missed. Nothing durable: the decision is written back by whatever asked for it.
+  provides:
+    - component: stream-processing
+    - component: cache
+    - component: ml-platform
+    - component: observability
+  relations:
+    - from: stream-processing
+      to: cache
+    - from: stream-processing
+      to: ml-platform
+    - from: ml-platform
+      to: cache
+    - from: ml-platform
+      to: observability
+  defaults:
+    network_zone: Private-App
+
+- building_block_id: model-platform
+  name: Model platform
+  category: Decisioning
+  description: >
+    Where models are trained, registered, served and watched: the platform, the store that holds every version and its training data, the catalog that says what each model is for and what fed it, and the monitoring that notices drift before a regulator does.
+  provides:
+    - component: ml-platform
+    - component: object-store
+    - component: catalog
+    - component: observability
+  relations:
+    - from: object-store
+      to: ml-platform
+    - from: ml-platform
+      to: catalog
+    - from: ml-platform
+      to: observability
+  defaults:
+    network_zone: Private-Data

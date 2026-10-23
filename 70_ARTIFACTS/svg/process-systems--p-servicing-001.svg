@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="710.4" viewBox="0 0 1100 710.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Assess interest, fees, and minimum payment — Systems, Data and Controls</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Assess interest, fees, and minimum payment — Systems, Data and Controls</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   6 nodes · 5 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(169.72 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="271.72" y="390.3" width="212.57" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="313.72" y="407.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Control">
+<rect x="272.3" y="258.3" width="211.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="305.15" y="275.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Control</text>
+</g>
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="529.3" y="140.3" width="221.4" height="175.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="571.3" y="157.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.87" y="143.26" width="212.27" height="119.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.72" y="160.67" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="529.3" y="24.3" width="198.4" height="87.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="559.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-SERVICING-001::SYS-CORE-LEDGER">
+<title>Primary</title>
+<path d="M196 180.33 L224.94 180 A10 10 0 0 1 225.06 180 L233 180 A8 8 0 0 0 241 172 L241 78 A10 10 0 0 1 251 68 L526 68 L551.48 68" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 68 L545.43 72.78 L545.43 63.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-SERVICING-001::SYS-CORE-LEDGER">
+<rect x="354.32" y="74.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="86.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-SERVICING-001::DA-CUSTOMER-PROFILE">
+<title>Reads</title>
+<path d="M196 191.67 L224.94 192 A10 10 0 0 0 225.06 192 L526 192 L551.48 192" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 192 L545.43 196.78 L545.43 187.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-SERVICING-001::DA-CUSTOMER-PROFILE">
+<rect x="357.82" y="169.5" width="35.36" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="181.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Reads</text>
+</g>
+<g class="edge" data-id="e2::P-SERVICING-001::DA-TRANSACTION">
+<title>Both</title>
+<path d="M196 203 L225 203 L488 203 A10 10 0 0 1 498 213 L498 254 A10 10 0 0 0 508 264 L526 264 L551.48 264" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 264 L545.43 268.79 L545.43 259.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-SERVICING-001::DA-TRANSACTION">
+<rect x="361.35" y="209.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="221.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e3::P-SERVICING-001::CTL-CYCLE-VALID">
+<title>governed by</title>
+<path d="M196 214.33 L224.94 214 A10 10 0 0 1 225.06 214 L241 214 A10 10 0 0 1 251 224 L251 301 A9 9 0 0 0 260 310 L269 310 L294.48 310" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M298 310 L288.43 314.79 L288.43 305.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e4::P-SERVICING-001::CAP-BILL-01">
+<title>supports</title>
+<path d="M196 225.67 L224.94 226 A10 10 0 0 0 225.06 226 L233 226 A8 8 0 0 1 241 234 L241 432 A10 10 0 0 0 251 442 L269 442 L294.48 442" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M298 442 L288.43 446.79 L288.43 437.21 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-BILL-01" data-type="capabilities">
+<title>Interest &amp; Fee Assessment</title>
+<path d="M338 416 L298 442 L338 468 L418 468 L458 442 L418 416 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="378" y="440.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Interest &amp; Fee</text>
+<text x="378" y="452.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Assessment</text>
+</g>
+<g class="node" data-id="CTL-CYCLE-VALID" data-type="controls">
+<title>Cycle assessment validation</title>
+<path d="M344.86 284 L298 299.23 L298 320.77 L344.86 336 L411.14 336 L458 320.77 L458 299.23 L411.14 284 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="378" y="308.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Cycle assessment</text>
+<text x="378" y="320.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">validation</text>
+</g>
+<g class="node" data-id="DA-CUSTOMER-PROFILE" data-type="data_assets">
+<title>Customer profile</title>
+<path d="M555 168.6 Q563.5 166 597.5 166 L682.5 166 Q716.5 166 725 168.6 L725 215.4 Q716.5 218 682.5 218 L597.5 218 Q563.5 218 555 215.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="636" y="196.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer profile</text>
+<svg x="707" y="171" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-TRANSACTION" data-type="data_assets">
+<title>Card transaction history</title>
+<path d="M555 240.6 Q563.5 238 597.5 238 L682.5 238 Q716.5 238 725 240.6 L725 287.4 Q716.5 290 682.5 290 L597.5 290 Q563.5 290 555 287.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="636" y="262.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Card transaction</text>
+<text x="636" y="274.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">history</text>
+<svg x="707" y="243" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-SERVICING-001" data-type="processes">
+<title>Assess interest, fees, and minimum payment</title>
+<path d="M116 169 L36 194.97 L66.56 237 L165.44 237 L196 194.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="201.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Assess interest, fees,</text>
+<text x="116" y="213.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and minimum payment</text>
+</g>
+<g class="node" data-id="SYS-CORE-LEDGER" data-type="systems">
+<title>Core Card Ledger</title>
+<rect x="555" y="50" width="147" height="36" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="624.5" y="72.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Core Card Ledger</text>
+<svg x="684" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="608.4" x2="1072" y2="608.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="632.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 621.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="632.4" font-size="12" font-weight="400" fill="#343d50">capability · 1</text>
+<g transform="translate(177.5 621.4)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="203.5" y="632.4" font-size="12" font-weight="400" fill="#343d50">control · 1</text>
+<g transform="translate(273.05 621.4)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="299.05" y="632.4" font-size="12" font-weight="400" fill="#343d50">data asset · 2</text>
+<g transform="translate(389.98 621.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="415.98" y="632.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(490.24 621.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="516.24" y="632.4" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
+<text x="28" y="654.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 643.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="654.4" font-size="12" font-weight="400" fill="#343d50">governed by</text>
+<g transform="translate(184.75 643.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="210.75" y="654.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(277.26 643.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="303.26" y="654.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="688.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-servicing-001 · edit the model, not the picture</text></g>
+</svg>

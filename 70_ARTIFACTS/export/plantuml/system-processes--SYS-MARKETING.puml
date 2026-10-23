@@ -1,0 +1,43 @@
+@startuml
+' Campaign management — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Campaign management — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_ACQ_03, "Campaign Execution & Channel Management", "Execute acquisition campaigns across direct mail, digital, partner, and inbound channels.", $tags="capabilities")
+  ' aac CAP_ACQ_03: company_domain="MarTech"
+  System(CAP_ACQ_04, "Marketing Compliance & Disclosure Review", "Review creative and offers for regulatory adequacy before release.", $tags="capabilities")
+  ' aac CAP_ACQ_04: company_domain="MarTech"
+  System(CAP_ACQ_02, "Offer & Pre-Screen Management", "Construct and govern firm offers of credit and pre-screen criteria.", $tags="capabilities")
+  ' aac CAP_ACQ_02: company_domain="MarTech"
+}
+Boundary(b_Process, "Process") {
+  System(P_MARKETING_002, "Construct and approve firm offer of credit", "Define offer criteria and terms, and obtain compliance approval before release. A firm offer of credit commits the bank under FCRA; criteria, terms, and the compliance sign-off are locked before any channel sees the offer.", $tags="processes")
+  ' aac P_MARKETING_002: company_domain=""
+  System(P_MARKETING_003, "Execute acquisition campaign", "Deploy the approved offer across selected channels and manage in-flight performance. In-flight management covers channel performance, budget, and suppression hygiene; changes to a live campaign re-enter compliance review when terms move.", $tags="processes")
+  ' aac P_MARKETING_003: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_MARKETING, "Campaign management", "Campaign management and execution.", $tags="systems")
+  ' aac SYS_MARKETING: company_domain=""
+}
+
+Rel(P_MARKETING_002, SYS_MARKETING, "Supporting")
+' aac rel: source="P_MARKETING_002"; target="SYS_MARKETING"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_MARKETING_003, SYS_MARKETING, "Primary")
+' aac rel: source="P_MARKETING_003"; target="SYS_MARKETING"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_MARKETING_002, CAP_ACQ_02, "supports")
+' aac rel: source="P_MARKETING_002"; target="CAP_ACQ_02"; label="supports"; relation="process_supports_capability"
+Rel(P_MARKETING_002, CAP_ACQ_04, "supports")
+' aac rel: source="P_MARKETING_002"; target="CAP_ACQ_04"; label="supports"; relation="process_supports_capability"
+Rel(P_MARKETING_003, CAP_ACQ_03, "supports")
+' aac rel: source="P_MARKETING_003"; target="CAP_ACQ_03"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

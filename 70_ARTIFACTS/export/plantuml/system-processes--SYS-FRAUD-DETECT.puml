@@ -1,0 +1,63 @@
+@startuml
+' Transaction fraud detection — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Transaction fraud detection — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_PAY_01, "Authorization Processing", "Decision and respond to real-time authorization requests.", $tags="capabilities")
+  ' aac CAP_PAY_01: company_domain="Servicing"
+  System(CAP_CRED_06, "Authorization Strategy Management", "Set the rules governing real-time authorization decisions.", $tags="capabilities")
+  ' aac CAP_CRED_06: company_domain="Originations"
+  System(CAP_FRAUD_02, "Fraud Case Investigation", "Investigate and adjudicate fraud cases.", $tags="capabilities")
+  ' aac CAP_FRAUD_02: company_domain="Servicing"
+  System(CAP_FRAUD_01, "Transaction Fraud Detection & Strategy", "Detect fraudulent transactions in flight and set detection strategy.", $tags="capabilities")
+  ' aac CAP_FRAUD_01: company_domain="Servicing"
+}
+Boundary(b_Process, "Process") {
+  System(P_FRAUD_001, "Detect and action transaction fraud alert", "Detect a suspected fraudulent transaction, action the alert, and contact the cardholder. Alert handling runs against loss and customer-friction budgets; actions span block, reissue, and contact, and the clock matters because exposure grows per transaction.", $tags="processes")
+  ' aac P_FRAUD_001: company_domain=""
+  System(P_FRAUD_002, "Investigate and adjudicate fraud case", "Investigate a suspected fraud case and reach a documented determination. The case determination separates true fraud from friendly fraud and abuse, drives the Reg E liability decision, and feeds the loss and strategy data.", $tags="processes")
+  ' aac P_FRAUD_002: company_domain=""
+  System(P_CREDIT_007, "Maintain authorization strategy", "Define and deploy the rules governing real-time authorization decisions. Authorization strategy balances approval rates, fraud losses, and credit exposure in real time; changes deploy through the same testing discipline as origination strategy.", $tags="processes")
+  ' aac P_CREDIT_007: company_domain=""
+  System(P_FRAUD_006, "Maintain fraud detection strategy", "Define, test, and deploy changes to fraud detection rules and models. Strategy changes are tested against recent fraud and false-positive performance before deployment; every rule change is versioned and reversible.", $tags="processes")
+  ' aac P_FRAUD_006: company_domain=""
+  System(P_PAYMENTS_001, "Process authorization request", "Receive, decision, and respond to a real-time authorization request within the network response window.", $tags="processes")
+  ' aac P_PAYMENTS_001: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_FRAUD_DETECT, "Transaction fraud detection", "Real-time transaction fraud scoring and alerting.", $tags="systems")
+  ' aac SYS_FRAUD_DETECT: company_domain=""
+}
+
+Rel(P_CREDIT_007, SYS_FRAUD_DETECT, "Supporting")
+' aac rel: source="P_CREDIT_007"; target="SYS_FRAUD_DETECT"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PAYMENTS_001, SYS_FRAUD_DETECT, "Supporting")
+' aac rel: source="P_PAYMENTS_001"; target="SYS_FRAUD_DETECT"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_FRAUD_001, SYS_FRAUD_DETECT, "Primary")
+' aac rel: source="P_FRAUD_001"; target="SYS_FRAUD_DETECT"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_FRAUD_002, SYS_FRAUD_DETECT, "Supporting")
+' aac rel: source="P_FRAUD_002"; target="SYS_FRAUD_DETECT"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_FRAUD_006, SYS_FRAUD_DETECT, "Primary")
+' aac rel: source="P_FRAUD_006"; target="SYS_FRAUD_DETECT"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_CREDIT_007, CAP_CRED_06, "supports")
+' aac rel: source="P_CREDIT_007"; target="CAP_CRED_06"; label="supports"; relation="process_supports_capability"
+Rel(P_PAYMENTS_001, CAP_PAY_01, "supports")
+' aac rel: source="P_PAYMENTS_001"; target="CAP_PAY_01"; label="supports"; relation="process_supports_capability"
+Rel(P_PAYMENTS_001, CAP_CRED_06, "supports")
+' aac rel: source="P_PAYMENTS_001"; target="CAP_CRED_06"; label="supports"; relation="process_supports_capability"
+Rel(P_FRAUD_001, CAP_FRAUD_01, "supports")
+' aac rel: source="P_FRAUD_001"; target="CAP_FRAUD_01"; label="supports"; relation="process_supports_capability"
+Rel(P_FRAUD_002, CAP_FRAUD_02, "supports")
+' aac rel: source="P_FRAUD_002"; target="CAP_FRAUD_02"; label="supports"; relation="process_supports_capability"
+Rel(P_FRAUD_006, CAP_FRAUD_01, "supports")
+' aac rel: source="P_FRAUD_006"; target="CAP_FRAUD_01"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

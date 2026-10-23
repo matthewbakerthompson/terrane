@@ -1,0 +1,281 @@
+# The parts of a product we build.
+#
+# A channel, an API, a worker, a datastore, an object store, an event
+# publisher, a public front door. The AWS and Azure shapes are composed from
+# these; what differs between them is the blocks they run on and the shared
+# services they use, which the shape passes in.
+
+- module_id: api-service
+  name: Product service
+  category: Application
+  needs: [product_name, slug]
+  description: >
+    The domain service the product is built around, and the API it offers.
+    Every other part of a built product wires to it, so it cannot be dropped.
+    The service is what is deployed and runs; the API is its door, a record
+    of its own that every caller's connection goes through. The system keeps
+    the id it had when it was named for the API, because the estate's
+    connections, flows and processes point at it.
+  optional: false
+  parameters:
+    - name: runs_on
+      default: [stateless-service]
+      description: Blocks or block components the service runs on
+    - name: uses
+      default: []
+      description: Shared services the service uses directly
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-API"
+        name: "{product_name} Service"
+        description: "Domain service for {product_name}, behind the {product_name} API."
+        system_category: Application
+        network_zone: Private-App
+        runs_on: "{runs_on}"
+        uses: "{uses}"
+    offered_interfaces:
+      - offered_interface_id: "OI-{slug|upper}-API"
+        name: "{product_name} API"
+        description: "The domain API {product_name} offers its channels, its jobs and its partners."
+        system_id: "SYS-{slug|upper}-API"
+        protocol: HTTPS
+        integration_style: Request-response
+        auth_method: OAuth2
+
+- module_id: web-channel
+  name: Web channel
+  category: Channel
+  needs: [product_name, slug]
+  description: >
+    The customer-facing front end, calling the product API. Drop it for a
+    product with no screens of its own.
+  requires: [api-service]
+  parameters:
+    - name: runs_on
+      default: [stateless-service.container-platform, stateless-service.observability]
+    - name: uses
+      default: []
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-WEB"
+        name: "{product_name} Web"
+        description: "Customer-facing front end for {product_name}."
+        system_category: Channel
+        network_zone: Private-App
+        runs_on: "{runs_on}"
+        uses: "{uses}"
+    interfaces:
+      - interface_id: "INT-{slug|upper}-WEB-API"
+        name: "{product_name} Web to API"
+        source_system_id: "SYS-{slug|upper}-WEB"
+        target_system_id: "SYS-{slug|upper}-API"
+        offered_interface_id: "OI-{slug|upper}-API"
+        auth_method: OAuth2
+
+- module_id: public-web-entry
+  name: Public front door
+  category: Edge
+  needs: [product_name, slug]
+  description: >
+    The edge in front of a public web channel: a CDN distribution with a WAF
+    ruleset, and a load balancer terminating TLS. Runs on the public web tier
+    block, which is where the ruleset and the hostname are created.
+  requires: [web-channel]
+  patterns: [public-web-entry]
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-EDGE"
+        name: "{product_name} Edge"
+        description: "CDN distribution and WAF ruleset for {product_name}."
+        system_category: Edge
+        network_zone: Edge
+        region: global
+        deployment_unit: terraform
+        resilience: Multi-region
+        architecture_domain: Technology
+        runs_on: [public-web-tier.cdn, public-web-tier.waf, public-web-tier.dns]
+      - system_id: "SYS-{slug|upper}-ALB"
+        name: "{product_name} Load Balancer"
+        description: "Public load balancer terminating TLS for {product_name}."
+        system_category: Network
+        network_zone: Public
+        deployment_unit: terraform
+        architecture_domain: Technology
+        runs_on: [public-web-tier.load-balancer]
+    interfaces:
+      - interface_id: "INT-{slug|upper}-EDGE-ALB"
+        name: "{product_name} Edge to Load Balancer"
+        source_system_id: "SYS-{slug|upper}-EDGE"
+        target_system_id: "SYS-{slug|upper}-ALB"
+        direction: Inbound
+        auth_method: MutualTLS
+        architecture_domain: Technology
+      - interface_id: "INT-{slug|upper}-ALB-WEB"
+        name: "{product_name} Load Balancer to Web"
+        source_system_id: "SYS-{slug|upper}-ALB"
+        target_system_id: "SYS-{slug|upper}-WEB"
+        direction: Inbound
+        auth_method: MutualTLS
+        architecture_domain: Technology
+
+- module_id: async-worker
+  name: Async worker
+  category: Application
+  needs: [product_name, slug]
+  description: >
+    Consumes the product's domain events and drives the long-running work a
+    request cannot wait for. Drop it for a product with nothing to do after
+    the response.
+  requires: [api-service]
+  patterns: [event-fanout]
+  parameters:
+    - name: runs_on
+      default: [stateless-service.container-platform, stateless-service.observability]
+    - name: stream
+      component: event-stream
+      description: The event stream the worker consumes from
+    - name: protocol
+      default: Kafka
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-WORKER"
+        name: "{product_name} Async Worker"
+        description: "Consumes {product_name} domain events and drives long-running work."
+        criticality: Medium
+        system_category: Application
+        network_zone: Private-App
+        runs_on: "{runs_on}"
+        uses: ["{stream}"]
+    interfaces:
+      - interface_id: "INT-{slug|upper}-API-WORKER"
+        name: "{product_name} Service to Async Worker"
+        description: Domain events published onto the shared stream.
+        source_system_id: "SYS-{slug|upper}-API"
+        target_system_id: "SYS-{slug|upper}-WORKER"
+        protocol: "{protocol}"
+        integration_style: Event
+        data_classification: Confidential
+
+- module_id: relational-datastore
+  name: Relational datastore
+  category: Data
+  needs: [classification, owner_org, product_name, slug]
+  description: >
+    The product's operational database and the data asset it masters, with
+    the API reading and writing it. Runs on the transactional store block,
+    which is where the backup plan and the key come from.
+  requires: [api-service]
+  patterns: [stateless-request-service]
+  parameters:
+    - name: runs_on
+      default: [transactional-store]
+    - name: protocol
+      default: PostgreSQL
+    - name: system_suffix
+      default: DB
+      description: DB, STORE or whatever the estate calls its datastores
+    - name: risk_level
+      default: High
+    - name: data_org
+      estate: true
+      description: The org unit that stewards the estate's operational data
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-{system_suffix}"
+        name: "{product_name} Database"
+        description: "Relational database for {product_name}, encrypted with a customer managed key."
+        system_category: Datastore
+        network_zone: Private-Data
+        deployment_unit: terraform
+        togaf_layer: Data
+        architecture_domain: Data
+        runs_on: "{runs_on}"
+    interfaces:
+      - interface_id: "INT-{slug|upper}-API-{system_suffix}"
+        name: "{product_name} Service to Database"
+        source_system_id: "SYS-{slug|upper}-API"
+        target_system_id: "SYS-{slug|upper}-{system_suffix}"
+        protocol: "{protocol}"
+        architecture_domain: Data
+    data_assets:
+      - data_asset_id: "DA-{slug|upper}-OPERATIONAL"
+        name: "{product_name} operational data"
+        description: "Operational records held by {product_name}."
+        source_of_truth: "SYS-{slug|upper}-{system_suffix}"
+        data_owner_org_id: "{owner_org}"
+        data_steward_org_id: "{data_org}"
+        classification: "{classification}"
+        risk_level: "{risk_level}"
+        pii_flag: "Yes"
+        togaf_layer: Data
+        architecture_domain: Data
+  relations:
+    system_reads_writes:
+      - system_id: "SYS-{slug|upper}-API"
+        data_asset_id: "DA-{slug|upper}-OPERATIONAL"
+        operation: ReadWrite
+
+- module_id: object-store
+  name: Object store
+  category: Data
+  needs: [product_name, slug]
+  description: >
+    A bucket of the product's own, for documents and extracts, encrypted with
+    the customer managed key. Drop it for a product that holds no files.
+  requires: [api-service]
+  parameters:
+    - name: uses
+      # Kinds, which the shape's landing zone answers: the bucket service
+      # and the key it is encrypted with.
+      default: [object-store, kms]
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-BUCKET"
+        name: "{product_name} Object Store"
+        description: "Object store for {product_name} documents and extracts."
+        criticality: Medium
+        system_category: Datastore
+        network_zone: Private-Data
+        deployment_unit: terraform
+        resilience: Multi-AZ
+        togaf_layer: Data
+        architecture_domain: Data
+        uses: "{uses}"
+    interfaces:
+      - interface_id: "INT-{slug|upper}-API-BUCKET"
+        name: "{product_name} Service to Object Store"
+        source_system_id: "SYS-{slug|upper}-API"
+        target_system_id: "SYS-{slug|upper}-BUCKET"
+        architecture_domain: Data
+
+- module_id: event-publisher
+  name: Event publisher
+  category: Integration
+  needs: [product_name, slug]
+  description: >
+    Publishes the product's domain events onto the enterprise bus for whoever
+    subscribes. The part that lets other products react without calling
+    this one.
+  requires: [api-service]
+  patterns: [event-fanout]
+  parameters:
+    - name: bus
+      component: message-queue
+    - name: protocol
+      default: AMQP
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-EVENTS"
+        name: "{product_name} Event Publisher"
+        description: "Publishes {product_name} domain events onto the enterprise bus."
+        criticality: Medium
+        system_category: Integration
+        uses: ["{bus}"]
+    interfaces:
+      - interface_id: "INT-{slug|upper}-API-EVENTS"
+        name: "{product_name} Service to Event Publisher"
+        source_system_id: "SYS-{slug|upper}-API"
+        target_system_id: "SYS-{slug|upper}-EVENTS"
+        protocol: "{protocol}"
+        integration_style: Event
+        data_classification: Internal

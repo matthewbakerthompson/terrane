@@ -1,0 +1,30 @@
+# Developer probes
+
+Scripts for judging a change by looking, kept here rather than in a session's
+scratch folder so the next person has them. They drive the Chrome already on
+the machine: the `.mjs` ones through `../capture.mjs` (install once with
+`cd 80_APP/tools && npm install --no-save puppeteer-core pptxgenjs`), the
+`.py` ones through `chrome.py` here (a name for the engine's `terrane.draw.browser`, which `--png` shoots drawings with), which speaks the DevTools protocol with
+the standard library and needs nothing installed. All expect the app to be
+listening on 127.0.0.1:8020 (`python 80_APP/app/server.py`) unless told
+`--url`. Pictures land in `out/`, which is not committed.
+
+| Script | What it answers |
+|---|---|
+| `shots.mjs name=hash ...` | What does this drawing look like now? A PNG per hash through the app's own export, with its size and the zoom the app chose. |
+| `opening_probe.mjs out/ URL [stone\|graphite] [view ...]` | What does every drawing open at, as a person sees it? Each view in the estate (or those named) opened in a 1440 by 900 window with the sidebar and the brief as the app leaves them: a line each in `out/<tone>.jsonl` with the zoom it opened at, the zoom it fits whole at, how many pixels a box's name is on the screen, how much of the drawing is in view and the range of box sizes, and a PNG of the window. Run it before and after a change to the opening or the layout, in both tones. |
+| `ratio_probe.mjs [view ...]` | How does every drawing fit the sheet? Width, height, ratio and fit zoom per view; run before and after a layout change. |
+| `pages.mjs out/ URL name=hash ...` | What does a page look like, window and all? A PNG per name of the whole app as a person sees it, `name=hash\|click:id` pressing a button for the pages a hash cannot reach; for judging the shell rather than a drawing. |
+| `drag_probe.mjs out/ URL name=hash\|BOX>TARGET[\|steps]` | What does a drop do? Drags a box with the mouse onto another box or into a boundary (a clear spot in it, found from the drawing), captures the moment before and the chooser it opens, and with `confirm,undo` makes the move and takes it back; `layout=packed` first for a map drawn as tiles. Prints what the chooser said and which boundary the box is drawn in. |
+| `arrange_probe.mjs out/ URL [graphite]` | Does a canvas diagram stay where it is put? Makes a diagram of Network Topology with two systems through the canvas's endpoints, then drags a box within its zone, drags a system in from the picker, carries a box into another zone and moves it there, drags a boundary, lays it out again and undoes that; a PNG per step, and a line each on how many positions the file keeps, which boxes moved and how far a drop landed from where it was let go. It writes to the model: run it on a copy of the repository. |
+| `place_probe.mjs out/ URL` | Does every page keep a way back and its place? On nine pages, reached by pressing what a person presses: hides the sidebar, captures the window (`<page>-hidden.png`) and says whether a Show the sidebar control is on screen and brings it back; then chooses something (a table, a shelf, a tab), scrolls or zooms, reloads, and says what the reload lost, if anything: the address, the heading, what was chosen, the drawing's zoom and pan, the scroll. Run it before and after a change to the shell or the router. |
+| `tour_probe.mjs out/ URL [graphite]` | Does the tour run, start to end, as a first visit sees it? From a cleared browser: the offer on Home, Start the tour, then each step done as its card asks (some by the person's own press, some by Show me) to the end card, a PNG per step and a line each with the card's words, where the ring is and whether the pointer rests in it; then Next and Back, Esc, Not now, Don't offer this again, and Take the tour from Help. Point it at a baked static copy too: there the last step only opens the New menu. |
+| `err_probe.mjs <hash>` | Why is this drawing blank? Page and console errors from before the first script runs. |
+| `live_probe.mjs [base-url]` | Did the deploy land? Marks and the review-pack line on the hosted demo, and any icon the site failed to serve. |
+| `watch_ci.sh <sha>` | Are both workflows green on this commit? Waits and prints their conclusions; run it as a background task after a push. |
+| `layout_fixture.py [view ...]` | What did the app compute for this drawing? Every node's center, size and box and every boundary's box, read back from Cytoscape into `50_ENGINE/tests/fixtures/layout/` for the packed maps and `fixtures/layered/` for the dagre-ranked diagrams, the latter with the direction the app chose, the axis it ranked each edge along and every routed edge's points; for a tile map, every band, card, grid and tile as the page laid it out, with the lines each name broke into, into `fixtures/tiles/`, `fixtures/elk/` for the small diagrams the app hands to ELK, which `terrane.draw.elk` holds equal through the browser, `fixtures/wheel/` for the hub view's concentric layout, and `fixtures/organic/` for a flat drawing the app laid out with cose after dagre ranked it into a ribbon (captured from a probe view that was not kept; the fixture carries its payload); the app's own PNG lands in `out/`. The Python layout in `terrane.draw` is held equal to these. A fixture whose view is gone (a retired view, a deleted probe) is taken again with `--replay fixture.json ...`, the page handed the payload the fixture holds. |
+| `font_metrics.py` | How wide is this text in the app's own face? Every glyph and pair of the shipped faces measured in Chrome into `50_ENGINE/terrane/draw/fonts/metrics.json`; re-run when a face or a weight is added. |
+| `svg_shot.py view-or-file ...` | What does the Python drawing of this look like? The sheet from `/api/svg` for a view, or an SVG file on disk such as a committed picture under `70_ARTIFACTS/`, as a PNG at 2x, for reading beside the app's export of the same view. |
+
+The README's own pictures are a separate script, `../screenshots.py`, described in
+`80_APP/README.md`; the review pack is the engine's own `terrane pack`.

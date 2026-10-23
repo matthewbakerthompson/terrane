@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1249.3" height="817.3" viewBox="0 0 1249.3 817.3" font-family="Geist, system-ui, sans-serif" data-layout="dagre">
+<title>Open Banking Affordability — Onboarding</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Open Banking Affordability — Onboarding</text>
+<text x="1221.3" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   5 nodes · 5 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">What onboarding this product creates, nested by account, region and network tier. Everything inside the boundaries comes from the product's shape; the systems outside are the ones it</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">must connect to, which are usually the long- lead items. For a bought product, the vendor's environment sits outside our accounts.</text>
+<line x1="28" y1="112" x2="1221.3" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(36.5 130.5)">
+<g class="boundary" data-id="grp::GCP">
+<rect x="-6.8" y="-6.8" width="1189.9" height="284.6" rx="8" fill="#f8fbff" stroke="#4285f4" stroke-width="1.4"/>
+<text x="13.65" y="10.6" font-size="11" font-weight="600" fill="#1a4f9e" text-anchor="middle">GCP</text>
+</g>
+<g class="boundary" data-id="grp::SaaS">
+<rect x="420.9" y="313.9" width="336.2" height="233.2" rx="8" fill="#fcfbf7" stroke="#9a8f6a" stroke-width="1.4" stroke-dasharray="4 2"/>
+<text x="444.4" y="331.31" font-size="11" font-weight="600" fill="#6b6246" text-anchor="middle">SaaS</text>
+</g>
+<g class="boundary" data-id="grp::GCP::gcp-lending-prod">
+<rect x="18.9" y="18.9" width="1138.5" height="233.2" rx="8" fill="#f8fbff" stroke="#4285f4" stroke-width="1.4" stroke-dasharray="4 2"/>
+<text x="103.4" y="36.3" font-size="11" font-weight="600" fill="#1a4f9e" text-anchor="middle">project gcp-lending-prod</text>
+</g>
+<g class="boundary" data-id="grp::SaaS::eu-west-1">
+<rect x="446.6" y="339.6" width="284.8" height="181.8" rx="8" fill="#f8fafc" stroke="#8f9bb5" stroke-width="1.4" stroke-dasharray="4 2"/>
+<text x="506.7" y="357" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">region eu-west-1</text>
+</g>
+<g class="boundary" data-id="grp::GCP::gcp-lending-prod::europe-west2">
+<rect x="44.6" y="44.6" width="1087.1" height="181.8" rx="8" fill="#f8fafc" stroke="#5f6368" stroke-width="1.4" stroke-dasharray="1 1"/>
+<text x="113.85" y="62" font-size="11" font-weight="600" fill="#3c4043" text-anchor="middle">region europe-west2</text>
+</g>
+<g class="boundary" data-id="grp::SaaS::eu-west-1::Edge">
+<rect x="472.3" y="365.3" width="233.4" height="130.4" rx="8" fill="#fcfbf7" stroke="#9a8f6a" stroke-width="1.4" stroke-dasharray="4 2"/>
+<text x="495.8" y="382.7" font-size="11" font-weight="600" fill="#6b6246" text-anchor="middle">Edge</text>
+</g>
+<g class="boundary" data-id="grp::GCP::gcp-lending-prod::europe-west2::Public">
+<rect x="70.3" y="70.3" width="233.4" height="130.4" rx="8" fill="#f1f6ff" stroke="#4285f4" stroke-width="1.4"/>
+<text x="99.9" y="87.7" font-size="11" font-weight="600" fill="#1a4f9e" text-anchor="middle">Public</text>
+</g>
+<g class="boundary" data-id="grp::GCP::gcp-lending-prod::europe-west2::Private-App">
+<rect x="348.3" y="70.3" width="476.4" height="130.4" rx="8" fill="#f1f6ff" stroke="#4285f4" stroke-width="1.4"/>
+<text x="393.15" y="87.7" font-size="11" font-weight="600" fill="#1a4f9e" text-anchor="middle">Private-App</text>
+</g>
+<g class="boundary" data-id="grp::GCP::gcp-lending-prod::europe-west2::Shared-Services">
+<rect x="871" y="70.3" width="235" height="130.4" rx="8" fill="#f1f6ff" stroke="#4285f4" stroke-width="1.4"/>
+<text x="928.05" y="87.7" font-size="11" font-weight="600" fill="#1a4f9e" text-anchor="middle">Shared-Services</text>
+</g>
+<g class="edge" data-id="e0::SYS-POSFIN-API::SYS-OBAFF-GATEWAY">
+<title>HTTPS</title>
+<path d="M556.7 135.5 L567.7 135.5 L605.3 135.5 L612.78 135.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M616.3 135.5 L606.73 140.28 L606.73 130.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::SYS-POSFIN-API::SYS-OBAFF-GATEWAY">
+<rect x="568" y="127.5" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="586.5" y="139.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+</g>
+<g class="edge" data-id="e1::SYS-OBAFF-GATEWAY::SYS-OBAFF-EGRESS">
+<title>HTTPS</title>
+<path d="M799.7 135.5 L810.7 135.5 L885.8 135.5 L893.28 135.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M896.8 135.5 L887.23 140.28 L887.23 130.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::SYS-OBAFF-GATEWAY::SYS-OBAFF-EGRESS">
+<rect x="829.75" y="127.5" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="848.25" y="139.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+</g>
+<g class="edge" data-id="e2::SYS-OBAFF-EGRESS::SYS-OBAFF-VENDOR">
+<title>PrivateLink</title>
+<path d="M988.5 175.7 L988.5 186.7 L988.5 363.6 A10 10 0 0 1 978.5 373.6 L598.85 373.6 A2.85 2.85 0 0 0 596 376.45 L596 379.3 L596 386.78" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M596 390.3 L591.22 380.73 L600.78 380.73 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::SYS-OBAFF-EGRESS::SYS-OBAFF-VENDOR">
+<rect x="772.86" y="365.6" width="58.79" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="802.25" y="377.15" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">PrivateLink</text>
+</g>
+<g class="edge" data-id="e3::SYS-OBAFF-VENDOR::SYS-OBAFF-WEBHOOKS">
+<title>HTTPS</title>
+<path d="M582 390.3 L582 379.3 L582 222.4 A10 10 0 0 0 572 212.4 L197 212.4 A10 10 0 0 1 187 202.4 L187 186.7 L187 179.22" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M187 175.7 L191.78 185.27 L182.22 185.27 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::SYS-OBAFF-VENDOR::SYS-OBAFF-WEBHOOKS">
+<rect x="563.5" y="287.85" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="582" y="299.4" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+</g>
+<g class="edge" data-id="e4::SYS-OBAFF-WEBHOOKS::SYS-POSFIN-API">
+<title>HTTPS</title>
+<path d="M278.7 135.5 L289.7 135.5 L362.3 135.5 L369.78 135.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M373.3 135.5 L363.73 140.28 L363.73 130.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::SYS-OBAFF-WEBHOOKS::SYS-POSFIN-API">
+<rect x="307.5" y="127.5" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="326" y="139.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+</g>
+<g class="node" data-id="SYS-OBAFF-EGRESS" data-type="systems">
+<title>Open Banking Affordability Private Egress</title>
+<rect x="897.5" y="96" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="984.5" y="127.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Open Banking</text>
+<text x="984.5" y="139.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Affordability Private</text>
+<text x="984.5" y="151.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Egress</text>
+<svg x="1061.5" y="101" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-OBAFF-GATEWAY" data-type="systems">
+<title>Open Banking Affordability Integration Gateway</title>
+<rect x="617" y="96" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="698" y="116.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Open Banking</text>
+<text x="698" y="128.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Affordability</text>
+<text x="698" y="140.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Integration</text>
+<text x="698" y="152.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Gateway</text>
+<text x="708" y="169.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">GKE</text>
+<image x="777" y="100" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0ic3RhbmRhcmRfcHJvZHVjdF9pY29uIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDUxMiA1MTIiPgogIDwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiAyLjEuMCBCdWlsZCAxNDIpICAtLT4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLnN0MCB7CiAgICAgICAgZmlsbDogbm9uZTsKICAgICAgfQoKICAgICAgLnN0MSB7CiAgICAgICAgZmlsbDogIzQyODVmNDsKICAgICAgfQoKICAgICAgLnN0MiB7CiAgICAgICAgZmlsbDogIzM0YTg1MzsKICAgICAgfQoKICAgICAgLnN0MyB7CiAgICAgICAgZmlsbDogI2ZiYmMwNDsKICAgICAgfQoKICAgICAgLnN0NCB7CiAgICAgICAgZmlsbDogI2VhNDMzNTsKICAgICAgfQogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPGcgaWQ9ImJvdW5kaW5nX2JveCI+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIvPgogIDwvZz4KICA8ZyBpZD0iYXJ0Ij4KICAgIDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0yNTYsNDU5Yy0yLjcsMC01LjQtLjctNy44LTJsLTE2Ni4yLTkzLjVjLTUtMi44LTguMi04LjItOC4yLTE0di0xODdjMC01LjgsMy4xLTExLjEsOC4yLTEzLjlMMjQ4LjIsNTVjNC45LTIuNywxMC44LTIuNywxNS43LDBsMTY2LjIsOTMuNWM1LDIuOCw4LjIsOC4yLDguMiwxMy45djE4N2MwLDUuOC0zLjEsMTEuMS04LjIsMTRsLTE2Ni4yLDkzLjVjLTIuNCwxLjQtNS4xLDItNy44LDJoMFpNMTA1LjgsMzQwLjFsMTUwLjIsODQuNSwxNTAuMi04NC41di0xNjguM2wtMTUwLjItODQuNS0xNTAuMiw4NC41djE2OC4zWk00MjIuMiwzNDkuNWgwWiIvPgogICAgPHBhdGggY2xhc3M9InN0NCIgZD0iTTg5LjgsMTc4LjVjLTUuNiwwLTExLTIuOS0xNC04LjItNC4zLTcuNy0xLjYtMTcuNSw2LjEtMjEuOEwyNDguMiw1NWM3LjctNC4zLDE3LjUtMS42LDIxLjgsNi4xLDQuMyw3LjcsMS42LDE3LjUtNi4xLDIxLjhsLTE2Ni4yLDkzLjVjLTIuNSwxLjQtNS4yLDIuMS03LjgsMi4xaDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3Q0IiBkPSJNNDIyLjIsMTc4LjVjLTIuNywwLTUuNC0uNy03LjgtMi4xbC0xNjYuMi05My41Yy03LjctNC4zLTEwLjQtMTQuMS02LjEtMjEuOCw0LjMtNy43LDE0LjEtMTAuNCwyMS44LTYuMWwxNjYuMiw5My41YzcuNyw0LjMsMTAuNCwxNC4xLDYuMSwyMS44LTIuOSw1LjItOC40LDguMi0xNCw4LjJoMFoiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDQiIGQ9Ik0yNTYsMTc4LjVjLTguOCwwLTE2LTcuMi0xNi0xNnYtOTMuNWMwLTguOCw3LjItMTYsMTYtMTZzMTYsNy4yLDE2LDE2djkzLjVjMCw4LjgtNy4yLDE2LTE2LDE2WiIvPgogICAgPHBhdGggY2xhc3M9InN0MyIgZD0iTTgxLjcsMzYzLjNjLTQuOS0yLjktNy45LTguMS03LjktMTMuOHYtMTg3YzAtNiwzLjMtMTEuMiw4LjItMTMuOSwyLjMtMS4zLDIzLjgtMTMuNCwyMy44LTEzLjR2MTg3bDU5LjMtMzMuM2M3LjctNC4zLDE3LjUtMS42LDIxLjgsNi4xLDQuMyw3LjcsMS42LDE3LjUtNi4xLDIxLjhsLTkwLjksNTEuMnMtNS42LTMuMS04LjEtNC41aDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNNDIyLjIsMzY3LjlsLTkwLjktNTEuMmMtNy43LTQuMy0xMC40LTE0LjEtNi4xLTIxLjhzMTQuMS0xMC40LDIxLjgtNi4xbDU5LjMsMzMuM3YtMTg3czIxLjUsMTIuMSwyMy45LDEzLjRjLjguNSwxLjYsMSwyLjMsMS42LDMuNiwyLjksNS44LDcuNCw1LjgsMTIuNHYxODdjMCw1LjctMywxMC45LTcuOSwxMy44LTIuNSwxLjUtOC4xLDQuNS04LjEsNC41aDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3Q0IiBkPSJNMzM5LjEsMjI1LjJjLTIuNywwLTUuNC0uNy03LjgtMi4xbC03NS4zLTQyLjMtNzUuMyw0Mi4zYy03LjcsNC4zLTE3LjUsMS42LTIxLjgtNi4xLTQuMy03LjctMS42LTE3LjUsNi4xLTIxLjhsODMuMS00Ni44YzQuOS0yLjcsMTAuOC0yLjcsMTUuNywwbDgzLjEsNDYuOGM3LjcsNC4zLDEwLjQsMTQuMSw2LjEsMjEuOC0yLjksNS4yLTguNCw4LjItMTQsOC4yaDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMjU2LDM2NS41Yy01LjYsMC0xMS0yLjktMTQtOC4yLTQuMy03LjctMS42LTE3LjUsNi4xLTIxLjhsNzUtNDIuMnYtODQuMWMwLTguOCw3LjItMTYsMTYtMTZzMTYsNy4yLDE2LDE2djkzLjVjMCw1LjgtMy4xLDExLjEtOC4yLDE0bC04My4xLDQ2LjhjLTIuNSwxLjQtNS4yLDIuMS03LjgsMi4xaDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QzIiBkPSJNMjU2LDM2NS41Yy0yLjcsMC01LjQtLjctNy44LTJsLTgzLjEtNDYuOGMtNS0yLjgtOC4yLTguMi04LjItMTR2LTkzLjVjMC04LjgsNy4yLTE2LDE2LTE2czE2LDcuMiwxNiwxNnY4NC4xbDUxLjEsMjguOHYtNjYuMWMwLTguOCw3LjItMTYsMTYtMTZzMTYsNy4yLDE2LDE2djEwMi45cy0zLDEuNi03LjksNC41Yy0yLjUsMS41LTUuMywyLjItOC4xLDIuMmgwWiIvPgogICAgPHBhdGggY2xhc3M9InN0MSIgZD0iTTI1NiwyNzJjLTUuNiwwLTExLTIuOS0xNC04LjItNC4zLTcuNy0xLjYtMTcuNSw2LjEtMjEuOGw5MS01MS4yLDcuOSw0LjRjMi4xLDEuMSw0LjIsMi44LDYuMSw2LjEsNC4zLDcuNywxLjYsMTcuNS02LjEsMjEuOGwtODMuMSw0Ni44Yy0yLjUsMS40LTUuMiwyLjEtNy44LDIuMWgwWiIvPgogICAgPHBhdGggY2xhc3M9InN0NCIgZD0iTTI1NiwyMzcuNmwtNzUuMy00Mi4zYy03LjctNC4zLTE3LjUtMS42LTIxLjgsNi4xLTEuNCwyLjUtMi4xLDUuMi0yLjEsNy44djkuNGw5MS4zLDUxLjNjMi41LDEuNCw1LjIsMi4xLDcuOCwyLjFoMHYtMzQuNGgwWiIvPgogIDwvZz4KPC9zdmc+"/>
+</g>
+<g class="node" data-id="SYS-OBAFF-VENDOR" data-type="systems">
+<title>Open Banking Affordability</title>
+<rect x="498" y="391" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="585" y="423.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Open Banking</text>
+<text x="585" y="435.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Affordability</text>
+<text x="589" y="464.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">TrueLayer</text>
+<svg x="662" y="396" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-OBAFF-WEBHOOKS" data-type="systems">
+<title>Open Banking Affordability Webhook Listener</title>
+<rect x="96" y="96" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="177" y="122.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Open Banking</text>
+<text x="177" y="134.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Affordability</text>
+<text x="177" y="146.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Webhook Listener</text>
+<text x="187" y="169.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">GKE</text>
+<image x="256" y="100" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0ic3RhbmRhcmRfcHJvZHVjdF9pY29uIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDUxMiA1MTIiPgogIDwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiAyLjEuMCBCdWlsZCAxNDIpICAtLT4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLnN0MCB7CiAgICAgICAgZmlsbDogbm9uZTsKICAgICAgfQoKICAgICAgLnN0MSB7CiAgICAgICAgZmlsbDogIzQyODVmNDsKICAgICAgfQoKICAgICAgLnN0MiB7CiAgICAgICAgZmlsbDogIzM0YTg1MzsKICAgICAgfQoKICAgICAgLnN0MyB7CiAgICAgICAgZmlsbDogI2ZiYmMwNDsKICAgICAgfQoKICAgICAgLnN0NCB7CiAgICAgICAgZmlsbDogI2VhNDMzNTsKICAgICAgfQogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPGcgaWQ9ImJvdW5kaW5nX2JveCI+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIvPgogIDwvZz4KICA8ZyBpZD0iYXJ0Ij4KICAgIDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0yNTYsNDU5Yy0yLjcsMC01LjQtLjctNy44LTJsLTE2Ni4yLTkzLjVjLTUtMi44LTguMi04LjItOC4yLTE0di0xODdjMC01LjgsMy4xLTExLjEsOC4yLTEzLjlMMjQ4LjIsNTVjNC45LTIuNywxMC44LTIuNywxNS43LDBsMTY2LjIsOTMuNWM1LDIuOCw4LjIsOC4yLDguMiwxMy45djE4N2MwLDUuOC0zLjEsMTEuMS04LjIsMTRsLTE2Ni4yLDkzLjVjLTIuNCwxLjQtNS4xLDItNy44LDJoMFpNMTA1LjgsMzQwLjFsMTUwLjIsODQuNSwxNTAuMi04NC41di0xNjguM2wtMTUwLjItODQuNS0xNTAuMiw4NC41djE2OC4zWk00MjIuMiwzNDkuNWgwWiIvPgogICAgPHBhdGggY2xhc3M9InN0NCIgZD0iTTg5LjgsMTc4LjVjLTUuNiwwLTExLTIuOS0xNC04LjItNC4zLTcuNy0xLjYtMTcuNSw2LjEtMjEuOEwyNDguMiw1NWM3LjctNC4zLDE3LjUtMS42LDIxLjgsNi4xLDQuMyw3LjcsMS42LDE3LjUtNi4xLDIxLjhsLTE2Ni4yLDkzLjVjLTIuNSwxLjQtNS4yLDIuMS03LjgsMi4xaDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3Q0IiBkPSJNNDIyLjIsMTc4LjVjLTIuNywwLTUuNC0uNy03LjgtMi4xbC0xNjYuMi05My41Yy03LjctNC4zLTEwLjQtMTQuMS02LjEtMjEuOCw0LjMtNy43LDE0LjEtMTAuNCwyMS44LTYuMWwxNjYuMiw5My41YzcuNyw0LjMsMTAuNCwxNC4xLDYuMSwyMS44LTIuOSw1LjItOC40LDguMi0xNCw4LjJoMFoiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDQiIGQ9Ik0yNTYsMTc4LjVjLTguOCwwLTE2LTcuMi0xNi0xNnYtOTMuNWMwLTguOCw3LjItMTYsMTYtMTZzMTYsNy4yLDE2LDE2djkzLjVjMCw4LjgtNy4yLDE2LTE2LDE2WiIvPgogICAgPHBhdGggY2xhc3M9InN0MyIgZD0iTTgxLjcsMzYzLjNjLTQuOS0yLjktNy45LTguMS03LjktMTMuOHYtMTg3YzAtNiwzLjMtMTEuMiw4LjItMTMuOSwyLjMtMS4zLDIzLjgtMTMuNCwyMy44LTEzLjR2MTg3bDU5LjMtMzMuM2M3LjctNC4zLDE3LjUtMS42LDIxLjgsNi4xLDQuMyw3LjcsMS42LDE3LjUtNi4xLDIxLjhsLTkwLjksNTEuMnMtNS42LTMuMS04LjEtNC41aDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNNDIyLjIsMzY3LjlsLTkwLjktNTEuMmMtNy43LTQuMy0xMC40LTE0LjEtNi4xLTIxLjhzMTQuMS0xMC40LDIxLjgtNi4xbDU5LjMsMzMuM3YtMTg3czIxLjUsMTIuMSwyMy45LDEzLjRjLjguNSwxLjYsMSwyLjMsMS42LDMuNiwyLjksNS44LDcuNCw1LjgsMTIuNHYxODdjMCw1LjctMywxMC45LTcuOSwxMy44LTIuNSwxLjUtOC4xLDQuNS04LjEsNC41aDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3Q0IiBkPSJNMzM5LjEsMjI1LjJjLTIuNywwLTUuNC0uNy03LjgtMi4xbC03NS4zLTQyLjMtNzUuMyw0Mi4zYy03LjcsNC4zLTE3LjUsMS42LTIxLjgtNi4xLTQuMy03LjctMS42LTE3LjUsNi4xLTIxLjhsODMuMS00Ni44YzQuOS0yLjcsMTAuOC0yLjcsMTUuNywwbDgzLjEsNDYuOGM3LjcsNC4zLDEwLjQsMTQuMSw2LjEsMjEuOC0yLjksNS4yLTguNCw4LjItMTQsOC4yaDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMjU2LDM2NS41Yy01LjYsMC0xMS0yLjktMTQtOC4yLTQuMy03LjctMS42LTE3LjUsNi4xLTIxLjhsNzUtNDIuMnYtODQuMWMwLTguOCw3LjItMTYsMTYtMTZzMTYsNy4yLDE2LDE2djkzLjVjMCw1LjgtMy4xLDExLjEtOC4yLDE0bC04My4xLDQ2LjhjLTIuNSwxLjQtNS4yLDIuMS03LjgsMi4xaDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QzIiBkPSJNMjU2LDM2NS41Yy0yLjcsMC01LjQtLjctNy44LTJsLTgzLjEtNDYuOGMtNS0yLjgtOC4yLTguMi04LjItMTR2LTkzLjVjMC04LjgsNy4yLTE2LDE2LTE2czE2LDcuMiwxNiwxNnY4NC4xbDUxLjEsMjguOHYtNjYuMWMwLTguOCw3LjItMTYsMTYtMTZzMTYsNy4yLDE2LDE2djEwMi45cy0zLDEuNi03LjksNC41Yy0yLjUsMS41LTUuMywyLjItOC4xLDIuMmgwWiIvPgogICAgPHBhdGggY2xhc3M9InN0MSIgZD0iTTI1NiwyNzJjLTUuNiwwLTExLTIuOS0xNC04LjItNC4zLTcuNy0xLjYtMTcuNSw2LjEtMjEuOGw5MS01MS4yLDcuOSw0LjRjMi4xLDEuMSw0LjIsMi44LDYuMSw2LjEsNC4zLDcuNywxLjYsMTcuNS02LjEsMjEuOGwtODMuMSw0Ni44Yy0yLjUsMS40LTUuMiwyLjEtNy44LDIuMWgwWiIvPgogICAgPHBhdGggY2xhc3M9InN0NCIgZD0iTTI1NiwyMzcuNmwtNzUuMy00Mi4zYy03LjctNC4zLTE3LjUtMS42LTIxLjgsNi4xLTEuNCwyLjUtMi4xLDUuMi0yLjEsNy44djkuNGw5MS4zLDUxLjNjMi41LDEuNCw1LjIsMi4xLDcuOCwyLjFoMHYtMzQuNGgwWiIvPgogIDwvZz4KPC9zdmc+"/>
+</g>
+<g class="node" data-id="SYS-POSFIN-API" data-type="systems">
+<title>Point-of-Sale Finance Service</title>
+<rect x="374" y="96" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="455" y="128.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Point-of-Sale</text>
+<text x="455" y="140.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Finance Service</text>
+<text x="465" y="169.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">GKE · Point-of-Sale Finance Cache</text>
+<image x="534" y="100" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0ic3RhbmRhcmRfcHJvZHVjdF9pY29uIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDUxMiA1MTIiPgogIDwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiAyLjEuMCBCdWlsZCAxNDIpICAtLT4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLnN0MCB7CiAgICAgICAgZmlsbDogbm9uZTsKICAgICAgfQoKICAgICAgLnN0MSB7CiAgICAgICAgZmlsbDogIzQyODVmNDsKICAgICAgfQoKICAgICAgLnN0MiB7CiAgICAgICAgZmlsbDogIzM0YTg1MzsKICAgICAgfQoKICAgICAgLnN0MyB7CiAgICAgICAgZmlsbDogI2ZiYmMwNDsKICAgICAgfQoKICAgICAgLnN0NCB7CiAgICAgICAgZmlsbDogI2VhNDMzNTsKICAgICAgfQogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPGcgaWQ9ImJvdW5kaW5nX2JveCI+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIvPgogIDwvZz4KICA8ZyBpZD0iYXJ0Ij4KICAgIDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0yNTYsNDU5Yy0yLjcsMC01LjQtLjctNy44LTJsLTE2Ni4yLTkzLjVjLTUtMi44LTguMi04LjItOC4yLTE0di0xODdjMC01LjgsMy4xLTExLjEsOC4yLTEzLjlMMjQ4LjIsNTVjNC45LTIuNywxMC44LTIuNywxNS43LDBsMTY2LjIsOTMuNWM1LDIuOCw4LjIsOC4yLDguMiwxMy45djE4N2MwLDUuOC0zLjEsMTEuMS04LjIsMTRsLTE2Ni4yLDkzLjVjLTIuNCwxLjQtNS4xLDItNy44LDJoMFpNMTA1LjgsMzQwLjFsMTUwLjIsODQuNSwxNTAuMi04NC41di0xNjguM2wtMTUwLjItODQuNS0xNTAuMiw4NC41djE2OC4zWk00MjIuMiwzNDkuNWgwWiIvPgogICAgPHBhdGggY2xhc3M9InN0NCIgZD0iTTg5LjgsMTc4LjVjLTUuNiwwLTExLTIuOS0xNC04LjItNC4zLTcuNy0xLjYtMTcuNSw2LjEtMjEuOEwyNDguMiw1NWM3LjctNC4zLDE3LjUtMS42LDIxLjgsNi4xLDQuMyw3LjcsMS42LDE3LjUtNi4xLDIxLjhsLTE2Ni4yLDkzLjVjLTIuNSwxLjQtNS4yLDIuMS03LjgsMi4xaDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3Q0IiBkPSJNNDIyLjIsMTc4LjVjLTIuNywwLTUuNC0uNy03LjgtMi4xbC0xNjYuMi05My41Yy03LjctNC4zLTEwLjQtMTQuMS02LjEtMjEuOCw0LjMtNy43LDE0LjEtMTAuNCwyMS44LTYuMWwxNjYuMiw5My41YzcuNyw0LjMsMTAuNCwxNC4xLDYuMSwyMS44LTIuOSw1LjItOC40LDguMi0xNCw4LjJoMFoiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDQiIGQ9Ik0yNTYsMTc4LjVjLTguOCwwLTE2LTcuMi0xNi0xNnYtOTMuNWMwLTguOCw3LjItMTYsMTYtMTZzMTYsNy4yLDE2LDE2djkzLjVjMCw4LjgtNy4yLDE2LTE2LDE2WiIvPgogICAgPHBhdGggY2xhc3M9InN0MyIgZD0iTTgxLjcsMzYzLjNjLTQuOS0yLjktNy45LTguMS03LjktMTMuOHYtMTg3YzAtNiwzLjMtMTEuMiw4LjItMTMuOSwyLjMtMS4zLDIzLjgtMTMuNCwyMy44LTEzLjR2MTg3bDU5LjMtMzMuM2M3LjctNC4zLDE3LjUtMS42LDIxLjgsNi4xLDQuMyw3LjcsMS42LDE3LjUtNi4xLDIxLjhsLTkwLjksNTEuMnMtNS42LTMuMS04LjEtNC41aDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNNDIyLjIsMzY3LjlsLTkwLjktNTEuMmMtNy43LTQuMy0xMC40LTE0LjEtNi4xLTIxLjhzMTQuMS0xMC40LDIxLjgtNi4xbDU5LjMsMzMuM3YtMTg3czIxLjUsMTIuMSwyMy45LDEzLjRjLjguNSwxLjYsMSwyLjMsMS42LDMuNiwyLjksNS44LDcuNCw1LjgsMTIuNHYxODdjMCw1LjctMywxMC45LTcuOSwxMy44LTIuNSwxLjUtOC4xLDQuNS04LjEsNC41aDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3Q0IiBkPSJNMzM5LjEsMjI1LjJjLTIuNywwLTUuNC0uNy03LjgtMi4xbC03NS4zLTQyLjMtNzUuMyw0Mi4zYy03LjcsNC4zLTE3LjUsMS42LTIxLjgtNi4xLTQuMy03LjctMS42LTE3LjUsNi4xLTIxLjhsODMuMS00Ni44YzQuOS0yLjcsMTAuOC0yLjcsMTUuNywwbDgzLjEsNDYuOGM3LjcsNC4zLDEwLjQsMTQuMSw2LjEsMjEuOC0yLjksNS4yLTguNCw4LjItMTQsOC4yaDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMjU2LDM2NS41Yy01LjYsMC0xMS0yLjktMTQtOC4yLTQuMy03LjctMS42LTE3LjUsNi4xLTIxLjhsNzUtNDIuMnYtODQuMWMwLTguOCw3LjItMTYsMTYtMTZzMTYsNy4yLDE2LDE2djkzLjVjMCw1LjgtMy4xLDExLjEtOC4yLDE0bC04My4xLDQ2LjhjLTIuNSwxLjQtNS4yLDIuMS03LjgsMi4xaDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QzIiBkPSJNMjU2LDM2NS41Yy0yLjcsMC01LjQtLjctNy44LTJsLTgzLjEtNDYuOGMtNS0yLjgtOC4yLTguMi04LjItMTR2LTkzLjVjMC04LjgsNy4yLTE2LDE2LTE2czE2LDcuMiwxNiwxNnY4NC4xbDUxLjEsMjguOHYtNjYuMWMwLTguOCw3LjItMTYsMTYtMTZzMTYsNy4yLDE2LDE2djEwMi45cy0zLDEuNi03LjksNC41Yy0yLjUsMS41LTUuMywyLjItOC4xLDIuMmgwWiIvPgogICAgPHBhdGggY2xhc3M9InN0MSIgZD0iTTI1NiwyNzJjLTUuNiwwLTExLTIuOS0xNC04LjItNC4zLTcuNy0xLjYtMTcuNSw2LjEtMjEuOGw5MS01MS4yLDcuOSw0LjRjMi4xLDEuMSw0LjIsMi44LDYuMSw2LjEsNC4zLDcuNywxLjYsMTcuNS02LjEsMjEuOGwtODMuMSw0Ni44Yy0yLjUsMS40LTUuMiwyLjEtNy44LDIuMWgwWiIvPgogICAgPHBhdGggY2xhc3M9InN0NCIgZD0iTTI1NiwyMzcuNmwtNzUuMy00Mi4zYy03LjctNC4zLTE3LjUtMS42LTIxLjgsNi4xLTEuNCwyLjUtMi4xLDUuMi0yLjEsNy44djkuNGw5MS4zLDUxLjNjMi41LDEuNCw1LjIsMi4xLDcuOCwyLjFoMHYtMzQuNGgwWiIvPgogIDwvZz4KPC9zdmc+"/>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="693.3" x2="1221.3" y2="693.3" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="717.3" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 706.3)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="93.2" y="717.3" font-size="12" font-weight="400" fill="#343d50">system · 5</text>
+<text x="28" y="739.3" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">BOUNDARIES</text>
+<g transform="translate(105 728.3)"><rect x="1" y="1" width="18" height="12" rx="2" fill="#f8fbff" stroke="#4285f4" stroke-width="1.4"/></g>
+<text x="131" y="739.3" font-size="12" font-weight="400" fill="#343d50">GCP</text>
+<g transform="translate(173.66 728.3)"><rect x="1" y="1" width="18" height="12" rx="2" fill="#fcfbf7" stroke="#9a8f6a" stroke-width="1.4" stroke-dasharray="4 2"/></g>
+<text x="199.66" y="739.3" font-size="12" font-weight="400" fill="#343d50">SaaS</text>
+<g transform="translate(246.36 728.3)"><rect x="1" y="1" width="18" height="12" rx="2" fill="#f8fbff" stroke="#4285f4" stroke-width="1.4" stroke-dasharray="4 2"/></g>
+<text x="272.36" y="739.3" font-size="12" font-weight="400" fill="#343d50">GCP project</text>
+<g transform="translate(356.38 728.3)"><rect x="1" y="1" width="18" height="12" rx="2" fill="#f8fafc" stroke="#8f9bb5" stroke-width="1.4" stroke-dasharray="4 2"/></g>
+<text x="382.38" y="739.3" font-size="12" font-weight="400" fill="#343d50">SaaS region</text>
+<g transform="translate(466.24 728.3)"><rect x="1" y="1" width="18" height="12" rx="2" fill="#f8fafc" stroke="#5f6368" stroke-width="1.4" stroke-dasharray="1 1"/></g>
+<text x="492.24" y="739.3" font-size="12" font-weight="400" fill="#343d50">GCP region</text>
+<g transform="translate(572.07 728.3)"><rect x="1" y="1" width="18" height="12" rx="2" fill="#fcfbf7" stroke="#9a8f6a" stroke-width="1.4" stroke-dasharray="4 2"/></g>
+<text x="598.07" y="739.3" font-size="12" font-weight="400" fill="#343d50">vendor tenancy</text>
+<g transform="translate(701.02 728.3)"><rect x="1" y="1" width="18" height="12" rx="2" fill="#f1f6ff" stroke="#4285f4" stroke-width="1.4"/></g>
+<text x="727.02" y="739.3" font-size="12" font-weight="400" fill="#343d50">GCP subnet</text>
+<text x="28" y="761.3" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 750.3)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="761.3" font-size="12" font-weight="400" fill="#343d50">calls</text>
+<text x="28" y="795.3" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · onboarding--prd-ob-affordability · edit the model, not the picture</text></g>
+</svg>

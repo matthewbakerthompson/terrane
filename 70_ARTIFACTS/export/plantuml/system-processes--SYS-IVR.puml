@@ -1,0 +1,43 @@
+@startuml
+' IVR and self-service voice — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title IVR and self-service voice — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_SERV_02, "Account Maintenance & Servicing Requests", "Execute cardholder-requested account changes.", $tags="capabilities")
+  ' aac CAP_SERV_02: company_domain="Servicing"
+  System(CAP_SERV_01, "Contact Handling & Routing", "Receive and route contacts across voice, chat, and messaging.", $tags="capabilities")
+  ' aac CAP_SERV_01: company_domain="Servicing"
+  System(CAP_PAY_03, "Payment Capture & Application", "Accept and apply cardholder payments across all channels.", $tags="capabilities")
+  ' aac CAP_PAY_03: company_domain="Servicing"
+}
+Boundary(b_Process, "Process") {
+  System(P_CARD_PMT_001, "Capture and apply cardholder payment", "Accept a cardholder payment through any channel and apply it to the account on the correct effective date.", $tags="processes")
+  ' aac P_CARD_PMT_001: company_domain=""
+  System(P_CUST_INQ_001, "Handle cardholder inquiry", "Receive, understand, and resolve a cardholder inquiry across any servicing channel. First-contact resolution is the design goal across phone, chat, and secure message; anything unresolved routes to a case with ownership and a promise date.", $tags="processes")
+  ' aac P_CUST_INQ_001: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_IVR, "IVR and self-service voice", "Interactive voice response and voice self-service.", $tags="systems")
+  ' aac SYS_IVR: company_domain=""
+}
+
+Rel(P_CARD_PMT_001, SYS_IVR, "Supporting")
+' aac rel: source="P_CARD_PMT_001"; target="SYS_IVR"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_CUST_INQ_001, SYS_IVR, "Supporting")
+' aac rel: source="P_CUST_INQ_001"; target="SYS_IVR"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_CARD_PMT_001, CAP_PAY_03, "supports")
+' aac rel: source="P_CARD_PMT_001"; target="CAP_PAY_03"; label="supports"; relation="process_supports_capability"
+Rel(P_CUST_INQ_001, CAP_SERV_01, "supports")
+' aac rel: source="P_CUST_INQ_001"; target="CAP_SERV_01"; label="supports"; relation="process_supports_capability"
+Rel(P_CUST_INQ_001, CAP_SERV_02, "supports")
+' aac rel: source="P_CUST_INQ_001"; target="CAP_SERV_02"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

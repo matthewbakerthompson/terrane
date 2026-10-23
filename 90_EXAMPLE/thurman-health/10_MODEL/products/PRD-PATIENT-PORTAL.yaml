@@ -1,0 +1,54 @@
+# The patient portal, on the shipped Azure digital product shape unchanged:
+# the same web channel, API, datastore and event publisher the card
+# issuer's servicing channel is built from. What a portal needs that a
+# card servicing channel does not -- the clinical record -- is not in the
+# shape at all, and should not be: it is an interface to the FHIR server,
+# written below as an ordinary record.
+product_id: PRD-PATIENT-PORTAL
+name: Patient Portal
+description: >
+  Test results, messages to the care team, appointments, prescription
+  renewals and bill pay, on the web and in the app. The way most patients
+  meet the health system between visits.
+status: Active
+owner_org_id: ORG-DIGITAL
+criticality: High
+product_category: Digital channel
+company_domain: Patient Access
+
+build_type: digital-product
+archetype: azure-digital-product
+parameters:
+  slug: portal
+  product_name: Patient Portal
+  owner_org: ORG-DIGITAL
+  domain: Patient Access
+  account: azure-patient-prod
+  region: eastus2
+  criticality: High
+  classification: Restricted
+
+patterns: [stateless-request-service, observed-service]
+
+overrides:
+  SYS-PORTAL-WEB:
+    description: The browser and app front end patients sign in to.
+    service_tier: Tier 1
+    tags: [digital, patient-facing]
+  SYS-PORTAL-API:
+    description: >
+      The portal's own API: sessions, proxy access for parents and
+      caregivers, and the calls through to the FHIR server for the record.
+    service_tier: Tier 1
+    tags: [digital, service]
+  SYS-PORTAL-STORE:
+    name: Patient Portal Datastore
+    description: Portal accounts, proxy relationships, preferences and message drafts. Not the clinical record.
+    service_tier: Tier 1
+    tags: [digital, datastore]
+  SYS-PORTAL-EVENTS:
+    # Appointment reminders and new-result notices, which say that
+    # something is waiting and never what it is.
+    criticality: Medium
+    data_classification_supported: Confidential
+    tags: [digital, eventing]

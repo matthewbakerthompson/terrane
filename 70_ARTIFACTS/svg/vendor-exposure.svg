@@ -1,0 +1,423 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="1013.4" viewBox="0 0 1100 1013.4" font-family="Geist, system-ui, sans-serif" data-layout="packed">
+<title>Third-Party Exposure</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Third-Party Exposure</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   23 nodes · 28 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">Every system run by a vendor rather than by us, and what it connects to. The filter is the vendor tag, so new vendor systems appear automatically. It answers the</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">third-party risk question: if this vendor disappeared, what would stop working?</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(51.75 125.2)">
+<g class="boundary" data-id="grp::Card Issuing">
+<rect x="-1.7" y="-1.7" width="233.4" height="130.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="46.4" y="15.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Card Issuing</text>
+</g>
+<g class="boundary" data-id="grp::Data and Analytics">
+<rect x="254" y="-1.7" width="272" height="130.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="320.4" y="15.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data and Analytics</text>
+</g>
+<g class="boundary" data-id="grp::Enterprise Platform">
+<rect x="548.3" y="-1.7" width="439.4" height="328.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="617.75" y="15.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Enterprise Platform</text>
+</g>
+<g class="boundary" data-id="grp::Lending">
+<rect x="-1.7" y="145.3" width="233.4" height="427.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="31.15" y="162.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Lending</text>
+</g>
+<g class="boundary" data-id="grp::Risk and Compliance">
+<rect x="254" y="343.3" width="284" height="427.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="323.45" y="360.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Risk and Compliance</text>
+</g>
+<g class="boundary" data-id="grp::Servicing">
+<rect x="560.3" y="343.3" width="233.4" height="333.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="599.25" y="360.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Servicing</text>
+</g>
+<g class="edge" data-id="e0::SYS-FRAUD-DETECT::SYS-CRM" opacity="0.45">
+<title>AMQP</title>
+<path d="M853.09 542.3 L736.56 455.41" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M734.27 453.7 L744.8 455.58 L739.08 463.26 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e1::SYS-CORE-LEDGER::SYS-BUREAU-GW" opacity="0.45">
+<title>FileTransfer</title>
+<path d="M206.7 100.67 L812.65 346.26" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M815.3 347.33 L804.63 348.17 L808.23 339.3 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::SYS-CORE-LEDGER::SYS-BUREAU-GW">
+<rect x="299.58" y="142.59" width="60.6" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="329.88" y="154.14" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">FileTransfer</text>
+</g>
+<g class="edge" data-id="e2::SYS-BUREAU-GW::SYS-CREDIT-BUREAU" opacity="0.45">
+<title>FileTransfer</title>
+<path d="M815.3 388.81 L490.56 404.06" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M487.7 404.19 L497.03 398.96 L497.48 408.52 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e3::SYS-BUREAU-GW::SYS-CRM" opacity="0.45">
+<title>FileTransfer</title>
+<path d="M815.3 395.07 L771.54 400.11" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M768.7 400.43 L777.66 394.59 L778.75 404.09 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e4::SYS-CONTACT::SYS-CRM" opacity="0.45">
+<title>HTTPS</title>
+<path d="M815.3 454.59 L771.43 440.77" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M768.7 439.91 L779.27 438.22 L776.39 447.35 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e5::SYS-CRM::SYS-DISPUTES-GATEWAY" opacity="0.45">
+<title>HTTPS</title>
+<path d="M677 453.7 L677 469.44" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M677 472.3 L672.22 462.73 L681.78 462.73 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e6::SYS-MARKETING::SYS-CRM" opacity="0.45">
+<title>AMQP</title>
+<path d="M872.82 641.3 L715.16 455.88" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M713.31 453.7 L723.15 457.89 L715.86 464.09 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e7::SYS-IAM::SYS-SIEM" opacity="0.45">
+<title>Syslog</title>
+<path d="M153.53 590.3 L600.06 303.25" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M602.47 301.7 L597 310.9 L591.83 302.85 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e7::SYS-IAM::SYS-SIEM">
+<rect x="245.3" y="511.23" width="37.55" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="264.08" y="522.78" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Syslog</text>
+</g>
+<g class="edge" data-id="e8::SYS-CRM::SYS-IAM" opacity="0.45">
+<title>HTTPS</title>
+<path d="M585.3 445.35 L185.38 595.15" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M182.7 596.15 L189.98 588.31 L193.34 597.28 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e8::SYS-CRM::SYS-IAM">
+<rect x="241.36" y="559.25" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="259.85" y="570.8" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+</g>
+<g class="edge" data-id="e9::SYS-CONTACT::SYS-IAM" opacity="0.45">
+<title>HTTPS</title>
+<path d="M815.3 500.02 L185.51 613.47" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M182.7 613.98 L191.27 607.57 L192.97 616.99 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e9::SYS-CONTACT::SYS-IAM">
+<rect x="501.6" y="545.2" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="520.09" y="556.75" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+</g>
+<g class="edge" data-id="e10::SYS-CRM::SYS-CORE-LEDGER" opacity="0.45">
+<title>HTTPS</title>
+<path d="M607.94 368.3 L182.45 105.2" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M180.01 103.7 L190.67 104.66 L185.64 112.8 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e10::SYS-CRM::SYS-CORE-LEDGER">
+<rect x="393.71" y="239.27" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="412.21" y="250.82" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+</g>
+<g class="edge" data-id="e11::SYS-CORE-LEDGER::SYS-DATA-INGEST" opacity="0.45">
+<title>FileTransfer</title>
+<path d="M206.7 63.5 L295.44 63.5" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M298.3 63.5 L288.73 68.28 L288.73 58.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e12::SYS-LENDING-API::SYS-CORE-LEDGER" opacity="0.45">
+<title>MQ</title>
+<path d="M115 170.3 L115 106.56" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M115 103.7 L119.78 113.27 L110.22 113.27 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e13::SYS-LENDING-API::SYS-CREDIT-BUREAU" opacity="0.45">
+<title>HTTPS</title>
+<path d="M172.05 250.7 L336.61 366.65" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M338.95 368.3 L328.37 366.7 L333.88 358.88 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e13::SYS-LENDING-API::SYS-CREDIT-BUREAU">
+<rect x="244.01" y="306.44" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="262.51" y="317.99" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+</g>
+<g class="edge" data-id="e14::SYS-CORE-LEDGER::SYS-DISPUTES-GATEWAY" opacity="0.45">
+<title>HTTPS</title>
+<path d="M165.32 103.7 L624.45 470.51" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M626.68 472.3 L616.22 470.06 L622.19 462.59 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e14::SYS-CORE-LEDGER::SYS-DISPUTES-GATEWAY">
+<rect x="399.83" y="297.83" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="418.32" y="309.38" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+</g>
+<g class="edge" data-id="e15::SYS-DISPUTES-GATEWAY::SYS-DISPUTES-SAAS" opacity="0.45">
+<title>HTTPS</title>
+<path d="M677 552.7 L677 568.44" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M677 571.3 L672.22 561.73 L681.78 561.73 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e16::SYS-DISPUTES-SAAS::SYS-DATA-INGEST" opacity="0.45">
+<title>SFTP</title>
+<path d="M655.95 571.3 L412.38 106.23" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M411.05 103.7 L419.73 109.96 L411.25 114.4 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e16::SYS-DISPUTES-SAAS::SYS-DATA-INGEST">
+<rect x="428.87" y="158.91" width="30.58" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="444.16" y="170.46" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">SFTP</text>
+</g>
+<g class="edge" data-id="e17::SYS-IDV-EGRESS::SYS-IDV-VENDOR" opacity="0.45">
+<title>PrivateLink</title>
+<path d="M640.64 103.7 L421.84 464.85" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M420.36 467.3 L421.22 456.64 L429.41 461.59 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e17::SYS-IDV-EGRESS::SYS-IDV-VENDOR" transform="matrix(0.52 -0.86 0.86 0.52 12.83 591.33)">
+<rect x="501.85" y="276.28" width="58.79" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="531.24" y="287.83" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">PrivateLink</text>
+</g>
+<g class="edge" data-id="e18::SYS-IDV-VENDOR::SYS-IDV-WEBHOOKS" opacity="0.45">
+<title>HTTPS</title>
+<path d="M396 547.7 L396 563.44" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M396 566.3 L391.21 556.73 L400.79 556.73 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e19::SYS-CORE-LEDGER::SYS-LENDING-HUB" opacity="0.45">
+<title>HTTPS</title>
+<path d="M115 103.7 L115 266.44" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M115 269.3 L110.22 259.73 L119.78 259.73 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e20::SYS-CREDIT-BUREAU::SYS-LENDING-HUB" opacity="0.45">
+<title>HTTPS</title>
+<path d="M304.3 376.19 L209.4 342.76" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M206.7 341.81 L217.32 340.47 L214.14 349.5 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e21::SYS-CRM::SYS-LENDING-HUB" opacity="0.45">
+<title>HTTPS</title>
+<path d="M585.3 394.44 L209.51 326.57" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M206.7 326.06 L216.97 323.05 L215.27 332.47 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e21::SYS-CRM::SYS-LENDING-HUB">
+<rect x="538.33" y="381.3" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="556.83" y="392.85" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+</g>
+<g class="edge" data-id="e22::SYS-OBAFF-EGRESS::SYS-OBAFF-VENDOR" opacity="0.45">
+<title>PrivateLink</title>
+<path d="M782.91 103.7 L205.69 367.11" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M203.09 368.3 L209.81 359.97 L213.78 368.68 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e22::SYS-OBAFF-EGRESS::SYS-OBAFF-VENDOR">
+<rect x="317.53" y="294.66" width="58.79" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="346.92" y="306.21" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">PrivateLink</text>
+</g>
+<g class="edge" data-id="e23::SYS-OBAFF-VENDOR::SYS-OBAFF-WEBHOOKS" opacity="0.45">
+<title>HTTPS</title>
+<path d="M115 448.7 L115 464.44" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M115 467.3 L110.22 457.73 L119.78 457.73 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e24::SYS-SCREENING-FEDERATION::SYS-SCREENING-VENDOR" opacity="0.45">
+<title>SAML</title>
+<path d="M835.83 202.7 L433.05 663.15" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M431.17 665.3 L433.87 654.95 L441.07 661.25 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e24::SYS-SCREENING-FEDERATION::SYS-SCREENING-VENDOR">
+<rect x="769.09" y="251.81" width="33.58" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="785.88" y="263.36" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">SAML</text>
+</g>
+<g class="edge" data-id="e25::SYS-SCREENING-VENDOR::SYS-SIEM" opacity="0.45">
+<title>HTTPS</title>
+<path d="M420.36 665.3 L639.16 304.15" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M640.64 301.7 L639.78 312.36 L631.59 307.41 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e25::SYS-SCREENING-VENDOR::SYS-SIEM">
+<rect x="511.26" y="476.72" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="529.76" y="488.27" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+</g>
+<g class="edge" data-id="e26::SYS-SCREENING-EGRESS::SYS-SCREENING-VENDOR" opacity="0.45">
+<title>PrivateLink</title>
+<path d="M645.09 202.7 L417.18 662.74" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M415.91 665.3 L415.88 654.6 L424.45 658.85 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e26::SYS-SCREENING-EGRESS::SYS-SCREENING-VENDOR">
+<rect x="501.74" y="424.72" width="58.79" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="531.13" y="436.27" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">PrivateLink</text>
+</g>
+<g class="edge" data-id="e27::SYS-SCREENING-VENDOR::SYS-DATA-INGEST" opacity="0.45">
+<title>SFTP</title>
+<path d="M395.62 665.3 L390.4 106.56" fill="none" stroke="#7b8798" stroke-width="1.3"/>
+<path d="M390.38 103.7 L395.25 113.22 L385.68 113.31 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e27::SYS-SCREENING-VENDOR::SYS-DATA-INGEST">
+<rect x="375.91" y="183.94" width="30.58" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="391.2" y="195.49" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">SFTP</text>
+</g>
+<g class="node" data-id="SYS-BUREAU-GW" data-type="systems">
+<title>Credit bureau gateway</title>
+<rect x="816" y="345" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="903" y="382.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit bureau</text>
+<text x="903" y="394.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">gateway</text>
+<svg x="980" y="350" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-CONTACT" data-type="systems">
+<title>Contact center platform</title>
+<rect x="816" y="444" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="903" y="481.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Contact center</text>
+<text x="903" y="493.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">platform</text>
+<svg x="980" y="449" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-CORE-LEDGER" data-type="systems">
+<title>Core Card Ledger</title>
+<rect x="24" y="24" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="111" y="67.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Core Card Ledger</text>
+<svg x="188" y="29" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-CREDIT-BUREAU" data-type="systems">
+<title>Experian Credit Bureau</title>
+<rect x="305" y="369" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="392" y="401.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Experian Credit</text>
+<text x="392" y="413.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Bureau</text>
+<text x="396" y="442.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Experian</text>
+<svg x="469" y="374" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-CRM" data-type="systems">
+<title>Dynamics 365 Customer Service</title>
+<rect x="586" y="369" width="182" height="84" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="673" y="403.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dynamics 365</text>
+<text x="673" y="415.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer Service</text>
+<text x="677" y="447.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Microsoft</text>
+<svg x="750" y="374" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-DATA-INGEST" data-type="systems">
+<title>Enterprise Data Ingestion Hub</title>
+<rect x="299" y="24" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="380" y="56.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Enterprise Data</text>
+<text x="380" y="68.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Ingestion Hub</text>
+<text x="390" y="97.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Service Bus · Snowflake Data Cloud</text>
+<image x="459" y="28" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJiZDAyODc4LTMwOWEtNDQ5MC04MTk2LTk0NjMzOGQwZjU5MyIgeDE9IjguOTk1IiB5MT0iMTAuMjk5IiB4Mj0iOC45OTUiIHkyPSIxMy4xOTkiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMwMDViYTEiIC8+PHN0b3Agb2Zmc2V0PSIwLjI1OCIgc3RvcC1jb2xvcj0iIzAwNTg5ZCIgLz48c3RvcCBvZmZzZXQ9IjAuNTI1IiBzdG9wLWNvbG9yPSIjMDA0ZjkwIiAvPjxzdG9wIG9mZnNldD0iMC43OTYiIHN0b3AtY29sb3I9IiMwMDNmN2MiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMDAzMDY3IiAvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxnPjxnIGlkPSJiNTMyZTYwMC0zNjIzLTRiZTYtOWZhNi0zMGQwNWZmZjU2YjEiPjxwb2x5Z29uIHBvaW50cz0iMTMuMzg3IDcuNCAxMy4zODIgNy4zOTYgMTMuMzgyIDcuMzg0IDEzLjM2MyA3LjM4NCA4Ljk5NyA0LjQwNSA0LjYzMSA3LjM4NCA0LjYxMiA3LjM4NCA0LjYxMiA3LjM5NiA0LjYwNiA3LjQgNC42MTIgNy40IDQuNjEyIDEzLjIwMSAxMy4zODIgMTMuMjAxIDEzLjM4MiA3LjQgMTMuMzg3IDcuNCIgZmlsbD0iIzUwZTZmZiIgLz48cGF0aCBkPSJNNC42MDYsNy40YzAtLjEuMDA4LDUuNjgxLjAwOCw1LjhMOC45OTUsMTAuM1oiIGZpbGw9IiMzMmJlZGQiIC8+PHBhdGggZD0iTTEzLjM4NCw3LjQsOC45OTUsMTAuMywxMy4zNzYsMTMuMkMxMy4zNzYsMTMuMDgzLDEzLjM4NCw3LjMsMTMuMzg0LDcuNFoiIGZpbGw9IiMxOThhYjMiIC8+PHBvbHlnb24gcG9pbnRzPSI4Ljk5NSAxMC4yOTkgNC42MTQgMTMuMTk0IDQuNjE0IDEzLjE5OSAxMy4zNzYgMTMuMTk5IDEzLjM3NiAxMy4xOTQgOC45OTUgMTAuMjk5IiBmaWxsPSJ1cmwoI2JiZDAyODc4LTMwOWEtNDQ5MC04MTk2LTk0NjMzOGQwZjU5MykiIC8+PGc+PHBhdGggZD0iTTEuMDcyLDEuNDNoMS4yOWEwLDAsMCwwLDEsMCwwdjMuNmEuMjg2LjI4NiwwLDAsMS0uMjg2LjI4NkguNzg2QS4yODYuMjg2LDAsMCwxLC41LDUuMDM1VjJBLjU3Mi41NzIsMCwwLDEsMS4wNzIsMS40M1oiIGZpbGw9IiM5OTkiIC8+PHBhdGggZD0iTTEuMDcyLDEuNDNoMS4yOWEwLDAsMCwwLDEsMCwwdjMuNmEuMjg2LjI4NiwwLDAsMS0uMjg2LjI4NkguNzg2QS4yODYuMjg2LDAsMCwxLC41LDUuMDM1VjJBLjU3Mi41NzIsMCwwLDEsMS4wNzIsMS40M1oiIGZpbGw9IiM5OTkiIG9wYWNpdHk9IjAuNSIgLz48L2c+PGc+PHBhdGggZD0iTTE1LjYzOCwxLjQzaDEuMjlBLjU3Mi41NzIsMCwwLDEsMTcuNSwyVjUuMDM1YS4yODYuMjg2LDAsMCwxLS4yODYuMjg2aC0xLjI5YS4yODYuMjg2LDAsMCwxLS4yODYtLjI4NlYxLjQzQTAsMCwwLDAsMSwxNS42MzgsMS40M1oiIGZpbGw9IiM5OTkiIC8+PHBhdGggZD0iTTE1LjYzOCwxLjQzaDEuMjlBLjU3Mi41NzIsMCwwLDEsMTcuNSwyVjUuMDM1YS4yODYuMjg2LDAsMCwxLS4yODYuMjg2aC0xLjI5YS4yODYuMjg2LDAsMCwxLS4yODYtLjI4NlYxLjQzQTAsMCwwLDAsMSwxNS42MzgsMS40M1oiIGZpbGw9IiM5OTkiIG9wYWNpdHk9IjAuNSIgLz48L2c+PHBhdGggZD0iTTguNjYtNi4xNjNIOS45MDdhMCwwLDAsMCwxLDAsMHYxN2EwLDAsMCwwLDEsMCwwSDguNjZhLjU2Ny41NjcsMCwwLDEtLjU2Ny0uNTY3Vi01LjZBLjU2Ny41NjcsMCwwLDEsOC42Ni02LjE2M1oiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDExLjMzNyAtNi42NjMpIHJvdGF0ZSg5MCkiIGZpbGw9IiM5NDk0OTQiIC8+PGc+PHBhdGggZD0iTS43ODYsMTIuNjc5aDEuMjlhLjI4Ni4yODYsMCwwLDEsLjI4Ni4yODZ2My42YTAsMCwwLDAsMSwwLDBIMS4wNzJBLjU3Mi41NzIsMCwwLDEsLjUsMTZWMTIuOTY1QS4yODYuMjg2LDAsMCwxLC43ODYsMTIuNjc5WiIgZmlsbD0iIzk5OSIgLz48cGF0aCBkPSJNLjc4NiwxMi42NzloMS4yOWEuMjg2LjI4NiwwLDAsMSwuMjg2LjI4NnYzLjZhMCwwLDAsMCwxLDAsMEgxLjA3MkEuNTcyLjU3MiwwLDAsMSwuNSwxNlYxMi45NjVBLjI4Ni4yODYsMCwwLDEsLjc4NiwxMi42NzlaIiBmaWxsPSIjOTk5IiBvcGFjaXR5PSIwLjUiIC8+PC9nPjxnPjxwYXRoIGQ9Ik0xNS45MjQsMTIuNjc5aDEuMjlhLjI4Ni4yODYsMCwwLDEsLjI4Ni4yODZWMTZhLjU3Mi41NzIsMCwwLDEtLjU3Mi41NzJoLTEuMjlhMCwwLDAsMCwxLDAsMHYtMy42QS4yODYuMjg2LDAsMCwxLDE1LjkyNCwxMi42NzlaIiBmaWxsPSIjOTk5IiAvPjxwYXRoIGQ9Ik0xNS45MjQsMTIuNjc5aDEuMjlhLjI4Ni4yODYsMCwwLDEsLjI4Ni4yODZWMTZhLjU3Mi41NzIsMCwwLDEtLjU3Mi41NzJoLTEuMjlhMCwwLDAsMCwxLDAsMHYtMy42QS4yODYuMjg2LDAsMCwxLDE1LjkyNCwxMi42NzlaIiBmaWxsPSIjOTk5IiBvcGFjaXR5PSIwLjUiIC8+PC9nPjxwYXRoIGQ9Ik04LjY2LDcuMTYzSDkuOTA3YTAsMCwwLDAsMSwwLDB2MTdhMCwwLDAsMCwxLDAsMEg4LjY2YS41NjcuNTY3LDAsMCwxLS41NjctLjU2N1Y3LjczQS41NjcuNTY3LDAsMCwxLDguNjYsNy4xNjNaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNi42NjMgMjQuNjYzKSByb3RhdGUoLTkwKSIgZmlsbD0iIzk0OTQ5NCIgLz48L2c+PC9nPjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-DISPUTES-GATEWAY" data-type="systems">
+<title>Dispute Management Platform Integration Gateway</title>
+<rect x="586" y="473" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="667" y="487.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dispute</text>
+<text x="667" y="499.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+<text x="667" y="511.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Platform</text>
+<text x="667" y="523.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Integration</text>
+<text x="667" y="535.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Gateway</text>
+<text x="677" y="546.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AKS</text>
+<image x="746" y="477" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYWY2YTJjNDItYmQ0OC00ODU3LWE0NzktYWVjZjhiM2RlNGY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImI3MGM5Y2YxLWJhYjgtNDdlMC1iYmRiLWNlMWNkNjY0ZDI2OCIgeDE9IjIuOTQiIHkxPSIzLjc0IiB4Mj0iOC42NyIgeTI9IjMuNzQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiZWI2OTk1My1iZDk2LTQ1MTUtODg0My1hYzEyNTQ2YWY5MzYiIHgxPSI5LjEzIiB5MT0iMy43OSIgeDI9IjE0Ljg1IiB5Mj0iMy43OSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImEzOWM3NmU4LTU0N2UtNGViNC1iYzI1LWQ4MWMwZjhjZGE2MiIgeDE9IjAuMDEiIHkxPSI5LjEyIiB4Mj0iNS43MyIgeTI9IjkuMTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJmMGEyYTQ5MS0xN2RjLTRiYjgtYmJmYy1lZTU4YTVjZjQ3ZGEiIHgxPSI2LjE4IiB5MT0iOS4wOCIgeDI9IjExLjkiIHkyPSI5LjA4IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwIiB4MT0iMTIuMzUiIHkxPSI5LjEzIiB4Mj0iMTguMDgiIHkyPSI5LjEzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZTM5OWFhOTMtMzQxZi00ZGYyLTljMDItNjAzYjgyYjQ4NGMyIiB4MT0iMi44NyIgeTE9IjE0LjU2IiB4Mj0iOC42IiB5Mj0iMTQuNTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJhMTUyYmJhMC1iYTJiLTQ4M2EtYjhjMS0wYWU3ZGUzNTU5OTAiIHgxPSI5LjA1IiB5MT0iMTQuNiIgeDI9IjE0Ljc4IiB5Mj0iMTQuNiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPkljb24tY29tcHV0ZS0yMzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSI1LjggMS4yMiAyLjk0IDEuNzUgMi45NCA1LjY1IDUuOCA2LjI2IDguNjcgNS4xMSA4LjY3IDIuMiA1LjggMS4yMiIgZmlsbD0idXJsKCNiNzBjOWNmMS1iYWI4LTQ3ZTAtYmJkYi1jZTFjZDY2NGQyNjgpIiAvPjxwYXRoIGQ9Ik01LjkxLDYuMiw4LjUzLDUuMTRBLjIuMiwwLDAsMCw4LjY1LDVWMi4zNmEuMjEuMjEsMCwwLDAtLjEzLS4xOGwtMi42NS0uOUg1Ljc1bC0yLjYuNDhBLjIuMiwwLDAsMCwzLDEuOTRWNS40N2EuMTkuMTksMCwwLDAsLjE1LjE5bDIuNjMuNTVBLjMyLjMyLDAsMCwwLDUuOTEsNi4yWiIgZmlsbD0ibm9uZSIgLz48cGF0aCBkPSJNMi45NCwxLjc1djMuOWwyLjg5LjYxdi01Wm0xLjIyLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYybC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMTEuOTkgMS4yNyA5LjEzIDEuOCA5LjEzIDUuNyAxMS45OSA2LjMxIDE0Ljg1IDUuMTUgMTQuODUgMi4yNSAxMS45OSAxLjI3IiBmaWxsPSJ1cmwoI2JlYjY5OTUzLWJkOTYtNDUxNS04ODQzLWFjMTI1NDZhZjkzNikiIC8+PHBhdGggZD0iTTkuMTMsMS44VjUuN0wxMiw2LjMxdi01Wm0xLjIxLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYyLjA1bC45My0uMTdaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMi44NyA2LjYgMC4wMSA3LjEzIDAuMDEgMTEuMDMgMi44NyAxMS42NCA1Ljc0IDEwLjQ5IDUuNzQgNy41OCAyLjg3IDYuNiIgZmlsbD0idXJsKCNhMzljNzZlOC01NDdlLTRlYjQtYmMyNS1kODFjMGY4Y2RhNjIpIiAvPjxwYXRoIGQ9Ik0wLDcuMTNWMTFsMi44OS42MXYtNVptMS4yMSwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFpNMi40OCwxMWwtLjkzLS4xNVY3LjM4bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iOS4wNCA2LjU2IDYuMTggNy4wOSA2LjE4IDEwLjk5IDkuMDQgMTEuNjEgMTEuOSAxMC40NSAxMS45IDcuNTQgOS4wNCA2LjU2IiBmaWxsPSJ1cmwoI2YwYTJhNDkxLTE3ZGMtNGJiOC1iYmZjLWVlNThhNWNmNDdkYSkiIC8+PHBhdGggZD0iTTYuMTgsNy4wOVYxMWwyLjg4LjYxdi01Wk03LjM5LDEwLjdsLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjcuMzRsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxNS4yMSA2LjYxIDEyLjM1IDcuMTQgMTIuMzUgMTEuMDQgMTUuMjEgMTEuNjUgMTguMDggMTAuNSAxOC4wOCA3LjU5IDE1LjIxIDYuNjEiIGZpbGw9InVybCgjZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwKSIgLz48cGF0aCBkPSJNMTIuMzUsNy4xNFYxMWwyLjg5LjYxdi01Wm0xLjIyLDMuNjEtLjgxLS4xN3YtM2wuODEtLjE0Wm0xLjI2LjIyLS45My0uMTVWNy4zOWwuOTMtLjE2WiIgZmlsbD0iIzM0MWE2ZSIgLz48cG9seWdvbiBwb2ludHM9IjUuNzMgMTIuMDQgMi44NyAxMi41NiAyLjg3IDE2LjQ2IDUuNzMgMTcuMDggOC42IDE1LjkyIDguNiAxMy4wMiA1LjczIDEyLjA0IiBmaWxsPSJ1cmwoI2UzOTlhYTkzLTM0MWYtNGRmMi05YzAyLTYwM2I4MmI0ODRjMikiIC8+PHBhdGggZD0iTTUuODQsMTcsOC40NSwxNmEuMTguMTgsMCwwLDAsLjEyLS4xOHYtMi42QS4yLjIsMCwwLDAsOC40NCwxM0w1LjgsMTIuMWEuMTcuMTcsMCwwLDAtLjEyLDBsLTIuNi40N2EuMTkuMTksMCwwLDAtLjE2LjE5djMuNTRhLjE5LjE5LDAsMCwwLC4xNS4xOUw1LjcsMTdBLjIzLjIzLDAsMCwwLDUuODQsMTdaIiBmaWxsPSJub25lIiAvPjxwYXRoIGQ9Ik0yLjg3LDEyLjU2djMuOWwyLjg5LjYyVjEyWm0xLjIyLDMuNjFMMy4yOCwxNlYxM2wuODEtLjE0Wm0xLjI2LjIzLS45My0uMTVWMTIuODFsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxMS45MSAxMi4wOCA5LjA1IDEyLjYxIDkuMDUgMTYuNTEgMTEuOTEgMTcuMTIgMTQuNzggMTUuOTcgMTQuNzggMTMuMDYgMTEuOTEgMTIuMDgiIGZpbGw9InVybCgjYTE1MmJiYTAtYmEyYi00ODNhLWI4YzEtMGFlN2RlMzU1OTkwKSIgLz48cGF0aCBkPSJNOS4wNSwxMi42MXYzLjlsMi44OS42MXYtNVptMS4yMiwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjEyLjg2bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-DISPUTES-SAAS" data-type="systems">
+<title>Pega Smart Dispute</title>
+<rect x="586" y="572" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="673" y="610.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Pega Smart Dispute</text>
+<text x="677" y="645.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Pegasystems</text>
+<svg x="750" y="577" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-FRAUD-DETECT" data-type="systems">
+<title>Transaction fraud detection</title>
+<rect x="816" y="543" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="903" y="580.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Transaction fraud</text>
+<text x="903" y="592.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">detection</text>
+<svg x="980" y="548" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-IAM" data-type="systems">
+<title>Identity and access management</title>
+<rect x="0" y="591" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="87" y="628.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Identity and access</text>
+<text x="87" y="640.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">management</text>
+<svg x="164" y="596" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-IDV-EGRESS" data-type="systems">
+<title>Identity Document Verification Private Egress</title>
+<rect x="574" y="24" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="661" y="55.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Identity Document</text>
+<text x="661" y="67.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Verification Private</text>
+<text x="661" y="79.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Egress</text>
+<svg x="738" y="29" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-IDV-VENDOR" data-type="systems">
+<title>Identity Document Verification</title>
+<rect x="305" y="468" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="392" y="500.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Identity Document</text>
+<text x="392" y="512.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Verification</text>
+<text x="396" y="541.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Onfido</text>
+<svg x="469" y="473" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-IDV-WEBHOOKS" data-type="systems">
+<title>Identity Document Verification Webhook Listener</title>
+<rect x="305" y="567" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="386" y="593.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Identity Document</text>
+<text x="386" y="605.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Verification</text>
+<text x="386" y="617.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Webhook Listener</text>
+<text x="396" y="640.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AKS</text>
+<image x="465" y="571" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYWY2YTJjNDItYmQ0OC00ODU3LWE0NzktYWVjZjhiM2RlNGY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImI3MGM5Y2YxLWJhYjgtNDdlMC1iYmRiLWNlMWNkNjY0ZDI2OCIgeDE9IjIuOTQiIHkxPSIzLjc0IiB4Mj0iOC42NyIgeTI9IjMuNzQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiZWI2OTk1My1iZDk2LTQ1MTUtODg0My1hYzEyNTQ2YWY5MzYiIHgxPSI5LjEzIiB5MT0iMy43OSIgeDI9IjE0Ljg1IiB5Mj0iMy43OSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImEzOWM3NmU4LTU0N2UtNGViNC1iYzI1LWQ4MWMwZjhjZGE2MiIgeDE9IjAuMDEiIHkxPSI5LjEyIiB4Mj0iNS43MyIgeTI9IjkuMTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJmMGEyYTQ5MS0xN2RjLTRiYjgtYmJmYy1lZTU4YTVjZjQ3ZGEiIHgxPSI2LjE4IiB5MT0iOS4wOCIgeDI9IjExLjkiIHkyPSI5LjA4IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwIiB4MT0iMTIuMzUiIHkxPSI5LjEzIiB4Mj0iMTguMDgiIHkyPSI5LjEzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZTM5OWFhOTMtMzQxZi00ZGYyLTljMDItNjAzYjgyYjQ4NGMyIiB4MT0iMi44NyIgeTE9IjE0LjU2IiB4Mj0iOC42IiB5Mj0iMTQuNTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJhMTUyYmJhMC1iYTJiLTQ4M2EtYjhjMS0wYWU3ZGUzNTU5OTAiIHgxPSI5LjA1IiB5MT0iMTQuNiIgeDI9IjE0Ljc4IiB5Mj0iMTQuNiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPkljb24tY29tcHV0ZS0yMzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSI1LjggMS4yMiAyLjk0IDEuNzUgMi45NCA1LjY1IDUuOCA2LjI2IDguNjcgNS4xMSA4LjY3IDIuMiA1LjggMS4yMiIgZmlsbD0idXJsKCNiNzBjOWNmMS1iYWI4LTQ3ZTAtYmJkYi1jZTFjZDY2NGQyNjgpIiAvPjxwYXRoIGQ9Ik01LjkxLDYuMiw4LjUzLDUuMTRBLjIuMiwwLDAsMCw4LjY1LDVWMi4zNmEuMjEuMjEsMCwwLDAtLjEzLS4xOGwtMi42NS0uOUg1Ljc1bC0yLjYuNDhBLjIuMiwwLDAsMCwzLDEuOTRWNS40N2EuMTkuMTksMCwwLDAsLjE1LjE5bDIuNjMuNTVBLjMyLjMyLDAsMCwwLDUuOTEsNi4yWiIgZmlsbD0ibm9uZSIgLz48cGF0aCBkPSJNMi45NCwxLjc1djMuOWwyLjg5LjYxdi01Wm0xLjIyLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYybC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMTEuOTkgMS4yNyA5LjEzIDEuOCA5LjEzIDUuNyAxMS45OSA2LjMxIDE0Ljg1IDUuMTUgMTQuODUgMi4yNSAxMS45OSAxLjI3IiBmaWxsPSJ1cmwoI2JlYjY5OTUzLWJkOTYtNDUxNS04ODQzLWFjMTI1NDZhZjkzNikiIC8+PHBhdGggZD0iTTkuMTMsMS44VjUuN0wxMiw2LjMxdi01Wm0xLjIxLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYyLjA1bC45My0uMTdaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMi44NyA2LjYgMC4wMSA3LjEzIDAuMDEgMTEuMDMgMi44NyAxMS42NCA1Ljc0IDEwLjQ5IDUuNzQgNy41OCAyLjg3IDYuNiIgZmlsbD0idXJsKCNhMzljNzZlOC01NDdlLTRlYjQtYmMyNS1kODFjMGY4Y2RhNjIpIiAvPjxwYXRoIGQ9Ik0wLDcuMTNWMTFsMi44OS42MXYtNVptMS4yMSwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFpNMi40OCwxMWwtLjkzLS4xNVY3LjM4bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iOS4wNCA2LjU2IDYuMTggNy4wOSA2LjE4IDEwLjk5IDkuMDQgMTEuNjEgMTEuOSAxMC40NSAxMS45IDcuNTQgOS4wNCA2LjU2IiBmaWxsPSJ1cmwoI2YwYTJhNDkxLTE3ZGMtNGJiOC1iYmZjLWVlNThhNWNmNDdkYSkiIC8+PHBhdGggZD0iTTYuMTgsNy4wOVYxMWwyLjg4LjYxdi01Wk03LjM5LDEwLjdsLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjcuMzRsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxNS4yMSA2LjYxIDEyLjM1IDcuMTQgMTIuMzUgMTEuMDQgMTUuMjEgMTEuNjUgMTguMDggMTAuNSAxOC4wOCA3LjU5IDE1LjIxIDYuNjEiIGZpbGw9InVybCgjZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwKSIgLz48cGF0aCBkPSJNMTIuMzUsNy4xNFYxMWwyLjg5LjYxdi01Wm0xLjIyLDMuNjEtLjgxLS4xN3YtM2wuODEtLjE0Wm0xLjI2LjIyLS45My0uMTVWNy4zOWwuOTMtLjE2WiIgZmlsbD0iIzM0MWE2ZSIgLz48cG9seWdvbiBwb2ludHM9IjUuNzMgMTIuMDQgMi44NyAxMi41NiAyLjg3IDE2LjQ2IDUuNzMgMTcuMDggOC42IDE1LjkyIDguNiAxMy4wMiA1LjczIDEyLjA0IiBmaWxsPSJ1cmwoI2UzOTlhYTkzLTM0MWYtNGRmMi05YzAyLTYwM2I4MmI0ODRjMikiIC8+PHBhdGggZD0iTTUuODQsMTcsOC40NSwxNmEuMTguMTgsMCwwLDAsLjEyLS4xOHYtMi42QS4yLjIsMCwwLDAsOC40NCwxM0w1LjgsMTIuMWEuMTcuMTcsMCwwLDAtLjEyLDBsLTIuNi40N2EuMTkuMTksMCwwLDAtLjE2LjE5djMuNTRhLjE5LjE5LDAsMCwwLC4xNS4xOUw1LjcsMTdBLjIzLjIzLDAsMCwwLDUuODQsMTdaIiBmaWxsPSJub25lIiAvPjxwYXRoIGQ9Ik0yLjg3LDEyLjU2djMuOWwyLjg5LjYyVjEyWm0xLjIyLDMuNjFMMy4yOCwxNlYxM2wuODEtLjE0Wm0xLjI2LjIzLS45My0uMTVWMTIuODFsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxMS45MSAxMi4wOCA5LjA1IDEyLjYxIDkuMDUgMTYuNTEgMTEuOTEgMTcuMTIgMTQuNzggMTUuOTcgMTQuNzggMTMuMDYgMTEuOTEgMTIuMDgiIGZpbGw9InVybCgjYTE1MmJiYTAtYmEyYi00ODNhLWI4YzEtMGFlN2RlMzU1OTkwKSIgLz48cGF0aCBkPSJNOS4wNSwxMi42MXYzLjlsMi44OS42MXYtNVptMS4yMiwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjEyLjg2bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-LENDING-API" data-type="systems">
+<title>Installment Lending Service</title>
+<rect x="24" y="171" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="105" y="203.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment</text>
+<text x="105" y="215.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Lending Service</text>
+<text x="115" y="244.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">EKS · Installment Lending Cache</text>
+<image x="184" y="175" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNjRweCIgaGVpZ2h0PSI2NHB4IiB2aWV3Qm94PSIwIDAgNjQgNjQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8dGl0bGU+SWNvbi1BcmNoaXRlY3R1cmUvNDgvQXJjaF9BbWF6b24tRWxhc3RpYy1LdWJlcm5ldGVzLVNlcnZpY2VfNDg8L3RpdGxlPgogICAgPGcgaWQ9Ikljb24tQXJjaGl0ZWN0dXJlLzQ4L0FyY2hfQW1hem9uLUVsYXN0aWMtS3ViZXJuZXRlcy1TZXJ2aWNlXzQ4IiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0iSWNvbi1BcmNoaXRlY3R1cmUtQkcvNDgvQ29tcHV0ZSIgZmlsbD0iI0VENzEwMCI+CiAgICAgICAgICAgIDxyZWN0IGlkPSJSZWN0YW5nbGUiIHg9IjAiIHk9IjAiIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PC9yZWN0PgogICAgICAgIDwvZz4KICAgICAgICA8cGF0aCBkPSJNMzcuNzA4LDI1LjAwMDQwNTggTDMyLjY1LDMxLjM0MDMxNzEgTDM3Ljk2NywzOC4wMjEyMjM2IEwzNS43NTIsMzguMDIxMjIzNiBMMzEsMzIuMDAwMzA3OSBMMzEsMzguMDAwMjIzOSBMMjksMzguMDAwMjIzOSBMMjksMjUuMDAwNDA1OCBMMzEsMjUuMDAwNDA1OCBMMzEsMzAuMjQxMzMyNSBMMzUuNDYzLDI1LjAwMDQwNTggTDM3LjcwOCwyNS4wMDA0MDU4IFogTTUwLDM2LjM4MjI0NjYgTDQ0LDMzLjM4MjI4ODUgTDQ0LDI1LjAwMDQwNTggQzQ0LDI0LjYzNzQxMDkgNDMuODAzLDI0LjMwMjQxNTYgNDMuNDg1LDI0LjEyNjQxODEgTDM1LDE5LjQxMjQ4NCBMMzUsMTIuNzQ5NTc3MyBMNTAsMjEuNTcyNDUzOCBMNTAsMzYuMzgyMjQ2NiBaIE01MS41MDcsMjAuMTM4NDczOSBMMzQuNTA3LDEwLjEzODYxMzggQzM0LjE5OSw5Ljk1NzYxNjM3IDMzLjgxNSw5Ljk1NDYxNjQxIDMzLjUwNCwxMC4xMzI2MTM5IEMzMy4xOTIsMTAuMzEwNjExNCAzMywxMC42NDE2MDY4IDMzLDExLjAwMDYwMTggTDMzLDIwLjAwMDQ3NTggQzMzLDIwLjM2MzQ3MDcgMzMuMTk3LDIwLjY5ODQ2NjEgMzMuNTE1LDIwLjg3NDQ2MzYgTDQyLDI1LjU4ODM5NzYgTDQyLDM0LjAwMDI3OTkgQzQyLDM0LjM3OTI3NDYgNDIuMjE0LDM0LjcyNTI2OTcgNDIuNTUzLDM0Ljg5NTI2NzQgTDUwLjU1MywzOC44OTUyMTE0IEM1MC42OTQsMzguOTY1MjEwNCA1MC44NDcsMzkuMDAwMjA5OSA1MSwzOS4wMDAyMDk5IEM1MS4xODMsMzkuMDAwMjA5OSA1MS4zNjUsMzguOTUwMjEwNiA1MS41MjUsMzguODUxMjEyIEM1MS44MiwzOC42NjgyMTQ2IDUyLDM4LjM0NzIxOTEgNTIsMzguMDAwMjIzOSBMNTIsMjEuMDAwNDYxOCBDNTIsMjAuNjQ2NDY2OCA1MS44MTIsMjAuMzE4NDcxNCA1MS41MDcsMjAuMTM4NDczOSBMNTEuNTA3LDIwLjEzODQ3MzkgWiBNMzIsNTEuODI4MDMwNCBMMTUsNDEuNDM5MTc1OCBMMTUsMjEuNTU0NDU0MSBMMjksMTIuODA0NTc2NSBMMjksMTkuNDQ2NDgzNiBMMjEuNDcsMjQuMTUyNDE3NyBDMjEuMTc4LDI0LjMzNTQxNTIgMjEsMjQuNjU1NDEwNyAyMSwyNS4wMDA0MDU4IEwyMSwzOC4wMDAyMjM5IEMyMSwzOC4zNTEyMTkgMjEuMTg1LDM4LjY3NzIxNDQgMjEuNDg1LDM4Ljg1NzIxMTkgTDMxLjQ4NSw0NC44NTcxMjggQzMxLjc4OSw0NS4wNDAxMjU0IDMyLjE2Nyw0NS4wNDgxMjUzIDMyLjQ3OSw0NC44NzgxMjc3IEw0Mi45ODgsMzkuMTQ2MjA3OSBMNDguMDM1LDQyLjAyOTE2NzUgTDMyLDUxLjgyODAzMDQgWiBNNTAuNDk2LDQxLjEzMjE4MDEgTDQzLjQ5NiwzNy4xMzIyMzYxIEM0My4xOTQsMzYuOTU5MjM4NSA0Mi44MjUsMzYuOTU2MjM4NSA0Mi41MjEsMzcuMTIyMjM2MiBMMzIuMDIzLDQyLjg0ODE1NjEgTDIzLDM3LjQzNDIzMTggTDIzLDI1LjU1NDM5ODEgTDMwLjUzLDIwLjg0ODQ2NCBDMzAuODIyLDIwLjY2NTQ2NjUgMzEsMjAuMzQ1NDcxIDMxLDIwLjAwMDQ3NTggTDMxLDExLjAwMDYwMTggQzMxLDEwLjYzNjYwNjkgMzAuODAzLDEwLjMwMjYxMTUgMzAuNDg0LDEwLjEyNTYxNCBDMzAuMTY4LDkuOTQ4NjE2NSAyOS43NzgsOS45NTk2MTYzNCAyOS40NywxMC4xNTI2MTM2IEwxMy40NywyMC4xNTI0NzM3IEMxMy4xNzgsMjAuMzM1NDcxMSAxMywyMC42NTU0NjY3IDEzLDIxLjAwMDQ2MTggTDEzLDQyLjAwMDE2NzkgQzEzLDQyLjM0ODE2MzEgMTMuMTgyLDQyLjY3MTE1ODUgMTMuNDc5LDQyLjg1NDE1NiBMMzEuNDc5LDUzLjg1NDAwMiBDMzEuNjM5LDUzLjk1MTAwMDcgMzEuODE5LDU0IDMyLDU0IEMzMi4xODEsNTQgMzIuMzYxLDUzLjk1MTAwMDcgMzIuNTIxLDUzLjg1NDAwMiBMNTAuNTIxLDQyLjg1NDE1NiBDNTAuODIzLDQyLjY2OTE1ODYgNTEuMDA1LDQyLjMzOTE2MzIgNTEuMDAwMTAwNCw0MS45ODUxNjgxIEM1MC45OTUsNDEuNjMyMTczMSA1MC44MDMsNDEuMzA3MTc3NiA1MC40OTYsNDEuMTMyMTgwMSBMNTAuNDk2LDQxLjEzMjE4MDEgWiIgaWQ9IkFtYXpvbi1FbGFzdGljLUt1YmVybmV0ZXMtU2VydmljZV9JY29uXzQ4X1NxdWlkIiBmaWxsPSIjRkZGRkZGIj48L3BhdGg+CiAgICA8L2c+Cjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-LENDING-HUB" data-type="systems">
+<title>Installment Lending Integration Hub</title>
+<rect x="24" y="270" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="111" y="307.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment Lending</text>
+<text x="111" y="319.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Integration Hub</text>
+<svg x="188" y="275" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-MARKETING" data-type="systems">
+<title>Campaign management</title>
+<rect x="816" y="642" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="903" y="679.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Campaign</text>
+<text x="903" y="691.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">management</text>
+<svg x="980" y="647" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-OBAFF-EGRESS" data-type="systems">
+<title>Open Banking Affordability Private Egress</title>
+<rect x="780" y="24" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="867" y="55.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Open Banking</text>
+<text x="867" y="67.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Affordability Private</text>
+<text x="867" y="79.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Egress</text>
+<svg x="944" y="29" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-OBAFF-VENDOR" data-type="systems">
+<title>Open Banking Affordability</title>
+<rect x="24" y="369" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="111" y="401.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Open Banking</text>
+<text x="111" y="413.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Affordability</text>
+<text x="115" y="442.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">TrueLayer</text>
+<svg x="188" y="374" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-OBAFF-WEBHOOKS" data-type="systems">
+<title>Open Banking Affordability Webhook Listener</title>
+<rect x="24" y="468" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="105" y="494.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Open Banking</text>
+<text x="105" y="506.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Affordability</text>
+<text x="105" y="518.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Webhook Listener</text>
+<text x="115" y="541.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">GKE</text>
+<image x="184" y="472" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0ic3RhbmRhcmRfcHJvZHVjdF9pY29uIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDUxMiA1MTIiPgogIDwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiAyLjEuMCBCdWlsZCAxNDIpICAtLT4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLnN0MCB7CiAgICAgICAgZmlsbDogbm9uZTsKICAgICAgfQoKICAgICAgLnN0MSB7CiAgICAgICAgZmlsbDogIzQyODVmNDsKICAgICAgfQoKICAgICAgLnN0MiB7CiAgICAgICAgZmlsbDogIzM0YTg1MzsKICAgICAgfQoKICAgICAgLnN0MyB7CiAgICAgICAgZmlsbDogI2ZiYmMwNDsKICAgICAgfQoKICAgICAgLnN0NCB7CiAgICAgICAgZmlsbDogI2VhNDMzNTsKICAgICAgfQogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPGcgaWQ9ImJvdW5kaW5nX2JveCI+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIvPgogIDwvZz4KICA8ZyBpZD0iYXJ0Ij4KICAgIDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0yNTYsNDU5Yy0yLjcsMC01LjQtLjctNy44LTJsLTE2Ni4yLTkzLjVjLTUtMi44LTguMi04LjItOC4yLTE0di0xODdjMC01LjgsMy4xLTExLjEsOC4yLTEzLjlMMjQ4LjIsNTVjNC45LTIuNywxMC44LTIuNywxNS43LDBsMTY2LjIsOTMuNWM1LDIuOCw4LjIsOC4yLDguMiwxMy45djE4N2MwLDUuOC0zLjEsMTEuMS04LjIsMTRsLTE2Ni4yLDkzLjVjLTIuNCwxLjQtNS4xLDItNy44LDJoMFpNMTA1LjgsMzQwLjFsMTUwLjIsODQuNSwxNTAuMi04NC41di0xNjguM2wtMTUwLjItODQuNS0xNTAuMiw4NC41djE2OC4zWk00MjIuMiwzNDkuNWgwWiIvPgogICAgPHBhdGggY2xhc3M9InN0NCIgZD0iTTg5LjgsMTc4LjVjLTUuNiwwLTExLTIuOS0xNC04LjItNC4zLTcuNy0xLjYtMTcuNSw2LjEtMjEuOEwyNDguMiw1NWM3LjctNC4zLDE3LjUtMS42LDIxLjgsNi4xLDQuMyw3LjcsMS42LDE3LjUtNi4xLDIxLjhsLTE2Ni4yLDkzLjVjLTIuNSwxLjQtNS4yLDIuMS03LjgsMi4xaDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3Q0IiBkPSJNNDIyLjIsMTc4LjVjLTIuNywwLTUuNC0uNy03LjgtMi4xbC0xNjYuMi05My41Yy03LjctNC4zLTEwLjQtMTQuMS02LjEtMjEuOCw0LjMtNy43LDE0LjEtMTAuNCwyMS44LTYuMWwxNjYuMiw5My41YzcuNyw0LjMsMTAuNCwxNC4xLDYuMSwyMS44LTIuOSw1LjItOC40LDguMi0xNCw4LjJoMFoiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDQiIGQ9Ik0yNTYsMTc4LjVjLTguOCwwLTE2LTcuMi0xNi0xNnYtOTMuNWMwLTguOCw3LjItMTYsMTYtMTZzMTYsNy4yLDE2LDE2djkzLjVjMCw4LjgtNy4yLDE2LTE2LDE2WiIvPgogICAgPHBhdGggY2xhc3M9InN0MyIgZD0iTTgxLjcsMzYzLjNjLTQuOS0yLjktNy45LTguMS03LjktMTMuOHYtMTg3YzAtNiwzLjMtMTEuMiw4LjItMTMuOSwyLjMtMS4zLDIzLjgtMTMuNCwyMy44LTEzLjR2MTg3bDU5LjMtMzMuM2M3LjctNC4zLDE3LjUtMS42LDIxLjgsNi4xLDQuMyw3LjcsMS42LDE3LjUtNi4xLDIxLjhsLTkwLjksNTEuMnMtNS42LTMuMS04LjEtNC41aDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNNDIyLjIsMzY3LjlsLTkwLjktNTEuMmMtNy43LTQuMy0xMC40LTE0LjEtNi4xLTIxLjhzMTQuMS0xMC40LDIxLjgtNi4xbDU5LjMsMzMuM3YtMTg3czIxLjUsMTIuMSwyMy45LDEzLjRjLjguNSwxLjYsMSwyLjMsMS42LDMuNiwyLjksNS44LDcuNCw1LjgsMTIuNHYxODdjMCw1LjctMywxMC45LTcuOSwxMy44LTIuNSwxLjUtOC4xLDQuNS04LjEsNC41aDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3Q0IiBkPSJNMzM5LjEsMjI1LjJjLTIuNywwLTUuNC0uNy03LjgtMi4xbC03NS4zLTQyLjMtNzUuMyw0Mi4zYy03LjcsNC4zLTE3LjUsMS42LTIxLjgtNi4xLTQuMy03LjctMS42LTE3LjUsNi4xLTIxLjhsODMuMS00Ni44YzQuOS0yLjcsMTAuOC0yLjcsMTUuNywwbDgzLjEsNDYuOGM3LjcsNC4zLDEwLjQsMTQuMSw2LjEsMjEuOC0yLjksNS4yLTguNCw4LjItMTQsOC4yaDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMjU2LDM2NS41Yy01LjYsMC0xMS0yLjktMTQtOC4yLTQuMy03LjctMS42LTE3LjUsNi4xLTIxLjhsNzUtNDIuMnYtODQuMWMwLTguOCw3LjItMTYsMTYtMTZzMTYsNy4yLDE2LDE2djkzLjVjMCw1LjgtMy4xLDExLjEtOC4yLDE0bC04My4xLDQ2LjhjLTIuNSwxLjQtNS4yLDIuMS03LjgsMi4xaDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QzIiBkPSJNMjU2LDM2NS41Yy0yLjcsMC01LjQtLjctNy44LTJsLTgzLjEtNDYuOGMtNS0yLjgtOC4yLTguMi04LjItMTR2LTkzLjVjMC04LjgsNy4yLTE2LDE2LTE2czE2LDcuMiwxNiwxNnY4NC4xbDUxLjEsMjguOHYtNjYuMWMwLTguOCw3LjItMTYsMTYtMTZzMTYsNy4yLDE2LDE2djEwMi45cy0zLDEuNi03LjksNC41Yy0yLjUsMS41LTUuMywyLjItOC4xLDIuMmgwWiIvPgogICAgPHBhdGggY2xhc3M9InN0MSIgZD0iTTI1NiwyNzJjLTUuNiwwLTExLTIuOS0xNC04LjItNC4zLTcuNy0xLjYtMTcuNSw2LjEtMjEuOGw5MS01MS4yLDcuOSw0LjRjMi4xLDEuMSw0LjIsMi44LDYuMSw2LjEsNC4zLDcuNywxLjYsMTcuNS02LjEsMjEuOGwtODMuMSw0Ni44Yy0yLjUsMS40LTUuMiwyLjEtNy44LDIuMWgwWiIvPgogICAgPHBhdGggY2xhc3M9InN0NCIgZD0iTTI1NiwyMzcuNmwtNzUuMy00Mi4zYy03LjctNC4zLTE3LjUtMS42LTIxLjgsNi4xLTEuNCwyLjUtMi4xLDUuMi0yLjEsNy44djkuNGw5MS4zLDUxLjNjMi41LDEuNCw1LjIsMi4xLDcuOCwyLjFoMHYtMzQuNGgwWiIvPgogIDwvZz4KPC9zdmc+"/>
+</g>
+<g class="node" data-id="SYS-SCREENING-EGRESS" data-type="systems">
+<title>NICE Actimize Screening Private Egress</title>
+<rect x="574" y="123" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="661" y="154.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">NICE Actimize</text>
+<text x="661" y="166.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Screening Private</text>
+<text x="661" y="178.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Egress</text>
+<svg x="738" y="128" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-SCREENING-FEDERATION" data-type="systems">
+<title>NICE Actimize Screening Identity Federation</title>
+<rect x="780" y="123" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="867" y="154.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">NICE Actimize</text>
+<text x="867" y="166.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Screening Identity</text>
+<text x="867" y="178.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Federation</text>
+<svg x="944" y="128" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-SCREENING-VENDOR" data-type="systems">
+<title>NICE Actimize Screening</title>
+<rect x="305" y="666" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="392" y="698.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">NICE Actimize</text>
+<text x="392" y="710.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Screening</text>
+<text x="396" y="739.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">NICE Actimize</text>
+<svg x="469" y="671" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-SIEM" data-type="systems">
+<title>Security Monitoring</title>
+<rect x="574" y="222" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="655" y="254.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Security</text>
+<text x="655" y="266.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Monitoring</text>
+<text x="665" y="295.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Microsoft Sentinel</text>
+<image x="734" y="226" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYTc1ZTNmM2EtMjY2MS00MTBiLTgyZmItZDMwMGQzN2RlYTJkIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImFmZjYwZGRmLWVlYzEtNDBiZi04YmY1LWYzZTNiNTBlODgxOCIgeDE9IjkiIHkxPSIxNi4yMSIgeDI9IjkiIHkyPSIwLjYyIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWI5M2ViIiAvPjxzdG9wIG9mZnNldD0iMC4yMSIgc3RvcC1jb2xvcj0iIzIwOTVlYiIgLz48c3RvcCBvZmZzZXQ9IjAuNDQiIHN0b3AtY29sb3I9IiMyZTljZWQiIC8+PHN0b3Agb2Zmc2V0PSIwLjY5IiBzdG9wLWNvbG9yPSIjNDVhN2VmIiAvPjxzdG9wIG9mZnNldD0iMC45NSIgc3RvcC1jb2xvcj0iIzY0YjZmMSIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM2YmI5ZjIiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPkljb24tc2VjdXJpdHktMjQ4PC90aXRsZT48cGF0aCBkPSJNMTYsOC40NGMwLDQuNTctNS41Myw4LjI1LTYuNzMsOWEuNDMuNDMsMCwwLDEtLjQ2LDBDNy41NywxNi42OSwyLDEzLDIsOC40NFYyLjk0YS40NC40NCwwLDAsMSwuNDMtLjQ0QzYuNzcsMi4zOSw1Ljc4LjUsOSwuNXMyLjIzLDEuODksNi41MywyYS40NC40NCwwLDAsMSwuNDMuNDRaIiBmaWxsPSIjMWI5M2ViIiAvPjxwYXRoIGQ9Ik0xNS4zOCw4LjQ4YzAsNC4yLTUuMDcsNy41Ny02LjE3LDguMjVhLjQuNCwwLDAsMS0uNDIsMGMtMS4xLS42OC02LjE3LTQuMDUtNi4xNy04LjI1di01QS40MS40MSwwLDAsMSwzLDNjMy45NC0uMTEsMy0xLjgzLDYtMS44M1MxMS4wNSwyLjkzLDE1LDNhLjQxLjQxLDAsMCwxLC4zOS40WiIgZmlsbD0idXJsKCNhZmY2MGRkZi1lZWMxLTQwYmYtOGJmNS1mM2UzYjUwZTg4MTgpIiAvPjxwYXRoIGQ9Ik05LDYuNTNBMi44OCwyLjg4LDAsMCwxLDExLjg0LDlhLjQ5LjQ5LDAsMCwwLC40OS40aDEuNGEuNDkuNDksMCwwLDAsLjUtLjUzLDUuMjYsNS4yNiwwLDAsMC0xMC40NiwwLC40OS40OSwwLDAsMCwuNS41M2gxLjRBLjQ5LjQ5LDAsMCwwLDYuMTYsOSwyLjg4LDIuODgsMCwwLDEsOSw2LjUzWiIgZmlsbD0iI2MzZjFmZiIgLz48Y2lyY2xlIGN4PSI5IiBjeT0iOS40IiByPSIxLjkxIiBmaWxsPSIjZmZmIiAvPjwvc3ZnPg=="/>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="911.4" x2="1072" y2="911.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="935.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 924.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="93.2" y="935.4" font-size="12" font-weight="400" fill="#343d50">system · 23</text>
+<text x="28" y="957.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 946.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="957.4" font-size="12" font-weight="400" fill="#343d50">calls</text>
+<text x="28" y="991.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · vendor-exposure · edit the model, not the picture</text></g>
+</svg>

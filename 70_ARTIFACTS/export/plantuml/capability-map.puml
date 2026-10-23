@@ -1,0 +1,334 @@
+@startuml
+' Capability Map
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Capability Map
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+
+Boundary(b_Direct, "Direct") {
+  Boundary(b_Direct__Enterprise_Strategy___Planning, "Enterprise Strategy & Planning") {
+    System(CAP_STRAT_03, "Business Performance Management", "Set, track, and act on enterprise performance indicators.", $tags="capabilities")
+    ' aac CAP_STRAT_03: company_domain="Cross-Functional Services"
+    System(CAP_STRAT_04, "Enterprise Architecture & Change Portfolio", "Govern the shape of the estate and the pipeline of change.", $tags="capabilities")
+    ' aac CAP_STRAT_04: company_domain="Cross-Functional Services"
+    System(CAP_STRAT_01, "Market & Competitive Analysis", "Understand market, competitor, and portfolio economics to inform strategy.", $tags="capabilities")
+    ' aac CAP_STRAT_01: company_domain="Cross-Functional Services"
+    System(CAP_STRAT_05, "Merger, Acquisition & Portfolio Transaction", "Evaluate and integrate acquired portfolios and servicing books.", $tags="capabilities")
+    ' aac CAP_STRAT_05: company_domain="Cross-Functional Services"
+    System(CAP_STRAT_02, "Portfolio Strategy & Investment Planning", "Decide which portfolios and programs receive capital and change capacity.", $tags="capabilities")
+    ' aac CAP_STRAT_02: company_domain="Cross-Functional Services"
+  }
+  Boundary(b_Direct__Partner___Client_Relationship_Management, "Partner & Client Relationship Management") {
+    System(CAP_PART_04, "Client Service Level & Performance Management", "Manage delivery against contracted service levels and report performance.", $tags="capabilities")
+    ' aac CAP_PART_04: company_domain="Cross-Functional Services"
+    System(CAP_PART_05, "Co-Brand & Program Partner Management", "Manage co-brand and program partner economics and obligations.", $tags="capabilities")
+    ' aac CAP_PART_05: company_domain="Cross-Functional Services"
+    System(CAP_PART_01, "Issuing Bank & Sponsor Relationship", "Manage the issuing bank relationship and its obligations.", $tags="capabilities")
+    ' aac CAP_PART_01: company_domain="Cross-Functional Services"
+    System(CAP_PART_02, "Network & Scheme Relationship", "Manage network membership, rules, and mandate adoption.", $tags="capabilities")
+    ' aac CAP_PART_02: company_domain="Cross-Functional Services"
+    System(CAP_PART_03, "Servicing Client Origination & Contracting", "Win and contract third-party servicing engagements.", $tags="capabilities")
+    ' aac CAP_PART_03: company_domain="Cross-Functional Services"
+  }
+  Boundary(b_Direct__Product_Management___Pricing, "Product Management & Pricing") {
+    System(CAP_PROD_02, "Pricing, Fee & APR Management", "Set and maintain rate, fee, and pricing structures across products.", $tags="capabilities")
+    ' aac CAP_PROD_02: company_domain="Products"
+    System(CAP_PROD_01, "Product Design & Configuration", "Define product features, eligibility, and operating parameters.", $tags="capabilities")
+    ' aac CAP_PROD_01: company_domain="Products"
+    System(CAP_PROD_05, "Product Lifecycle & Retirement", "Launch, amend, sunset, and migrate products through their lifecycle.", $tags="capabilities")
+    ' aac CAP_PROD_05: company_domain="Products"
+    System(CAP_PROD_04, "Rewards Program Design", "Define earn, accrual, and redemption economics for rewards programs.", $tags="capabilities")
+    ' aac CAP_PROD_04: company_domain="Products"
+    System(CAP_PROD_03, "Terms & Disclosure Management", "Author, version, and control cardholder agreements and disclosures.", $tags="capabilities")
+    ' aac CAP_PROD_03: company_domain="Products"
+  }
+  Boundary(b_Direct__Risk_Governance___Compliance_Management, "Risk Governance & Compliance Management") {
+    System(CAP_RGOV_06, "Complaint Oversight & UDAAP Management", "Aggregate, analyze, and act on complaint signal for unfair practice risk.", $tags="capabilities")
+    ' aac CAP_RGOV_06: company_domain="Cross-Functional Services"
+    System(CAP_RGOV_03, "Compliance Monitoring & Testing", "Test whether controls operate as designed and report the result.", $tags="capabilities")
+    ' aac CAP_RGOV_03: company_domain="Cross-Functional Services"
+    System(CAP_RGOV_07, "Financial Crimes & BSA/AML Compliance", "Operate the KYC/CIP program, transaction monitoring, sanctions screening, and regulatory filing.", $tags="capabilities")
+    ' aac CAP_RGOV_07: company_domain="Cross-Functional Services"
+    System(CAP_RGOV_05, "Internal Audit & Examination Management", "Coordinate internal audits and regulatory examinations.", $tags="capabilities")
+    ' aac CAP_RGOV_05: company_domain="Cross-Functional Services"
+    System(CAP_RGOV_04, "Issue & Remediation Management", "Track findings and issues to evidenced closure.", $tags="capabilities")
+    ' aac CAP_RGOV_04: company_domain="Cross-Functional Services"
+    System(CAP_RGOV_08, "Model Risk Governance", "Independently validate and monitor models in production use.", $tags="capabilities")
+    ' aac CAP_RGOV_08: company_domain="Cross-Functional Services"
+    System(CAP_RGOV_02, "Regulatory Change Management", "Detect, interpret, and land regulatory change across the enterprise.", $tags="capabilities")
+    ' aac CAP_RGOV_02: company_domain="Cross-Functional Services"
+    System(CAP_RGOV_01, "Risk Appetite & Policy Management", "Define risk appetite and author and version enterprise policy.", $tags="capabilities")
+    ' aac CAP_RGOV_01: company_domain="Cross-Functional Services"
+  }
+}
+Boundary(b_Core, "Core") {
+  Boundary(b_Core__Billing__Statements___Rewards, "Billing, Statements & Rewards") {
+    System(CAP_BILL_05, "Billing Adjustment & Credit Processing", "Apply goodwill credits, fee reversals, and billing corrections.", $tags="capabilities")
+    ' aac CAP_BILL_05: company_domain="Servicing"
+    System(CAP_BILL_02, "Cycle & Statement Generation", "Cut billing cycles and generate statements.", $tags="capabilities")
+    ' aac CAP_BILL_02: company_domain="Servicing"
+    System(CAP_BILL_01, "Interest & Fee Assessment", "Calculate interest, fees, and minimum payment.", $tags="capabilities")
+    ' aac CAP_BILL_01: company_domain="Servicing"
+    System(CAP_BILL_04, "Rewards Earn, Accrual & Redemption", "Operate the rewards ledger, accrual, and redemption.", $tags="capabilities")
+    ' aac CAP_BILL_04: company_domain="Servicing"
+    System(CAP_BILL_03, "Statement Delivery & Archive", "Deliver statements by print and electronic channels, and retain and retrieve them.", $tags="capabilities")
+    ' aac CAP_BILL_03: company_domain="Servicing"
+  }
+  Boundary(b_Core__Collections___Recovery, "Collections & Recovery") {
+    System(CAP_COLL_06, "Bankruptcy, Deceased & Legal Account Handling", "Handle accounts under legal protection or in estate.", $tags="capabilities")
+    ' aac CAP_COLL_06: company_domain="Collections"
+    System(CAP_COLL_04, "Charge-off Processing", "Execute charge-off on policy timing with the correct accounting effect.", $tags="capabilities")
+    ' aac CAP_COLL_04: company_domain="Collections"
+    System(CAP_COLL_07, "Collections Compliance Oversight", "Assure conformance with debt collection, contact, and state-law requirements.", $tags="capabilities")
+    ' aac CAP_COLL_07: company_domain="Collections"
+    System(CAP_COLL_08, "Credit Bureau Reporting & Dispute Handling", "Furnish data to bureaus and handle consumer reporting disputes.", $tags="capabilities")
+    ' aac CAP_COLL_08: company_domain="Collections"
+    System(CAP_COLL_01, "Delinquency Segmentation & Treatment Strategy", "Decide which accounts are contacted, how, and when.", $tags="capabilities")
+    ' aac CAP_COLL_01: company_domain="Collections"
+    System(CAP_COLL_02, "Outbound Contact Operations", "Execute dialer, digital, and letter treatment.", $tags="capabilities")
+    ' aac CAP_COLL_02: company_domain="Collections"
+    System(CAP_COLL_03, "Payment Arrangement & Settlement Offers", "Negotiate and administer arrangements and settlements.", $tags="capabilities")
+    ' aac CAP_COLL_03: company_domain="Collections"
+    System(CAP_COLL_05, "Recovery, Agency & Debt Sale Management", "Place, manage, and settle with agencies, and execute debt sales.", $tags="capabilities")
+    ' aac CAP_COLL_05: company_domain="Collections"
+  }
+  Boundary(b_Core__Consumer___Recreation_Lending, "Consumer & Recreation Lending") {
+    System(CAP_LEND_04, "Collateral, Title & Lien Management", "Perfect and track liens and titles on financed assets across state regimes; release on payoff.", $tags="capabilities")
+    ' aac CAP_LEND_04: company_domain="Lending"
+    System(CAP_LEND_01, "Dealer Network & Program Management", "Recruit, contract, monitor, and manage the dealer network that originates recreation loans, including program terms and dealer performance.", $tags="capabilities")
+    ' aac CAP_LEND_01: company_domain="Lending"
+    System(CAP_LEND_02, "Indirect Application & Underwriting", "Receive applications through dealers, decision them against credit policy, and return terms while the buyer is at the point of sale.", $tags="capabilities")
+    ' aac CAP_LEND_02: company_domain="Lending"
+    System(CAP_LEND_05, "Installment Loan Servicing", "Bill, post, and service fixed-term installment loans: payments, payoffs, extensions, and customer contact.", $tags="capabilities")
+    ' aac CAP_LEND_05: company_domain="Lending"
+    System(CAP_LEND_03, "Loan Boarding & Dealer Funding", "Board approved loans, verify stipulations and documentation, and fund the dealer.", $tags="capabilities")
+    ' aac CAP_LEND_03: company_domain="Lending"
+    System(CAP_LEND_06, "Repossession & Asset Remarketing", "Recover, recondition, and remarket collateral on defaulted loans; manage deficiency balances.", $tags="capabilities")
+    ' aac CAP_LEND_06: company_domain="Lending"
+  }
+  Boundary(b_Core__Credit_Decisioning___Portfolio_Management, "Credit Decisioning & Portfolio Management") {
+    System(CAP_CRED_07, "Account Review & Reissue Decisioning", "Perform periodic account-level risk review and reissue decisions.", $tags="capabilities")
+    ' aac CAP_CRED_07: company_domain="Originations"
+    System(CAP_CRED_06, "Authorization Strategy Management", "Set the rules governing real-time authorization decisions.", $tags="capabilities")
+    ' aac CAP_CRED_06: company_domain="Originations"
+    System(CAP_CRED_03, "Credit Line Assignment & Management", "Set initial lines and manage increases, decreases, and reallocation.", $tags="capabilities")
+    ' aac CAP_CRED_03: company_domain="Originations"
+    System(CAP_CRED_01, "Credit Strategy & Scorecard Management", "Own the credit decision strategy and its cutoffs.", $tags="capabilities")
+    ' aac CAP_CRED_01: company_domain="Originations"
+    System(CAP_CRED_05, "Loss Forecasting & Allowance", "Forecast credit losses and set the allowance.", $tags="capabilities")
+    ' aac CAP_CRED_05: company_domain="Originations"
+    System(CAP_CRED_02, "Model Development & Validation", "Build, document, and validate credit and fraud models.", $tags="capabilities")
+    ' aac CAP_CRED_02: company_domain="Originations"
+    System(CAP_CRED_04, "Portfolio Risk Monitoring & Segmentation", "Monitor vintage, roll rate, and segment performance across the portfolio.", $tags="capabilities")
+    ' aac CAP_CRED_04: company_domain="Originations"
+  }
+  Boundary(b_Core__Customer_Acquisition___Marketing, "Customer Acquisition & Marketing") {
+    System(CAP_ACQ_05, "Acquisition Performance Analytics", "Measure response, approval, and vintage economics of acquisition activity.", $tags="capabilities")
+    ' aac CAP_ACQ_05: company_domain="MarTech"
+    System(CAP_ACQ_03, "Campaign Execution & Channel Management", "Execute acquisition campaigns across direct mail, digital, partner, and inbound channels.", $tags="capabilities")
+    ' aac CAP_ACQ_03: company_domain="MarTech"
+    System(CAP_ACQ_04, "Marketing Compliance & Disclosure Review", "Review creative and offers for regulatory adequacy before release.", $tags="capabilities")
+    ' aac CAP_ACQ_04: company_domain="MarTech"
+    System(CAP_ACQ_02, "Offer & Pre-Screen Management", "Construct and govern firm offers of credit and pre-screen criteria.", $tags="capabilities")
+    ' aac CAP_ACQ_02: company_domain="MarTech"
+    System(CAP_ACQ_01, "Prospect Data & List Management", "Source, permission, and manage prospect data.", $tags="capabilities")
+    ' aac CAP_ACQ_01: company_domain="MarTech"
+  }
+  Boundary(b_Core__Customer_Servicing___Care, "Customer Servicing & Care") {
+    System(CAP_SERV_02, "Account Maintenance & Servicing Requests", "Execute cardholder-requested account changes.", $tags="capabilities")
+    ' aac CAP_SERV_02: company_domain="Servicing"
+    System(CAP_SERV_05, "Complaint Capture & Resolution", "Capture, classify, resolve, and evidence complaints.", $tags="capabilities")
+    ' aac CAP_SERV_05: company_domain="Servicing"
+    System(CAP_SERV_01, "Contact Handling & Routing", "Receive and route contacts across voice, chat, and messaging.", $tags="capabilities")
+    ' aac CAP_SERV_01: company_domain="Servicing"
+    System(CAP_SERV_04, "Correspondence & Notification Management", "Generate and deliver required and elective communications.", $tags="capabilities")
+    ' aac CAP_SERV_04: company_domain="Servicing"
+    System(CAP_SERV_03, "Digital Self-Service", "Enable cardholders to self-serve in web and mobile channels.", $tags="capabilities")
+    ' aac CAP_SERV_03: company_domain="Servicing"
+    System(CAP_SERV_07, "Hardship & Payment Assistance", "Operate hardship, forbearance, and payment assistance programs.", $tags="capabilities")
+    ' aac CAP_SERV_07: company_domain="Servicing"
+    System(CAP_SERV_06, "Servicing Knowledge & Agent Enablement", "Equip agents with current, compliant guidance.", $tags="capabilities")
+    ' aac CAP_SERV_06: company_domain="Servicing"
+    System(CAP_SERV_08, "Servicing Quality Monitoring", "Monitor and score servicing interactions for quality and compliance.", $tags="capabilities")
+    ' aac CAP_SERV_08: company_domain="Servicing"
+  }
+  Boundary(b_Core__Deposit_Products___Funding, "Deposit Products & Funding") {
+    System(CAP_DEP_03, "Brokered CD Program Management", "Issue and administer CDs through broker-dealer networks: allocations, settlement, and broker relationships. A primary funding channel.", $tags="capabilities")
+    ' aac CAP_DEP_03: company_domain="Deposits"
+    System(CAP_DEP_02, "Deposit Account Opening", "Open and fund consumer deposit accounts directly: identity, disclosures, initial funding.", $tags="capabilities")
+    ' aac CAP_DEP_02: company_domain="Deposits"
+    System(CAP_DEP_05, "Deposit Compliance & Insurance Administration", "FDIC insurance administration, interest reporting, escheatment, and deposit-side regulatory obligations.", $tags="capabilities")
+    ' aac CAP_DEP_05: company_domain="Deposits"
+    System(CAP_DEP_01, "Deposit Product Management", "Define and price CD and savings products: terms, rates, disclosures, and the rate sheet cadence.", $tags="capabilities")
+    ' aac CAP_DEP_01: company_domain="Deposits"
+    System(CAP_DEP_04, "Deposit Servicing, Interest & Maturities", "Accrue and pay interest, process maturities and renewals, and handle early withdrawal within terms.", $tags="capabilities")
+    ' aac CAP_DEP_04: company_domain="Deposits"
+  }
+  Boundary(b_Core__Fraud__Disputes___Chargeback_Management, "Fraud, Disputes & Chargeback Management") {
+    System(CAP_FRAUD_04, "Chargeback & Representment Processing", "Execute network chargeback and representment cycles.", $tags="capabilities")
+    ' aac CAP_FRAUD_04: company_domain="Servicing"
+    System(CAP_FRAUD_03, "Dispute Intake & Provisional Credit", "Take dispute claims and apply provisional credit within regulatory timers.", $tags="capabilities")
+    ' aac CAP_FRAUD_03: company_domain="Servicing"
+    System(CAP_FRAUD_02, "Fraud Case Investigation", "Investigate and adjudicate fraud cases.", $tags="capabilities")
+    ' aac CAP_FRAUD_02: company_domain="Servicing"
+    System(CAP_FRAUD_05, "Fraud Loss Recovery & Write-off", "Recover and account for fraud losses.", $tags="capabilities")
+    ' aac CAP_FRAUD_05: company_domain="Servicing"
+    System(CAP_FRAUD_07, "Fraud Reporting & Network Compliance", "Meet network fraud reporting thresholds and obligations.", $tags="capabilities")
+    ' aac CAP_FRAUD_07: company_domain="Servicing"
+    System(CAP_FRAUD_06, "Identity Theft & Account Takeover Response", "Respond to account takeover and identity theft events.", $tags="capabilities")
+    ' aac CAP_FRAUD_06: company_domain="Servicing"
+    System(CAP_FRAUD_01, "Transaction Fraud Detection & Strategy", "Detect fraudulent transactions in flight and set detection strategy.", $tags="capabilities")
+    ' aac CAP_FRAUD_01: company_domain="Servicing"
+  }
+  Boundary(b_Core__Merchant_Acquiring___Sponsorship, "Merchant Acquiring & Sponsorship") {
+    System(CAP_MERCH_05, "Acquiring Chargeback Processing", "Work chargebacks from the acquiring side: represent on behalf of merchants and pass losses to the right party.", $tags="capabilities")
+    ' aac CAP_MERCH_05: company_domain="Merchant Services"
+    System(CAP_MERCH_01, "ISO & Agent Program Management", "Recruit, contract, and oversee ISOs and agents who bring merchant volume; manage program economics and liability.", $tags="capabilities")
+    ' aac CAP_MERCH_01: company_domain="Merchant Services"
+    System(CAP_MERCH_03, "Merchant Boarding & Network Sponsorship", "Board approved merchants and sponsor them into the card networks under the bank's licenses.", $tags="capabilities")
+    ' aac CAP_MERCH_03: company_domain="Merchant Services"
+    System(CAP_MERCH_06, "Merchant Monitoring & Exposure Management", "Monitor merchant transaction behavior, credit exposure, and collusion or bust-out patterns across the portfolio.", $tags="capabilities")
+    ' aac CAP_MERCH_06: company_domain="Merchant Services"
+    System(CAP_MERCH_04, "Merchant Settlement & Funding", "Clear and settle merchant card volume and fund merchant accounts daily, with reserves where risk requires them.", $tags="capabilities")
+    ' aac CAP_MERCH_04: company_domain="Merchant Services"
+    System(CAP_MERCH_02, "Merchant Underwriting & Risk Vetting", "Underwrite merchants against credit and brand risk appetite — the specialty-vertical appetite is the differentiator.", $tags="capabilities")
+    ' aac CAP_MERCH_02: company_domain="Merchant Services"
+  }
+  Boundary(b_Core__Originations___Account_Opening, "Originations & Account Opening") {
+    System(CAP_ORIG_06, "Account Establishment & Card Issuance", "Open the account and issue credentials.", $tags="capabilities")
+    ' aac CAP_ORIG_06: company_domain="Originations"
+    System(CAP_ORIG_05, "Adverse Action & Notice Generation", "Produce compliant decline and counter-offer notices.", $tags="capabilities")
+    ' aac CAP_ORIG_05: company_domain="Originations"
+    System(CAP_ORIG_01, "Application Capture", "Accept applications across web, mobile, phone, mail, and partner channels.", $tags="capabilities")
+    ' aac CAP_ORIG_01: company_domain="Originations"
+    System(CAP_ORIG_03, "Application Fraud Screening", "Detect synthetic, stolen, and first-party application fraud.", $tags="capabilities")
+    ' aac CAP_ORIG_03: company_domain="Originations"
+    System(CAP_ORIG_07, "Card Production & Fulfillment", "Produce, personalize, and deliver physical and digital cards.", $tags="capabilities")
+    ' aac CAP_ORIG_07: company_domain="Originations"
+    System(CAP_ORIG_08, "Digital Wallet Provisioning", "Provision credentials into wallets and tokenized environments.", $tags="capabilities")
+    ' aac CAP_ORIG_08: company_domain="Originations"
+    System(CAP_ORIG_02, "Identity Verification & KYC/CIP", "Verify applicant identity and satisfy customer identification obligations.", $tags="capabilities")
+    ' aac CAP_ORIG_02: company_domain="Originations"
+    System(CAP_ORIG_04, "Underwriting & Credit Decisioning Execution", "Execute the credit decision against the approved strategy.", $tags="capabilities")
+    ' aac CAP_ORIG_04: company_domain="Originations"
+  }
+  Boundary(b_Core__Payments___Transaction_Processing, "Payments & Transaction Processing") {
+    System(CAP_PAY_01, "Authorization Processing", "Decision and respond to real-time authorization requests.", $tags="capabilities")
+    ' aac CAP_PAY_01: company_domain="Servicing"
+    System(CAP_PAY_02, "Clearing & Transaction Posting", "Receive clearing files and post transactions to accounts.", $tags="capabilities")
+    ' aac CAP_PAY_02: company_domain="Servicing"
+    System(CAP_PAY_06, "Network & Merchant Reconciliation", "Reconcile network, processor, and internal ledgers.", $tags="capabilities")
+    ' aac CAP_PAY_06: company_domain="Servicing"
+    System(CAP_PAY_05, "Network Settlement & Interchange", "Settle positions with networks and account for interchange.", $tags="capabilities")
+    ' aac CAP_PAY_05: company_domain="Servicing"
+    System(CAP_PAY_03, "Payment Capture & Application", "Accept and apply cardholder payments across all channels.", $tags="capabilities")
+    ' aac CAP_PAY_03: company_domain="Servicing"
+    System(CAP_PAY_04, "Returned Payment & NSF Handling", "Process returns, reversals, and associated fees.", $tags="capabilities")
+    ' aac CAP_PAY_04: company_domain="Servicing"
+    System(CAP_PAY_07, "Tokenization & Credential Management", "Manage tokens, primary account numbers, and credential lifecycle.", $tags="capabilities")
+    ' aac CAP_PAY_07: company_domain="Servicing"
+  }
+  Boundary(b_Core__Third_Party_Servicing_Delivery, "Third-Party Servicing Delivery") {
+    System(CAP_TPS_05, "Client Audit & Oversight Support", "Support client and client-regulator oversight activity.", $tags="capabilities")
+    ' aac CAP_TPS_05: company_domain="Cross-Functional Services"
+    System(CAP_TPS_04, "Client Billing & Revenue Management", "Bill servicing fees and manage revenue recognition.", $tags="capabilities")
+    ' aac CAP_TPS_04: company_domain="Cross-Functional Services"
+    System(CAP_TPS_01, "Client Program Configuration & Setup", "Configure platform, product, and treatment for a client program.", $tags="capabilities")
+    ' aac CAP_TPS_01: company_domain="Cross-Functional Services"
+    System(CAP_TPS_03, "Client Reporting & Data Exchange", "Deliver contracted reporting and data feeds to clients.", $tags="capabilities")
+    ' aac CAP_TPS_03: company_domain="Cross-Functional Services"
+    System(CAP_TPS_06, "Client-Directed Change Management", "Intake, price, and deliver client-requested change.", $tags="capabilities")
+    ' aac CAP_TPS_06: company_domain="Cross-Functional Services"
+    System(CAP_TPS_02, "Portfolio Conversion & Deconversion", "Convert client portfolios onto and off the servicing platform.", $tags="capabilities")
+    ' aac CAP_TPS_02: company_domain="Cross-Functional Services"
+  }
+}
+Boundary(b_Enable, "Enable") {
+  Boundary(b_Enable__Data___Analytics_Management, "Data & Analytics Management") {
+    System(CAP_DATA_06, "AI/ML Model Operations", "Deploy, monitor, and retire models in production.", $tags="capabilities")
+    ' aac CAP_DATA_06: company_domain="Cross-Functional Services"
+    System(CAP_DATA_04, "Analytics, Reporting & BI", "Serve reporting and analysis to the business.", $tags="capabilities")
+    ' aac CAP_DATA_04: company_domain="Cross-Functional Services"
+    System(CAP_DATA_01, "Data Governance & Stewardship", "Own data policy, ownership, and stewardship across the enterprise.", $tags="capabilities")
+    ' aac CAP_DATA_01: company_domain="Cross-Functional Services"
+    System(CAP_DATA_03, "Data Quality Management", "Define, measure, and remediate data quality.", $tags="capabilities")
+    ' aac CAP_DATA_03: company_domain="Cross-Functional Services"
+    System(CAP_DATA_02, "Data Sourcing & Integration", "Acquire and integrate internal and third-party data.", $tags="capabilities")
+    ' aac CAP_DATA_02: company_domain="Cross-Functional Services"
+    System(CAP_DATA_05, "Metadata, Lineage & Catalog", "Maintain the governed catalog, metadata, and lineage.", $tags="capabilities")
+    ' aac CAP_DATA_05: company_domain="Cross-Functional Services"
+    System(CAP_DATA_07, "Records Retention & Disposition", "Retain and dispose of records to the retention schedule.", $tags="capabilities")
+    ' aac CAP_DATA_07: company_domain="Cross-Functional Services"
+  }
+  Boundary(b_Enable__Finance__Treasury___Settlement_Accounting, "Finance, Treasury & Settlement Accounting") {
+    System(CAP_FIN_05, "Accounts Payable & Procurement Finance", "Pay suppliers and control discretionary spend.", $tags="capabilities")
+    ' aac CAP_FIN_05: company_domain="Cross-Functional Services"
+    System(CAP_FIN_06, "Cash & Settlement Reconciliation", "Reconcile cash and settlement positions daily.", $tags="capabilities")
+    ' aac CAP_FIN_06: company_domain="Cross-Functional Services"
+    System(CAP_FIN_03, "Funding & Liquidity Management", "Manage funding positions and liquidity.", $tags="capabilities")
+    ' aac CAP_FIN_03: company_domain="Cross-Functional Services"
+    System(CAP_FIN_01, "General Ledger & Financial Close", "Operate the general ledger and close the books.", $tags="capabilities")
+    ' aac CAP_FIN_01: company_domain="Cross-Functional Services"
+    System(CAP_FIN_02, "Interchange & Revenue Accounting", "Account for interchange, fees, and servicing revenue.", $tags="capabilities")
+    ' aac CAP_FIN_02: company_domain="Cross-Functional Services"
+    System(CAP_FIN_04, "Regulatory & Financial Reporting", "Produce regulatory and external financial reporting.", $tags="capabilities")
+    ' aac CAP_FIN_04: company_domain="Cross-Functional Services"
+  }
+  Boundary(b_Enable__Information_Security___Privacy, "Information Security & Privacy") {
+    System(CAP_SEC_04, "Data Protection & Cryptography", "Protect data at rest and in transit, and manage keys and cardholder data scope.", $tags="capabilities")
+    ' aac CAP_SEC_04: company_domain="Cross-Functional Services"
+    System(CAP_SEC_01, "Identity & Access Management", "Govern who can access what, and evidence it.", $tags="capabilities")
+    ' aac CAP_SEC_01: company_domain="Cross-Functional Services"
+    System(CAP_SEC_05, "Privacy Management", "Operate privacy obligations including consumer rights requests.", $tags="capabilities")
+    ' aac CAP_SEC_05: company_domain="Cross-Functional Services"
+    System(CAP_SEC_02, "Threat Detection & Response", "Detect and respond to security events.", $tags="capabilities")
+    ' aac CAP_SEC_02: company_domain="Cross-Functional Services"
+    System(CAP_SEC_03, "Vulnerability & Patch Management", "Find and remediate technical exposure.", $tags="capabilities")
+    ' aac CAP_SEC_03: company_domain="Cross-Functional Services"
+  }
+  Boundary(b_Enable__People__Legal___Corporate_Services, "People, Legal & Corporate Services") {
+    System(CAP_CORP_05, "Corporate Communications", "Manage internal and external communications.", $tags="capabilities")
+    ' aac CAP_CORP_05: company_domain="Cross-Functional Services"
+    System(CAP_CORP_04, "Facilities & Workplace Operations", "Operate sites and workplace services.", $tags="capabilities")
+    ' aac CAP_CORP_04: company_domain="Cross-Functional Services"
+    System(CAP_CORP_02, "Learning, Licensing & Certification", "Train the workforce and maintain required certifications.", $tags="capabilities")
+    ' aac CAP_CORP_02: company_domain="Cross-Functional Services"
+    System(CAP_CORP_03, "Legal & Contract Counsel", "Provide legal advice and contracting support.", $tags="capabilities")
+    ' aac CAP_CORP_03: company_domain="Cross-Functional Services"
+    System(CAP_CORP_01, "Workforce Management & HR", "Hire, pay, and manage people.", $tags="capabilities")
+    ' aac CAP_CORP_01: company_domain="Cross-Functional Services"
+  }
+  Boundary(b_Enable__Technology___Platform_Operations, "Technology & Platform Operations") {
+    System(CAP_TECH_05, "Business Continuity & Disaster Recovery", "Recover the business to committed objectives.", $tags="capabilities")
+    ' aac CAP_TECH_05: company_domain="Technology"
+    System(CAP_TECH_07, "End-User Computing & Workplace Technology", "Equip and support the workforce with workplace technology.", $tags="capabilities")
+    ' aac CAP_TECH_07: company_domain="Technology"
+    System(CAP_TECH_06, "Enterprise Integration & API Management", "Operate the integration and API estate.", $tags="capabilities")
+    ' aac CAP_TECH_06: company_domain="Technology"
+    System(CAP_TECH_02, "Platform & Infrastructure Operations", "Run the technology estate.", $tags="capabilities")
+    ' aac CAP_TECH_02: company_domain="Technology"
+    System(CAP_TECH_08, "Quality Engineering & Testing", "Prove that a change does what it claims before and after it reaches production: test strategy, automation, performance, acceptance, defects, and release certification.", $tags="capabilities")
+    ' aac CAP_TECH_08: company_domain="Technology"
+    System(CAP_TECH_04, "Release & Change Management", "Move change into production safely.", $tags="capabilities")
+    ' aac CAP_TECH_04: company_domain="Technology"
+    System(CAP_TECH_03, "Service Management & Incident Response", "Detect, triage, and resolve service incidents.", $tags="capabilities")
+    ' aac CAP_TECH_03: company_domain="Technology"
+    System(CAP_TECH_01, "Solution Delivery & Engineering", "Build and change software.", $tags="capabilities")
+    ' aac CAP_TECH_01: company_domain="Technology"
+  }
+  Boundary(b_Enable__Third_Party___Vendor_Management, "Third-Party & Vendor Management") {
+    System(CAP_TPRM_02, "Contract & SLA Management", "Contract suppliers and hold them to commitments.", $tags="capabilities")
+    ' aac CAP_TPRM_02: company_domain="Cross-Functional Services"
+    System(CAP_TPRM_03, "Ongoing Vendor Risk Monitoring", "Monitor supplier risk through the life of the relationship.", $tags="capabilities")
+    ' aac CAP_TPRM_03: company_domain="Cross-Functional Services"
+    System(CAP_TPRM_04, "Vendor Exit & Continuity Planning", "Maintain exit and continuity plans for critical suppliers.", $tags="capabilities")
+    ' aac CAP_TPRM_04: company_domain="Cross-Functional Services"
+    System(CAP_TPRM_01, "Vendor Sourcing & Due Diligence", "Select and diligence suppliers.", $tags="capabilities")
+    ' aac CAP_TPRM_01: company_domain="Cross-Functional Services"
+  }
+}
+
+SHOW_LEGEND()
+@enduml

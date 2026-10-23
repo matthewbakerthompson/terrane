@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="625.4" viewBox="0 0 1100 625.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Public web tier</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Public web tier</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   4 nodes · 3 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">Everything between the internet and an application. A load balancer with no WAF in front of it is a different risk posture, and naming the tier is what makes that</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">visible instead of remembered.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(453 111.7)">
+<g class="edge" data-id="e0::dns::cdn">
+<path d="M97 75 L97 115.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M97 119 L92.22 109.43 L101.78 109.43 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e1::cdn::waf">
+<path d="M97 182 L97 222.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M97 226 L92.22 216.43 L101.78 216.43 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e2::waf::load-balancer">
+<path d="M97 289 L97 329.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M97 333 L92.22 323.43 L101.78 323.43 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="cdn" data-type="tech_services">
+<title>Content delivery network</title>
+<path d="M12 119 L125.31 119 L182 182 L68.69 182 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="93" y="143.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Content delivery</text>
+<text x="93" y="155.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">network</text>
+<text x="97" y="176.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Amazon CloudFront · Azure Front Door · C…</text>
+<svg x="153" y="124" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M8 3.5a1.5 1.5 0 1 0 0 .01 M3.5 12.5a1.5 1.5 0 1 0 0 .01 M12.5 12.5a1.5 1.5 0 1 0 0 .01 M8 5v3 M8 8l-4 3.5 M8 8l4 3.5" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="waf" data-type="tech_services">
+<title>Web application firewall</title>
+<path d="M12 226 L125.31 226 L182 289 L68.69 289 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="93" y="250.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Web application</text>
+<text x="93" y="262.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">firewall</text>
+<text x="97" y="283.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AWS WAF · Azure WAF · Cloud Armor</text>
+<svg x="153" y="231" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M8 2l5 2v4c0 3-2.2 5.2-5 6-2.8-.8-5-3-5-6V4z" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="load-balancer" data-type="tech_services">
+<title>Load balancer</title>
+<path d="M12 333 L125.31 333 L182 396 L68.69 396 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="93" y="363.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Load balancer</text>
+<text x="97" y="390.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Application Load Balancer · Application G…</text>
+<svg x="153" y="338" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M8 3.5a1.5 1.5 0 1 0 0 .01 M3.5 12.5a1.5 1.5 0 1 0 0 .01 M12.5 12.5a1.5 1.5 0 1 0 0 .01 M8 5v3 M8 8l-4 3.5 M8 8l4 3.5" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="dns" data-type="tech_services">
+<title>DNS</title>
+<path d="M12 12 L125.31 12 L182 75 L68.69 75 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="93" y="42.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">DNS</text>
+<text x="97" y="69.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Amazon Route 53 · Azure DNS · Cloud DNS</text>
+<svg x="153" y="17" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M8 3.5a1.5 1.5 0 1 0 0 .01 M3.5 12.5a1.5 1.5 0 1 0 0 .01 M12.5 12.5a1.5 1.5 0 1 0 0 .01 M8 5v3 M8 8l-4 3.5 M8 8l4 3.5" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="523.4" x2="1072" y2="523.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="547.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 536.4)" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"><path d="M5 1h14l-4 12H1z"/></g>
+<text x="93.2" y="547.4" font-size="12" font-weight="400" fill="#343d50">technology service · 4</text>
+<text x="28" y="569.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 558.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="569.4" font-size="12" font-weight="400" fill="#343d50">connects to</text>
+<text x="28" y="603.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · block--public-web-tier · edit the model, not the picture</text></g>
+</svg>

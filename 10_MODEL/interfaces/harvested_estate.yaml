@@ -1,0 +1,981 @@
+# How the systems the business layer harvested talk to each other, and to
+# the estate this model already held.
+#
+# The harvested systems arrived as names with nothing between them: the
+# process map said which systems each process uses, and nothing said how a
+# payment reaches the ledger or a bureau file leaves it. These are the
+# connections, drafted from two sources: the pairs of systems the process
+# inventory uses together (the ledger and the document platform share ten
+# processes, the collections platform and the general ledger four), and the
+# patterns in `27_PATTERNS/` that say how a connection of each kind is built
+# here. Every interface names the pattern it applies, which is what makes
+# "did this integration use the approved pattern" a query.
+#
+# Everything here is Proposed, like the systems at either end: drafted from
+# the process map and the pattern library, not confirmed by anyone who runs
+# one. To promote one, move it to the file of the product that owns it and
+# set its status. The payload rows are in
+# `10_MODEL/relations/harvested_estate.yaml`.
+
+# --- originations: an application becomes an account -----------------------
+
+- interface_id: INT-ORIG-CREDIT-DATA
+  name: Originations Decision Engine to Credit Data Environment
+  description: Bureau attributes and internal credit history pulled into the decision.
+  status: Proposed
+  source_system_id: SYS-ORIG-DECISION
+  target_system_id: SYS-CREDIT-DATA
+  owner_org_id: ORG-ORIG
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Confidential
+  company_domain: Lending
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [api-front-door]
+
+- interface_id: INT-ORIG-APPFRAUD
+  name: Originations Decision Engine to Application Fraud Screening
+  description: >
+    Identity and application-fraud scoring inside the decision, against the
+    time budget the application flow allows.
+  status: Proposed
+  source_system_id: SYS-ORIG-DECISION
+  target_system_id: SYS-APPFRAUD
+  owner_org_id: ORG-FRAUD
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Restricted
+  company_domain: Risk and Compliance
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [inline-risk-decision]
+
+- interface_id: INT-ORIG-KYC
+  name: Originations Decision Engine to Identity Verification
+  description: Customer identification program checks and document verification during the application.
+  status: Proposed
+  source_system_id: SYS-ORIG-DECISION
+  target_system_id: SYS-KYC
+  owner_org_id: ORG-COMPLIANCE
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Restricted
+  company_domain: Risk and Compliance
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [api-front-door]
+
+- interface_id: INT-ORIG-MODEL
+  name: Originations Decision Engine to Model Platform
+  description: Credit scores from registered models, with the model version on every response.
+  status: Proposed
+  source_system_id: SYS-ORIG-DECISION
+  target_system_id: SYS-MODEL
+  owner_org_id: ORG-CREDIT
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: MutualTLS
+  data_classification: Confidential
+  company_domain: Lending
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [governed-model-lifecycle]
+
+- interface_id: INT-ORIG-LEDGER-BOARD
+  name: Originations Decision Engine to Core Card Ledger
+  description: Approved applications boarded as accounts in the nightly window.
+  status: Proposed
+  source_system_id: SYS-ORIG-DECISION
+  target_system_id: SYS-CORE-LEDGER
+  owner_org_id: ORG-ORIG
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Restricted
+  company_domain: Lending
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [windowed-batch]
+
+- interface_id: INT-ORIG-DOC
+  name: Originations Decision Engine to Document Management
+  description: Adverse action notices and welcome packs, raised as events the document platform renders and archives.
+  status: Proposed
+  source_system_id: SYS-ORIG-DECISION
+  target_system_id: SYS-DOC
+  owner_org_id: ORG-ORIG
+  protocol: AMQP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: OAuth2
+  data_classification: Restricted
+  company_domain: Lending
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [customer-communication-archive]
+
+- interface_id: INT-LEDGER-CARD-FULFILL
+  name: Core Card Ledger to Card Production
+  description: Embossing and fulfillment file to the external card producer.
+  status: Proposed
+  source_system_id: SYS-CORE-LEDGER
+  target_system_id: SYS-CARD-FULFILL
+  owner_org_id: ORG-SERVICING
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: KeyPair
+  data_classification: Restricted
+  company_domain: Servicing
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [partner-file-exchange]
+
+# --- payments and the books --------------------------------------------------
+
+- interface_id: INT-PAYMENT-GW-LEDGER
+  name: Payment Capture Gateway to Core Card Ledger
+  description: Payment instructions posted in sequence, once, with returns reversing the instruction they refer to.
+  status: Proposed
+  source_system_id: SYS-PAYMENT-GW
+  target_system_id: SYS-CORE-LEDGER
+  offered_interface_id: OI-LEDGER-QUEUE
+  owner_org_id: ORG-PAYMENTS
+  protocol: MQ
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: MutualTLS
+  data_classification: Restricted
+  company_domain: Payments
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [payment-capture-and-posting]
+
+- interface_id: INT-PAYMENT-GW-GL
+  name: Payment Capture Gateway to General Ledger
+  description: Settlement totals by channel, from the same store the postings came from.
+  status: Proposed
+  source_system_id: SYS-PAYMENT-GW
+  target_system_id: SYS-GL
+  owner_org_id: ORG-PAYMENTS
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Confidential
+  company_domain: Payments
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [payment-capture-and-posting]
+
+- interface_id: INT-LEDGER-GL
+  name: Core Card Ledger to General Ledger
+  description: The daily posting journal, summarized to the chart of accounts.
+  status: Proposed
+  source_system_id: SYS-CORE-LEDGER
+  target_system_id: SYS-GL
+  owner_org_id: ORG-FINANCE
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Confidential
+  company_domain: Finance
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [windowed-batch]
+
+- interface_id: INT-LEDGER-RECON
+  name: Core Card Ledger to Reconciliation Platform
+  description: Transaction and balance extracts for the daily settlement reconciliation.
+  status: Proposed
+  source_system_id: SYS-CORE-LEDGER
+  target_system_id: SYS-RECON
+  owner_org_id: ORG-SETTLEMENT
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Restricted
+  company_domain: Finance
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [windowed-batch]
+
+- interface_id: INT-GL-RECON
+  name: General Ledger to Reconciliation Platform
+  description: Ledger balances matched against the card ledger's and the scheme settlement reports.
+  status: Proposed
+  source_system_id: SYS-GL
+  target_system_id: SYS-RECON
+  owner_org_id: ORG-FINANCE
+  protocol: SQL
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: ManagedIdentity
+  data_classification: Confidential
+  company_domain: Finance
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [windowed-batch]
+
+- interface_id: INT-GL-TREASURY
+  name: General Ledger to Treasury Management
+  description: Cash positions and settlement funding requirements for the day.
+  status: Proposed
+  source_system_id: SYS-GL
+  target_system_id: SYS-TREASURY
+  owner_org_id: ORG-TREASURY
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Confidential
+  company_domain: Finance
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [windowed-batch]
+
+# --- the authorization path --------------------------------------------------
+
+- interface_id: INT-AUTH-FRAUD
+  name: Authorization Switch to Transaction Fraud Detection
+  description: >
+    Every authorization scored inside the switch's time budget; the switch
+    applies its stated default when the scorer does not answer in time.
+  status: Proposed
+  source_system_id: SYS-AUTH-SWITCH
+  target_system_id: SYS-FRAUD-DETECT
+  owner_org_id: ORG-FRAUD
+  protocol: ISO8583
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: MutualTLS
+  data_classification: Restricted
+  company_domain: Payments
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [inline-risk-decision]
+
+- interface_id: INT-FRAUD-MODEL
+  name: Transaction Fraud Detection to Model Platform
+  description: Fraud model versions served from the registry; the scorer caches what the time budget demands.
+  status: Proposed
+  source_system_id: SYS-FRAUD-DETECT
+  target_system_id: SYS-MODEL
+  owner_org_id: ORG-FRAUD
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: MutualTLS
+  data_classification: Restricted
+  company_domain: Risk and Compliance
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [governed-model-lifecycle]
+
+- interface_id: INT-FRAUD-CRM
+  name: Transaction Fraud Detection to CRM
+  description: Fraud alerts raised as cases for the fraud operations queue.
+  status: Proposed
+  source_system_id: SYS-FRAUD-DETECT
+  target_system_id: SYS-CRM
+  owner_org_id: ORG-FRAUD
+  protocol: AMQP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: OAuth2
+  data_classification: Restricted
+  company_domain: Risk and Compliance
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [event-fanout]
+
+- interface_id: INT-AUTH-TOKEN
+  name: Authorization Switch to Tokenization Service
+  description: Detokenization on the way to the schemes; the only system that sees a card number after the edge.
+  status: Proposed
+  source_system_id: SYS-AUTH-SWITCH
+  target_system_id: SYS-TOKEN
+  owner_org_id: ORG-INFOSEC
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: MutualTLS
+  data_classification: Restricted
+  company_domain: Payments
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [tokenized-card-data]
+
+- interface_id: INT-MOBILE-TOKEN
+  name: Cardholder Mobile to Tokenization Service
+  description: >
+    Wallet provisioning: the device receives a token, never the number.
+  status: Proposed
+  source_system_id: SYS-MOBILE
+  target_system_id: SYS-TOKEN
+  owner_org_id: ORG-DIGITAL
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Restricted
+  company_domain: Servicing
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [tokenized-card-data, api-front-door]
+
+- interface_id: INT-MOBILE-CARDSVC
+  name: Cardholder Mobile to Card Servicing API
+  description: Balances, transactions, payments and card controls through the servicing API the web channel already uses.
+  status: Proposed
+  source_system_id: SYS-MOBILE
+  target_system_id: SYS-CARDSVC-API
+  offered_interface_id: OI-CARDSVC-API
+  owner_org_id: ORG-DIGITAL
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Restricted
+  company_domain: Servicing
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [api-front-door]
+
+# --- the bureaus ---------------------------------------------------------------
+
+- interface_id: INT-LEDGER-BUREAU-GW
+  name: Core Card Ledger to Credit Bureau Gateway
+  description: The monthly furnishing extract, validated against the format before it leaves the gateway.
+  status: Proposed
+  source_system_id: SYS-CORE-LEDGER
+  target_system_id: SYS-BUREAU-GW
+  owner_org_id: ORG-COLLECTIONS
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Monthly
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Restricted
+  company_domain: Collections
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [regulatory-file-furnishing]
+
+- interface_id: INT-BUREAU-GW-BUREAU
+  name: Credit Bureau Gateway to Credit Bureau
+  description: Furnishing files out and acknowledgments back, reconciled account by account.
+  status: Proposed
+  source_system_id: SYS-BUREAU-GW
+  target_system_id: SYS-CREDIT-BUREAU
+  owner_org_id: ORG-COLLECTIONS
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Monthly
+  integration_style: Batch
+  auth_method: KeyPair
+  data_classification: Restricted
+  company_domain: Collections
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [regulatory-file-furnishing]
+
+- interface_id: INT-BUREAU-GW-CRM
+  name: Credit Bureau Gateway to CRM
+  description: Consumer disputes returned by the bureaus, opened as cases the day the file lands.
+  status: Proposed
+  source_system_id: SYS-BUREAU-GW
+  target_system_id: SYS-CRM
+  owner_org_id: ORG-COLLECTIONS
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Restricted
+  company_domain: Collections
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [regulatory-file-furnishing]
+
+# --- collections, communications and the contact center ----------------------
+
+- interface_id: INT-COLLECT-DIALER
+  name: Collections Platform to Outbound Contact Platform
+  description: Campaign lists for the day, with contact limits applied before the list is built.
+  status: Proposed
+  source_system_id: SYS-COLLECT-API
+  target_system_id: SYS-DIALER
+  owner_org_id: ORG-COLLECTIONS
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Restricted
+  company_domain: Collections
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [contact-center-integration]
+
+- interface_id: INT-DIALER-COLLECT
+  name: Outbound Contact Platform to Collections Platform
+  description: Contact outcomes written back as events, so the contact count is a fact the platform holds.
+  status: Proposed
+  source_system_id: SYS-DIALER
+  target_system_id: SYS-COLLECT-API
+  owner_org_id: ORG-COLLECTIONS
+  protocol: AMQP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: OAuth2
+  data_classification: Restricted
+  company_domain: Collections
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [contact-center-integration, event-fanout]
+
+- interface_id: INT-COLLECT-DOC
+  name: Collections Platform to Document Management
+  description: Statutory collections notices, raised as events and archived with delivery evidence.
+  status: Proposed
+  source_system_id: SYS-COLLECT-API
+  target_system_id: SYS-DOC
+  owner_org_id: ORG-COLLECTIONS
+  protocol: AMQP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: OAuth2
+  data_classification: Restricted
+  company_domain: Collections
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [customer-communication-archive]
+
+- interface_id: INT-LEDGER-DOC
+  name: Core Card Ledger to Document Management
+  description: Cycle notices, rate changes and letters the ledger decides are due.
+  status: Proposed
+  source_system_id: SYS-CORE-LEDGER
+  target_system_id: SYS-DOC
+  owner_org_id: ORG-SERVICING
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Restricted
+  company_domain: Servicing
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [customer-communication-archive]
+
+- interface_id: INT-STATEMENTS-DOC
+  name: Statement Generation to Document Management
+  description: Rendered statements into the archive, which is where a statement is served from thereafter.
+  status: Proposed
+  source_system_id: SYS-STATEMENTS
+  target_system_id: SYS-DOC
+  owner_org_id: ORG-SERVICING
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Restricted
+  company_domain: Servicing
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [customer-communication-archive]
+
+- interface_id: INT-DOC-CLIENT-PORTAL
+  name: Document Management to Servicing Client Portal
+  description: Statements and program documents retrieved from the archive for client users.
+  status: Proposed
+  source_system_id: SYS-CLIENT-PORTAL
+  target_system_id: SYS-DOC
+  owner_org_id: ORG-TPS
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Confidential
+  company_domain: Servicing
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [api-front-door]
+
+- interface_id: INT-LEDGER-CLIENT-PORTAL
+  name: Core Card Ledger to Servicing Client Portal
+  description: Program-level reporting extracts for the clients whose portfolios are serviced here.
+  status: Proposed
+  source_system_id: SYS-CORE-LEDGER
+  target_system_id: SYS-CLIENT-PORTAL
+  owner_org_id: ORG-TPS
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Restricted
+  company_domain: Servicing
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [windowed-batch]
+
+- interface_id: INT-CONTACT-CRM
+  name: Contact Center Platform to CRM
+  description: Screen pop and case creation for the agent, with the caller's verified identity carried from the voice menu.
+  status: Proposed
+  source_system_id: SYS-CONTACT
+  target_system_id: SYS-CRM
+  owner_org_id: ORG-SERVICING
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Restricted
+  company_domain: Servicing
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [contact-center-integration]
+
+- interface_id: INT-IVR-CONTACT
+  name: IVR to Contact Center Platform
+  description: >
+    Transfer with context: what the caller verified and asked for travels with the call.
+  status: Proposed
+  source_system_id: SYS-IVR
+  target_system_id: SYS-CONTACT
+  owner_org_id: ORG-SERVICING
+  protocol: SIP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: MutualTLS
+  data_classification: Restricted
+  company_domain: Servicing
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [contact-center-integration]
+
+- interface_id: INT-IVR-CARDSVC
+  name: IVR to Card Servicing API
+  description: Balance, payment and card activation by phone, through the same servicing API as the digital channels.
+  status: Proposed
+  source_system_id: SYS-IVR
+  target_system_id: SYS-CARDSVC-API
+  offered_interface_id: OI-CARDSVC-API
+  owner_org_id: ORG-SERVICING
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Restricted
+  company_domain: Servicing
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [contact-center-integration, api-front-door]
+
+- interface_id: INT-CRM-DISPUTES
+  name: CRM to Dispute Gateway
+  description: Dispute intake from a servicing case into the dispute platform, through the gateway this estate owns.
+  status: Proposed
+  source_system_id: SYS-CRM
+  target_system_id: SYS-DISPUTES-GATEWAY
+  owner_org_id: ORG-DISPUTE
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Restricted
+  company_domain: Servicing
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [private-egress-to-saas]
+
+# --- marketing, data and compliance ------------------------------------------
+
+- interface_id: INT-PROSPECT-MARKETING
+  name: Prospect Data Services to Campaign Management
+  description: Prospect lists, screened for suppressions before they reach a campaign.
+  status: Proposed
+  source_system_id: SYS-PROSPECT-DATA
+  target_system_id: SYS-MARKETING
+  owner_org_id: ORG-MARKETING
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Weekly
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Confidential
+  company_domain: Marketing
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [windowed-batch]
+
+- interface_id: INT-MARKETING-CRM
+  name: Campaign Management to CRM
+  description: Campaign responses and opt-outs as events, so the servicing record knows what the customer was offered.
+  status: Proposed
+  source_system_id: SYS-MARKETING
+  target_system_id: SYS-CRM
+  owner_org_id: ORG-MARKETING
+  protocol: AMQP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: OAuth2
+  data_classification: Confidential
+  company_domain: Marketing
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [event-fanout]
+
+- interface_id: INT-INGEST-MODEL
+  name: Enterprise Data Platform to Model Platform
+  description: The feature store refreshed from the landing zone each day, with lineage recorded at the boundary.
+  status: Proposed
+  source_system_id: SYS-DATA-INGEST
+  target_system_id: SYS-MODEL
+  owner_org_id: ORG-DATAENG
+  protocol: SQL
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: ManagedIdentity
+  data_classification: Restricted
+  company_domain: Data and Analytics
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [analytics-landing-zone, governed-model-lifecycle]
+
+- interface_id: INT-INGEST-CATALOG
+  name: Enterprise Data Platform to Governance Catalog
+  description: Dataset registration and lineage events; a dataset nobody has described is refused at landing.
+  status: Proposed
+  source_system_id: SYS-DATA-INGEST
+  target_system_id: SYS-CATALOG
+  owner_org_id: ORG-DATAGOV
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: OAuth2
+  data_classification: Internal
+  company_domain: Data and Analytics
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [analytics-landing-zone]
+
+- interface_id: INT-INGEST-CREDIT-DATA
+  name: Enterprise Data Platform to Credit Data Environment
+  description: Account, transaction and application history curated for credit analytics and decision strategy.
+  status: Proposed
+  source_system_id: SYS-DATA-INGEST
+  target_system_id: SYS-CREDIT-DATA
+  owner_org_id: ORG-DATAENG
+  protocol: SQL
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: ManagedIdentity
+  data_classification: Restricted
+  company_domain: Data and Analytics
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [analytics-landing-zone]
+
+- interface_id: INT-KYC-AML
+  name: Identity Verification to Financial Crimes Platform
+  description: Screening results and identity-risk cases handed to transaction monitoring and case management.
+  status: Proposed
+  source_system_id: SYS-KYC
+  target_system_id: SYS-AML
+  owner_org_id: ORG-COMPLIANCE
+  protocol: AMQP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: OAuth2
+  data_classification: Restricted
+  company_domain: Risk and Compliance
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [event-fanout]
+
+- interface_id: INT-LEDGER-AML
+  name: Core Card Ledger to Financial Crimes Platform
+  description: The daily transaction feed transaction monitoring runs its scenarios over.
+  status: Proposed
+  source_system_id: SYS-CORE-LEDGER
+  target_system_id: SYS-AML
+  owner_org_id: ORG-COMPLIANCE
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Restricted
+  company_domain: Risk and Compliance
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [windowed-batch]
+
+# --- workforce identity and the operations chain -----------------------------
+
+- interface_id: INT-HRIS-IAM
+  name: HR Information System to Identity and Access Management
+  description: Joiners, movers and leavers; the people record drives the account, not the other way round.
+  status: Proposed
+  source_system_id: SYS-HRIS
+  target_system_id: SYS-IAM
+  owner_org_id: ORG-HR
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: KeyPair
+  data_classification: Confidential
+  company_domain: Enterprise Platform
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [workforce-identity-lifecycle]
+
+- interface_id: INT-IAM-SIEM
+  name: Identity and Access Management to Security Monitoring
+  description: Every authentication and privilege change, streamed to the place that notices the wrong ones.
+  status: Proposed
+  source_system_id: SYS-IAM
+  target_system_id: SYS-SIEM
+  owner_org_id: ORG-INFOSEC
+  protocol: Syslog
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Confidential
+  company_domain: Enterprise Platform
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [workforce-identity-lifecycle, observed-service]
+
+- interface_id: INT-CRM-IAM
+  name: CRM to Identity and Access Management
+  description: Agent single sign-on; the CRM keeps no users of its own.
+  status: Proposed
+  source_system_id: SYS-CRM
+  target_system_id: SYS-IAM
+  owner_org_id: ORG-INFOSEC
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Confidential
+  company_domain: Enterprise Platform
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [workforce-identity-lifecycle]
+
+- interface_id: INT-CONTACT-IAM
+  name: Contact Center Platform to Identity and Access Management
+  description: Agent single sign-on for the contact center desktop.
+  status: Proposed
+  source_system_id: SYS-CONTACT
+  target_system_id: SYS-IAM
+  owner_org_id: ORG-INFOSEC
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Confidential
+  company_domain: Enterprise Platform
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [workforce-identity-lifecycle]
+
+- interface_id: INT-OBSERV-ITSM
+  name: Observability Platform to IT Service Management
+  description: Alerts that page become incidents with a timeline, whether they started as an outage or an intrusion.
+  status: Proposed
+  source_system_id: SYS-OBSERV
+  target_system_id: SYS-ITSM
+  owner_org_id: ORG-TECH
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: OAuth2
+  data_classification: Internal
+  company_domain: Enterprise Platform
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [observed-service]
+
+- interface_id: INT-SIEM-ITSM
+  name: Security Monitoring to IT Service Management
+  description: Security incidents on the same incident timeline as operational ones.
+  status: Proposed
+  source_system_id: SYS-SIEM
+  target_system_id: SYS-ITSM
+  owner_org_id: ORG-INFOSEC
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: OAuth2
+  data_classification: Confidential
+  company_domain: Enterprise Platform
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [observed-service]
+
+- interface_id: INT-SCM-ITSM
+  name: Source Control and Pipeline to IT Service Management
+  description: Every deployment recorded against the change it was approved under, by the pipeline, not a person.
+  status: Proposed
+  source_system_id: SYS-SCM
+  target_system_id: SYS-ITSM
+  owner_org_id: ORG-TECH
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: OAuth2
+  data_classification: Internal
+  company_domain: Enterprise Platform
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [change-evidence-chain]
+
+- interface_id: INT-SCM-TESTMGMT
+  name: Source Control and Pipeline to Test Management
+  description: Pipeline test results against the cases they ran, so the evidence of testing is written by the run.
+  status: Proposed
+  source_system_id: SYS-SCM
+  target_system_id: SYS-TESTMGMT
+  owner_org_id: ORG-QE
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: OAuth2
+  data_classification: Internal
+  company_domain: Enterprise Platform
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [change-evidence-chain]
+
+- interface_id: INT-ITSM-GRC
+  name: IT Service Management to Governance, Risk and Compliance
+  description: Change and incident evidence into the control register, weekly, as the register's evidence of operating effectiveness.
+  status: Proposed
+  source_system_id: SYS-ITSM
+  target_system_id: SYS-GRC
+  owner_org_id: ORG-RISK
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Weekly
+  integration_style: Batch
+  auth_method: OAuth2
+  data_classification: Internal
+  company_domain: Enterprise Platform
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [change-evidence-chain]
+
+- interface_id: INT-WORKTRACK-GRC
+  name: Work Tracking to Governance, Risk and Compliance
+  description: Regulatory change work items, so a regulation's implementation is tracked to the work that did it.
+  status: Proposed
+  source_system_id: SYS-WORKTRACK
+  target_system_id: SYS-GRC
+  owner_org_id: ORG-COMPLIANCE
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Weekly
+  integration_style: Batch
+  auth_method: OAuth2
+  data_classification: Internal
+  company_domain: Enterprise Platform
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [change-evidence-chain]
+
+- interface_id: INT-ARCHREPO-GRC
+  name: Architecture Repository to Governance, Risk and Compliance
+  description: Architecture decisions and recorded exceptions into the register, which is where a waiver is a waiver.
+  status: Proposed
+  source_system_id: SYS-ARCHREPO
+  target_system_id: SYS-GRC
+  owner_org_id: ORG-EA
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Weekly
+  integration_style: Batch
+  auth_method: OAuth2
+  data_classification: Internal
+  company_domain: Enterprise Platform
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [change-evidence-chain]
+
+- interface_id: INT-ITSM-ARCHREPO
+  name: IT Service Management to Architecture Repository
+  description: >
+    The configuration management database's view of the estate, imported
+    daily so the architecture repository and the CMDB disagree in a report
+    rather than in a meeting. This model's own `cmdb_ci_sys_id` fields are
+    this interface's product.
+  status: Proposed
+  source_system_id: SYS-ITSM
+  target_system_id: SYS-ARCHREPO
+  owner_org_id: ORG-EA
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: OAuth2
+  data_classification: Internal
+  company_domain: Enterprise Platform
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [change-evidence-chain]

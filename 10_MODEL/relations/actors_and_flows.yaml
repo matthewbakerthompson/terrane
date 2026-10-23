@@ -1,0 +1,108 @@
+# Who touches what, and the order transactions move in.
+
+# --- actors to the systems they reach -------------------------------------
+# Only the entry points. An actor "uses" the whole estate transitively, and
+# recording that would make a context diagram useless.
+#
+# The live estate only. The two rows for the lending web front end moved onto
+# PRD-INSTALLMENT-LENDING, where they are chosen as a part rather than written
+# down here: a product that brings its own people should say so in its own
+# file, the way it already does for its systems and its controls.
+actor_uses_system:
+  - actor_id: ACT-CARDHOLDER
+    system_id: SYS-CARDSVC-WEB
+    interaction: Self-service
+  - actor_id: ACT-CARDHOLDER
+    system_id: SYS-STATEMENTS
+    interaction: Receives statements
+  - actor_id: ACT-SERVICING-AGENT
+    system_id: SYS-CRM
+    interaction: Handles cases
+  - actor_id: ACT-SERVICING-AGENT
+    system_id: SYS-DISPUTES-SAAS
+    interaction: Raises disputes
+  - actor_id: ACT-COLLECTIONS-AGENT
+    system_id: SYS-COLLECT-WEB
+    interaction: Works arrears
+  - actor_id: ACT-MERCHANT
+    system_id: SYS-AUTH-SWITCH
+    interaction: Presents transactions
+  - actor_id: ACT-CARD-SCHEME
+    system_id: SYS-AUTH-SWITCH
+    interaction: Carries authorization
+  - actor_id: ACT-REGULATOR
+    system_id: SYS-REG-REPORTING
+    interaction: Receives returns
+
+# --- ordered steps ---------------------------------------------------------
+# `sequence` is what makes these a flow rather than a set. Gaps are fine and
+# deliberate: they leave room to insert a step without renumbering.
+flow_step:
+  # Card authorization. Screening sits inline, which is why its gateway carries
+  # a circuit breaker: the scheme timeout does not care that a vendor is slow.
+  - flow_id: FLOW-CARD-AUTH
+    interface_id: INT-SCREENING-CALLER-GATEWAY
+    sequence: "10"
+  - flow_id: FLOW-CARD-AUTH
+    interface_id: INT-SCREENING-GATEWAY-EGRESS
+    sequence: "20"
+  - flow_id: FLOW-CARD-AUTH
+    interface_id: INT-SCREENING-EGRESS-VENDOR
+    sequence: "30"
+  - flow_id: FLOW-CARD-AUTH
+    interface_id: INT-AUTH-LEDGER
+    sequence: "40"
+
+  # Loan application, front to back.
+  - flow_id: FLOW-LOAN-APPLICATION
+    interface_id: INT-LENDING-EDGE-ALB
+    sequence: "10"
+  - flow_id: FLOW-LOAN-APPLICATION
+    interface_id: INT-LENDING-ALB-WEB
+    sequence: "20"
+  - flow_id: FLOW-LOAN-APPLICATION
+    interface_id: INT-LENDING-WEB-API
+    sequence: "30"
+  - flow_id: FLOW-LOAN-APPLICATION
+    interface_id: INT-LENDING-API-IDENTITY
+    sequence: "40"
+  - flow_id: FLOW-LOAN-APPLICATION
+    interface_id: INT-LENDING-API-BUREAU
+    sequence: "50"
+  - flow_id: FLOW-LOAN-APPLICATION
+    interface_id: INT-LENDING-API-DB
+    sequence: "60"
+  - flow_id: FLOW-LOAN-APPLICATION
+    interface_id: INT-LENDING-API-LEDGER
+    sequence: "70"
+  - flow_id: FLOW-LOAN-APPLICATION
+    interface_id: INT-LENDING-API-WORKER
+    sequence: "80"
+
+  # Dispute, raised in the contact center and settled through the vendor.
+  - flow_id: FLOW-DISPUTE
+    interface_id: INT-CRM-LEDGER
+    sequence: "10"
+  - flow_id: FLOW-DISPUTE
+    interface_id: INT-DISPUTES-UP-GATEWAY
+    sequence: "20"
+  - flow_id: FLOW-DISPUTE
+    interface_id: INT-DISPUTES-GATEWAY-SAAS
+    sequence: "30"
+  - flow_id: FLOW-DISPUTE
+    interface_id: INT-DISPUTES-SAAS-FEED
+    sequence: "40"
+
+  # Regulatory return. Entirely batch, and the only deadline set outside.
+  - flow_id: FLOW-REG-RETURN
+    interface_id: INT-LEDGER-INGEST
+    sequence: "10"
+  - flow_id: FLOW-REG-RETURN
+    interface_id: INT-CUST360-INGEST
+    sequence: "20"
+  - flow_id: FLOW-REG-RETURN
+    interface_id: INT-CUST360-PIPE-SEMANTIC
+    sequence: "30"
+  - flow_id: FLOW-REG-RETURN
+    interface_id: INT-CUST360-REGREPORTING
+    sequence: "40"

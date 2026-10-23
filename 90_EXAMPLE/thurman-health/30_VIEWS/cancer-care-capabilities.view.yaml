@@ -1,0 +1,38 @@
+# The shipped `value-stream-capabilities` with one value changed, the value
+# stream it filters on, and its title and description to match. That is the
+# whole of retargeting a view written about the sample; every other view in
+# this folder is a shipped one, copied unchanged, and a test holds it so.
+view_id: cancer-care-capabilities
+title: "Diagnosis to Survivorship — Stages and Capabilities"
+category: Business
+kind: report
+description: >
+  The Diagnosis to Survivorship value stream, its stages, and the
+  capabilities each stage depends on. A capability used in several stages
+  is on the stream's critical path: if it fails, every one of those stages
+  stops.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+group_by: type
+
+scope:
+  include:
+    - type: value_stream_stages
+      where:
+        value_stream_id: [VS-CANCER-CARE]
+  expand:
+    - relation: stage_crosses_capability
+      depth: 1
+      types: [capabilities]
+
+edges:
+  - via: stage_crosses_capability
+    text: needs
+
+style:
+  color_by: capability_tier
+
+limits:
+  max_nodes: 60

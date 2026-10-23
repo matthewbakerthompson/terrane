@@ -1,0 +1,72 @@
+# Model-level configuration for the second example estate.
+name: Thurman Health
+description: >
+  A regional health system, made up: two hospitals, a cancer center and
+  thirty clinics on one EHR, an HL7 interface engine in the middle, and the
+  first workloads in Azure. The second estate the repository ships, kept so
+  the metamodel, the library and the views can be seen working for an
+  industry the sample was not written for.
+
+# Not the sample estate. That one is `10_MODEL/` at the repository root and
+# the engine's tests are seeded from it; nothing here is copied anywhere.
+sample_estate: false
+
+# This estate holds no copy of the shipped library. The shapes, parts,
+# blocks, patterns and connection kinds are the repository's, read from two
+# folders up, so the products here are built from exactly what the card
+# issuer's are (50_ENGINE/terrane/library.py).
+shipped_library: ../..
+
+# And a library of Thurman's own, read after it: the two connection kinds
+# a health system has hundreds of and a card issuer has none of.
+library_paths: [library]
+
+metamodel:
+  aligns_to: architecture_method_metamodel.v2
+  contract: 00_METHOD/AAC-07_METAMODEL_CONTRACT.md
+
+# What the shipped library asks of an estate, answered for Thurman. These
+# were the card issuer's own records until the library asked instead of
+# naming them, and this estate held eighteen records under the sample's ids
+# to build on it. Who owns the private path to a vendor is Infrastructure and
+# Cloud here, where the card issuer gives it to its whole technology org.
+answers:
+  platform_org: ORG-INFRA
+  data_org: ORG-DATAENG
+  security_org: ORG-INFOSEC
+  ingest_system: SYS-CLINICAL-INGEST
+  siem_system: SYS-SIEM
+  vendor_controls: [CTL-BA-DUE-DILIGENCE]
+  vendor_policies: [POL-BUSINESS-ASSOCIATES]
+  landed_data_controls: [CTL-RETENTION]
+  landed_data_policies: [POL-RECORDS, POL-PRIVACY]
+  access_controls: [CTL-ACCESS-CERT]
+  access_policies: [POL-INFOSEC]
+
+# The patterns Thurman's products apply, as Thurman holds them: who owns
+# each here and which of its own controls each is designed to meet. The
+# shipped patterns used to name the card issuer's owners and register, and
+# this estate heard fifty-one warnings about records it never had. Nothing
+# here was approved at a board, so no decision is recorded.
+patterns:
+  api-front-door:
+    owner_org_id: ORG-INTEGRATION
+    satisfies: [CTL-PATIENT-API, CTL-ENCRYPT-TRANSIT]
+  stateless-request-service:
+    owner_org_id: ORG-DIGITAL
+  event-fanout:
+    owner_org_id: ORG-INTEGRATION
+  observed-service:
+    owner_org_id: ORG-INFRA
+    satisfies: [CTL-ACCESS-AUDIT, CTL-BACKUP-DR]
+  partner-file-exchange:
+    owner_org_id: ORG-INTEGRATION
+    satisfies: [CTL-ENCRYPT-TRANSIT]
+  private-egress-to-saas:
+    owner_org_id: ORG-INFRA
+    satisfies: [CTL-ENCRYPT-TRANSIT, CTL-BA-DUE-DILIGENCE]
+  analytics-landing-zone:
+    owner_org_id: ORG-DATAENG
+    satisfies: [CTL-MIN-NECESSARY, CTL-RETENTION]
+  windowed-batch:
+    owner_org_id: ORG-DATAENG

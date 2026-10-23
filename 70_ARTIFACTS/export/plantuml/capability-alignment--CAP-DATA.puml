@@ -1,0 +1,184 @@
+@startuml
+' Data & Analytics Management — Frameworks, Controls, Systems
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Data & Analytics Management — Frameworks, Controls, Systems
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_DATA_06, "AI/ML Model Operations", "Deploy, monitor, and retire models in production.", $tags="capabilities")
+  ' aac CAP_DATA_06: company_domain="Cross-Functional Services"
+  System(CAP_DATA_04, "Analytics, Reporting & BI", "Serve reporting and analysis to the business.", $tags="capabilities")
+  ' aac CAP_DATA_04: company_domain="Cross-Functional Services"
+  System(CAP_DATA, "Data & Analytics Management", "Data & Analytics Management. Level 0 enterprise capability domain (Enable tier).", $tags="capabilities")
+  ' aac CAP_DATA: company_domain="Cross-Functional Services"
+  System(CAP_DATA_01, "Data Governance & Stewardship", "Own data policy, ownership, and stewardship across the enterprise.", $tags="capabilities")
+  ' aac CAP_DATA_01: company_domain="Cross-Functional Services"
+  System(CAP_DATA_03, "Data Quality Management", "Define, measure, and remediate data quality.", $tags="capabilities")
+  ' aac CAP_DATA_03: company_domain="Cross-Functional Services"
+  System(CAP_DATA_02, "Data Sourcing & Integration", "Acquire and integrate internal and third-party data.", $tags="capabilities")
+  ' aac CAP_DATA_02: company_domain="Cross-Functional Services"
+  System(CAP_DATA_05, "Metadata, Lineage & Catalog", "Maintain the governed catalog, metadata, and lineage.", $tags="capabilities")
+  ' aac CAP_DATA_05: company_domain="Cross-Functional Services"
+  System(CAP_DATA_07, "Records Retention & Disposition", "Retain and dispose of records to the retention schedule.", $tags="capabilities")
+  ' aac CAP_DATA_07: company_domain="Cross-Functional Services"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_CLIENT_SLA, "Client reporting and feed monitoring", "Contracted client reporting and data feeds are monitored to schedule and specification; misses alert before the client notices and count against the SLA.", $tags="controls")
+  ' aac CTL_CLIENT_SLA: company_domain=""
+  System(CTL_CONV_VERIFY, "Conversion balance and record verification", "Portfolio conversions verify record counts, balances, and regulatory continuity before and after cutover, with client sign-off at each gate.", $tags="controls")
+  ' aac CTL_CONV_VERIFY: company_domain=""
+  System(CTL_DQ_GATE, "Ingestion data quality gate", "Source ingestion enforces schema and quality thresholds at the boundary; failing loads quarantine rather than land.", $tags="controls")
+  ' aac CTL_DQ_GATE: company_domain=""
+  System(CTL_REGRPT_CERT, "Regulatory report certification", "Regulatory submissions reconcile to the ledger and prior filings and carry a named officer certification before transmission.", $tags="controls")
+  ' aac CTL_REGRPT_CERT: company_domain=""
+  System(CTL_RETENTION, "Retention schedule enforcement", "Records are retained to schedule and destroyed on expiry with a certificate of disposition.", $tags="controls")
+  ' aac CTL_RETENTION: company_domain=""
+}
+Boundary(b_Framework, "Framework") {
+  System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
+  ' aac FW_BIAN: company_domain=""
+  System(FW_DMBOK, "DAMA-DMBOK", "The data management body of knowledge: governance, quality, architecture, metadata, master data, security. The only one of these with a defensible account of what a data function is responsible for.", $tags="frameworks")
+  ' aac FW_DMBOK: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_TPS_002, "Convert client portfolio", "Migrate a client portfolio onto the servicing platform with reconciled balances and no cardholder disruption.", $tags="processes")
+  ' aac P_TPS_002: company_domain=""
+  System(P_APPDEV_009, "Decommission an application", "Retire an application: migrate or archive its data to the retention schedule, remove interfaces and access, and update the inventory.", $tags="processes")
+  ' aac P_APPDEV_009: company_domain=""
+  System(P_DATAENG_002, "Deploy and monitor production model", "Deploy an approved model to production and monitor its ongoing performance. Deployment follows model risk approval; monitoring covers drift, stability, and performance against the validation baseline, with retirement triggers agreed up front.", $tags="processes")
+  ' aac P_DATAENG_002: company_domain=""
+  System(P_TPS_005, "Exchange client data feed", "Send and receive contracted data feeds with the client on schedule. Data feeds run both directions on contracted schedules with schema and quality checks at the boundary; feed failures page, because clients reconcile against them.", $tags="processes")
+  ' aac P_TPS_005: company_domain=""
+  System(P_DATAGOV_004, "Execute records retention and disposition", "Apply the retention schedule and execute defensible disposition of records. Disposition is defensible destruction: eligibility verified against holds, execution evidenced by certificate, and the retention schedule is the single authority.", $tags="processes")
+  ' aac P_DATAGOV_004: company_domain=""
+  System(P_DATAENG_001, "Ingest and integrate source data", "Acquire, integrate, and land source data into the enterprise data platform. Ingestion lands source extracts into the platform with schema validation, lineage capture, and quality checks at the gate rather than downstream.", $tags="processes")
+  ' aac P_DATAENG_001: company_domain=""
+  System(P_DATAGOV_002, "Measure and remediate data quality", "Measure data quality against defined expectations and drive remediation. Quality rules run against critical data elements with published thresholds; breaches create remediation work with the data owner, not just a dashboard entry.", $tags="processes")
+  ' aac P_DATAGOV_002: company_domain=""
+  System(P_DATAGOV_001, "Onboard and classify data asset", "Register a data asset, assign ownership, and classify it for handling. Onboarding assigns owner, steward, classification, and retention up front; the Collibra registration is the system of record this model's stub points at.", $tags="processes")
+  ' aac P_DATAGOV_001: company_domain=""
+  System(P_REG_DATA_PREP_001, "Prepare regulatory reporting data", "Assemble, validate, and certify the data supporting regulatory reporting submissions. Report data is assembled from governed sources with reconciliation to the ledger and prior submissions; certification is a named officer's sign-off, not a batch job.", $tags="processes")
+  ' aac P_REG_DATA_PREP_001: company_domain=""
+  System(P_DATAGOV_003, "Publish metadata and lineage to catalog", "Publish metadata, lineage, and ownership into the governance catalog. The catalog is where consumers discover data and its lineage; publication is part of change delivery, not an afterthought, so the catalog stays current by construction.", $tags="processes")
+  ' aac P_DATAGOV_003: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_ARCHREPO, "Architecture repository", "Architecture models, standards, decisions, and the application inventory. Built with SaaS.", $tags="systems")
+  ' aac SYS_ARCHREPO: company_domain=""; hosting="SaaS"; technology="SaaS"
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_CUST360_PIPELINE, "Customer 360 Pipeline", "Ingestion and curation jobs building Customer 360. Built with Snowflake Data Cloud +1.", $tags="systems")
+  ' aac SYS_CUST360_PIPELINE: company_domain="Data and Analytics"; hosting="Azure"; technology="Snowflake Data Cloud +1"
+  System_Ext(SYS_CUST360_SEMANTIC, "Customer 360 Semantic Layer", "Governed models and metrics exposed to analysts for Customer 360. Built with Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_CUST360_SEMANTIC: company_domain="Data and Analytics"; hosting="SaaS"; technology="Snowflake Data Cloud"
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+  System(SYS_DATA_INGEST, "Enterprise Data Ingestion Hub", "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse. Built with Service Bus · Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_DATA_INGEST: company_domain="Data and Analytics"; hosting="Azure"; technology="Service Bus · Snowflake Data Cloud"
+  System(SYS_CATALOG, "Governance catalog", "Governance catalog and metadata system of record. Built with Collibra Data Intelligence.", $tags="systems")
+  ' aac SYS_CATALOG: company_domain=""; technology="Collibra Data Intelligence"
+  System(SYS_MODEL, "Model platform", "Model development, deployment, and monitoring.", $tags="systems")
+  ' aac SYS_MODEL: company_domain=""
+  System(SYS_CLIENT_PORTAL, "Servicing client portal", "Client reporting, data exchange, and interaction.", $tags="systems")
+  ' aac SYS_CLIENT_PORTAL: company_domain=""
+}
+
+Rel(CAP_DATA_01, CAP_DATA, "part of")
+Rel(CAP_DATA_02, CAP_DATA, "part of")
+Rel(CAP_DATA_03, CAP_DATA, "part of")
+Rel(CAP_DATA_04, CAP_DATA, "part of")
+Rel(CAP_DATA_05, CAP_DATA, "part of")
+Rel(CAP_DATA_06, CAP_DATA, "part of")
+Rel(CAP_DATA_07, CAP_DATA, "part of")
+Rel(CAP_DATA, FW_DMBOK, "Aligned to")
+' aac rel: source="CAP_DATA"; target="FW_DMBOK"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
+Rel(CAP_DATA_01, FW_DMBOK, "Data Governance")
+' aac rel: source="CAP_DATA_01"; target="FW_DMBOK"; label="Data Governance"; relation="capability_references_framework"; ref="Data Governance"
+Rel(CAP_DATA_02, FW_DMBOK, "Data Integration and Interoperability")
+' aac rel: source="CAP_DATA_02"; target="FW_DMBOK"; label="Data Integration and Interoperability"; relation="capability_references_framework"; ref="Data Integration and Interoperability"
+Rel(CAP_DATA_03, FW_DMBOK, "Data Quality")
+' aac rel: source="CAP_DATA_03"; target="FW_DMBOK"; label="Data Quality"; relation="capability_references_framework"; ref="Data Quality"
+Rel(CAP_DATA_04, FW_DMBOK, "Data Warehousing and Business Intelligence")
+' aac rel: source="CAP_DATA_04"; target="FW_DMBOK"; label="Data Warehousing and Business Intelligence"; relation="capability_references_framework"; ref="Data Warehousing and Business Intelligence"
+Rel(CAP_DATA_05, FW_DMBOK, "Metadata Management")
+' aac rel: source="CAP_DATA_05"; target="FW_DMBOK"; label="Metadata Management"; relation="capability_references_framework"; ref="Metadata Management"
+Rel(CAP_DATA_06, FW_BIAN, "Risk and Compliance > Models > Credit Risk Models")
+' aac rel: source="CAP_DATA_06"; target="FW_BIAN"; label="Risk and Compliance > Models > Credit Risk Models"; relation="capability_references_framework"; ref="Risk and Compliance > Models > Credit Risk Models"
+Rel(CAP_DATA_07, FW_BIAN, "Business Support > Document Management and Archive > Document Services")
+' aac rel: source="CAP_DATA_07"; target="FW_BIAN"; label="Business Support > Document Management and Archive > Document Services"; relation="capability_references_framework"; ref="Business Support > Document Management and Archive > Document Services"
+Rel(CAP_DATA_07, FW_DMBOK, "Document and Content Management")
+' aac rel: source="CAP_DATA_07"; target="FW_DMBOK"; label="Document and Content Management"; relation="capability_references_framework"; ref="Document and Content Management"
+Rel(P_TPS_002, CAP_DATA_02, "supported by")
+' aac rel: source="P_TPS_002"; target="CAP_DATA_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_TPS_005, CAP_DATA_02, "supported by")
+' aac rel: source="P_TPS_005"; target="CAP_DATA_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_REG_DATA_PREP_001, CAP_DATA_03, "supported by")
+' aac rel: source="P_REG_DATA_PREP_001"; target="CAP_DATA_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_DATAGOV_001, CAP_DATA_01, "supported by")
+' aac rel: source="P_DATAGOV_001"; target="CAP_DATA_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_DATAGOV_002, CAP_DATA_03, "supported by")
+' aac rel: source="P_DATAGOV_002"; target="CAP_DATA_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_DATAGOV_003, CAP_DATA_05, "supported by")
+' aac rel: source="P_DATAGOV_003"; target="CAP_DATA_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_DATAGOV_004, CAP_DATA_07, "supported by")
+' aac rel: source="P_DATAGOV_004"; target="CAP_DATA_07"; label="supported by"; relation="process_supports_capability"
+Rel(P_DATAENG_001, CAP_DATA_02, "supported by")
+' aac rel: source="P_DATAENG_001"; target="CAP_DATA_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_DATAENG_002, CAP_DATA_06, "supported by")
+' aac rel: source="P_DATAENG_002"; target="CAP_DATA_06"; label="supported by"; relation="process_supports_capability"
+Rel(P_APPDEV_009, CAP_DATA_07, "supported by")
+' aac rel: source="P_APPDEV_009"; target="CAP_DATA_07"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_DATA, CTL_CLIENT_SLA, "governed by")
+' aac rel: source="CAP_DATA"; target="CTL_CLIENT_SLA"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_DATA, CTL_CONV_VERIFY, "governed by")
+' aac rel: source="CAP_DATA"; target="CTL_CONV_VERIFY"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_DATA, CTL_DQ_GATE, "governed by")
+' aac rel: source="CAP_DATA"; target="CTL_DQ_GATE"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_DATA, CTL_REGRPT_CERT, "governed by")
+' aac rel: source="CAP_DATA"; target="CTL_REGRPT_CERT"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_DATA, CTL_RETENTION, "governed by")
+' aac rel: source="CAP_DATA"; target="CTL_RETENTION"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_DATA_02, CTL_CLIENT_SLA, "governed by")
+' aac rel: source="CAP_DATA_02"; target="CTL_CLIENT_SLA"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_DATA_02, CTL_CONV_VERIFY, "governed by")
+' aac rel: source="CAP_DATA_02"; target="CTL_CONV_VERIFY"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_DATA_02, CTL_DQ_GATE, "governed by")
+' aac rel: source="CAP_DATA_02"; target="CTL_DQ_GATE"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_DATA_03, CTL_DQ_GATE, "governed by")
+' aac rel: source="CAP_DATA_03"; target="CTL_DQ_GATE"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_DATA_03, CTL_REGRPT_CERT, "governed by")
+' aac rel: source="CAP_DATA_03"; target="CTL_REGRPT_CERT"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_DATA_07, CTL_RETENTION, "governed by")
+' aac rel: source="CAP_DATA_07"; target="CTL_RETENTION"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(SYS_CUST360_PIPELINE, CAP_DATA_04, "realizes")
+' aac rel: source="SYS_CUST360_PIPELINE"; target="CAP_DATA_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CUST360_SEMANTIC, CAP_DATA_04, "realizes")
+' aac rel: source="SYS_CUST360_SEMANTIC"; target="CAP_DATA_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_ARCHREPO, CAP_DATA_07, "realizes")
+' aac rel: source="SYS_ARCHREPO"; target="CAP_DATA_07"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CATALOG, CAP_DATA_01, "realizes")
+' aac rel: source="SYS_CATALOG"; target="CAP_DATA_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CATALOG, CAP_DATA_05, "realizes")
+' aac rel: source="SYS_CATALOG"; target="CAP_DATA_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CLIENT_PORTAL, CAP_DATA_02, "realizes")
+' aac rel: source="SYS_CLIENT_PORTAL"; target="CAP_DATA_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CORE_LEDGER, CAP_DATA_02, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_DATA_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DATA_INGEST, CAP_DATA_02, "realizes")
+' aac rel: source="SYS_DATA_INGEST"; target="CAP_DATA_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DATA_INGEST, CAP_DATA_03, "realizes")
+' aac rel: source="SYS_DATA_INGEST"; target="CAP_DATA_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DOC, CAP_DATA_07, "realizes")
+' aac rel: source="SYS_DOC"; target="CAP_DATA_07"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_MODEL, CAP_DATA_06, "realizes")
+' aac rel: source="SYS_MODEL"; target="CAP_DATA_06"; label="realizes"; relation="system_realizes_capability"
+
+SHOW_LEGEND()
+@enduml

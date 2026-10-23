@@ -1,0 +1,89 @@
+@startuml
+' Credit data and decisioning environment — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Credit data and decisioning environment — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_CRED_07, "Account Review & Reissue Decisioning", "Perform periodic account-level risk review and reissue decisions.", $tags="capabilities")
+  ' aac CAP_CRED_07: company_domain="Originations"
+  System(CAP_ACQ_05, "Acquisition Performance Analytics", "Measure response, approval, and vintage economics of acquisition activity.", $tags="capabilities")
+  ' aac CAP_ACQ_05: company_domain="MarTech"
+  System(CAP_CRED_03, "Credit Line Assignment & Management", "Set initial lines and manage increases, decreases, and reallocation.", $tags="capabilities")
+  ' aac CAP_CRED_03: company_domain="Originations"
+  System(CAP_CRED_01, "Credit Strategy & Scorecard Management", "Own the credit decision strategy and its cutoffs.", $tags="capabilities")
+  ' aac CAP_CRED_01: company_domain="Originations"
+  System(CAP_ACQ_04, "Marketing Compliance & Disclosure Review", "Review creative and offers for regulatory adequacy before release.", $tags="capabilities")
+  ' aac CAP_ACQ_04: company_domain="MarTech"
+  System(CAP_ACQ_02, "Offer & Pre-Screen Management", "Construct and govern firm offers of credit and pre-screen criteria.", $tags="capabilities")
+  ' aac CAP_ACQ_02: company_domain="MarTech"
+  System(CAP_CRED_04, "Portfolio Risk Monitoring & Segmentation", "Monitor vintage, roll rate, and segment performance across the portfolio.", $tags="capabilities")
+  ' aac CAP_CRED_04: company_domain="Originations"
+  System(CAP_ORIG_04, "Underwriting & Credit Decisioning Execution", "Execute the credit decision against the approved strategy.", $tags="capabilities")
+  ' aac CAP_ORIG_04: company_domain="Originations"
+}
+Boundary(b_Process, "Process") {
+  System(P_CREDIT_009, "Acquire and refresh credit bureau data", "Source consumer bureau data for prescreen, account review, and portfolio monitoring under permissible purpose, and manage refresh cadence and quality.", $tags="processes")
+  ' aac P_CREDIT_009: company_domain=""
+  System(P_CREDIT_005, "Conduct monthly portfolio credit review", "Review vintage, roll-rate, and segment performance against risk appetite and record the actions agreed at the portfolio credit review.", $tags="processes")
+  ' aac P_CREDIT_005: company_domain=""
+  System(P_MARKETING_002, "Construct and approve firm offer of credit", "Define offer criteria and terms, and obtain compliance approval before release. A firm offer of credit commits the bank under FCRA; criteria, terms, and the compliance sign-off are locked before any channel sees the offer.", $tags="processes")
+  ' aac P_MARKETING_002: company_domain=""
+  System(P_ORIG_004, "Execute credit decision", "Apply the approved credit strategy to render an approve, decline, or counter-offer decision with a line assignment.", $tags="processes")
+  ' aac P_ORIG_004: company_domain=""
+  System(P_CREDIT_008, "Perform account review and reissue decision", "Review account risk periodically and decide reissue, close, or continue. Periodic account review drives reissue, line, and closure decisions at card expiry and on risk triggers; decisions carry the same notice obligations as any adverse action.", $tags="processes")
+  ' aac P_CREDIT_008: company_domain=""
+  System(P_MARKETING_005, "Review campaign performance and adjust targeting", "Evaluate response, approval, and early vintage economics for in-flight campaigns and decide continue, adjust, or stop.", $tags="processes")
+  ' aac P_MARKETING_005: company_domain=""
+  System(P_CREDIT_001, "Set and deploy credit decision strategy", "Define, test, approve, and deploy changes to the credit decision strategy and its cutoffs. Strategy changes ship through champion-challenger testing with documented approval; the deployed strategy is the single decisioning authority for originations.", $tags="processes")
+  ' aac P_CREDIT_001: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CREDIT_DATA, "Credit data and decisioning environment", "Credit data, analytics, and decisioning environment. Built with Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_CREDIT_DATA: company_domain=""; technology="Snowflake Data Cloud"
+}
+
+Rel(P_MARKETING_002, SYS_CREDIT_DATA, "Primary")
+' aac rel: source="P_MARKETING_002"; target="SYS_CREDIT_DATA"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_MARKETING_005, SYS_CREDIT_DATA, "Supporting")
+' aac rel: source="P_MARKETING_005"; target="SYS_CREDIT_DATA"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_ORIG_004, SYS_CREDIT_DATA, "Supporting")
+' aac rel: source="P_ORIG_004"; target="SYS_CREDIT_DATA"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_CREDIT_001, SYS_CREDIT_DATA, "Supporting")
+' aac rel: source="P_CREDIT_001"; target="SYS_CREDIT_DATA"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_CREDIT_005, SYS_CREDIT_DATA, "Supporting")
+' aac rel: source="P_CREDIT_005"; target="SYS_CREDIT_DATA"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_CREDIT_008, SYS_CREDIT_DATA, "Supporting")
+' aac rel: source="P_CREDIT_008"; target="SYS_CREDIT_DATA"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_CREDIT_009, SYS_CREDIT_DATA, "Primary")
+' aac rel: source="P_CREDIT_009"; target="SYS_CREDIT_DATA"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_MARKETING_002, CAP_ACQ_02, "supports")
+' aac rel: source="P_MARKETING_002"; target="CAP_ACQ_02"; label="supports"; relation="process_supports_capability"
+Rel(P_MARKETING_002, CAP_ACQ_04, "supports")
+' aac rel: source="P_MARKETING_002"; target="CAP_ACQ_04"; label="supports"; relation="process_supports_capability"
+Rel(P_MARKETING_005, CAP_ACQ_05, "supports")
+' aac rel: source="P_MARKETING_005"; target="CAP_ACQ_05"; label="supports"; relation="process_supports_capability"
+Rel(P_ORIG_004, CAP_ORIG_04, "supports")
+' aac rel: source="P_ORIG_004"; target="CAP_ORIG_04"; label="supports"; relation="process_supports_capability"
+Rel(P_ORIG_004, CAP_CRED_01, "supports")
+' aac rel: source="P_ORIG_004"; target="CAP_CRED_01"; label="supports"; relation="process_supports_capability"
+Rel(P_ORIG_004, CAP_CRED_03, "supports")
+' aac rel: source="P_ORIG_004"; target="CAP_CRED_03"; label="supports"; relation="process_supports_capability"
+Rel(P_CREDIT_001, CAP_CRED_01, "supports")
+' aac rel: source="P_CREDIT_001"; target="CAP_CRED_01"; label="supports"; relation="process_supports_capability"
+Rel(P_CREDIT_005, CAP_CRED_04, "supports")
+' aac rel: source="P_CREDIT_005"; target="CAP_CRED_04"; label="supports"; relation="process_supports_capability"
+Rel(P_CREDIT_008, CAP_CRED_07, "supports")
+' aac rel: source="P_CREDIT_008"; target="CAP_CRED_07"; label="supports"; relation="process_supports_capability"
+Rel(P_CREDIT_009, CAP_CRED_04, "supports")
+' aac rel: source="P_CREDIT_009"; target="CAP_CRED_04"; label="supports"; relation="process_supports_capability"
+Rel(P_CREDIT_009, CAP_ACQ_02, "supports")
+' aac rel: source="P_CREDIT_009"; target="CAP_ACQ_02"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

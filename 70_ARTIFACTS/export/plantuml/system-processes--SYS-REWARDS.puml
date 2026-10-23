@@ -1,0 +1,47 @@
+@startuml
+' Rewards ledger — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Rewards ledger — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_FIN_02, "Interchange & Revenue Accounting", "Account for interchange, fees, and servicing revenue.", $tags="capabilities")
+  ' aac CAP_FIN_02: company_domain="Cross-Functional Services"
+  System(CAP_BILL_04, "Rewards Earn, Accrual & Redemption", "Operate the rewards ledger, accrual, and redemption.", $tags="capabilities")
+  ' aac CAP_BILL_04: company_domain="Servicing"
+}
+Boundary(b_Process, "Process") {
+  System(P_REWARDS_001, "Accrue rewards earn", "Calculate and post rewards earn to the rewards ledger for qualifying activity. Earn accrues per the program terms with promotional multipliers; the accrual creates the liability finance reconciles, so earn rules and accounting stay in lockstep.", $tags="processes")
+  ' aac P_REWARDS_001: company_domain=""
+  System(P_REWARDS_002, "Process rewards redemption", "Execute a cardholder rewards redemption and settle the resulting obligation. Redemption executes across cash, statement credit, and partner channels; partner settlement follows the program contract, and failed redemptions reverse cleanly.", $tags="processes")
+  ' aac P_REWARDS_002: company_domain=""
+  System(P_REWARDS_003, "Reconcile rewards liability", "Reconcile the rewards ledger to the recorded liability and resolve differences. The rewards liability reconciliation catches earn, redemption, and expiry drift between the ledger and finance; differences are investigated, not plugged.", $tags="processes")
+  ' aac P_REWARDS_003: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_REWARDS, "Rewards ledger", "Rewards accrual ledger and redemption.", $tags="systems")
+  ' aac SYS_REWARDS: company_domain=""
+}
+
+Rel(P_REWARDS_001, SYS_REWARDS, "Primary")
+' aac rel: source="P_REWARDS_001"; target="SYS_REWARDS"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_REWARDS_002, SYS_REWARDS, "Primary")
+' aac rel: source="P_REWARDS_002"; target="SYS_REWARDS"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_REWARDS_003, SYS_REWARDS, "Primary")
+' aac rel: source="P_REWARDS_003"; target="SYS_REWARDS"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_REWARDS_001, CAP_BILL_04, "supports")
+' aac rel: source="P_REWARDS_001"; target="CAP_BILL_04"; label="supports"; relation="process_supports_capability"
+Rel(P_REWARDS_002, CAP_BILL_04, "supports")
+' aac rel: source="P_REWARDS_002"; target="CAP_BILL_04"; label="supports"; relation="process_supports_capability"
+Rel(P_REWARDS_003, CAP_BILL_04, "supports")
+' aac rel: source="P_REWARDS_003"; target="CAP_BILL_04"; label="supports"; relation="process_supports_capability"
+Rel(P_REWARDS_003, CAP_FIN_02, "supports")
+' aac rel: source="P_REWARDS_003"; target="CAP_FIN_02"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

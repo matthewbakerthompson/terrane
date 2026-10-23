@@ -1,0 +1,39 @@
+@startuml
+' Analyze complaint signal for conduct risk — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Analyze complaint signal for conduct risk — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_RGOV_06, "Complaint Oversight & UDAAP Management", "Aggregate, analyze, and act on complaint signal for unfair practice risk.", $tags="capabilities")
+  ' aac CAP_RGOV_06: company_domain="Cross-Functional Services"
+}
+Boundary(b_Process, "Process") {
+  System(P_COMPLIANCE_005, "Analyze complaint signal for conduct risk", "Aggregate and analyze complaint data for unfair or deceptive practice risk. Feeds the UDAAP program: complaint taxonomy, root cause, and trend analysis across channels, including complaints held by servicing clients about serviced portfolios.", $tags="processes")
+  ' aac P_COMPLIANCE_005: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_CRM, "Dynamics 365 Customer Service", "Contact center desktop and case management for servicing agents. Built with Microsoft.", $tags="systems")
+  ' aac SYS_CRM: company_domain="Servicing"; hosting="SaaS"; technology="Microsoft"
+  System(SYS_DATA_INGEST, "Enterprise Data Ingestion Hub", "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse. Built with Service Bus · Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_DATA_INGEST: company_domain="Data and Analytics"; hosting="Azure"; technology="Service Bus · Snowflake Data Cloud"
+  System(SYS_GRC, "Governance, risk and compliance platform", "Policy, control, issue, and risk register management.", $tags="systems")
+  ' aac SYS_GRC: company_domain=""
+}
+
+Rel(P_COMPLIANCE_005, SYS_GRC, "Primary")
+' aac rel: source="P_COMPLIANCE_005"; target="SYS_GRC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_COMPLIANCE_005, SYS_CRM, "Supporting")
+' aac rel: source="P_COMPLIANCE_005"; target="SYS_CRM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COMPLIANCE_005, SYS_DATA_INGEST, "Supporting")
+' aac rel: source="P_COMPLIANCE_005"; target="SYS_DATA_INGEST"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COMPLIANCE_005, CAP_RGOV_06, "supports")
+' aac rel: source="P_COMPLIANCE_005"; target="CAP_RGOV_06"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

@@ -1,0 +1,354 @@
+# What the harvested estate carries, reads, enforces and is used by.
+#
+# The business layer brought thirty-three systems and ten data assets across
+# as names. The interfaces between them are in
+# `10_MODEL/interfaces/harvested_estate.yaml`; these are the facts that make
+# those interfaces mean something: which data asset each one carries, which
+# systems hold which data, which control each system enforces, who uses it,
+# and the few places a harvested system runs on a technology service this
+# model already holds.
+#
+# Drafted from the process inventory and the pattern library, like the
+# interfaces, and as unconfirmed. A row here is a claim for the owner of the
+# system to confirm or strike, which is a better starting point than the
+# empty inspector the harvested systems had.
+
+interface_transports_data_asset:
+  # originations
+  - interface_id: INT-ORIG-CREDIT-DATA
+    data_asset_id: DA-APPLICATION
+  - interface_id: INT-ORIG-APPFRAUD
+    data_asset_id: DA-APPLICATION
+  - interface_id: INT-ORIG-KYC
+    data_asset_id: DA-APPLICATION
+  - interface_id: INT-ORIG-MODEL
+    data_asset_id: DA-MODEL-FEAT
+  - interface_id: INT-ORIG-LEDGER-BOARD
+    data_asset_id: DA-APPLICATION
+  - interface_id: INT-ORIG-LEDGER-BOARD
+    data_asset_id: DA-CARD-ACCOUNT
+  - interface_id: INT-ORIG-DOC
+    data_asset_id: DA-APPLICATION
+  - interface_id: INT-LEDGER-CARD-FULFILL
+    data_asset_id: DA-CARD-ACCOUNT
+  # payments and the books
+  - interface_id: INT-PAYMENT-GW-LEDGER
+    data_asset_id: DA-PAYMENT-INSTR
+  - interface_id: INT-PAYMENT-GW-LEDGER
+    data_asset_id: DA-CARD-ACCOUNT
+  - interface_id: INT-PAYMENT-GW-GL
+    data_asset_id: DA-GL
+  - interface_id: INT-LEDGER-GL
+    data_asset_id: DA-GL
+  - interface_id: INT-LEDGER-RECON
+    data_asset_id: DA-TRANSACTION
+  - interface_id: INT-GL-RECON
+    data_asset_id: DA-GL
+  - interface_id: INT-GL-TREASURY
+    data_asset_id: DA-GL
+  # the authorization path
+  - interface_id: INT-AUTH-FRAUD
+    data_asset_id: DA-TRANSACTION
+  - interface_id: INT-FRAUD-MODEL
+    data_asset_id: DA-MODEL-FEAT
+  - interface_id: INT-FRAUD-CRM
+    data_asset_id: DA-TRANSACTION
+  - interface_id: INT-AUTH-TOKEN
+    data_asset_id: DA-CARD-ACCOUNT
+  - interface_id: INT-MOBILE-TOKEN
+    data_asset_id: DA-CARD-ACCOUNT
+  - interface_id: INT-MOBILE-CARDSVC
+    data_asset_id: DA-CARD-ACCOUNT
+  - interface_id: INT-MOBILE-CARDSVC
+    data_asset_id: DA-TRANSACTION
+  # the bureaus
+  - interface_id: INT-LEDGER-BUREAU-GW
+    data_asset_id: DA-BUREAU-FILE
+  - interface_id: INT-LEDGER-BUREAU-GW
+    data_asset_id: DA-CARD-ACCOUNT
+  - interface_id: INT-BUREAU-GW-BUREAU
+    data_asset_id: DA-BUREAU-FILE
+  - interface_id: INT-BUREAU-GW-CRM
+    data_asset_id: DA-DISPUTE-CASE
+  # collections, communications and the contact center
+  - interface_id: INT-COLLECT-DIALER
+    data_asset_id: DA-COLLECT-ACT
+  - interface_id: INT-DIALER-COLLECT
+    data_asset_id: DA-COLLECT-ACT
+  - interface_id: INT-COLLECT-DOC
+    data_asset_id: DA-COLLECT-ACT
+  - interface_id: INT-LEDGER-DOC
+    data_asset_id: DA-CARD-ACCOUNT
+  - interface_id: INT-STATEMENTS-DOC
+    data_asset_id: DA-STATEMENTS
+  - interface_id: INT-DOC-CLIENT-PORTAL
+    data_asset_id: DA-STATEMENTS
+  - interface_id: INT-DOC-CLIENT-PORTAL
+    data_asset_id: DA-CLIENT-SERV
+  - interface_id: INT-LEDGER-CLIENT-PORTAL
+    data_asset_id: DA-CLIENT-SERV
+  - interface_id: INT-LEDGER-CLIENT-PORTAL
+    data_asset_id: DA-CARD-ACCOUNT
+  - interface_id: INT-CONTACT-CRM
+    data_asset_id: DA-CUSTOMER-PROFILE
+  - interface_id: INT-IVR-CONTACT
+    data_asset_id: DA-CUSTOMER-PROFILE
+  - interface_id: INT-IVR-CARDSVC
+    data_asset_id: DA-CARD-ACCOUNT
+  - interface_id: INT-CRM-DISPUTES
+    data_asset_id: DA-DISPUTE-CASE
+  # marketing, data and compliance
+  - interface_id: INT-PROSPECT-MARKETING
+    data_asset_id: DA-PROSPECT
+  - interface_id: INT-MARKETING-CRM
+    data_asset_id: DA-PROSPECT
+  - interface_id: INT-MARKETING-CRM
+    data_asset_id: DA-CUSTOMER-PROFILE
+  - interface_id: INT-INGEST-MODEL
+    data_asset_id: DA-MODEL-FEAT
+  - interface_id: INT-INGEST-CREDIT-DATA
+    data_asset_id: DA-CARD-ACCOUNT
+  - interface_id: INT-INGEST-CREDIT-DATA
+    data_asset_id: DA-TRANSACTION
+  - interface_id: INT-INGEST-CREDIT-DATA
+    data_asset_id: DA-APPLICATION
+  - interface_id: INT-KYC-AML
+    data_asset_id: DA-APPLICATION
+  - interface_id: INT-LEDGER-AML
+    data_asset_id: DA-TRANSACTION
+  # The workforce and operations interfaces carry no business data asset:
+  # people records, telemetry, change records and test results are not in
+  # the data inventory, and listing them against the nearest asset would be
+  # a lie the lineage view repeated. They show as interfaces without a
+  # payload, which is true.
+
+system_reads_writes:
+  - system_id: SYS-ORIG-DECISION
+    data_asset_id: DA-APPLICATION
+    operation: ReadWrite
+  - system_id: SYS-APPFRAUD
+    data_asset_id: DA-APPLICATION
+    operation: Read
+  - system_id: SYS-KYC
+    data_asset_id: DA-APPLICATION
+    operation: Read
+  - system_id: SYS-CREDIT-DATA
+    data_asset_id: DA-APPLICATION
+    operation: Read
+  - system_id: SYS-CREDIT-DATA
+    data_asset_id: DA-CARD-ACCOUNT
+    operation: Read
+  - system_id: SYS-CREDIT-DATA
+    data_asset_id: DA-TRANSACTION
+    operation: Read
+  - system_id: SYS-MODEL
+    data_asset_id: DA-MODEL-FEAT
+    operation: ReadWrite
+  - system_id: SYS-DATA-INGEST
+    data_asset_id: DA-MODEL-FEAT
+    operation: ReadWrite
+  - system_id: SYS-FRAUD-DETECT
+    data_asset_id: DA-TRANSACTION
+    operation: Read
+  - system_id: SYS-FRAUD-DETECT
+    data_asset_id: DA-MODEL-FEAT
+    operation: Read
+  - system_id: SYS-PAYMENT-GW
+    data_asset_id: DA-PAYMENT-INSTR
+    operation: ReadWrite
+  - system_id: SYS-CORE-LEDGER
+    data_asset_id: DA-PAYMENT-INSTR
+    operation: Read
+  - system_id: SYS-GL
+    data_asset_id: DA-GL
+    operation: ReadWrite
+  - system_id: SYS-RECON
+    data_asset_id: DA-GL
+    operation: Read
+  - system_id: SYS-RECON
+    data_asset_id: DA-TRANSACTION
+    operation: Read
+  - system_id: SYS-TREASURY
+    data_asset_id: DA-GL
+    operation: Read
+  - system_id: SYS-BUREAU-GW
+    data_asset_id: DA-BUREAU-FILE
+    operation: ReadWrite
+  - system_id: SYS-BUREAU-GW
+    data_asset_id: DA-DISPUTE-CASE
+    operation: Read
+  - system_id: SYS-CREDIT-BUREAU
+    data_asset_id: DA-BUREAU-FILE
+    operation: Read
+  - system_id: SYS-CRM
+    data_asset_id: DA-DISPUTE-CASE
+    operation: ReadWrite
+  - system_id: SYS-COLLECT-API
+    data_asset_id: DA-COLLECT-ACT
+    operation: ReadWrite
+  - system_id: SYS-DIALER
+    data_asset_id: DA-COLLECT-ACT
+    operation: ReadWrite
+  - system_id: SYS-DOC
+    data_asset_id: DA-STATEMENTS
+    operation: ReadWrite
+  - system_id: SYS-STATEMENTS
+    data_asset_id: DA-STATEMENTS
+    operation: ReadWrite
+  - system_id: SYS-CLIENT-PORTAL
+    data_asset_id: DA-CLIENT-SERV
+    operation: ReadWrite
+  - system_id: SYS-CLIENT-PORTAL
+    data_asset_id: DA-STATEMENTS
+    operation: Read
+  - system_id: SYS-MARKETING
+    data_asset_id: DA-PROSPECT
+    operation: ReadWrite
+  - system_id: SYS-PROSPECT-DATA
+    data_asset_id: DA-PROSPECT
+    operation: ReadWrite
+  - system_id: SYS-AML
+    data_asset_id: DA-TRANSACTION
+    operation: Read
+  - system_id: SYS-AML
+    data_asset_id: DA-APPLICATION
+    operation: Read
+  - system_id: SYS-TOKEN
+    data_asset_id: DA-CARD-ACCOUNT
+    operation: Read
+  - system_id: SYS-MOBILE
+    data_asset_id: DA-CARD-ACCOUNT
+    operation: Read
+  - system_id: SYS-MOBILE
+    data_asset_id: DA-TRANSACTION
+    operation: Read
+  - system_id: SYS-IVR
+    data_asset_id: DA-CARD-ACCOUNT
+    operation: Read
+  - system_id: SYS-CONTACT
+    data_asset_id: DA-CUSTOMER-PROFILE
+    operation: Read
+  - system_id: SYS-CARD-FULFILL
+    data_asset_id: DA-CARD-ACCOUNT
+    operation: Read
+
+system_governed_by_control:
+  # Where a harvested system is the one that enforces a control the
+  # business layer already holds. Fourteen of these systems handle
+  # Restricted data and recorded nothing, which the gates reported as
+  # `governance.no_control`; these are the answers, drafted for the owners.
+  - system_id: SYS-BUREAU-GW
+    control_id: CTL-METRO2-RECON
+  - system_id: SYS-BUREAU-GW
+    control_id: CTL-BUREAU-ACC
+  - system_id: SYS-BUREAU-GW
+    control_id: CTL-REGE-ACK
+  - system_id: SYS-PAYMENT-GW
+    control_id: CTL-PMT-POSTING
+  - system_id: SYS-PAYMENT-GW
+    control_id: CTL-PCI-EVIDENCE
+  - system_id: SYS-TREASURY
+    control_id: CTL-FUNDING-CONF
+  - system_id: SYS-GL
+    control_id: CTL-CLOSE-SIGNOFF
+  - system_id: SYS-GL
+    control_id: CTL-DAILY-RECON
+  - system_id: SYS-RECON
+    control_id: CTL-DAILY-RECON
+  - system_id: SYS-RECON
+    control_id: CTL-CLOSE-SIGNOFF
+  - system_id: SYS-AML
+    control_id: CTL-SANCTIONS
+  - system_id: SYS-AML
+    control_id: CTL-SAR-FILING
+  - system_id: SYS-KYC
+    control_id: CTL-SANCTIONS
+  - system_id: SYS-KYC
+    control_id: CTL-SCRA-MLA
+  - system_id: SYS-FRAUD-DETECT
+    control_id: CTL-FRAUD-SLA
+  - system_id: SYS-APPFRAUD
+    control_id: CTL-FRAUD-SLA
+  - system_id: SYS-DOC
+    control_id: CTL-NOTICE-CONTENT
+  - system_id: SYS-DOC
+    control_id: CTL-RETENTION
+  - system_id: SYS-DIALER
+    control_id: CTL-CONTACT-LIM
+  - system_id: SYS-CONTACT
+    control_id: CTL-COMPLAINT-REG
+  - system_id: SYS-CONTACT
+    control_id: CTL-AUTH-POLICY
+  - system_id: SYS-IVR
+    control_id: CTL-AUTH-POLICY
+  - system_id: SYS-MOBILE
+    control_id: CTL-AUTH-POLICY
+  - system_id: SYS-IAM
+    control_id: CTL-ACCESS-CERT
+  - system_id: SYS-TOKEN
+    control_id: CTL-PCI-EVIDENCE
+  - system_id: SYS-ORIG-DECISION
+    control_id: CTL-ADVERSE-ACT
+  - system_id: SYS-ORIG-DECISION
+    control_id: CTL-APP-INTAKE
+  - system_id: SYS-MODEL
+    control_id: CTL-TREATMENT-APPR
+  - system_id: SYS-MODEL
+    control_id: CTL-ADVERSE-ACT
+  - system_id: SYS-MARKETING
+    control_id: CTL-MKT-REVIEW
+  - system_id: SYS-PROSPECT-DATA
+    control_id: CTL-PRIV-REQ
+  - system_id: SYS-GRC
+    control_id: CTL-REGCHANGE-TRACK
+  - system_id: SYS-WORKTRACK
+    control_id: CTL-REGCHANGE-TRACK
+  - system_id: SYS-ITSM
+    control_id: CTL-CHG-APPROVAL
+  - system_id: SYS-SCM
+    control_id: CTL-CHG-APPROVAL
+  - system_id: SYS-OBSERV
+    control_id: CTL-IR-PLAYBOOK
+  - system_id: SYS-CATALOG
+    control_id: CTL-RETENTION
+  - system_id: SYS-CREDIT-DATA
+    control_id: CTL-DQ-GATE
+  - system_id: SYS-TESTMGMT
+    control_id: CTL-MASK-NONPROD
+  - system_id: SYS-CLIENT-PORTAL
+    control_id: CTL-CLIENT-SLA
+  - system_id: SYS-CARD-FULFILL
+    control_id: CTL-TPRM-DD
+
+actor_uses_system:
+  - actor_id: ACT-CARDHOLDER
+    system_id: SYS-MOBILE
+    interaction: Mobile self-service
+  - actor_id: ACT-CARDHOLDER
+    system_id: SYS-IVR
+    interaction: Voice self-service
+  - actor_id: ACT-SERVICING-AGENT
+    system_id: SYS-CONTACT
+    interaction: Agent desktop
+  - actor_id: ACT-COLLECTIONS-AGENT
+    system_id: SYS-DIALER
+    interaction: Outbound campaigns
+  - actor_id: ACT-UNDERWRITER
+    system_id: SYS-ORIG-DECISION
+    interaction: Manual review queue
+  - actor_id: ACT-UNDERWRITER
+    system_id: SYS-CREDIT-DATA
+    interaction: Strategy analysis
+
+system_uses_tech_service:
+  # Only where the harvested system is plainly the thing a technology
+  # service this model already holds is running. Hosting for the rest is
+  # unknown and stays unknown until an owner says.
+  - system_id: SYS-ITSM
+    tech_service_id: TS-SERVICENOW
+  - system_id: SYS-CATALOG
+    tech_service_id: TS-COLLIBRA
+  - system_id: SYS-IAM
+    tech_service_id: TS-ENTRA-ID
+  - system_id: SYS-CREDIT-DATA
+    tech_service_id: TS-SNOWFLAKE

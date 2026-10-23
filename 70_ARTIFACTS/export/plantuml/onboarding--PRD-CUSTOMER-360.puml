@@ -1,0 +1,42 @@
+@startuml
+' Customer 360 — Onboarding
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Customer 360 — Onboarding
+
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddRelTag("pipeline-load", $legendText="Pipeline load")
+
+Boundary(b_Azure, "Azure") {
+  Boundary(b_Azure__azure_data_prod, "subscription azure-data-prod") {
+    Boundary(b_Azure__azure_data_prod__uksouth, "region uksouth") {
+      Boundary(b_Azure__azure_data_prod__uksouth__Private_Data, "Private-Data") {
+        System(SYS_DATA_INGEST, "Enterprise Data Ingestion Hub", "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse. Built with Service Bus · Snowflake Data Cloud.", $tags="systems")
+        ' aac SYS_DATA_INGEST: company_domain="Data and Analytics"; hosting="Azure"; technology="Service Bus · Snowflake Data Cloud"
+      }
+    }
+  }
+  Boundary(b_Azure__azure_risk_prod, "subscription azure-risk-prod") {
+    Boundary(b_Azure__azure_risk_prod__uksouth, "region uksouth") {
+      Boundary(b_Azure__azure_risk_prod__uksouth__Private_App, "Private-App") {
+        System(SYS_REG_REPORTING, "Regulatory Reporting Engine", "Planned replacement for the spreadsheet-based regulatory reporting process, sourcing from the warehouse rather than from the ledger directly. Built with AKS · Snowflake Data Cloud.", $tags="systems")
+        ' aac SYS_REG_REPORTING: company_domain="Risk and Compliance"; hosting="Azure"; technology="AKS · Snowflake Data Cloud"
+      }
+    }
+  }
+}
+System(SYS_CUST360_PIPELINE, "Customer 360 Pipeline", "Ingestion and curation jobs building Customer 360. Built with Snowflake Data Cloud +1.", $tags="systems")
+' aac SYS_CUST360_PIPELINE: company_domain="Data and Analytics"; hosting="Azure"; technology="Snowflake Data Cloud +1"
+System_Ext(SYS_CUST360_SEMANTIC, "Customer 360 Semantic Layer", "Governed models and metrics exposed to analysts for Customer 360. Built with Snowflake Data Cloud.", $tags="systems")
+' aac SYS_CUST360_SEMANTIC: company_domain="Data and Analytics"; hosting="SaaS"; technology="Snowflake Data Cloud"
+
+Rel(SYS_CUST360_SEMANTIC, SYS_REG_REPORTING, "Customer 360 Semantic Layer to Regulatory Reporting Engine", "SQL", $tags="pipeline-load")
+' aac rel: source="SYS_CUST360_SEMANTIC"; target="SYS_REG_REPORTING"; label="Customer 360 Semantic Layer to Regulatory Reporting Engine"; interface_id="INT-CUST360-REGREPORTING"; kind="pipeline-load"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Outbound"
+Rel(SYS_DATA_INGEST, SYS_CUST360_PIPELINE, "Ingest to Customer 360 Pipeline", "Snowpipe", $tags="pipeline-load")
+' aac rel: source="SYS_DATA_INGEST"; target="SYS_CUST360_PIPELINE"; label="Ingest to Customer 360 Pipeline"; interface_id="INT-CUST360-INGEST"; kind="pipeline-load"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Inbound"
+Rel(SYS_CUST360_PIPELINE, SYS_CUST360_SEMANTIC, "Customer 360 Pipeline to Semantic Layer", "SQL", $tags="pipeline-load")
+' aac rel: source="SYS_CUST360_PIPELINE"; target="SYS_CUST360_SEMANTIC"; label="Customer 360 Pipeline to Semantic Layer"; interface_id="INT-CUST360-PIPE-SEMANTIC"; kind="pipeline-load"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Outbound"
+
+SHOW_LEGEND()
+@enduml

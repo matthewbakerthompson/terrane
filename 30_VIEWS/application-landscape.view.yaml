@@ -1,0 +1,29 @@
+view_id: application-landscape
+title: Application Landscape
+category: Application
+section: Landscape
+kind: map
+description: >
+  All current and planned systems, grouped by business domain and shaded by
+  criticality. New systems appear here automatically when they are added to
+  the model.
+layout: LR
+group_by: company_domain
+node_label: name
+renderers: [mermaid, structurizr]
+
+scope:
+  include:
+    - type: systems
+      where:
+        status: [Active, Planned]
+
+edges:
+  - via: interfaces
+    label: protocol
+
+style:
+  color_by: criticality
+
+limits:
+  max_nodes: 60

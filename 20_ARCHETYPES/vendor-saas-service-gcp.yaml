@@ -1,0 +1,92 @@
+archetype_id: vendor-saas-service-gcp
+title: Vendor SaaS service on Google Cloud
+version: 1.0.0
+applies_to: products
+description: >
+  A bought capability running in a vendor tenancy, reached from our Google
+  Cloud side. The same shape as the Azure vendor shape, part for part: the
+  vendor system itself, an outbound integration that feeds it, a return path
+  that may be a file feed or webhooks, and a landed dataset. Only the
+  bindings differ: the private path is Private Service Connect, and the
+  gateway and the webhook listener land in the workload project beside the
+  product that calls the vendor. The first product on it buys affordability
+  data for point-of-sale finance, whose API already runs there.
+parameters:
+  - name: slug
+    required: true
+  - name: product_name
+    required: true
+  - name: vendor
+    required: true
+    description: Vendor name, carried onto the system as provider
+  - name: owner_org
+    required: true
+  - name: domain
+    required: true
+  - name: upstream_system
+    required: true
+    description: The internal system that feeds this vendor
+  - name: account
+    required: true
+    description: Workload project id the gateway and listener land in, e.g. gcp-lending-prod
+  - name: region
+    default: europe-west2
+    description: Google Cloud region our side of the integration lands in
+  - name: criticality
+    default: Medium
+  - name: classification
+    default: Confidential
+defaults:
+  architecture_domain: Business
+  togaf_layer: Business
+  abstraction_level: Conceptual
+provider: GCP
+entity_defaults:
+  all:
+    status: "{status}"
+    company_domain: "{domain}"
+  systems:
+    tags: [vendor]
+    owner_org_id: "{owner_org}"
+    criticality: "{criticality}"
+    hosting: GCP
+    environment: Production
+    cloud_provider: GCP
+    cloud_account: "{account}"
+    region: "{region}"
+    data_classification_supported: "{classification}"
+    togaf_layer: Application
+    architecture_domain: Application
+    abstraction_level: Physical
+  interfaces:
+    owner_org_id: "{owner_org}"
+    protocol: HTTPS
+    direction: Outbound
+    frequency: Realtime
+    integration_style: Request-response
+    auth_method: WorkloadIdentity
+    data_classification: "{classification}"
+    togaf_layer: Application
+    architecture_domain: Application
+modules:
+  - module: vendor-baseline
+    with:
+      vendor: "{vendor}"
+      caller_system: "{upstream_system}"
+slots:
+  - name: reach
+    description: How our side gets to the vendor
+    options: [private-egress, public-call]
+    default: private-egress
+  - name: return
+    description: How things come back, if anything does
+    options: [sftp-return-feed, webhook-inbound]
+    default: webhook-inbound
+    optional: true
+    # The listener hands the vendor's result to the system that called the
+    # vendor, which the shape already knows; a product on the default says
+    # nothing about it, and one that wants the result elsewhere answers
+    # `consumer_system` for the part under `modules`.
+    with:
+      webhook-inbound:
+        consumer_system: "{upstream_system}"

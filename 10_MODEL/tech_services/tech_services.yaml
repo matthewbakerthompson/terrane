@@ -1,0 +1,208 @@
+# Imported from tech_services.csv. Reference set: these change as a group, so
+# they share a file. Edit freely; the importer will not overwrite.
+#
+# `landing-zone` on a service says a part may resolve to it: a part that
+# asks for an api-gateway on an Azure shape finds APIM here without the
+# shape binding it. The per-product network primitives in the AWS files
+# are of the same kinds and are not tagged, so a part asking for the
+# private egress finds PrivateLink and not a NAT gateway.
+
+- tech_service_id: TS-AZURE-AKS
+  name: Azure Kubernetes Service
+  description: Managed Kubernetes hosting the containerized estate.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Compute
+  service_name: AKS
+  component_type: container-platform
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-APIM
+  name: Azure API Management
+  description: The API gateway every internal and partner API is published through.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Integration
+  service_name: APIM
+  component_type: api-gateway
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-KEYVAULT
+  name: Azure Key Vault
+  description: Secret, key and certificate management.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Security
+  service_name: Key Vault
+  component_type: secrets-manager
+  # One service that is two kinds: Key Vault holds the keys as well as the
+  # secrets, so it answers for `kms` on this landing zone too. Until it said
+  # so, a part asking for a kms on Azure resolved to nothing and the product
+  # shape bound Key Vault by hand.
+  answers_for: [kms]
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-SERVICEBUS
+  name: Azure Service Bus
+  description: Enterprise messaging backbone for domain events.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Integration
+  service_name: Service Bus
+  component_type: message-queue
+  tags: [landing-zone]
+
+# The event stream the Azure landing zone did not have. `terrane validate` said
+# so for two rounds (`library.landing_zone_gap`: `async-worker` asks for one)
+# and the first Azure product with a worker, rewards redemption, is what made
+# it a record. Kafka-compatible, so the worker's protocol stands.
+- tech_service_id: TS-AZURE-EVENTHUBS
+  name: Azure Event Hubs
+  description: Managed event streaming carrying a product's domain events to the workers that consume them.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Integration
+  service_name: Event Hubs
+  component_type: event-stream
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-SQL
+  name: Azure SQL Database
+  description: Managed relational database for operational datastores.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Data
+  service_name: Azure SQL
+  component_type: relational-db
+  tags: [landing-zone]
+
+- tech_service_id: TS-COLLIBRA
+  name: Collibra
+  description: Governance catalog and the intended system of record for metadata.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Governance
+  company_domain: Data and Analytics
+  owner_org_id: ORG-DATAENG
+  provider: Collibra
+  service_category: Governance
+  service_name: Collibra Data Intelligence
+  component_type: catalog
+  tags: [landing-zone]
+
+- tech_service_id: TS-ENTRA-ID
+  name: Microsoft Entra ID
+  description: Workforce and customer identity provider.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Microsoft Azure
+  service_category: Security
+  service_name: Entra ID
+  component_type: identity-provider
+  tags: [landing-zone]
+
+- tech_service_id: TS-SERVICENOW
+  name: ServiceNow
+  description: Service management and the configuration management database. The CMDB is the intended long-term system of record for the application inventory and is not trusted for that purpose yet. See AAC-06.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Governance
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: ServiceNow
+  service_category: Governance
+  service_name: ServiceNow ITSM and CMDB
+  component_type: itsm
+  tags: [landing-zone]
+
+- tech_service_id: TS-SNOWFLAKE
+  name: Snowflake
+  description: The enterprise warehouse and analytics compute.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Data
+  company_domain: Data and Analytics
+  owner_org_id: ORG-DATAENG
+  provider: Snowflake
+  service_category: Data
+  service_name: Snowflake Data Cloud
+  component_type: warehouse
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-MONITOR
+  name: Azure Monitor
+  description: Metrics, logs and alerts for the Azure-hosted estate.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Operations
+  service_name: Azure Monitor
+  component_type: observability
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-PRIVATELINK
+  name: Azure Private Link
+  description: Private endpoints to bought services, so the only path our data takes to a vendor never touches the public internet.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Network
+  service_name: Private Link
+  component_type: private-egress
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-VWAN
+  name: Azure Virtual WAN hub
+  description: The hub every virtual network attaches to, and the route back to the data center.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Network
+  service_name: Virtual WAN
+  component_type: transit-gateway
+  tags: [landing-zone]

@@ -1,0 +1,27 @@
+view_id: process-landscape
+title: Process Landscape
+category: Business
+section: Processes and value streams
+kind: map
+description: >
+  Every process in the business layer, grouped by the value stream it serves
+  and shaded by criticality. Processes are authored in the business
+  architecture repository; this view shows each process and what it touches. A
+  process outside every value stream has not been placed in the flow of work.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+group_by: value_stream_id
+
+scope:
+  include:
+    - type: processes
+
+edges: []
+
+style:
+  color_by: criticality
+
+limits:
+  max_nodes: 200

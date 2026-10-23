@@ -1,0 +1,39 @@
+# Three value streams, each stated from the patient's side and ending when
+# the patient has the value. The source project these were drafted from
+# had the same three; the stages are new.
+
+- value_stream_id: VS-EMERGENCY-CARE
+  name: Arrival to Disposition
+  description: A patient arriving at the emergency department is assessed, treated and admitted or sent home, safely and without waiting for a bed.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_type: Core
+  stakeholders: Patient;Emergency physicians and nurses;Inpatient units;Bed management
+  value_proposition: Rapid, safe emergency care, with an admitted patient in an inpatient bed rather than in the hallway.
+  owner_org_id: ORG-ED
+
+- value_stream_id: VS-DIAGNOSTICS
+  name: Order to Result
+  description: A clinician's question is answered by a test or an image, and the answer reaches them, and the patient, in time to act on it.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_type: Core
+  stakeholders: Ordering clinician;Patient;Laboratory;Imaging
+  value_proposition: Accurate results, matched to the right patient, with critical ones called within the hour.
+  owner_org_id: ORG-LAB
+
+- value_stream_id: VS-CANCER-CARE
+  name: Diagnosis to Survivorship
+  description: A patient with a new cancer diagnosis is staged, has a plan, is treated and is followed afterward, with the case reported as the state requires.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  value_stream_type: Core
+  stakeholders: Patient;Oncologists;Infusion and radiation teams;Registrars;State registry
+  value_proposition: One coordinated plan from the first pathology report, given safely, and the outcome known.
+  owner_org_id: ORG-CANCER-CENTER

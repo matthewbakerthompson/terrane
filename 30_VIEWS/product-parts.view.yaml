@@ -1,0 +1,65 @@
+view_id: product-parts
+title: "{product} — By part"
+category: Application
+section: Products and systems
+kind: diagram
+description: >
+  One product drawn by the parts it was composed from: each boundary is a part
+  of the library (the API, the web channel, the datastore, the event publisher),
+  and what sits inside it is what that part made. A system in no boundary was
+  written by hand or came from the landing zone. The same product as the
+  architecture view, cut the other way: not where things run, but which
+  decision in the library put them there.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+parameters:
+  - name: product
+    type: products
+    required: true
+    description: The product this diagram is about
+
+# The part each thing came from, which the composer stamps on everything a
+# module provides; a thing with no part sits outside every boundary.
+group_by: module
+
+scope:
+  include:
+    - type: products
+      where:
+        id_in: ["{product}"]
+  exclude:
+    - type: products
+  expand:
+    - relation: product_includes_system
+      depth: 1
+      types: [systems]
+    - relation: system_uses_tech_service
+      depth: 1
+      types: [tech_services]
+    - relation: system_reads_writes
+      depth: 1
+      types: [data_assets]
+
+edges:
+  - via: interfaces
+    label: protocol
+  - via: system_uses_tech_service
+    text: runs on
+  - via: system_reads_writes
+    label: operation
+
+style:
+  color_by: type
+
+limits:
+  max_nodes: 40
+
+# One committed diagram per product that is live or on its way, like the
+# architecture view's.
+render_for:
+  parameter: product
+  type: products
+  where:
+    status: [Active, Planned]

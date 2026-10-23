@@ -1,0 +1,75 @@
+view_id: change-footprint
+title: "{work_package} — Footprint"
+category: Change
+section: Impact
+kind: diagram
+description: >
+  One work package and its footprint: the systems it builds or changes, the
+  data those systems read and write, the capabilities they realize, and the
+  processes that depend on them. The footprint is derived from the model, so
+  it includes indirect effects.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+parameters:
+  - name: work_package
+    type: work_packages
+    required: true
+    description: The work package this diagram is about
+
+group_by: type
+
+scope:
+  include:
+    - type: work_packages
+      where:
+        id_in: ["{work_package}"]
+  # Each rule starts from everything the ones before it found, so the order
+  # is the chain: the package's systems, then what they touch, then who uses
+  # that. The `types` on the last two are what stops a process fanning back
+  # out to every system it runs on.
+  expand:
+    - relation: work_package_affects_system
+      depth: 1
+      types: [systems]
+    - relation: system_reads_writes
+      depth: 1
+      types: [data_assets]
+    - relation: system_realizes_capability
+      depth: 1
+      types: [capabilities]
+    - relation: process_uses_data_asset
+      depth: 1
+      types: [processes]
+    - relation: process_supports_capability
+      depth: 1
+      types: [processes]
+
+edges:
+  - via: work_package_affects_system
+    label: effect
+  - via: system_reads_writes
+    label: operation
+  - via: system_realizes_capability
+    text: realizes
+  - via: process_uses_data_asset
+    label: access
+  - via: process_supports_capability
+    text: supports
+
+style:
+  color_by: type
+
+limits:
+  # A footprint past forty is a program, not a work package -- or a data
+  # asset every process reads, which is worth noticing either way.
+  max_nodes: 40
+
+# One committed diagram per work package that touches something. One that
+# touches nothing is a single box, and the register already lists it.
+render_for:
+  parameter: work_package
+  type: work_packages
+  where:
+    has_any: [work_package_affects_system]

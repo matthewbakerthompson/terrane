@@ -1,0 +1,65 @@
+@startuml
+' Servicing client portal — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Servicing client portal — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_TPS_05, "Client Audit & Oversight Support", "Support client and client-regulator oversight activity.", $tags="capabilities")
+  ' aac CAP_TPS_05: company_domain="Cross-Functional Services"
+  System(CAP_TPS_04, "Client Billing & Revenue Management", "Bill servicing fees and manage revenue recognition.", $tags="capabilities")
+  ' aac CAP_TPS_04: company_domain="Cross-Functional Services"
+  System(CAP_TPS_03, "Client Reporting & Data Exchange", "Deliver contracted reporting and data feeds to clients.", $tags="capabilities")
+  ' aac CAP_TPS_03: company_domain="Cross-Functional Services"
+  System(CAP_TPS_06, "Client-Directed Change Management", "Intake, price, and deliver client-requested change.", $tags="capabilities")
+  ' aac CAP_TPS_06: company_domain="Cross-Functional Services"
+  System(CAP_DATA_02, "Data Sourcing & Integration", "Acquire and integrate internal and third-party data.", $tags="capabilities")
+  ' aac CAP_DATA_02: company_domain="Cross-Functional Services"
+}
+Boundary(b_Process, "Process") {
+  System(P_TPS_006, "Bill client servicing fees", "Calculate and invoice servicing fees per the contract and recognize the revenue. Fee billing calculates from contracted schedules against actual volumes; invoices carry the detail clients audit, and revenue recognition follows the contract.", $tags="processes")
+  ' aac P_TPS_006: company_domain=""
+  System(P_TPS_005, "Exchange client data feed", "Send and receive contracted data feeds with the client on schedule. Data feeds run both directions on contracted schedules with schema and quality checks at the boundary; feed failures page, because clients reconcile against them.", $tags="processes")
+  ' aac P_TPS_005: company_domain=""
+  System(P_TPS_008, "Intake and deliver client-directed change", "Receive, price, approve, and deliver a change requested by a servicing client. Client-directed changes are priced, approved, and delivered under the contract's change provisions; scope discipline here is what keeps serviced portfolios profitable.", $tags="processes")
+  ' aac P_TPS_008: company_domain=""
+  System(P_TPS_004, "Produce contracted client reporting", "Produce and deliver reporting to the schedule and specification in the client contract. Contracted reporting ships to specification and schedule; late or wrong reporting is an SLA breach with credits, so production is monitored like any critical batch.", $tags="processes")
+  ' aac P_TPS_004: company_domain=""
+  System(P_TPS_007, "Support client audit or examination", "Assemble evidence and respond to client and client-regulator oversight requests. Client audits and client-regulator exams get coordinated evidence with the same discipline as the bank's own exams; commitments made in responses are tracked.", $tags="processes")
+  ' aac P_TPS_007: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CLIENT_PORTAL, "Servicing client portal", "Client reporting, data exchange, and interaction.", $tags="systems")
+  ' aac SYS_CLIENT_PORTAL: company_domain=""
+}
+
+Rel(P_TPS_004, SYS_CLIENT_PORTAL, "Primary")
+' aac rel: source="P_TPS_004"; target="SYS_CLIENT_PORTAL"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_TPS_005, SYS_CLIENT_PORTAL, "Primary")
+' aac rel: source="P_TPS_005"; target="SYS_CLIENT_PORTAL"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_TPS_006, SYS_CLIENT_PORTAL, "Supporting")
+' aac rel: source="P_TPS_006"; target="SYS_CLIENT_PORTAL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_TPS_007, SYS_CLIENT_PORTAL, "Supporting")
+' aac rel: source="P_TPS_007"; target="SYS_CLIENT_PORTAL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_TPS_008, SYS_CLIENT_PORTAL, "Supporting")
+' aac rel: source="P_TPS_008"; target="SYS_CLIENT_PORTAL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_TPS_004, CAP_TPS_03, "supports")
+' aac rel: source="P_TPS_004"; target="CAP_TPS_03"; label="supports"; relation="process_supports_capability"
+Rel(P_TPS_005, CAP_TPS_03, "supports")
+' aac rel: source="P_TPS_005"; target="CAP_TPS_03"; label="supports"; relation="process_supports_capability"
+Rel(P_TPS_005, CAP_DATA_02, "supports")
+' aac rel: source="P_TPS_005"; target="CAP_DATA_02"; label="supports"; relation="process_supports_capability"
+Rel(P_TPS_006, CAP_TPS_04, "supports")
+' aac rel: source="P_TPS_006"; target="CAP_TPS_04"; label="supports"; relation="process_supports_capability"
+Rel(P_TPS_007, CAP_TPS_05, "supports")
+' aac rel: source="P_TPS_007"; target="CAP_TPS_05"; label="supports"; relation="process_supports_capability"
+Rel(P_TPS_008, CAP_TPS_06, "supports")
+' aac rel: source="P_TPS_008"; target="CAP_TPS_06"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

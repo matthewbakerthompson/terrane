@@ -1,0 +1,812 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1240" height="4986" viewBox="0 0 1240 4986" font-family="Geist, system-ui, sans-serif" data-layout="table">
+<title>Platform Dependencies</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Platform Dependencies</text>
+<text x="1212" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   106 rows · 91 entities</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">Which technology services each system runs on. The systems attached to a service are the ones affected if that service changes.</text>
+<line x1="28" y1="92" x2="1212" y2="92" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(28 102)">
+<text x="0" y="12" font-size="12" font-weight="500" fill="#334155">Relationship, on every row: system uses tech service</text>
+<rect x="0" y="26" width="1184" height="30" fill="#f4f6fb"/>
+<text x="10" y="45" font-size="10.5" font-weight="600" fill="#334155" letter-spacing="0.06em">FROM</text>
+<text x="602" y="45" font-size="10.5" font-weight="600" fill="#334155" letter-spacing="0.06em">TO</text>
+<line x1="0" y1="56" x2="1184" y2="56" stroke="#c9d0dc" stroke-width="1.2"/>
+<g class="row" data-row="1">
+<text x="10" y="75" font-size="12" font-weight="500" fill="#0f172a">Card Servicing Datastore</text>
+<text x="10" y="89" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CARDSVC-STORE</text>
+<text x="602" y="75" font-size="12" font-weight="500" fill="#0f172a">Azure SQL Database</text>
+<text x="602" y="89" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-SQL</text>
+</g>
+<line x1="0" y1="101" x2="1184" y2="101" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="101" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="2">
+<text x="10" y="120" font-size="12" font-weight="500" fill="#0f172a">Card Servicing Datastore</text>
+<text x="10" y="134" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CARDSVC-STORE</text>
+<text x="602" y="120" font-size="12" font-weight="500" fill="#0f172a">Card Servicing Backup and recovery</text>
+<text x="602" y="134" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-CARDSVC-BACKUP</text>
+</g>
+<line x1="0" y1="146" x2="1184" y2="146" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="3">
+<text x="10" y="165" font-size="12" font-weight="500" fill="#0f172a">Card Servicing Datastore</text>
+<text x="10" y="179" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CARDSVC-STORE</text>
+<text x="602" y="165" font-size="12" font-weight="500" fill="#0f172a">Azure Key Vault</text>
+<text x="602" y="179" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-KEYVAULT</text>
+</g>
+<line x1="0" y1="191" x2="1184" y2="191" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="191" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="4">
+<text x="10" y="210" font-size="12" font-weight="500" fill="#0f172a">Card Servicing Event Publisher</text>
+<text x="10" y="224" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CARDSVC-EVENTS</text>
+<text x="602" y="210" font-size="12" font-weight="500" fill="#0f172a">Azure Service Bus</text>
+<text x="602" y="224" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-SERVICEBUS</text>
+</g>
+<line x1="0" y1="236" x2="1184" y2="236" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="5">
+<text x="10" y="255" font-size="12" font-weight="500" fill="#0f172a">Card Servicing Service</text>
+<text x="10" y="269" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CARDSVC-API</text>
+<text x="602" y="255" font-size="12" font-weight="500" fill="#0f172a">Azure API Management</text>
+<text x="602" y="269" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-APIM</text>
+</g>
+<line x1="0" y1="281" x2="1184" y2="281" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="281" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="6">
+<text x="10" y="300" font-size="12" font-weight="500" fill="#0f172a">Card Servicing Service</text>
+<text x="10" y="314" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CARDSVC-API</text>
+<text x="602" y="300" font-size="12" font-weight="500" fill="#0f172a">Azure Kubernetes Service</text>
+<text x="602" y="314" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-AKS</text>
+</g>
+<line x1="0" y1="326" x2="1184" y2="326" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="7">
+<text x="10" y="345" font-size="12" font-weight="500" fill="#0f172a">Card Servicing Service</text>
+<text x="10" y="359" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CARDSVC-API</text>
+<text x="602" y="345" font-size="12" font-weight="500" fill="#0f172a">Card Servicing Cache</text>
+<text x="602" y="359" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-CARDSVC-CACHE</text>
+</g>
+<line x1="0" y1="371" x2="1184" y2="371" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="371" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="8">
+<text x="10" y="390" font-size="12" font-weight="500" fill="#0f172a">Card Servicing Service</text>
+<text x="10" y="404" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CARDSVC-API</text>
+<text x="602" y="390" font-size="12" font-weight="500" fill="#0f172a">Azure Monitor</text>
+<text x="602" y="404" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-MONITOR</text>
+</g>
+<line x1="0" y1="416" x2="1184" y2="416" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="9">
+<text x="10" y="435" font-size="12" font-weight="500" fill="#0f172a">Card Servicing Service</text>
+<text x="10" y="449" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CARDSVC-API</text>
+<text x="602" y="435" font-size="12" font-weight="500" fill="#0f172a">Azure Key Vault</text>
+<text x="602" y="449" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-KEYVAULT</text>
+</g>
+<line x1="0" y1="461" x2="1184" y2="461" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="461" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="10">
+<text x="10" y="480" font-size="12" font-weight="500" fill="#0f172a">Card Servicing Web</text>
+<text x="10" y="494" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CARDSVC-WEB</text>
+<text x="602" y="480" font-size="12" font-weight="500" fill="#0f172a">Card Servicing Web application firewall</text>
+<text x="602" y="494" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-CARDSVC-WAF</text>
+</g>
+<line x1="0" y1="506" x2="1184" y2="506" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="11">
+<text x="10" y="525" font-size="12" font-weight="500" fill="#0f172a">Card Servicing Web</text>
+<text x="10" y="539" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CARDSVC-WEB</text>
+<text x="602" y="525" font-size="12" font-weight="500" fill="#0f172a">Azure Kubernetes Service</text>
+<text x="602" y="539" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-AKS</text>
+</g>
+<line x1="0" y1="551" x2="1184" y2="551" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="551" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="12">
+<text x="10" y="570" font-size="12" font-weight="500" fill="#0f172a">Card Servicing Web</text>
+<text x="10" y="584" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CARDSVC-WEB</text>
+<text x="602" y="570" font-size="12" font-weight="500" fill="#0f172a">Microsoft Entra ID</text>
+<text x="602" y="584" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-ENTRA-ID</text>
+</g>
+<line x1="0" y1="596" x2="1184" y2="596" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="13">
+<text x="10" y="615" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace Datastore</text>
+<text x="10" y="629" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-COLLECT-STORE</text>
+<text x="602" y="615" font-size="12" font-weight="500" fill="#0f172a">Azure SQL Database</text>
+<text x="602" y="629" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-SQL</text>
+</g>
+<line x1="0" y1="641" x2="1184" y2="641" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="641" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="14">
+<text x="10" y="660" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace Datastore</text>
+<text x="10" y="674" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-COLLECT-STORE</text>
+<text x="602" y="660" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace Backup and recovery</text>
+<text x="602" y="674" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-COLLECT-BACKUP</text>
+</g>
+<line x1="0" y1="686" x2="1184" y2="686" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="15">
+<text x="10" y="705" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace Datastore</text>
+<text x="10" y="719" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-COLLECT-STORE</text>
+<text x="602" y="705" font-size="12" font-weight="500" fill="#0f172a">Azure Key Vault</text>
+<text x="602" y="719" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-KEYVAULT</text>
+</g>
+<line x1="0" y1="731" x2="1184" y2="731" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="731" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="16">
+<text x="10" y="750" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace Service</text>
+<text x="10" y="764" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-COLLECT-API</text>
+<text x="602" y="750" font-size="12" font-weight="500" fill="#0f172a">Azure API Management</text>
+<text x="602" y="764" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-APIM</text>
+</g>
+<line x1="0" y1="776" x2="1184" y2="776" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="17">
+<text x="10" y="795" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace Service</text>
+<text x="10" y="809" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-COLLECT-API</text>
+<text x="602" y="795" font-size="12" font-weight="500" fill="#0f172a">Azure Kubernetes Service</text>
+<text x="602" y="809" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-AKS</text>
+</g>
+<line x1="0" y1="821" x2="1184" y2="821" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="821" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="18">
+<text x="10" y="840" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace Service</text>
+<text x="10" y="854" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-COLLECT-API</text>
+<text x="602" y="840" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace Cache</text>
+<text x="602" y="854" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-COLLECT-CACHE</text>
+</g>
+<line x1="0" y1="866" x2="1184" y2="866" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="19">
+<text x="10" y="885" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace Service</text>
+<text x="10" y="899" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-COLLECT-API</text>
+<text x="602" y="885" font-size="12" font-weight="500" fill="#0f172a">Azure Monitor</text>
+<text x="602" y="899" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-MONITOR</text>
+</g>
+<line x1="0" y1="911" x2="1184" y2="911" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="911" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="20">
+<text x="10" y="930" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace Service</text>
+<text x="10" y="944" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-COLLECT-API</text>
+<text x="602" y="930" font-size="12" font-weight="500" fill="#0f172a">Azure Key Vault</text>
+<text x="602" y="944" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-KEYVAULT</text>
+</g>
+<line x1="0" y1="956" x2="1184" y2="956" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="21">
+<text x="10" y="975" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace Web</text>
+<text x="10" y="989" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-COLLECT-WEB</text>
+<text x="602" y="975" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace Web application firewall</text>
+<text x="602" y="989" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-COLLECT-WAF</text>
+</g>
+<line x1="0" y1="1001" x2="1184" y2="1001" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1001" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="22">
+<text x="10" y="1020" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace Web</text>
+<text x="10" y="1034" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-COLLECT-WEB</text>
+<text x="602" y="1020" font-size="12" font-weight="500" fill="#0f172a">Azure Kubernetes Service</text>
+<text x="602" y="1034" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-AKS</text>
+</g>
+<line x1="0" y1="1046" x2="1184" y2="1046" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="23">
+<text x="10" y="1065" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace Web</text>
+<text x="10" y="1079" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-COLLECT-WEB</text>
+<text x="602" y="1065" font-size="12" font-weight="500" fill="#0f172a">Microsoft Entra ID</text>
+<text x="602" y="1079" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-ENTRA-ID</text>
+</g>
+<line x1="0" y1="1091" x2="1184" y2="1091" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1091" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="24">
+<text x="10" y="1110" font-size="12" font-weight="500" fill="#0f172a">Credit data and decisioning environment</text>
+<text x="10" y="1124" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CREDIT-DATA</text>
+<text x="602" y="1110" font-size="12" font-weight="500" fill="#0f172a">Snowflake</text>
+<text x="602" y="1124" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-SNOWFLAKE</text>
+</g>
+<line x1="0" y1="1136" x2="1184" y2="1136" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="25">
+<text x="10" y="1155" font-size="12" font-weight="500" fill="#0f172a">Customer 360 Pipeline</text>
+<text x="10" y="1169" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CUST360-PIPELINE</text>
+<text x="602" y="1155" font-size="12" font-weight="500" fill="#0f172a">Snowflake</text>
+<text x="602" y="1169" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-SNOWFLAKE</text>
+</g>
+<line x1="0" y1="1181" x2="1184" y2="1181" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1181" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="26">
+<text x="10" y="1200" font-size="12" font-weight="500" fill="#0f172a">Customer 360 Pipeline</text>
+<text x="10" y="1214" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CUST360-PIPELINE</text>
+<text x="602" y="1200" font-size="12" font-weight="500" fill="#0f172a">Collibra</text>
+<text x="602" y="1214" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-COLLIBRA</text>
+</g>
+<line x1="0" y1="1226" x2="1184" y2="1226" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="27">
+<text x="10" y="1245" font-size="12" font-weight="500" fill="#0f172a">Customer 360 Semantic Layer</text>
+<text x="10" y="1259" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CUST360-SEMANTIC</text>
+<text x="602" y="1245" font-size="12" font-weight="500" fill="#0f172a">Snowflake</text>
+<text x="602" y="1259" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-SNOWFLAKE</text>
+</g>
+<line x1="0" y1="1271" x2="1184" y2="1271" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1271" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="28">
+<text x="10" y="1290" font-size="12" font-weight="500" fill="#0f172a">Customer Identity Service</text>
+<text x="10" y="1304" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-IDENTITY-SVC</text>
+<text x="602" y="1290" font-size="12" font-weight="500" fill="#0f172a">Customer Identity Service Web application firewall</text>
+<text x="602" y="1304" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-IDENTITY-WAF</text>
+</g>
+<line x1="0" y1="1316" x2="1184" y2="1316" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="29">
+<text x="10" y="1335" font-size="12" font-weight="500" fill="#0f172a">Customer Identity Service</text>
+<text x="10" y="1349" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-IDENTITY-SVC</text>
+<text x="602" y="1335" font-size="12" font-weight="500" fill="#0f172a">Azure API Management</text>
+<text x="602" y="1349" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-APIM</text>
+</g>
+<line x1="0" y1="1361" x2="1184" y2="1361" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1361" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="30">
+<text x="10" y="1380" font-size="12" font-weight="500" fill="#0f172a">Customer Identity Service</text>
+<text x="10" y="1394" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-IDENTITY-SVC</text>
+<text x="602" y="1380" font-size="12" font-weight="500" fill="#0f172a">Azure Kubernetes Service</text>
+<text x="602" y="1394" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-AKS</text>
+</g>
+<line x1="0" y1="1406" x2="1184" y2="1406" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="31">
+<text x="10" y="1425" font-size="12" font-weight="500" fill="#0f172a">Customer Identity Service</text>
+<text x="10" y="1439" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-IDENTITY-SVC</text>
+<text x="602" y="1425" font-size="12" font-weight="500" fill="#0f172a">Azure Key Vault</text>
+<text x="602" y="1439" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-KEYVAULT</text>
+</g>
+<line x1="0" y1="1451" x2="1184" y2="1451" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1451" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="32">
+<text x="10" y="1470" font-size="12" font-weight="500" fill="#0f172a">Dispute Management Platform Integration Gateway</text>
+<text x="10" y="1484" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-DISPUTES-GATEWAY</text>
+<text x="602" y="1470" font-size="12" font-weight="500" fill="#0f172a">Azure Kubernetes Service</text>
+<text x="602" y="1484" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-AKS</text>
+</g>
+<line x1="0" y1="1496" x2="1184" y2="1496" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="33">
+<text x="10" y="1515" font-size="12" font-weight="500" fill="#0f172a">Dispute Management Platform Integration Gateway</text>
+<text x="10" y="1529" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-DISPUTES-GATEWAY</text>
+<text x="602" y="1515" font-size="12" font-weight="500" fill="#0f172a">Azure API Management</text>
+<text x="602" y="1529" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-APIM</text>
+</g>
+<line x1="0" y1="1541" x2="1184" y2="1541" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1541" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="34">
+<text x="10" y="1560" font-size="12" font-weight="500" fill="#0f172a">Dispute Management Platform Integration Gateway</text>
+<text x="10" y="1574" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-DISPUTES-GATEWAY</text>
+<text x="602" y="1560" font-size="12" font-weight="500" fill="#0f172a">Azure Key Vault</text>
+<text x="602" y="1574" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-KEYVAULT</text>
+</g>
+<line x1="0" y1="1586" x2="1184" y2="1586" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="35">
+<text x="10" y="1605" font-size="12" font-weight="500" fill="#0f172a">Dynamics 365 Customer Service</text>
+<text x="10" y="1619" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CRM</text>
+<text x="602" y="1605" font-size="12" font-weight="500" fill="#0f172a">Microsoft Entra ID</text>
+<text x="602" y="1619" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-ENTRA-ID</text>
+</g>
+<line x1="0" y1="1631" x2="1184" y2="1631" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1631" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="36">
+<text x="10" y="1650" font-size="12" font-weight="500" fill="#0f172a">Enterprise Data Ingestion Hub</text>
+<text x="10" y="1664" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-DATA-INGEST</text>
+<text x="602" y="1650" font-size="12" font-weight="500" fill="#0f172a">Azure Service Bus</text>
+<text x="602" y="1664" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-SERVICEBUS</text>
+</g>
+<line x1="0" y1="1676" x2="1184" y2="1676" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="37">
+<text x="10" y="1695" font-size="12" font-weight="500" fill="#0f172a">Enterprise Data Ingestion Hub</text>
+<text x="10" y="1709" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-DATA-INGEST</text>
+<text x="602" y="1695" font-size="12" font-weight="500" fill="#0f172a">Snowflake</text>
+<text x="602" y="1709" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-SNOWFLAKE</text>
+</g>
+<line x1="0" y1="1721" x2="1184" y2="1721" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1721" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="38">
+<text x="10" y="1740" font-size="12" font-weight="500" fill="#0f172a">Governance catalog</text>
+<text x="10" y="1754" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CATALOG</text>
+<text x="602" y="1740" font-size="12" font-weight="500" fill="#0f172a">Collibra</text>
+<text x="602" y="1754" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-COLLIBRA</text>
+</g>
+<line x1="0" y1="1766" x2="1184" y2="1766" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="39">
+<text x="10" y="1785" font-size="12" font-weight="500" fill="#0f172a">Identity and access management</text>
+<text x="10" y="1799" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-IAM</text>
+<text x="602" y="1785" font-size="12" font-weight="500" fill="#0f172a">Microsoft Entra ID</text>
+<text x="602" y="1799" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-ENTRA-ID</text>
+</g>
+<line x1="0" y1="1811" x2="1184" y2="1811" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1811" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="40">
+<text x="10" y="1830" font-size="12" font-weight="500" fill="#0f172a">Identity Document Verification Integration Gateway</text>
+<text x="10" y="1844" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-IDV-GATEWAY</text>
+<text x="602" y="1830" font-size="12" font-weight="500" fill="#0f172a">Azure Kubernetes Service</text>
+<text x="602" y="1844" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-AKS</text>
+</g>
+<line x1="0" y1="1856" x2="1184" y2="1856" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="41">
+<text x="10" y="1875" font-size="12" font-weight="500" fill="#0f172a">Identity Document Verification Integration Gateway</text>
+<text x="10" y="1889" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-IDV-GATEWAY</text>
+<text x="602" y="1875" font-size="12" font-weight="500" fill="#0f172a">Azure API Management</text>
+<text x="602" y="1889" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-APIM</text>
+</g>
+<line x1="0" y1="1901" x2="1184" y2="1901" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1901" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="42">
+<text x="10" y="1920" font-size="12" font-weight="500" fill="#0f172a">Identity Document Verification Integration Gateway</text>
+<text x="10" y="1934" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-IDV-GATEWAY</text>
+<text x="602" y="1920" font-size="12" font-weight="500" fill="#0f172a">Azure Key Vault</text>
+<text x="602" y="1934" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-KEYVAULT</text>
+</g>
+<line x1="0" y1="1946" x2="1184" y2="1946" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="43">
+<text x="10" y="1965" font-size="12" font-weight="500" fill="#0f172a">Identity Document Verification Webhook Listener</text>
+<text x="10" y="1979" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-IDV-WEBHOOKS</text>
+<text x="602" y="1965" font-size="12" font-weight="500" fill="#0f172a">Azure API Management</text>
+<text x="602" y="1979" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-APIM</text>
+</g>
+<line x1="0" y1="1991" x2="1184" y2="1991" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1991" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="44">
+<text x="10" y="2010" font-size="12" font-weight="500" fill="#0f172a">Identity Document Verification Webhook Listener</text>
+<text x="10" y="2024" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-IDV-WEBHOOKS</text>
+<text x="602" y="2010" font-size="12" font-weight="500" fill="#0f172a">Azure Kubernetes Service</text>
+<text x="602" y="2024" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-AKS</text>
+</g>
+<line x1="0" y1="2036" x2="1184" y2="2036" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="45">
+<text x="10" y="2055" font-size="12" font-weight="500" fill="#0f172a">Installment Lending Async Worker</text>
+<text x="10" y="2069" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDING-WORKER</text>
+<text x="602" y="2055" font-size="12" font-weight="500" fill="#0f172a">Amazon EKS</text>
+<text x="602" y="2069" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AWS-EKS</text>
+</g>
+<line x1="0" y1="2081" x2="1184" y2="2081" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2081" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="46">
+<text x="10" y="2100" font-size="12" font-weight="500" fill="#0f172a">Installment Lending Async Worker</text>
+<text x="10" y="2114" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDING-WORKER</text>
+<text x="602" y="2100" font-size="12" font-weight="500" fill="#0f172a">Amazon CloudWatch</text>
+<text x="602" y="2114" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AWS-CLOUDWATCH</text>
+</g>
+<line x1="0" y1="2126" x2="1184" y2="2126" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="47">
+<text x="10" y="2145" font-size="12" font-weight="500" fill="#0f172a">Installment Lending Async Worker</text>
+<text x="10" y="2159" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDING-WORKER</text>
+<text x="602" y="2145" font-size="12" font-weight="500" fill="#0f172a">Amazon MSK</text>
+<text x="602" y="2159" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AWS-MSK</text>
+</g>
+<line x1="0" y1="2171" x2="1184" y2="2171" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2171" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="48">
+<text x="10" y="2190" font-size="12" font-weight="500" fill="#0f172a">Installment Lending Database</text>
+<text x="10" y="2204" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDING-DB</text>
+<text x="602" y="2190" font-size="12" font-weight="500" fill="#0f172a">Amazon RDS for PostgreSQL</text>
+<text x="602" y="2204" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AWS-RDS</text>
+</g>
+<line x1="0" y1="2216" x2="1184" y2="2216" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="49">
+<text x="10" y="2235" font-size="12" font-weight="500" fill="#0f172a">Installment Lending Database</text>
+<text x="10" y="2249" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDING-DB</text>
+<text x="602" y="2235" font-size="12" font-weight="500" fill="#0f172a">AWS KMS</text>
+<text x="602" y="2249" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AWS-KMS</text>
+</g>
+<line x1="0" y1="2261" x2="1184" y2="2261" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2261" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="50">
+<text x="10" y="2280" font-size="12" font-weight="500" fill="#0f172a">Installment Lending Object Store</text>
+<text x="10" y="2294" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDING-BUCKET</text>
+<text x="602" y="2280" font-size="12" font-weight="500" fill="#0f172a">Amazon S3</text>
+<text x="602" y="2294" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AWS-S3</text>
+</g>
+<line x1="0" y1="2306" x2="1184" y2="2306" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="51">
+<text x="10" y="2325" font-size="12" font-weight="500" fill="#0f172a">Installment Lending Object Store</text>
+<text x="10" y="2339" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDING-BUCKET</text>
+<text x="602" y="2325" font-size="12" font-weight="500" fill="#0f172a">AWS KMS</text>
+<text x="602" y="2339" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AWS-KMS</text>
+</g>
+<line x1="0" y1="2351" x2="1184" y2="2351" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2351" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="52">
+<text x="10" y="2370" font-size="12" font-weight="500" fill="#0f172a">Installment Lending Service</text>
+<text x="10" y="2384" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDING-API</text>
+<text x="602" y="2370" font-size="12" font-weight="500" fill="#0f172a">Amazon EKS</text>
+<text x="602" y="2384" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AWS-EKS</text>
+</g>
+<line x1="0" y1="2396" x2="1184" y2="2396" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="53">
+<text x="10" y="2415" font-size="12" font-weight="500" fill="#0f172a">Installment Lending Service</text>
+<text x="10" y="2429" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDING-API</text>
+<text x="602" y="2415" font-size="12" font-weight="500" fill="#0f172a">Amazon CloudWatch</text>
+<text x="602" y="2429" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AWS-CLOUDWATCH</text>
+</g>
+<line x1="0" y1="2441" x2="1184" y2="2441" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2441" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="54">
+<text x="10" y="2460" font-size="12" font-weight="500" fill="#0f172a">Installment Lending Service</text>
+<text x="10" y="2474" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDING-API</text>
+<text x="602" y="2460" font-size="12" font-weight="500" fill="#0f172a">AWS Secrets Manager</text>
+<text x="602" y="2474" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AWS-SECRETS</text>
+</g>
+<line x1="0" y1="2486" x2="1184" y2="2486" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="55">
+<text x="10" y="2505" font-size="12" font-weight="500" fill="#0f172a">Installment Lending Web</text>
+<text x="10" y="2519" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDING-WEB</text>
+<text x="602" y="2505" font-size="12" font-weight="500" fill="#0f172a">Amazon EKS</text>
+<text x="602" y="2519" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AWS-EKS</text>
+</g>
+<line x1="0" y1="2531" x2="1184" y2="2531" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2531" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="56">
+<text x="10" y="2550" font-size="12" font-weight="500" fill="#0f172a">Installment Lending Web</text>
+<text x="10" y="2564" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDING-WEB</text>
+<text x="602" y="2550" font-size="12" font-weight="500" fill="#0f172a">Amazon CloudWatch</text>
+<text x="602" y="2564" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AWS-CLOUDWATCH</text>
+</g>
+<line x1="0" y1="2576" x2="1184" y2="2576" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="57">
+<text x="10" y="2595" font-size="12" font-weight="500" fill="#0f172a">IT service management</text>
+<text x="10" y="2609" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-ITSM</text>
+<text x="602" y="2595" font-size="12" font-weight="500" fill="#0f172a">ServiceNow</text>
+<text x="602" y="2609" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-SERVICENOW</text>
+</g>
+<line x1="0" y1="2621" x2="1184" y2="2621" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2621" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="58">
+<text x="10" y="2640" font-size="12" font-weight="500" fill="#0f172a">Lending Portfolio Performance Pipeline</text>
+<text x="10" y="2654" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDPERF-PIPELINE</text>
+<text x="602" y="2640" font-size="12" font-weight="500" fill="#0f172a">Pub/Sub</text>
+<text x="602" y="2654" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-GCP-PUBSUB</text>
+</g>
+<line x1="0" y1="2666" x2="1184" y2="2666" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="59">
+<text x="10" y="2685" font-size="12" font-weight="500" fill="#0f172a">Lending Portfolio Performance Pipeline</text>
+<text x="10" y="2699" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDPERF-PIPELINE</text>
+<text x="602" y="2685" font-size="12" font-weight="500" fill="#0f172a">Dataflow</text>
+<text x="602" y="2699" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-GCP-DATAFLOW</text>
+</g>
+<line x1="0" y1="2711" x2="1184" y2="2711" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2711" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="60">
+<text x="10" y="2730" font-size="12" font-weight="500" fill="#0f172a">Lending Portfolio Performance Pipeline</text>
+<text x="10" y="2744" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDPERF-PIPELINE</text>
+<text x="602" y="2730" font-size="12" font-weight="500" fill="#0f172a">Cloud Composer</text>
+<text x="602" y="2744" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-GCP-COMPOSER</text>
+</g>
+<line x1="0" y1="2756" x2="1184" y2="2756" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="61">
+<text x="10" y="2775" font-size="12" font-weight="500" fill="#0f172a">Lending Portfolio Performance Pipeline</text>
+<text x="10" y="2789" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDPERF-PIPELINE</text>
+<text x="602" y="2775" font-size="12" font-weight="500" fill="#0f172a">BigQuery</text>
+<text x="602" y="2789" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-GCP-BIGQUERY</text>
+</g>
+<line x1="0" y1="2801" x2="1184" y2="2801" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2801" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="62">
+<text x="10" y="2820" font-size="12" font-weight="500" fill="#0f172a">Lending Portfolio Performance Pipeline</text>
+<text x="10" y="2834" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDPERF-PIPELINE</text>
+<text x="602" y="2820" font-size="12" font-weight="500" fill="#0f172a">Collibra</text>
+<text x="602" y="2834" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-COLLIBRA</text>
+</g>
+<line x1="0" y1="2846" x2="1184" y2="2846" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="63">
+<text x="10" y="2865" font-size="12" font-weight="500" fill="#0f172a">Lending Portfolio Performance Semantic Layer</text>
+<text x="10" y="2879" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDPERF-SEMANTIC</text>
+<text x="602" y="2865" font-size="12" font-weight="500" fill="#0f172a">BigQuery</text>
+<text x="602" y="2879" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-GCP-BIGQUERY</text>
+</g>
+<line x1="0" y1="2891" x2="1184" y2="2891" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2891" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="64">
+<text x="10" y="2910" font-size="12" font-weight="500" fill="#0f172a">Lending Portfolio Performance Semantic Layer</text>
+<text x="10" y="2924" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDPERF-SEMANTIC</text>
+<text x="602" y="2910" font-size="12" font-weight="500" fill="#0f172a">Looker</text>
+<text x="602" y="2924" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-GCP-LOOKER</text>
+</g>
+<line x1="0" y1="2936" x2="1184" y2="2936" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="65">
+<text x="10" y="2955" font-size="12" font-weight="500" fill="#0f172a">Merchant Portal Database</text>
+<text x="10" y="2969" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-MERCHANT-STORE</text>
+<text x="602" y="2955" font-size="12" font-weight="500" fill="#0f172a">Azure SQL Database</text>
+<text x="602" y="2969" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-SQL</text>
+</g>
+<line x1="0" y1="2981" x2="1184" y2="2981" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2981" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="66">
+<text x="10" y="3000" font-size="12" font-weight="500" fill="#0f172a">Merchant Portal Database</text>
+<text x="10" y="3014" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-MERCHANT-STORE</text>
+<text x="602" y="3000" font-size="12" font-weight="500" fill="#0f172a">Azure Key Vault</text>
+<text x="602" y="3014" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-KEYVAULT</text>
+</g>
+<line x1="0" y1="3026" x2="1184" y2="3026" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="67">
+<text x="10" y="3045" font-size="12" font-weight="500" fill="#0f172a">Merchant Portal Event Publisher</text>
+<text x="10" y="3059" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-MERCHANT-EVENTS</text>
+<text x="602" y="3045" font-size="12" font-weight="500" fill="#0f172a">Azure Service Bus</text>
+<text x="602" y="3059" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-SERVICEBUS</text>
+</g>
+<line x1="0" y1="3071" x2="1184" y2="3071" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="3071" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="68">
+<text x="10" y="3090" font-size="12" font-weight="500" fill="#0f172a">Merchant Portal Service</text>
+<text x="10" y="3104" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-MERCHANT-API</text>
+<text x="602" y="3090" font-size="12" font-weight="500" fill="#0f172a">Azure API Management</text>
+<text x="602" y="3104" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-APIM</text>
+</g>
+<line x1="0" y1="3116" x2="1184" y2="3116" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="69">
+<text x="10" y="3135" font-size="12" font-weight="500" fill="#0f172a">Merchant Portal Service</text>
+<text x="10" y="3149" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-MERCHANT-API</text>
+<text x="602" y="3135" font-size="12" font-weight="500" fill="#0f172a">Azure Kubernetes Service</text>
+<text x="602" y="3149" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-AKS</text>
+</g>
+<line x1="0" y1="3161" x2="1184" y2="3161" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="3161" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="70">
+<text x="10" y="3180" font-size="12" font-weight="500" fill="#0f172a">Merchant Portal Service</text>
+<text x="10" y="3194" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-MERCHANT-API</text>
+<text x="602" y="3180" font-size="12" font-weight="500" fill="#0f172a">Azure Monitor</text>
+<text x="602" y="3194" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-MONITOR</text>
+</g>
+<line x1="0" y1="3206" x2="1184" y2="3206" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="71">
+<text x="10" y="3225" font-size="12" font-weight="500" fill="#0f172a">Merchant Portal Service</text>
+<text x="10" y="3239" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-MERCHANT-API</text>
+<text x="602" y="3225" font-size="12" font-weight="500" fill="#0f172a">Azure Key Vault</text>
+<text x="602" y="3239" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-KEYVAULT</text>
+</g>
+<line x1="0" y1="3251" x2="1184" y2="3251" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="3251" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="72">
+<text x="10" y="3270" font-size="12" font-weight="500" fill="#0f172a">Merchant Portal Web</text>
+<text x="10" y="3284" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-MERCHANT-WEB</text>
+<text x="602" y="3270" font-size="12" font-weight="500" fill="#0f172a">Azure Kubernetes Service</text>
+<text x="602" y="3284" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-AKS</text>
+</g>
+<line x1="0" y1="3296" x2="1184" y2="3296" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="73">
+<text x="10" y="3315" font-size="12" font-weight="500" fill="#0f172a">Merchant Portal Web</text>
+<text x="10" y="3329" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-MERCHANT-WEB</text>
+<text x="602" y="3315" font-size="12" font-weight="500" fill="#0f172a">Microsoft Entra ID</text>
+<text x="602" y="3329" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-ENTRA-ID</text>
+</g>
+<line x1="0" y1="3341" x2="1184" y2="3341" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="3341" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="74">
+<text x="10" y="3360" font-size="12" font-weight="500" fill="#0f172a">NICE Actimize Screening Identity Federation</text>
+<text x="10" y="3374" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-SCREENING-FEDERATION</text>
+<text x="602" y="3360" font-size="12" font-weight="500" fill="#0f172a">Microsoft Entra ID</text>
+<text x="602" y="3374" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-ENTRA-ID</text>
+</g>
+<line x1="0" y1="3386" x2="1184" y2="3386" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="75">
+<text x="10" y="3405" font-size="12" font-weight="500" fill="#0f172a">NICE Actimize Screening Integration Gateway</text>
+<text x="10" y="3419" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-SCREENING-GATEWAY</text>
+<text x="602" y="3405" font-size="12" font-weight="500" fill="#0f172a">Amazon EKS</text>
+<text x="602" y="3419" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AWS-EKS</text>
+</g>
+<line x1="0" y1="3431" x2="1184" y2="3431" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="3431" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="76">
+<text x="10" y="3450" font-size="12" font-weight="500" fill="#0f172a">NICE Actimize Screening Integration Gateway</text>
+<text x="10" y="3464" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-SCREENING-GATEWAY</text>
+<text x="602" y="3450" font-size="12" font-weight="500" fill="#0f172a">Amazon API Gateway</text>
+<text x="602" y="3464" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AWS-APIGW</text>
+</g>
+<line x1="0" y1="3476" x2="1184" y2="3476" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="77">
+<text x="10" y="3495" font-size="12" font-weight="500" fill="#0f172a">NICE Actimize Screening Integration Gateway</text>
+<text x="10" y="3509" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-SCREENING-GATEWAY</text>
+<text x="602" y="3495" font-size="12" font-weight="500" fill="#0f172a">AWS Secrets Manager</text>
+<text x="602" y="3509" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AWS-SECRETS</text>
+</g>
+<line x1="0" y1="3521" x2="1184" y2="3521" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="3521" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="78">
+<text x="10" y="3540" font-size="12" font-weight="500" fill="#0f172a">NICE Actimize Screening Integration Gateway</text>
+<text x="10" y="3554" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-SCREENING-GATEWAY</text>
+<text x="602" y="3540" font-size="12" font-weight="500" fill="#0f172a">Amazon CloudWatch</text>
+<text x="602" y="3554" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AWS-CLOUDWATCH</text>
+</g>
+<line x1="0" y1="3566" x2="1184" y2="3566" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="79">
+<text x="10" y="3585" font-size="12" font-weight="500" fill="#0f172a">Open Banking Affordability Integration Gateway</text>
+<text x="10" y="3599" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-OBAFF-GATEWAY</text>
+<text x="602" y="3585" font-size="12" font-weight="500" fill="#0f172a">Google Kubernetes Engine</text>
+<text x="602" y="3599" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-GCP-GKE</text>
+</g>
+<line x1="0" y1="3611" x2="1184" y2="3611" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="3611" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="80">
+<text x="10" y="3630" font-size="12" font-weight="500" fill="#0f172a">Open Banking Affordability Integration Gateway</text>
+<text x="10" y="3644" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-OBAFF-GATEWAY</text>
+<text x="602" y="3630" font-size="12" font-weight="500" fill="#0f172a">Apigee</text>
+<text x="602" y="3644" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-GCP-APIGEE</text>
+</g>
+<line x1="0" y1="3656" x2="1184" y2="3656" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="81">
+<text x="10" y="3675" font-size="12" font-weight="500" fill="#0f172a">Open Banking Affordability Integration Gateway</text>
+<text x="10" y="3689" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-OBAFF-GATEWAY</text>
+<text x="602" y="3675" font-size="12" font-weight="500" fill="#0f172a">Secret Manager</text>
+<text x="602" y="3689" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-GCP-SECRET-MANAGER</text>
+</g>
+<line x1="0" y1="3701" x2="1184" y2="3701" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="3701" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="82">
+<text x="10" y="3720" font-size="12" font-weight="500" fill="#0f172a">Open Banking Affordability Webhook Listener</text>
+<text x="10" y="3734" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-OBAFF-WEBHOOKS</text>
+<text x="602" y="3720" font-size="12" font-weight="500" fill="#0f172a">Apigee</text>
+<text x="602" y="3734" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-GCP-APIGEE</text>
+</g>
+<line x1="0" y1="3746" x2="1184" y2="3746" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="83">
+<text x="10" y="3765" font-size="12" font-weight="500" fill="#0f172a">Open Banking Affordability Webhook Listener</text>
+<text x="10" y="3779" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-OBAFF-WEBHOOKS</text>
+<text x="602" y="3765" font-size="12" font-weight="500" fill="#0f172a">Google Kubernetes Engine</text>
+<text x="602" y="3779" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-GCP-GKE</text>
+</g>
+<line x1="0" y1="3791" x2="1184" y2="3791" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="3791" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="84">
+<text x="10" y="3810" font-size="12" font-weight="500" fill="#0f172a">Point-of-Sale Finance Database</text>
+<text x="10" y="3824" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-POSFIN-DB</text>
+<text x="602" y="3810" font-size="12" font-weight="500" fill="#0f172a">Cloud SQL for PostgreSQL</text>
+<text x="602" y="3824" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-GCP-CLOUD-SQL</text>
+</g>
+<line x1="0" y1="3836" x2="1184" y2="3836" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="85">
+<text x="10" y="3855" font-size="12" font-weight="500" fill="#0f172a">Point-of-Sale Finance Database</text>
+<text x="10" y="3869" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-POSFIN-DB</text>
+<text x="602" y="3855" font-size="12" font-weight="500" fill="#0f172a">Cloud KMS</text>
+<text x="602" y="3869" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-GCP-KMS</text>
+</g>
+<line x1="0" y1="3881" x2="1184" y2="3881" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="3881" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="86">
+<text x="10" y="3900" font-size="12" font-weight="500" fill="#0f172a">Point-of-Sale Finance Event Publisher</text>
+<text x="10" y="3914" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-POSFIN-EVENTS</text>
+<text x="602" y="3900" font-size="12" font-weight="500" fill="#0f172a">Pub/Sub</text>
+<text x="602" y="3914" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-GCP-PUBSUB</text>
+</g>
+<line x1="0" y1="3926" x2="1184" y2="3926" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="87">
+<text x="10" y="3945" font-size="12" font-weight="500" fill="#0f172a">Point-of-Sale Finance Service</text>
+<text x="10" y="3959" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-POSFIN-API</text>
+<text x="602" y="3945" font-size="12" font-weight="500" fill="#0f172a">Apigee</text>
+<text x="602" y="3959" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-GCP-APIGEE</text>
+</g>
+<line x1="0" y1="3971" x2="1184" y2="3971" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="3971" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="88">
+<text x="10" y="3990" font-size="12" font-weight="500" fill="#0f172a">Point-of-Sale Finance Service</text>
+<text x="10" y="4004" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-POSFIN-API</text>
+<text x="602" y="3990" font-size="12" font-weight="500" fill="#0f172a">Google Kubernetes Engine</text>
+<text x="602" y="4004" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-GCP-GKE</text>
+</g>
+<line x1="0" y1="4016" x2="1184" y2="4016" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="89">
+<text x="10" y="4035" font-size="12" font-weight="500" fill="#0f172a">Point-of-Sale Finance Service</text>
+<text x="10" y="4049" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-POSFIN-API</text>
+<text x="602" y="4035" font-size="12" font-weight="500" fill="#0f172a">Cloud Monitoring</text>
+<text x="602" y="4049" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-GCP-MONITORING</text>
+</g>
+<line x1="0" y1="4061" x2="1184" y2="4061" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="4061" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="90">
+<text x="10" y="4080" font-size="12" font-weight="500" fill="#0f172a">Point-of-Sale Finance Service</text>
+<text x="10" y="4094" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-POSFIN-API</text>
+<text x="602" y="4080" font-size="12" font-weight="500" fill="#0f172a">Secret Manager</text>
+<text x="602" y="4094" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-GCP-SECRET-MANAGER</text>
+</g>
+<line x1="0" y1="4106" x2="1184" y2="4106" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="91">
+<text x="10" y="4125" font-size="12" font-weight="500" fill="#0f172a">Point-of-Sale Finance Web</text>
+<text x="10" y="4139" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-POSFIN-WEB</text>
+<text x="602" y="4125" font-size="12" font-weight="500" fill="#0f172a">Google Kubernetes Engine</text>
+<text x="602" y="4139" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-GCP-GKE</text>
+</g>
+<line x1="0" y1="4151" x2="1184" y2="4151" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="4151" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="92">
+<text x="10" y="4170" font-size="12" font-weight="500" fill="#0f172a">Point-of-Sale Finance Web</text>
+<text x="10" y="4184" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-POSFIN-WEB</text>
+<text x="602" y="4170" font-size="12" font-weight="500" fill="#0f172a">Microsoft Entra ID</text>
+<text x="602" y="4184" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-ENTRA-ID</text>
+</g>
+<line x1="0" y1="4196" x2="1184" y2="4196" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="93">
+<text x="10" y="4215" font-size="12" font-weight="500" fill="#0f172a">Regulatory Reporting Engine</text>
+<text x="10" y="4229" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-REG-REPORTING</text>
+<text x="602" y="4215" font-size="12" font-weight="500" fill="#0f172a">Azure Kubernetes Service</text>
+<text x="602" y="4229" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-AKS</text>
+</g>
+<line x1="0" y1="4241" x2="1184" y2="4241" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="4241" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="94">
+<text x="10" y="4260" font-size="12" font-weight="500" fill="#0f172a">Regulatory Reporting Engine</text>
+<text x="10" y="4274" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-REG-REPORTING</text>
+<text x="602" y="4260" font-size="12" font-weight="500" fill="#0f172a">Snowflake</text>
+<text x="602" y="4274" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-SNOWFLAKE</text>
+</g>
+<line x1="0" y1="4286" x2="1184" y2="4286" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="95">
+<text x="10" y="4305" font-size="12" font-weight="500" fill="#0f172a">Rewards Redemption Async Worker</text>
+<text x="10" y="4319" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-REWARDS-WORKER</text>
+<text x="602" y="4305" font-size="12" font-weight="500" fill="#0f172a">Azure Kubernetes Service</text>
+<text x="602" y="4319" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-AKS</text>
+</g>
+<line x1="0" y1="4331" x2="1184" y2="4331" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="4331" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="96">
+<text x="10" y="4350" font-size="12" font-weight="500" fill="#0f172a">Rewards Redemption Async Worker</text>
+<text x="10" y="4364" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-REWARDS-WORKER</text>
+<text x="602" y="4350" font-size="12" font-weight="500" fill="#0f172a">Azure Monitor</text>
+<text x="602" y="4364" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-MONITOR</text>
+</g>
+<line x1="0" y1="4376" x2="1184" y2="4376" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="97">
+<text x="10" y="4395" font-size="12" font-weight="500" fill="#0f172a">Rewards Redemption Async Worker</text>
+<text x="10" y="4409" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-REWARDS-WORKER</text>
+<text x="602" y="4395" font-size="12" font-weight="500" fill="#0f172a">Azure Event Hubs</text>
+<text x="602" y="4409" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-EVENTHUBS</text>
+</g>
+<line x1="0" y1="4421" x2="1184" y2="4421" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="4421" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="98">
+<text x="10" y="4440" font-size="12" font-weight="500" fill="#0f172a">Rewards Redemption Database</text>
+<text x="10" y="4454" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-REWARDS-STORE</text>
+<text x="602" y="4440" font-size="12" font-weight="500" fill="#0f172a">Azure SQL Database</text>
+<text x="602" y="4454" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-SQL</text>
+</g>
+<line x1="0" y1="4466" x2="1184" y2="4466" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="99">
+<text x="10" y="4485" font-size="12" font-weight="500" fill="#0f172a">Rewards Redemption Database</text>
+<text x="10" y="4499" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-REWARDS-STORE</text>
+<text x="602" y="4485" font-size="12" font-weight="500" fill="#0f172a">Azure Key Vault</text>
+<text x="602" y="4499" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-KEYVAULT</text>
+</g>
+<line x1="0" y1="4511" x2="1184" y2="4511" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="4511" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="100">
+<text x="10" y="4530" font-size="12" font-weight="500" fill="#0f172a">Rewards Redemption Event Publisher</text>
+<text x="10" y="4544" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-REWARDS-EVENTS</text>
+<text x="602" y="4530" font-size="12" font-weight="500" fill="#0f172a">Azure Service Bus</text>
+<text x="602" y="4544" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-SERVICEBUS</text>
+</g>
+<line x1="0" y1="4556" x2="1184" y2="4556" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="101">
+<text x="10" y="4575" font-size="12" font-weight="500" fill="#0f172a">Rewards Redemption Service</text>
+<text x="10" y="4589" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-REWARDS-API</text>
+<text x="602" y="4575" font-size="12" font-weight="500" fill="#0f172a">Azure API Management</text>
+<text x="602" y="4589" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-APIM</text>
+</g>
+<line x1="0" y1="4601" x2="1184" y2="4601" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="4601" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="102">
+<text x="10" y="4620" font-size="12" font-weight="500" fill="#0f172a">Rewards Redemption Service</text>
+<text x="10" y="4634" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-REWARDS-API</text>
+<text x="602" y="4620" font-size="12" font-weight="500" fill="#0f172a">Azure Kubernetes Service</text>
+<text x="602" y="4634" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-AKS</text>
+</g>
+<line x1="0" y1="4646" x2="1184" y2="4646" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="103">
+<text x="10" y="4665" font-size="12" font-weight="500" fill="#0f172a">Rewards Redemption Service</text>
+<text x="10" y="4679" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-REWARDS-API</text>
+<text x="602" y="4665" font-size="12" font-weight="500" fill="#0f172a">Azure Monitor</text>
+<text x="602" y="4679" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-MONITOR</text>
+</g>
+<line x1="0" y1="4691" x2="1184" y2="4691" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="4691" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="104">
+<text x="10" y="4710" font-size="12" font-weight="500" fill="#0f172a">Rewards Redemption Service</text>
+<text x="10" y="4724" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-REWARDS-API</text>
+<text x="602" y="4710" font-size="12" font-weight="500" fill="#0f172a">Azure Key Vault</text>
+<text x="602" y="4724" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-KEYVAULT</text>
+</g>
+<line x1="0" y1="4736" x2="1184" y2="4736" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="105">
+<text x="10" y="4755" font-size="12" font-weight="500" fill="#0f172a">Rewards Redemption Web</text>
+<text x="10" y="4769" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-REWARDS-WEB</text>
+<text x="602" y="4755" font-size="12" font-weight="500" fill="#0f172a">Azure Kubernetes Service</text>
+<text x="602" y="4769" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-AZURE-AKS</text>
+</g>
+<line x1="0" y1="4781" x2="1184" y2="4781" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="4781" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="106">
+<text x="10" y="4800" font-size="12" font-weight="500" fill="#0f172a">Rewards Redemption Web</text>
+<text x="10" y="4814" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-REWARDS-WEB</text>
+<text x="602" y="4800" font-size="12" font-weight="500" fill="#0f172a">Microsoft Entra ID</text>
+<text x="602" y="4814" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">TS-ENTRA-ID</text>
+</g>
+<line x1="0" y1="4826" x2="1184" y2="4826" stroke="#c9d0dc" stroke-width="0.6"/>
+</g>
+<g class="foot"><line x1="28" y1="4942" x2="1212" y2="4942" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="4964" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · platform-dependencies · edit the model, not the picture</text></g>
+</svg>

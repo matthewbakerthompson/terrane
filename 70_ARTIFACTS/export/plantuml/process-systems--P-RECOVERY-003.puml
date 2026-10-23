@@ -1,0 +1,46 @@
+@startuml
+' Handle bankruptcy notification — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Handle bankruptcy notification — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_COLL_06, "Bankruptcy, Deceased & Legal Account Handling", "Handle accounts under legal protection or in estate.", $tags="capabilities")
+  ' aac CAP_COLL_06: company_domain="Collections"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_FDCPA_NOTICE, "Statutory collections notices", "Validation and other statutory notices issue within the prescribed period with content owned by legal; continued collection is blocked until issued.", $tags="controls")
+  ' aac CTL_FDCPA_NOTICE: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_RECOVERY_003, "Handle bankruptcy notification", "Receive, verify, and action a bankruptcy notification with required account treatment. The automatic stay stops collection on notice; verification, claim filing, and account treatment follow bankruptcy chapter rules with dates that are court deadlines.", $tags="processes")
+  ' aac P_RECOVERY_003: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_COLLECT_API, "Collections Workspace Service", "The service behind the Collections Workspace API, backing the channel. Built with AKS · Collections Workspace Cache.", $tags="systems")
+  ' aac SYS_COLLECT_API: company_domain="Collections"; hosting="Azure"; technology="AKS · Collections Workspace Cache"
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+}
+
+Rel(P_RECOVERY_003, SYS_COLLECT_API, "Primary")
+' aac rel: source="P_RECOVERY_003"; target="SYS_COLLECT_API"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_RECOVERY_003, SYS_CORE_LEDGER, "Supporting")
+' aac rel: source="P_RECOVERY_003"; target="SYS_CORE_LEDGER"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_RECOVERY_003, SYS_DOC, "Supporting")
+' aac rel: source="P_RECOVERY_003"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_RECOVERY_003, CTL_FDCPA_NOTICE, "governed by")
+' aac rel: source="P_RECOVERY_003"; target="CTL_FDCPA_NOTICE"; label="governed by"; relation="process_governed_by_control"
+Rel(P_RECOVERY_003, CAP_COLL_06, "supports")
+' aac rel: source="P_RECOVERY_003"; target="CAP_COLL_06"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

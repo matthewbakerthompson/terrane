@@ -1,0 +1,45 @@
+@startuml
+' Land point-of-sale finance on Google Cloud — Footprint
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Land point-of-sale finance on Google Cloud — Footprint
+
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("work_packages", $bgColor="#ccfbf1", $borderColor="#0d9488", $fontColor="#0f172a", $legendText="work package")
+
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_POSFIN_OPERATIONAL, "Point-of-Sale Finance operational data", "Operational records held by Point-of-Sale Finance.", $tags="data_assets")
+  ' aac DA_POSFIN_OPERATIONAL: company_domain="Lending"
+}
+Boundary(b_System, "System") {
+  System(SYS_POSFIN_DB, "Point-of-Sale Finance Database", "Relational database for Point-of-Sale Finance, encrypted with a customer managed key. Built with Cloud SQL.", $tags="systems")
+  ' aac SYS_POSFIN_DB: company_domain="Lending"; hosting="GCP"; technology="Cloud SQL"
+  System(SYS_POSFIN_EVENTS, "Point-of-Sale Finance Event Publisher", "Publishes Point-of-Sale Finance domain events onto the enterprise bus. Built with Pub/Sub.", $tags="systems")
+  ' aac SYS_POSFIN_EVENTS: company_domain="Lending"; hosting="GCP"; technology="Pub/Sub"
+  System(SYS_POSFIN_API, "Point-of-Sale Finance Service", "Domain API for point-of-sale finance: dealer applications, shopper identity and consent, decisions, and the payment schedule that follows. Built with GKE · Point-of-Sale Finance Cache.", $tags="systems")
+  ' aac SYS_POSFIN_API: company_domain="Lending"; hosting="GCP"; technology="GKE · Point-of-Sale Finance Cache"
+  System(SYS_POSFIN_WEB, "Point-of-Sale Finance Web", "Customer-facing front end for Point-of-Sale Finance. Built with GKE.", $tags="systems")
+  ' aac SYS_POSFIN_WEB: company_domain="Lending"; hosting="GCP"; technology="GKE"
+}
+Boundary(b_Work_Package, "Work Package") {
+  System(WP_POS_FINANCE, "Land point-of-sale finance on Google Cloud", "The first product on the Google Cloud landing zone: the API, the web channel, the datastore and the event publisher of the digital shape, resolved against GKE, Apigee, Cloud SQL and Pub/Sub. The dealer integrations that start an application already run through Apigee, so the product lands beside its partners.", $tags="work_packages")
+  ' aac WP_POS_FINANCE: company_domain="Lending"
+}
+
+Rel(WP_POS_FINANCE, SYS_POSFIN_WEB, "Builds")
+' aac rel: source="WP_POS_FINANCE"; target="SYS_POSFIN_WEB"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_POS_FINANCE, SYS_POSFIN_API, "Builds")
+' aac rel: source="WP_POS_FINANCE"; target="SYS_POSFIN_API"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_POS_FINANCE, SYS_POSFIN_DB, "Builds")
+' aac rel: source="WP_POS_FINANCE"; target="SYS_POSFIN_DB"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_POS_FINANCE, SYS_POSFIN_EVENTS, "Builds")
+' aac rel: source="WP_POS_FINANCE"; target="SYS_POSFIN_EVENTS"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(SYS_POSFIN_API, DA_POSFIN_OPERATIONAL, "ReadWrite")
+' aac rel: source="SYS_POSFIN_API"; target="DA_POSFIN_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_POSFIN_DB, DA_POSFIN_OPERATIONAL, "ReadWrite")
+' aac rel: source="SYS_POSFIN_DB"; target="DA_POSFIN_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+
+SHOW_LEGEND()
+@enduml

@@ -1,0 +1,98 @@
+# Architecture repository — Processes and Capabilities
+
+One system, every process that uses it and in what role, and the capabilities those processes support. This shows the business impact of changing the system. A long list against a low criticality rating is worth a second look.
+
+```mermaid
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Architecture repository — Processes and Capabilities
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Capability["Capability"]
+    direction LR
+    CAP_TECH_07{{"End-User Computing &<br/>Workplace Technology"}}
+    CAP_STRAT_04{{"Enterprise Architecture &<br/>Change Portfolio"}}
+    CAP_RGOV_04{{"Issue & Remediation<br/>Management"}}
+    CAP_TECH_02{{"Platform & Infrastructure<br/>Operations"}}
+    CAP_STRAT_02{{"Portfolio Strategy &<br/>Investment Planning"}}
+    CAP_DATA_07{{"Records Retention &<br/>Disposition"}}
+    CAP_TECH_04{{"Release & Change<br/>Management"}}
+    CAP_TECH_01{{"Solution Delivery &<br/>Engineering"}}
+    CAP_TPRM_01{{"Vendor Sourcing & Due<br/>Diligence"}}
+  end
+
+  subgraph grp_Process["Process"]
+    direction LR
+    P_EA_007[\"Assess change impact of a<br/>proposed system change"/]
+    P_EA_005[\"Assess technology<br/>lifecycle and<br/>rationalization"/]
+    P_APPDEV_009[\"Decommission an<br/>application"/]
+    P_EA_008[\"Evaluate and select a<br/>technology or platform"/]
+    P_EA_003[\"Grant or decline an<br/>architecture exception"/]
+    P_EA_004[\"Maintain architecture<br/>standards and reference<br/>models"/]
+    P_EA_001[\"Maintain target-state<br/>architecture and roadmap"/]
+    P_EA_009[\"Maintain the application<br/>and technology inventory"/]
+    P_EA_006[\"Maintain the capability<br/>map and process inventory"/]
+    P_APPDEV_006[\"Manage technical debt"/]
+    P_EA_002[\"Review solution<br/>architecture for an<br/>initiative"/]
+  end
+
+  subgraph grp_System["System"]
+    direction LR
+    SYS_ARCHREPO["Architecture repository<br/>[SaaS]"]
+  end
+
+  P_EA_001 -->|"Primary"| SYS_ARCHREPO
+  P_EA_002 -->|"Primary"| SYS_ARCHREPO
+  P_EA_003 -->|"Primary"| SYS_ARCHREPO
+  P_EA_004 -->|"Primary"| SYS_ARCHREPO
+  P_EA_005 -->|"Primary"| SYS_ARCHREPO
+  P_EA_006 -->|"Primary"| SYS_ARCHREPO
+  P_EA_007 -->|"Primary"| SYS_ARCHREPO
+  P_EA_008 -->|"Primary"| SYS_ARCHREPO
+  P_EA_009 -->|"Primary"| SYS_ARCHREPO
+  P_APPDEV_006 -->|"Supporting"| SYS_ARCHREPO
+  P_APPDEV_009 -->|"Primary"| SYS_ARCHREPO
+  P_EA_001 -->|"supports"| CAP_STRAT_04
+  P_EA_001 -->|"supports"| CAP_STRAT_02
+  P_EA_002 -->|"supports"| CAP_STRAT_04
+  P_EA_003 -->|"supports"| CAP_STRAT_04
+  P_EA_003 -->|"supports"| CAP_RGOV_04
+  P_EA_004 -->|"supports"| CAP_STRAT_04
+  P_EA_005 -->|"supports"| CAP_STRAT_04
+  P_EA_005 -->|"supports"| CAP_TECH_02
+  P_EA_006 -->|"supports"| CAP_STRAT_04
+  P_EA_007 -->|"supports"| CAP_STRAT_04
+  P_EA_007 -->|"supports"| CAP_TECH_04
+  P_EA_008 -->|"supports"| CAP_STRAT_04
+  P_EA_008 -->|"supports"| CAP_TPRM_01
+  P_EA_009 -->|"supports"| CAP_STRAT_04
+  P_EA_009 -->|"supports"| CAP_TECH_07
+  P_APPDEV_006 -->|"supports"| CAP_TECH_01
+  P_APPDEV_006 -->|"supports"| CAP_STRAT_04
+  P_APPDEV_009 -->|"supports"| CAP_TECH_01
+  P_APPDEV_009 -->|"supports"| CAP_STRAT_04
+  P_APPDEV_009 -->|"supports"| CAP_DATA_07
+
+  classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
+  classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  class CAP_DATA_07,CAP_RGOV_04,CAP_STRAT_02,CAP_STRAT_04,CAP_TECH_01,CAP_TECH_02,CAP_TECH_04,CAP_TECH_07,CAP_TPRM_01 s_capabilities__capabilities;
+  class P_APPDEV_006,P_APPDEV_009,P_EA_001,P_EA_002,P_EA_003,P_EA_004,P_EA_005,P_EA_006,P_EA_007,P_EA_008,P_EA_009 s_processes__processes;
+  class SYS_ARCHREPO s_systems__systems;
+  classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_Capability,grp_Process,grp_System boundary1;
+```
+
+The same view as the app draws it, written beside the Mermaid by `terrane render`:
+
+![Architecture repository — Processes and Capabilities](../svg/system-processes--sys-archrepo.svg)
+
+**Hue is the entity type.**
+
+| | Entity type |
+|---|---|
+| `#6d28d9` | capabilities |
+| `#0369a1` | processes |
+| `#4338ca` | systems |
+
+21 entities, 31 relationships. Generated from the model; edit the model, not this file.

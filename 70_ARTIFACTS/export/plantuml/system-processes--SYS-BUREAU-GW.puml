@@ -1,0 +1,45 @@
+@startuml
+' Credit bureau gateway — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Credit bureau gateway — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_COLL_08, "Credit Bureau Reporting & Dispute Handling", "Furnish data to bureaus and handle consumer reporting disputes.", $tags="capabilities")
+  ' aac CAP_COLL_08: company_domain="Collections"
+  System(CAP_FRAUD_03, "Dispute Intake & Provisional Credit", "Take dispute claims and apply provisional credit within regulatory timers.", $tags="capabilities")
+  ' aac CAP_FRAUD_03: company_domain="Servicing"
+}
+Boundary(b_Process, "Process") {
+  System(P_COLLECTIONS_005, "Furnish credit bureau data", "Compile and furnish account data to the consumer reporting agencies. Monthly Metro 2 furnishing to the bureaus; accuracy is an FCRA obligation, and the file must reconcile to the system of record before transmission.", $tags="processes")
+  ' aac P_COLLECTIONS_005: company_domain=""
+  System(P_COLLECTIONS_006, "Handle credit reporting dispute", "Investigate and respond to a consumer credit reporting dispute within the required period. Direct and bureau-routed disputes both land here; FCRA sets the investigation window, and the outcome must correct both the bureau file and the account when the consumer is right.", $tags="processes")
+  ' aac P_COLLECTIONS_006: company_domain=""
+  System(P_DISPUTE_001, "Process cardholder dispute claim", "Take a cardholder dispute claim, apply provisional credit, investigate, determine, and notify within regulatory timers.", $tags="processes")
+  ' aac P_DISPUTE_001: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_BUREAU_GW, "Credit bureau gateway", "Credit bureau furnishing and consumer dispute exchange.", $tags="systems")
+  ' aac SYS_BUREAU_GW: company_domain=""
+}
+
+Rel(P_DISPUTE_001, SYS_BUREAU_GW, "Supporting")
+' aac rel: source="P_DISPUTE_001"; target="SYS_BUREAU_GW"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COLLECTIONS_005, SYS_BUREAU_GW, "Primary")
+' aac rel: source="P_COLLECTIONS_005"; target="SYS_BUREAU_GW"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_COLLECTIONS_006, SYS_BUREAU_GW, "Primary")
+' aac rel: source="P_COLLECTIONS_006"; target="SYS_BUREAU_GW"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_DISPUTE_001, CAP_FRAUD_03, "supports")
+' aac rel: source="P_DISPUTE_001"; target="CAP_FRAUD_03"; label="supports"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_005, CAP_COLL_08, "supports")
+' aac rel: source="P_COLLECTIONS_005"; target="CAP_COLL_08"; label="supports"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_006, CAP_COLL_08, "supports")
+' aac rel: source="P_COLLECTIONS_006"; target="CAP_COLL_08"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

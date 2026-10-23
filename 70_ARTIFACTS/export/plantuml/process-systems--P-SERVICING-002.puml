@@ -1,0 +1,35 @@
+@startuml
+' Deliver and archive statement — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Deliver and archive statement — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_BILL_03, "Statement Delivery & Archive", "Deliver statements by print and electronic channels, and retain and retrieve them.", $tags="capabilities")
+  ' aac CAP_BILL_03: company_domain="Servicing"
+}
+Boundary(b_Process, "Process") {
+  System(P_SERVICING_002, "Deliver and archive statement", "Deliver the statement by the cardholder's elected channel and retain it for retrieval. Delivery honors the e-consent election and postal fallback; the archived statement is the legal record retrieved for disputes and subpoenas.", $tags="processes")
+  ' aac P_SERVICING_002: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+  System(SYS_STATEMENTS, "Statement Generation", "Composes, renders and dispatches customer statements.", $tags="systems")
+  ' aac SYS_STATEMENTS: company_domain="Servicing"; hosting="On-prem"
+}
+
+Rel(P_SERVICING_002, SYS_STATEMENTS, "Primary")
+' aac rel: source="P_SERVICING_002"; target="SYS_STATEMENTS"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_SERVICING_002, SYS_DOC, "Supporting")
+' aac rel: source="P_SERVICING_002"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_002, CAP_BILL_03, "supports")
+' aac rel: source="P_SERVICING_002"; target="CAP_BILL_03"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

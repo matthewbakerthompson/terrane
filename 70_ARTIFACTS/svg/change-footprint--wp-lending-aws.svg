@@ -1,0 +1,203 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="936.4" viewBox="0 0 1100 936.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Build installment lending on AWS — Footprint</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Build installment lending on AWS — Footprint</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   10 nodes · 10 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One work package and its footprint: the systems it builds or changes, the data those systems read and write, the capabilities they realize, and the processes that</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">depend on them. The footprint is derived from the model, so it includes indirect effects.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(35.5 99.2)">
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="797.3" y="288.3" width="221.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="839.3" y="305.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="403.1" y="24.3" width="233.4" height="695.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="432.9" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="boundary" data-id="grp::Work Package">
+<rect x="10.3" y="266.3" width="211.4" height="135.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="58.4" y="283.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Work Package</text>
+</g>
+<g class="edge" data-id="e0::WP-LENDING-AWS::SYS-LENDING-EDGE">
+<title>Builds</title>
+<path d="M196 301.33 L244.97 301 A10 10 0 0 1 245.03 301 L253 301 A8 8 0 0 0 261 293 L261 91.96 A10 10 0 0 1 270.96 81.96 L399.78 81.5 A10 10 0 0 1 399.82 81.5 L425.28 81.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M428.8 81.5 L419.23 86.28 L419.23 76.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::WP-LENDING-AWS::SYS-LENDING-EDGE">
+<rect x="313.86" y="88.5" width="35.07" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="331.4" y="100.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Builds</text>
+</g>
+<g class="edge" data-id="e1::WP-LENDING-AWS::SYS-LENDING-ALB">
+<title>Builds</title>
+<path d="M196 310.67 L205.67 310.67 A0.33 0.33 0 0 1 206 311 L206 311 A0.33 0.33 0 0 0 206.33 311.33 L244.96 311 A10 10 0 0 1 245.04 311 L261 311 A10 10 0 0 0 271 301 L271 174.96 A10 10 0 0 1 280.96 164.96 L399.78 164.5 A10 10 0 0 1 399.82 164.5 L425.28 164.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M428.8 164.5 L419.23 169.28 L419.23 159.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::WP-LENDING-AWS::SYS-LENDING-ALB">
+<rect x="313.86" y="171.5" width="35.07" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="331.4" y="183.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Builds</text>
+</g>
+<g class="edge" data-id="e2::WP-LENDING-AWS::SYS-LENDING-WEB">
+<title>Builds</title>
+<path d="M196 320 L205.33 320 A0.67 0.67 0 0 1 206 320.67 L206 320.67 A0.66 0.66 0 0 0 206.67 321.33 L244.96 321 A10 10 0 0 1 245.04 321 L271 321 A10 10 0 0 0 281 311 L281 257.96 A10 10 0 0 1 290.96 247.96 L399.78 247.5 A10 10 0 0 1 399.82 247.5 L425.28 247.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M428.8 247.5 L419.23 252.28 L419.23 242.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::WP-LENDING-AWS::SYS-LENDING-WEB">
+<rect x="313.86" y="254.5" width="35.07" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="331.4" y="266.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Builds</text>
+</g>
+<g class="edge" data-id="e3::WP-LENDING-AWS::SYS-LENDING-API">
+<title>Builds</title>
+<path d="M196 329.33 L205 329.33 A1 1 0 0 1 206 330.33 L206 330.33 A0.99 0.99 0 0 0 207 331.32 L244.97 331 A10 10 0 0 1 245.03 331 L399.78 330.5 A10 10 0 0 1 399.82 330.5 L425.28 330.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M428.8 330.5 L419.23 335.29 L419.23 325.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::WP-LENDING-AWS::SYS-LENDING-API">
+<rect x="313.86" y="337.5" width="35.07" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="331.4" y="349.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Builds</text>
+</g>
+<g class="edge" data-id="e4::WP-LENDING-AWS::SYS-LENDING-WORKER">
+<title>Builds</title>
+<path d="M196 338.67 L204.67 338.67 A1.33 1.33 0 0 1 206 340 L206 340 A1.32 1.32 0 0 0 207.33 341.32 L244.96 341 A10 10 0 0 1 245.04 341 L281 341 A10 10 0 0 1 291 351 L291 403.95 A10 10 0 0 0 301.05 413.95 L399.78 413.5 A10 10 0 0 1 399.82 413.5 L425.28 413.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M428.8 413.5 L419.23 418.29 L419.23 408.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::WP-LENDING-AWS::SYS-LENDING-WORKER">
+<rect x="313.86" y="420.5" width="35.07" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="331.4" y="432.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Builds</text>
+</g>
+<g class="edge" data-id="e5::WP-LENDING-AWS::SYS-LENDING-DB">
+<title>Builds</title>
+<path d="M196 348 L204.33 348 A1.67 1.67 0 0 1 206 349.67 L206 349.67 A1.65 1.65 0 0 0 207.67 351.32 L244.96 351 A10 10 0 0 1 245.04 351 L271 351 A10 10 0 0 1 281 361 L281 486.96 A10 10 0 0 0 291.04 496.96 L399.78 496.5 A10 10 0 0 1 399.82 496.5 L425.28 496.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M428.8 496.5 L419.23 501.29 L419.23 491.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e5::WP-LENDING-AWS::SYS-LENDING-DB">
+<rect x="313.86" y="503.5" width="35.07" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="331.4" y="515.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Builds</text>
+</g>
+<g class="edge" data-id="e6::WP-LENDING-AWS::SYS-LENDING-BUCKET">
+<title>Builds</title>
+<path d="M196 357.33 L204 357.33 A2 2 0 0 1 206 359.33 L206 359.33 A1.98 1.98 0 0 0 208 361.32 L244.96 361 A10 10 0 0 1 245.04 361 L261 361 A10 10 0 0 1 271 371 L271 569.96 A10 10 0 0 0 281.04 579.96 L399.78 579.5 A10 10 0 0 1 399.82 579.5 L425.28 579.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M428.8 579.5 L419.23 584.28 L419.23 574.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e6::WP-LENDING-AWS::SYS-LENDING-BUCKET">
+<rect x="313.86" y="586.5" width="35.07" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="331.4" y="598.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Builds</text>
+</g>
+<g class="edge" data-id="e7::WP-LENDING-AWS::SYS-LENDING-HUB">
+<title>Builds</title>
+<path d="M196 366.67 L203.67 366.67 A2.33 2.33 0 0 1 206 369 L206 369 A2.31 2.31 0 0 0 208.33 371.31 L244.96 371 A10 10 0 0 1 245.04 371 L253 371 A8 8 0 0 1 261 379 L261 652.96 A10 10 0 0 0 271.04 662.96 L399.78 662.5 A10 10 0 0 1 399.82 662.5 L425.28 662.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M428.8 662.5 L419.23 667.28 L419.23 657.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e7::WP-LENDING-AWS::SYS-LENDING-HUB">
+<rect x="313.86" y="669.5" width="35.07" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="331.4" y="681.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Builds</text>
+</g>
+<g class="edge" data-id="e8::SYS-LENDING-API::DA-LENDING-OPERATIONAL">
+<title>ReadWrite</title>
+<path d="M610.8 330.5 L639.72 331 A10 10 0 0 0 639.88 331 L793.99 331.33 A10 10 0 0 0 794.01 331.33 L819.48 331.33" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M823 331.33 L813.43 336.12 L813.43 326.55 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e8::SYS-LENDING-API::DA-LENDING-OPERATIONAL">
+<rect x="689.51" y="308.5" width="54.78" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="716.9" y="320.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">ReadWrite</text>
+</g>
+<g class="edge" data-id="e9::SYS-LENDING-WORKER::DA-LENDING-OPERATIONAL">
+<title>Read</title>
+<path d="M610.8 413.5 L639.71 414 A10 10 0 0 0 639.89 414 L647.8 414 A8 8 0 0 0 655.8 406 L655.8 358.98 A10 10 0 0 1 665.78 348.98 L793.99 348.67 A10 10 0 0 1 794.01 348.67 L819.48 348.67" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M823 348.67 L813.43 353.45 L813.43 343.88 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e9::SYS-LENDING-WORKER::DA-LENDING-OPERATIONAL">
+<rect x="701.86" y="355.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="716.9" y="367.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="node" data-id="DA-LENDING-OPERATIONAL" data-type="data_assets">
+<title>Installment Lending operational data</title>
+<path d="M823 316.6 Q831.5 314 865.5 314 L950.5 314 Q984.5 314 993 316.6 L993 363.4 Q984.5 366 950.5 366 L865.5 366 Q831.5 366 823 363.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="904" y="338.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment Lending</text>
+<text x="904" y="350.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">operational data</text>
+<svg x="975" y="319" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="SYS-LENDING-ALB" data-type="systems">
+<title>Installment Lending Load Balancer</title>
+<rect x="428.8" y="133" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="515.8" y="162.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment Lending</text>
+<text x="515.8" y="174.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Load Balancer</text>
+<svg x="592.8" y="138" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-LENDING-API" data-type="systems">
+<title>Installment Lending Service</title>
+<rect x="428.8" y="299" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="509.8" y="323.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment</text>
+<text x="509.8" y="335.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Lending Service</text>
+<text x="519.8" y="356.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">EKS · Installment Lending Cache</text>
+<image x="588.8" y="303" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNjRweCIgaGVpZ2h0PSI2NHB4IiB2aWV3Qm94PSIwIDAgNjQgNjQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8dGl0bGU+SWNvbi1BcmNoaXRlY3R1cmUvNDgvQXJjaF9BbWF6b24tRWxhc3RpYy1LdWJlcm5ldGVzLVNlcnZpY2VfNDg8L3RpdGxlPgogICAgPGcgaWQ9Ikljb24tQXJjaGl0ZWN0dXJlLzQ4L0FyY2hfQW1hem9uLUVsYXN0aWMtS3ViZXJuZXRlcy1TZXJ2aWNlXzQ4IiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0iSWNvbi1BcmNoaXRlY3R1cmUtQkcvNDgvQ29tcHV0ZSIgZmlsbD0iI0VENzEwMCI+CiAgICAgICAgICAgIDxyZWN0IGlkPSJSZWN0YW5nbGUiIHg9IjAiIHk9IjAiIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PC9yZWN0PgogICAgICAgIDwvZz4KICAgICAgICA8cGF0aCBkPSJNMzcuNzA4LDI1LjAwMDQwNTggTDMyLjY1LDMxLjM0MDMxNzEgTDM3Ljk2NywzOC4wMjEyMjM2IEwzNS43NTIsMzguMDIxMjIzNiBMMzEsMzIuMDAwMzA3OSBMMzEsMzguMDAwMjIzOSBMMjksMzguMDAwMjIzOSBMMjksMjUuMDAwNDA1OCBMMzEsMjUuMDAwNDA1OCBMMzEsMzAuMjQxMzMyNSBMMzUuNDYzLDI1LjAwMDQwNTggTDM3LjcwOCwyNS4wMDA0MDU4IFogTTUwLDM2LjM4MjI0NjYgTDQ0LDMzLjM4MjI4ODUgTDQ0LDI1LjAwMDQwNTggQzQ0LDI0LjYzNzQxMDkgNDMuODAzLDI0LjMwMjQxNTYgNDMuNDg1LDI0LjEyNjQxODEgTDM1LDE5LjQxMjQ4NCBMMzUsMTIuNzQ5NTc3MyBMNTAsMjEuNTcyNDUzOCBMNTAsMzYuMzgyMjQ2NiBaIE01MS41MDcsMjAuMTM4NDczOSBMMzQuNTA3LDEwLjEzODYxMzggQzM0LjE5OSw5Ljk1NzYxNjM3IDMzLjgxNSw5Ljk1NDYxNjQxIDMzLjUwNCwxMC4xMzI2MTM5IEMzMy4xOTIsMTAuMzEwNjExNCAzMywxMC42NDE2MDY4IDMzLDExLjAwMDYwMTggTDMzLDIwLjAwMDQ3NTggQzMzLDIwLjM2MzQ3MDcgMzMuMTk3LDIwLjY5ODQ2NjEgMzMuNTE1LDIwLjg3NDQ2MzYgTDQyLDI1LjU4ODM5NzYgTDQyLDM0LjAwMDI3OTkgQzQyLDM0LjM3OTI3NDYgNDIuMjE0LDM0LjcyNTI2OTcgNDIuNTUzLDM0Ljg5NTI2NzQgTDUwLjU1MywzOC44OTUyMTE0IEM1MC42OTQsMzguOTY1MjEwNCA1MC44NDcsMzkuMDAwMjA5OSA1MSwzOS4wMDAyMDk5IEM1MS4xODMsMzkuMDAwMjA5OSA1MS4zNjUsMzguOTUwMjEwNiA1MS41MjUsMzguODUxMjEyIEM1MS44MiwzOC42NjgyMTQ2IDUyLDM4LjM0NzIxOTEgNTIsMzguMDAwMjIzOSBMNTIsMjEuMDAwNDYxOCBDNTIsMjAuNjQ2NDY2OCA1MS44MTIsMjAuMzE4NDcxNCA1MS41MDcsMjAuMTM4NDczOSBMNTEuNTA3LDIwLjEzODQ3MzkgWiBNMzIsNTEuODI4MDMwNCBMMTUsNDEuNDM5MTc1OCBMMTUsMjEuNTU0NDU0MSBMMjksMTIuODA0NTc2NSBMMjksMTkuNDQ2NDgzNiBMMjEuNDcsMjQuMTUyNDE3NyBDMjEuMTc4LDI0LjMzNTQxNTIgMjEsMjQuNjU1NDEwNyAyMSwyNS4wMDA0MDU4IEwyMSwzOC4wMDAyMjM5IEMyMSwzOC4zNTEyMTkgMjEuMTg1LDM4LjY3NzIxNDQgMjEuNDg1LDM4Ljg1NzIxMTkgTDMxLjQ4NSw0NC44NTcxMjggQzMxLjc4OSw0NS4wNDAxMjU0IDMyLjE2Nyw0NS4wNDgxMjUzIDMyLjQ3OSw0NC44NzgxMjc3IEw0Mi45ODgsMzkuMTQ2MjA3OSBMNDguMDM1LDQyLjAyOTE2NzUgTDMyLDUxLjgyODAzMDQgWiBNNTAuNDk2LDQxLjEzMjE4MDEgTDQzLjQ5NiwzNy4xMzIyMzYxIEM0My4xOTQsMzYuOTU5MjM4NSA0Mi44MjUsMzYuOTU2MjM4NSA0Mi41MjEsMzcuMTIyMjM2MiBMMzIuMDIzLDQyLjg0ODE1NjEgTDIzLDM3LjQzNDIzMTggTDIzLDI1LjU1NDM5ODEgTDMwLjUzLDIwLjg0ODQ2NCBDMzAuODIyLDIwLjY2NTQ2NjUgMzEsMjAuMzQ1NDcxIDMxLDIwLjAwMDQ3NTggTDMxLDExLjAwMDYwMTggQzMxLDEwLjYzNjYwNjkgMzAuODAzLDEwLjMwMjYxMTUgMzAuNDg0LDEwLjEyNTYxNCBDMzAuMTY4LDkuOTQ4NjE2NSAyOS43NzgsOS45NTk2MTYzNCAyOS40NywxMC4xNTI2MTM2IEwxMy40NywyMC4xNTI0NzM3IEMxMy4xNzgsMjAuMzM1NDcxMSAxMywyMC42NTU0NjY3IDEzLDIxLjAwMDQ2MTggTDEzLDQyLjAwMDE2NzkgQzEzLDQyLjM0ODE2MzEgMTMuMTgyLDQyLjY3MTE1ODUgMTMuNDc5LDQyLjg1NDE1NiBMMzEuNDc5LDUzLjg1NDAwMiBDMzEuNjM5LDUzLjk1MTAwMDcgMzEuODE5LDU0IDMyLDU0IEMzMi4xODEsNTQgMzIuMzYxLDUzLjk1MTAwMDcgMzIuNTIxLDUzLjg1NDAwMiBMNTAuNTIxLDQyLjg1NDE1NiBDNTAuODIzLDQyLjY2OTE1ODYgNTEuMDA1LDQyLjMzOTE2MzIgNTEuMDAwMTAwNCw0MS45ODUxNjgxIEM1MC45OTUsNDEuNjMyMTczMSA1MC44MDMsNDEuMzA3MTc3NiA1MC40OTYsNDEuMTMyMTgwMSBMNTAuNDk2LDQxLjEzMjE4MDEgWiIgaWQ9IkFtYXpvbi1FbGFzdGljLUt1YmVybmV0ZXMtU2VydmljZV9JY29uXzQ4X1NxdWlkIiBmaWxsPSIjRkZGRkZGIj48L3BhdGg+CiAgICA8L2c+Cjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-LENDING-BUCKET" data-type="systems">
+<title>Installment Lending Object Store</title>
+<rect x="428.8" y="548" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="509.8" y="566.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment</text>
+<text x="509.8" y="578.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Lending Object</text>
+<text x="509.8" y="590.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Store</text>
+<text x="519.8" y="605.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">S3</text>
+<image x="588.8" y="552" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNjRweCIgaGVpZ2h0PSI2NHB4IiB2aWV3Qm94PSIwIDAgNjQgNjQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8dGl0bGU+SWNvbi1BcmNoaXRlY3R1cmUvNDgvQXJjaF9BbWF6b24tU2ltcGxlLVN0b3JhZ2UtU2VydmljZV80ODwvdGl0bGU+CiAgICA8ZyBpZD0iSWNvbi1BcmNoaXRlY3R1cmUvNDgvQXJjaF9BbWF6b24tU2ltcGxlLVN0b3JhZ2UtU2VydmljZV80OCIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGcgaWQ9Ikljb24tQXJjaGl0ZWN0dXJlLUJHLzQ4L1N0b3JhZ2UiIGZpbGw9IiM3QUExMTYiPgogICAgICAgICAgICA8cmVjdCBpZD0iUmVjdGFuZ2xlIiB4PSIwIiB5PSIwIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiPjwvcmVjdD4KICAgICAgICA8L2c+CiAgICAgICAgPGcgaWQ9Ikljb24tU2VydmljZS80OC9BbWF6b24tU2ltcGxlLVN0b3JhZ2UtU2VydmljZV80OCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTAuOTk5ODAwLCAxMC4wMDAyMDApIiBmaWxsPSIjRkZGRkZGIj4KICAgICAgICAgICAgPHBhdGggZD0iTTM2Ljc1OSwyMy45NDggTDM2Ljk5MywyMi4xMzEgQzM5LjE2NiwyMy4zODUgMzkuODQyLDI0LjEyMSA0MC4wMzcsMjQuNDI0IEMzOS43MTMsMjQuNDg1IDM4LjgzMiwyNC41MDkgMzYuNzU5LDIzLjk0OCBMMzYuNzU5LDIzLjk0OCBaIE0xOS41LDExIEM5LjEyNSwxMSAyLjM4Miw4LjQ4OCAyLDYuNjk2IEwyLDYuNTExIEMyLjM0OSw1LjM5MiA4LjE0LDIgMTkuNSwyIEMzMC44NCwyIDM2LjYzMiw1LjM4MSAzNyw2LjUwNSBMMzcsNi42MTYgQzM2LjcyNCw4LjQ0NiAyOS45NjEsMTEgMTkuNSwxMSBMMTkuNSwxMSBaIE0zNC44MTgsMjMuMzYyIEMzMC4wNTMsMjEuNzk3IDIzLjkxMiwxOC45NzkgMjEuNTk0LDE3Ljg4OCBDMjEuNTM1LDE2Ljc4NiAyMC42MjgsMTUuOTA2IDE5LjUxMiwxNS45MDYgQzE4LjM1OCwxNS45MDYgMTcuNDE4LDE2Ljg0NSAxNy40MTgsMTggQzE3LjQxOCwxOS4xNTQgMTguMzU4LDIwLjA5NCAxOS41MTIsMjAuMDk0IEMxOS45NjksMjAuMDk0IDIwLjM4OSwxOS45NDIgMjAuNzMzLDE5LjY5MyBDMjMuMTMyLDIwLjgyMiAyOS42MTksMjMuNzk4IDM0LjU1OCwyNS4zOCBMMzIuODM3LDM4LjcyNCBDMzIuNTgzLDQwLjM1MiAyNy45MTksNDIgMTkuNDk3LDQyIEMxMS4wNzIsNDIgNi40MDUsNDAuMzUyIDYuMTU1LDM4Ljc1MSBMMi40MzUsOS44MTQgQzUuOTQ1LDExLjkxNSAxMi43NDksMTMgMTkuNSwxMyBDMjYuMjUsMTMgMzMuMDU0LDExLjkxNSAzNi41NjUsOS44MTUgTDM0LjgxOCwyMy4zNjIgWiBNMzksNi41IEMzOSwzLjQzMSAzMC42NjEsMCAxOS41LDAgQzguMzM5LDAgLTMuNTUyNzEzNjhlLTE1LDMuNDMxIC0zLjU1MjcxMzY4ZS0xNSw2LjUgTC0zLjU1MjcxMzY4ZS0xNSw3LjA0MyBMNC4xNzQsMzkuMDMzIEM0Ljg3NSw0My41MTYgMTUuMTIzLDQ0IDE5LjQ5Nyw0NCBDMjMuODY5LDQ0IDM0LjExMyw0My41MTYgMzQuODE4LDM5LjAwNyBMMzYuNTAxLDI1Ljk0NyBDMzcuNzc4LDI2LjI3OSAzOC44MTIsMjYuNDU2IDM5LjYxNiwyNi40NTUgQzQwLjYwNiwyNi40NTUgNDEuMjczLDI2LjIwMyA0MS42OTcsMjUuNjk3IEM0Mi4wNDcsMjUuMjgxIDQyLjE4NSwyNC43NTYgNDIuMDg1LDI0LjIyMSBDNDEuODU3LDIzIDQwLjQwMywyMS43MTIgMzcuMzcsMjAuMDQ0IEwzNy4yNywxOS45ODkgTDM5LDcuMDQ0IEwzOSw2LjUgWiIgaWQ9IkFtYXpvbi1TaW1wbGUtU3RvcmFnZS1TZXJ2aWNlLUljb25fNDhfU3F1aWQiPjwvcGF0aD4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-LENDING-DB" data-type="systems">
+<title>Installment Lending Database</title>
+<rect x="428.8" y="465" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="509.8" y="489.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment</text>
+<text x="509.8" y="501.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Lending Database</text>
+<text x="519.8" y="522.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">RDS</text>
+<image x="588.8" y="469" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNjRweCIgaGVpZ2h0PSI2NHB4IiB2aWV3Qm94PSIwIDAgNjQgNjQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8dGl0bGU+SWNvbi1BcmNoaXRlY3R1cmUvNDgvQXJjaF9BbWF6b24tUkRTXzQ4PC90aXRsZT4KICAgIDxnIGlkPSJJY29uLUFyY2hpdGVjdHVyZS80OC9BcmNoX0FtYXpvbi1SRFNfNDgiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxnIGlkPSJJY29uLUFyY2hpdGVjdHVyZS1CRy80OC9EYXRhYmFzZSIgZmlsbD0iI0M5MjVEMSI+CiAgICAgICAgICAgIDxyZWN0IGlkPSJSZWN0YW5nbGUiIHg9IjAiIHk9IjAiIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PC9yZWN0PgogICAgICAgIDwvZz4KICAgICAgICA8cGF0aCBkPSJNNTQsMTEgTDU0LDE5IEw1MiwxOSBMNTIsMTMuNDE0IEw0NS43MDcsMTkuNzA3IEw0NC4yOTMsMTguMjkzIEw1MC41ODYsMTIgTDQ1LjEyNSwxMiBMNDUuMTI1LDEwIEw1MywxMCBDNTMuNTUzLDEwIDU0LDEwLjQ0OCA1NCwxMSBMNTQsMTEgWiBNMTIsMTguODc1IEwxMCwxOC44NzUgTDEwLDExIEMxMCwxMC40NDggMTAuNDQ3LDEwIDExLDEwIEwxOSwxMCBMMTksMTIgTDEzLjQxNCwxMiBMMTkuNzA3LDE4LjI5MyBMMTguMjkzLDE5LjcwNyBMMTIsMTMuNDE0IEwxMiwxOC44NzUgWiBNMTkuNzA3LDQ1LjcwNyBMMTMuNDE0LDUyIEwxOC44NzUsNTIgTDE4Ljg3NSw1NCBMMTEsNTQgQzEwLjQ0Nyw1NCAxMCw1My41NTIgMTAsNTMgTDEwLDQ1IEwxMiw0NSBMMTIsNTAuNTg2IEwxOC4yOTMsNDQuMjkzIEwxOS43MDcsNDUuNzA3IFogTTUxLjUsMzEuNzgxIEM1MS41LDI5LjM1MiA0OC42MzQsMjYuOTMyIDQzLjgzMywyNS4zMDcgTDQ0LjQ3NCwyMy40MTMgQzUwLjIxLDI1LjM1NCA1My41LDI4LjQwNCA1My41LDMxLjc4MSBDNTMuNSwzNS4xNTggNTAuMjEsMzguMjA4IDQ0LjQ3NCw0MC4xNSBMNDMuODMzLDM4LjI1NSBDNDguNjM0LDM2LjYzMSA1MS41LDM0LjIxIDUxLjUsMzEuNzgxIEw1MS41LDMxLjc4MSBaIE0xMi41NDMsMzEuNzgxIEMxMi41NDMsMzQuMTA1IDE1LjIyNCwzNi40NiAxOS43MTUsMzguMDgxIEwxOS4wMzUsMzkuOTYxIEMxMy42MzksMzguMDE0IDEwLjU0MywzNS4wMzMgMTAuNTQzLDMxLjc4MSBDMTAuNTQzLDI4LjUzIDEzLjYzOSwyNS41NDggMTkuMDM1LDIzLjYwMSBMMTkuNzE1LDI1LjQ4MiBDMTUuMjI0LDI3LjEwMyAxMi41NDMsMjkuNDU4IDEyLjU0MywzMS43ODEgTDEyLjU0MywzMS43ODEgWiBNNTIsNDUuMTI1IEw1NCw0NS4xMjUgTDU0LDUzIEM1NCw1My41NTIgNTMuNTUzLDU0IDUzLDU0IEw0NSw1NCBMNDUsNTIgTDUwLjU4Niw1MiBMNDQuMjkzLDQ1LjcwNyBMNDUuNzA3LDQ0LjI5MyBMNTIsNTAuNTg2IEw1Miw0NS4xMjUgWiBNMzIuMDIyLDMxLjQwMiBDMjYuOTk5LDMxLjQwMiAyNC4xMjYsMzAuMDU5IDI0LDI5LjQ4MyBMMjQsMjYuMjU3IEMyNi4xNTksMjcuMjY2IDI5LjYwOSwyNy41OTMgMzIsMjcuNTkzIEMzNC4zOTEsMjcuNTkzIDM3Ljg0MSwyNy4yNjYgNDAsMjYuMjU3IEw0MCwyOS40ODMgQzM5Ljg5NCwzMC4wNTcgMzcuMDUxLDMxLjQwMiAzMi4wMjIsMzEuNDAyIEwzMi4wMjIsMzEuNDAyIFogTTMyLjAyMiwzNy4xMyBDMjYuOTk5LDM3LjEzIDI0LjEyNiwzNS43ODYgMjQsMzUuMjEgTDI0LDMxLjk1NiBDMjUuOTUzLDMyLjkzNyAyOS4wNTUsMzMuNDAyIDMyLjAyMiwzMy40MDIgQzM0Ljk3MywzMy40MDIgMzguMDU1LDMyLjkzOCA0MCwzMS45NiBMNDAsMzUuMjEgQzM5Ljg5NCwzNS43ODUgMzcuMDUyLDM3LjEzIDMyLjAyMiwzNy4xMyBMMzIuMDIyLDM3LjEzIFogTTMyLDQyLjI2OCBDMjYuOTUsNDIuMjY4IDI0LjEwNCw0MC45MTcgMjQsNDAuMzQ2IEwyNCwzNy42ODMgQzI1Ljk1MywzOC42NjUgMjkuMDU1LDM5LjEzIDMyLjAyMiwzOS4xMyBDMzQuOTczLDM5LjEzIDM4LjA1NSwzOC42NjYgNDAsMzcuNjg3IEw0MCw0MC4zNDIgQzM5Ljg5Niw0MC45MTcgMzcuMDUsNDIuMjY4IDMyLDQyLjI2OCBMMzIsNDIuMjY4IFogTTMyLDIyLjE5MyBDMzYuOTcxLDIyLjE5MyAzOS42NDIsMjMuMzcgMzkuOTgyLDIzLjg5NCBDMzkuNjQyLDI0LjQxNyAzNi45NzEsMjUuNTkzIDMyLDI1LjU5MyBDMjYuOTA5LDI1LjU5MyAyNC4yMzMsMjQuMzYxIDI0LDIzLjk0OSBMMjQsMjMuOTMgQzI0LjIzMywyMy40MjYgMjYuOTA5LDIyLjE5MyAzMiwyMi4xOTMgTDMyLDIyLjE5MyBaIE0zMiwyMC4xOTMgQzI4LjI4NiwyMC4xOTMgMjIsMjAuOTczIDIyLDIzLjg5NCBMMjIsNDAuMzQ2IEMyMiw0My4wNDEgMjcuMTg0LDQ0LjI2OCAzMiw0NC4yNjggQzM2LjgxNiw0NC4yNjggNDIsNDMuMDQxIDQyLDQwLjM0NiBMNDIsMjMuODk0IEM0MiwyMC45NzMgMzUuNzE0LDIwLjE5MyAzMiwyMC4xOTMgTDMyLDIwLjE5MyBaIiBpZD0iQW1hem9uLVJEU19JY29uXzQ4X1NxdWlkIiBmaWxsPSIjRkZGRkZGIj48L3BhdGg+CiAgICA8L2c+Cjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-LENDING-EDGE" data-type="systems">
+<title>Installment Lending Edge</title>
+<rect x="428.8" y="50" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="515.8" y="79.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment Lending</text>
+<text x="515.8" y="91.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Edge</text>
+<svg x="592.8" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-LENDING-HUB" data-type="systems">
+<title>Installment Lending Integration Hub</title>
+<rect x="428.8" y="631" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="515.8" y="660.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment Lending</text>
+<text x="515.8" y="672.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Integration Hub</text>
+<svg x="592.8" y="636" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-LENDING-WEB" data-type="systems">
+<title>Installment Lending Web</title>
+<rect x="428.8" y="216" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="509.8" y="240.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment</text>
+<text x="509.8" y="252.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Lending Web</text>
+<text x="519.8" y="273.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">EKS</text>
+<image x="588.8" y="220" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNjRweCIgaGVpZ2h0PSI2NHB4IiB2aWV3Qm94PSIwIDAgNjQgNjQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8dGl0bGU+SWNvbi1BcmNoaXRlY3R1cmUvNDgvQXJjaF9BbWF6b24tRWxhc3RpYy1LdWJlcm5ldGVzLVNlcnZpY2VfNDg8L3RpdGxlPgogICAgPGcgaWQ9Ikljb24tQXJjaGl0ZWN0dXJlLzQ4L0FyY2hfQW1hem9uLUVsYXN0aWMtS3ViZXJuZXRlcy1TZXJ2aWNlXzQ4IiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0iSWNvbi1BcmNoaXRlY3R1cmUtQkcvNDgvQ29tcHV0ZSIgZmlsbD0iI0VENzEwMCI+CiAgICAgICAgICAgIDxyZWN0IGlkPSJSZWN0YW5nbGUiIHg9IjAiIHk9IjAiIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PC9yZWN0PgogICAgICAgIDwvZz4KICAgICAgICA8cGF0aCBkPSJNMzcuNzA4LDI1LjAwMDQwNTggTDMyLjY1LDMxLjM0MDMxNzEgTDM3Ljk2NywzOC4wMjEyMjM2IEwzNS43NTIsMzguMDIxMjIzNiBMMzEsMzIuMDAwMzA3OSBMMzEsMzguMDAwMjIzOSBMMjksMzguMDAwMjIzOSBMMjksMjUuMDAwNDA1OCBMMzEsMjUuMDAwNDA1OCBMMzEsMzAuMjQxMzMyNSBMMzUuNDYzLDI1LjAwMDQwNTggTDM3LjcwOCwyNS4wMDA0MDU4IFogTTUwLDM2LjM4MjI0NjYgTDQ0LDMzLjM4MjI4ODUgTDQ0LDI1LjAwMDQwNTggQzQ0LDI0LjYzNzQxMDkgNDMuODAzLDI0LjMwMjQxNTYgNDMuNDg1LDI0LjEyNjQxODEgTDM1LDE5LjQxMjQ4NCBMMzUsMTIuNzQ5NTc3MyBMNTAsMjEuNTcyNDUzOCBMNTAsMzYuMzgyMjQ2NiBaIE01MS41MDcsMjAuMTM4NDczOSBMMzQuNTA3LDEwLjEzODYxMzggQzM0LjE5OSw5Ljk1NzYxNjM3IDMzLjgxNSw5Ljk1NDYxNjQxIDMzLjUwNCwxMC4xMzI2MTM5IEMzMy4xOTIsMTAuMzEwNjExNCAzMywxMC42NDE2MDY4IDMzLDExLjAwMDYwMTggTDMzLDIwLjAwMDQ3NTggQzMzLDIwLjM2MzQ3MDcgMzMuMTk3LDIwLjY5ODQ2NjEgMzMuNTE1LDIwLjg3NDQ2MzYgTDQyLDI1LjU4ODM5NzYgTDQyLDM0LjAwMDI3OTkgQzQyLDM0LjM3OTI3NDYgNDIuMjE0LDM0LjcyNTI2OTcgNDIuNTUzLDM0Ljg5NTI2NzQgTDUwLjU1MywzOC44OTUyMTE0IEM1MC42OTQsMzguOTY1MjEwNCA1MC44NDcsMzkuMDAwMjA5OSA1MSwzOS4wMDAyMDk5IEM1MS4xODMsMzkuMDAwMjA5OSA1MS4zNjUsMzguOTUwMjEwNiA1MS41MjUsMzguODUxMjEyIEM1MS44MiwzOC42NjgyMTQ2IDUyLDM4LjM0NzIxOTEgNTIsMzguMDAwMjIzOSBMNTIsMjEuMDAwNDYxOCBDNTIsMjAuNjQ2NDY2OCA1MS44MTIsMjAuMzE4NDcxNCA1MS41MDcsMjAuMTM4NDczOSBMNTEuNTA3LDIwLjEzODQ3MzkgWiBNMzIsNTEuODI4MDMwNCBMMTUsNDEuNDM5MTc1OCBMMTUsMjEuNTU0NDU0MSBMMjksMTIuODA0NTc2NSBMMjksMTkuNDQ2NDgzNiBMMjEuNDcsMjQuMTUyNDE3NyBDMjEuMTc4LDI0LjMzNTQxNTIgMjEsMjQuNjU1NDEwNyAyMSwyNS4wMDA0MDU4IEwyMSwzOC4wMDAyMjM5IEMyMSwzOC4zNTEyMTkgMjEuMTg1LDM4LjY3NzIxNDQgMjEuNDg1LDM4Ljg1NzIxMTkgTDMxLjQ4NSw0NC44NTcxMjggQzMxLjc4OSw0NS4wNDAxMjU0IDMyLjE2Nyw0NS4wNDgxMjUzIDMyLjQ3OSw0NC44NzgxMjc3IEw0Mi45ODgsMzkuMTQ2MjA3OSBMNDguMDM1LDQyLjAyOTE2NzUgTDMyLDUxLjgyODAzMDQgWiBNNTAuNDk2LDQxLjEzMjE4MDEgTDQzLjQ5NiwzNy4xMzIyMzYxIEM0My4xOTQsMzYuOTU5MjM4NSA0Mi44MjUsMzYuOTU2MjM4NSA0Mi41MjEsMzcuMTIyMjM2MiBMMzIuMDIzLDQyLjg0ODE1NjEgTDIzLDM3LjQzNDIzMTggTDIzLDI1LjU1NDM5ODEgTDMwLjUzLDIwLjg0ODQ2NCBDMzAuODIyLDIwLjY2NTQ2NjUgMzEsMjAuMzQ1NDcxIDMxLDIwLjAwMDQ3NTggTDMxLDExLjAwMDYwMTggQzMxLDEwLjYzNjYwNjkgMzAuODAzLDEwLjMwMjYxMTUgMzAuNDg0LDEwLjEyNTYxNCBDMzAuMTY4LDkuOTQ4NjE2NSAyOS43NzgsOS45NTk2MTYzNCAyOS40NywxMC4xNTI2MTM2IEwxMy40NywyMC4xNTI0NzM3IEMxMy4xNzgsMjAuMzM1NDcxMSAxMywyMC42NTU0NjY3IDEzLDIxLjAwMDQ2MTggTDEzLDQyLjAwMDE2NzkgQzEzLDQyLjM0ODE2MzEgMTMuMTgyLDQyLjY3MTE1ODUgMTMuNDc5LDQyLjg1NDE1NiBMMzEuNDc5LDUzLjg1NDAwMiBDMzEuNjM5LDUzLjk1MTAwMDcgMzEuODE5LDU0IDMyLDU0IEMzMi4xODEsNTQgMzIuMzYxLDUzLjk1MTAwMDcgMzIuNTIxLDUzLjg1NDAwMiBMNTAuNTIxLDQyLjg1NDE1NiBDNTAuODIzLDQyLjY2OTE1ODYgNTEuMDA1LDQyLjMzOTE2MzIgNTEuMDAwMTAwNCw0MS45ODUxNjgxIEM1MC45OTUsNDEuNjMyMTczMSA1MC44MDMsNDEuMzA3MTc3NiA1MC40OTYsNDEuMTMyMTgwMSBMNTAuNDk2LDQxLjEzMjE4MDEgWiIgaWQ9IkFtYXpvbi1FbGFzdGljLUt1YmVybmV0ZXMtU2VydmljZV9JY29uXzQ4X1NxdWlkIiBmaWxsPSIjRkZGRkZGIj48L3BhdGg+CiAgICA8L2c+Cjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-LENDING-WORKER" data-type="systems">
+<title>Installment Lending Async Worker</title>
+<rect x="428.8" y="382" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="509.8" y="400.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment</text>
+<text x="509.8" y="412.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Lending Async</text>
+<text x="509.8" y="424.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Worker</text>
+<text x="519.8" y="439.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">EKS · MSK</text>
+<image x="588.8" y="386" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNjRweCIgaGVpZ2h0PSI2NHB4IiB2aWV3Qm94PSIwIDAgNjQgNjQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8dGl0bGU+SWNvbi1BcmNoaXRlY3R1cmUvNDgvQXJjaF9BbWF6b24tRWxhc3RpYy1LdWJlcm5ldGVzLVNlcnZpY2VfNDg8L3RpdGxlPgogICAgPGcgaWQ9Ikljb24tQXJjaGl0ZWN0dXJlLzQ4L0FyY2hfQW1hem9uLUVsYXN0aWMtS3ViZXJuZXRlcy1TZXJ2aWNlXzQ4IiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0iSWNvbi1BcmNoaXRlY3R1cmUtQkcvNDgvQ29tcHV0ZSIgZmlsbD0iI0VENzEwMCI+CiAgICAgICAgICAgIDxyZWN0IGlkPSJSZWN0YW5nbGUiIHg9IjAiIHk9IjAiIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PC9yZWN0PgogICAgICAgIDwvZz4KICAgICAgICA8cGF0aCBkPSJNMzcuNzA4LDI1LjAwMDQwNTggTDMyLjY1LDMxLjM0MDMxNzEgTDM3Ljk2NywzOC4wMjEyMjM2IEwzNS43NTIsMzguMDIxMjIzNiBMMzEsMzIuMDAwMzA3OSBMMzEsMzguMDAwMjIzOSBMMjksMzguMDAwMjIzOSBMMjksMjUuMDAwNDA1OCBMMzEsMjUuMDAwNDA1OCBMMzEsMzAuMjQxMzMyNSBMMzUuNDYzLDI1LjAwMDQwNTggTDM3LjcwOCwyNS4wMDA0MDU4IFogTTUwLDM2LjM4MjI0NjYgTDQ0LDMzLjM4MjI4ODUgTDQ0LDI1LjAwMDQwNTggQzQ0LDI0LjYzNzQxMDkgNDMuODAzLDI0LjMwMjQxNTYgNDMuNDg1LDI0LjEyNjQxODEgTDM1LDE5LjQxMjQ4NCBMMzUsMTIuNzQ5NTc3MyBMNTAsMjEuNTcyNDUzOCBMNTAsMzYuMzgyMjQ2NiBaIE01MS41MDcsMjAuMTM4NDczOSBMMzQuNTA3LDEwLjEzODYxMzggQzM0LjE5OSw5Ljk1NzYxNjM3IDMzLjgxNSw5Ljk1NDYxNjQxIDMzLjUwNCwxMC4xMzI2MTM5IEMzMy4xOTIsMTAuMzEwNjExNCAzMywxMC42NDE2MDY4IDMzLDExLjAwMDYwMTggTDMzLDIwLjAwMDQ3NTggQzMzLDIwLjM2MzQ3MDcgMzMuMTk3LDIwLjY5ODQ2NjEgMzMuNTE1LDIwLjg3NDQ2MzYgTDQyLDI1LjU4ODM5NzYgTDQyLDM0LjAwMDI3OTkgQzQyLDM0LjM3OTI3NDYgNDIuMjE0LDM0LjcyNTI2OTcgNDIuNTUzLDM0Ljg5NTI2NzQgTDUwLjU1MywzOC44OTUyMTE0IEM1MC42OTQsMzguOTY1MjEwNCA1MC44NDcsMzkuMDAwMjA5OSA1MSwzOS4wMDAyMDk5IEM1MS4xODMsMzkuMDAwMjA5OSA1MS4zNjUsMzguOTUwMjEwNiA1MS41MjUsMzguODUxMjEyIEM1MS44MiwzOC42NjgyMTQ2IDUyLDM4LjM0NzIxOTEgNTIsMzguMDAwMjIzOSBMNTIsMjEuMDAwNDYxOCBDNTIsMjAuNjQ2NDY2OCA1MS44MTIsMjAuMzE4NDcxNCA1MS41MDcsMjAuMTM4NDczOSBMNTEuNTA3LDIwLjEzODQ3MzkgWiBNMzIsNTEuODI4MDMwNCBMMTUsNDEuNDM5MTc1OCBMMTUsMjEuNTU0NDU0MSBMMjksMTIuODA0NTc2NSBMMjksMTkuNDQ2NDgzNiBMMjEuNDcsMjQuMTUyNDE3NyBDMjEuMTc4LDI0LjMzNTQxNTIgMjEsMjQuNjU1NDEwNyAyMSwyNS4wMDA0MDU4IEwyMSwzOC4wMDAyMjM5IEMyMSwzOC4zNTEyMTkgMjEuMTg1LDM4LjY3NzIxNDQgMjEuNDg1LDM4Ljg1NzIxMTkgTDMxLjQ4NSw0NC44NTcxMjggQzMxLjc4OSw0NS4wNDAxMjU0IDMyLjE2Nyw0NS4wNDgxMjUzIDMyLjQ3OSw0NC44NzgxMjc3IEw0Mi45ODgsMzkuMTQ2MjA3OSBMNDguMDM1LDQyLjAyOTE2NzUgTDMyLDUxLjgyODAzMDQgWiBNNTAuNDk2LDQxLjEzMjE4MDEgTDQzLjQ5NiwzNy4xMzIyMzYxIEM0My4xOTQsMzYuOTU5MjM4NSA0Mi44MjUsMzYuOTU2MjM4NSA0Mi41MjEsMzcuMTIyMjM2MiBMMzIuMDIzLDQyLjg0ODE1NjEgTDIzLDM3LjQzNDIzMTggTDIzLDI1LjU1NDM5ODEgTDMwLjUzLDIwLjg0ODQ2NCBDMzAuODIyLDIwLjY2NTQ2NjUgMzEsMjAuMzQ1NDcxIDMxLDIwLjAwMDQ3NTggTDMxLDExLjAwMDYwMTggQzMxLDEwLjYzNjYwNjkgMzAuODAzLDEwLjMwMjYxMTUgMzAuNDg0LDEwLjEyNTYxNCBDMzAuMTY4LDkuOTQ4NjE2NSAyOS43NzgsOS45NTk2MTYzNCAyOS40NywxMC4xNTI2MTM2IEwxMy40NywyMC4xNTI0NzM3IEMxMy4xNzgsMjAuMzM1NDcxMSAxMywyMC42NTU0NjY3IDEzLDIxLjAwMDQ2MTggTDEzLDQyLjAwMDE2NzkgQzEzLDQyLjM0ODE2MzEgMTMuMTgyLDQyLjY3MTE1ODUgMTMuNDc5LDQyLjg1NDE1NiBMMzEuNDc5LDUzLjg1NDAwMiBDMzEuNjM5LDUzLjk1MTAwMDcgMzEuODE5LDU0IDMyLDU0IEMzMi4xODEsNTQgMzIuMzYxLDUzLjk1MTAwMDcgMzIuNTIxLDUzLjg1NDAwMiBMNTAuNTIxLDQyLjg1NDE1NiBDNTAuODIzLDQyLjY2OTE1ODYgNTEuMDA1LDQyLjMzOTE2MzIgNTEuMDAwMTAwNCw0MS45ODUxNjgxIEM1MC45OTUsNDEuNjMyMTczMSA1MC44MDMsNDEuMzA3MTc3NiA1MC40OTYsNDEuMTMyMTgwMSBMNTAuNDk2LDQxLjEzMjE4MDEgWiIgaWQ9IkFtYXpvbi1FbGFzdGljLUt1YmVybmV0ZXMtU2VydmljZV9JY29uXzQ4X1NxdWlkIiBmaWxsPSIjRkZGRkZGIj48L3BhdGg+CiAgICA8L2c+Cjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="WP-LENDING-AWS" data-type="work_packages">
+<title>Build installment lending on AWS</title>
+<path d="M108.92 372.28 Q116 376 123.08 372.28 L188.92 337.72 Q196 334 188.92 330.28 L123.08 295.72 Q116 292 108.92 295.72 L43.08 330.28 Q36 334 43.08 337.72 Z" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.4"/>
+<text x="116" y="332.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Build installment</text>
+<text x="116" y="344.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">lending on AWS</text>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="834.4" x2="1072" y2="834.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="858.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 847.4)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="93.2" y="858.4" font-size="12" font-weight="400" fill="#343d50">data asset · 1</text>
+<g transform="translate(181.3 847.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="207.3" y="858.4" font-size="12" font-weight="400" fill="#343d50">system · 8</text>
+<g transform="translate(280.56 847.4)" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.4"><path d="M8.5 1.6a2 2 0 0 1 3 0l6.9 4.6a1.2 1.2 0 0 1 0 1.6l-6.9 4.6a2 2 0 0 1-3 0L1.6 7.8a1.2 1.2 0 0 1 0-1.6z"/></g>
+<text x="306.56" y="858.4" font-size="12" font-weight="400" fill="#343d50">work package · 1</text>
+<text x="28" y="880.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 869.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="880.4" font-size="12" font-weight="400" fill="#343d50">reads / writes</text>
+<g transform="translate(193.45 869.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="219.45" y="880.4" font-size="12" font-weight="400" fill="#343d50">work package affects system</text>
+<text x="28" y="914.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · change-footprint--wp-lending-aws · edit the model, not the picture</text></g>
+</svg>

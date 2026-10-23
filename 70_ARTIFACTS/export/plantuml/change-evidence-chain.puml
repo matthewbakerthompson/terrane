@@ -1,0 +1,72 @@
+@startuml
+' Change and Operations Evidence
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Change and Operations Evidence
+
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddRelTag("api-call", $legendText="API call")
+AddRelTag("event-over-https", $legendText="Event over HTTPS")
+AddRelTag("log-stream", $legendText="Log stream")
+AddRelTag("scheduled-file", $legendText="Scheduled file")
+AddRelTag("scheduled-pull", $legendText="Scheduled API pull")
+
+System_Ext(SYS_ARCHREPO, "Architecture repository", "Architecture models, standards, decisions, and the application inventory. Built with SaaS.", $tags="systems")
+' aac SYS_ARCHREPO: company_domain=""; hosting="SaaS"; technology="SaaS"
+System(SYS_CONTACT, "Contact center platform", "Contact center routing, voice, and digital channels.", $tags="systems")
+' aac SYS_CONTACT: company_domain=""
+System_Ext(SYS_CRM, "Dynamics 365 Customer Service", "Contact center desktop and case management for servicing agents. Built with Microsoft.", $tags="systems")
+' aac SYS_CRM: company_domain="Servicing"; hosting="SaaS"; technology="Microsoft"
+System(SYS_GRC, "Governance, risk and compliance platform", "Policy, control, issue, and risk register management.", $tags="systems")
+' aac SYS_GRC: company_domain=""
+System(SYS_HRIS, "Human resources information system", "Human resources information management.", $tags="systems")
+' aac SYS_HRIS: company_domain=""
+System(SYS_IAM, "Identity and access management", "Workforce identity, authentication, and access governance.", $tags="systems")
+' aac SYS_IAM: company_domain=""
+System_Ext(SYS_ITSM, "IT service management", "Incident, change, and service management. Built with SaaS.", $tags="systems")
+' aac SYS_ITSM: company_domain=""; hosting="SaaS"; technology="SaaS"
+System_Ext(SYS_SCREENING_VENDOR, "NICE Actimize Screening", "Financial Crime Screening, operated by NICE Actimize in their own tenancy. Contractually pinned to EU processing; the DPA restricts sub-processors and sets a 90-day retention ceiling. Built with NICE Actimize.", $tags="systems")
+' aac SYS_SCREENING_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="NICE Actimize"
+System_Ext(SYS_OBSERV, "Observability platform", "Logs, metrics, traces, and production monitoring. Built with SaaS.", $tags="systems")
+' aac SYS_OBSERV: company_domain=""; hosting="SaaS"; technology="SaaS"
+System_Ext(SYS_SIEM, "Security Monitoring", "Security information and event management: the audit trails of the estate and of every bought service, correlated in one place, and the console the incident response playbook runs from. Built with Microsoft Sentinel.", $tags="systems")
+' aac SYS_SIEM: company_domain="Enterprise Platform"; hosting="SaaS"; technology="Microsoft Sentinel"
+System_Ext(SYS_SCM, "Source control and CI/CD pipeline", "Source repositories, build, and deployment pipeline. Built with SaaS.", $tags="systems")
+' aac SYS_SCM: company_domain=""; hosting="SaaS"; technology="SaaS"
+System_Ext(SYS_TESTMGMT, "Test management and automation", "Test case management, automated test execution, and results. Built with SaaS.", $tags="systems")
+' aac SYS_TESTMGMT: company_domain=""; hosting="SaaS"; technology="SaaS"
+System_Ext(SYS_WORKTRACK, "Work and change tracking", "Work item and change tracking. Built with SaaS.", $tags="systems")
+' aac SYS_WORKTRACK: company_domain=""; hosting="SaaS"; technology="SaaS"
+
+Rel(SYS_CONTACT, SYS_CRM, "Contact Center Platform to CRM", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CONTACT"; target="SYS_CRM"; label="Contact Center Platform to CRM"; interface_id="INT-CONTACT-CRM"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="contact-center-integration"
+Rel(SYS_HRIS, SYS_IAM, "HR Information System to Identity and Access Management", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_HRIS"; target="SYS_IAM"; label="HR Information System to Identity and Access Management"; interface_id="INT-HRIS-IAM"; kind="scheduled-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Outbound"; patterns="workforce-identity-lifecycle"
+Rel(SYS_IAM, SYS_SIEM, "Identity and Access Management to Security Monitoring", "Syslog", $tags="log-stream")
+' aac rel: source="SYS_IAM"; target="SYS_SIEM"; label="Identity and Access Management to Security Monitoring"; interface_id="INT-IAM-SIEM"; kind="log-stream"; integration_style="Event"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; patterns="workforce-identity-lifecycle;observed-service"
+Rel(SYS_CRM, SYS_IAM, "CRM to Identity and Access Management", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CRM"; target="SYS_IAM"; label="CRM to Identity and Access Management"; interface_id="INT-CRM-IAM"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="workforce-identity-lifecycle"
+Rel(SYS_CONTACT, SYS_IAM, "Contact Center Platform to Identity and Access Management", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CONTACT"; target="SYS_IAM"; label="Contact Center Platform to Identity and Access Management"; interface_id="INT-CONTACT-IAM"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="workforce-identity-lifecycle"
+Rel(SYS_OBSERV, SYS_ITSM, "Observability Platform to IT Service Management", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_OBSERV"; target="SYS_ITSM"; label="Observability Platform to IT Service Management"; interface_id="INT-OBSERV-ITSM"; kind="event-over-https"; integration_style="Event"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="observed-service"
+Rel(SYS_SIEM, SYS_ITSM, "Security Monitoring to IT Service Management", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_SIEM"; target="SYS_ITSM"; label="Security Monitoring to IT Service Management"; interface_id="INT-SIEM-ITSM"; kind="event-over-https"; integration_style="Event"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="observed-service"
+Rel(SYS_SCM, SYS_ITSM, "Source Control and Pipeline to IT Service Management", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_SCM"; target="SYS_ITSM"; label="Source Control and Pipeline to IT Service Management"; interface_id="INT-SCM-ITSM"; kind="event-over-https"; integration_style="Event"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="change-evidence-chain"
+Rel(SYS_SCM, SYS_TESTMGMT, "Source Control and Pipeline to Test Management", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_SCM"; target="SYS_TESTMGMT"; label="Source Control and Pipeline to Test Management"; interface_id="INT-SCM-TESTMGMT"; kind="event-over-https"; integration_style="Event"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="change-evidence-chain"
+Rel(SYS_ITSM, SYS_GRC, "IT Service Management to Governance, Risk and Compliance", "HTTPS", $tags="scheduled-pull")
+' aac rel: source="SYS_ITSM"; target="SYS_GRC"; label="IT Service Management to Governance, Risk and Compliance"; interface_id="INT-ITSM-GRC"; kind="scheduled-pull"; integration_style="Batch"; auth_method="OAuth2"; frequency="Weekly"; direction="Outbound"; patterns="change-evidence-chain"
+Rel(SYS_WORKTRACK, SYS_GRC, "Work Tracking to Governance, Risk and Compliance", "HTTPS", $tags="scheduled-pull")
+' aac rel: source="SYS_WORKTRACK"; target="SYS_GRC"; label="Work Tracking to Governance, Risk and Compliance"; interface_id="INT-WORKTRACK-GRC"; kind="scheduled-pull"; integration_style="Batch"; auth_method="OAuth2"; frequency="Weekly"; direction="Outbound"; patterns="change-evidence-chain"
+Rel(SYS_ARCHREPO, SYS_GRC, "Architecture Repository to Governance, Risk and Compliance", "HTTPS", $tags="scheduled-pull")
+' aac rel: source="SYS_ARCHREPO"; target="SYS_GRC"; label="Architecture Repository to Governance, Risk and Compliance"; interface_id="INT-ARCHREPO-GRC"; kind="scheduled-pull"; integration_style="Batch"; auth_method="OAuth2"; frequency="Weekly"; direction="Outbound"; patterns="change-evidence-chain"
+Rel(SYS_ITSM, SYS_ARCHREPO, "IT Service Management to Architecture Repository", "HTTPS", $tags="scheduled-pull")
+' aac rel: source="SYS_ITSM"; target="SYS_ARCHREPO"; label="IT Service Management to Architecture Repository"; interface_id="INT-ITSM-ARCHREPO"; kind="scheduled-pull"; integration_style="Batch"; auth_method="OAuth2"; frequency="Daily"; direction="Outbound"; patterns="change-evidence-chain"
+Rel(SYS_SCREENING_VENDOR, SYS_SIEM, "NICE Actimize audit log to security monitoring", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_SCREENING_VENDOR"; target="SYS_SIEM"; label="NICE Actimize audit log to security monitoring"; interface_id="INT-SCREENING-VENDOR-AUDIT"; kind="event-over-https"; integration_style="Event"; auth_method="Token"; frequency="Realtime"; direction="Inbound"
+
+SHOW_LEGEND()
+@enduml

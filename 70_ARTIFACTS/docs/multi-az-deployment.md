@@ -1,0 +1,85 @@
+# Multi-AZ Deployment
+
+One workload account laid out for a resilience review: region, then availability zone, then tier. Each tier should appear in both zones. A tier that appears in only one zone is a resilience gap.
+
+```mermaid
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart TB
+  %% Multi-AZ Deployment
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_eu_west_2["region eu-west-2"]
+    direction TB
+    SYS_LENDING_WORKER["Installment Lending Async<br/>Worker<br/>[EKS · MSK]"]
+    SYS_LENDING_DB["Installment Lending<br/>Database<br/>[RDS]"]
+    SYS_LENDING_ALB["Installment Lending Load<br/>Balancer"]
+    SYS_LENDING_BUCKET["Installment Lending Object<br/>Store<br/>[S3]"]
+    SYS_LENDING_API["Installment Lending<br/>Service<br/>[EKS · Installment Lending Cache]"]
+    SYS_LENDING_WEB["Installment Lending Web<br/>[EKS]"]
+    subgraph grp_eu_west_2__eu_west_2a["zone eu-west-2a"]
+      direction TB
+      TS_NET_SUB_LEND_APP_A[/"Lending App Subnet A<br/>[Subnet]"/]
+      TS_NET_SUB_LEND_DATA_A[/"Lending Data Subnet A<br/>[Subnet]"/]
+      TS_NET_NAT_LEND_A[/"Lending NAT Gateway A<br/>[Private egress]"/]
+      TS_NET_SUB_LEND_PUB_A[/"Lending Public Subnet A<br/>[Subnet]"/]
+    end
+    subgraph grp_eu_west_2__eu_west_2b["zone eu-west-2b"]
+      direction TB
+      TS_NET_SUB_LEND_APP_B[/"Lending App Subnet B<br/>[Subnet]"/]
+      TS_NET_SUB_LEND_DATA_B[/"Lending Data Subnet B<br/>[Subnet]"/]
+      TS_NET_NAT_LEND_B[/"Lending NAT Gateway B<br/>[Private egress]"/]
+      TS_NET_SUB_LEND_PUB_B[/"Lending Public Subnet B<br/>[Subnet]"/]
+    end
+  end
+
+  SYS_LENDING_ALB -.->|"deployed in"| TS_NET_SUB_LEND_PUB_A
+  SYS_LENDING_ALB -.->|"deployed in"| TS_NET_SUB_LEND_PUB_B
+  SYS_LENDING_WEB -.->|"deployed in"| TS_NET_SUB_LEND_APP_A
+  SYS_LENDING_WEB -.->|"deployed in"| TS_NET_SUB_LEND_APP_B
+  SYS_LENDING_API -.->|"deployed in"| TS_NET_SUB_LEND_APP_A
+  SYS_LENDING_API -.->|"deployed in"| TS_NET_SUB_LEND_APP_B
+  SYS_LENDING_WORKER -.->|"deployed in"| TS_NET_SUB_LEND_APP_A
+  SYS_LENDING_WORKER -.->|"deployed in"| TS_NET_SUB_LEND_APP_B
+  SYS_LENDING_DB -.->|"deployed in"| TS_NET_SUB_LEND_DATA_A
+  SYS_LENDING_DB -.->|"deployed in"| TS_NET_SUB_LEND_DATA_B
+  SYS_LENDING_BUCKET -.->|"deployed in"| TS_NET_SUB_LEND_DATA_A
+  TS_NET_SUB_LEND_APP_A -->|"egress route"| TS_NET_NAT_LEND_A
+  TS_NET_SUB_LEND_APP_B -->|"egress route"| TS_NET_NAT_LEND_B
+
+  classDef s_systems__private_app fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__private_data fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__public fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  classDef s_tech_services__private_app fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
+  classDef s_tech_services__private_data fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
+  classDef s_tech_services__public fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
+  class SYS_LENDING_API,SYS_LENDING_WEB,SYS_LENDING_WORKER s_systems__private_app;
+  class SYS_LENDING_BUCKET,SYS_LENDING_DB s_systems__private_data;
+  class SYS_LENDING_ALB s_systems__public;
+  class TS_NET_SUB_LEND_APP_A,TS_NET_SUB_LEND_APP_B s_tech_services__private_app;
+  class TS_NET_SUB_LEND_DATA_A,TS_NET_SUB_LEND_DATA_B s_tech_services__private_data;
+  class TS_NET_NAT_LEND_A,TS_NET_NAT_LEND_B,TS_NET_SUB_LEND_PUB_A,TS_NET_SUB_LEND_PUB_B s_tech_services__public;
+  classDef boundary1 fill:#f5fbfb,stroke:#00a4a6,color:#0b6e70,stroke-dasharray:6 3;
+  class grp_eu_west_2 boundary1;
+  classDef boundary2 fill:#f6f9fd,stroke:#147eba,color:#0f5f8c,stroke-dasharray:6 3;
+  class grp_eu_west_2__eu_west_2a,grp_eu_west_2__eu_west_2b boundary2;
+```
+
+The same view as the app draws it, written beside the Mermaid by `terrane render`:
+
+![Multi-AZ Deployment](../svg/multi-az-deployment.svg)
+
+**Hue is the entity type.**
+
+| | Entity type |
+|---|---|
+| `#4338ca` | systems |
+| `#c2410c` | tech services |
+
+**Boundaries** are drawn the way their provider draws them.
+
+| Border | Boundary |
+|---|---|
+| dashed `#00a4a6` | AWS region |
+| dashed `#147eba` | AWS availability zone |
+
+14 entities, 13 relationships. Generated from the model; edit the model, not this file.

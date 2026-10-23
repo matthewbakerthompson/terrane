@@ -1,0 +1,39 @@
+@startuml
+' Handle deceased cardholder and estate — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Handle deceased cardholder and estate — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_COLL_06, "Bankruptcy, Deceased & Legal Account Handling", "Handle accounts under legal protection or in estate.", $tags="capabilities")
+  ' aac CAP_COLL_06: company_domain="Collections"
+}
+Boundary(b_Process, "Process") {
+  System(P_RECOVERY_004, "Handle deceased cardholder and estate", "Verify a deceased notification and manage the account through estate resolution. Estate handling balances recovery with conduct: verified notification stops collection contact, and the claim proceeds through the estate at the estate's pace.", $tags="processes")
+  ' aac P_RECOVERY_004: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_COLLECT_API, "Collections Workspace Service", "The service behind the Collections Workspace API, backing the channel. Built with AKS · Collections Workspace Cache.", $tags="systems")
+  ' aac SYS_COLLECT_API: company_domain="Collections"; hosting="Azure"; technology="AKS · Collections Workspace Cache"
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+}
+
+Rel(P_RECOVERY_004, SYS_COLLECT_API, "Primary")
+' aac rel: source="P_RECOVERY_004"; target="SYS_COLLECT_API"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_RECOVERY_004, SYS_CORE_LEDGER, "Supporting")
+' aac rel: source="P_RECOVERY_004"; target="SYS_CORE_LEDGER"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_RECOVERY_004, SYS_DOC, "Supporting")
+' aac rel: source="P_RECOVERY_004"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_RECOVERY_004, CAP_COLL_06, "supports")
+' aac rel: source="P_RECOVERY_004"; target="CAP_COLL_06"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

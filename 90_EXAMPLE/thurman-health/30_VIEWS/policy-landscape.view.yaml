@@ -1,0 +1,39 @@
+view_id: policy-landscape
+title: Policies, Their Controls, and Their Subjects
+category: Governance
+kind: report
+description: >
+  Each policy, the controls that implement it, and the systems and data it
+  applies to directly. A policy with subjects but no controls is only a
+  statement of intent; a policy with controls but no subjects is enforced
+  somewhere the model has not recorded.
+group_by: type
+node_label: name
+renderers: [mermaid]
+
+scope:
+  include:
+    - type: policies
+  expand:
+    # `policy_id` is a reference field on a control, followed backwards: every
+    # control that names this policy.
+    - relation: policy_id
+      depth: 1
+      types: [controls]
+    - relation: system_subject_to_policy
+      depth: 1
+      types: [systems]
+    - relation: data_subject_to_policy
+      depth: 1
+      types: [data_assets]
+
+edges:
+  - via: policy_id
+    text: gives effect to
+  - via: system_subject_to_policy
+    text: binds
+  - via: data_subject_to_policy
+    text: binds
+
+limits:
+  max_nodes: 120

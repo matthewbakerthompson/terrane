@@ -1,0 +1,39 @@
+@startuml
+' Serve digital self-service transaction — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Serve digital self-service transaction — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_SERV_03, "Digital Self-Service", "Enable cardholders to self-serve in web and mobile channels.", $tags="capabilities")
+  ' aac CAP_SERV_03: company_domain="Servicing"
+}
+Boundary(b_Process, "Process") {
+  System(P_DIGITAL_002, "Serve digital self-service transaction", "Execute a cardholder self-service action in web or mobile without agent involvement. Self-service actions execute against the same core services as agent actions, with the same entitlements; the channel changes, the control does not.", $tags="processes")
+  ' aac P_DIGITAL_002: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CARDSVC_WEB, "Card Servicing Web", "Browser front end for Card Servicing. Built with AKS.", $tags="systems")
+  ' aac SYS_CARDSVC_WEB: company_domain="Servicing"; hosting="Azure"; technology="AKS"
+  System(SYS_MOBILE, "Cardholder mobile application", "Cardholder mobile self-service.", $tags="systems")
+  ' aac SYS_MOBILE: company_domain=""
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+}
+
+Rel(P_DIGITAL_002, SYS_CARDSVC_WEB, "Primary")
+' aac rel: source="P_DIGITAL_002"; target="SYS_CARDSVC_WEB"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_DIGITAL_002, SYS_MOBILE, "Supporting")
+' aac rel: source="P_DIGITAL_002"; target="SYS_MOBILE"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DIGITAL_002, SYS_CORE_LEDGER, "Supporting")
+' aac rel: source="P_DIGITAL_002"; target="SYS_CORE_LEDGER"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DIGITAL_002, CAP_SERV_03, "supports")
+' aac rel: source="P_DIGITAL_002"; target="CAP_SERV_03"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

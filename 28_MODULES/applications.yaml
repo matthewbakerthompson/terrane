@@ -1,0 +1,124 @@
+# The standard applications: kits of the components in application-parts.yaml
+# and product-parts.yaml.
+#
+# A kit is a part made of parts. Picking one in the Assemble panel picks its
+# members, each under its own name, so a product can still do without one of
+# them, tell one of them something, or add a part the kit did not bring. The
+# application types in 29_TYPES/ require these: an internal tool is the
+# internal-tool kit plus whatever it offers. Nothing here names a cloud; the
+# members name blocks and kinds, and the landing zone answers.
+
+- module_id: web-app-baseline
+  name: Web application
+  category: Application
+  optional: true
+  description: >
+    The standard web application: a browser front end behind the public
+    front door, the API behind it, and the operational database. The parts
+    every one of these starts with, picked in one go.
+  modules:
+    - module: api-service
+    - module: web-channel
+    - module: public-web-entry
+    - module: relational-datastore
+
+- module_id: mobile-app-baseline
+  name: Mobile application
+  category: Application
+  optional: true
+  description: >
+    The standard mobile application: the app in the stores, the API it calls
+    through the shared gateway, and the operational database.
+  modules:
+    - module: api-service
+    - module: mobile-channel
+    - module: relational-datastore
+
+- module_id: internal-tool-baseline
+  name: Internal tool
+  category: Application
+  optional: true
+  description: >
+    The standard internal tool: a console behind workforce sign-on, the API
+    behind it, and the operational database. No public front door.
+  modules:
+    - module: api-service
+    - module: admin-console
+    - module: relational-datastore
+
+- module_id: event-service-baseline
+  name: Event-driven service
+  category: Application
+  optional: true
+  description: >
+    The standard event-driven service: consumes another system's events,
+    does the work in a worker, and publishes its own events for whoever is
+    next. An API for whatever still has to be asked directly.
+  parameters:
+    - name: source_system
+      required: true
+      description: The system whose events the service consumes, as a system id
+  modules:
+    - module: api-service
+    - module: event-consumer
+      with:
+        source_system: "{source_system}"
+    - module: async-worker
+    - module: event-publisher
+
+- module_id: batch-app-baseline
+  name: Batch application
+  category: Application
+  optional: true
+  description: >
+    The standard batch application: scheduled jobs with a window, the API
+    they call, and the operational database they work over.
+  modules:
+    - module: api-service
+    - module: scheduled-job
+    - module: relational-datastore
+
+- module_id: adapter-baseline
+  name: Integration adapter
+  category: Application
+  optional: true
+  description: >
+    The standard integration with a partner system: an adapter that owns the
+    mapping, retry and credentials, and the API it serves.
+  parameters:
+    - name: partner
+      required: true
+      description: Who is on the other end, as a name
+    - name: target_system
+      required: true
+      description: The partner's system in the model, as a system id
+  modules:
+    - module: api-service
+    - module: partner-adapter
+      with:
+        partner: "{partner}"
+        target_system: "{target_system}"
+
+- module_id: ml-service-baseline
+  name: AI inference service
+  category: Application
+  optional: true
+  description: >
+    The standard AI service: an inference service that calls the landing
+    zone's foundation model service, with prompts, retrieval, guardrails and
+    the audit log in one place, and the API in front of it.
+  modules:
+    - module: api-service
+    - module: ml-inference-service
+
+- module_id: reporting-baseline
+  name: Reporting application
+  category: Application
+  optional: true
+  description: >
+    The standard reporting application: reports and extracts over an
+    operational database, behind an API, and never in the transaction path.
+  modules:
+    - module: api-service
+    - module: relational-datastore
+    - module: report-service

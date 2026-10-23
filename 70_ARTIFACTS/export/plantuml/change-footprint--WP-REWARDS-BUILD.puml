@@ -1,0 +1,49 @@
+@startuml
+' Build rewards redemption on Azure — Footprint
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Build rewards redemption on Azure — Footprint
+
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("work_packages", $bgColor="#ccfbf1", $borderColor="#0d9488", $fontColor="#0f172a", $legendText="work package")
+
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_REWARDS_OPERATIONAL, "Rewards Redemption operational data", "Operational records held by Rewards Redemption.", $tags="data_assets")
+  ' aac DA_REWARDS_OPERATIONAL: company_domain="Card Issuing"
+}
+Boundary(b_System, "System") {
+  System(SYS_REWARDS_WORKER, "Rewards Redemption Async Worker", "Consumes redemption events and fulfills them: statement credits posted to the ledger, gift-card orders placed with the fulfillment partner. Built with AKS · Event Hubs.", $tags="systems")
+  ' aac SYS_REWARDS_WORKER: company_domain="Card Issuing"; hosting="Azure"; technology="AKS · Event Hubs"
+  System(SYS_REWARDS_STORE, "Rewards Redemption Database", "Relational database for Rewards Redemption, encrypted with a customer managed key. Built with Azure SQL.", $tags="systems")
+  ' aac SYS_REWARDS_STORE: company_domain="Card Issuing"; hosting="Azure"; technology="Azure SQL"
+  System(SYS_REWARDS_EVENTS, "Rewards Redemption Event Publisher", "Publishes Rewards Redemption domain events onto the enterprise bus. Built with Service Bus.", $tags="systems")
+  ' aac SYS_REWARDS_EVENTS: company_domain="Card Issuing"; hosting="Azure"; technology="Service Bus"
+  System(SYS_REWARDS_API, "Rewards Redemption Service", "Domain service for Rewards Redemption, behind the Rewards Redemption API. Built with AKS · Rewards Redemption Cache.", $tags="systems")
+  ' aac SYS_REWARDS_API: company_domain="Card Issuing"; hosting="Azure"; technology="AKS · Rewards Redemption Cache"
+  System(SYS_REWARDS_WEB, "Rewards Redemption Web", "Customer-facing front end for Rewards Redemption. Built with AKS.", $tags="systems")
+  ' aac SYS_REWARDS_WEB: company_domain="Card Issuing"; hosting="Azure"; technology="AKS"
+}
+Boundary(b_Work_Package, "Work Package") {
+  System(WP_REWARDS_BUILD, "Build rewards redemption on Azure", "The first product on the Azure digital shape: the catalog and redemption web front end and API, the product datastore, the event publisher, and the worker that fulfills a redemption after the response. Balances stay with the proposed rewards ledger; this is the channel in front of it.", $tags="work_packages")
+  ' aac WP_REWARDS_BUILD: company_domain="Card Issuing"
+}
+
+Rel(WP_REWARDS_BUILD, SYS_REWARDS_WEB, "Builds")
+' aac rel: source="WP_REWARDS_BUILD"; target="SYS_REWARDS_WEB"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_REWARDS_BUILD, SYS_REWARDS_API, "Builds")
+' aac rel: source="WP_REWARDS_BUILD"; target="SYS_REWARDS_API"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_REWARDS_BUILD, SYS_REWARDS_STORE, "Builds")
+' aac rel: source="WP_REWARDS_BUILD"; target="SYS_REWARDS_STORE"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_REWARDS_BUILD, SYS_REWARDS_EVENTS, "Builds")
+' aac rel: source="WP_REWARDS_BUILD"; target="SYS_REWARDS_EVENTS"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_REWARDS_BUILD, SYS_REWARDS_WORKER, "Builds")
+' aac rel: source="WP_REWARDS_BUILD"; target="SYS_REWARDS_WORKER"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(SYS_REWARDS_API, DA_REWARDS_OPERATIONAL, "ReadWrite")
+' aac rel: source="SYS_REWARDS_API"; target="DA_REWARDS_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_REWARDS_STORE, DA_REWARDS_OPERATIONAL, "ReadWrite")
+' aac rel: source="SYS_REWARDS_STORE"; target="DA_REWARDS_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+
+SHOW_LEGEND()
+@enduml

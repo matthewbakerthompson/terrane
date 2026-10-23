@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="518.4" viewBox="0 0 1100 518.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Model platform</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Model platform</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   4 nodes · 3 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">Where models are trained, registered, served and watched: the platform, the store that holds every version and its training data, the catalog that says what each</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">model is for and what fed it, and the monitoring that notices drift before a regulator does.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(359 111.7)">
+<g class="edge" data-id="e0::object-store::ml-platform">
+<path d="M125 75 L125 115.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M125 119 L120.22 109.43 L129.78 109.43 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e1::ml-platform::catalog">
+<path d="M97 182 L97 222.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M97 226 L92.22 216.43 L101.78 216.43 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e2::ml-platform::observability">
+<path d="M153 182 L153 190 A8 8 0 0 0 161 198 L275 198 A10 10 0 0 1 285 208 L285 222.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M285 226 L280.21 216.43 L289.79 216.43 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="ml-platform" data-type="tech_services">
+<title>Machine learning platform</title>
+<path d="M40 119 L153.31 119 L210 182 L96.69 182 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="121" y="143.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Machine learning</text>
+<text x="121" y="155.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">platform</text>
+<text x="125" y="176.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Amazon SageMaker AI · Microsoft Foundr…</text>
+<svg x="181" y="124" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M8 2.5l1.4 3.6L13 7.5l-3.6 1.4L8 12.5 6.6 8.9 3 7.5l3.6-1.4z M12.5 2v2 M11.5 3h2" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="object-store" data-type="tech_services">
+<title>Object store</title>
+<path d="M40 12 L153.31 12 L210 75 L96.69 75 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="121" y="42.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Object store</text>
+<text x="125" y="69.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Amazon S3 · Azure Blob Storage · Cloud S…</text>
+<svg x="181" y="17" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M2 5h12v6H2z M11 8h1" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="catalog" data-type="tech_services">
+<title>Data catalog</title>
+<path d="M12 226 L125.31 226 L182 289 L68.69 289 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="93" y="256.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Data catalog</text>
+<text x="97" y="283.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AWS Glue Data Catalog · Microsoft Purvie…</text>
+<svg x="153" y="231" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M8 3c3.3 0 5 .9 5 2s-1.7 2-5 2-5-.9-5-2 1.7-2 5-2z M3 5v6c0 1.1 1.7 2 5 2s5-.9 5-2V5" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="observability" data-type="tech_services">
+<title>Observability</title>
+<path d="M200 226 L313.31 226 L370 289 L256.69 289 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="281" y="256.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Observability</text>
+<text x="285" y="283.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Amazon CloudWatch · Azure Monitor · Clo…</text>
+<svg x="341" y="231" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M2.5 11a5.5 5.5 0 0 1 11 0 M8 11l2.5-4" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="416.4" x2="1072" y2="416.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="440.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 429.4)" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"><path d="M5 1h14l-4 12H1z"/></g>
+<text x="93.2" y="440.4" font-size="12" font-weight="400" fill="#343d50">technology service · 4</text>
+<text x="28" y="462.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 451.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="462.4" font-size="12" font-weight="400" fill="#343d50">connects to</text>
+<text x="28" y="496.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · block--model-platform · edit the model, not the picture</text></g>
+</svg>

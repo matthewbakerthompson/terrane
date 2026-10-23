@@ -1,0 +1,240 @@
+@startuml
+' Core Card Ledger — Architecture
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Core Card Ledger — Architecture
+
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("offered_interfaces", $bgColor="#e6ecff", $borderColor="#6366f1", $fontColor="#0f172a", $legendText="offered interface")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("tech_services", $bgColor="#fed7aa", $borderColor="#c2410c", $fontColor="#0f172a", $legendText="technology service")
+AddRelTag("api-call", $legendText="API call")
+AddRelTag("event", $legendText="Event on the bus")
+AddRelTag("pipeline-load", $legendText="Pipeline load")
+AddRelTag("queued-request", $legendText="Request on a queue")
+AddRelTag("scheduled-file", $legendText="Scheduled file")
+
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_CARD_ACCOUNT, "Card account master", "Account, balance, limit and status records for every card account.", $tags="data_assets")
+  ' aac DA_CARD_ACCOUNT: company_domain="Card Issuing"
+  SystemDb(DA_CARDSVC_OPERATIONAL, "Card Servicing operational data", "Operational records held by Card Servicing.", $tags="data_assets")
+  ' aac DA_CARDSVC_OPERATIONAL: company_domain="Servicing"
+  SystemDb(DA_TRANSACTION, "Card transaction history", "Authorized, cleared and settled card transactions.", $tags="data_assets")
+  ' aac DA_TRANSACTION: company_domain="Payments"
+  SystemDb(DA_COLLECT_ACT, "Collections activity record", "Contact attempts, dispositions, promises, and arrangement terms.", $tags="data_assets")
+  ' aac DA_COLLECT_ACT: company_domain=""
+  SystemDb(DA_COLLECT_OPERATIONAL, "Collections Workspace operational data", "Operational records held by Collections Workspace.", $tags="data_assets")
+  ' aac DA_COLLECT_OPERATIONAL: company_domain="Collections"
+  SystemDb(DA_APPLICATION, "Credit application record", "Application content, identity evidence, and decision inputs, including bureau pulls.", $tags="data_assets")
+  ' aac DA_APPLICATION: company_domain=""
+  SystemDb(DA_BUREAU_FILE, "Credit bureau furnishing file", "Monthly tradeline furnishing extract and consumer-dispute responses.", $tags="data_assets")
+  ' aac DA_BUREAU_FILE: company_domain=""
+  SystemDb(DA_CUSTOMER_PROFILE, "Customer profile", "Contact details, preferences and servicing history.", $tags="data_assets")
+  ' aac DA_CUSTOMER_PROFILE: company_domain="Servicing"
+  SystemDb(DA_DISPUTE_CASE, "Dispute case file", "Claims, evidence, correspondence, timers, and determinations for error resolution.", $tags="data_assets")
+  ' aac DA_DISPUTE_CASE: company_domain=""
+  SystemDb(DA_DISPUTES_VENDOR_FEED, "Dispute Management Platform vendor feed", "Landed vendor extract from Pegasystems.", $tags="data_assets")
+  ' aac DA_DISPUTES_VENDOR_FEED: company_domain="Servicing"
+  SystemDb(DA_GL, "General ledger entries", "Posted financial entries, settlement and reconciliation balances.", $tags="data_assets")
+  ' aac DA_GL: company_domain=""
+  SystemDb(DA_LENDING_OPERATIONAL, "Installment Lending operational data", "Operational records held by Installment Lending.", $tags="data_assets")
+  ' aac DA_LENDING_OPERATIONAL: company_domain="Lending"
+  SystemDb(DA_MODEL_FEAT, "Model feature store", "Curated features and scores for credit, fraud, and collections models.", $tags="data_assets")
+  ' aac DA_MODEL_FEAT: company_domain=""
+  SystemDb(DA_SCREENING_OUTCOMES, "NICE Actimize Screening outcomes", "What the vendor decided and why, landed our side. Held because a decision we cannot explain is a decision we cannot defend.", $tags="data_assets")
+  ' aac DA_SCREENING_OUTCOMES: company_domain="Risk and Compliance"
+  SystemDb(DA_PAYMENT_INSTR, "Payment instructions", "Cardholder payment methods and instructions: ACH details, scheduled payments.", $tags="data_assets")
+  ' aac DA_PAYMENT_INSTR: company_domain=""
+  SystemDb(DA_CLIENT_SERV, "Servicing client program data", "Client program configuration, SLAs, and reporting extracts for serviced portfolios.", $tags="data_assets")
+  ' aac DA_CLIENT_SERV: company_domain=""
+  SystemDb(DA_STATEMENTS, "Statement archive", "Rendered periodic statements and disclosures as delivered.", $tags="data_assets")
+  ' aac DA_STATEMENTS: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_AUTH_SWITCH, "Authorization Switch", "Real-time card authorization switch connected to the scheme networks.", $tags="systems")
+  ' aac SYS_AUTH_SWITCH: company_domain="Payments"; hosting="On-prem"
+  System_Ext(SYS_CARD_FULFILL, "Card production and fulfillment", "Card production, personalization, and fulfillment. Built with external.", $tags="systems")
+  ' aac SYS_CARD_FULFILL: company_domain=""; hosting="External"; technology="external"
+  System(SYS_CARDSVC_API, "Card Servicing Service", "The service behind the Card Servicing API, backing the channel. Built with AKS · Card Servicing Cache.", $tags="systems")
+  ' aac SYS_CARDSVC_API: company_domain="Servicing"; hosting="Azure"; technology="AKS · Card Servicing Cache"
+  System(SYS_COLLECT_API, "Collections Workspace Service", "The service behind the Collections Workspace API, backing the channel. Built with AKS · Collections Workspace Cache.", $tags="systems")
+  ' aac SYS_COLLECT_API: company_domain="Collections"; hosting="Azure"; technology="AKS · Collections Workspace Cache"
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(OI_LEDGER_QUEUE, "Core Ledger request queue", "Postings, holds and balance requests put on the ledger's MQ request queue, answered on the reply queue in the order they arrived. Built with MQ.", $tags="offered_interfaces")
+  ' aac OI_LEDGER_QUEUE: company_domain="Card Issuing"; technology="MQ"
+  System(SYS_BUREAU_GW, "Credit bureau gateway", "Credit bureau furnishing and consumer dispute exchange.", $tags="systems")
+  ' aac SYS_BUREAU_GW: company_domain=""
+  System(SYS_DISPUTES_GATEWAY, "Dispute Management Platform Integration Gateway", "Our side of the Pegasystems integration: mapping, retry and audit. Built with AKS.", $tags="systems")
+  ' aac SYS_DISPUTES_GATEWAY: company_domain="Servicing"; hosting="Azure"; technology="AKS"
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+  System_Ext(SYS_CRM, "Dynamics 365 Customer Service", "Contact center desktop and case management for servicing agents. Built with Microsoft.", $tags="systems")
+  ' aac SYS_CRM: company_domain="Servicing"; hosting="SaaS"; technology="Microsoft"
+  System(SYS_DATA_INGEST, "Enterprise Data Ingestion Hub", "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse. Built with Service Bus · Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_DATA_INGEST: company_domain="Data and Analytics"; hosting="Azure"; technology="Service Bus · Snowflake Data Cloud"
+  System(SYS_AML, "Financial crimes platform", "Sanctions screening, transaction monitoring, and case management.", $tags="systems")
+  ' aac SYS_AML: company_domain=""
+  System(SYS_GL, "General ledger", "General ledger and financial accounting.", $tags="systems")
+  ' aac SYS_GL: company_domain=""
+  System(SYS_LENDING_HUB, "Installment Lending Integration Hub", "Mediates every Installment Lending integration: one place for mapping, routing, retry and the audit trail, so the spokes do not each carry their own.", $tags="systems")
+  ' aac SYS_LENDING_HUB: company_domain="Lending"; hosting="AWS"
+  System(SYS_LENDING_API, "Installment Lending Service", "Domain service for Installment Lending, behind the Installment Lending API. Built with EKS · Installment Lending Cache.", $tags="systems")
+  ' aac SYS_LENDING_API: company_domain="Lending"; hosting="AWS"; technology="EKS · Installment Lending Cache"
+  System(SYS_ORIG_DECISION, "Originations decision engine", "Application processing and credit decision execution.", $tags="systems")
+  ' aac SYS_ORIG_DECISION: company_domain=""
+  System(SYS_PAYMENT_GW, "Payment capture gateway", "Payment capture across ACH, debit, lockbox, and wallet channels.", $tags="systems")
+  ' aac SYS_PAYMENT_GW: company_domain=""
+  System(SYS_RECON, "Reconciliation platform", "Automated reconciliation and exception management.", $tags="systems")
+  ' aac SYS_RECON: company_domain=""
+  System(SYS_REWARDS_WORKER, "Rewards Redemption Async Worker", "Consumes redemption events and fulfills them: statement credits posted to the ledger, gift-card orders placed with the fulfillment partner. Built with AKS · Event Hubs.", $tags="systems")
+  ' aac SYS_REWARDS_WORKER: company_domain="Card Issuing"; hosting="Azure"; technology="AKS · Event Hubs"
+  System(SYS_CLIENT_PORTAL, "Servicing client portal", "Client reporting, data exchange, and interaction.", $tags="systems")
+  ' aac SYS_CLIENT_PORTAL: company_domain=""
+  System(SYS_STATEMENTS, "Statement Generation", "Composes, renders and dispatches customer statements.", $tags="systems")
+  ' aac SYS_STATEMENTS: company_domain="Servicing"; hosting="On-prem"
+}
+Boundary(b_Technology_Service, "Technology Service") {
+  Deployment_Node(TS_AWS_CLOUDWATCH, "Amazon CloudWatch", "Observability", "Metrics, logs and alarms for every workload in the landing zone.", $tags="tech_services") {
+    ' aac TS_AWS_CLOUDWATCH: company_domain="Enterprise Platform"; technology="Observability"
+  }
+  Deployment_Node(TS_AWS_EKS, "Amazon EKS", "Container platform", "Managed Kubernetes running the containerized workloads.", $tags="tech_services") {
+    ' aac TS_AWS_EKS: company_domain="Enterprise Platform"; technology="Container platform"
+  }
+  Deployment_Node(TS_AWS_PRIVATELINK, "AWS PrivateLink", "Private egress", "Private egress to partner and vendor endpoints without internet transit.", $tags="tech_services") {
+    ' aac TS_AWS_PRIVATELINK: company_domain="Enterprise Platform"; technology="Private egress"
+  }
+}
+
+Rel(SYS_ORIG_DECISION, SYS_CORE_LEDGER, "Originations Decision Engine to Core Card Ledger", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_ORIG_DECISION"; target="SYS_CORE_LEDGER"; label="Originations Decision Engine to Core Card Ledger"; interface_id="INT-ORIG-LEDGER-BOARD"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="windowed-batch"
+Rel(SYS_ORIG_DECISION, SYS_DOC, "Originations Decision Engine to Document Management", "AMQP", $tags="event")
+' aac rel: source="SYS_ORIG_DECISION"; target="SYS_DOC"; label="Originations Decision Engine to Document Management"; interface_id="INT-ORIG-DOC"; kind="event"; integration_style="Event"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="customer-communication-archive"
+Rel(SYS_CORE_LEDGER, SYS_CARD_FULFILL, "Core Card Ledger to Card Production", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_CARD_FULFILL"; label="Core Card Ledger to Card Production"; interface_id="INT-LEDGER-CARD-FULFILL"; kind="scheduled-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Outbound"; patterns="partner-file-exchange"
+Rel(SYS_PAYMENT_GW, OI_LEDGER_QUEUE, "Payment Capture Gateway to Core Card Ledger", "MQ", $tags="queued-request")
+' aac rel: source="SYS_PAYMENT_GW"; target="OI_LEDGER_QUEUE"; label="Payment Capture Gateway to Core Card Ledger"; interface_id="INT-PAYMENT-GW-LEDGER"; kind="queued-request"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; patterns="payment-capture-and-posting"; offered_interface_id="OI-LEDGER-QUEUE"
+Rel(SYS_PAYMENT_GW, SYS_GL, "Payment Capture Gateway to General Ledger", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_PAYMENT_GW"; target="SYS_GL"; label="Payment Capture Gateway to General Ledger"; interface_id="INT-PAYMENT-GW-GL"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="payment-capture-and-posting"
+Rel(SYS_CORE_LEDGER, SYS_GL, "Core Card Ledger to General Ledger", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_GL"; label="Core Card Ledger to General Ledger"; interface_id="INT-LEDGER-GL"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="windowed-batch"
+Rel(SYS_CORE_LEDGER, SYS_RECON, "Core Card Ledger to Reconciliation Platform", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_RECON"; label="Core Card Ledger to Reconciliation Platform"; interface_id="INT-LEDGER-RECON"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="windowed-batch"
+Rel(SYS_GL, SYS_RECON, "General Ledger to Reconciliation Platform", "SQL", $tags="pipeline-load")
+' aac rel: source="SYS_GL"; target="SYS_RECON"; label="General Ledger to Reconciliation Platform"; interface_id="INT-GL-RECON"; kind="pipeline-load"; integration_style="Batch"; auth_method="ManagedIdentity"; frequency="Daily"; direction="Outbound"; patterns="windowed-batch"
+Rel(SYS_CORE_LEDGER, SYS_BUREAU_GW, "Core Card Ledger to Credit Bureau Gateway", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_BUREAU_GW"; label="Core Card Ledger to Credit Bureau Gateway"; interface_id="INT-LEDGER-BUREAU-GW"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Monthly"; direction="Outbound"; patterns="regulatory-file-furnishing"
+Rel(SYS_BUREAU_GW, SYS_CRM, "Credit Bureau Gateway to CRM", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_BUREAU_GW"; target="SYS_CRM"; label="Credit Bureau Gateway to CRM"; interface_id="INT-BUREAU-GW-CRM"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="regulatory-file-furnishing"
+Rel(SYS_COLLECT_API, SYS_DOC, "Collections Platform to Document Management", "AMQP", $tags="event")
+' aac rel: source="SYS_COLLECT_API"; target="SYS_DOC"; label="Collections Platform to Document Management"; interface_id="INT-COLLECT-DOC"; kind="event"; integration_style="Event"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="customer-communication-archive"
+Rel(SYS_CORE_LEDGER, SYS_DOC, "Core Card Ledger to Document Management", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_DOC"; label="Core Card Ledger to Document Management"; interface_id="INT-LEDGER-DOC"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="customer-communication-archive"
+Rel(SYS_STATEMENTS, SYS_DOC, "Statement Generation to Document Management", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_STATEMENTS"; target="SYS_DOC"; label="Statement Generation to Document Management"; interface_id="INT-STATEMENTS-DOC"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="customer-communication-archive"
+Rel(SYS_CLIENT_PORTAL, SYS_DOC, "Document Management to Servicing Client Portal", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CLIENT_PORTAL"; target="SYS_DOC"; label="Document Management to Servicing Client Portal"; interface_id="INT-DOC-CLIENT-PORTAL"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="api-front-door"
+Rel(SYS_CORE_LEDGER, SYS_CLIENT_PORTAL, "Core Card Ledger to Servicing Client Portal", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_CLIENT_PORTAL"; label="Core Card Ledger to Servicing Client Portal"; interface_id="INT-LEDGER-CLIENT-PORTAL"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="windowed-batch"
+Rel(SYS_CRM, SYS_DISPUTES_GATEWAY, "CRM to Dispute Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CRM"; target="SYS_DISPUTES_GATEWAY"; label="CRM to Dispute Gateway"; interface_id="INT-CRM-DISPUTES"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="private-egress-to-saas"
+Rel(SYS_CORE_LEDGER, SYS_AML, "Core Card Ledger to Financial Crimes Platform", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_AML"; label="Core Card Ledger to Financial Crimes Platform"; interface_id="INT-LEDGER-AML"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="windowed-batch"
+Rel(SYS_AUTH_SWITCH, OI_LEDGER_QUEUE, "Authorization Switch to Core Ledger", "MQ", $tags="queued-request")
+' aac rel: source="SYS_AUTH_SWITCH"; target="OI_LEDGER_QUEUE"; label="Authorization Switch to Core Ledger"; interface_id="INT-AUTH-LEDGER"; kind="queued-request"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-LEDGER-QUEUE"
+Rel(SYS_CARDSVC_API, OI_LEDGER_QUEUE, "Card Servicing Service to Core Ledger", "MQ", $tags="queued-request")
+' aac rel: source="SYS_CARDSVC_API"; target="OI_LEDGER_QUEUE"; label="Card Servicing Service to Core Ledger"; interface_id="INT-CARDSVC-API-LEDGER"; kind="queued-request"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-LEDGER-QUEUE"
+Rel(SYS_COLLECT_API, OI_LEDGER_QUEUE, "Collections Service to Core Ledger", "MQ", $tags="queued-request")
+' aac rel: source="SYS_COLLECT_API"; target="OI_LEDGER_QUEUE"; label="Collections Service to Core Ledger"; interface_id="INT-COLLECT-API-LEDGER"; kind="queued-request"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-LEDGER-QUEUE"
+Rel(SYS_CRM, SYS_CORE_LEDGER, "Servicing CRM to Core Ledger", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CRM"; target="SYS_CORE_LEDGER"; label="Servicing CRM to Core Ledger"; interface_id="INT-CRM-LEDGER"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_CORE_LEDGER, SYS_DATA_INGEST, "Core Ledger to Data Ingestion Hub", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_DATA_INGEST"; label="Core Ledger to Data Ingestion Hub"; interface_id="INT-LEDGER-INGEST"; kind="scheduled-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Outbound"
+Rel(SYS_CORE_LEDGER, SYS_STATEMENTS, "Core Ledger to Statement Generation", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_STATEMENTS"; label="Core Ledger to Statement Generation"; interface_id="INT-LEDGER-STATEMENTS"; kind="scheduled-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Monthly"; direction="Outbound"
+Rel(SYS_LENDING_API, OI_LEDGER_QUEUE, "Installment Lending Service to Core Card Ledger", "MQ", $tags="queued-request")
+' aac rel: source="SYS_LENDING_API"; target="OI_LEDGER_QUEUE"; label="Installment Lending Service to Core Card Ledger"; interface_id="INT-LENDING-API-LEDGER"; kind="queued-request"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-LEDGER-QUEUE"
+Rel(SYS_CORE_LEDGER, SYS_DISPUTES_GATEWAY, "SYS-CORE-LEDGER to Dispute Management Platform Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_DISPUTES_GATEWAY"; label="SYS-CORE-LEDGER to Dispute Management Platform Gateway"; interface_id="INT-DISPUTES-UP-GATEWAY"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_CORE_LEDGER, SYS_LENDING_HUB, "CORE-LEDGER via Installment Lending hub", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_LENDING_HUB"; label="CORE-LEDGER via Installment Lending hub"; interface_id="INT-LENDING-CORE-LEDGER-HUB"; kind="api-call"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_CRM, SYS_LENDING_HUB, "CRM via Installment Lending hub", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CRM"; target="SYS_LENDING_HUB"; label="CRM via Installment Lending hub"; interface_id="INT-LENDING-CRM-HUB"; kind="api-call"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_REWARDS_WORKER, OI_LEDGER_QUEUE, "Rewards Redemption Worker to Core Ledger", "MQ", $tags="queued-request")
+' aac rel: source="SYS_REWARDS_WORKER"; target="OI_LEDGER_QUEUE"; label="Rewards Redemption Worker to Core Ledger"; interface_id="INT-REWARDS-WORKER-LEDGER"; kind="queued-request"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-LEDGER-QUEUE"
+Rel(SYS_LENDING_API, TS_AWS_EKS, "runs on")
+' aac rel: source="SYS_LENDING_API"; target="TS_AWS_EKS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_LENDING_API, TS_AWS_CLOUDWATCH, "runs on")
+' aac rel: source="SYS_LENDING_API"; target="TS_AWS_CLOUDWATCH"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_LENDING_API, TS_AWS_PRIVATELINK, "runs on")
+' aac rel: source="SYS_LENDING_API"; target="TS_AWS_PRIVATELINK"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_API, DA_CARDSVC_OPERATIONAL, "ReadWrite")
+' aac rel: source="SYS_CARDSVC_API"; target="DA_CARDSVC_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_COLLECT_API, DA_COLLECT_OPERATIONAL, "ReadWrite")
+' aac rel: source="SYS_COLLECT_API"; target="DA_COLLECT_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_DATA_INGEST, DA_DISPUTES_VENDOR_FEED, "Read")
+' aac rel: source="SYS_DATA_INGEST"; target="DA_DISPUTES_VENDOR_FEED"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_LENDING_API, DA_LENDING_OPERATIONAL, "ReadWrite")
+' aac rel: source="SYS_LENDING_API"; target="DA_LENDING_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_DATA_INGEST, DA_SCREENING_OUTCOMES, "Read")
+' aac rel: source="SYS_DATA_INGEST"; target="DA_SCREENING_OUTCOMES"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_ORIG_DECISION, DA_APPLICATION, "ReadWrite")
+' aac rel: source="SYS_ORIG_DECISION"; target="DA_APPLICATION"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_DATA_INGEST, DA_MODEL_FEAT, "ReadWrite")
+' aac rel: source="SYS_DATA_INGEST"; target="DA_MODEL_FEAT"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_PAYMENT_GW, DA_PAYMENT_INSTR, "ReadWrite")
+' aac rel: source="SYS_PAYMENT_GW"; target="DA_PAYMENT_INSTR"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_CORE_LEDGER, DA_PAYMENT_INSTR, "Read")
+' aac rel: source="SYS_CORE_LEDGER"; target="DA_PAYMENT_INSTR"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_GL, DA_GL, "ReadWrite")
+' aac rel: source="SYS_GL"; target="DA_GL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_RECON, DA_GL, "Read")
+' aac rel: source="SYS_RECON"; target="DA_GL"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_RECON, DA_TRANSACTION, "Read")
+' aac rel: source="SYS_RECON"; target="DA_TRANSACTION"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_BUREAU_GW, DA_BUREAU_FILE, "ReadWrite")
+' aac rel: source="SYS_BUREAU_GW"; target="DA_BUREAU_FILE"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_BUREAU_GW, DA_DISPUTE_CASE, "Read")
+' aac rel: source="SYS_BUREAU_GW"; target="DA_DISPUTE_CASE"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_CRM, DA_DISPUTE_CASE, "ReadWrite")
+' aac rel: source="SYS_CRM"; target="DA_DISPUTE_CASE"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_COLLECT_API, DA_COLLECT_ACT, "ReadWrite")
+' aac rel: source="SYS_COLLECT_API"; target="DA_COLLECT_ACT"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_DOC, DA_STATEMENTS, "ReadWrite")
+' aac rel: source="SYS_DOC"; target="DA_STATEMENTS"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_STATEMENTS, DA_STATEMENTS, "ReadWrite")
+' aac rel: source="SYS_STATEMENTS"; target="DA_STATEMENTS"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_CLIENT_PORTAL, DA_CLIENT_SERV, "ReadWrite")
+' aac rel: source="SYS_CLIENT_PORTAL"; target="DA_CLIENT_SERV"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_CLIENT_PORTAL, DA_STATEMENTS, "Read")
+' aac rel: source="SYS_CLIENT_PORTAL"; target="DA_STATEMENTS"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_AML, DA_TRANSACTION, "Read")
+' aac rel: source="SYS_AML"; target="DA_TRANSACTION"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_AML, DA_APPLICATION, "Read")
+' aac rel: source="SYS_AML"; target="DA_APPLICATION"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_CARD_FULFILL, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_CARD_FULFILL"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_AUTH_SWITCH, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_AUTH_SWITCH"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_AUTH_SWITCH, DA_TRANSACTION, "ReadWrite")
+' aac rel: source="SYS_AUTH_SWITCH"; target="DA_TRANSACTION"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_CARDSVC_API, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_CARDSVC_API"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_CARDSVC_API, DA_TRANSACTION, "Read")
+' aac rel: source="SYS_CARDSVC_API"; target="DA_TRANSACTION"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_COLLECT_API, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_COLLECT_API"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_CORE_LEDGER, DA_CARD_ACCOUNT, "ReadWrite")
+' aac rel: source="SYS_CORE_LEDGER"; target="DA_CARD_ACCOUNT"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_CRM, DA_CUSTOMER_PROFILE, "ReadWrite")
+' aac rel: source="SYS_CRM"; target="DA_CUSTOMER_PROFILE"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_STATEMENTS, DA_CARD_ACCOUNT, "Read")
+' aac rel: source="SYS_STATEMENTS"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_STATEMENTS, DA_TRANSACTION, "Read")
+' aac rel: source="SYS_STATEMENTS"; target="DA_TRANSACTION"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(OI_LEDGER_QUEUE, SYS_CORE_LEDGER, "offered by")
+' aac rel: source="OI_LEDGER_QUEUE"; target="SYS_CORE_LEDGER"; label="offered by"; field="system_id"
+
+SHOW_LEGEND()
+@enduml

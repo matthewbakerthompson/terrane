@@ -1,0 +1,30 @@
+# A product assembled from the library's parts, from one file.
+#
+# No shape fits a product of one, so the file names the parts and the landing
+# zone instead: the standard web application kit (the API, the web channel,
+# the public front door, the operational database) on AWS, plus a worker for
+# the slow work after the response. The parts make the systems, the lines
+# between them, the platform services they run on and the data they master;
+# the file is the decision, the picture follows. What the parts ask for and
+# the file leaves out is answered and said in a note; write it under
+# `parameters` to choose. `terrane draw --library` lists the kits and the parts.
+model:
+  name: Merchant portal, from parts
+systems:
+  - system_id: SYS-CORE-LEDGER
+    name: Core ledger
+    hosting: On-prem
+products:
+  - product_id: PRD-PORTAL
+    name: Merchant portal
+    company_domain: Payments
+    compose:
+      provider: AWS
+      modules:
+        - module: web-app-baseline
+        - module: async-worker
+views:
+  - use: product-architecture
+    with: {product: PRD-PORTAL}
+  - use: product-parts
+    with: {product: PRD-PORTAL}

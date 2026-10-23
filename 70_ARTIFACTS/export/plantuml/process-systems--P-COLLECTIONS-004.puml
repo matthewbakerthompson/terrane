@@ -1,0 +1,50 @@
+@startuml
+' Execute charge-off — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Execute charge-off — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_COLL_04, "Charge-off Processing", "Execute charge-off on policy timing with the correct accounting effect.", $tags="capabilities")
+  ' aac CAP_COLL_04: company_domain="Collections"
+  System(CAP_FIN_01, "General Ledger & Financial Close", "Operate the general ledger and close the books.", $tags="capabilities")
+  ' aac CAP_FIN_01: company_domain="Cross-Functional Services"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_CHARGEOFF_TIME, "Charge-off timing to policy", "Charge-off executes at the policy timing aligned to regulatory guidance, with exceptions approved and documented.", $tags="controls")
+  ' aac CTL_CHARGEOFF_TIME: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_COLLECTIONS_004, "Execute charge-off", "Execute charge-off on policy timing and record the accounting effect. Timing follows the charge-off policy aligned to regulatory guidance; the entry moves the balance to charged-off status and hands the account to recovery placement.", $tags="processes")
+  ' aac P_COLLECTIONS_004: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_COLLECT_API, "Collections Workspace Service", "The service behind the Collections Workspace API, backing the channel. Built with AKS · Collections Workspace Cache.", $tags="systems")
+  ' aac SYS_COLLECT_API: company_domain="Collections"; hosting="Azure"; technology="AKS · Collections Workspace Cache"
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_GL, "General ledger", "General ledger and financial accounting.", $tags="systems")
+  ' aac SYS_GL: company_domain=""
+}
+
+Rel(P_COLLECTIONS_004, SYS_CORE_LEDGER, "Primary")
+' aac rel: source="P_COLLECTIONS_004"; target="SYS_CORE_LEDGER"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_COLLECTIONS_004, SYS_GL, "Supporting")
+' aac rel: source="P_COLLECTIONS_004"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COLLECTIONS_004, SYS_COLLECT_API, "Supporting")
+' aac rel: source="P_COLLECTIONS_004"; target="SYS_COLLECT_API"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COLLECTIONS_004, CTL_CHARGEOFF_TIME, "governed by")
+' aac rel: source="P_COLLECTIONS_004"; target="CTL_CHARGEOFF_TIME"; label="governed by"; relation="process_governed_by_control"
+Rel(P_COLLECTIONS_004, CAP_COLL_04, "supports")
+' aac rel: source="P_COLLECTIONS_004"; target="CAP_COLL_04"; label="supports"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_004, CAP_FIN_01, "supports")
+' aac rel: source="P_COLLECTIONS_004"; target="CAP_FIN_01"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

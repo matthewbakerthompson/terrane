@@ -1,0 +1,126 @@
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% NICE Actimize Screening — Architecture
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_AWS["AWS"]
+    direction LR
+    subgraph grp_AWS__prod_riskops["account prod-riskops"]
+      direction LR
+      subgraph grp_AWS__prod_riskops__Private_App["Private-App"]
+        direction LR
+        SYS_SCREENING_GATEWAY["NICE Actimize Screening<br/>Integration Gateway<br/>[EKS]"]
+        TS_NET_VPC_RISKOPS[/"Risk Operations VPC<br/>[Virtual network]"/]
+      end
+      subgraph grp_AWS__prod_riskops__Shared_Services["Shared-Services"]
+        direction LR
+        SYS_SCREENING_FEDERATION["NICE Actimize Screening<br/>Identity Federation"]
+        SYS_SCREENING_EGRESS["NICE Actimize Screening<br/>Private Egress"]
+      end
+    end
+    subgraph grp_AWS__shared_management["account shared-management"]
+      direction LR
+      subgraph grp_AWS__shared_management__Shared_Services["Shared-Services"]
+        direction LR
+        TS_AWS_CLOUDWATCH[/"Amazon CloudWatch<br/>[Observability]"/]
+      end
+    end
+    subgraph grp_AWS__shared_network["account shared-network"]
+      direction LR
+      subgraph grp_AWS__shared_network__Edge["Edge"]
+        direction LR
+        TS_AWS_APIGW[/"Amazon API Gateway<br/>[API gateway]"/]
+      end
+      subgraph grp_AWS__shared_network__Shared_Services["Shared-Services"]
+        direction LR
+        TS_AWS_PRIVATELINK[/"AWS PrivateLink<br/>[Private egress]"/]
+        TS_AWS_TGW[/"AWS Transit Gateway<br/>[Transit hub]"/]
+        TS_NET_VPC_SHARED[/"Shared Services VPC<br/>[Virtual network]"/]
+      end
+    end
+    subgraph grp_AWS__Private_App["Private-App"]
+      direction LR
+      TS_AWS_EKS[/"Amazon EKS<br/>[Container platform]"/]
+    end
+    subgraph grp_AWS__Shared_Services["Shared-Services"]
+      direction LR
+      TS_AWS_SECRETS[/"AWS Secrets Manager<br/>[Secrets manager]"/]
+    end
+  end
+
+  subgraph grp_Azure["Azure"]
+    direction LR
+    subgraph grp_Azure__azure_data_prod["subscription azure-data-prod"]
+      direction LR
+      subgraph grp_Azure__azure_data_prod__Private_Data["Private-Data"]
+        direction LR
+        SYS_DATA_INGEST["Enterprise Data Ingestion<br/>Hub<br/>[Service Bus · Snowflake Data Cloud]"]
+      end
+    end
+  end
+
+  subgraph grp_On_prem["On-prem"]
+    direction LR
+    SYS_AUTH_SWITCH["Authorization Switch"]
+  end
+
+  subgraph grp_SaaS["SaaS"]
+    direction LR
+    subgraph grp_SaaS__Edge["Edge"]
+      direction LR
+      SYS_SCREENING_VENDOR["NICE Actimize Screening<br/>[NICE Actimize]"]
+      SYS_SIEM["Security Monitoring<br/>[Microsoft Sentinel]"]
+    end
+  end
+
+  TS_ENTRA_ID[/"Microsoft Entra ID<br/>[Identity provider]"/]
+  DA_SCREENING_OUTCOMES[("NICE Actimize Screening<br/>outcomes")]
+  ACT_SCREENING_ANALYST(["Screening Analyst"])
+
+  SYS_AUTH_SWITCH -->|"HTTPS"| SYS_SCREENING_GATEWAY
+  SYS_SCREENING_FEDERATION -->|"SAML"| SYS_SCREENING_VENDOR
+  SYS_SCREENING_VENDOR -->|"HTTPS"| SYS_SIEM
+  SYS_SCREENING_GATEWAY -->|"HTTPS"| SYS_SCREENING_EGRESS
+  SYS_SCREENING_EGRESS -->|"PrivateLink"| SYS_SCREENING_VENDOR
+  SYS_SCREENING_VENDOR -->|"SFTP"| SYS_DATA_INGEST
+  SYS_SCREENING_GATEWAY -.->|"runs on"| TS_AWS_EKS
+  SYS_SCREENING_GATEWAY -.->|"runs on"| TS_AWS_APIGW
+  SYS_SCREENING_FEDERATION -.->|"runs on"| TS_ENTRA_ID
+  SYS_SCREENING_EGRESS -.->|"runs on"| TS_AWS_PRIVATELINK
+  SYS_SCREENING_EGRESS -.->|"runs on"| TS_AWS_TGW
+  SYS_SCREENING_GATEWAY -.->|"runs on"| TS_AWS_SECRETS
+  SYS_SCREENING_GATEWAY -.->|"runs on"| TS_AWS_CLOUDWATCH
+  SYS_SCREENING_GATEWAY -.->|"runs on"| TS_NET_VPC_RISKOPS
+  SYS_SCREENING_EGRESS -.->|"runs on"| TS_NET_VPC_SHARED
+  SYS_SCREENING_VENDOR -->|"Write"| DA_SCREENING_OUTCOMES
+  SYS_DATA_INGEST -->|"Read"| DA_SCREENING_OUTCOMES
+  ACT_SCREENING_ANALYST -->|"Clears alerts"| SYS_SCREENING_VENDOR
+
+  classDef s_actors__actors fill:#fde68a,stroke:#b45309,color:#0f172a,stroke-width:1.4px;
+  classDef s_data_assets__data_assets fill:#a7f3d0,stroke:#047857,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  classDef s_tech_services__tech_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
+  class ACT_SCREENING_ANALYST s_actors__actors;
+  class DA_SCREENING_OUTCOMES s_data_assets__data_assets;
+  class SYS_AUTH_SWITCH,SYS_DATA_INGEST,SYS_SCREENING_EGRESS,SYS_SCREENING_FEDERATION,SYS_SCREENING_GATEWAY,SYS_SCREENING_VENDOR,SYS_SIEM s_systems__systems;
+  class TS_AWS_APIGW,TS_AWS_CLOUDWATCH,TS_AWS_EKS,TS_AWS_PRIVATELINK,TS_AWS_SECRETS,TS_AWS_TGW,TS_ENTRA_ID,TS_NET_VPC_RISKOPS,TS_NET_VPC_SHARED s_tech_services__tech_services;
+  classDef boundary1 fill:#eef5fb,stroke:#147eba,color:#0f5f8c;
+  class grp_AWS__Private_App,grp_AWS__prod_riskops__Private_App boundary1;
+  classDef boundary2 fill:#f1f6fb,stroke:#5b9bd5,color:#2f5d8a;
+  class grp_Azure__azure_data_prod__Private_Data boundary2;
+  classDef boundary3 fill:#f3f7e9,stroke:#7aa116,color:#4f6a0e;
+  class grp_AWS__shared_network__Edge boundary3;
+  classDef boundary4 fill:#f4f0ff,stroke:#8c4fff,color:#5b2fb0;
+  class grp_AWS__Shared_Services,grp_AWS__prod_riskops__Shared_Services,grp_AWS__shared_management__Shared_Services,grp_AWS__shared_network__Shared_Services boundary4;
+  classDef boundary5 fill:#f4f5f7,stroke:#5f6b7a,color:#3f4a5c;
+  class grp_On_prem boundary5;
+  classDef boundary6 fill:#f7fbfe,stroke:#0078d4,color:#1b4b7a,stroke-dasharray:6 3;
+  class grp_Azure__azure_data_prod boundary6;
+  classDef boundary7 fill:#f7fbfe,stroke:#0078d4,color:#1b4b7a;
+  class grp_Azure boundary7;
+  classDef boundary8 fill:#fbfcfd,stroke:#232f3e,color:#232f3e;
+  class grp_AWS boundary8;
+  classDef boundary9 fill:#fcfbf7,stroke:#9a8f6a,color:#6b6246,stroke-dasharray:6 3;
+  class grp_SaaS,grp_SaaS__Edge boundary9;
+  classDef boundary10 fill:#fdf6fa,stroke:#c7257e,color:#8b1a58;
+  class grp_AWS__prod_riskops,grp_AWS__shared_management,grp_AWS__shared_network boundary10;

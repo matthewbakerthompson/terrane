@@ -1,0 +1,234 @@
+# Hub-and-spoke parts.
+#
+# A hub is one thing in the middle that many things talk through, and the
+# picture of it is a wheel, not a stack. What every hub has in common is
+# that its shape is not fixed: the spokes are whichever systems the product
+# names, and each one gets the same interface. These parts use `each` for
+# that. A template with `each: "{spokes}"` is written once and produced once
+# per spoke, with `{item}` the spoke's id, `{item|stem}` the id without its
+# type prefix, and `{index}` counting from one.
+#
+# Every hub system carries the tag `hub`, which is what the hub-and-spoke
+# view renders one wheel for.
+
+- module_id: integration-hub
+  name: Integration hub
+  category: Integration
+  needs: [product_name, slug]
+  description: >
+    One system in the middle that every spoke talks through: mapping, routing,
+    retries and the audit trail in one place instead of in every pair. The
+    spokes are named on the instance; the hub gets one interface per spoke.
+  parameters:
+    - name: spokes
+      required: true
+      description: The systems that talk through the hub, as a list of system ids
+    - name: hub_suffix
+      default: HUB
+    - name: protocol
+      default: HTTPS
+    - name: change_controls
+      estate: true
+      default: []
+      description: The controls a change to the hub is governed by, change approval among them
+    - name: change_policies
+      estate: true
+      default: []
+      description: The policies a change to the hub is subject to
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-{hub_suffix}"
+        name: "{product_name} Integration Hub"
+        description: >
+          Mediates every {product_name} integration: one place for mapping,
+          routing, retry and the audit trail, so the spokes do not each carry
+          their own.
+        system_category: Integration
+        service_tier: Tier 2
+        network_zone: Private-App
+        tags: [hub, integration]
+        controls: "{change_controls}"
+        policies: "{change_policies}"
+    interfaces:
+      - each: "{spokes}"
+        interface_id: "INT-{slug|upper}-{item|stem}-{hub_suffix}"
+        name: "{item|stem} via {product_name} hub"
+        source_system_id: "{item}"
+        target_system_id: "SYS-{slug|upper}-{hub_suffix}"
+        protocol: "{protocol}"
+        integration_style: Request-response
+
+- module_id: event-hub
+  name: Event hub
+  category: Integration
+  needs: [product_name, slug]
+  description: >
+    A bus in the middle. Publishers put domain events on it and subscribers
+    take what they want, and neither side knows the other. The publishers and
+    the subscribers are named on the instance; each gets one interface to or
+    from the bus.
+  parameters:
+    - name: spokes
+      required: true
+      description: The systems that publish onto the bus, as a list of system ids
+    - name: subscribers
+      default: []
+      description: The systems that consume from the bus, as a list of system ids
+    - name: bus
+      component: message-queue
+    - name: protocol
+      default: AMQP
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-BUS"
+        name: "{product_name} Event Hub"
+        description: >
+          The {product_name} event bus: publishers on one side, subscribers on
+          the other, and no pair-wise integrations between them.
+        criticality: High
+        system_category: Integration
+        network_zone: Private-App
+        tags: [hub, events]
+        uses: ["{bus}"]
+    interfaces:
+      - each: "{spokes}"
+        interface_id: "INT-{slug|upper}-{item|stem}-BUS"
+        name: "{item|stem} publishes to {product_name} bus"
+        source_system_id: "{item}"
+        target_system_id: "SYS-{slug|upper}-BUS"
+        protocol: "{protocol}"
+        integration_style: Event
+        data_classification: Internal
+      - each: "{subscribers}"
+        interface_id: "INT-{slug|upper}-BUS-{item|stem}"
+        name: "{product_name} bus to {item|stem}"
+        source_system_id: "SYS-{slug|upper}-BUS"
+        target_system_id: "{item}"
+        protocol: "{protocol}"
+        integration_style: Event
+        direction: Inbound
+        data_classification: Internal
+
+- module_id: data-hub
+  name: Data hub
+  category: Data
+  needs: [classification, owner_org, product_name, slug]
+  description: >
+    A consolidation point. Every source feeds one hub, the hub masters one
+    consolidated dataset, and whoever needs the data reads it there rather
+    than from each source. The sources are named on the instance.
+  parameters:
+    - name: spokes
+      required: true
+      description: The source systems that feed the hub, as a list of system ids
+    - name: protocol
+      default: SFTP
+    - name: frequency
+      default: Daily
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-DATAHUB"
+        name: "{product_name} Data Hub"
+        description: >
+          Consolidates {product_name} data from every source into one dataset
+          with one owner, so a question is answered once.
+        system_category: Data
+        network_zone: Private-Data
+        tags: [hub, data]
+    data_assets:
+      - data_asset_id: "DA-{slug|upper}-CONSOLIDATED"
+        name: "{product_name} consolidated data"
+        description: "What every source contributes, consolidated and mastered by the hub."
+        source_of_truth: "SYS-{slug|upper}-DATAHUB"
+        data_owner_org_id: "{owner_org}"
+        classification: "{classification}"
+        togaf_layer: Data
+        architecture_domain: Data
+    interfaces:
+      - each: "{spokes}"
+        interface_id: "INT-{slug|upper}-{item|stem}-DATAHUB"
+        name: "{item|stem} feeds {product_name} data hub"
+        source_system_id: "{item}"
+        target_system_id: "SYS-{slug|upper}-DATAHUB"
+        protocol: "{protocol}"
+        integration_style: Batch
+        frequency: "{frequency}"
+  relations:
+    system_reads_writes:
+      - system_id: "SYS-{slug|upper}-DATAHUB"
+        data_asset_id: "DA-{slug|upper}-CONSOLIDATED"
+        operation: Write
+
+- module_id: identity-hub
+  name: Identity hub
+  category: Identity
+  needs: [product_name, slug]
+  description: >
+    One identity provider that every application federates to. Users sign on
+    once; the applications are named on the instance and each gets its
+    federation link.
+  parameters:
+    - name: spokes
+      required: true
+      description: The applications that federate to the hub, as a list of system ids
+    - name: idp
+      component: identity-provider
+    - name: protocol
+      default: SAML
+    - name: access_controls
+      estate: true
+      default: []
+      description: The controls access through the hub is governed by, access certification among them
+    - name: access_policies
+      estate: true
+      default: []
+      description: The policies access through the hub is subject to
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-IDP"
+        name: "{product_name} Identity Hub"
+        description: >
+          The one place {product_name} users sign on. Every application
+          federates here; none holds a password of its own.
+        criticality: High
+        system_category: Security
+        network_zone: Shared-Services
+        tags: [hub, identity]
+        uses: ["{idp}"]
+        controls: "{access_controls}"
+        policies: "{access_policies}"
+    interfaces:
+      - each: "{spokes}"
+        interface_id: "INT-{slug|upper}-{item|stem}-IDP"
+        name: "{item|stem} federates to {product_name} identity hub"
+        source_system_id: "{item}"
+        target_system_id: "SYS-{slug|upper}-IDP"
+        protocol: "{protocol}"
+        auth_method: "{protocol}"
+        integration_style: Request-response
+
+- module_id: network-hub
+  name: Network hub
+  category: Network
+  needs: [product_name, slug]
+  description: >
+    A transit hub that every network attaches to, so any two of them reach
+    each other through the hub rather than through a mesh of peerings. The
+    networks are named on the instance, as technology service ids.
+  parameters:
+    - name: spokes
+      required: true
+      description: The networks that attach to the hub, as a list of technology service ids
+  provides:
+    tech_services:
+      - tech_service_id: "TS-{slug|upper}-TRANSIT"
+        name: "{product_name} Transit Hub"
+        description: "The hub every {product_name} network attaches to."
+        component_type: transit-gateway
+        service_category: Network
+        network_zone: Shared-Services
+  relations:
+    tech_service_connects_to:
+      - each: "{spokes}"
+        from_tech_service_id: "{item}"
+        to_tech_service_id: "TS-{slug|upper}-TRANSIT"

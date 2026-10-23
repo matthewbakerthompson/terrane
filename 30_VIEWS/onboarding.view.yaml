@@ -1,0 +1,59 @@
+view_id: onboarding
+title: "{product} — Onboarding"
+category: Change
+section: Impact
+kind: diagram
+description: >
+  What onboarding this product creates, nested by account, region and network
+  tier. Everything inside the boundaries comes from the product's shape; the
+  systems outside are the ones it must connect to, which are usually the long-
+  lead items. For a bought product, the vendor's environment sits outside our
+  accounts.
+layout: TB
+node_label: name
+renderers: [mermaid, structurizr]
+
+parameters:
+  - name: product
+    type: products
+    required: true
+    description: The product being onboarded
+
+group_by: [cloud_provider, cloud_account, region, network_zone]
+
+scope:
+  include:
+    - type: products
+      where:
+        id_in: ["{product}"]
+  exclude:
+    - type: products
+  expand:
+    - relation: product_includes_system
+      depth: 1
+      types: [systems]
+    - relation: interfaces
+      depth: 1
+      types: [systems]
+
+edges:
+  - via: interfaces
+    label: protocol
+
+style:
+  color_by: network_zone
+
+limits:
+  max_nodes: 30
+
+# One committed diagram per product on a shape. This used to be two views,
+# each naming one product by id -- `aws-onboarding` for the lending build,
+# `saas-onboarding` for the screening purchase -- with the same nesting, the
+# same expansion and the same coloring, so a third product on a shape got
+# no onboarding diagram until somebody copied a view for it. A product that
+# is not on a shape has nothing an onboarding created, and is left out.
+render_for:
+  parameter: product
+  type: products
+  where:
+    archetype: {exists: true}

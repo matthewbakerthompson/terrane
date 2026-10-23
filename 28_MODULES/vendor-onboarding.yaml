@@ -1,0 +1,596 @@
+# The parts of onboarding a bought service.
+#
+# Almost none of an onboarding is the vendor's software. It is the identity
+# federation, the path out, the gateway that owns retries and audit, the
+# return feed, the webhooks, the audit trail into the SIEM. Each is a part
+# that most vendors need and some do not, which is exactly what a module is.
+#
+# Ids are built from the product slug, so a second vendor gets its own set.
+#
+# What a part needs from the estate around it -- who owns the shared network,
+# where the audit trail goes, which controls govern a vendor -- is a parameter
+# marked `estate: true`, answered once under `answers` in the estate's
+# `model.yaml`. These parts used to name the sample's own records there, and
+# an estate building on them had to hold records under the sample's ids.
+
+- module_id: vendor-tenancy
+  name: Vendor tenancy
+  category: Vendor
+  needs: [product_name, slug]
+  description: >
+    The vendor's system, in their tenancy, drawn outside our boundaries. We
+    hold a contract and a data processing agreement, not a deployment. Every
+    other part of an onboarding wires to this one, so it cannot be dropped.
+  optional: false
+  parameters:
+    - name: vendor
+      required: true
+      description: Vendor name, carried onto the system as provider
+    - name: vendor_region
+      default: eu-west-1
+      description: Where the vendor processes our data. A data residency answer.
+    - name: vendor_controls
+      estate: true
+      default: []
+      description: The controls every vendor tenancy is governed by, third-party due diligence among them
+    - name: vendor_policies
+      estate: true
+      default: []
+      description: The policies every vendor tenancy is subject to
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-VENDOR"
+        name: "{product_name}"
+        description: >
+          {product_name}, operated by {vendor} in their own tenancy. We hold a
+          contract and a data processing agreement, not a deployment.
+        hosting: SaaS
+        provider: "{vendor}"
+        system_category: Vendor
+        cloud_provider: SaaS
+        cloud_account: null
+        region: "{vendor_region}"
+        network_zone: Edge
+        resilience: Multi-region
+        deployment_unit: null
+        tags: [vendor, third-party, saas, onboarding]
+        controls: "{vendor_controls}"
+        policies: "{vendor_policies}"
+
+- module_id: vendor-baseline
+  name: Vendor baseline
+  category: Vendor
+  description: >
+    What every vendor onboarding starts with, however our side reaches the
+    vendor and whatever comes back: the tenancy, the gateway that calls it and
+    owns the retries and the audit, and the vault the credentials live in.
+    Named so the two vendor shapes can share it by reference rather than by
+    copy, which is how they came to differ in a binding nobody meant. What it
+    runs on is the shape's to say, by kind.
+  # A kit: a part made of parts. Its members land under their own aliases, so
+  # `without: [secrets-management]` and `requires: [vendor-tenancy]` work the
+  # same whether the tenancy came alone or inside the baseline. Dropping the
+  # kit by name drops all three, and the tenancy is not optional, so it cannot
+  # be dropped at all.
+  optional: false
+  parameters:
+    - name: vendor
+      required: true
+      description: The vendor, as a name
+    - name: vendor_region
+      default: eu-west-1
+      description: Where the vendor processes our data
+    - name: caller_system
+      required: true
+      description: The system on our side that calls the vendor in line
+  # The members name the kinds they need -- a container platform, an API
+  # gateway, a secrets manager -- and the shape binds each kind to the shared
+  # service that is that kind on its landing zone. The kit carries nothing
+  # cloud-specific, and neither does any member.
+  modules:
+    - module: vendor-tenancy
+      with:
+        vendor: "{vendor}"
+        vendor_region: "{vendor_region}"
+    - module: api-outbound
+      with:
+        caller_system: "{caller_system}"
+    - module: secrets-management
+
+- module_id: api-outbound
+  name: Outbound API gateway
+  category: Integration
+  needs: [product_name, slug, vendor]
+  description: >
+    Our side of the integration: a gateway that owns request mapping, retry
+    and back-off, circuit breaking when the vendor is down, and the audit
+    trail of what we sent them. The system that calls the vendor calls this.
+  requires: [vendor-tenancy]
+  parameters:
+    - name: caller_system
+      required: true
+      description: The system that calls the vendor in line, e.g. SYS-AUTH-SWITCH
+    - name: platform
+      component: container-platform
+      description: The container platform the gateway runs on
+    - name: front_door
+      component: api-gateway
+      description: The shared API gateway it is published through
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-GATEWAY"
+        name: "{product_name} Integration Gateway"
+        description: >
+          Our side of the {vendor} integration: request mapping, retry and
+          back-off, circuit breaking when the vendor is down, and the audit trail
+          of what we sent them.
+        system_category: Integration
+        network_zone: Private-App
+        deployment_unit: helm
+        uses: ["{platform}", "{front_door}"]
+        tags: [saas, onboarding, integration]
+    interfaces:
+      - interface_id: "INT-{slug|upper}-CALLER-GATEWAY"
+        name: "{caller_system} to {product_name} Gateway"
+        description: In-line call at transaction time.
+        source_system_id: "{caller_system}"
+        target_system_id: "SYS-{slug|upper}-GATEWAY"
+        auth_method: MutualTLS
+
+- module_id: private-egress
+  name: Private egress to the vendor
+  category: Network
+  needs: [product_name, slug, vendor]
+  description: >
+    A private endpoint and an egress allow-list, so the only path our data
+    takes to the vendor never touches the public internet. The control a
+    security review asks to see first. Needs a vendor that offers private
+    connectivity; where there is none, use the public path instead.
+  requires: [vendor-tenancy, api-outbound]
+  patterns: [private-egress-to-saas]
+  parameters:
+    - name: private_link
+      component: private-egress
+    - name: transit
+      component: transit-gateway
+    - name: platform_org
+      estate: true
+      description: The org unit that owns the enterprise platform, the shared network path among it
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-EGRESS"
+        name: "{product_name} Private Egress"
+        description: >
+          PrivateLink endpoint and egress allow-list for {vendor}. The control
+          that keeps regulated data off the public internet, and the thing a
+          security review asks to see first.
+        owner_org_id: "{platform_org}"
+        system_category: Network
+        company_domain: Enterprise Platform
+        network_zone: Shared-Services
+        architecture_domain: Technology
+        uses: ["{private_link}", "{transit}"]
+        tags: [saas, onboarding, network, control]
+    interfaces:
+      - interface_id: "INT-{slug|upper}-GATEWAY-EGRESS"
+        name: "{product_name} Gateway to Private Egress"
+        source_system_id: "SYS-{slug|upper}-GATEWAY"
+        target_system_id: "SYS-{slug|upper}-EGRESS"
+        owner_org_id: "{platform_org}"
+        auth_method: IAM
+        company_domain: Enterprise Platform
+        architecture_domain: Technology
+      - interface_id: "INT-{slug|upper}-EGRESS-VENDOR"
+        name: "Private Egress to {vendor}"
+        description: >
+          The only path our data takes to the vendor. Everything else is denied
+          by the egress policy.
+        source_system_id: "SYS-{slug|upper}-EGRESS"
+        target_system_id: "SYS-{slug|upper}-VENDOR"
+        owner_org_id: "{platform_org}"
+        protocol: PrivateLink
+        company_domain: Enterprise Platform
+        architecture_domain: Technology
+
+- module_id: public-call
+  name: Public path to the vendor
+  category: Network
+  needs: [product_name, slug, vendor]
+  description: >
+    The gateway calls the vendor over the public internet, with mutual TLS and
+    an allow-listed egress address. The honest shape where the vendor offers
+    no private connectivity, and the one to replace with private egress when
+    they do.
+  requires: [vendor-tenancy, api-outbound]
+  provides:
+    interfaces:
+      - interface_id: "INT-{slug|upper}-GATEWAY-VENDOR"
+        name: "{product_name} Gateway to {vendor}"
+        description: Over the public internet, mutual TLS, from an allow-listed egress address.
+        source_system_id: "SYS-{slug|upper}-GATEWAY"
+        target_system_id: "SYS-{slug|upper}-VENDOR"
+        auth_method: MutualTLS
+
+- module_id: secrets-management
+  name: Vendor credentials in the vault
+  category: Security
+  needs: [slug]
+  description: >
+    The API keys and certificates the vendor issues us live in the secrets
+    manager, rotated there, and the gateway reads them at runtime. Without
+    this part they end up in a config file.
+  requires: [api-outbound]
+  parameters:
+    - name: vault
+      component: secrets-manager
+  relations:
+    system_uses_tech_service:
+      - system_id: "SYS-{slug|upper}-GATEWAY"
+        tech_service_id: "{vault}"
+
+- module_id: sso-federation
+  name: Single sign-on into the vendor
+  category: Identity
+  needs: [product_name, slug, vendor]
+  description: >
+    Our people reach the vendor through our identity provider, not with
+    passwords the vendor holds. Onboarding creates it; leavers make it matter.
+  requires: [vendor-tenancy]
+  parameters:
+    - name: idp
+      component: identity-provider
+    - name: protocol
+      default: SAML
+    - name: platform_org
+      estate: true
+      description: The org unit that owns the enterprise platform, identity federation among it
+    - name: access_controls
+      estate: true
+      default: []
+      description: The controls access through federation is governed by, access certification among them
+    - name: access_policies
+      estate: true
+      default: []
+      description: The policies access through federation is subject to
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-FEDERATION"
+        name: "{product_name} Identity Federation"
+        description: >
+          Single sign-on into {vendor}: assertions from our identity provider,
+          so access is granted and revoked where the joiner and leaver process
+          already runs.
+        owner_org_id: "{platform_org}"
+        criticality: Medium
+        system_category: Security
+        company_domain: Enterprise Platform
+        network_zone: Shared-Services
+        architecture_domain: Technology
+        uses: ["{idp}"]
+        controls: "{access_controls}"
+        policies: "{access_policies}"
+        tags: [saas, onboarding, identity, control]
+    interfaces:
+      - interface_id: "INT-{slug|upper}-FEDERATION-VENDOR"
+        name: "Identity Federation to {vendor}"
+        description: "{protocol} assertions at sign-in."
+        source_system_id: "SYS-{slug|upper}-FEDERATION"
+        target_system_id: "SYS-{slug|upper}-VENDOR"
+        owner_org_id: "{platform_org}"
+        protocol: "{protocol}"
+        auth_method: Certificate
+        data_classification: Confidential
+        company_domain: Enterprise Platform
+        architecture_domain: Technology
+
+- module_id: scim-provisioning
+  name: User provisioning into the vendor
+  category: Identity
+  needs: [slug, vendor]
+  description: >
+    Accounts in the vendor are created and removed from our directory rather
+    than by hand: joiners appear, leavers disappear, and the quarterly access
+    review has something to reconcile against.
+  requires: [sso-federation]
+  parameters:
+    - name: platform_org
+      estate: true
+      description: The org unit that owns the enterprise platform, the directory among it
+  provides:
+    interfaces:
+      - interface_id: "INT-{slug|upper}-SCIM-VENDOR"
+        name: "Provisioning to {vendor}"
+        description: User lifecycle, pushed from the directory.
+        source_system_id: "SYS-{slug|upper}-FEDERATION"
+        target_system_id: "SYS-{slug|upper}-VENDOR"
+        owner_org_id: "{platform_org}"
+        protocol: SCIM
+        frequency: Per event
+        integration_style: Event
+        auth_method: Token
+        data_classification: Confidential
+        company_domain: Enterprise Platform
+        architecture_domain: Technology
+
+- module_id: webhook-inbound
+  name: Webhooks from the vendor
+  category: Integration
+  needs: [product_name, slug, vendor]
+  description: >
+    The vendor calls us back. A listener of ours on the public tier, behind
+    the shared API gateway, verifies the signature and hands the event to the
+    system that wants it. Without this part, a vendor event is a poll.
+  requires: [vendor-tenancy]
+  parameters:
+    - name: consumer_system
+      required: true
+      description: The system that acts on the vendor's events
+    - name: platform
+      component: container-platform
+    - name: front_door
+      component: api-gateway
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-WEBHOOKS"
+        name: "{product_name} Webhook Listener"
+        description: >
+          Receives {vendor} callbacks, verifies their signature, and forwards
+          the event. Public by necessity, small by design.
+        system_category: Integration
+        network_zone: Public
+        deployment_unit: helm
+        uses: ["{front_door}", "{platform}"]
+        tags: [saas, onboarding, integration, webhooks]
+    interfaces:
+      - interface_id: "INT-{slug|upper}-VENDOR-WEBHOOKS"
+        name: "{vendor} webhooks"
+        description: Signed callbacks, one per event.
+        source_system_id: "SYS-{slug|upper}-VENDOR"
+        target_system_id: "SYS-{slug|upper}-WEBHOOKS"
+        direction: Inbound
+        integration_style: Event
+        auth_method: HMAC
+      - interface_id: "INT-{slug|upper}-WEBHOOKS-CONSUMER"
+        name: "{product_name} Webhook Listener to {consumer_system}"
+        source_system_id: "SYS-{slug|upper}-WEBHOOKS"
+        target_system_id: "{consumer_system}"
+        integration_style: Event
+        auth_method: IAM
+
+- module_id: sftp-return-feed
+  name: Return feed by file
+  category: Data
+  needs: [classification, owner_org, product_name, slug, vendor]
+  description: >
+    A nightly extract from the vendor, landed through the shared ingestion
+    hub for reconciliation and for the model risk work that has to explain
+    their decisions. What the vendor decided and why, held our side, because
+    a decision we cannot explain is a decision we cannot defend.
+  requires: [vendor-tenancy]
+  patterns: [partner-file-exchange]
+  parameters:
+    - name: ingest_system
+      estate: true
+      description: The shared ingestion system the file lands in
+    - name: data_org
+      estate: true
+      description: The org unit that runs the landing and stewards what lands
+    - name: landed_data_controls
+      estate: true
+      default: []
+      description: The controls landed vendor data is governed by, retention among them
+    - name: landed_data_policies
+      estate: true
+      default: []
+      description: The policies landed vendor data is subject to
+  provides:
+    interfaces:
+      - interface_id: "INT-{slug|upper}-VENDOR-RETURN"
+        name: "{vendor} return feed"
+        description: >
+          Nightly outcome extract from the vendor, landed for reconciliation and
+          for the model risk work that has to explain their decisions.
+        source_system_id: "SYS-{slug|upper}-VENDOR"
+        target_system_id: "{ingest_system}"
+        owner_org_id: "{data_org}"
+        protocol: SFTP
+        direction: Inbound
+        frequency: Daily
+        integration_style: Batch
+        auth_method: KeyPair
+        company_domain: Data and Analytics
+        architecture_domain: Data
+    data_assets:
+      - data_asset_id: "DA-{slug|upper}-OUTCOMES"
+        name: "{product_name} outcomes"
+        description: >
+          What the vendor decided and why, landed our side. Held because a
+          decision we cannot explain is a decision we cannot defend.
+        source_of_truth: "SYS-{slug|upper}-VENDOR"
+        data_owner_org_id: "{owner_org}"
+        data_steward_org_id: "{data_org}"
+        classification: "{classification}"
+        risk_level: High
+        pii_flag: "Yes"
+        togaf_layer: Data
+        architecture_domain: Data
+        lineage_reference: "Vendor extract; retention governed by the DPA."
+        controls: "{landed_data_controls}"
+        policies: "{landed_data_policies}"
+        tags: [saas, onboarding, vendor]
+  relations:
+    interface_transports_data_asset:
+      - interface_id: "INT-{slug|upper}-VENDOR-RETURN"
+        data_asset_id: "DA-{slug|upper}-OUTCOMES"
+    system_reads_writes:
+      - system_id: "SYS-{slug|upper}-VENDOR"
+        data_asset_id: "DA-{slug|upper}-OUTCOMES"
+        operation: Write
+      - system_id: "{ingest_system}"
+        data_asset_id: "DA-{slug|upper}-OUTCOMES"
+        operation: Read
+
+- module_id: audit-forwarding
+  name: Audit trail into the SIEM
+  category: Security
+  needs: [slug, vendor]
+  description: >
+    The vendor's audit log streams into our security monitoring, so what our
+    people did in their system is investigable from ours. The part the
+    incident response playbook assumes exists.
+  requires: [vendor-tenancy]
+  parameters:
+    - name: siem_system
+      estate: true
+      description: The security monitoring system audit trails stream into
+    - name: security_org
+      estate: true
+      description: The org unit that runs security monitoring
+  provides:
+    interfaces:
+      - interface_id: "INT-{slug|upper}-VENDOR-AUDIT"
+        name: "{vendor} audit log to security monitoring"
+        source_system_id: "SYS-{slug|upper}-VENDOR"
+        target_system_id: "{siem_system}"
+        owner_org_id: "{security_org}"
+        direction: Inbound
+        frequency: Realtime
+        integration_style: Event
+        auth_method: Token
+        data_classification: Confidential
+        company_domain: Enterprise Platform
+        architecture_domain: Technology
+
+- module_id: vendor-monitoring
+  name: Availability monitoring
+  category: Operations
+  needs: [slug]
+  description: >
+    Synthetic checks through the gateway and the vendor's status signals, in
+    our observability rather than in an inbox. When the vendor is down, we
+    know before the customer does.
+  requires: [api-outbound]
+  parameters:
+    - name: observability
+      component: observability
+  relations:
+    system_uses_tech_service:
+      - system_id: "SYS-{slug|upper}-GATEWAY"
+        tech_service_id: "{observability}"
+
+- module_id: byok-encryption
+  name: Our keys in the vendor
+  category: Security
+  needs: [slug]
+  description: >
+    The vendor encrypts our data with a key we hold and can revoke. Not every
+    vendor offers it; where one does, this is the difference between leaving
+    and leaving our data behind.
+  requires: [vendor-tenancy]
+  parameters:
+    - name: kms
+      component: kms
+  relations:
+    system_uses_tech_service:
+      - system_id: "SYS-{slug|upper}-VENDOR"
+        tech_service_id: "{kms}"
+
+- module_id: embedded-ui
+  name: Vendor UI inside our channel
+  category: Channel
+  needs: [product_name, slug]
+  description: >
+    A channel of ours opens the vendor's screens for the user, by deep link or
+    embedded frame, signed in through federation. Where the vendor is used by
+    customers as well as staff, this is how they reach it.
+  requires: [vendor-tenancy]
+  parameters:
+    - name: channel_system
+      required: true
+      description: The channel system that embeds the vendor
+  provides:
+    interfaces:
+      - interface_id: "INT-{slug|upper}-CHANNEL-VENDOR"
+        name: "{channel_system} to {product_name}"
+        description: Deep link or embedded frame, signed in through federation.
+        source_system_id: "{channel_system}"
+        target_system_id: "SYS-{slug|upper}-VENDOR"
+        auth_method: OAuth2
+
+- module_id: operator-access
+  name: Who operates it
+  category: Business
+  needs: [slug]
+  description: >
+    The people who work in the vendor's system, so it appears on the system
+    context diagram with them attached rather than floating outside the
+    estate.
+  # No `requires` any more. It named `vendor-tenancy` because the system was
+  # hardcoded to that part's output; now that the system is a parameter, the
+  # part works in any shape, and pointing it at a system that does not exist
+  # is a `ref.dangling` error rather than something a requirement has to
+  # prevent.
+  parameters:
+    - name: actor
+      required: true
+      description: The actor who operates the vendor system, e.g. ACT-SERVICING-AGENT
+    - name: interaction
+      default: Operates
+    # Defaulted rather than hardcoded, so a product that is built rather than
+    # bought can point the same part at its own front end.
+    - name: system
+      default: "SYS-{slug|upper}-VENDOR"
+      description: The system they work in
+  relations:
+    actor_uses_system:
+      - actor_id: "{actor}"
+        system_id: "{system}"
+        interaction: "{interaction}"
+
+- module_id: operator-role
+  name: A role the product creates
+  category: Business
+  needs: [owner_org]
+  description: >
+    An operating role that exists because the product does. Most operators are
+    already in the model and `operator-access` names one of them; this is for
+    the roles a product brings with it -- the analyst who works a queue that
+    was nobody's job until the thing was bought.
+  parameters:
+    - name: roles
+      required: true
+      description: >
+        The roles the product creates. Each entry is a mapping with `id`,
+        `name`, `description` and `interaction`; every key is used, so a
+        missing one fails by name rather than producing half an actor.
+    - name: system
+      required: true
+      description: The system they work in
+  provides:
+    # `each` over a list of mappings: one actor per role, and none at all where
+    # a product introduces no new role, because `each` over an empty list
+    # produces nothing. That is how the part stays optional without a switch
+    # of its own.
+    #
+    # The actor is a Role rather than a Person on purpose. A named individual
+    # is a staffing fact and goes stale; the job is what the architecture has
+    # to keep working when the person changes.
+    actors:
+      - each: "{roles}"
+        actor_id: "ACT-{item|upper}"
+        name: "{name}"
+        description: "{description}"
+        actor_kind: Role
+        internal: "Yes"
+        owner_org_id: "{owner_org}"
+        # True of every actor anywhere, and the shapes' `entity_defaults` have
+        # no actors block to put it in. It sits here so the part carries its
+        # own meaning into whichever shape composes it.
+        togaf_layer: Business
+        architecture_domain: Business
+  relations:
+    actor_uses_system:
+      - each: "{roles}"
+        actor_id: "ACT-{item|upper}"
+        system_id: "{system}"
+        interaction: "{interaction}"

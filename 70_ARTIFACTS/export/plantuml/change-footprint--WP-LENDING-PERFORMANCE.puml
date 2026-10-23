@@ -1,0 +1,37 @@
+@startuml
+' Curate lending performance in BigQuery — Footprint
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Curate lending performance in BigQuery — Footprint
+
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("work_packages", $bgColor="#ccfbf1", $borderColor="#0d9488", $fontColor="#0f172a", $legendText="work package")
+
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_LENDPERF_CURATED, "Lending Portfolio Performance curated dataset", "Curated, governed dataset produced by Lending Portfolio Performance, held in BigQuery.", $tags="data_assets")
+  ' aac DA_LENDPERF_CURATED: company_domain="Lending"
+}
+Boundary(b_System, "System") {
+  System(SYS_LENDPERF_PIPELINE, "Lending Portfolio Performance Pipeline", "Dataflow jobs on a Composer schedule, ingesting the source events of Lending Portfolio Performance from Pub/Sub and curating them into BigQuery. Built with BigQuery · Dataflow +3.", $tags="systems")
+  ' aac SYS_LENDPERF_PIPELINE: company_domain="Lending"; hosting="GCP"; technology="BigQuery · Dataflow +3"
+  System(SYS_LENDPERF_SEMANTIC, "Lending Portfolio Performance Semantic Layer", "Governed models and metrics exposed to analysts for Lending Portfolio Performance, served from BigQuery through Looker. Built with BigQuery · Looker.", $tags="systems")
+  ' aac SYS_LENDPERF_SEMANTIC: company_domain="Lending"; hosting="GCP"; technology="BigQuery · Looker"
+}
+Boundary(b_Work_Package, "Work Package") {
+  System(WP_LENDING_PERFORMANCE, "Curate lending performance in BigQuery", "The first data product on the Google Cloud side: point-of-sale finance's events curated nightly into BigQuery in an analytics project of its own, served through Looker and registered in Collibra. The second workload project on the hub, so the product's tenancy and its analytics tenancy are separate.", $tags="work_packages")
+  ' aac WP_LENDING_PERFORMANCE: company_domain="Lending"
+}
+
+Rel(WP_LENDING_PERFORMANCE, SYS_LENDPERF_PIPELINE, "Builds")
+' aac rel: source="WP_LENDING_PERFORMANCE"; target="SYS_LENDPERF_PIPELINE"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_LENDING_PERFORMANCE, SYS_LENDPERF_SEMANTIC, "Builds")
+' aac rel: source="WP_LENDING_PERFORMANCE"; target="SYS_LENDPERF_SEMANTIC"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(SYS_LENDPERF_PIPELINE, DA_LENDPERF_CURATED, "Write")
+' aac rel: source="SYS_LENDPERF_PIPELINE"; target="DA_LENDPERF_CURATED"; label="Write"; relation="system_reads_writes"; operation="Write"
+Rel(SYS_LENDPERF_SEMANTIC, DA_LENDPERF_CURATED, "Read")
+' aac rel: source="SYS_LENDPERF_SEMANTIC"; target="DA_LENDPERF_CURATED"; label="Read"; relation="system_reads_writes"; operation="Read"
+
+SHOW_LEGEND()
+@enduml

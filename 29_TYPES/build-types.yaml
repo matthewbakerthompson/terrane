@@ -1,0 +1,87 @@
+# The kinds of thing the organization builds, and the standard build of each.
+#
+# A shape (20_ARCHETYPES/) is one provider's answer to "what does a digital
+# product look like". A build type is the question, asked once, whoever hosts
+# the product: the parts (28_MODULES/) every build of its kind has, the parts
+# it includes unless there is a reason not to, and the parts it offers as
+# additions. The Assemble panel starts from a type: the required parts are
+# locked, the included ones are ticked, the offered ones are a click away, and
+# everything else is folded out of the way. A product records its type as
+# `build_type`, and `terrane validate` says where a product departs from its
+# standard: a required part missing, an included part dropped, a part added
+# that the type does not list. A deviation is not an error. It is the thing a
+# design review should see without having to ask.
+#
+# `shapes` names the shape that is this type on each provider; `any` is a
+# shape that lands on no cloud of its own. A type with no shape for the chosen
+# provider is assembled from its parts against that provider's landing zone,
+# which answers for what the parts run on: the load balancer, the container
+# platform, the secrets manager, whichever the organization uses there.
+
+- build_type_id: digital-product
+  name: Customer-facing digital product
+  description: >
+    A product customers use directly: a web or mobile front end, the API
+    behind it, its own datastore, and an event publisher onto the enterprise
+    bus so the rest of the estate hears what happened.
+  requires: [api-service]
+  includes: [web-channel, relational-datastore]
+  offers: [event-publisher, public-web-entry, async-worker, object-store, operator-role, operator-access,
+           mobile-channel, admin-console, scheduled-job, event-consumer, notification-service, search-index,
+           partner-adapter, report-service, ml-inference-service]
+  shapes:
+    AWS: aws-product-onboarding
+    Azure: azure-digital-product
+    GCP: gcp-digital-product
+
+- build_type_id: platform-service
+  name: Internal platform service
+  description: >
+    A shared service other products call through the API gateway. It has no
+    channel of its own, and its value is measured by who consumes it.
+  requires: []
+  includes: []
+  offers: [api-service, relational-datastore, event-publisher, async-worker, operator-role,
+           admin-console, scheduled-job, event-consumer, notification-service, partner-adapter, ml-inference-service]
+  shapes:
+    Azure: core-platform-service
+
+- build_type_id: bought-saas
+  name: Bought SaaS capability
+  description: >
+    A capability bought from a vendor and run in the vendor's own tenancy.
+    What we build is the boundary around it: the outbound integration, the
+    secrets it needs, how our side reaches it, and what comes back.
+  requires: [vendor-baseline]
+  includes: []
+  offers: [private-egress, public-call, sftp-return-feed, webhook-inbound, sso-federation,
+           scim-provisioning, audit-forwarding, vendor-monitoring, byok-encryption, embedded-ui,
+           operator-role, operator-access]
+  shapes:
+    AWS: saas-onboarding
+    Azure: vendor-saas-service
+    GCP: vendor-saas-service-gcp
+
+- build_type_id: data-product
+  name: Batch data product
+  description: >
+    A curated dataset on the analytics platform: an ingestion pipeline, a
+    semantic layer the business queries, and the catalog registration that
+    makes it governed. A tenant of the analytics landing zone, not an
+    instance of its infrastructure.
+  requires: []
+  includes: []
+  offers: [data-hub]
+  shapes:
+    any: batch-data-product
+    GCP: batch-data-product-gcp
+
+- build_type_id: shared-hub
+  name: Shared hub
+  description: >
+    A hub the estate integrates through: an integration hub, an event bus,
+    an identity provider, a network hub or a data hub. One of each kind per
+    estate, assembled from its part rather than built on a shape.
+  requires: []
+  includes: []
+  offers: [integration-hub, event-hub, identity-hub, network-hub, data-hub]

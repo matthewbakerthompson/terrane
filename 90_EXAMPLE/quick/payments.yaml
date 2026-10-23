@@ -1,0 +1,113 @@
+# One file, drawn: `python -m terrane draw 90_EXAMPLE/quick/payments.yaml`
+# (from 50_ENGINE). A small model and the views it wants, in the method's
+# own vocabulary; the pictures are queries over it, drawn by the same code
+# as the whole estate's. Anything a drawing needs that this leaves out is
+# filled with a default and said so: a status is Active, a name is the id,
+# an owner is one org unit made for the sketch.
+
+model:
+  name: Card payments, sketched
+
+actors:
+  - actor_id: ACT-CARDHOLDER
+    name: Cardholder
+    actor_kind: Person
+  - actor_id: ACT-MERCHANT
+    name: Merchant
+    actor_kind: Organization
+
+systems:
+  - system_id: SYS-MOBILE
+    name: Cardholder mobile app
+    company_domain: Servicing
+    hosting: Azure
+    criticality: Medium
+  - system_id: SYS-AUTH
+    name: Authorization switch
+    company_domain: Payments
+    hosting: On-prem
+    criticality: High
+  - system_id: SYS-FRAUD
+    name: Fraud scoring
+    company_domain: Payments
+    hosting: AWS
+    criticality: High
+  - system_id: SYS-LEDGER
+    name: Card ledger
+    company_domain: Payments
+    hosting: On-prem
+    criticality: High
+  - system_id: SYS-STATEMENTS
+    name: Statement service
+    company_domain: Servicing
+    hosting: Azure
+
+interfaces:
+  - interface_id: INT-MERCHANT-AUTH
+    source_system_id: SYS-AUTH
+    target_system_id: SYS-FRAUD
+    protocol: gRPC
+    integration_style: Request-response
+  - interface_id: INT-AUTH-LEDGER
+    source_system_id: SYS-AUTH
+    target_system_id: SYS-LEDGER
+    protocol: MQ
+    integration_style: Request-response
+  - interface_id: INT-LEDGER-STATEMENTS
+    source_system_id: SYS-LEDGER
+    target_system_id: SYS-STATEMENTS
+    protocol: FileTransfer
+    integration_style: Batch
+  - interface_id: INT-MOBILE-STATEMENTS
+    source_system_id: SYS-MOBILE
+    target_system_id: SYS-STATEMENTS
+    protocol: HTTPS
+    integration_style: Request-response
+
+flows:
+  - flow_id: FLOW-AUTH
+    name: Card authorization
+    trigger: Presents a card
+    target_latency: under 500ms end to end
+
+relations:
+  actor_uses_system:
+    - actor_id: ACT-CARDHOLDER
+      system_id: SYS-MOBILE
+      interaction: Mobile self-service
+    - actor_id: ACT-MERCHANT
+      system_id: SYS-AUTH
+      interaction: Presents transactions
+  flow_step:
+    - flow_id: FLOW-AUTH
+      interface_id: INT-MERCHANT-AUTH
+      sequence: 10
+    - flow_id: FLOW-AUTH
+      interface_id: INT-AUTH-LEDGER
+      sequence: 20
+
+# The shipped views by name, and one written here: the systems by where
+# they run, which the shipped landscape does not show.
+views:
+  - system-context
+  - application-landscape
+  - view_id: payments-by-hosting
+    title: Payments, by where it runs
+    kind: diagram
+    layout: LR
+    description: >
+      The five systems grouped by hosting, every recorded interface between
+      them labeled with its protocol.
+    group_by: hosting
+    node_label: name
+    renderers: [mermaid]
+    scope:
+      include:
+        - type: systems
+    edges:
+      - via: interfaces
+        label: protocol
+    style:
+      color_by: criticality
+    limits:
+      max_nodes: 20

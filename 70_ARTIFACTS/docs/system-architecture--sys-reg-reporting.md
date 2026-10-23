@@ -1,0 +1,77 @@
+# Regulatory Reporting Engine — Architecture
+
+One system, the systems it talks to, and the technology it runs on. The most common whiteboard diagram, generated from the model for any system.
+
+```mermaid
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Regulatory Reporting Engine — Architecture
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Data_Asset["Data Asset"]
+    direction LR
+    DA_CUST360_CURATED[("Customer 360 curated<br/>dataset")]
+    DA_LENDPERF_CURATED[("Lending Portfolio<br/>Performance curated<br/>dataset")]
+  end
+
+  subgraph grp_System["System"]
+    direction LR
+    SYS_CUST360_SEMANTIC["Customer 360 Semantic<br/>Layer<br/>[Snowflake Data Cloud]"]
+    SYS_LENDPERF_SEMANTIC["Lending Portfolio<br/>Performance Semantic Layer<br/>[BigQuery · Looker]"]
+    SYS_REG_REPORTING["Regulatory Reporting<br/>Engine<br/>[AKS · Snowflake Data Cloud]"]
+  end
+
+  subgraph grp_Technology_Service["Technology Service"]
+    direction LR
+    TS_AZURE_AKS[/"Azure Kubernetes Service<br/>[Container platform]"/]
+    TS_GCP_BIGQUERY[/"BigQuery<br/>[Data warehouse]"/]
+    TS_GCP_LOOKER[/"Looker<br/>[Business intelligence]"/]
+    TS_SNOWFLAKE[/"Snowflake<br/>[Data warehouse]"/]
+  end
+
+  SYS_CUST360_SEMANTIC -->|"SQL"| SYS_REG_REPORTING
+  SYS_LENDPERF_SEMANTIC -->|"HTTPS"| SYS_REG_REPORTING
+  SYS_CUST360_SEMANTIC -.->|"runs on"| TS_SNOWFLAKE
+  SYS_LENDPERF_SEMANTIC -.->|"runs on"| TS_GCP_BIGQUERY
+  SYS_LENDPERF_SEMANTIC -.->|"runs on"| TS_GCP_LOOKER
+  SYS_REG_REPORTING -.->|"runs on"| TS_AZURE_AKS
+  SYS_REG_REPORTING -.->|"runs on"| TS_SNOWFLAKE
+  SYS_CUST360_SEMANTIC -->|"Read"| DA_CUST360_CURATED
+  SYS_LENDPERF_SEMANTIC -->|"Read"| DA_LENDPERF_CURATED
+  SYS_REG_REPORTING -->|"Read"| DA_LENDPERF_CURATED
+  SYS_REG_REPORTING -->|"Read"| DA_CUST360_CURATED
+
+  classDef s_data_assets__data_assets fill:#a7f3d0,stroke:#047857,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  classDef s_tech_services__tech_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
+  class DA_CUST360_CURATED,DA_LENDPERF_CURATED s_data_assets__data_assets;
+  class SYS_CUST360_SEMANTIC,SYS_LENDPERF_SEMANTIC,SYS_REG_REPORTING s_systems__systems;
+  class TS_AZURE_AKS,TS_GCP_BIGQUERY,TS_GCP_LOOKER,TS_SNOWFLAKE s_tech_services__tech_services;
+  classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_Data_Asset,grp_System,grp_Technology_Service boundary1;
+```
+
+The same view as the app draws it, written beside the Mermaid by `terrane render`:
+
+![Regulatory Reporting Engine — Architecture](../svg/system-architecture--sys-reg-reporting.svg)
+
+**Hue is the entity type.**
+
+| | Entity type |
+|---|---|
+| `#047857` | data assets |
+| `#4338ca` | systems |
+| `#c2410c` | tech services |
+
+## Flows across this diagram
+
+Each flow is a recorded sequence of interfaces. The steps drawn on this diagram are numbered; a step whose interface is not on it is marked.
+
+**Regulatory Return**: The monthly supervisory return. Entirely batch, and the only flow whose deadline is external and non-negotiable.
+
+1. Core Card Ledger → Enterprise Data Ingestion Hub (FileTransfer) — not on this diagram
+2. Enterprise Data Ingestion Hub → Customer 360 Pipeline (Snowpipe) — not on this diagram
+3. Customer 360 Pipeline → Customer 360 Semantic Layer (SQL) — not on this diagram
+4. Customer 360 Semantic Layer → Regulatory Reporting Engine (SQL)
+
+9 entities, 11 relationships. Generated from the model; edit the model, not this file.

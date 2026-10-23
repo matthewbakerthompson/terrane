@@ -1,0 +1,31 @@
+# The pattern for money arriving.
+
+- pattern_id: payment-capture-and-posting
+  name: Payment capture and same-day posting
+  status: Approved
+  category: Payments
+  blocks: [payment-capture, transactional-store]
+  intent: >
+    Every channel a payment can arrive through -- the app, a debit at a
+    terminal, a lockbox file, a wallet push -- lands in one capture service
+    that assigns each instruction a sequence, stores it, and posts it to the
+    ledger in order, once. Returns and reversals come back through the same
+    service and reverse the instruction they refer to. Settlement totals go
+    to the general ledger from the same store the postings came from, so
+    the daily reconciliation compares two reports of one fact.
+  consequences: >
+    The capture service is a system of record for payment instructions,
+    with the tiering, recovery and retention that implies, where before the
+    instructions lived in four channels' logs. Posting in order means a slow
+    channel can hold up a fast one, and the ordering guarantee has to be
+    designed rather than assumed from a queue's documentation. Every new
+    payment channel is an integration into this service first and a product
+    feature second, which product teams find slower than calling the ledger.
+  when_not_to_use: >
+    Card transactions, which arrive through the authorization switch and the
+    clearing files and have their own posting path; a payment is money the
+    customer sends us, and conflating the two paths loses the distinction
+    the reconciliation depends on. Internal transfers between the bank's
+    own accounts, which are journal entries and belong to the general
+    ledger's rules.
+  method_ref: PAT-015

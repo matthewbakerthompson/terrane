@@ -1,0 +1,93 @@
+# Results, images and the cancer center's own data.
+
+- data_asset_id: DA-LAB-RESULT
+  name: Laboratory results
+  description: >
+    Verified results from the core lab, microbiology, pathology and the
+    reference lab, with reference ranges and critical flags. Leaves the LIS
+    as HL7 ORU; the FHIR Observation resource on the API.
+  status: Active
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  company_domain: Diagnostics
+  tags: [clinical, fhir, hl7v2]
+  data_owner_org_id: ORG-LAB
+  data_steward_org_id: ORG-LAB
+  source_of_truth: SYS-LIS
+  classification: Restricted
+  risk_level: High
+  pii_flag: "Yes"
+  pii_types: Medical record number;Test results
+
+- data_asset_id: DA-IMAGING-STUDY
+  name: Imaging studies
+  description: The images themselves, in DICOM. The largest data the health system keeps, and the longest kept.
+  status: Active
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Physical
+  company_domain: Diagnostics
+  tags: [clinical, dicom]
+  data_owner_org_id: ORG-IMAGING
+  data_steward_org_id: ORG-IMAGING
+  source_of_truth: SYS-PACS
+  classification: Restricted
+  risk_level: High
+  pii_flag: "Yes"
+  pii_types: Name;Date of birth;Medical record number
+  quality_rules: Accession number matches an order; patient demographics match the index
+
+- data_asset_id: DA-IMAGING-REPORT
+  name: Radiology reports
+  description: The radiologist's signed interpretation. HL7 ORU out of the RIS; the FHIR DiagnosticReport resource on the API.
+  status: Active
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  company_domain: Diagnostics
+  tags: [clinical, fhir, hl7v2]
+  data_owner_org_id: ORG-IMAGING
+  data_steward_org_id: ORG-IMAGING
+  source_of_truth: SYS-RIS
+  classification: Restricted
+  risk_level: High
+  pii_flag: "Yes"
+  pii_types: Medical record number;Diagnoses
+
+- data_asset_id: DA-TREATMENT-PLAN
+  name: Oncology treatment plans
+  description: Chemotherapy regimens, cycles and doses, and radiation courses. The FHIR CarePlan resource, where it is shared at all.
+  status: Active
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  company_domain: Oncology
+  tags: [clinical, fhir]
+  data_owner_org_id: ORG-CANCER-CENTER
+  data_steward_org_id: ORG-CANCER-CENTER
+  source_of_truth: SYS-ONCOLOGY
+  classification: Restricted
+  risk_level: High
+  pii_flag: "Yes"
+  pii_types: Medical record number;Diagnoses;Medications
+
+- data_asset_id: DA-CANCER-CASE
+  name: Cancer registry abstracts
+  description: >
+    One abstract per reportable case: primary site, histology, stage,
+    first course of treatment and follow-up, in the layout the state
+    registry takes.
+  status: Active
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Physical
+  company_domain: Oncology
+  tags: [registry]
+  data_owner_org_id: ORG-CANCER-CENTER
+  data_steward_org_id: ORG-CANCER-CENTER
+  source_of_truth: SYS-TUMOR-REGISTRY
+  classification: Restricted
+  risk_level: High
+  pii_flag: "Yes"
+  pii_types: Name;Date of birth;Address;Diagnoses

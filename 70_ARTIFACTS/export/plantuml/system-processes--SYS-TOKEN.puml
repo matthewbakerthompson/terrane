@@ -1,0 +1,41 @@
+@startuml
+' Tokenization and credential management — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Tokenization and credential management — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_ORIG_08, "Digital Wallet Provisioning", "Provision credentials into wallets and tokenized environments.", $tags="capabilities")
+  ' aac CAP_ORIG_08: company_domain="Originations"
+  System(CAP_PAY_07, "Tokenization & Credential Management", "Manage tokens, primary account numbers, and credential lifecycle.", $tags="capabilities")
+  ' aac CAP_PAY_07: company_domain="Servicing"
+}
+Boundary(b_Process, "Process") {
+  System(P_PAYMENTS_004, "Manage token and credential lifecycle", "Issue, update, suspend, and delete payment tokens and credentials. Token lifecycle events flow between networks, wallets, and the account of record; a stale token strands the cardholder's wallet, so lifecycle sync is monitored.", $tags="processes")
+  ' aac P_PAYMENTS_004: company_domain=""
+  System(P_ORIG_008, "Provision credential to digital wallet", "Provision the card credential into a digital wallet or tokenized environment. Wallet provisioning runs the network token flows with step-up verification where risk requires; weak provisioning is a known fraud vector the strategy watches.", $tags="processes")
+  ' aac P_ORIG_008: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_TOKEN, "Tokenization and credential management", "Token and credential lifecycle management.", $tags="systems")
+  ' aac SYS_TOKEN: company_domain=""
+}
+
+Rel(P_ORIG_008, SYS_TOKEN, "Primary")
+' aac rel: source="P_ORIG_008"; target="SYS_TOKEN"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_PAYMENTS_004, SYS_TOKEN, "Primary")
+' aac rel: source="P_PAYMENTS_004"; target="SYS_TOKEN"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_ORIG_008, CAP_ORIG_08, "supports")
+' aac rel: source="P_ORIG_008"; target="CAP_ORIG_08"; label="supports"; relation="process_supports_capability"
+Rel(P_ORIG_008, CAP_PAY_07, "supports")
+' aac rel: source="P_ORIG_008"; target="CAP_PAY_07"; label="supports"; relation="process_supports_capability"
+Rel(P_PAYMENTS_004, CAP_PAY_07, "supports")
+' aac rel: source="P_PAYMENTS_004"; target="CAP_PAY_07"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

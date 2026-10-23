@@ -1,0 +1,483 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1263.21" height="998.4" viewBox="0 0 1263.21 998.4" font-family="Geist, system-ui, sans-serif" data-layout="dagre">
+<title>General ledger — Processes and Capabilities</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">General ledger — Processes and Capabilities</text>
+<text x="1235.21" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   35 nodes · 42 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One system, every process that uses it and in what role, and the capabilities those processes support. This shows the business impact of changing the system. A long list against a low</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">criticality rating is worth a second look.</text>
+<line x1="28" y1="112" x2="1235.21" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(31.63 121.7)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="621.92" y="169.8" width="580.16" height="559.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="663.92" y="187.21" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="-2.13" y="90.76" width="580.27" height="559.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="30.72" y="108.17" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="622.3" y="11.8" width="184.4" height="135.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="652.1" y="29.2" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-CREDIT-006::SYS-GL">
+<title>Supporting</title>
+<path d="M362.81 150.5 L371.47 150.5 A8.66 8.66 0 0 0 380.13 141.84 L380.13 107.76 A10 10 0 0 1 390.13 97.76 L622.42 97.76 A10 10 0 0 0 632.42 87.76 L632.42 45.74 A1.94 1.94 0 0 1 634.36 43.8 L636.3 43.8 L643.78 43.8" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 43.8 L637.73 48.58 L637.73 39.01 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e1::P-NETWORK-RECON-001::SYS-GL">
+<title>Supporting</title>
+<path d="M546.81 326.5 L564.13 326.5 L600.8 326.5 A10 10 0 0 0 610.8 316.5 L610.8 83.2 A10 10 0 0 1 620.8 73.2 L636.3 73.2 L643.78 73.2" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 73.2 L637.73 77.99 L637.73 68.42 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e2::P-INTERCHANGE-POST-001::SYS-GL">
+<title>Supporting</title>
+<path d="M362.81 326.5 L380.13 326.5 L380 326.5 A0.13 0.13 0 0 1 379.87 326.37 L379.87 87.4 A10 10 0 0 1 389.87 77.4 L636.3 77.4 L643.78 77.4" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 77.4 L637.73 82.19 L637.73 72.62 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-INTERCHANGE-POST-001::SYS-GL">
+<rect x="479.04" y="69.4" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="508.08" y="80.95" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e3::P-SETTLEMENT-001::SYS-GL">
+<title>Supporting</title>
+<path d="M178.81 590.5 L187.47 590.5 A8.66 8.66 0 0 1 196.13 599.16 L196.13 619.2 A10 10 0 0 0 206.13 629.2 L596.92 629.2 A10 10 0 0 0 606.92 619.2 L606.92 121 A10 10 0 0 1 616.92 111 L636.3 111 L643.78 111" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 111 L637.73 115.78 L637.73 106.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::P-SETTLEMENT-001::SYS-GL">
+<rect x="574.95" y="618.27" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="603.99" y="629.82" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e4::P-SETTLEMENT-002::SYS-GL">
+<title>Supporting</title>
+<path d="M362.81 590.5 L371.47 590.5 A8.66 8.66 0 0 1 380.13 599.16 L380.13 626.2 A10 10 0 0 0 390.13 636.2 L554.13 636.2 A10 10 0 0 0 564.13 626.2 L564.13 125.2 A10 10 0 0 1 574.13 115.2 L636.3 115.2 L643.78 115.2" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 115.2 L637.73 119.99 L637.73 110.42 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e5::P-REWARDS-003::SYS-GL">
+<title>Supporting</title>
+<path d="M362.81 502.5 L371.47 502.5 A8.66 8.66 0 0 0 380.13 493.84 L380.13 466.7 A10 10 0 0 1 390.13 456.7 L576.13 456.7 A10 10 0 0 0 586.13 446.7 L586.13 112.6 A10 10 0 0 1 596.13 102.6 L636.3 102.6 L643.78 102.6" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 102.6 L637.73 107.38 L637.73 97.81 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e5::P-REWARDS-003::SYS-GL" transform="matrix(0 -1 1 0 336.48 835.78)">
+<rect x="557.09" y="241.65" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="586.13" y="253.2" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e6::P-FRAUD-004::SYS-GL">
+<title>Supporting</title>
+<path d="M362.81 238.5 L371.47 238.5 A8.66 8.66 0 0 0 380.13 229.84 L380.13 109.26 A10 10 0 0 1 390.13 99.26 L622.65 99.26 A10 10 0 0 0 632.65 89.26 L632.65 66.62 A1.83 1.83 0 0 1 634.47 64.8 L636.3 64.8 L643.78 64.8" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 64.8 L637.73 69.58 L637.73 60.01 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e7::P-COLLECTIONS-004::SYS-GL">
+<title>Supporting</title>
+<path d="M178.81 150.5 L187.47 150.5 A8.66 8.66 0 0 0 196.13 141.84 L196.13 114.76 A10 10 0 0 1 206.13 104.76 L554.13 104.76 A10 10 0 0 0 564.13 94.76 L564.13 62.2 A10 10 0 0 1 574.13 52.2 L636.3 52.2 L643.78 52.2" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 52.2 L637.73 56.99 L637.73 47.42 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e8::P-RECOVERY-001::SYS-GL">
+<title>Supporting</title>
+<path d="M178.81 414.5 L196.13 414.5 L194.25 414.5 A1.88 1.88 0 0 1 192.37 412.62 L192.37 108.4 A10 10 0 0 1 202.37 98.4 L617.5 98.4 A6.3 6.3 0 0 0 623.8 92.1 L623.8 92.05 A6.25 6.25 0 0 1 630.05 85.8 L636.3 85.8 L643.78 85.8" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 85.8 L637.73 90.58 L637.73 81.01 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e8::P-RECOVERY-001::SYS-GL">
+<rect x="163.33" y="86.45" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="192.37" y="98" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e9::P-RECOVERY-002::SYS-GL">
+<title>Supporting</title>
+<path d="M362.81 414.5 L371.47 414.5 A8.66 8.66 0 0 0 380.13 405.84 L380.13 382.2 A10 10 0 0 1 390.13 372.2 L556.13 372.2 A10 10 0 0 0 566.13 362.2 L566.13 100 A10 10 0 0 1 576.13 90 L636.3 90 L643.78 90" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 90 L637.73 94.78 L637.73 85.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e10::P-RECOVERY-005::SYS-GL">
+<title>Supporting</title>
+<path d="M546.81 414.5 L564.13 414.5 L620.42 414.5 A10 10 0 0 0 630.42 404.5 L630.42 84.54 A2.94 2.94 0 0 1 633.36 81.6 L636.3 81.6 L643.78 81.6" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 81.6 L637.73 86.38 L637.73 76.81 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e11::P-TPS-006::SYS-GL">
+<title>Primary</title>
+<path d="M546.81 590.5 L564.13 590.5 L600.8 590.5 A10 10 0 0 0 610.8 580.5 L610.8 335.67 A9.17 9.17 0 0 1 619.97 326.5 L619.97 326.5 A9.17 9.17 0 0 0 629.15 317.33 L629.15 110.38 A3.58 3.58 0 0 1 632.72 106.8 L636.3 106.8 L643.78 106.8" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 106.8 L637.73 111.58 L637.73 102.01 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e11::P-TPS-006::SYS-GL">
+<rect x="589.62" y="430.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="610.8" y="442.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e12::P-GL-CLOSE-001::SYS-GL">
+<title>Primary</title>
+<path d="M178.81 326.5 L187.47 326.5 A8.66 8.66 0 0 0 196.13 317.84 L196.13 112.6 A10 10 0 0 1 206.13 102.6 L579.63 102.6 A10 10 0 0 0 589.63 92.6 L589.63 79 A10 10 0 0 1 599.63 69 L636.3 69 L643.78 69" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 69 L637.73 73.78 L637.73 64.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e13::P-FUNDING-001::SYS-GL">
+<title>Supporting</title>
+<path d="M546.81 238.5 L564.13 238.5 L617.75 238.5 A10 10 0 0 0 627.75 228.5 L627.75 60.68 A4.28 4.28 0 0 1 632.02 56.4 L636.3 56.4 L643.78 56.4" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 56.4 L637.73 61.19 L637.73 51.62 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e14::P-REG-DATA-PREP-001::SYS-GL">
+<title>Supporting</title>
+<path d="M178.81 502.5 L196.13 502.5 L194.25 502.5 A1.88 1.88 0 0 0 192.37 504.38 L192.37 633.2 A10 10 0 0 0 202.37 643.2 L559.63 643.2 A10 10 0 0 0 569.63 633.2 L569.63 382.2 A10 10 0 0 1 579.63 372.2 L620.8 372.2 A10 10 0 0 0 630.8 362.2 L630.8 96.95 A2.75 2.75 0 0 1 633.55 94.2 L636.3 94.2 L643.78 94.2" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 94.2 L637.73 98.99 L637.73 89.42 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e15::P-FINANCE-001::SYS-GL">
+<title>Primary</title>
+<path d="M546.81 150.5 L564.13 150.5 L603.92 150.5 A10 10 0 0 0 613.92 140.5 L613.92 58 A10 10 0 0 1 623.92 48 L636.3 48 L643.78 48" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 48 L637.73 52.78 L637.73 43.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e15::P-FINANCE-001::SYS-GL">
+<rect x="592.74" y="121.25" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="613.92" y="132.8" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e16::P-FINANCE-002::SYS-GL">
+<title>Primary</title>
+<path d="M178.81 238.5 L196.13 238.5 L197.75 238.5 A1.62 1.62 0 0 0 199.37 236.88 L199.37 70.6 A10 10 0 0 1 209.37 60.6 L636.3 60.6 L643.78 60.6" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 60.6 L637.73 65.38 L637.73 55.81 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e16::P-FINANCE-002::SYS-GL">
+<rect x="396.66" y="52.6" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="417.83" y="64.15" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e17::P-SERVICING-011::SYS-GL">
+<title>Supporting</title>
+<path d="M546.81 502.5 L564.13 502.5 L614.25 502.5 A10 10 0 0 0 624.25 492.5 L624.25 179.89 A7.59 7.59 0 0 1 631.83 172.3 L631.83 172.3 A7.59 7.59 0 0 0 639.42 164.71 L639.42 99.96 A1.56 1.56 0 0 0 637.86 98.4 L636.3 98.4 L643.78 98.4" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 98.4 L637.73 103.19 L637.73 93.62 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e18::P-CREDIT-006::CAP-CRED-05">
+<title>supports</title>
+<path d="M362.81 150.5 L371.47 150.5 A8.66 8.66 0 0 1 380.13 159.16 L380.13 180.3 A10 10 0 0 0 390.13 190.3 L622.42 190.3 A10 10 0 0 1 632.42 200.3 L632.42 315.75 A1.75 1.75 0 0 0 634.17 317.5 L635.92 317.5 L643.78 317.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 317.5 L637.73 322.29 L637.73 312.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e19::P-NETWORK-RECON-001::CAP-PAY-06">
+<title>supports</title>
+<path d="M546.81 326.5 L555.47 326.5 A8.66 8.66 0 0 1 564.13 335.16 L564.13 349.8 A10 10 0 0 0 574.13 359.8 L629.42 359.8 A10 10 0 0 1 639.42 369.8 L639.42 534.76 A10 10 0 0 0 649.42 544.76 L808.2 544.76 A10 10 0 0 1 818.2 554.76 L818.2 580.64 A0.86 0.86 0 0 0 819.06 581.5 L819.92 581.5 L827.78 581.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M831.3 581.5 L821.73 586.28 L821.73 576.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e20::P-INTERCHANGE-POST-001::CAP-PAY-05">
+<title>supports</title>
+<path d="M362.81 326.5 L371.47 326.5 A8.66 8.66 0 0 1 380.13 335.16 L380.13 356.7 A10 10 0 0 0 390.13 366.7 L615.65 366.7 A10 10 0 0 1 625.65 376.7 L625.65 576.37 A5.13 5.13 0 0 0 630.78 581.5 L635.92 581.5 L643.78 581.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 581.5 L637.73 586.28 L637.73 576.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e21::P-INTERCHANGE-POST-001::CAP-FIN-02">
+<title>supports</title>
+<path d="M362.81 326.5 L371.47 326.5 A8.66 8.66 0 0 1 380.13 335.16 L380.13 362.26 A10 10 0 0 0 390.13 372.26 L616.13 372.26 A10 10 0 0 1 626.13 382.26 L626.13 400.61 A4.89 4.89 0 0 0 631.03 405.5 L635.92 405.5 L643.78 405.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 405.5 L637.73 410.29 L637.73 400.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e22::P-SETTLEMENT-001::CAP-PAY-05">
+<title>supports</title>
+<path d="M178.81 590.5 L187.47 590.5 A8.66 8.66 0 0 1 196.13 599.16 L196.13 631.7 A10 10 0 0 0 206.13 641.7 L622.65 641.7 A10 10 0 0 0 632.65 631.7 L632.65 583.13 A1.63 1.63 0 0 1 634.28 581.5 L635.92 581.5 L643.78 581.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 581.5 L637.73 586.28 L637.73 576.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e23::P-SETTLEMENT-001::CAP-FIN-03">
+<title>supports</title>
+<path d="M178.81 590.5 L196.13 590.5 L197.75 590.5 A1.62 1.62 0 0 1 199.37 592.12 L199.37 651.7 A10 10 0 0 0 209.37 661.7 L617.3 661.7 A10 10 0 0 0 627.3 651.7 L627.3 457.8 A10 10 0 0 1 637.3 447.8 L808.2 447.8 A10 10 0 0 0 818.2 437.8 L818.2 406.36 A0.86 0.86 0 0 1 819.06 405.5 L819.92 405.5 L827.78 405.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M831.3 405.5 L821.73 410.29 L821.73 400.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e24::P-SETTLEMENT-002::CAP-FIN-06">
+<title>supports</title>
+<path d="M362.81 590.5 L380.13 590.5 L380 590.5 A0.13 0.13 0 0 0 379.87 590.63 L379.87 705.2 A10 10 0 0 0 389.87 715.2 L810.08 715.2 A10 10 0 0 0 820.08 705.2 L820.08 545.7 A0.94 0.94 0 0 0 819.14 544.76 L819.14 544.76 A0.94 0.94 0 0 1 818.2 543.82 L818.2 494.36 A0.86 0.86 0 0 1 819.06 493.5 L819.92 493.5 L827.78 493.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M831.3 493.5 L821.73 498.29 L821.73 488.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e25::P-REWARDS-003::CAP-BILL-04">
+<title>supports</title>
+<path d="M362.81 502.5 L371.47 502.5 A8.66 8.66 0 0 0 380.13 493.84 L380.13 466.76 A10 10 0 0 1 390.13 456.76 L613.42 456.76 A10 10 0 0 0 623.42 446.76 L623.42 235.75 A6.25 6.25 0 0 1 629.67 229.5 L635.92 229.5 L643.78 229.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 229.5 L637.73 234.28 L637.73 224.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e26::P-REWARDS-003::CAP-FIN-02">
+<title>supports</title>
+<path d="M362.81 502.5 L380.13 502.5 L380 502.5 A0.13 0.13 0 0 1 379.87 502.37 L379.87 461.2 A10 10 0 0 1 389.87 451.2 L624.3 451.2 A10 10 0 0 0 634.3 441.2 L634.3 406.31 A0.81 0.81 0 0 1 635.11 405.5 L635.92 405.5 L643.78 405.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 405.5 L637.73 410.29 L637.73 400.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e27::P-FRAUD-004::CAP-FRAUD-05">
+<title>supports</title>
+<path d="M362.81 238.5 L371.47 238.5 A8.66 8.66 0 0 1 380.13 247.16 L380.13 274.2 A10 10 0 0 0 390.13 284.2 L583.13 284.2 A10 10 0 0 1 593.13 294.2 L593.13 710.7 A10 10 0 0 0 603.13 720.7 L993.92 720.7 A10 10 0 0 0 1003.92 710.7 L1003.92 497.43 A3.93 3.93 0 0 1 1007.85 493.5 L1011.78 493.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1015.3 493.5 L1005.73 498.29 L1005.73 488.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e28::P-COLLECTIONS-004::CAP-COLL-04">
+<title>supports</title>
+<path d="M178.81 150.5 L187.47 150.5 A8.66 8.66 0 0 0 196.13 141.84 L196.13 121.76 A10 10 0 0 1 206.13 111.76 L547.13 111.76 A10 10 0 0 1 557.13 121.76 L557.13 148.3 A10 10 0 0 0 567.13 158.3 L808.2 158.3 A10 10 0 0 1 818.2 168.3 L818.2 228.64 A0.86 0.86 0 0 0 819.06 229.5 L819.92 229.5 L827.78 229.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M831.3 229.5 L821.73 234.28 L821.73 224.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e29::P-COLLECTIONS-004::CAP-FIN-01">
+<title>supports</title>
+<path d="M178.81 150.5 L187.47 150.5 A8.66 8.66 0 0 0 196.13 141.84 L196.13 10.3 A10 10 0 0 1 206.13 0.3 L993.92 0.3 A10 10 0 0 1 1003.92 10.3 L1003.92 313.57 A3.93 3.93 0 0 0 1007.85 317.5 L1011.78 317.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1015.3 317.5 L1005.73 322.29 L1005.73 312.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e30::P-RECOVERY-001::CAP-COLL-05">
+<title>supports</title>
+<path d="M178.81 414.5 L187.47 414.5 A8.66 8.66 0 0 0 196.13 405.84 L196.13 369.7 A10 10 0 0 1 206.13 359.7 L563.13 359.7 A10 10 0 0 0 573.13 349.7 L573.13 168.7 A10 10 0 0 1 583.13 158.7 L990.58 158.7 A10 10 0 0 1 1000.58 168.7 L1000.58 227.83 A1.67 1.67 0 0 0 1002.25 229.5 L1003.92 229.5 L1011.78 229.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1015.3 229.5 L1005.73 234.28 L1005.73 224.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e31::P-RECOVERY-002::CAP-COLL-05">
+<title>supports</title>
+<path d="M362.81 414.5 L371.47 414.5 A8.66 8.66 0 0 0 380.13 405.84 L380.13 375.26 A10 10 0 0 1 390.13 365.26 L561.13 365.26 A10 10 0 0 0 571.13 355.26 L571.13 202.76 A10 10 0 0 1 581.13 192.76 L690.71 192.76 A4.48 4.48 0 0 0 695.19 188.28 L695.19 188.28 A4.48 4.48 0 0 1 699.67 183.8 L993.92 183.8 A10 10 0 0 1 1003.92 193.8 L1003.92 225.57 A3.93 3.93 0 0 0 1007.85 229.5 L1011.78 229.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1015.3 229.5 L1005.73 234.28 L1005.73 224.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e32::P-RECOVERY-005::CAP-COLL-05">
+<title>supports</title>
+<path d="M546.81 414.5 L564.13 414.5 L622.65 414.5 A10 10 0 0 0 632.65 404.5 L632.65 175.3 A10 10 0 0 1 642.65 165.3 L688.69 165.3 A6.5 6.5 0 0 1 695.19 171.8 L695.19 171.8 A6.5 6.5 0 0 0 701.69 178.3 L997.58 178.3 A10 10 0 0 1 1007.58 188.3 L1007.58 227.67 A1.83 1.83 0 0 1 1005.75 229.5 L1003.92 229.5 L1011.78 229.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1015.3 229.5 L1005.73 234.28 L1005.73 224.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e33::P-RECOVERY-005::CAP-FIN-02">
+<title>supports</title>
+<path d="M546.81 414.5 L559.63 414.5 A4.5 4.5 0 0 0 564.13 410 L564.13 410 A4.5 4.5 0 0 1 568.63 405.5 L635.92 405.5 L643.78 405.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 405.5 L637.73 410.29 L637.73 400.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e34::P-TPS-006::CAP-TPS-04">
+<title>supports</title>
+<path d="M546.81 590.5 L564.13 590.5 L620.42 590.5 A10 10 0 0 1 630.42 600.5 L630.42 666.75 A2.75 2.75 0 0 0 633.17 669.5 L635.92 669.5 L643.78 669.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 669.5 L637.73 674.28 L637.73 664.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e35::P-GL-CLOSE-001::CAP-FIN-01">
+<title>supports</title>
+<path d="M178.81 326.5 L187.47 326.5 A8.66 8.66 0 0 0 196.13 317.84 L196.13 290.76 A10 10 0 0 1 206.13 280.76 L993.92 280.76 A10 10 0 0 1 1003.92 290.76 L1003.92 313.57 A3.93 3.93 0 0 0 1007.85 317.5 L1011.78 317.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1015.3 317.5 L1005.73 322.29 L1005.73 312.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e36::P-FUNDING-001::CAP-FIN-03">
+<title>supports</title>
+<path d="M546.81 238.5 L564.13 238.5 L629.42 238.5 A10 10 0 0 1 639.42 248.5 L639.42 349.8 A10 10 0 0 0 649.42 359.8 L804.7 359.8 A10 10 0 0 1 814.7 369.8 L814.7 402.89 A2.61 2.61 0 0 0 817.31 405.5 L819.92 405.5 L827.78 405.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M831.3 405.5 L821.73 410.29 L821.73 400.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e37::P-REG-DATA-PREP-001::CAP-FIN-04">
+<title>supports</title>
+<path d="M178.81 502.5 L187.47 502.5 A8.66 8.66 0 0 1 196.13 511.16 L196.13 730.7 A10 10 0 0 0 206.13 740.7 L994.08 740.7 A10 10 0 0 0 1004.08 730.7 L1004.08 405.58 A0.08 0.08 0 0 0 1004 405.5 L1003.92 405.5 L1011.78 405.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1015.3 405.5 L1005.73 410.29 L1005.73 400.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e38::P-REG-DATA-PREP-001::CAP-DATA-03">
+<title>supports</title>
+<path d="M178.81 502.5 L187.47 502.5 A8.66 8.66 0 0 0 196.13 493.84 L196.13 473.7 A10 10 0 0 1 206.13 463.7 L622.42 463.7 A10 10 0 0 0 632.42 453.7 L632.42 373.2 A10 10 0 0 1 642.42 363.2 L811.7 363.2 A10 10 0 0 0 821.7 353.2 L821.7 318.39 A0.89 0.89 0 0 0 820.81 317.5 L819.92 317.5 L827.78 317.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M831.3 317.5 L821.73 322.29 L821.73 312.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e39::P-FINANCE-001::CAP-FIN-02">
+<title>supports</title>
+<path d="M546.81 150.5 L564.13 150.5 L618.47 150.5 A10 10 0 0 1 628.47 160.5 L628.47 401.77 A3.73 3.73 0 0 0 632.19 405.5 L635.92 405.5 L643.78 405.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 405.5 L637.73 410.29 L637.73 400.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e40::P-FINANCE-002::CAP-FIN-05">
+<title>supports</title>
+<path d="M178.81 238.5 L187.47 238.5 A8.66 8.66 0 0 1 196.13 247.16 L196.13 265.2 A10 10 0 0 0 206.13 275.2 L610.75 275.2 A10 10 0 0 1 620.75 285.2 L620.75 485.91 A7.59 7.59 0 0 0 628.33 493.5 L635.92 493.5 L643.78 493.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M647.3 493.5 L637.73 498.29 L637.73 488.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e41::P-SERVICING-011::CAP-SERV-02">
+<title>supports</title>
+<path d="M546.81 502.5 L564.13 502.5 L617.75 502.5 A10 10 0 0 1 627.75 512.5 L627.75 750.7 A10 10 0 0 0 637.75 760.7 L993.92 760.7 A10 10 0 0 0 1003.92 750.7 L1003.92 585.43 A3.93 3.93 0 0 1 1007.85 581.5 L1011.78 581.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1015.3 581.5 L1005.73 586.28 L1005.73 576.72 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-BILL-04" data-type="capabilities">
+<title>Rewards Earn, Accrual &amp; Redemption</title>
+<path d="M688 195.5 L648 229.5 L688 263.5 L768 263.5 L808 229.5 L768 195.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="728" y="227.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Rewards Earn, Accrual</text>
+<text x="728" y="239.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">&amp; Redemption</text>
+</g>
+<g class="node" data-id="CAP-COLL-04" data-type="capabilities">
+<title>Charge-off Processing</title>
+<path d="M872 195.5 L832 229.5 L872 263.5 L952 263.5 L992 229.5 L952 195.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="912" y="233.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Charge-off Processing</text>
+</g>
+<g class="node" data-id="CAP-COLL-05" data-type="capabilities">
+<title>Recovery, Agency &amp; Debt Sale Management</title>
+<path d="M1056 195.5 L1016 229.5 L1056 263.5 L1136 263.5 L1176 229.5 L1136 195.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="1096" y="221.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Recovery, Agency &amp;</text>
+<text x="1096" y="233.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Debt Sale</text>
+<text x="1096" y="245.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+</g>
+<g class="node" data-id="CAP-CRED-05" data-type="capabilities">
+<title>Loss Forecasting &amp; Allowance</title>
+<path d="M688 283.5 L648 317.5 L688 351.5 L768 351.5 L808 317.5 L768 283.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="728" y="315.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Loss Forecasting &amp;</text>
+<text x="728" y="327.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Allowance</text>
+</g>
+<g class="node" data-id="CAP-DATA-03" data-type="capabilities">
+<title>Data Quality Management</title>
+<path d="M872 283.5 L832 317.5 L872 351.5 L952 351.5 L992 317.5 L952 283.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="912" y="315.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Data Quality</text>
+<text x="912" y="327.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+</g>
+<g class="node" data-id="CAP-FIN-01" data-type="capabilities">
+<title>General Ledger &amp; Financial Close</title>
+<path d="M1056 283.5 L1016 317.5 L1056 351.5 L1136 351.5 L1176 317.5 L1136 283.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="1096" y="315.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">General Ledger &amp;</text>
+<text x="1096" y="327.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Financial Close</text>
+</g>
+<g class="node" data-id="CAP-FIN-02" data-type="capabilities">
+<title>Interchange &amp; Revenue Accounting</title>
+<path d="M688 371.5 L648 405.5 L688 439.5 L768 439.5 L808 405.5 L768 371.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="728" y="403.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Interchange &amp;</text>
+<text x="728" y="415.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Revenue Accounting</text>
+</g>
+<g class="node" data-id="CAP-FIN-03" data-type="capabilities">
+<title>Funding &amp; Liquidity Management</title>
+<path d="M872 371.5 L832 405.5 L872 439.5 L952 439.5 L992 405.5 L952 371.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="912" y="403.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Funding &amp; Liquidity</text>
+<text x="912" y="415.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+</g>
+<g class="node" data-id="CAP-FIN-04" data-type="capabilities">
+<title>Regulatory &amp; Financial Reporting</title>
+<path d="M1056 371.5 L1016 405.5 L1056 439.5 L1136 439.5 L1176 405.5 L1136 371.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="1096" y="403.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Regulatory &amp; Financial</text>
+<text x="1096" y="415.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Reporting</text>
+</g>
+<g class="node" data-id="CAP-FIN-05" data-type="capabilities">
+<title>Accounts Payable &amp; Procurement Finance</title>
+<path d="M688 459.5 L648 493.5 L688 527.5 L768 527.5 L808 493.5 L768 459.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="728" y="491.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Accounts Payable &amp;</text>
+<text x="728" y="503.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Procurement Finance</text>
+</g>
+<g class="node" data-id="CAP-FIN-06" data-type="capabilities">
+<title>Cash &amp; Settlement Reconciliation</title>
+<path d="M872 459.5 L832 493.5 L872 527.5 L952 527.5 L992 493.5 L952 459.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="912" y="491.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Cash &amp; Settlement</text>
+<text x="912" y="503.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Reconciliation</text>
+</g>
+<g class="node" data-id="CAP-FRAUD-05" data-type="capabilities">
+<title>Fraud Loss Recovery &amp; Write-off</title>
+<path d="M1056 459.5 L1016 493.5 L1056 527.5 L1136 527.5 L1176 493.5 L1136 459.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="1096" y="491.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Fraud Loss Recovery &amp;</text>
+<text x="1096" y="503.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Write-off</text>
+</g>
+<g class="node" data-id="CAP-PAY-05" data-type="capabilities">
+<title>Network Settlement &amp; Interchange</title>
+<path d="M688 547.5 L648 581.5 L688 615.5 L768 615.5 L808 581.5 L768 547.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="728" y="579.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Network Settlement &amp;</text>
+<text x="728" y="591.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Interchange</text>
+</g>
+<g class="node" data-id="CAP-PAY-06" data-type="capabilities">
+<title>Network &amp; Merchant Reconciliation</title>
+<path d="M872 547.5 L832 581.5 L872 615.5 L952 615.5 L992 581.5 L952 547.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="912" y="579.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Network &amp; Merchant</text>
+<text x="912" y="591.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Reconciliation</text>
+</g>
+<g class="node" data-id="CAP-SERV-02" data-type="capabilities">
+<title>Account Maintenance &amp; Servicing Requests</title>
+<path d="M1056 547.5 L1016 581.5 L1056 615.5 L1136 615.5 L1176 581.5 L1136 547.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="1096" y="579.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Account Maintenance</text>
+<text x="1096" y="591.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">&amp; Servicing Requests</text>
+</g>
+<g class="node" data-id="CAP-TPS-04" data-type="capabilities">
+<title>Client Billing &amp; Revenue Management</title>
+<path d="M688 635.5 L648 669.5 L688 703.5 L768 703.5 L808 669.5 L768 635.5 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="728" y="667.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Client Billing &amp;</text>
+<text x="728" y="679.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Revenue Management</text>
+</g>
+<g class="node" data-id="P-COLLECTIONS-004" data-type="processes">
+<title>Execute charge-off</title>
+<path d="M104 116.5 L24 142.47 L54.56 184.5 L153.44 184.5 L184 142.47 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="104" y="154.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Execute charge-off</text>
+</g>
+<g class="node" data-id="P-CREDIT-006" data-type="processes">
+<title>Produce loss forecast and allowance</title>
+<path d="M288 116.5 L208 142.47 L238.56 184.5 L337.44 184.5 L368 142.47 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="288" y="148.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Produce loss forecast</text>
+<text x="288" y="160.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and allowance</text>
+</g>
+<g class="node" data-id="P-FINANCE-001" data-type="processes">
+<title>Recognize interchange and servicing revenue</title>
+<path d="M472 116.5 L392 142.47 L422.56 184.5 L521.44 184.5 L552 142.47 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="472" y="148.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Recognize interchange</text>
+<text x="472" y="160.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and servicing revenue</text>
+</g>
+<g class="node" data-id="P-FINANCE-002" data-type="processes">
+<title>Process supplier payment</title>
+<path d="M104 204.5 L24 230.47 L54.56 272.5 L153.44 272.5 L184 230.47 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="104" y="236.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Process supplier</text>
+<text x="104" y="248.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">payment</text>
+</g>
+<g class="node" data-id="P-FRAUD-004" data-type="processes">
+<title>Recover and write off fraud loss</title>
+<path d="M288 204.5 L208 230.47 L238.56 272.5 L337.44 272.5 L368 230.47 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="288" y="236.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Recover and write off</text>
+<text x="288" y="248.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">fraud loss</text>
+</g>
+<g class="node" data-id="P-FUNDING-001" data-type="processes">
+<title>Manage daily funding position</title>
+<path d="M472 204.5 L392 230.47 L422.56 272.5 L521.44 272.5 L552 230.47 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="472" y="236.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Manage daily funding</text>
+<text x="472" y="248.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">position</text>
+</g>
+<g class="node" data-id="P-GL-CLOSE-001" data-type="processes">
+<title>Execute monthly financial close</title>
+<path d="M104 292.5 L24 318.47 L54.56 360.5 L153.44 360.5 L184 318.47 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="104" y="324.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Execute monthly</text>
+<text x="104" y="336.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">financial close</text>
+</g>
+<g class="node" data-id="P-INTERCHANGE-POST-001" data-type="processes">
+<title>Post interchange and settlement entries</title>
+<path d="M288 292.5 L208 318.47 L238.56 360.5 L337.44 360.5 L368 318.47 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="288" y="324.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Post interchange and</text>
+<text x="288" y="336.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">settlement entries</text>
+</g>
+<g class="node" data-id="P-NETWORK-RECON-001" data-type="processes">
+<title>Reconcile network settlement</title>
+<path d="M472 292.5 L392 318.47 L422.56 360.5 L521.44 360.5 L552 318.47 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="472" y="324.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Reconcile network</text>
+<text x="472" y="336.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">settlement</text>
+</g>
+<g class="node" data-id="P-RECOVERY-001" data-type="processes">
+<title>Place account with collection agency</title>
+<path d="M104 380.5 L24 406.47 L54.56 448.5 L153.44 448.5 L184 406.47 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="104" y="412.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Place account with</text>
+<text x="104" y="424.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">collection agency</text>
+</g>
+<g class="node" data-id="P-RECOVERY-002" data-type="processes">
+<title>Execute debt sale</title>
+<path d="M288 380.5 L208 406.47 L238.56 448.5 L337.44 448.5 L368 406.47 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="288" y="418.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Execute debt sale</text>
+</g>
+<g class="node" data-id="P-RECOVERY-005" data-type="processes">
+<title>Post recovery and account for proceeds</title>
+<path d="M472 380.5 L392 406.47 L422.56 448.5 L521.44 448.5 L552 406.47 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="472" y="412.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Post recovery and</text>
+<text x="472" y="424.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">account for proceeds</text>
+</g>
+<g class="node" data-id="P-REG-DATA-PREP-001" data-type="processes">
+<title>Prepare regulatory reporting data</title>
+<path d="M104 468.5 L24 494.47 L54.56 536.5 L153.44 536.5 L184 494.47 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="104" y="500.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Prepare regulatory</text>
+<text x="104" y="512.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">reporting data</text>
+</g>
+<g class="node" data-id="P-REWARDS-003" data-type="processes">
+<title>Reconcile rewards liability</title>
+<path d="M288 468.5 L208 494.47 L238.56 536.5 L337.44 536.5 L368 494.47 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="288" y="500.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Reconcile rewards</text>
+<text x="288" y="512.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">liability</text>
+</g>
+<g class="node" data-id="P-SERVICING-011" data-type="processes">
+<title>Administer secured card deposit lifecycle</title>
+<path d="M472 468.5 L392 494.47 L422.56 536.5 L521.44 536.5 L552 494.47 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="472" y="500.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Administer secured</text>
+<text x="472" y="512.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">card deposit lifecycle</text>
+</g>
+<g class="node" data-id="P-SETTLEMENT-001" data-type="processes">
+<title>Fund daily network settlement position</title>
+<path d="M104 556.5 L24 582.47 L54.56 624.5 L153.44 624.5 L184 582.47 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="104" y="588.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Fund daily network</text>
+<text x="104" y="600.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">settlement position</text>
+</g>
+<g class="node" data-id="P-SETTLEMENT-002" data-type="processes">
+<title>Reconcile cash and suspense accounts</title>
+<path d="M288 556.5 L208 582.47 L238.56 624.5 L337.44 624.5 L368 582.47 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="288" y="588.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Reconcile cash and</text>
+<text x="288" y="600.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">suspense accounts</text>
+</g>
+<g class="node" data-id="P-TPS-006" data-type="processes">
+<title>Bill client servicing fees</title>
+<path d="M472 556.5 L392 582.47 L422.56 624.5 L521.44 624.5 L552 582.47 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="472" y="588.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Bill client servicing</text>
+<text x="472" y="600.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">fees</text>
+</g>
+<g class="node" data-id="SYS-GL" data-type="systems">
+<title>General ledger</title>
+<rect x="648" y="37.5" width="133" height="84" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="710.5" y="83.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">General ledger</text>
+<svg x="763" y="42.5" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="896.4" x2="1235.21" y2="896.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="920.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 909.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="920.4" font-size="12" font-weight="400" fill="#343d50">capability · 16</text>
+<g transform="translate(184.5 909.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="210.5" y="920.4" font-size="12" font-weight="400" fill="#343d50">process · 18</text>
+<g transform="translate(291.77 909.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="317.77" y="920.4" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
+<text x="28" y="942.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 931.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="942.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 931.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="942.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="976.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-processes--sys-gl · edit the model, not the picture</text></g>
+</svg>

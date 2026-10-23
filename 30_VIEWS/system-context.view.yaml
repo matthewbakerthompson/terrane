@@ -1,0 +1,35 @@
+view_id: system-context
+title: System Context
+category: Business
+section: People and channels
+kind: diagram
+description: >
+  External actors and the systems they use, and nothing else. Internal systems
+  are left out on purpose, so the diagram stays small.
+layout: LR
+node_label: name
+renderers: [mermaid, structurizr]
+
+group_by: actor_kind
+
+scope:
+  include:
+    - type: actors
+      where:
+        status: [Active]
+  expand:
+    # Only the systems actors reach directly. One more hop and this becomes a
+    # landscape, which is a different diagram with a different job.
+    - relation: actor_uses_system
+      depth: 1
+      types: [systems]
+
+edges:
+  - via: actor_uses_system
+    label: interaction
+
+style:
+  color_by: actor_kind
+
+limits:
+  max_nodes: 30

@@ -1,0 +1,119 @@
+# Which body of practice each capability domain answers to.
+#
+# Mapped at level 0 only. Below that the answer is the parent's: a level-1
+# capability inside Payments answers to PCI DSS because Payments does, and
+# repeating it on every child would be noise that then goes stale unevenly.
+#
+# `alignment` is the part worth arguing about:
+#
+#   Governed by  a fact about the organization. An auditor turns up.
+#   Aligned to   a choice somebody made and can revisit.
+#   Informed by  a borrowing. Useful vocabulary, no obligation.
+#
+# A domain with no mapping is not an oversight to be filled in for tidiness.
+# It means no external body of practice has much to say about it, which is
+# itself worth knowing.
+
+capability_aligns_to_framework:
+  # --- what the bank does: BIAN is the reference model -------------------
+  - capability_id: CAP-PAY
+    framework_id: FW-BIAN
+    alignment: Aligned to
+  - capability_id: CAP-PAY
+    framework_id: FW-PCI-DSS
+    alignment: Governed by
+  - capability_id: CAP-MERCH
+    framework_id: FW-BIAN
+    alignment: Aligned to
+  - capability_id: CAP-MERCH
+    framework_id: FW-PCI-DSS
+    alignment: Governed by
+  - capability_id: CAP-ORIG
+    framework_id: FW-BIAN
+    alignment: Aligned to
+  - capability_id: CAP-CRED
+    framework_id: FW-BIAN
+    alignment: Aligned to
+  - capability_id: CAP-SERV
+    framework_id: FW-BIAN
+    alignment: Aligned to
+  - capability_id: CAP-BILL
+    framework_id: FW-BIAN
+    alignment: Aligned to
+  - capability_id: CAP-COLL
+    framework_id: FW-BIAN
+    alignment: Aligned to
+  - capability_id: CAP-FRAUD
+    framework_id: FW-BIAN
+    alignment: Aligned to
+  - capability_id: CAP-FRAUD
+    framework_id: FW-PCI-DSS
+    alignment: Governed by
+  - capability_id: CAP-LEND
+    framework_id: FW-BIAN
+    alignment: Aligned to
+  - capability_id: CAP-DEP
+    framework_id: FW-BIAN
+    alignment: Aligned to
+  - capability_id: CAP-ACQ
+    framework_id: FW-BIAN
+    alignment: Informed by
+  - capability_id: CAP-PROD
+    framework_id: FW-BIAN
+    alignment: Aligned to
+  - capability_id: CAP-TPS
+    framework_id: FW-BIAN
+    alignment: Informed by
+
+  # --- how the enterprise is run: APQC for the enabling tier -------------
+  - capability_id: CAP-CORP
+    framework_id: FW-APQC
+    alignment: Aligned to
+  - capability_id: CAP-FIN
+    framework_id: FW-APQC
+    alignment: Aligned to
+  - capability_id: CAP-TPRM
+    framework_id: FW-APQC
+    alignment: Informed by
+
+  # --- technology: ITIL runs it, COBIT governs it ------------------------
+  - capability_id: CAP-TECH
+    framework_id: FW-ITIL
+    alignment: Aligned to
+  - capability_id: CAP-TECH
+    framework_id: FW-COBIT
+    alignment: Informed by
+
+  # --- data: DMBOK is the only defensible account of the function --------
+  - capability_id: CAP-DATA
+    framework_id: FW-DMBOK
+    alignment: Aligned to
+
+  # --- security and privacy ---------------------------------------------
+  - capability_id: CAP-SEC
+    framework_id: FW-NIST-CSF
+    alignment: Aligned to
+  - capability_id: CAP-SEC
+    framework_id: FW-ISO27001
+    alignment: Governed by
+  - capability_id: CAP-SEC
+    framework_id: FW-PCI-DSS
+    alignment: Governed by
+
+  # --- risk and governance ----------------------------------------------
+  - capability_id: CAP-RGOV
+    framework_id: FW-COBIT
+    alignment: Aligned to
+
+  # --- and the practice of architecture itself ---------------------------
+  - capability_id: CAP-STRAT
+    framework_id: FW-TOGAF
+    alignment: Informed by
+  - capability_id: CAP-STRAT
+    framework_id: FW-BIZBOK
+    alignment: Informed by
+  # The examiner's frame for cyber: the CRI Profile is what the security
+  # domain is examined against, so it governs.
+  - capability_id: CAP-SEC
+    framework_id: FW-CRI
+    alignment: Governed by

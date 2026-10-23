@@ -1,0 +1,382 @@
+# The org structure, as the business architecture repository holds it.
+#
+# Accountability, not reporting lines: this is what the ownership view and the
+# `owner_org_id` on everything else point at.
+
+- org_unit_id: ORG-ANALYTICS
+  name: Analytics
+  description: Analytics organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-DATAGOV
+  source: Business architecture repository
+
+- org_unit_id: ORG-APPDEV
+  name: Application Development
+  description: Software design, build, code review, pipelines, and application support.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-TECH
+  source: Business architecture repository
+
+- org_unit_id: ORG-AUDIT
+  name: Internal Audit
+  description: Internal Audit organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-CLIENTMGMT
+  name: Client Management
+  description: Client Management organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-TPS
+  source: Business architecture repository
+
+- org_unit_id: ORG-COLLECTIONS
+  name: Collections
+  description: Collections organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-COMMS
+  name: Corporate Communications
+  description: Corporate Communications organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-COMPLIANCE
+  name: Compliance
+  description: Compliance organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-RISK
+  source: Business architecture repository
+
+- org_unit_id: ORG-CREDIT
+  name: Credit Risk
+  description: Credit Risk organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-RISK
+  source: Business architecture repository
+
+- org_unit_id: ORG-DATAENG
+  name: Data Engineering
+  description: Data Engineering organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-TECH
+  source: Business architecture repository
+
+- org_unit_id: ORG-DATAGOV
+  name: Data Governance
+  description: Data Governance organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-DEPOSITS
+  name: Deposit Operations
+  description: "Consumer deposit products: CDs and savings, direct and brokered, opening through maturity."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-DIGITAL
+  name: Digital Servicing
+  description: Digital Servicing organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-SERVICING
+  source: Business architecture repository
+
+- org_unit_id: ORG-DISPUTE
+  name: Dispute Operations
+  description: Dispute Operations organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-FRAUD
+  source: Business architecture repository
+
+- org_unit_id: ORG-EA
+  name: Enterprise Architecture
+  description: Enterprise Architecture organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-TECH
+  source: Business architecture repository
+
+- org_unit_id: ORG-FACILITIES
+  name: Facilities
+  description: Facilities organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-HR
+  source: Business architecture repository
+
+- org_unit_id: ORG-FINANCE
+  name: Finance
+  description: Finance organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-FRAUD
+  name: Fraud Operations
+  description: Fraud Operations organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-HR
+  name: Human Resources
+  description: Human Resources organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-INFOSEC
+  name: Information Security
+  description: Information Security organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-TECH
+  source: Business architecture repository
+
+- org_unit_id: ORG-LEGAL
+  name: Legal
+  description: Legal organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-LENDING
+  name: Consumer Lending
+  description: "Recreation and installment lending operations: dealer programs, underwriting, servicing, collateral."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-MARKETING
+  name: Marketing
+  description: Marketing organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-MERCHANT
+  name: Merchant Services
+  description: "Merchant acquiring and network sponsorship: ISO programs, merchant underwriting, settlement, acquiring disputes."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-OPS
+  name: Operations Support
+  description: Operations Support organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-ORIG
+  name: Originations
+  description: Originations organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-PARTNERSHIPS
+  name: Partnerships
+  description: Partnerships organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-PAYMENTS
+  name: Payments Operations
+  description: Payments Operations organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-PRIVACY
+  name: Privacy Office
+  description: Privacy Office organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-COMPLIANCE
+  source: Business architecture repository
+
+- org_unit_id: ORG-PRODUCT
+  name: Product Management
+  description: Product Management organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-QE
+  name: Quality Engineering
+  description: Test strategy, automation, performance and acceptance testing, release certification.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-TECH
+  source: Business architecture repository
+
+- org_unit_id: ORG-RECOVERY
+  name: Recovery
+  description: Recovery organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-COLLECTIONS
+  source: Business architecture repository
+
+- org_unit_id: ORG-REWARDS
+  name: Rewards Operations
+  description: Rewards Operations organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-SERVICING
+  source: Business architecture repository
+
+- org_unit_id: ORG-RISK
+  name: Enterprise Risk Management
+  description: Enterprise Risk Management organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-SERVICING
+  name: Customer Servicing
+  description: Customer Servicing organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-SETTLEMENT
+  name: Settlement Operations
+  description: Settlement Operations organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-PAYMENTS
+  source: Business architecture repository
+
+- org_unit_id: ORG-STRATEGY
+  name: Corporate Strategy
+  description: Corporate Strategy organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-TECH
+  name: Technology
+  description: Technology organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-TPS
+  name: Third-Party Servicing
+  description: Third-Party Servicing organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-TREASURY
+  name: Treasury
+  description: Treasury organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-FINANCE
+  source: Business architecture repository
+
+- org_unit_id: ORG-VENDORMGMT
+  name: Vendor Management
+  description: Vendor Management organizational unit.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-RISK
+  source: Business architecture repository

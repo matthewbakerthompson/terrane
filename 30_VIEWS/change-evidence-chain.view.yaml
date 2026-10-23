@@ -1,0 +1,35 @@
+view_id: change-evidence-chain
+title: Change and Operations Evidence
+category: Governance
+kind: diagram
+description: >
+  The chain of systems that proves what changed and who knew: the pipeline
+  writing deployments into service management, service management and work
+  tracking writing evidence into the risk register, the people system driving
+  workforce identity, and monitoring paging one on-call for outages and
+  intrusions alike. Every edge is a system writing to a system; the day a
+  person retypes a change number, the chain is a story.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+scope:
+  include:
+    - type: systems
+      where:
+        id_in: [SYS-SCM, SYS-TESTMGMT, SYS-WORKTRACK, SYS-ARCHREPO, SYS-ITSM,
+                SYS-OBSERV, SYS-SIEM, SYS-HRIS, SYS-IAM, SYS-GRC]
+  expand:
+    - relation: interfaces
+      depth: 1
+      types: [systems]
+
+edges:
+  - via: interfaces
+    label: integration_style
+
+style:
+  color_by: status
+
+limits:
+  max_nodes: 20

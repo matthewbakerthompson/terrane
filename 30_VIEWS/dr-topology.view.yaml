@@ -1,0 +1,35 @@
+view_id: dr-topology
+title: Disaster Recovery Topology
+category: Technology
+section: Network and resilience
+kind: diagram
+description: >
+  Primary and recovery regions side by side, with the replication paths
+  between them. Anything in the primary region with no connection to the
+  recovery region would not survive a regional outage.
+layout: LR
+node_label: name
+renderers: [mermaid, structurizr]
+
+group_by: [cloud_provider, region]
+
+scope:
+  include:
+    - type: tech_services
+      where:
+        tags_any: [network-fabric]
+        service_name: [VPC, Data Center]
+  expand:
+    - relation: tech_service_connects_to
+      depth: 1
+      types: [tech_services]
+
+edges:
+  - via: tech_service_connects_to
+    label: connection
+
+style:
+  color_by: status
+
+limits:
+  max_nodes: 40

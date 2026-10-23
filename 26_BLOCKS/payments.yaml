@@ -1,0 +1,26 @@
+# Where money arrives, and is proven to have arrived.
+#
+# Payment capture is four channels pretending to be one: a payment made in
+# the app, a debit presented at a terminal, a check at a lockbox and a wallet
+# push all have to post to the same account on the same day. The block is the
+# funnel that makes them one stream before the ledger sees them.
+
+- building_block_id: payment-capture
+  name: Payment capture
+  category: Payments
+  description: >
+    A gateway for the channels that call, a file transfer for the channels that send batches, a queue that makes both one ordered stream of instructions, and the store that remembers every instruction until the ledger has acknowledged it. The queue is the pattern's whole point: posting is idempotent only if something upstream of the ledger owns the sequence.
+  provides:
+    - component: api-gateway
+    - component: file-transfer
+    - component: message-queue
+    - component: relational-db
+  relations:
+    - from: api-gateway
+      to: message-queue
+    - from: file-transfer
+      to: message-queue
+    - from: message-queue
+      to: relational-db
+  defaults:
+    network_zone: Private-App

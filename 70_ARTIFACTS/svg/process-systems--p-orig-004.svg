@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="1103.4" viewBox="0 0 1100 1103.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Execute credit decision — Systems, Data and Controls</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Execute credit decision — Systems, Data and Controls</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   10 nodes · 9 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(134.66 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="329.92" y="591.3" width="212.16" height="295.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="371.92" y="608.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Control">
+<rect x="330.3" y="459.3" width="211.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="363.15" y="476.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Control</text>
+</g>
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="587.3" y="282.3" width="221.4" height="247.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="629.3" y="299.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.98" y="311.25" width="212.03" height="135.45" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.83" y="328.65" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="587.3" y="24.3" width="233.4" height="229.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="617.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-ORIG-004::SYS-ORIG-DECISION">
+<title>Primary</title>
+<path d="M196 345.4 L202.8 345.4 A3.2 3.2 0 0 0 206 342.2 L206 342.2 A3.2 3.2 0 0 1 209.2 339 L255 339 L263 339 A8 8 0 0 0 271 331 L271 99.98 A10 10 0 0 1 280.98 89.98 L583.99 89.5 A10 10 0 0 1 584.01 89.5 L609.48 89.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M613 89.5 L603.43 94.28 L603.43 84.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-ORIG-004::SYS-ORIG-DECISION">
+<rect x="412.32" y="67.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="79.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-ORIG-004::SYS-CREDIT-DATA">
+<title>Supporting</title>
+<path d="M196 353.8 L213.6 353.8 A2.4 2.4 0 0 0 216 351.4 L216 351.4 A2.4 2.4 0 0 1 218.4 349 L255 349 L271 349 A10 10 0 0 0 281 339 L281 198.98 A10 10 0 0 1 290.98 188.98 L583.99 188.5 A10 10 0 0 1 584.01 188.5 L609.48 188.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M613 188.5 L603.43 193.28 L603.43 183.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-ORIG-004::SYS-CREDIT-DATA">
+<rect x="404.46" y="195.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="207.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-ORIG-004::DA-APPLICATION">
+<title>Both</title>
+<path d="M196 362.2 L204.4 362.2 A1.6 1.6 0 0 0 206 360.6 L206 360.6 A1.6 1.6 0 0 1 207.6 359 L255 359 L281 359 A10 10 0 0 0 291 349 L291 344 A10 10 0 0 1 301 334 L584 334 L609.48 334" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M613 334 L603.43 338.79 L603.43 329.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-ORIG-004::DA-APPLICATION">
+<rect x="419.35" y="340.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="352.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e3::P-ORIG-004::DA-BUREAU-FILE">
+<title>Reads</title>
+<path d="M196 370.6 L205.2 370.6 A0.8 0.8 0 0 0 206 369.8 L206 369.8 A0.8 0.8 0 0 1 206.8 369 L255 369 L556 369 A10 10 0 0 1 566 379 L566 397 A9 9 0 0 0 575 406 L584 406 L609.48 406" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M613 406 L603.43 410.79 L603.43 401.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::P-ORIG-004::DA-BUREAU-FILE">
+<rect x="415.82" y="375.5" width="35.36" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="387.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Reads</text>
+</g>
+<g class="edge" data-id="e4::P-ORIG-004::DA-MODEL-FEAT">
+<title>Reads</title>
+<path d="M196 379 L255 379 L301 379 A10 10 0 0 1 311 389 L311 394 A10 10 0 0 0 321 404 L546 404 A10 10 0 0 1 556 414 L556 468 A10 10 0 0 0 566 478 L584 478 L609.48 478" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M613 478 L603.43 482.79 L603.43 473.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::P-ORIG-004::DA-MODEL-FEAT">
+<rect x="415.82" y="410.5" width="35.36" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="422.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Reads</text>
+</g>
+<g class="edge" data-id="e5::P-ORIG-004::CTL-ADVERSE-ACT">
+<title>governed by</title>
+<path d="M196 387.4 L205.2 387.4 A0.8 0.8 0 0 1 206 388.2 L206 388.2 A0.8 0.8 0 0 0 206.8 389 L255 389 L291 389 A10 10 0 0 1 301 399 L301 501 A10 10 0 0 0 311 511 L327 511 L352.48 511" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M356 511 L346.43 515.78 L346.43 506.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e6::P-ORIG-004::CAP-ORIG-04">
+<title>supports</title>
+<path d="M196 395.8 L204.4 395.8 A1.6 1.6 0 0 1 206 397.4 L206 397.4 A1.6 1.6 0 0 0 207.6 399 L255 399 L281 399 A10 10 0 0 1 291 409 L291 641 A10 10 0 0 0 301 651 L327 651 L352.48 651" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M356 651 L346.43 655.78 L346.43 646.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e7::P-ORIG-004::CAP-CRED-01">
+<title>supports</title>
+<path d="M196 404.2 L213.6 404.2 A2.4 2.4 0 0 1 216 406.6 L216 406.6 A2.4 2.4 0 0 0 218.4 409 L255 409 L271 409 A10 10 0 0 1 281 419 L281 729 A10 10 0 0 0 291 739 L327 739 L352.48 739" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M356 739 L346.43 743.78 L346.43 734.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e8::P-ORIG-004::CAP-CRED-03">
+<title>supports</title>
+<path d="M196 412.6 L202.8 412.6 A3.2 3.2 0 0 1 206 415.8 L206 415.8 A3.2 3.2 0 0 0 209.2 419 L255 419 L263 419 A8 8 0 0 1 271 427 L271 817 A10 10 0 0 0 281 827 L327 827 L352.48 827" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M356 827 L346.43 831.78 L346.43 822.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-CRED-01" data-type="capabilities">
+<title>Credit Strategy &amp; Scorecard Management</title>
+<path d="M396 705 L356 739 L396 773 L476 773 L516 739 L476 705 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="436" y="731.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit Strategy &amp;</text>
+<text x="436" y="743.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Scorecard</text>
+<text x="436" y="755.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+</g>
+<g class="node" data-id="CAP-CRED-03" data-type="capabilities">
+<title>Credit Line Assignment &amp; Management</title>
+<path d="M396 793 L356 827 L396 861 L476 861 L516 827 L476 793 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="436" y="819.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit Line</text>
+<text x="436" y="831.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Assignment &amp;</text>
+<text x="436" y="843.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+</g>
+<g class="node" data-id="CAP-ORIG-04" data-type="capabilities">
+<title>Underwriting &amp; Credit Decisioning Execution</title>
+<path d="M396 617 L356 651 L396 685 L476 685 L516 651 L476 617 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="436" y="649.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Underwriting &amp; Credit</text>
+<text x="436" y="661.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Decisioning Execution</text>
+</g>
+<g class="node" data-id="CTL-ADVERSE-ACT" data-type="controls">
+<title>Adverse action notice completeness</title>
+<path d="M402.86 485 L356 500.23 L356 521.77 L402.86 537 L469.14 537 L516 521.77 L516 500.23 L469.14 485 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="436" y="509.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Adverse action notice</text>
+<text x="436" y="521.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">completeness</text>
+</g>
+<g class="node" data-id="DA-APPLICATION" data-type="data_assets">
+<title>Credit application record</title>
+<path d="M613 310.6 Q621.5 308 655.5 308 L740.5 308 Q774.5 308 783 310.6 L783 357.4 Q774.5 360 740.5 360 L655.5 360 Q621.5 360 613 357.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="694" y="332.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit application</text>
+<text x="694" y="344.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">record</text>
+<svg x="765" y="313" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-BUREAU-FILE" data-type="data_assets">
+<title>Credit bureau furnishing file</title>
+<path d="M613 382.6 Q621.5 380 655.5 380 L740.5 380 Q774.5 380 783 382.6 L783 429.4 Q774.5 432 740.5 432 L655.5 432 Q621.5 432 613 429.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="694" y="404.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit bureau</text>
+<text x="694" y="416.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">furnishing file</text>
+<svg x="765" y="385" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-MODEL-FEAT" data-type="data_assets">
+<title>Model feature store</title>
+<path d="M613 454.6 Q621.5 452 655.5 452 L740.5 452 Q774.5 452 783 454.6 L783 501.4 Q774.5 504 740.5 504 L655.5 504 Q621.5 504 613 501.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="694" y="482.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Model feature store</text>
+<svg x="765" y="457" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-ORIG-004" data-type="processes">
+<title>Execute credit decision</title>
+<path d="M116 337 L36 369.09 L66.56 421 L165.44 421 L196 369.09 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="377.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Execute credit</text>
+<text x="116" y="389.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">decision</text>
+</g>
+<g class="node" data-id="SYS-CREDIT-DATA" data-type="systems">
+<title>Credit data and decisioning environment</title>
+<rect x="613" y="149" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="694" y="175.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit data and</text>
+<text x="694" y="187.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">decisioning</text>
+<text x="694" y="199.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">environment</text>
+<text x="704" y="222.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Snowflake Data Cloud</text>
+<image x="773" y="153" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMjlCNUU4IiByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+U25vd2ZsYWtlPC90aXRsZT48cGF0aCBkPSJNMjQgMy40NTljMCAuNjQ2LS40MTggMS4xOC0xLjE0MSAxLjE4LS43MjMgMC0xLjE0Mi0uNTM0LTEuMTQyLTEuMTggMC0uNjQ3LjQxOS0xLjE4IDEuMTQyLTEuMTguNzIzIDAgMS4xNDEuNTMzIDEuMTQxIDEuMTh6bS0uMjI4IDBjMC0uNTMzLS4zOC0uOTUxLS45MTMtLjk1MXMtLjkxMy4zOC0uOTEzLjk1YzAgLjUzMy4zOC45NTIuOTEzLjk1Mi41NyAwIC45MTMtLjQxOS45MTMtLjk1MXptLTEuMzctLjUzM2guNDk1Yy4yNjYgMCAuNDU2LjE1Mi40NTYuMzggMCAuMTUzLS4wNzYuMjI5LS4xOS4zMDVsLjE5LjI2NnYuMDM4aC0uMjY2bC0uMTktLjI2NmgtLjIyOXYuMjY2aC0uMjY2em0uNDk1LjIyOGgtLjIyOXYuMjY3aC4yMjljLjExNCAwIC4xNTItLjAzOC4xNTItLjExNC4wMzgtLjA3Ny0uMDM4LS4xNTMtLjE1Mi0uMTUzek03LjYwMiAxMi40Yy4wMzgtLjE1MS4wNzYtLjMwNC4wNzYtLjQ1NiAwLS4xMTQtLjAzOC0uMjI4LS4wMzgtLjM0Mi0uMTE0LS4zNDMtLjMwNC0uNjQ3LS42NDYtLjgzOGwtNC44Ny0yLjc3N2MtLjY4NS0uMzgtMS41Ni0uMTUyLTEuOTQuNTMzLS4zODEuNjg1LS4xNTMgMS41Ni41MzIgMS45NGwyLjcwMSAxLjU2LTIuNzAxIDEuNTZjLS42ODUuMzgtLjkxMyAxLjI1Ni0uNTMzIDEuOTQuMzguNjg1IDEuMjU2LjkxNCAxLjk0LjUzM2w0LjgzMi0yLjc3N2MuMzQzLS4yNjcuNTcxLS41MzMuNjQ3LS44NzZ6bTEuMzMyIDIuNjI2Yy0uMjY2LS4wMzgtLjU3LjAzOC0uODM3LjE5bC00LjgzMiAyLjc3N2MtLjY4NS4zOC0uOTEzIDEuMjU2LS41MzIgMS45NC4zOC42ODYgMS4yNTUuOTE0IDEuOTQuNTMzbDIuNzAxLTEuNTZ2My4xMmMwIC44LjY0NyAxLjQwOCAxLjQ0NiAxLjQwOC43OTkgMCAxLjQwNy0uNjQ3IDEuNDA3LTEuNDA4di01LjU5MmMwLS43NjEtLjU3LTEuMzctMS4yOTMtMS40MDh6bTQuOTQ2LTYuMDg4Yy4yNjYuMDM4LjU3LS4wMzguODM3LS4xOWw0LjgzMi0yLjc3N2MuNjg1LS4zOC45MTMtMS4yNTYuNTMyLTEuOTQtLjM4LS42ODYtMS4yNTUtLjkxNC0xLjk0LS41MzNsLTIuNzAxIDEuNTZWMS45NzVjMC0uNzk5LS42NDctMS40MDgtMS40NDYtMS40MDgtLjc5OSAwLTEuNDQ2LjYwOS0xLjQ0NiAxLjQwOFY3LjUzYzAgLjc2LjYwOSAxLjM3IDEuMzMyIDEuNDA3ek0zLjI2NSA1Ljk3bDQuODMyIDIuNzc3Yy4yNjYuMTUyLjUzMy4xOS44MzcuMTkuNzIzLS4wMzggMS4zMzEtLjY4NCAxLjMzMS0xLjQwN1YxLjk3NWMwLS43OTktLjY0Ni0xLjQwOC0xLjQwNy0xLjQwOC0uNzk5IDAtMS40NDYuNjQ3LTEuNDQ2IDEuNDA4djMuMTJsLTIuNzAxLTEuNTZjLS42ODUtLjM4LTEuNTYtLjE1Mi0xLjk0LjUzMy0uNDE5LjY0Ni0uMTkgMS41MjEuNDk0IDEuOTAyem05LjA5MyA2LjAxMWEuNDEyLjQxMiAwIDAwLS4xMTQtLjI2NmwtLjU3LS41NzFhLjM0Ni4zNDYgMCAwMC0uMjY3LS4xMTQuNDEyLjQxMiAwIDAwLS4yNjYuMTE0bC0uNTcxLjU3YS40MTEuNDExIDAgMDAtLjExNC4yNjdjMCAuMDc2LjAzOC4xOS4xMTQuMjY3bC41Ny41N2EuMzQ1LjM0NSAwIDAwLjI2Ny4xMTRjLjA3NiAwIC4xOS0uMDM4LjI2Ni0uMTE0bC41NzEtLjU3YS40MTIuNDEyIDAgMDAuMTE0LS4yNjd6bTEuNTk4LjUzM0wxMS45NCAxNC41M2MtLjAzOS4wMzgtLjE1My4xMTQtLjIyOS4xMTRoLS42MDhhLjQxMS40MTEgMCAwMS0uMjY3LS4xMTRMOC44MiAxMi41MTRhLjQwOC40MDggMCAwMS0uMDc2LS4yMjl2LS42MDhjMC0uMDc2LjAzOC0uMTkuMTE0LS4yNjdsMi4wMTYtMi4wMTZhLjQxLjQxIDAgMDEuMjY3LS4xMTRoLjYwOGEuNDEuNDEgMCAwMS4yNjcuMTE0bDIuMDE2IDIuMDE2YS4zNDcuMzQ3IDAgMDEuMTE0LjI2N3YuNjA4Yy0uMDc2LjA3Ny0uMTE0LjE5LS4xOS4yMjl6bTUuNTkzIDUuNDRsLTQuODMyLTIuNzc3Yy0uMjY2LS4xNTItLjU3LS4xOS0uODM3LS4xNTItLjcyMy4wMzgtMS4zMzIuNjg0LTEuMzMyIDEuNDA4djUuNTU0YzAgLjguNjQ3IDEuNDA4IDEuNDA4IDEuNDA4Ljc5OSAwIDEuNDQ2LS42NDcgMS40NDYtMS40MDh2LTMuMTJsMi43IDEuNTZjLjY4Ni4zOCAxLjU2MS4xNTIgMS45NDEtLjUzMy40MTktLjY0Ni4xOS0xLjUyMS0uNDk0LTEuOTR6bTIuNTQ5LTcuNTMzbC0yLjcwMSAxLjU2IDIuNyAxLjU2Yy42ODYuMzguOTE0IDEuMjU2LjUzMyAxLjk0LS4zOC42ODUtMS4yNTUuOTEzLTEuOTQuNTMzbC00LjgzMi0yLjc3OGExLjY0NCAxLjY0NCAwIDAxLS42NDctLjc5OGMtLjAzNy0uMTUzLS4wNzYtLjMwNS0uMDc2LS40NTcgMC0uMTE0LjAzOS0uMjI4LjAzOS0uMzQyLjExNC0uMzQzLjM0Mi0uNjQ3LjY0Ni0uODM3bDQuODMyLTIuNzc4Yy42ODUtLjM4IDEuNTYtLjE1MiAxLjk0LjUzMy40NTcuNjA5LjE5IDEuNDg0LS40OTQgMS44NjQiLz48L3N2Zz4="/>
+</g>
+<g class="node" data-id="SYS-ORIG-DECISION" data-type="systems">
+<title>Originations decision engine</title>
+<rect x="613" y="50" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="700" y="87.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Originations decision</text>
+<text x="700" y="99.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">engine</text>
+<svg x="777" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="1001.4" x2="1072" y2="1001.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="1025.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 1014.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="1025.4" font-size="12" font-weight="400" fill="#343d50">capability · 3</text>
+<g transform="translate(180.25 1014.4)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="206.25" y="1025.4" font-size="12" font-weight="400" fill="#343d50">control · 1</text>
+<g transform="translate(275.8 1014.4)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="301.8" y="1025.4" font-size="12" font-weight="400" fill="#343d50">data asset · 3</text>
+<g transform="translate(392.65 1014.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="418.65" y="1025.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(492.92 1014.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="518.92" y="1025.4" font-size="12" font-weight="400" fill="#343d50">system · 2</text>
+<text x="28" y="1047.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 1036.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="1047.4" font-size="12" font-weight="400" fill="#343d50">governed by</text>
+<g transform="translate(184.75 1036.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="210.75" y="1047.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(277.26 1036.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="303.26" y="1047.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="1081.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-orig-004 · edit the model, not the picture</text></g>
+</svg>

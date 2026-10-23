@@ -1,0 +1,312 @@
+# What decides whether something is allowed.
+#
+# These are the components a control maps onto, which is why they belong in the
+# model rather than in a separate register nobody joins to it.
+
+- component_type_id: identity-provider
+  name: Identity provider
+  category: Security
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Authenticates people and issues tokens. The single point everything else trusts.
+  providers:
+    AWS: AWS IAM Identity Center
+    Azure: Microsoft Entra ID
+    GCP: Cloud Identity
+    SaaS: Okta or Ping Identity
+  defaults:
+    service_category: Security
+    network_zone: Shared-Services
+
+- component_type_id: secrets-manager
+  name: Secrets manager
+  category: Security
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Credentials and keys with rotation and an audit trail. The alternative is an environment variable somebody pasted.
+  providers:
+    AWS: AWS Secrets Manager
+    Azure: Azure Key Vault
+    GCP: Secret Manager
+    SaaS: HashiCorp Vault
+  defaults:
+    service_category: Security
+    network_zone: Shared-Services
+
+- component_type_id: kms
+  name: Key management
+  category: Security
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Encryption keys and the policy over them. What a data residency claim ultimately rests on.
+  providers:
+    AWS: AWS KMS
+    Azure: Azure Key Vault
+    GCP: Cloud KMS
+  defaults:
+    service_category: Security
+    network_zone: Shared-Services
+
+- component_type_id: waf
+  name: Web application firewall
+  category: Security
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Request inspection at the edge. Blocks the traffic nobody wrote a test for.
+  providers:
+    AWS: AWS WAF
+    Azure: Azure WAF
+    GCP: Cloud Armor
+    SaaS: Cloudflare
+  defaults:
+    service_category: Security
+    network_zone: Edge
+
+- component_type_id: siem
+  name: Security monitoring
+  category: Security
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Log aggregation and detection. Where an incident is noticed, or is not.
+  providers:
+    AWS: Amazon Security Lake with OpenSearch
+    Azure: Microsoft Sentinel
+    GCP: Google Security Operations (formerly Chronicle)
+    SaaS: Splunk or Elastic Security
+  defaults:
+    service_category: Security
+    network_zone: Shared-Services
+
+- component_type_id: privileged-access
+  name: Privileged access management
+  category: Security
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Brokered, recorded access to production. Usually the control an auditor asks about first.
+  providers:
+    SaaS: CyberArk or BeyondTrust
+    Azure: Entra Privileged Identity Management
+  defaults:
+    service_category: Security
+    network_zone: Shared-Services
+
+- component_type_id: identity-governance
+  name: Identity governance
+  category: Security
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Joiners, movers, leavers, access requests and access reviews. The evidence that the right people have the right access, which is most of what an access audit asks for.
+  providers:
+    Azure: Microsoft Entra ID Governance
+    SaaS: SailPoint or Saviynt
+  defaults:
+    service_category: Security
+    network_zone: Shared-Services
+
+- component_type_id: customer-identity
+  name: Customer identity
+  category: Security
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Sign-up, sign-in and consent for customers and partners, kept apart from the workforce directory on purpose.
+  providers:
+    AWS: Amazon Cognito
+    Azure: Microsoft Entra External ID
+    GCP: Identity Platform
+    SaaS: Auth0 or Okta Customer Identity
+  defaults:
+    service_category: Security
+    network_zone: Shared-Services
+
+- component_type_id: edr
+  name: Endpoint detection and response
+  category: Security
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    The agent on every laptop and server, and the detection and response over it. Where most incidents are first seen.
+  providers:
+    Azure: Microsoft Defender for Endpoint, under Defender XDR
+    SaaS: CrowdStrike Falcon or SentinelOne
+  defaults:
+    service_category: Security
+    network_zone: Shared-Services
+
+- component_type_id: device-management
+  name: Device management
+  category: Security
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Enrollment, configuration and compliance of laptops, phones and tablets. What makes a device trusted enough to reach the estate.
+  providers:
+    Azure: Microsoft Intune
+    GCP: Google Endpoint Management
+    SaaS: Jamf
+  defaults:
+    service_category: Security
+    network_zone: Shared-Services
+
+- component_type_id: email-security
+  name: Email security
+  category: Security
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Filtering, phishing protection and attachment sandboxing in front of the mailbox. The control on the channel most attacks arrive by.
+  providers:
+    Azure: Microsoft Defender for Office 365
+    SaaS: Proofpoint or Mimecast
+  defaults:
+    service_category: Security
+    network_zone: Edge
+
+- component_type_id: sse
+  name: Secure access edge
+  category: Security
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Zero-trust access to applications, web filtering and cloud application control from one edge, replacing the VPN and the proxy.
+  providers:
+    AWS: AWS Verified Access
+    Azure: Microsoft Entra Internet Access and Private Access (Global Secure Access)
+    GCP: Chrome Enterprise Premium
+    SaaS: Zscaler or Netskope
+  defaults:
+    service_category: Security
+    network_zone: Edge
+
+- component_type_id: cspm
+  name: Cloud security posture
+  category: Security
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Misconfigurations, exposed resources and policy violations across cloud accounts, found by scanning the estate rather than by waiting for an incident.
+  providers:
+    AWS: AWS Security Hub
+    Azure: Microsoft Defender for Cloud
+    GCP: Security Command Center
+    SaaS: Wiz or Prisma Cloud
+  defaults:
+    service_category: Security
+    network_zone: Shared-Services
+
+- component_type_id: threat-detection
+  name: Cloud threat detection
+  category: Security
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Detection over cloud logs and workloads at runtime: unusual API calls, compromised credentials, malware on an instance.
+  providers:
+    AWS: Amazon GuardDuty
+    Azure: Microsoft Defender for Cloud
+    GCP: Security Command Center Event Threat Detection
+  defaults:
+    service_category: Security
+    network_zone: Shared-Services
+
+- component_type_id: vulnerability-management
+  name: Vulnerability management
+  category: Security
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Scanning instances, containers and code for known weaknesses, and the list of what to patch first.
+  providers:
+    AWS: Amazon Inspector
+    Azure: Microsoft Defender Vulnerability Management
+    GCP: Security Command Center
+    SaaS: Tenable or Qualys
+  defaults:
+    service_category: Security
+    network_zone: Shared-Services
+
+- component_type_id: soar
+  name: Security automation
+  category: Security
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Playbooks that respond to a detection: enrich it, contain it, open the ticket. Where response time stops depending on who is on shift.
+  providers:
+    AWS: Security Hub automations
+    Azure: Microsoft Sentinel playbooks
+    GCP: Google Security Operations SOAR
+    SaaS: Palo Alto Cortex XSOAR or Splunk SOAR
+  defaults:
+    service_category: Security
+    network_zone: Shared-Services
+
+- component_type_id: dlp
+  name: Data classification and loss prevention
+  category: Security
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Finding sensitive data where it rests and stopping it leaving where it should not. What a data classification claim rests on.
+  providers:
+    AWS: Amazon Macie
+    Azure: Microsoft Purview
+    GCP: Sensitive Data Protection
+    SaaS: Symantec DLP or Forcepoint
+  defaults:
+    service_category: Security
+    network_zone: Shared-Services
+
+- component_type_id: certificate-management
+  name: Certificate management
+  category: Security
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Issuing, renewing and revoking certificates, public and private. The outage nobody planned is an expired certificate.
+  providers:
+    AWS: AWS Certificate Manager and Private CA
+    Azure: Azure Key Vault certificates
+    GCP: Certificate Authority Service
+    SaaS: DigiCert or Venafi
+  defaults:
+    service_category: Security
+    network_zone: Shared-Services
+
+- component_type_id: ddos-protection
+  name: DDoS protection
+  category: Security
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Absorbing volumetric attacks at the edge before they reach a load balancer.
+  providers:
+    AWS: AWS Shield
+    Azure: Azure DDoS Protection
+    GCP: Cloud Armor
+    SaaS: Cloudflare or Akamai
+  defaults:
+    service_category: Security
+    network_zone: Edge
+
+- component_type_id: code-security
+  name: Application security testing
+  category: Security
+  applies_to: tech_services
+  shape: hexagon
+  description: >
+    Scanning source code, dependencies and secrets in the pipeline. The control that keeps a known-vulnerable library out of production.
+  providers:
+    AWS: Amazon Inspector code scanning
+    Azure: GitHub Advanced Security
+    SaaS: Snyk or Checkmarx
+  defaults:
+    service_category: Security
+    network_zone: Shared-Services

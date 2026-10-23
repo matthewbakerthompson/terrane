@@ -1,0 +1,16 @@
+# Imported from interfaces.csv.
+interface_id: INT-CARDSVC-EVENTS-INGEST
+name: Card Servicing Events to Data Ingestion Hub
+status: Active
+togaf_layer: Application
+architecture_domain: Data
+company_domain: Data and Analytics
+source_system_id: SYS-CARDSVC-EVENTS
+target_system_id: SYS-DATA-INGEST
+owner_org_id: ORG-DATAENG
+protocol: AMQP
+direction: Outbound
+frequency: Realtime
+integration_style: Event
+auth_method: ManagedIdentity
+data_classification: Confidential

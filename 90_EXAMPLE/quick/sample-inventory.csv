@@ -1,0 +1,12 @@
+Application,Type,Business domain,Description,Hosting,Criticality,Calls,Reads,Writes,Owner,Last reviewed
+Authorization switch,System,Payments,Routes every authorization request to the scheme and the ledger.,On-prem,High,Fraud scoring; Card ledger,,Transactions,Payments platform,2026-09
+Fraud scoring,Application,Payments,Scores a transaction in under 50 ms.,AWS,High,,Transactions,,Risk engineering,2026-08
+Card ledger,Database,Payments,Every transaction posted.,On-prem,High,,,,Payments platform,2026-09
+Transactions,Dataset,Payments,The posted transactions.,,,,,,Data office,2026-06
+Merchant portal,Web application,Channels,Where a merchant sees settlements.,Azure,Medium,Authorization switch,Transactions,,Merchant experience,2026-07
+Card scheme,External SaaS,Partners,The scheme that carries authorization.,SaaS,High,,,,Partnerships,2026-01
+Merchant,Person,Partners,Presents a card for payment.,,,Authorization switch; Merchant portal,,,,
+Payment processing,Capability,Payments,Taking a payment from a card.,,,,,,,
+Kubernetes platform,Platform service,Shared,The cluster the applications run on.,AWS,High,,,,Platform engineering,2026-09
+Settlement reconciliation,Process,Payments,Matching the scheme's settlement to the ledger.,,,,Transactions,,Finance operations,
+Old gateway,System,Payments,Retired last year.,On-prem,Low,Nowhere,,,,

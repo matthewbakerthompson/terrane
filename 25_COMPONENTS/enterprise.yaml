@@ -1,0 +1,192 @@
+# Enterprise applications: the systems every organization runs whether or not
+# anybody draws them.
+#
+# Applied to `systems`, because each has users, data and a vendor contract,
+# and belongs on the landscape next to what was built in-house. The provider
+# column says who sells it; the kind says what it is for, which is what a
+# migration, a renewal or an incident actually turns on.
+
+- component_type_id: hr-system
+  name: Human resources system
+  category: Enterprise
+  applies_to: systems
+  shape: round-tag
+  description: >
+    People, positions, pay and the joiner-mover-leaver events everything downstream keys on. The system of record for who works here.
+  providers:
+    SaaS: Workday HCM, SAP SuccessFactors or Oracle Fusion Cloud HCM
+  defaults:
+    network_zone: Public
+
+- component_type_id: erp
+  name: Enterprise resource planning
+  category: Enterprise
+  applies_to: systems
+  shape: round-tag
+  description: >
+    Finance, procurement and the general ledger. The system of record for money, and the one every other system eventually posts to.
+  providers:
+    SaaS: SAP S/4HANA Cloud, Oracle Fusion Cloud ERP or Workday Financial Management
+    Azure: Dynamics 365 Finance and Supply Chain
+  defaults:
+    network_zone: Public
+
+- component_type_id: crm
+  name: Customer relationship management
+  category: Enterprise
+  applies_to: systems
+  shape: round-tag
+  description: >
+    Customers, accounts, cases and campaigns. Where sales and service see one customer, if anywhere.
+  providers:
+    SaaS: Salesforce
+    Azure: Dynamics 365 Customer Service and Sales
+  defaults:
+    network_zone: Public
+
+- component_type_id: work-tracking
+  name: Work tracking
+  category: Enterprise
+  applies_to: systems
+  shape: round-tag
+  description: >
+    Issues, backlogs and boards. Where delivery work is planned and where an audit asks for the trail.
+  providers:
+    SaaS: Atlassian Jira
+    Azure: Azure Boards or GitHub Issues
+  defaults:
+    network_zone: Public
+
+- component_type_id: knowledge-base
+  name: Knowledge base
+  category: Enterprise
+  applies_to: systems
+  shape: round-tag
+  description: >
+    Pages, runbooks and decisions. Where the architecture that is not in this model is written down.
+  providers:
+    SaaS: Atlassian Confluence or Notion
+    Azure: SharePoint
+  defaults:
+    network_zone: Public
+
+- component_type_id: collaboration-suite
+  name: Productivity suite
+  category: Enterprise
+  applies_to: systems
+  shape: round-tag
+  description: >
+    Mail, calendar, documents and the identity most staff sign in with. The largest data boundary most organizations have.
+  providers:
+    Azure: Microsoft 365
+    GCP: Google Workspace
+  defaults:
+    network_zone: Public
+
+- component_type_id: messaging
+  name: Team messaging
+  category: Enterprise
+  applies_to: systems
+  shape: round-tag
+  description: >
+    Chat, calls and meetings. Also, in practice, where incidents are run and where decisions get made without a record.
+  providers:
+    Azure: Microsoft Teams
+    GCP: Google Chat and Meet
+    SaaS: Slack or Zoom
+  defaults:
+    network_zone: Public
+
+- component_type_id: document-management
+  name: Document management
+  category: Enterprise
+  applies_to: systems
+  shape: round-tag
+  description: >
+    Stored documents with retention, versioning and access control. Where regulated records live, as opposed to a shared drive.
+  providers:
+    Azure: SharePoint and OneDrive
+    GCP: Google Drive
+    SaaS: Box or OpenText
+  defaults:
+    network_zone: Public
+
+- component_type_id: e-signature
+  name: Electronic signature
+  category: Enterprise
+  applies_to: systems
+  shape: round-tag
+  description: >
+    Agreements signed and evidenced. A small system that a surprising number of processes stop without.
+  providers:
+    SaaS: DocuSign or Adobe Acrobat Sign
+  defaults:
+    network_zone: Public
+
+- component_type_id: contact-center
+  name: Contact center platform
+  category: Enterprise
+  applies_to: systems
+  shape: round-tag
+  description: >
+    Routing, queues, telephony and agent desktops for customer contact across channels.
+  providers:
+    AWS: Amazon Connect
+    Azure: Dynamics 365 Contact Center
+    GCP: Customer Engagement Suite
+    SaaS: Genesys Cloud or NICE CXone
+  defaults:
+    network_zone: Public
+
+- component_type_id: grc
+  name: Governance, risk and compliance
+  category: Enterprise
+  applies_to: systems
+  shape: round-tag
+  description: >
+    Risks, controls, policies, audits and issues. The system the controls in this model should reconcile to.
+  providers:
+    SaaS: ServiceNow IRM, Archer or OneTrust
+  defaults:
+    network_zone: Public
+
+- component_type_id: low-code
+  name: Low-code platform
+  category: Enterprise
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Applications built by configuration rather than code. Fast to deliver, and where shadow systems come from when nobody models them.
+  providers:
+    Azure: Power Apps
+    GCP: AppSheet
+    SaaS: ServiceNow App Engine, OutSystems or Mendix
+  defaults:
+    service_category: Enterprise
+    network_zone: Private-App
+
+- component_type_id: rpa
+  name: Process automation
+  category: Enterprise
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Automated steps across applications, from a bot driving a screen to a flow calling APIs. A dependency on every interface it touches.
+  providers:
+    Azure: Power Automate
+    SaaS: UiPath or Automation Anywhere
+  defaults:
+    service_category: Enterprise
+    network_zone: Private-App
+
+- component_type_id: procurement
+  name: Procurement and spend
+  category: Enterprise
+  applies_to: systems
+  shape: round-tag
+  description: >
+    Sourcing, purchasing and supplier management. Where a vendor in this model first became a vendor.
+  providers:
+    SaaS: Coupa or SAP Ariba
+  defaults:
+    network_zone: Public

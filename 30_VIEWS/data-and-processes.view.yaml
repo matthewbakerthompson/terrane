@@ -1,0 +1,35 @@
+view_id: data-and-processes
+title: Processes That Touch Restricted Data
+category: Data
+section: Lineage and flow
+kind: diagram
+description: >
+  Every process that reads or changes a Restricted data asset, with the kind
+  of access on the line. This is the list a data protection review starts
+  from, kept current from the model rather than gathered by interview.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+group_by: type
+
+scope:
+  include:
+    - type: data_assets
+      where:
+        classification: [Restricted]
+        status: [Active, Planned, Proposed]
+  expand:
+    - relation: process_uses_data_asset
+      depth: 1
+      types: [processes]
+
+edges:
+  - via: process_uses_data_asset
+    label: access
+
+style:
+  color_by: classification
+
+limits:
+  max_nodes: 60

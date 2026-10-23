@@ -1,0 +1,124 @@
+# Point-of-Sale Finance — Architecture
+
+One product in full: the systems it is made of, what each runs on, the data it masters, who uses it, and everything one hop away that it connects to. For a product built from modules, every box corresponds to a part.
+
+```mermaid
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Point-of-Sale Finance — Architecture
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_GCP["GCP"]
+    direction LR
+    TS_GCP_APIGEE[/"Apigee<br/>[API gateway]"/]
+    TS_GCP_KMS[/"Cloud KMS<br/>[Key management]"/]
+    TS_GCP_MONITORING[/"Cloud Monitoring<br/>[Observability]"/]
+    TS_GCP_CLOUD_SQL[/"Cloud SQL for PostgreSQL<br/>[Relational database]"/]
+    TS_GCP_GKE[/"Google Kubernetes Engine<br/>[Container platform]"/]
+    TS_GCP_PUBSUB[/"Pub/Sub<br/>[Message queue]"/]
+    TS_GCP_SECRET_MANAGER[/"Secret Manager<br/>[Secrets manager]"/]
+    subgraph grp_GCP__gcp_analytics_prod["project gcp-analytics-prod"]
+      direction LR
+      subgraph grp_GCP__gcp_analytics_prod__Private_Data["Private-Data"]
+        direction LR
+        SYS_LENDPERF_PIPELINE["Lending Portfolio<br/>Performance Pipeline<br/>[BigQuery · Dataflow +3]"]
+      end
+    end
+    subgraph grp_GCP__gcp_lending_prod["project gcp-lending-prod"]
+      direction LR
+      SYS_POSFIN_EVENTS["Point-of-Sale Finance<br/>Event Publisher<br/>[Pub/Sub]"]
+      subgraph grp_GCP__gcp_lending_prod__Edge["Edge"]
+        direction LR
+        TS_POSFIN_DNS[/"Point-of-Sale Finance DNS<br/>[Cloud DNS]"/]
+        TS_POSFIN_WAF[/"Point-of-Sale Finance Web<br/>application firewall<br/>[Cloud Armor]"/]
+      end
+      subgraph grp_GCP__gcp_lending_prod__Public["Public"]
+        direction LR
+        SYS_OBAFF_WEBHOOKS["Open Banking Affordability<br/>Webhook Listener<br/>[GKE]"]
+      end
+      subgraph grp_GCP__gcp_lending_prod__Private_App["Private-App"]
+        direction LR
+        SYS_OBAFF_GATEWAY["Open Banking Affordability<br/>Integration Gateway<br/>[GKE]"]
+        OI_POSFIN_API("Point-of-Sale Finance API<br/>[HTTPS]")
+        TS_POSFIN_CACHE[/"Point-of-Sale Finance<br/>Cache<br/>[Memorystore]"/]
+        SYS_POSFIN_API["Point-of-Sale Finance<br/>Service<br/>[GKE · Point-of-Sale Finance Cache]"]
+        SYS_POSFIN_WEB["Point-of-Sale Finance Web<br/>[GKE]"]
+      end
+      subgraph grp_GCP__gcp_lending_prod__Private_Data["Private-Data"]
+        direction LR
+        TS_POSFIN_BACKUP[/"Point-of-Sale Finance<br/>Backup and recovery<br/>[Backup and DR Service]"/]
+        SYS_POSFIN_DB["Point-of-Sale Finance<br/>Database<br/>[Cloud SQL]"]
+      end
+    end
+  end
+
+  TS_ENTRA_ID[/"Microsoft Entra ID<br/>[Identity provider]"/]
+  DA_POSFIN_OPERATIONAL[("Point-of-Sale Finance<br/>operational data")]
+
+  SYS_POSFIN_EVENTS -->|"Pub/Sub"| SYS_LENDPERF_PIPELINE
+  SYS_POSFIN_API -->|"HTTPS"| SYS_OBAFF_GATEWAY
+  SYS_OBAFF_WEBHOOKS -->|"HTTPS"| SYS_POSFIN_API
+  SYS_POSFIN_WEB --> OI_POSFIN_API
+  SYS_POSFIN_API -->|"PostgreSQL"| SYS_POSFIN_DB
+  SYS_POSFIN_API -->|"AMQP"| SYS_POSFIN_EVENTS
+  SYS_LENDPERF_PIPELINE -.->|"runs on"| TS_GCP_PUBSUB
+  SYS_OBAFF_GATEWAY -.->|"runs on"| TS_GCP_GKE
+  SYS_OBAFF_GATEWAY -.->|"runs on"| TS_GCP_APIGEE
+  SYS_OBAFF_WEBHOOKS -.->|"runs on"| TS_GCP_APIGEE
+  SYS_OBAFF_WEBHOOKS -.->|"runs on"| TS_GCP_GKE
+  SYS_OBAFF_GATEWAY -.->|"runs on"| TS_GCP_SECRET_MANAGER
+  SYS_POSFIN_API -.->|"runs on"| TS_GCP_APIGEE
+  SYS_POSFIN_API -.->|"runs on"| TS_GCP_GKE
+  SYS_POSFIN_API -.->|"runs on"| TS_POSFIN_CACHE
+  SYS_POSFIN_API -.->|"runs on"| TS_GCP_MONITORING
+  SYS_POSFIN_API -.->|"runs on"| TS_GCP_SECRET_MANAGER
+  SYS_POSFIN_WEB -.->|"runs on"| TS_POSFIN_DNS
+  SYS_POSFIN_WEB -.->|"runs on"| TS_POSFIN_WAF
+  SYS_POSFIN_WEB -.->|"runs on"| TS_GCP_GKE
+  SYS_POSFIN_WEB -.->|"runs on"| TS_ENTRA_ID
+  SYS_POSFIN_DB -.->|"runs on"| TS_GCP_CLOUD_SQL
+  SYS_POSFIN_DB -.->|"runs on"| TS_POSFIN_BACKUP
+  SYS_POSFIN_DB -.->|"runs on"| TS_GCP_KMS
+  SYS_POSFIN_EVENTS -.->|"runs on"| TS_GCP_PUBSUB
+  SYS_POSFIN_API -->|"ReadWrite"| DA_POSFIN_OPERATIONAL
+  SYS_POSFIN_DB -->|"ReadWrite"| DA_POSFIN_OPERATIONAL
+  OI_POSFIN_API --- SYS_POSFIN_API
+
+  classDef s_data_assets__data_assets fill:#a7f3d0,stroke:#047857,color:#0f172a,stroke-width:1.4px;
+  classDef s_offered_interfaces__offered_interfaces fill:#e6ecff,stroke:#6366f1,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  classDef s_tech_services__tech_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
+  class DA_POSFIN_OPERATIONAL s_data_assets__data_assets;
+  class OI_POSFIN_API s_offered_interfaces__offered_interfaces;
+  class SYS_LENDPERF_PIPELINE,SYS_OBAFF_GATEWAY,SYS_OBAFF_WEBHOOKS,SYS_POSFIN_API,SYS_POSFIN_DB,SYS_POSFIN_EVENTS,SYS_POSFIN_WEB s_systems__systems;
+  class TS_ENTRA_ID,TS_GCP_APIGEE,TS_GCP_CLOUD_SQL,TS_GCP_GKE,TS_GCP_KMS,TS_GCP_MONITORING,TS_GCP_PUBSUB,TS_GCP_SECRET_MANAGER,TS_POSFIN_BACKUP,TS_POSFIN_CACHE,TS_POSFIN_DNS,TS_POSFIN_WAF s_tech_services__tech_services;
+  classDef boundary1 fill:#f1f6ff,stroke:#4285f4,color:#1a4f9e;
+  class grp_GCP__gcp_analytics_prod__Private_Data,grp_GCP__gcp_lending_prod__Edge,grp_GCP__gcp_lending_prod__Public,grp_GCP__gcp_lending_prod__Private_App,grp_GCP__gcp_lending_prod__Private_Data boundary1;
+  classDef boundary2 fill:#f8fbff,stroke:#4285f4,color:#1a4f9e,stroke-dasharray:6 3;
+  class grp_GCP__gcp_analytics_prod,grp_GCP__gcp_lending_prod boundary2;
+  classDef boundary3 fill:#f8fbff,stroke:#4285f4,color:#1a4f9e;
+  class grp_GCP boundary3;
+```
+
+The same view as the app draws it, written beside the Mermaid by `terrane render`:
+
+![Point-of-Sale Finance — Architecture](../svg/product-architecture--prd-pos-finance.svg)
+
+**Hue is the entity type.**
+
+| | Entity type |
+|---|---|
+| `#047857` | data assets |
+| `#6366f1` | offered interfaces |
+| `#4338ca` | systems |
+| `#c2410c` | tech services |
+
+**Boundaries** are drawn the way their provider draws them.
+
+| Border | Boundary |
+|---|---|
+| solid `#4285f4` | GCP |
+| dashed `#4285f4` | GCP project |
+| solid `#4285f4` | GCP subnet |
+
+21 entities, 28 relationships. Generated from the model; edit the model, not this file.

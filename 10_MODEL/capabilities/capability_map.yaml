@@ -1,0 +1,3066 @@
+# The enterprise capability map.
+#
+# Imported from the business architecture repository by
+# `50_ENGINE/tools/import_business_layer.py`. Ids are verbatim, so a capability
+# means the same thing in both places; edit it there and re-run the import.
+#
+# `capability_level` is the map level (L0 domain, L1, L2). `abstraction_level`
+# stays Conceptual throughout: a capability map is conceptual at every level of
+# itself, and the two fields answer different questions.
+
+- capability_id: CAP-ACQ
+  name: Customer Acquisition & Marketing
+  description: Customer Acquisition & Marketing. Level 0 enterprise capability domain (Core tier).
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Core
+  owner_org_id: ORG-MARKETING
+  company_domain: MarTech
+  company_subdomain: Campaigns
+  source: Business architecture repository
+
+- capability_id: CAP-ACQ-01
+  name: Prospect Data & List Management
+  description: Source, permission, and manage prospect data.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-ACQ
+  owner_org_id: ORG-MARKETING
+  company_domain: MarTech
+  company_subdomain: Campaigns
+  source: Business architecture repository
+
+- capability_id: CAP-ACQ-02
+  name: Offer & Pre-Screen Management
+  description: Construct and govern firm offers of credit and pre-screen criteria.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-ACQ
+  owner_org_id: ORG-MARKETING
+  company_domain: MarTech
+  company_subdomain: Campaigns
+  source: Business architecture repository
+
+- capability_id: CAP-ACQ-02-01
+  name: Offer Construction
+  description: "Assemble the offer: terms, pricing, and eligibility criteria."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-ACQ-02
+  owner_org_id: ORG-MARKETING
+  company_domain: MarTech
+  company_subdomain: Campaigns
+  source: Business architecture repository
+
+- capability_id: CAP-ACQ-02-02
+  name: Product Matching
+  description: Match prospects to the products they qualify for.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-ACQ-02
+  owner_org_id: ORG-MARKETING
+  company_domain: MarTech
+  company_subdomain: Campaigns
+  source: Business architecture repository
+
+- capability_id: CAP-ACQ-03
+  name: Campaign Execution & Channel Management
+  description: Execute acquisition campaigns across direct mail, digital, partner, and inbound channels.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-ACQ
+  owner_org_id: ORG-MARKETING
+  company_domain: MarTech
+  company_subdomain: Campaigns
+  source: Business architecture repository
+
+- capability_id: CAP-ACQ-04
+  name: Marketing Compliance & Disclosure Review
+  description: Review creative and offers for regulatory adequacy before release.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-ACQ
+  owner_org_id: ORG-COMPLIANCE
+  company_domain: MarTech
+  company_subdomain: Campaigns
+  source: Business architecture repository
+
+- capability_id: CAP-ACQ-05
+  name: Acquisition Performance Analytics
+  description: Measure response, approval, and vintage economics of acquisition activity.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-ACQ
+  owner_org_id: ORG-MARKETING
+  company_domain: MarTech
+  company_subdomain: Campaigns
+  source: Business architecture repository
+
+- capability_id: CAP-BILL
+  name: Billing, Statements & Rewards
+  description: Billing, Statements & Rewards. Level 0 enterprise capability domain (Core tier).
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Core
+  owner_org_id: ORG-SERVICING
+  company_domain: Servicing
+  company_subdomain: Statements
+  source: Business architecture repository
+
+- capability_id: CAP-BILL-01
+  name: Interest & Fee Assessment
+  description: Calculate interest, fees, and minimum payment.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-BILL
+  owner_org_id: ORG-SERVICING
+  company_domain: Servicing
+  company_subdomain: Statements
+  source: Business architecture repository
+
+- capability_id: CAP-BILL-02
+  name: Cycle & Statement Generation
+  description: Cut billing cycles and generate statements.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-BILL
+  owner_org_id: ORG-SERVICING
+  company_domain: Servicing
+  company_subdomain: Statements
+  source: Business architecture repository
+
+- capability_id: CAP-BILL-03
+  name: Statement Delivery & Archive
+  description: Deliver statements by print and electronic channels, and retain and retrieve them.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Commodity
+  parent_capability_id: CAP-BILL
+  owner_org_id: ORG-OPS
+  company_domain: Servicing
+  company_subdomain: Statements
+  source: Business architecture repository
+
+- capability_id: CAP-BILL-04
+  name: Rewards Earn, Accrual & Redemption
+  description: Operate the rewards ledger, accrual, and redemption.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-BILL
+  owner_org_id: ORG-REWARDS
+  company_domain: Servicing
+  company_subdomain: Statements
+  source: Business architecture repository
+
+- capability_id: CAP-BILL-04-01
+  name: Rewards Earn & Accrual
+  description: Accrue earn against qualifying activity per program terms.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-BILL-04
+  owner_org_id: ORG-REWARDS
+  company_domain: Servicing
+  company_subdomain: Statements
+  source: Business architecture repository
+
+- capability_id: CAP-BILL-04-02
+  name: Rewards Redemption
+  description: Execute redemptions across cash, credit, and partner channels.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-BILL-04
+  owner_org_id: ORG-REWARDS
+  company_domain: Servicing
+  company_subdomain: Statements
+  source: Business architecture repository
+
+- capability_id: CAP-BILL-04-03
+  name: Rewards Delivery
+  description: Deliver redeemed value to the cardholder or partner.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-BILL-04
+  owner_org_id: ORG-REWARDS
+  company_domain: Servicing
+  company_subdomain: Statements
+  source: Business architecture repository
+
+- capability_id: CAP-BILL-05
+  name: Billing Adjustment & Credit Processing
+  description: Apply goodwill credits, fee reversals, and billing corrections.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-BILL
+  owner_org_id: ORG-SERVICING
+  company_domain: Servicing
+  company_subdomain: Statements
+  source: Business architecture repository
+
+- capability_id: CAP-COLL
+  name: Collections & Recovery
+  description: Collections & Recovery. Level 0 enterprise capability domain (Core tier).
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Core
+  owner_org_id: ORG-COLLECTIONS
+  company_domain: Collections
+  company_subdomain: Recovery Lifecycle
+  source: Business architecture repository
+
+- capability_id: CAP-COLL-01
+  name: Delinquency Segmentation & Treatment Strategy
+  description: Decide which accounts are contacted, how, and when.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-COLL
+  owner_org_id: ORG-COLLECTIONS
+  company_domain: Collections
+  company_subdomain: Recovery Lifecycle
+  source: Business architecture repository
+
+- capability_id: CAP-COLL-02
+  name: Outbound Contact Operations
+  description: Execute dialer, digital, and letter treatment.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-COLL
+  owner_org_id: ORG-COLLECTIONS
+  company_domain: Collections
+  company_subdomain: Recovery Lifecycle
+  source: Business architecture repository
+
+- capability_id: CAP-COLL-03
+  name: Payment Arrangement & Settlement Offers
+  description: Negotiate and administer arrangements and settlements.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-COLL
+  owner_org_id: ORG-COLLECTIONS
+  company_domain: Collections
+  company_subdomain: Recovery Lifecycle
+  source: Business architecture repository
+
+- capability_id: CAP-COLL-03-01
+  name: Payment Arrangements
+  description: Agree and administer promises and long-term arrangements.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-COLL-03
+  owner_org_id: ORG-COLLECTIONS
+  company_domain: Collections
+  company_subdomain: Recovery Lifecycle
+  source: Business architecture repository
+
+- capability_id: CAP-COLL-03-02
+  name: Settlement Offers
+  description: Structure and execute settlements within the approved matrix.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-COLL-03
+  owner_org_id: ORG-COLLECTIONS
+  company_domain: Collections
+  company_subdomain: Recovery Lifecycle
+  source: Business architecture repository
+
+- capability_id: CAP-COLL-04
+  name: Charge-off Processing
+  description: Execute charge-off on policy timing with the correct accounting effect.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-COLL
+  owner_org_id: ORG-COLLECTIONS
+  company_domain: Collections
+  company_subdomain: Recovery Lifecycle
+  source: Business architecture repository
+
+- capability_id: CAP-COLL-05
+  name: Recovery, Agency & Debt Sale Management
+  description: Place, manage, and settle with agencies, and execute debt sales.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-COLL
+  owner_org_id: ORG-RECOVERY
+  company_domain: Collections
+  company_subdomain: Recovery Lifecycle
+  source: Business architecture repository
+
+- capability_id: CAP-COLL-06
+  name: Bankruptcy, Deceased & Legal Account Handling
+  description: Handle accounts under legal protection or in estate.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-COLL
+  owner_org_id: ORG-RECOVERY
+  company_domain: Collections
+  company_subdomain: Recovery Lifecycle
+  source: Business architecture repository
+
+- capability_id: CAP-COLL-07
+  name: Collections Compliance Oversight
+  description: Assure conformance with debt collection, contact, and state-law requirements.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-COLL
+  owner_org_id: ORG-COMPLIANCE
+  company_domain: Collections
+  company_subdomain: Recovery Lifecycle
+  source: Business architecture repository
+
+- capability_id: CAP-COLL-08
+  name: Credit Bureau Reporting & Dispute Handling
+  description: Furnish data to bureaus and handle consumer reporting disputes.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-COLL
+  owner_org_id: ORG-COLLECTIONS
+  company_domain: Collections
+  company_subdomain: Recovery Lifecycle
+  source: Business architecture repository
+
+- capability_id: CAP-CORP
+  name: People, Legal & Corporate Services
+  description: People, Legal & Corporate Services. Level 0 enterprise capability domain (Enable tier).
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Enable
+  owner_org_id: ORG-HR
+  company_domain: Cross-Functional Services
+  company_subdomain: Corporate
+  source: Business architecture repository
+
+- capability_id: CAP-CORP-01
+  name: Workforce Management & HR
+  description: Hire, pay, and manage people.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Commodity
+  parent_capability_id: CAP-CORP
+  owner_org_id: ORG-HR
+  company_domain: Cross-Functional Services
+  company_subdomain: Corporate
+  source: Business architecture repository
+
+- capability_id: CAP-CORP-02
+  name: Learning, Licensing & Certification
+  description: Train the workforce and maintain required certifications.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-CORP
+  owner_org_id: ORG-HR
+  company_domain: Cross-Functional Services
+  company_subdomain: Corporate
+  source: Business architecture repository
+
+- capability_id: CAP-CORP-03
+  name: Legal & Contract Counsel
+  description: Provide legal advice and contracting support.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-CORP
+  owner_org_id: ORG-LEGAL
+  company_domain: Cross-Functional Services
+  company_subdomain: Corporate
+  source: Business architecture repository
+
+- capability_id: CAP-CORP-04
+  name: Facilities & Workplace Operations
+  description: Operate sites and workplace services.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Commodity
+  parent_capability_id: CAP-CORP
+  owner_org_id: ORG-FACILITIES
+  company_domain: Cross-Functional Services
+  company_subdomain: Corporate
+  source: Business architecture repository
+
+- capability_id: CAP-CORP-05
+  name: Corporate Communications
+  description: Manage internal and external communications.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Commodity
+  parent_capability_id: CAP-CORP
+  owner_org_id: ORG-COMMS
+  company_domain: Cross-Functional Services
+  company_subdomain: Corporate
+  source: Business architecture repository
+
+- capability_id: CAP-CRED
+  name: Credit Decisioning & Portfolio Management
+  description: Credit Decisioning & Portfolio Management. Level 0 enterprise capability domain (Core tier).
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Core
+  owner_org_id: ORG-CREDIT
+  company_domain: Originations
+  company_subdomain: Decision
+  source: Business architecture repository
+
+- capability_id: CAP-CRED-01
+  name: Credit Strategy & Scorecard Management
+  description: Own the credit decision strategy and its cutoffs.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-CRED
+  owner_org_id: ORG-CREDIT
+  company_domain: Originations
+  company_subdomain: Decision
+  source: Business architecture repository
+
+- capability_id: CAP-CRED-02
+  name: Model Development & Validation
+  description: Build, document, and validate credit and fraud models.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-CRED
+  owner_org_id: ORG-CREDIT
+  company_domain: Originations
+  company_subdomain: Decision
+  source: Business architecture repository
+
+- capability_id: CAP-CRED-03
+  name: Credit Line Assignment & Management
+  description: Set initial lines and manage increases, decreases, and reallocation.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-CRED
+  owner_org_id: ORG-CREDIT
+  company_domain: Originations
+  company_subdomain: Decision
+  source: Business architecture repository
+
+- capability_id: CAP-CRED-04
+  name: Portfolio Risk Monitoring & Segmentation
+  description: Monitor vintage, roll rate, and segment performance across the portfolio.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-CRED
+  owner_org_id: ORG-CREDIT
+  company_domain: Originations
+  company_subdomain: Decision
+  source: Business architecture repository
+
+- capability_id: CAP-CRED-05
+  name: Loss Forecasting & Allowance
+  description: Forecast credit losses and set the allowance.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-CRED
+  owner_org_id: ORG-FINANCE
+  company_domain: Originations
+  company_subdomain: Decision
+  source: Business architecture repository
+
+- capability_id: CAP-CRED-06
+  name: Authorization Strategy Management
+  description: Set the rules governing real-time authorization decisions.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-CRED
+  owner_org_id: ORG-CREDIT
+  company_domain: Originations
+  company_subdomain: Decision
+  source: Business architecture repository
+
+- capability_id: CAP-CRED-07
+  name: Account Review & Reissue Decisioning
+  description: Perform periodic account-level risk review and reissue decisions.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-CRED
+  owner_org_id: ORG-CREDIT
+  company_domain: Originations
+  company_subdomain: Decision
+  source: Business architecture repository
+
+- capability_id: CAP-DATA
+  name: Data & Analytics Management
+  description: Data & Analytics Management. Level 0 enterprise capability domain (Enable tier).
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Enable
+  owner_org_id: ORG-DATAGOV
+  company_domain: Cross-Functional Services
+  company_subdomain: Data Governance
+  source: Business architecture repository
+
+- capability_id: CAP-DATA-01
+  name: Data Governance & Stewardship
+  description: Own data policy, ownership, and stewardship across the enterprise.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-DATA
+  owner_org_id: ORG-DATAGOV
+  company_domain: Cross-Functional Services
+  company_subdomain: Data Governance
+  source: Business architecture repository
+
+- capability_id: CAP-DATA-02
+  name: Data Sourcing & Integration
+  description: Acquire and integrate internal and third-party data.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-DATA
+  owner_org_id: ORG-DATAENG
+  company_domain: Cross-Functional Services
+  company_subdomain: Data Governance
+  source: Business architecture repository
+
+- capability_id: CAP-DATA-03
+  name: Data Quality Management
+  description: Define, measure, and remediate data quality.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-DATA
+  owner_org_id: ORG-DATAGOV
+  company_domain: Cross-Functional Services
+  company_subdomain: Data Governance
+  source: Business architecture repository
+
+- capability_id: CAP-DATA-04
+  name: Analytics, Reporting & BI
+  description: Serve reporting and analysis to the business.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-DATA
+  owner_org_id: ORG-ANALYTICS
+  company_domain: Cross-Functional Services
+  company_subdomain: Data Governance
+  source: Business architecture repository
+
+- capability_id: CAP-DATA-05
+  name: Metadata, Lineage & Catalog
+  description: Maintain the governed catalog, metadata, and lineage.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-DATA
+  owner_org_id: ORG-DATAGOV
+  company_domain: Cross-Functional Services
+  company_subdomain: Data Governance
+  source: Business architecture repository
+
+- capability_id: CAP-DATA-06
+  name: AI/ML Model Operations
+  description: Deploy, monitor, and retire models in production.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-DATA
+  owner_org_id: ORG-ANALYTICS
+  company_domain: Cross-Functional Services
+  company_subdomain: Data Governance
+  source: Business architecture repository
+
+- capability_id: CAP-DATA-07
+  name: Records Retention & Disposition
+  description: Retain and dispose of records to the retention schedule.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-DATA
+  owner_org_id: ORG-DATAGOV
+  company_domain: Cross-Functional Services
+  company_subdomain: Data Governance
+  source: Business architecture repository
+
+- capability_id: CAP-DEP
+  name: Deposit Products & Funding
+  description: Deposit Products & Funding. Level 0 enterprise capability domain (Core tier). Consumer CDs and savings, direct and brokered — the bank's funding engine.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Core
+  owner_org_id: ORG-DEPOSITS
+  company_domain: Deposits
+  source: Business architecture repository
+
+- capability_id: CAP-DEP-01
+  name: Deposit Product Management
+  description: "Define and price CD and savings products: terms, rates, disclosures, and the rate sheet cadence."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-DEP
+  owner_org_id: ORG-PRODUCT
+  company_domain: Deposits
+  company_subdomain: Products
+  source: Business architecture repository
+
+- capability_id: CAP-DEP-02
+  name: Deposit Account Opening
+  description: "Open and fund consumer deposit accounts directly: identity, disclosures, initial funding."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-DEP
+  owner_org_id: ORG-DEPOSITS
+  company_domain: Deposits
+  company_subdomain: Onboarding
+  source: Business architecture repository
+
+- capability_id: CAP-DEP-03
+  name: Brokered CD Program Management
+  description: "Issue and administer CDs through broker-dealer networks: allocations, settlement, and broker relationships. A primary funding channel."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-DEP
+  owner_org_id: ORG-TREASURY
+  company_domain: Deposits
+  company_subdomain: Brokered Funding
+  source: Business architecture repository
+
+- capability_id: CAP-DEP-04
+  name: Deposit Servicing, Interest & Maturities
+  description: Accrue and pay interest, process maturities and renewals, and handle early withdrawal within terms.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-DEP
+  owner_org_id: ORG-DEPOSITS
+  company_domain: Deposits
+  company_subdomain: Servicing
+  source: Business architecture repository
+
+- capability_id: CAP-DEP-05
+  name: Deposit Compliance & Insurance Administration
+  description: FDIC insurance administration, interest reporting, escheatment, and deposit-side regulatory obligations.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-DEP
+  owner_org_id: ORG-COMPLIANCE
+  company_domain: Deposits
+  company_subdomain: Compliance
+  source: Business architecture repository
+
+- capability_id: CAP-FIN
+  name: Finance, Treasury & Settlement Accounting
+  description: Finance, Treasury & Settlement Accounting. Level 0 enterprise capability domain (Enable tier).
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Enable
+  owner_org_id: ORG-FINANCE
+  company_domain: Cross-Functional Services
+  company_subdomain: Finance
+  source: Business architecture repository
+
+- capability_id: CAP-FIN-01
+  name: General Ledger & Financial Close
+  description: Operate the general ledger and close the books.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-FIN
+  owner_org_id: ORG-FINANCE
+  company_domain: Cross-Functional Services
+  company_subdomain: Finance
+  source: Business architecture repository
+
+- capability_id: CAP-FIN-02
+  name: Interchange & Revenue Accounting
+  description: Account for interchange, fees, and servicing revenue.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-FIN
+  owner_org_id: ORG-FINANCE
+  company_domain: Cross-Functional Services
+  company_subdomain: Finance
+  source: Business architecture repository
+
+- capability_id: CAP-FIN-03
+  name: Funding & Liquidity Management
+  description: Manage funding positions and liquidity.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-FIN
+  owner_org_id: ORG-TREASURY
+  company_domain: Cross-Functional Services
+  company_subdomain: Finance
+  source: Business architecture repository
+
+- capability_id: CAP-FIN-04
+  name: Regulatory & Financial Reporting
+  description: Produce regulatory and external financial reporting.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-FIN
+  owner_org_id: ORG-FINANCE
+  company_domain: Cross-Functional Services
+  company_subdomain: Finance
+  source: Business architecture repository
+
+- capability_id: CAP-FIN-05
+  name: Accounts Payable & Procurement Finance
+  description: Pay suppliers and control discretionary spend.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Commodity
+  parent_capability_id: CAP-FIN
+  owner_org_id: ORG-FINANCE
+  company_domain: Cross-Functional Services
+  company_subdomain: Finance
+  source: Business architecture repository
+
+- capability_id: CAP-FIN-06
+  name: Cash & Settlement Reconciliation
+  description: Reconcile cash and settlement positions daily.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-FIN
+  owner_org_id: ORG-SETTLEMENT
+  company_domain: Cross-Functional Services
+  company_subdomain: Finance
+  source: Business architecture repository
+
+- capability_id: CAP-FRAUD
+  name: Fraud, Disputes & Chargeback Management
+  description: Fraud, Disputes & Chargeback Management. Level 0 enterprise capability domain (Core tier).
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Core
+  owner_org_id: ORG-FRAUD
+  company_domain: Servicing
+  company_subdomain: Disputes
+  source: Business architecture repository
+
+- capability_id: CAP-FRAUD-01
+  name: Transaction Fraud Detection & Strategy
+  description: Detect fraudulent transactions in flight and set detection strategy.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-FRAUD
+  owner_org_id: ORG-FRAUD
+  company_domain: Servicing
+  company_subdomain: Disputes
+  source: Business architecture repository
+
+- capability_id: CAP-FRAUD-02
+  name: Fraud Case Investigation
+  description: Investigate and adjudicate fraud cases.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-FRAUD
+  owner_org_id: ORG-FRAUD
+  company_domain: Servicing
+  company_subdomain: Disputes
+  source: Business architecture repository
+
+- capability_id: CAP-FRAUD-03
+  name: Dispute Intake & Provisional Credit
+  description: Take dispute claims and apply provisional credit within regulatory timers.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-FRAUD
+  owner_org_id: ORG-DISPUTE
+  company_domain: Servicing
+  company_subdomain: Disputes
+  source: Business architecture repository
+
+- capability_id: CAP-FRAUD-04
+  name: Chargeback & Representment Processing
+  description: Execute network chargeback and representment cycles.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-FRAUD
+  owner_org_id: ORG-DISPUTE
+  company_domain: Servicing
+  company_subdomain: Disputes
+  source: Business architecture repository
+
+- capability_id: CAP-FRAUD-04-01
+  name: Chargeback Processing
+  description: File and track network chargebacks within reason-code windows.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-FRAUD-04
+  owner_org_id: ORG-DISPUTE
+  company_domain: Servicing
+  company_subdomain: Disputes
+  source: Business architecture repository
+
+- capability_id: CAP-FRAUD-04-02
+  name: Arbitration & Pre-Arbitration
+  description: Pursue contested cases through the network's arbitration cycle.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-FRAUD-04
+  owner_org_id: ORG-DISPUTE
+  company_domain: Servicing
+  company_subdomain: Disputes
+  source: Business architecture repository
+
+- capability_id: CAP-FRAUD-05
+  name: Fraud Loss Recovery & Write-off
+  description: Recover and account for fraud losses.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-FRAUD
+  owner_org_id: ORG-FRAUD
+  company_domain: Servicing
+  company_subdomain: Disputes
+  source: Business architecture repository
+
+- capability_id: CAP-FRAUD-06
+  name: Identity Theft & Account Takeover Response
+  description: Respond to account takeover and identity theft events.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-FRAUD
+  owner_org_id: ORG-FRAUD
+  company_domain: Servicing
+  company_subdomain: Disputes
+  source: Business architecture repository
+
+- capability_id: CAP-FRAUD-07
+  name: Fraud Reporting & Network Compliance
+  description: Meet network fraud reporting thresholds and obligations.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-FRAUD
+  owner_org_id: ORG-FRAUD
+  company_domain: Servicing
+  company_subdomain: Disputes
+  source: Business architecture repository
+
+- capability_id: CAP-LEND
+  name: Consumer & Recreation Lending
+  description: Consumer & Recreation Lending. Level 0 enterprise capability domain (Core tier). Dealer-originated RV, marine, and powersports lending plus direct consumer loans.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Core
+  owner_org_id: ORG-LENDING
+  company_domain: Lending
+  source: Business architecture repository
+
+- capability_id: CAP-LEND-01
+  name: Dealer Network & Program Management
+  description: Recruit, contract, monitor, and manage the dealer network that originates recreation loans, including program terms and dealer performance.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-LEND
+  owner_org_id: ORG-LENDING
+  company_domain: Lending
+  company_subdomain: Dealer Channel
+  source: Business architecture repository
+
+- capability_id: CAP-LEND-02
+  name: Indirect Application & Underwriting
+  description: Receive applications through dealers, decision them against credit policy, and return terms while the buyer is at the point of sale.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-LEND
+  owner_org_id: ORG-LENDING
+  company_domain: Lending
+  company_subdomain: Origination
+  source: Business architecture repository
+
+- capability_id: CAP-LEND-03
+  name: Loan Boarding & Dealer Funding
+  description: Board approved loans, verify stipulations and documentation, and fund the dealer.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-LEND
+  owner_org_id: ORG-LENDING
+  company_domain: Lending
+  company_subdomain: Origination
+  source: Business architecture repository
+
+- capability_id: CAP-LEND-04
+  name: Collateral, Title & Lien Management
+  description: Perfect and track liens and titles on financed assets across state regimes; release on payoff.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-LEND
+  owner_org_id: ORG-LENDING
+  company_domain: Lending
+  company_subdomain: Collateral
+  source: Business architecture repository
+
+- capability_id: CAP-LEND-05
+  name: Installment Loan Servicing
+  description: "Bill, post, and service fixed-term installment loans: payments, payoffs, extensions, and customer contact."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-LEND
+  owner_org_id: ORG-LENDING
+  company_domain: Lending
+  company_subdomain: Servicing
+  source: Business architecture repository
+
+- capability_id: CAP-LEND-06
+  name: Repossession & Asset Remarketing
+  description: Recover, recondition, and remarket collateral on defaulted loans; manage deficiency balances.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-LEND
+  owner_org_id: ORG-LENDING
+  company_domain: Lending
+  company_subdomain: Recovery
+  source: Business architecture repository
+
+- capability_id: CAP-MERCH
+  name: Merchant Acquiring & Sponsorship
+  description: Merchant Acquiring & Sponsorship. Level 0 enterprise capability domain (Core tier). ISO programs and network sponsorship, including specialty and higher-risk verticals.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Core
+  owner_org_id: ORG-MERCHANT
+  company_domain: Merchant Services
+  source: Business architecture repository
+
+- capability_id: CAP-MERCH-01
+  name: ISO & Agent Program Management
+  description: Recruit, contract, and oversee ISOs and agents who bring merchant volume; manage program economics and liability.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-MERCH
+  owner_org_id: ORG-MERCHANT
+  company_domain: Merchant Services
+  company_subdomain: Channel
+  source: Business architecture repository
+
+- capability_id: CAP-MERCH-02
+  name: Merchant Underwriting & Risk Vetting
+  description: Underwrite merchants against credit and brand risk appetite — the specialty-vertical appetite is the differentiator.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-MERCH
+  owner_org_id: ORG-MERCHANT
+  company_domain: Merchant Services
+  company_subdomain: Underwriting
+  source: Business architecture repository
+
+- capability_id: CAP-MERCH-03
+  name: Merchant Boarding & Network Sponsorship
+  description: Board approved merchants and sponsor them into the card networks under the bank's licenses.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-MERCH
+  owner_org_id: ORG-MERCHANT
+  company_domain: Merchant Services
+  company_subdomain: Boarding
+  source: Business architecture repository
+
+- capability_id: CAP-MERCH-04
+  name: Merchant Settlement & Funding
+  description: Clear and settle merchant card volume and fund merchant accounts daily, with reserves where risk requires them.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-MERCH
+  owner_org_id: ORG-MERCHANT
+  company_domain: Merchant Services
+  company_subdomain: Settlement
+  source: Business architecture repository
+
+- capability_id: CAP-MERCH-05
+  name: Acquiring Chargeback Processing
+  description: "Work chargebacks from the acquiring side: represent on behalf of merchants and pass losses to the right party."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-MERCH
+  owner_org_id: ORG-MERCHANT
+  company_domain: Merchant Services
+  company_subdomain: Disputes
+  source: Business architecture repository
+
+- capability_id: CAP-MERCH-06
+  name: Merchant Monitoring & Exposure Management
+  description: Monitor merchant transaction behavior, credit exposure, and collusion or bust-out patterns across the portfolio.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-MERCH
+  owner_org_id: ORG-MERCHANT
+  company_domain: Merchant Services
+  company_subdomain: Risk
+  source: Business architecture repository
+
+- capability_id: CAP-ORIG
+  name: Originations & Account Opening
+  description: Originations & Account Opening. Level 0 enterprise capability domain (Core tier).
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Core
+  owner_org_id: ORG-ORIG
+  company_domain: Originations
+  company_subdomain: Apply
+  source: Business architecture repository
+
+- capability_id: CAP-ORIG-01
+  name: Application Capture
+  description: Accept applications across web, mobile, phone, mail, and partner channels.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-ORIG
+  owner_org_id: ORG-ORIG
+  company_domain: Originations
+  company_subdomain: Apply
+  source: Business architecture repository
+
+- capability_id: CAP-ORIG-02
+  name: Identity Verification & KYC/CIP
+  description: Verify applicant identity and satisfy customer identification obligations.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-ORIG
+  owner_org_id: ORG-ORIG
+  company_domain: Originations
+  company_subdomain: Apply
+  source: Business architecture repository
+
+- capability_id: CAP-ORIG-03
+  name: Application Fraud Screening
+  description: Detect synthetic, stolen, and first-party application fraud.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-ORIG
+  owner_org_id: ORG-FRAUD
+  company_domain: Originations
+  company_subdomain: Apply
+  source: Business architecture repository
+
+- capability_id: CAP-ORIG-04
+  name: Underwriting & Credit Decisioning Execution
+  description: Execute the credit decision against the approved strategy.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-ORIG
+  owner_org_id: ORG-CREDIT
+  company_domain: Originations
+  company_subdomain: Apply
+  source: Business architecture repository
+
+- capability_id: CAP-ORIG-05
+  name: Adverse Action & Notice Generation
+  description: Produce compliant decline and counter-offer notices.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-ORIG
+  owner_org_id: ORG-COMPLIANCE
+  company_domain: Originations
+  company_subdomain: Apply
+  source: Business architecture repository
+
+- capability_id: CAP-ORIG-06
+  name: Account Establishment & Card Issuance
+  description: Open the account and issue credentials.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-ORIG
+  owner_org_id: ORG-ORIG
+  company_domain: Originations
+  company_subdomain: Apply
+  source: Business architecture repository
+
+- capability_id: CAP-ORIG-07
+  name: Card Production & Fulfillment
+  description: Produce, personalize, and deliver physical and digital cards.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Commodity
+  parent_capability_id: CAP-ORIG
+  owner_org_id: ORG-OPS
+  company_domain: Originations
+  company_subdomain: Apply
+  source: Business architecture repository
+
+- capability_id: CAP-ORIG-08
+  name: Digital Wallet Provisioning
+  description: Provision credentials into wallets and tokenized environments.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-ORIG
+  owner_org_id: ORG-ORIG
+  company_domain: Originations
+  company_subdomain: Apply
+  source: Business architecture repository
+
+- capability_id: CAP-PART
+  name: Partner & Client Relationship Management
+  description: Partner & Client Relationship Management. Level 0 enterprise capability domain (Direct tier).
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Direct
+  owner_org_id: ORG-PARTNERSHIPS
+  company_domain: Cross-Functional Services
+  company_subdomain: Partnerships
+  source: Business architecture repository
+
+- capability_id: CAP-PART-01
+  name: Issuing Bank & Sponsor Relationship
+  description: Manage the issuing bank relationship and its obligations.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-PART
+  owner_org_id: ORG-PARTNERSHIPS
+  company_domain: Cross-Functional Services
+  company_subdomain: Partnerships
+  source: Business architecture repository
+
+- capability_id: CAP-PART-02
+  name: Network & Scheme Relationship
+  description: Manage network membership, rules, and mandate adoption.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-PART
+  owner_org_id: ORG-PAYMENTS
+  company_domain: Cross-Functional Services
+  company_subdomain: Partnerships
+  source: Business architecture repository
+
+- capability_id: CAP-PART-03
+  name: Servicing Client Origination & Contracting
+  description: Win and contract third-party servicing engagements.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-PART
+  owner_org_id: ORG-CLIENTMGMT
+  company_domain: Cross-Functional Services
+  company_subdomain: Partnerships
+  source: Business architecture repository
+
+- capability_id: CAP-PART-04
+  name: Client Service Level & Performance Management
+  description: Manage delivery against contracted service levels and report performance.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-PART
+  owner_org_id: ORG-CLIENTMGMT
+  company_domain: Cross-Functional Services
+  company_subdomain: Partnerships
+  source: Business architecture repository
+
+- capability_id: CAP-PART-05
+  name: Co-Brand & Program Partner Management
+  description: Manage co-brand and program partner economics and obligations.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-PART
+  owner_org_id: ORG-PARTNERSHIPS
+  company_domain: Cross-Functional Services
+  company_subdomain: Partnerships
+  source: Business architecture repository
+
+- capability_id: CAP-PAY
+  name: Payments & Transaction Processing
+  description: Payments & Transaction Processing. Level 0 enterprise capability domain (Core tier).
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Core
+  owner_org_id: ORG-PAYMENTS
+  company_domain: Servicing
+  company_subdomain: Payments
+  source: Business architecture repository
+
+- capability_id: CAP-PAY-01
+  name: Authorization Processing
+  description: Decision and respond to real-time authorization requests.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-PAY
+  owner_org_id: ORG-PAYMENTS
+  company_domain: Servicing
+  company_subdomain: Payments
+  source: Business architecture repository
+
+- capability_id: CAP-PAY-01-01
+  name: Credential Authentication
+  description: Validate card credentials and cryptograms in the authorization path.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-PAY-01
+  owner_org_id: ORG-PAYMENTS
+  company_domain: Servicing
+  company_subdomain: Payments
+  source: Business architecture repository
+
+- capability_id: CAP-PAY-01-02
+  name: Authorization Fraud Screening
+  description: Real-time fraud scoring inside the authorization decision.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-PAY-01
+  owner_org_id: ORG-PAYMENTS
+  company_domain: Servicing
+  company_subdomain: Payments
+  source: Business architecture repository
+
+- capability_id: CAP-PAY-01-03
+  name: Credit & Limit Check
+  description: Open-to-buy and account-status verification at authorization.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-PAY-01
+  owner_org_id: ORG-PAYMENTS
+  company_domain: Servicing
+  company_subdomain: Payments
+  source: Business architecture repository
+
+- capability_id: CAP-PAY-01-04
+  name: Stand-In Processing
+  description: Decision under network stand-in when the host is unavailable.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-PAY-01
+  owner_org_id: ORG-PAYMENTS
+  company_domain: Servicing
+  company_subdomain: Payments
+  source: Business architecture repository
+
+- capability_id: CAP-PAY-01-05
+  name: Transaction Switching
+  description: Route authorization traffic between networks and the host.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-PAY-01
+  owner_org_id: ORG-PAYMENTS
+  company_domain: Servicing
+  company_subdomain: Payments
+  source: Business architecture repository
+
+- capability_id: CAP-PAY-02
+  name: Clearing & Transaction Posting
+  description: Receive clearing files and post transactions to accounts.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-PAY
+  owner_org_id: ORG-PAYMENTS
+  company_domain: Servicing
+  company_subdomain: Payments
+  source: Business architecture repository
+
+- capability_id: CAP-PAY-03
+  name: Payment Capture & Application
+  description: Accept and apply cardholder payments across all channels.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-PAY
+  owner_org_id: ORG-PAYMENTS
+  company_domain: Servicing
+  company_subdomain: Payments
+  source: Business architecture repository
+
+- capability_id: CAP-PAY-04
+  name: Returned Payment & NSF Handling
+  description: Process returns, reversals, and associated fees.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-PAY
+  owner_org_id: ORG-PAYMENTS
+  company_domain: Servicing
+  company_subdomain: Payments
+  source: Business architecture repository
+
+- capability_id: CAP-PAY-05
+  name: Network Settlement & Interchange
+  description: Settle positions with networks and account for interchange.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-PAY
+  owner_org_id: ORG-SETTLEMENT
+  company_domain: Servicing
+  company_subdomain: Payments
+  source: Business architecture repository
+
+- capability_id: CAP-PAY-06
+  name: Network & Merchant Reconciliation
+  description: Reconcile network, processor, and internal ledgers.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-PAY
+  owner_org_id: ORG-SETTLEMENT
+  company_domain: Servicing
+  company_subdomain: Payments
+  source: Business architecture repository
+
+- capability_id: CAP-PAY-07
+  name: Tokenization & Credential Management
+  description: Manage tokens, primary account numbers, and credential lifecycle.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-PAY
+  owner_org_id: ORG-PAYMENTS
+  company_domain: Servicing
+  company_subdomain: Payments
+  source: Business architecture repository
+
+- capability_id: CAP-PROD
+  name: Product Management & Pricing
+  description: Product Management & Pricing. Level 0 enterprise capability domain (Direct tier).
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Direct
+  owner_org_id: ORG-PRODUCT
+  company_domain: Products
+  company_subdomain: Credit Cards
+  source: Business architecture repository
+
+- capability_id: CAP-PROD-01
+  name: Product Design & Configuration
+  description: Define product features, eligibility, and operating parameters.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-PROD
+  owner_org_id: ORG-PRODUCT
+  company_domain: Products
+  company_subdomain: Credit Cards
+  source: Business architecture repository
+
+- capability_id: CAP-PROD-02
+  name: Pricing, Fee & APR Management
+  description: Set and maintain rate, fee, and pricing structures across products.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-PROD
+  owner_org_id: ORG-PRODUCT
+  company_domain: Products
+  company_subdomain: Credit Cards
+  source: Business architecture repository
+
+- capability_id: CAP-PROD-03
+  name: Terms & Disclosure Management
+  description: Author, version, and control cardholder agreements and disclosures.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-PROD
+  owner_org_id: ORG-LEGAL
+  company_domain: Products
+  company_subdomain: Credit Cards
+  source: Business architecture repository
+
+- capability_id: CAP-PROD-04
+  name: Rewards Program Design
+  description: Define earn, accrual, and redemption economics for rewards programs.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-PROD
+  owner_org_id: ORG-PRODUCT
+  company_domain: Products
+  company_subdomain: Credit Cards
+  source: Business architecture repository
+
+- capability_id: CAP-PROD-05
+  name: Product Lifecycle & Retirement
+  description: Launch, amend, sunset, and migrate products through their lifecycle.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-PROD
+  owner_org_id: ORG-PRODUCT
+  company_domain: Products
+  company_subdomain: Credit Cards
+  source: Business architecture repository
+
+- capability_id: CAP-RGOV
+  name: Risk Governance & Compliance Management
+  description: Risk Governance & Compliance Management. Level 0 enterprise capability domain (Direct tier).
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Direct
+  owner_org_id: ORG-RISK
+  company_domain: Cross-Functional Services
+  company_subdomain: Risk & Compliance
+  source: Business architecture repository
+
+- capability_id: CAP-RGOV-01
+  name: Risk Appetite & Policy Management
+  description: Define risk appetite and author and version enterprise policy.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-RGOV
+  owner_org_id: ORG-RISK
+  company_domain: Cross-Functional Services
+  company_subdomain: Risk & Compliance
+  source: Business architecture repository
+
+- capability_id: CAP-RGOV-02
+  name: Regulatory Change Management
+  description: Detect, interpret, and land regulatory change across the enterprise.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-RGOV
+  owner_org_id: ORG-COMPLIANCE
+  company_domain: Cross-Functional Services
+  company_subdomain: Risk & Compliance
+  source: Business architecture repository
+
+- capability_id: CAP-RGOV-03
+  name: Compliance Monitoring & Testing
+  description: Test whether controls operate as designed and report the result.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-RGOV
+  owner_org_id: ORG-COMPLIANCE
+  company_domain: Cross-Functional Services
+  company_subdomain: Risk & Compliance
+  source: Business architecture repository
+
+- capability_id: CAP-RGOV-04
+  name: Issue & Remediation Management
+  description: Track findings and issues to evidenced closure.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-RGOV
+  owner_org_id: ORG-RISK
+  company_domain: Cross-Functional Services
+  company_subdomain: Risk & Compliance
+  source: Business architecture repository
+
+- capability_id: CAP-RGOV-05
+  name: Internal Audit & Examination Management
+  description: Coordinate internal audits and regulatory examinations.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-RGOV
+  owner_org_id: ORG-AUDIT
+  company_domain: Cross-Functional Services
+  company_subdomain: Risk & Compliance
+  source: Business architecture repository
+
+- capability_id: CAP-RGOV-06
+  name: Complaint Oversight & UDAAP Management
+  description: Aggregate, analyze, and act on complaint signal for unfair practice risk.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-RGOV
+  owner_org_id: ORG-COMPLIANCE
+  company_domain: Cross-Functional Services
+  company_subdomain: Risk & Compliance
+  source: Business architecture repository
+
+- capability_id: CAP-RGOV-07
+  name: Financial Crimes & BSA/AML Compliance
+  description: Operate the KYC/CIP program, transaction monitoring, sanctions screening, and regulatory filing.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-RGOV
+  owner_org_id: ORG-COMPLIANCE
+  company_domain: Cross-Functional Services
+  company_subdomain: Risk & Compliance
+  source: Business architecture repository
+
+- capability_id: CAP-RGOV-08
+  name: Model Risk Governance
+  description: Independently validate and monitor models in production use.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-RGOV
+  owner_org_id: ORG-RISK
+  company_domain: Cross-Functional Services
+  company_subdomain: Risk & Compliance
+  source: Business architecture repository
+
+- capability_id: CAP-SEC
+  name: Information Security & Privacy
+  description: Information Security & Privacy. Level 0 enterprise capability domain (Enable tier).
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Enable
+  owner_org_id: ORG-INFOSEC
+  company_domain: Cross-Functional Services
+  company_subdomain: InfoSec
+  source: Business architecture repository
+
+- capability_id: CAP-SEC-01
+  name: Identity & Access Management
+  description: Govern who can access what, and evidence it.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-SEC
+  owner_org_id: ORG-INFOSEC
+  company_domain: Cross-Functional Services
+  company_subdomain: InfoSec
+  source: Business architecture repository
+
+- capability_id: CAP-SEC-02
+  name: Threat Detection & Response
+  description: Detect and respond to security events.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-SEC
+  owner_org_id: ORG-INFOSEC
+  company_domain: Cross-Functional Services
+  company_subdomain: InfoSec
+  source: Business architecture repository
+
+- capability_id: CAP-SEC-02-01
+  name: Security Monitoring
+  description: Continuous monitoring of networks and systems for adverse events.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-SEC-02
+  owner_org_id: ORG-INFOSEC
+  company_domain: Cross-Functional Services
+  company_subdomain: InfoSec
+  source: Business architecture repository
+
+- capability_id: CAP-SEC-02-02
+  name: Security Incident Response
+  description: Manage detected security events through containment and recovery.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-SEC-02
+  owner_org_id: ORG-INFOSEC
+  company_domain: Cross-Functional Services
+  company_subdomain: InfoSec
+  source: Business architecture repository
+
+- capability_id: CAP-SEC-03
+  name: Vulnerability & Patch Management
+  description: Find and remediate technical exposure.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-SEC
+  owner_org_id: ORG-INFOSEC
+  company_domain: Cross-Functional Services
+  company_subdomain: InfoSec
+  source: Business architecture repository
+
+- capability_id: CAP-SEC-03-01
+  name: Vulnerability Identification
+  description: Find and risk-rate vulnerabilities across the estate.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-SEC-03
+  owner_org_id: ORG-INFOSEC
+  company_domain: Cross-Functional Services
+  company_subdomain: InfoSec
+  source: Business architecture repository
+
+- capability_id: CAP-SEC-03-02
+  name: Patch & Software Maintenance
+  description: Remediate through managed patching within severity service levels.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-SEC-03
+  owner_org_id: ORG-INFOSEC
+  company_domain: Cross-Functional Services
+  company_subdomain: InfoSec
+  source: Business architecture repository
+
+- capability_id: CAP-SEC-04
+  name: Data Protection & Cryptography
+  description: Protect data at rest and in transit, and manage keys and cardholder data scope.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-SEC
+  owner_org_id: ORG-INFOSEC
+  company_domain: Cross-Functional Services
+  company_subdomain: InfoSec
+  source: Business architecture repository
+
+- capability_id: CAP-SEC-04-01
+  name: Data-at-Rest Protection
+  description: Protect stored data with encryption and key management to policy.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-SEC-04
+  owner_org_id: ORG-INFOSEC
+  company_domain: Cross-Functional Services
+  company_subdomain: InfoSec
+  source: Business architecture repository
+
+- capability_id: CAP-SEC-04-02
+  name: Data-in-Transit Protection
+  description: Protect data moving between systems and parties.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-SEC-04
+  owner_org_id: ORG-INFOSEC
+  company_domain: Cross-Functional Services
+  company_subdomain: InfoSec
+  source: Business architecture repository
+
+- capability_id: CAP-SEC-05
+  name: Privacy Management
+  description: Operate privacy obligations including consumer rights requests.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-SEC
+  owner_org_id: ORG-PRIVACY
+  company_domain: Cross-Functional Services
+  company_subdomain: InfoSec
+  source: Business architecture repository
+
+- capability_id: CAP-SERV
+  name: Customer Servicing & Care
+  description: Customer Servicing & Care. Level 0 enterprise capability domain (Core tier).
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Core
+  owner_org_id: ORG-SERVICING
+  company_domain: Servicing
+  company_subdomain: Live Agent Customer Service
+  source: Business architecture repository
+
+- capability_id: CAP-SERV-01
+  name: Contact Handling & Routing
+  description: Receive and route contacts across voice, chat, and messaging.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-SERV
+  owner_org_id: ORG-SERVICING
+  company_domain: Servicing
+  company_subdomain: Live Agent Customer Service
+  source: Business architecture repository
+
+- capability_id: CAP-SERV-01-01
+  name: Contact Center Operations
+  description: "Run the daily contact center: staffing, queues, quality."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-SERV-01
+  owner_org_id: ORG-SERVICING
+  company_domain: Servicing
+  company_subdomain: Live Agent Customer Service
+  source: Business architecture repository
+
+- capability_id: CAP-SERV-01-02
+  name: Contact Routing
+  description: Route contacts to the right queue and skill.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-SERV-01
+  owner_org_id: ORG-SERVICING
+  company_domain: Servicing
+  company_subdomain: Live Agent Customer Service
+  source: Business architecture repository
+
+- capability_id: CAP-SERV-02
+  name: Account Maintenance & Servicing Requests
+  description: Execute cardholder-requested account changes.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-SERV
+  owner_org_id: ORG-SERVICING
+  company_domain: Servicing
+  company_subdomain: Live Agent Customer Service
+  source: Business architecture repository
+
+- capability_id: CAP-SERV-03
+  name: Digital Self-Service
+  description: Enable cardholders to self-serve in web and mobile channels.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-SERV
+  owner_org_id: ORG-DIGITAL
+  company_domain: Servicing
+  company_subdomain: Live Agent Customer Service
+  source: Business architecture repository
+
+- capability_id: CAP-SERV-04
+  name: Correspondence & Notification Management
+  description: Generate and deliver required and elective communications.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-SERV
+  owner_org_id: ORG-OPS
+  company_domain: Servicing
+  company_subdomain: Live Agent Customer Service
+  source: Business architecture repository
+
+- capability_id: CAP-SERV-05
+  name: Complaint Capture & Resolution
+  description: Capture, classify, resolve, and evidence complaints.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-SERV
+  owner_org_id: ORG-SERVICING
+  company_domain: Servicing
+  company_subdomain: Live Agent Customer Service
+  source: Business architecture repository
+
+- capability_id: CAP-SERV-06
+  name: Servicing Knowledge & Agent Enablement
+  description: Equip agents with current, compliant guidance.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-SERV
+  owner_org_id: ORG-SERVICING
+  company_domain: Servicing
+  company_subdomain: Live Agent Customer Service
+  source: Business architecture repository
+
+- capability_id: CAP-SERV-07
+  name: Hardship & Payment Assistance
+  description: Operate hardship, forbearance, and payment assistance programs.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-SERV
+  owner_org_id: ORG-SERVICING
+  company_domain: Servicing
+  company_subdomain: Live Agent Customer Service
+  source: Business architecture repository
+
+- capability_id: CAP-SERV-08
+  name: Servicing Quality Monitoring
+  description: Monitor and score servicing interactions for quality and compliance.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-SERV
+  owner_org_id: ORG-SERVICING
+  company_domain: Servicing
+  company_subdomain: Live Agent Customer Service
+  source: Business architecture repository
+
+- capability_id: CAP-STRAT
+  name: Enterprise Strategy & Planning
+  description: Enterprise Strategy & Planning. Level 0 enterprise capability domain (Direct tier).
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Direct
+  owner_org_id: ORG-STRATEGY
+  company_domain: Cross-Functional Services
+  company_subdomain: Strategy
+  source: Business architecture repository
+
+- capability_id: CAP-STRAT-01
+  name: Market & Competitive Analysis
+  description: Understand market, competitor, and portfolio economics to inform strategy.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-STRAT
+  owner_org_id: ORG-STRATEGY
+  company_domain: Cross-Functional Services
+  company_subdomain: Strategy
+  source: Business architecture repository
+
+- capability_id: CAP-STRAT-02
+  name: Portfolio Strategy & Investment Planning
+  description: Decide which portfolios and programs receive capital and change capacity.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-STRAT
+  owner_org_id: ORG-STRATEGY
+  company_domain: Cross-Functional Services
+  company_subdomain: Strategy
+  source: Business architecture repository
+
+- capability_id: CAP-STRAT-03
+  name: Business Performance Management
+  description: Set, track, and act on enterprise performance indicators.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-STRAT
+  owner_org_id: ORG-FINANCE
+  company_domain: Cross-Functional Services
+  company_subdomain: Strategy
+  source: Business architecture repository
+
+- capability_id: CAP-STRAT-04
+  name: Enterprise Architecture & Change Portfolio
+  description: Govern the shape of the estate and the pipeline of change.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-STRAT
+  owner_org_id: ORG-EA
+  company_domain: Cross-Functional Services
+  company_subdomain: Strategy
+  source: Business architecture repository
+
+- capability_id: CAP-STRAT-05
+  name: Merger, Acquisition & Portfolio Transaction
+  description: Evaluate and integrate acquired portfolios and servicing books.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-STRAT
+  owner_org_id: ORG-STRATEGY
+  company_domain: Cross-Functional Services
+  company_subdomain: Strategy
+  source: Business architecture repository
+
+- capability_id: CAP-TECH
+  name: Technology & Platform Operations
+  description: Technology & Platform Operations. Level 0 enterprise capability domain (Enable tier).
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Enable
+  owner_org_id: ORG-TECH
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TECH-01
+  name: Solution Delivery & Engineering
+  description: Build and change software.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TECH
+  owner_org_id: ORG-TECH
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TECH-01-01
+  name: Software Development & Management
+  description: Design, build, and maintain application software through its lifecycle.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TECH-01
+  owner_org_id: ORG-TECH
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TECH-01-02
+  name: Secure Development
+  description: "Integrate security practice into the development lifecycle: scanning, secrets, dependency hygiene."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TECH-01
+  owner_org_id: ORG-TECH
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TECH-02
+  name: Platform & Infrastructure Operations
+  description: Run the technology estate.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TECH
+  owner_org_id: ORG-TECH
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TECH-02-01
+  name: Infrastructure & Platform Management
+  description: Provision and operate compute, storage, network, and platform services.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TECH-02
+  owner_org_id: ORG-TECH
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TECH-02-02
+  name: Capacity & Performance Management
+  description: Ensure services meet demand and performance targets at acceptable cost.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TECH-02
+  owner_org_id: ORG-TECH
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TECH-03
+  name: Service Management & Incident Response
+  description: Detect, triage, and resolve service incidents.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TECH
+  owner_org_id: ORG-TECH
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TECH-03-01
+  name: Service Desk
+  description: "Single point of contact for users: intake, triage, and communication."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TECH-03
+  owner_org_id: ORG-TECH
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TECH-03-02
+  name: Incident Management
+  description: Restore normal service after an unplanned interruption, fast and visibly.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TECH-03
+  owner_org_id: ORG-TECH
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TECH-03-03
+  name: Problem Management
+  description: Find and remove the causes of recurring incidents.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TECH-03
+  owner_org_id: ORG-TECH
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TECH-04
+  name: Release & Change Management
+  description: Move change into production safely.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TECH
+  owner_org_id: ORG-TECH
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TECH-04-01
+  name: Change Enablement
+  description: Authorize change with risk assessed and rollback ready.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TECH-04
+  owner_org_id: ORG-TECH
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TECH-04-02
+  name: Release Management
+  description: Package changes into releases the business can absorb.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TECH-04
+  owner_org_id: ORG-TECH
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TECH-04-03
+  name: Deployment Management
+  description: Move release components into production environments.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TECH-04
+  owner_org_id: ORG-TECH
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TECH-05
+  name: Business Continuity & Disaster Recovery
+  description: Recover the business to committed objectives.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TECH
+  owner_org_id: ORG-TECH
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TECH-06
+  name: Enterprise Integration & API Management
+  description: Operate the integration and API estate.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TECH
+  owner_org_id: ORG-TECH
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TECH-07
+  name: End-User Computing & Workplace Technology
+  description: Equip and support the workforce with workplace technology.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Commodity
+  parent_capability_id: CAP-TECH
+  owner_org_id: ORG-TECH
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TECH-07-01
+  name: IT Asset Management
+  description: Track hardware and software assets through their lifecycle and cost.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Enable
+  strategic_importance: Commodity
+  parent_capability_id: CAP-TECH-07
+  owner_org_id: ORG-TECH
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TECH-07-02
+  name: Service Request Management
+  description: Fulfill standard requests through defined, often automated, paths.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Enable
+  strategic_importance: Commodity
+  parent_capability_id: CAP-TECH-07
+  owner_org_id: ORG-TECH
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TECH-08
+  name: Quality Engineering & Testing
+  description: "Prove that a change does what it claims before and after it reaches production: test strategy, automation, performance, acceptance, defects, and release certification."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TECH
+  owner_org_id: ORG-QE
+  company_domain: Technology
+  company_subdomain: Core Platform
+  source: Business architecture repository
+
+- capability_id: CAP-TPRM
+  name: Third-Party & Vendor Management
+  description: Third-Party & Vendor Management. Level 0 enterprise capability domain (Enable tier).
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Enable
+  owner_org_id: ORG-VENDORMGMT
+  company_domain: Cross-Functional Services
+  company_subdomain: Vendor Management
+  source: Business architecture repository
+
+- capability_id: CAP-TPRM-01
+  name: Vendor Sourcing & Due Diligence
+  description: Select and diligence suppliers.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TPRM
+  owner_org_id: ORG-VENDORMGMT
+  company_domain: Cross-Functional Services
+  company_subdomain: Vendor Management
+  source: Business architecture repository
+
+- capability_id: CAP-TPRM-02
+  name: Contract & SLA Management
+  description: Contract suppliers and hold them to commitments.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TPRM
+  owner_org_id: ORG-VENDORMGMT
+  company_domain: Cross-Functional Services
+  company_subdomain: Vendor Management
+  source: Business architecture repository
+
+- capability_id: CAP-TPRM-03
+  name: Ongoing Vendor Risk Monitoring
+  description: Monitor supplier risk through the life of the relationship.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TPRM
+  owner_org_id: ORG-VENDORMGMT
+  company_domain: Cross-Functional Services
+  company_subdomain: Vendor Management
+  source: Business architecture repository
+
+- capability_id: CAP-TPRM-03-01
+  name: Ongoing Third-Party Monitoring
+  description: Monitor supplier risk posture continuously between assessments.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TPRM-03
+  owner_org_id: ORG-VENDORMGMT
+  company_domain: Cross-Functional Services
+  company_subdomain: Vendor Management
+  source: Business architecture repository
+
+- capability_id: CAP-TPRM-03-02
+  name: Third-Party Performance Review
+  description: Review supplier performance and risk on the contracted cadence.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TPRM-03
+  owner_org_id: ORG-VENDORMGMT
+  company_domain: Cross-Functional Services
+  company_subdomain: Vendor Management
+  source: Business architecture repository
+
+- capability_id: CAP-TPRM-04
+  name: Vendor Exit & Continuity Planning
+  description: Maintain exit and continuity plans for critical suppliers.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Enable
+  strategic_importance: Essential
+  parent_capability_id: CAP-TPRM
+  owner_org_id: ORG-VENDORMGMT
+  company_domain: Cross-Functional Services
+  company_subdomain: Vendor Management
+  source: Business architecture repository
+
+- capability_id: CAP-TPS
+  name: Third-Party Servicing Delivery
+  description: Third-Party Servicing Delivery. Level 0 enterprise capability domain (Core tier).
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L0
+  capability_tier: Core
+  owner_org_id: ORG-TPS
+  company_domain: Cross-Functional Services
+  company_subdomain: Client Services
+  source: Business architecture repository
+
+- capability_id: CAP-TPS-01
+  name: Client Program Configuration & Setup
+  description: Configure platform, product, and treatment for a client program.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-TPS
+  owner_org_id: ORG-TPS
+  company_domain: Cross-Functional Services
+  company_subdomain: Client Services
+  source: Business architecture repository
+
+- capability_id: CAP-TPS-02
+  name: Portfolio Conversion & Deconversion
+  description: Convert client portfolios onto and off the servicing platform.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-TPS
+  owner_org_id: ORG-TPS
+  company_domain: Cross-Functional Services
+  company_subdomain: Client Services
+  source: Business architecture repository
+
+- capability_id: CAP-TPS-03
+  name: Client Reporting & Data Exchange
+  description: Deliver contracted reporting and data feeds to clients.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-TPS
+  owner_org_id: ORG-TPS
+  company_domain: Cross-Functional Services
+  company_subdomain: Client Services
+  source: Business architecture repository
+
+- capability_id: CAP-TPS-04
+  name: Client Billing & Revenue Management
+  description: Bill servicing fees and manage revenue recognition.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-TPS
+  owner_org_id: ORG-FINANCE
+  company_domain: Cross-Functional Services
+  company_subdomain: Client Services
+  source: Business architecture repository
+
+- capability_id: CAP-TPS-05
+  name: Client Audit & Oversight Support
+  description: Support client and client-regulator oversight activity.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-TPS
+  owner_org_id: ORG-TPS
+  company_domain: Cross-Functional Services
+  company_subdomain: Client Services
+  source: Business architecture repository
+
+- capability_id: CAP-TPS-06
+  name: Client-Directed Change Management
+  description: Intake, price, and deliver client-requested change.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-TPS
+  owner_org_id: ORG-TPS
+  company_domain: Cross-Functional Services
+  company_subdomain: Client Services
+  source: Business architecture repository

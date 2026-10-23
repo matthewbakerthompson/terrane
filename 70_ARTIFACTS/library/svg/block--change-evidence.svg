@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="490.4" viewBox="0 0 1100 490.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Change evidence</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Change evidence</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   4 nodes · 3 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">Source control, the pipeline that builds from it, the registry that holds what it built, and the service management that records the change the build was deployed</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">under. Every link is a system writing to another system; the moment a person retypes a change number, the chain is a story. The risk register the evidence lands in is</text>
+<text x="28" y="118" font-size="14" font-weight="400" fill="#343d50">an application and sits above the block.</text>
+<line x1="28" y1="132" x2="1072" y2="132" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(369 131.7)">
+<g class="edge" data-id="e0::source-control::ci-cd">
+<path d="M119 59 L119 99.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M119 103 L114.22 93.43 L123.78 93.43 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e1::ci-cd::artifact-registry">
+<path d="M92 150 L92 190.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M92 194 L87.22 184.43 L96.78 184.43 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e2::ci-cd::itsm">
+<path d="M146 150 L146 158 A8 8 0 0 0 154 166 L260 166 A10 10 0 0 1 270 176 L270 190.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M270 194 L265.21 184.43 L274.79 184.43 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="source-control" data-type="tech_services">
+<title>Source control</title>
+<path d="M39 12 L145.64 12 L199 59 L92.36 59 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="115" y="34.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Source control</text>
+<text x="119" y="53.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Azure Repos</text>
+<svg x="170" y="17" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M2.5 11a5.5 5.5 0 0 1 11 0 M8 11l2.5-4" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="ci-cd" data-type="tech_services">
+<title>Delivery pipeline</title>
+<path d="M39 103 L145.64 103 L199 150 L92.36 150 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="115" y="125.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Delivery pipeline</text>
+<text x="119" y="144.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AWS CodePipeline · Azure Pipelines · C…</text>
+<svg x="170" y="108" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M2.5 11a5.5 5.5 0 0 1 11 0 M8 11l2.5-4" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="artifact-registry" data-type="tech_services">
+<title>Artifact registry</title>
+<path d="M12 194 L118.64 194 L172 241 L65.36 241 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="88" y="216.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Artifact registry</text>
+<text x="92" y="235.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Amazon ECR and CodeArtifact · Azure …</text>
+<svg x="143" y="199" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M2.5 11a5.5 5.5 0 0 1 11 0 M8 11l2.5-4" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="itsm" data-type="tech_services">
+<title>Service management</title>
+<path d="M190 194 L296.64 194 L350 241 L243.36 241 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="266" y="221.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Service management</text>
+<svg x="321" y="199" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M2.5 11a5.5 5.5 0 0 1 11 0 M8 11l2.5-4" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="388.4" x2="1072" y2="388.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="412.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 401.4)" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"><path d="M5 1h14l-4 12H1z"/></g>
+<text x="93.2" y="412.4" font-size="12" font-weight="400" fill="#343d50">technology service · 4</text>
+<text x="28" y="434.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 423.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="434.4" font-size="12" font-weight="400" fill="#343d50">connects to</text>
+<text x="28" y="468.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · block--change-evidence · edit the model, not the picture</text></g>
+</svg>

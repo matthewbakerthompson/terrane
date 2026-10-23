@@ -1,0 +1,272 @@
+# Everything that is not an HL7 v2 feed: images, the FHIR API, the
+# regional exchange, the registry, the ledger, the warehouse extracts and
+# the audit trail. Each is of a shipped connection kind except the DICOM
+# transfers, which are Thurman's own.
+
+# --- images ---------------------------------------------------------------------------
+
+- interface_id: INT-PACS-VNA-ARCHIVE
+  name: PACS to Archive, studies
+  description: Every study, archived once it is read.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Diagnostics
+  source_system_id: SYS-PACS
+  target_system_id: SYS-VNA
+  owner_org_id: ORG-IMAGING
+  protocol: DICOM
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+- interface_id: INT-VNA-PACS-PRIORS
+  name: Archive to PACS, prior studies
+  description: Prior studies fetched back the night before a scheduled exam, so the radiologist can compare.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Diagnostics
+  source_system_id: SYS-VNA
+  target_system_id: SYS-PACS
+  owner_org_id: ORG-IMAGING
+  protocol: DICOM
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+# --- the FHIR API ---------------------------------------------------------------------------
+
+- interface_id: INT-ENGINE-FHIR-SYNC
+  name: Engine to FHIR Server, record updates
+  description: The engine keeps the FHIR server current from the same feeds it routes, translated to R4 resources.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Interoperability
+  source_system_id: SYS-INTERFACE-ENGINE
+  target_system_id: SYS-FHIR-SERVER
+  owner_org_id: ORG-INTEGRATION
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+- interface_id: INT-PORTAL-API-FHIR
+  name: Portal Service to FHIR Server
+  description: Results, medications, problems and appointments for the signed-in patient, under a SMART on FHIR token.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Patient Access
+  source_system_id: SYS-PORTAL-API
+  target_system_id: SYS-FHIR-SERVER
+  owner_org_id: ORG-DIGITAL
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Restricted
+
+- interface_id: INT-FHIR-EHR-WRITEBACK
+  name: FHIR Server to EHR, bookings and messages
+  description: Appointments a patient books and messages they send, written into the EHR, which stays the system of record for both.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Interoperability
+  source_system_id: SYS-FHIR-SERVER
+  target_system_id: SYS-EHR
+  owner_org_id: ORG-INTEGRATION
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+# --- the regional exchange and the registry ----------------------------------------------------
+
+- interface_id: INT-ENGINE-HIE-DOCUMENTS
+  name: Engine to HIE, care summaries
+  description: A C-CDA summary at every discharge, and the query for a patient's documents from elsewhere when they arrive.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Interoperability
+  source_system_id: SYS-INTERFACE-ENGINE
+  target_system_id: SYS-REGIONAL-HIE
+  owner_org_id: ORG-INTEGRATION
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+- interface_id: INT-HIE-ENGINE-ALERTS
+  name: HIE to Engine, encounter alerts
+  description: A notice when one of Thurman's patients is seen at another hospital in the region, so the care team can follow up.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Interoperability
+  source_system_id: SYS-REGIONAL-HIE
+  target_system_id: SYS-INTERFACE-ENGINE
+  owner_org_id: ORG-INTEGRATION
+  protocol: HTTPS
+  direction: Inbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+- interface_id: INT-LIS-REGISTRY-PATHOLOGY
+  name: LIS to Cancer Registry, pathology
+  description: Pathology reports with a cancer diagnosis, for case finding.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Oncology
+  source_system_id: SYS-LIS
+  target_system_id: SYS-TUMOR-REGISTRY
+  owner_org_id: ORG-CANCER-CENTER
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: OAuth2
+  data_classification: Restricted
+
+- interface_id: INT-ONCOLOGY-REGISTRY-TREATMENT
+  name: Oncology to Cancer Registry, first course of treatment
+  description: Nightly file of regimens and radiation courses, for the registrars' abstracts.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Oncology
+  source_system_id: SYS-ONCOLOGY
+  target_system_id: SYS-TUMOR-REGISTRY
+  owner_org_id: ORG-CANCER-CENTER
+  protocol: SFTP
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: KeyPair
+  data_classification: Restricted
+  patterns: [partner-file-exchange]
+
+# --- the ledger and the warehouse -----------------------------------------------------------------
+
+- interface_id: INT-BILLING-ERP-GL
+  name: Patient Accounting to ERP, journals
+  description: Revenue, cash and adjustments, summarized to the ledger each night.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Revenue Cycle
+  source_system_id: SYS-PATIENT-ACCOUNTING
+  target_system_id: SYS-ERP
+  owner_org_id: ORG-FINANCE
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: KeyPair
+  data_classification: Confidential
+
+- interface_id: INT-EHR-INGEST-EXTRACT
+  name: EHR to Ingestion, nightly extract
+  description: Encounters, problems, orders, administrations and results from the EHR's reporting database.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Data
+  company_domain: Data and Analytics
+  source_system_id: SYS-EHR
+  target_system_id: SYS-CLINICAL-INGEST
+  owner_org_id: ORG-DATAENG
+  protocol: SQL
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: KeyPair
+  data_classification: Restricted
+
+- interface_id: INT-BILLING-INGEST-EXTRACT
+  name: Patient Accounting to Ingestion, nightly extract
+  description: Charges and claims, for the cost of care and denial analysis.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Data
+  company_domain: Data and Analytics
+  source_system_id: SYS-PATIENT-ACCOUNTING
+  target_system_id: SYS-CLINICAL-INGEST
+  owner_org_id: ORG-DATAENG
+  protocol: SQL
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: KeyPair
+  data_classification: Restricted
+
+- interface_id: INT-ONCOLOGY-INGEST-EXTRACT
+  name: Oncology to Ingestion, nightly extract
+  description: Regimens and courses, for the cancer center's outcome measures.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Data
+  company_domain: Data and Analytics
+  source_system_id: SYS-ONCOLOGY
+  target_system_id: SYS-CLINICAL-INGEST
+  owner_org_id: ORG-DATAENG
+  protocol: SQL
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: KeyPair
+  data_classification: Restricted
+
+# --- the audit trail ---------------------------------------------------------------------------------
+
+- interface_id: INT-EHR-SIEM-AUDIT
+  name: EHR to Security Monitoring, access audit
+  description: Every chart access, as it happens; the feed the privacy team's snooping reports are run on.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Technology
+  company_domain: Security
+  source_system_id: SYS-EHR
+  target_system_id: SYS-SIEM
+  owner_org_id: ORG-INFOSEC
+  protocol: Syslog
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+  patterns: [observed-service]
+
+- interface_id: INT-FHIR-SIEM-AUDIT
+  name: FHIR Server to Security Monitoring, API audit
+  description: Which app read which patient's data, under whose authorization.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Technology
+  company_domain: Security
+  source_system_id: SYS-FHIR-SERVER
+  target_system_id: SYS-SIEM
+  owner_org_id: ORG-INFOSEC
+  protocol: Syslog
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+  patterns: [observed-service]

@@ -1,0 +1,791 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://architecture-as-code/schemas/module.schema.json",
+  "title": "Module",
+  "description": "A part of a product with parameters, or a list of them in one file.",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "module_id",
+        "name",
+        "description"
+      ],
+      "properties": {
+        "module_id": {
+          "type": "string"
+        },
+        "replaces": {
+          "type": "string",
+          "description": "This record's own id, said to stand in for the record of that id in a library read before this one. Without it a second record of an id is an error."
+        },
+        "name": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "optional": {
+          "type": "boolean",
+          "description": "Whether an instance may drop the part. On by default."
+        },
+        "parameters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "required": {
+                "type": "boolean"
+              },
+              "default": {},
+              "description": {
+                "type": "string"
+              },
+              "component": {
+                "type": "string",
+                "description": "The kind of shared service this stands for, as a component type id; the shape binds it."
+              },
+              "estate": {
+                "type": "boolean",
+                "description": "Answered by the estate: `answers` in model.yaml holds it under this name, taken ahead of the default."
+              }
+            }
+          }
+        },
+        "requires": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Modules that have to be present for this one to make sense."
+        },
+        "needs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Bindings the part reads from the shape and does not declare as parameters of its own."
+        },
+        "modules": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "module"
+                ],
+                "properties": {
+                  "module": {
+                    "type": "string"
+                  },
+                  "as": {
+                    "type": "string"
+                  },
+                  "optional": {
+                    "type": "boolean"
+                  },
+                  "with": {
+                    "type": "object",
+                    "description": "Parameter name to value; a value may use the shape tokens."
+                  }
+                }
+              }
+            ]
+          },
+          "description": "The parts this one is made of, which makes it a kit."
+        },
+        "patterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "provides": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "systems": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "interfaces": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "offered_interfaces": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "data_assets": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "tech_services": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "capabilities": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "frameworks": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "value_streams": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "value_stream_stages": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "org_units": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "policies": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "controls": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "actors": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "flows": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "processes": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "products": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "roadmaps": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "work_packages": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "architecture_change_requests": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "relations": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "system_uses_tech_service": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "interface_transports_data_asset": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "system_governed_by_control": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "system_subject_to_policy": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "data_governed_by_control": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "data_subject_to_policy": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "process_supports_capability": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "process_uses_system": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "process_uses_data_asset": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "process_governed_by_control": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "process_subject_to_policy": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "capability_references_framework": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "capability_governed_by_control": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "capability_subject_to_policy": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "system_realizes_capability": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "capability_aligns_to_framework": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "stage_crosses_capability": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "system_reads_writes": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "product_includes_system": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "actor_uses_system": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "flow_step": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "tech_service_connects_to": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "product_realizes_capability": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "work_package_affects_system": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "change_request_affects_system": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "module_id",
+          "name",
+          "description"
+        ],
+        "properties": {
+          "module_id": {
+            "type": "string"
+          },
+          "replaces": {
+            "type": "string",
+            "description": "This record's own id, said to stand in for the record of that id in a library read before this one. Without it a second record of an id is an error."
+          },
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "optional": {
+            "type": "boolean",
+            "description": "Whether an instance may drop the part. On by default."
+          },
+          "parameters": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "required": {
+                  "type": "boolean"
+                },
+                "default": {},
+                "description": {
+                  "type": "string"
+                },
+                "component": {
+                  "type": "string",
+                  "description": "The kind of shared service this stands for, as a component type id; the shape binds it."
+                },
+                "estate": {
+                  "type": "boolean",
+                  "description": "Answered by the estate: `answers` in model.yaml holds it under this name, taken ahead of the default."
+                }
+              }
+            }
+          },
+          "requires": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Modules that have to be present for this one to make sense."
+          },
+          "needs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Bindings the part reads from the shape and does not declare as parameters of its own."
+          },
+          "modules": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "module"
+                  ],
+                  "properties": {
+                    "module": {
+                      "type": "string"
+                    },
+                    "as": {
+                      "type": "string"
+                    },
+                    "optional": {
+                      "type": "boolean"
+                    },
+                    "with": {
+                      "type": "object",
+                      "description": "Parameter name to value; a value may use the shape tokens."
+                    }
+                  }
+                }
+              ]
+            },
+            "description": "The parts this one is made of, which makes it a kit."
+          },
+          "patterns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "provides": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "systems": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "interfaces": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "offered_interfaces": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "data_assets": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "tech_services": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "capabilities": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "frameworks": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "value_streams": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "value_stream_stages": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "org_units": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "policies": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "controls": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "actors": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "flows": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "processes": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "products": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "roadmaps": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "work_packages": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "architecture_change_requests": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "relations": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "system_uses_tech_service": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "interface_transports_data_asset": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "system_governed_by_control": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "system_subject_to_policy": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "data_governed_by_control": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "data_subject_to_policy": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "process_supports_capability": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "process_uses_system": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "process_uses_data_asset": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "process_governed_by_control": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "process_subject_to_policy": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "capability_references_framework": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "capability_governed_by_control": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "capability_subject_to_policy": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "system_realizes_capability": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "capability_aligns_to_framework": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "stage_crosses_capability": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "system_reads_writes": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "product_includes_system": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "actor_uses_system": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "flow_step": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "tech_service_connects_to": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "product_realizes_capability": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "work_package_affects_system": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "change_request_affects_system": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

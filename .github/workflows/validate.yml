@@ -1,0 +1,122 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  model:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+
+      # Deliberately not installing PyYAML. The engine ships a fallback reader
+      # and the default CI run exercises it, so the bare-Python path cannot rot.
+      - name: Model quality gates
+        working-directory: 50_ENGINE
+        run: python -m terrane validate
+
+      # The second example estate, a health system, read with this
+      # checkout's library through `shipped_library`. It commits no
+      # generated output, so the gate, its test and the parse below are
+      # what hold it.
+      - name: Second estate quality gates
+        working-directory: 50_ENGINE
+        run: python -m terrane --root ../90_EXAMPLE/thurman-health validate
+
+      - name: Tests
+        working-directory: 50_ENGINE
+        run: python -m unittest discover -s tests
+
+      # Catches the pull request that edits the model and forgets to re-render.
+      - name: Generated output is up to date
+        working-directory: 50_ENGINE
+        run: |
+          python -m terrane render
+          python -m terrane schema
+          python -m terrane export csv
+          python -m terrane export backstage
+          python -m terrane export json
+          python -m terrane export drawio
+          python -m terrane export plantuml
+          python -m terrane export excel
+          cd ..
+          if [ -n "$(git status --porcelain 70_ARTIFACTS 40_SCHEMAS)" ]; then
+            echo "Generated output is stale. Run 'python -m terrane render' and commit."
+            git --no-pager diff --stat 70_ARTIFACTS 40_SCHEMAS
+            exit 1
+          fi
+
+  parity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+
+      - name: Install PyYAML
+        run: pip install pyyaml
+
+      # With PyYAML present the suite runs the parity test, which parses every
+      # model file both ways and requires identical results.
+      - name: Tests with PyYAML
+        working-directory: 50_ENGINE
+        run: python -m unittest discover -s tests
+
+  diagrams:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "20"
+
+      # The engine has no dependencies; this check does. It parses the generated
+      # diagrams with the real Mermaid parser, which is the only way to be sure
+      # they render rather than merely looking well formed.
+      - name: Render and parse
+        run: |
+          (cd 50_ENGINE && python -m terrane render)
+          (cd 50_ENGINE && python -m terrane --root ../90_EXAMPLE/thurman-health render --format mermaid)
+          npm install --no-save mermaid jsdom
+          node 50_ENGINE/tools/mermaid_parse_check.mjs 70_ARTIFACTS
+          node 50_ENGINE/tools/mermaid_parse_check.mjs 90_EXAMPLE/thurman-health/70_ARTIFACTS
+
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+
+      # The engine as a wheel, installed into a bare interpreter and run from
+      # a folder with no repository around it: the shipped views, library,
+      # marks and faces have to come from inside the package, and `terrane draw`
+      # has to draw the example with them. The one mark the hosting picture
+      # must carry is the test that they did.
+      - name: Install the package and draw from nowhere
+        run: |
+          pip install .
+          mkdir -p /tmp/nowhere && cd /tmp/nowhere
+          terrane draw --example > sketch.yaml
+          terrane draw sketch.yaml
+          test -f sketch--payments-by-hosting.svg
+          grep -q "data:image/svg" sketch--payments-by-hosting.svg
+          test -f sketch--FLOW-AUTH.svg
+          # And a PNG with nothing installed but the runner's own Chrome.
+          terrane draw sketch.yaml --png
+          test -f sketch--payments-by-hosting.png

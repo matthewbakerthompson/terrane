@@ -1,0 +1,82 @@
+# The insurer's portfolio export and integration list, in the model's words.
+#
+#   cd 50_ENGINE
+#   python -m terrane import csv --from ../60_SOURCES/inventory --map ../60_SOURCES/inventory/mapping.yaml
+#
+# One entry per kind of record. `file` is the inventory file it is read from;
+# `columns` says which column is which field; `values` says which of the
+# inventory's values is which of the model's, field by field; `id` says how a
+# row becomes an id. A value the mapping does not place holds its row back and
+# is listed, rather than guessed. AAC-15 has the whole format, and
+# 40_SCHEMAS/import_mapping.schema.json checks one while it is typed.
+
+description: The insurer's application portfolio export and its integration list.
+
+# The departments are not a file of their own: every application names the
+# one that owns it, and rows that name the same department are one record.
+org_units:
+  file: application_portfolio.csv
+  id: {prefix: ORG-, from: name}
+  columns:
+    Owning Department: name
+  defaults:
+    status: Active
+
+systems:
+  file: application_portfolio.csv
+  # The portfolio tool's own id. Kept in cmdb_ci_sys_id, where the drift
+  # report looks first, and never the model's id.
+  code: App ID
+  id: {prefix: SYS-, from: name}
+  columns:
+    Application Name: name
+    Description: description
+    Lifecycle Status: status
+    # The portfolio's tier is the model's service tier word for word, and
+    # its criticality once mapped.
+    Business Criticality: [criticality, service_tier]
+    # A department's name; it resolves to the org unit made from it above.
+    Owning Department: owner_org_id
+    Hosting: [hosting, cloud_provider]
+    Last Reviewed: last_reviewed
+  ignore: [Business Owner, Annual Run Cost]
+  values:
+    status:
+      In Production: Active
+      In Development: Planned
+      Under Evaluation: Proposed
+      Retired - pending: Deprecated
+      Decommissioned: Retired
+    criticality:
+      Tier 1: High
+      Tier 2: Medium
+      Tier 3: Low
+    # AWS and Azure are already the model's words, so they need no line.
+    hosting:
+      Data Center: On-prem
+      Vendor Hosted: SaaS
+    cloud_provider:
+      Data Center: On-prem
+      Vendor Hosted: SaaS
+
+interfaces:
+  file: integrations.csv
+  id: {prefix: INT-, from: name}
+  columns:
+    Interface Name: name
+    # Applications by name, as the portfolio export names them.
+    Source Application: source_system_id
+    Target Application: target_system_id
+    Method: [protocol, integration_style]
+    Frequency: frequency
+    Status: status
+  ignore: [Interface ID]
+  values:
+    integration_style:
+      REST: Request-response
+      MQ: Event
+      SFTP: Batch
+    status:
+      Live: Active
+      Build: Planned
+      Pilot: Proposed

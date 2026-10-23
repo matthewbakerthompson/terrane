@@ -1,0 +1,213 @@
+# The Google Cloud network estate, tagged `network-fabric` so the topology
+# view draws it beside AWS's: the two paths back to the data center, the hub
+# every spoke attaches to, and the lending workload's tiers as subnetworks of
+# the shared VPC. Google's network is shaped differently from AWS's and the
+# model says so rather than borrowing: one VPC, global, shared from a host
+# project; regional subnetworks rather than zonal subnets; a proxy-only
+# subnetwork for the load balancer's own address space; Cloud NAT for the
+# egress AWS does with a gateway per zone.
+- tech_service_id: TS-GCPNET-HA-VPN
+  name: HA VPN
+  service_name: HA VPN
+  component_type: hybrid-link
+  description: >
+    The backup path to the data center: HA VPN over the internet, two tunnels
+    with BGP, carrying the traffic when the Interconnect does not. Tested on
+    the same quarterly failover as the Interconnect's second attachment.
+  status: Active
+  provider: Google Cloud
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: GCP
+  cloud_account: gcp-shared-network
+  region: europe-west2
+  network_zone: Shared-Services
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric, landing-zone]
+- tech_service_id: TS-GCPNET-PROXY-SUB-LEND
+  name: Lending Proxy-only Subnetwork
+  service_name: Subnetwork
+  component_type: subnet
+  description: >
+    The proxy-only subnetwork the regional external load balancer's proxies
+    sit in; nothing of ours runs there, and nothing of ours may.
+  status: Active
+  provider: Google Cloud
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: GCP
+  cloud_account: gcp-lending-prod
+  region: europe-west2
+  network_zone: Public
+  cidr: 10.60.0.0/23
+  company_domain: Lending
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+- tech_service_id: TS-GCPNET-SUB-LEND-APP
+  name: Lending App Subnetwork
+  service_name: Subnetwork
+  component_type: subnet
+  description: >
+    Where the GKE nodes land. Regional, shared to the lending project from the
+    host project, so the zones are the cluster's to spread across.
+  status: Active
+  provider: Google Cloud
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: GCP
+  cloud_account: gcp-lending-prod
+  region: europe-west2
+  network_zone: Private-App
+  cidr: 10.60.32.0/20
+  company_domain: Lending
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+- tech_service_id: TS-GCPNET-SUB-LEND-DATA
+  name: Lending Data Subnetwork
+  service_name: Subnetwork
+  component_type: subnet
+  description: >
+    Cloud SQL's private services access range and the Memorystore endpoints;
+    no route to the internet, in or out.
+  status: Active
+  provider: Google Cloud
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: GCP
+  cloud_account: gcp-lending-prod
+  region: europe-west2
+  network_zone: Private-Data
+  cidr: 10.60.64.0/20
+  company_domain: Lending
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+- tech_service_id: TS-GCPNET-SUB-LEND-APP-DR
+  name: Lending App Subnetwork (DR)
+  service_name: Subnetwork
+  component_type: subnet
+  description: >
+    The warm-standby region's application tier, empty until a failover; the
+    same VPC, since a Google Cloud VPC is global, so no peering to maintain.
+  status: Active
+  provider: Google Cloud
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: GCP
+  cloud_account: gcp-lending-prod
+  region: europe-west1
+  network_zone: Private-App
+  cidr: 10.61.32.0/20
+  company_domain: Lending
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+- tech_service_id: TS-GCPNET-NAT-LEND
+  name: Lending Cloud NAT
+  service_name: Cloud NAT
+  component_type: private-egress
+  description: >
+    Regional NAT for the private subnetworks' egress, the only way out that is
+    not a Private Service Connect endpoint; one gateway per region, not one
+    per zone.
+  status: Active
+  provider: Google Cloud
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: GCP
+  cloud_account: gcp-lending-prod
+  region: europe-west2
+  network_zone: Public
+  company_domain: Lending
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+- tech_service_id: TS-GCPNET-EXT-LB-LEND
+  name: Lending External Load Balancer
+  service_name: Cloud Load Balancing
+  component_type: load-balancer
+  description: >
+    The external HTTPS load balancer in front of the product's channel, with
+    Cloud Armor attached; the edge of the lending workload on Google Cloud.
+  status: Active
+  provider: Google Cloud
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: GCP
+  cloud_account: gcp-lending-prod
+  region: europe-west2
+  network_zone: Edge
+  company_domain: Lending
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+
+# The second workload project, so the hub has more than one spoke: the
+# analytics tenancy is a project of its own, separate from the product whose
+# data it curates. A data subnetwork and a NAT; BigQuery and Pub/Sub are
+# reached over Private Google Access, so nothing here faces the internet.
+- tech_service_id: TS-GCPNET-SUB-ANALYTICS-DATA
+  name: Analytics Data Subnetwork
+  service_name: Subnetwork
+  component_type: subnet
+  description: >
+    The analytics project's one subnetwork, for the Dataflow workers and the
+    Composer environment; BigQuery and Pub/Sub are reached over Private
+    Google Access rather than through it.
+  status: Active
+  provider: Google Cloud
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: GCP
+  cloud_account: gcp-analytics-prod
+  region: europe-west2
+  network_zone: Private-Data
+  cidr: 10.62.0.0/20
+  company_domain: Data and Analytics
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+- tech_service_id: TS-GCPNET-NAT-ANALYTICS
+  name: Analytics Cloud NAT
+  service_name: Cloud NAT
+  component_type: private-egress
+  description: >
+    Regional NAT for the Dataflow workers' egress to the package mirrors and
+    nothing else; the data never leaves by it.
+  status: Active
+  provider: Google Cloud
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: GCP
+  cloud_account: gcp-analytics-prod
+  region: europe-west2
+  network_zone: Public
+  company_domain: Data and Analytics
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+- tech_service_id: TS-GCPNET-SUB-ANALYTICS-DATA-DR
+  name: Analytics Data Subnetwork (DR)
+  service_name: Subnetwork
+  component_type: subnet
+  description: >
+    The warm-standby region's subnetwork for the analytics jobs, empty until
+    a failover. BigQuery keeps the dataset in a multi-region of its own, so
+    what fails over is the jobs and the schedule, not the data.
+  status: Active
+  provider: Google Cloud
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: GCP
+  cloud_account: gcp-analytics-prod
+  region: europe-west1
+  network_zone: Private-Data
+  cidr: 10.63.0.0/20
+  company_domain: Data and Analytics
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]

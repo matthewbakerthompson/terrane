@@ -1,0 +1,143 @@
+# Where the estate enforces the register.
+#
+# The controls and policies themselves are imported from the business
+# architecture repository and never edited here. Which system or data asset
+# enforces each one is a fact about the estate, so it is recorded here, by
+# hand, by whoever knows.
+#
+# Two things are deliberately left out, so the coverage report has something
+# honest to say. The card servicing product realizes Customer Servicing, a
+# capability the business layer says is governed by five controls, and none
+# of them is recorded against its systems: that is the "inherited control
+# unrecorded" finding, and it is what the report exists to surface. And the
+# lending product is mid-onboarding with no controls at all, which is the
+# state every new product is in until the intake question gets asked.
+#
+# Every row is placeholder content drafted against a placeholder estate.
+
+system_governed_by_control:
+  # Real-time authorization: availability is the control, and the switch is
+  # in PCI scope by definition.
+  - system_id: SYS-AUTH-SWITCH
+    control_id: CTL-AUTH-AVAIL
+  - system_id: SYS-AUTH-SWITCH
+    control_id: CTL-PCI-EVIDENCE
+  # The ledger carries the posting, cycle and reconciliation controls, and is
+  # the system a recovery test is actually a test of.
+  - system_id: SYS-CORE-LEDGER
+    control_id: CTL-DAILY-RECON
+  - system_id: SYS-CORE-LEDGER
+    control_id: CTL-PMT-POSTING
+  - system_id: SYS-CORE-LEDGER
+    control_id: CTL-CYCLE-VALID
+  - system_id: SYS-CORE-LEDGER
+    control_id: CTL-PCI-EVIDENCE
+  - system_id: SYS-CORE-LEDGER
+    control_id: CTL-CHG-APPROVAL
+  - system_id: SYS-CORE-LEDGER
+    control_id: CTL-DR-TEST
+  # The bought disputes platform is where the Reg E clocks run. The gateway in
+  # front of it is what third-party due diligence was done on.
+  - system_id: SYS-DISPUTES-SAAS
+    control_id: CTL-REGE-ACK
+  - system_id: SYS-DISPUTES-SAAS
+    control_id: CTL-REGE-PROVCR
+  - system_id: SYS-DISPUTES-SAAS
+    control_id: CTL-REGE-DETERM
+  - system_id: SYS-DISPUTES-GATEWAY
+    control_id: CTL-TPRM-DD
+  # Collections conduct is enforced in the workspace's API, not in the agents.
+  - system_id: SYS-COLLECT-API
+    control_id: CTL-CONTACT-LIM
+  - system_id: SYS-COLLECT-API
+    control_id: CTL-FDCPA-NOTICE
+  - system_id: SYS-COLLECT-WEB
+    control_id: CTL-CONTACT-LIM
+  # Bureau furnishing accuracy is a control on the feed to the bureau.
+  - system_id: SYS-CREDIT-BUREAU
+    control_id: CTL-BUREAU-ACC
+  - system_id: SYS-CREDIT-BUREAU
+    control_id: CTL-METRO2-RECON
+  - system_id: SYS-CREDIT-BUREAU
+    control_id: CTL-TPRM-DD
+  - system_id: SYS-IDENTITY-SVC
+    control_id: CTL-AUTH-POLICY
+  - system_id: SYS-IDENTITY-SVC
+    control_id: CTL-ACCESS-CERT
+  - system_id: SYS-REG-REPORTING
+    control_id: CTL-REGRPT-CERT
+  - system_id: SYS-REG-REPORTING
+    control_id: CTL-CLOSE-SIGNOFF
+  # The data pipeline is where the quality gate and the masking rule live.
+  - system_id: SYS-CUST360-PIPELINE
+    control_id: CTL-DQ-GATE
+  - system_id: SYS-CUST360-PIPELINE
+    control_id: CTL-MASK-NONPROD
+  - system_id: SYS-CRM
+    control_id: CTL-PRIV-REQ
+  - system_id: SYS-CRM
+    control_id: CTL-COMPLAINT-REG
+  - system_id: SYS-STATEMENTS
+    control_id: CTL-NOTICE-CONTENT
+  - system_id: SYS-STATEMENTS
+    control_id: CTL-CYCLE-VALID
+  # The screening product carries its own rows: the third-party controls
+  # come from its archetype and the sanctions control from its instance file.
+
+system_subject_to_policy:
+  - system_id: SYS-CORE-LEDGER
+    policy_id: POL-INFOSEC
+  - system_id: SYS-CORE-LEDGER
+    policy_id: POL-CHANGE
+  - system_id: SYS-CORE-LEDGER
+    policy_id: POL-RECORDS
+  - system_id: SYS-AUTH-SWITCH
+    policy_id: POL-INFOSEC
+  - system_id: SYS-AUTH-SWITCH
+    policy_id: POL-CHANGE
+  - system_id: SYS-DISPUTES-SAAS
+    policy_id: POL-ERROR-RES
+  - system_id: SYS-CREDIT-BUREAU
+    policy_id: POL-FAIR-LEND
+  - system_id: SYS-CREDIT-BUREAU
+    policy_id: POL-TPRM
+  - system_id: SYS-COLLECT-API
+    policy_id: POL-COLLECT
+  - system_id: SYS-CRM
+    policy_id: POL-PRIVACY
+  - system_id: SYS-CUST360-PIPELINE
+    policy_id: POL-PRIVACY
+  - system_id: SYS-CUST360-PIPELINE
+    policy_id: POL-RECORDS
+  - system_id: SYS-IDENTITY-SVC
+    policy_id: POL-INFOSEC
+
+data_governed_by_control:
+  - data_asset_id: DA-CARD-ACCOUNT
+    control_id: CTL-PCI-EVIDENCE
+  - data_asset_id: DA-CARD-ACCOUNT
+    control_id: CTL-RETENTION
+  - data_asset_id: DA-CUSTOMER-PROFILE
+    control_id: CTL-PRIV-REQ
+  - data_asset_id: DA-TRANSACTION
+    control_id: CTL-DAILY-RECON
+  - data_asset_id: DA-TRANSACTION
+    control_id: CTL-PCI-EVIDENCE
+  - data_asset_id: DA-CUST360-CURATED
+    control_id: CTL-MASK-NONPROD
+  - data_asset_id: DA-CUST360-CURATED
+    control_id: CTL-DQ-GATE
+
+data_subject_to_policy:
+  - data_asset_id: DA-CARD-ACCOUNT
+    policy_id: POL-PRIVACY
+  - data_asset_id: DA-CARD-ACCOUNT
+    policy_id: POL-RECORDS
+  - data_asset_id: DA-CUSTOMER-PROFILE
+    policy_id: POL-PRIVACY
+  - data_asset_id: DA-TRANSACTION
+    policy_id: POL-RECORDS
+  - data_asset_id: DA-CUST360-CURATED
+    policy_id: POL-PRIVACY
+  - data_asset_id: DA-DISPUTES-VENDOR-FEED
+    policy_id: POL-TPRM

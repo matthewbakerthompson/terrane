@@ -1,0 +1,82 @@
+# The kinds of application the organization builds, and the standard build of
+# each. Where build-types.yaml says what a product is made of, these say what
+# an application is made of: each requires the standard application kit from
+# 28_MODULES/applications.yaml and offers the components an application of
+# that kind may add. None has a shape of its own; each is assembled from its
+# parts against the landing zone of whichever cloud it lands on.
+
+- build_type_id: internal-tool
+  name: Internal tool
+  description: >
+    A web application staff use to operate something, behind workforce
+    sign-on rather than the public front door, with its own database.
+  requires: [internal-tool-baseline]
+  includes: []
+  offers: [scheduled-job, report-service, event-publisher, notification-service, search-index,
+           object-store, operator-role, operator-access]
+
+- build_type_id: mobile-application
+  name: Mobile application
+  description: >
+    A product whose channel is an app in the stores, calling its API through
+    the shared gateway, with its own database.
+  requires: [mobile-app-baseline]
+  includes: []
+  offers: [web-channel, public-web-entry, event-publisher, async-worker, notification-service,
+           search-index, object-store]
+
+- build_type_id: event-driven-service
+  name: Event-driven service
+  description: >
+    A service that consumes another system's events, does the work in a
+    worker, and publishes its own events for whoever is next.
+  requires: [event-service-baseline]
+  includes: []
+  offers: [relational-datastore, scheduled-job, notification-service, search-index]
+
+- build_type_id: batch-application
+  name: Batch application
+  description: >
+    Scheduled processing with a window and an external deadline, over its
+    own database, behind an API for whatever asks in between runs.
+  requires: [batch-app-baseline]
+  includes: []
+  offers: [object-store, report-service, event-publisher, notification-service]
+
+- build_type_id: integration-adapter
+  name: Integration adapter
+  description: >
+    Our side of an integration with a partner system we neither run nor
+    bought as a product: an adapter that owns the mapping, retry and
+    credentials.
+  requires: [adapter-baseline]
+  includes: []
+  offers: [event-publisher, scheduled-job, relational-datastore]
+
+- build_type_id: ai-service
+  name: AI inference service
+  description: >
+    A service that calls foundation models on the organization's behalf,
+    with the prompts, retrieval, guardrails and audit log in one place.
+  requires: [ml-service-baseline]
+  includes: []
+  offers: [event-consumer, async-worker, relational-datastore, object-store, search-index]
+
+- build_type_id: reporting-application
+  name: Reporting application
+  description: >
+    Reports and extracts over an operational database, behind an API and out
+    of the transaction path.
+  requires: [reporting-baseline]
+  includes: []
+  offers: [scheduled-job, admin-console, search-index]
+
+- build_type_id: web-application
+  name: Web application
+  description: >
+    A browser front end behind the public front door, the API behind it,
+    and its own database. The plainest thing the organization builds.
+  requires: [web-app-baseline]
+  includes: []
+  offers: [mobile-channel, admin-console, scheduled-job, event-publisher, async-worker,
+           notification-service, search-index, report-service, object-store, operator-role, operator-access]

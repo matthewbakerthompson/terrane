@@ -1,0 +1,143 @@
+archetype_id: aws-product-onboarding
+title: AWS product onboarding
+version: 3.1.0
+applies_to: products
+# Patterns from 27_PATTERNS/ that every instance of this shape applies. The
+# modules below add their own.
+patterns: [workload-account-baseline]
+description: >
+  What onboarding a product onto the AWS landing zone actually creates. A
+  workload account is vended, the workload lands across four network tiers, and
+  the platform services it consumes are recorded rather than assumed.
+  Instantiating this is the architecture half of an onboarding ticket: it
+  produces the inventory, the placement and the integration points that
+  security, network and operations otherwise each ask for separately.
+
+  Version 3 is composed from modules on top of building blocks. The blocks say
+  what the landing zone provides and what the product gets of its own; the
+  modules are the parts of the product, each of which an instance can drop: a
+  product with no screens drops the web channel and the front door, a product
+  with no files drops the object store. 3.1 binds the landing zone by kind
+  where it named the sample's own AWS services by id.
+
+parameters:
+  - name: slug
+    required: true
+    description: Short lower-case token used in identifiers, e.g. lending
+  - name: product_name
+    required: true
+  - name: owner_org
+    required: true
+  - name: domain
+    required: true
+    description: Company domain, for the business-facing views
+  - name: account
+    required: true
+    description: Vended workload account alias, e.g. prod-lending
+  - name: region
+    default: eu-west-2
+  - name: criticality
+    default: High
+  - name: classification
+    default: Restricted
+  - name: resilience
+    default: Multi-AZ
+
+# The instance entity itself.
+defaults:
+  architecture_domain: Business
+  togaf_layer: Business
+  abstraction_level: Conceptual
+
+# Every block resolves against this cloud.
+provider: AWS
+
+# What every entity this shape creates has in common. A module's template
+# says only what makes its entities different.
+entity_defaults:
+  all:
+    # The product\'s own status. A shape cannot know whether its instance is
+    # planned or live; the first planned product on a shape that said
+    # `Active` here came out with four live systems.
+    status: "{status}"
+    company_domain: "{domain}"
+  systems:
+    tags: [aws, onboarding]
+    owner_org_id: "{owner_org}"
+    criticality: "{criticality}"
+    hosting: AWS
+    environment: Production
+    cloud_provider: AWS
+    cloud_account: "{account}"
+    region: "{region}"
+    deployment_unit: helm
+    resilience: "{resilience}"
+    data_classification_supported: "{classification}"
+    togaf_layer: Application
+    architecture_domain: Application
+    abstraction_level: Physical
+  interfaces:
+    owner_org_id: "{owner_org}"
+    protocol: HTTPS
+    direction: Outbound
+    frequency: Realtime
+    integration_style: Request-response
+    auth_method: IAM
+    data_classification: "{classification}"
+    togaf_layer: Application
+    architecture_domain: Application
+  offered_interfaces:
+    owner_org_id: "{owner_org}"
+    data_classification: "{classification}"
+    togaf_layer: Application
+    architecture_domain: Application
+  tech_services:
+    tags: [aws, onboarding]
+    owner_org_id: "{owner_org}"
+    cloud_provider: AWS
+    cloud_account: "{account}"
+    region: "{region}"
+    togaf_layer: Technology
+    architecture_domain: Technology
+
+# The infrastructure, as blocks. `bind` names what the landing zone already
+# provides, so nothing is created for it -- `landing-zone`, the service of
+# that kind the estate's AWS landing zone is tagged with; every other
+# component is created for this product and resolved to the AWS product the
+# component names.
+blocks:
+  - block: public-web-tier
+    bind:
+      cdn: landing-zone
+      load-balancer: landing-zone
+    # waf and dns: created per product. A WAF ruleset and a hostname are the
+    # product's own, and a shared one would be a shared blast radius.
+  - block: stateless-service
+    bind:
+      container-platform: landing-zone
+      observability: landing-zone
+    # cache: created per product.
+  - block: transactional-store
+    bind:
+      relational-db: landing-zone
+      kms: landing-zone
+    # backup: created per product, because the recovery objective is.
+
+# The parts of the product. Each runs on the blocks above.
+modules:
+  - module: api-service
+    with:
+      uses: [secrets-manager, private-egress]
+  - module: web-channel
+  - module: public-web-entry
+  - module: async-worker
+  - module: relational-datastore
+  - module: object-store
+
+# What the parts do not already imply. The worker reads the operational data
+# the datastore module masters; drop either part and this row goes with it.
+relations:
+  system_reads_writes:
+    - system_id: "SYS-{slug|upper}-WORKER"
+      data_asset_id: "DA-{slug|upper}-OPERATIONAL"
+      operation: Read

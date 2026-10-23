@@ -1,0 +1,130 @@
+# Where the estate enforces the register.
+#
+# The HIPAA technical safeguards land on every system holding PHI: access
+# by role, the audit trail, encryption both ways. The patient safety
+# controls land where the safety check actually runs -- verification in
+# pharmacy, the scan in the EHR, the critical call from the lab, the
+# engine's queues -- which is the question a Joint Commission surveyor
+# asks of a system: show me where.
+#
+# Two gaps are left on purpose, as the sample leaves two. The clinical
+# warehouse's pipeline and semantic layer hold a copy of nearly everything
+# and record no control, which the gate says (`governance.no_control`). The
+# bed board holds names and locations and records none either; it is
+# Confidential, so nothing asks, which is the gap worth knowing about.
+
+system_governed_by_control:
+  - {system_id: SYS-EHR, control_id: CTL-RBAC}
+  - {system_id: SYS-EHR, control_id: CTL-ACCESS-AUDIT}
+  - {system_id: SYS-EHR, control_id: CTL-BREAK-GLASS}
+  - {system_id: SYS-EHR, control_id: CTL-ENCRYPT-REST}
+  - {system_id: SYS-EHR, control_id: CTL-BACKUP-DR}
+  - {system_id: SYS-EHR, control_id: CTL-PATIENT-ID}
+  - {system_id: SYS-EHR, control_id: CTL-BCMA}
+  - {system_id: SYS-EHR, control_id: CTL-ACCESS-CERT}
+  - {system_id: SYS-PHARMACY, control_id: CTL-PHARM-VERIFY}
+  - {system_id: SYS-PHARMACY, control_id: CTL-RBAC}
+  - {system_id: SYS-DEVICE-GW, control_id: CTL-PATIENT-ID}
+  - {system_id: SYS-DEVICE-GW, control_id: CTL-ENCRYPT-TRANSIT}
+  - {system_id: SYS-LIS, control_id: CTL-CRITICAL-RESULTS}
+  - {system_id: SYS-LIS, control_id: CTL-PATIENT-ID}
+  - {system_id: SYS-LIS, control_id: CTL-RBAC}
+  - {system_id: SYS-RIS, control_id: CTL-CRITICAL-RESULTS}
+  - {system_id: SYS-RIS, control_id: CTL-RBAC}
+  - {system_id: SYS-PACS, control_id: CTL-RBAC}
+  - {system_id: SYS-PACS, control_id: CTL-ENCRYPT-REST}
+  - {system_id: SYS-VNA, control_id: CTL-RETENTION}
+  - {system_id: SYS-VNA, control_id: CTL-ENCRYPT-REST}
+  - {system_id: SYS-VNA, control_id: CTL-BACKUP-DR}
+  - {system_id: SYS-ONCOLOGY, control_id: CTL-RBAC}
+  - {system_id: SYS-ONCOLOGY, control_id: CTL-PHARM-VERIFY}
+  - {system_id: SYS-TUMOR-REGISTRY, control_id: CTL-REGISTRY-TIMELINESS}
+  - {system_id: SYS-TUMOR-REGISTRY, control_id: CTL-BA-DUE-DILIGENCE}
+  - {system_id: SYS-INTERFACE-ENGINE, control_id: CTL-INTERFACE-MONITOR}
+  - {system_id: SYS-INTERFACE-ENGINE, control_id: CTL-ENCRYPT-TRANSIT}
+  - {system_id: SYS-INTERFACE-ENGINE, control_id: CTL-MIN-NECESSARY}
+  - {system_id: SYS-FHIR-SERVER, control_id: CTL-PATIENT-API}
+  - {system_id: SYS-FHIR-SERVER, control_id: CTL-ACCESS-AUDIT}
+  - {system_id: SYS-FHIR-SERVER, control_id: CTL-ENCRYPT-TRANSIT}
+  - {system_id: SYS-EMPI, control_id: CTL-PATIENT-ID}
+  - {system_id: SYS-EMPI, control_id: CTL-RBAC}
+  # Outside the walls: what Thurman controls is what it sends and to whom.
+  - {system_id: SYS-REGIONAL-HIE, control_id: CTL-MIN-NECESSARY}
+  - {system_id: SYS-REGIONAL-HIE, control_id: CTL-BA-DUE-DILIGENCE}
+  - {system_id: SYS-REFERENCE-LAB, control_id: CTL-BA-DUE-DILIGENCE}
+  - {system_id: SYS-PATIENT-ACCOUNTING, control_id: CTL-RBAC}
+  - {system_id: SYS-PATIENT-ACCOUNTING, control_id: CTL-MIN-NECESSARY}
+  - {system_id: SYS-CLINICAL-INGEST, control_id: CTL-ENCRYPT-REST}
+  - {system_id: SYS-CLINICAL-INGEST, control_id: CTL-ACCESS-CERT}
+  - {system_id: SYS-SIEM, control_id: CTL-ACCESS-AUDIT}
+  - {system_id: SYS-SIEM, control_id: CTL-BREACH-ASSESS}
+  # The products' systems. The vendor parts bring due diligence with them;
+  # what a health system adds is encryption on the way out.
+  - {system_id: SYS-PORTAL-API, control_id: CTL-RBAC}
+  - {system_id: SYS-PORTAL-API, control_id: CTL-ACCESS-AUDIT}
+  - {system_id: SYS-PORTAL-WEB, control_id: CTL-ENCRYPT-TRANSIT}
+  - {system_id: SYS-PORTAL-STORE, control_id: CTL-ENCRYPT-REST}
+  - {system_id: SYS-CLAIMS-GATEWAY, control_id: CTL-MIN-NECESSARY}
+  - {system_id: SYS-CLAIMS-EGRESS, control_id: CTL-ENCRYPT-TRANSIT}
+  - {system_id: SYS-TELEHEALTH-GATEWAY, control_id: CTL-MIN-NECESSARY}
+  - {system_id: SYS-TELEHEALTH-EGRESS, control_id: CTL-ENCRYPT-TRANSIT}
+  # Nothing for the warehouse's pipeline and semantic layer: the second gap.
+
+system_subject_to_policy:
+  - {system_id: SYS-EHR, policy_id: POL-PRIVACY}
+  - {system_id: SYS-EHR, policy_id: POL-INFOSEC}
+  - {system_id: SYS-EHR, policy_id: POL-PATIENT-SAFETY}
+  - {system_id: SYS-EHR, policy_id: POL-RECORDS}
+  - {system_id: SYS-FHIR-SERVER, policy_id: POL-INTEROP}
+  - {system_id: SYS-FHIR-SERVER, policy_id: POL-PRIVACY}
+  - {system_id: SYS-INTERFACE-ENGINE, policy_id: POL-INFOSEC}
+  - {system_id: SYS-INTERFACE-ENGINE, policy_id: POL-PATIENT-SAFETY}
+  - {system_id: SYS-REGIONAL-HIE, policy_id: POL-INTEROP}
+  - {system_id: SYS-REGIONAL-HIE, policy_id: POL-BUSINESS-ASSOCIATES}
+  - {system_id: SYS-REFERENCE-LAB, policy_id: POL-BUSINESS-ASSOCIATES}
+  - {system_id: SYS-TUMOR-REGISTRY, policy_id: POL-PUBLIC-HEALTH}
+  - {system_id: SYS-TUMOR-REGISTRY, policy_id: POL-BUSINESS-ASSOCIATES}
+  - {system_id: SYS-PHARMACY, policy_id: POL-PATIENT-SAFETY}
+  - {system_id: SYS-LIS, policy_id: POL-PATIENT-SAFETY}
+  - {system_id: SYS-VNA, policy_id: POL-RECORDS}
+  - {system_id: SYS-SIEM, policy_id: POL-BREACH}
+  - {system_id: SYS-PORTAL-API, policy_id: POL-PRIVACY}
+  - {system_id: SYS-BED-MGMT, policy_id: POL-BUSINESS-ASSOCIATES}
+  - {system_id: SYS-ERP, policy_id: POL-INFOSEC}
+
+data_governed_by_control:
+  - {data_asset_id: DA-PATIENT-IDENTITY, control_id: CTL-PATIENT-ID}
+  - {data_asset_id: DA-PATIENT-IDENTITY, control_id: CTL-RBAC}
+  - {data_asset_id: DA-ENCOUNTER, control_id: CTL-ACCESS-AUDIT}
+  - {data_asset_id: DA-PROBLEM-LIST, control_id: CTL-ACCESS-AUDIT}
+  - {data_asset_id: DA-PROBLEM-LIST, control_id: CTL-MIN-NECESSARY}
+  - {data_asset_id: DA-CLINICAL-ORDER, control_id: CTL-PATIENT-ID}
+  - {data_asset_id: DA-MEDICATION-ORDER, control_id: CTL-PHARM-VERIFY}
+  - {data_asset_id: DA-MED-ADMIN, control_id: CTL-BCMA}
+  - {data_asset_id: DA-LAB-RESULT, control_id: CTL-CRITICAL-RESULTS}
+  - {data_asset_id: DA-LAB-RESULT, control_id: CTL-ACCESS-AUDIT}
+  - {data_asset_id: DA-IMAGING-STUDY, control_id: CTL-ENCRYPT-REST}
+  - {data_asset_id: DA-IMAGING-STUDY, control_id: CTL-RETENTION}
+  - {data_asset_id: DA-IMAGING-REPORT, control_id: CTL-CRITICAL-RESULTS}
+  - {data_asset_id: DA-CARE-SUMMARY, control_id: CTL-MIN-NECESSARY}
+  - {data_asset_id: DA-CARE-SUMMARY, control_id: CTL-ENCRYPT-TRANSIT}
+  - {data_asset_id: DA-TREATMENT-PLAN, control_id: CTL-PHARM-VERIFY}
+  - {data_asset_id: DA-CANCER-CASE, control_id: CTL-REGISTRY-TIMELINESS}
+  - {data_asset_id: DA-CLAIM, control_id: CTL-MIN-NECESSARY}
+  - {data_asset_id: DA-CHARGE, control_id: CTL-RETENTION}
+  - {data_asset_id: DA-ACCESS-AUDIT, control_id: CTL-ACCESS-AUDIT}
+  - {data_asset_id: DA-ACCESS-AUDIT, control_id: CTL-RETENTION}
+  - {data_asset_id: DA-VITAL-SIGNS, control_id: CTL-PATIENT-ID}
+
+data_subject_to_policy:
+  - {data_asset_id: DA-PATIENT-IDENTITY, policy_id: POL-PRIVACY}
+  - {data_asset_id: DA-ENCOUNTER, policy_id: POL-PRIVACY}
+  - {data_asset_id: DA-PROBLEM-LIST, policy_id: POL-PRIVACY}
+  - {data_asset_id: DA-LAB-RESULT, policy_id: POL-PRIVACY}
+  - {data_asset_id: DA-LAB-RESULT, policy_id: POL-PATIENT-SAFETY}
+  - {data_asset_id: DA-IMAGING-STUDY, policy_id: POL-RECORDS}
+  - {data_asset_id: DA-CARE-SUMMARY, policy_id: POL-INTEROP}
+  - {data_asset_id: DA-CANCER-CASE, policy_id: POL-PUBLIC-HEALTH}
+  - {data_asset_id: DA-MED-ADMIN, policy_id: POL-PATIENT-SAFETY}
+  - {data_asset_id: DA-CLAIM, policy_id: POL-PRIVACY}
+  - {data_asset_id: DA-ACCESS-AUDIT, policy_id: POL-BREACH}

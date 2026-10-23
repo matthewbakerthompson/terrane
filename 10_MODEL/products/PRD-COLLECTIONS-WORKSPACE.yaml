@@ -1,0 +1,50 @@
+# The last candidate on the Azure side: the Azure digital shape without its
+# event publisher, because an agent workspace for arrears treatment
+# publishes nothing onto the enterprise bus. The slug `collect` makes the
+# ids the estate had, so the controls on the API, the agents' flows and the
+# processes that name it did not change; the publisher is done without as a
+# part, and what the shape's defaults get wrong about a live internal tool
+# is overrides. The two interfaces to identity and the ledger are the
+# product's own and stay beside this file.
+product_id: PRD-COLLECTIONS-WORKSPACE
+name: Collections Workspace
+description: Agent workspace for arrears treatment and payment arrangements.
+status: Active
+owner_org_id: ORG-COLLECTIONS
+criticality: Medium
+product_category: Internal application
+company_domain: Collections
+
+build_type: digital-product
+archetype: azure-digital-product
+parameters:
+  slug: collect
+  product_name: Collections Workspace
+  owner_org: ORG-COLLECTIONS
+  domain: Collections
+  account: azure-cards-prod
+  region: uksouth
+  criticality: Medium
+  classification: Restricted
+
+without: [event-publisher]
+
+# Patterns from 27_PATTERNS/ this product applies beyond its shape's.
+patterns: [stateless-request-service, shared-database-integration,
+           contact-center-integration, customer-communication-archive]
+
+overrides:
+  SYS-COLLECT-API:
+    description: The service behind the Collections Workspace API, backing the channel.
+    tags: [digital, service]
+  SYS-COLLECT-WEB:
+    description: Browser front end for Collections Workspace.
+    tags: [digital, customer-facing]
+  SYS-COLLECT-STORE:
+    name: Collections Workspace Datastore
+    description: Operational datastore owned by Collections Workspace.
+    tags: [digital, datastore]
+  INT-COLLECT-API-STORE:
+    name: Collections Workspace Service to Datastore
+  DA-COLLECT-OPERATIONAL:
+    tags: [digital]

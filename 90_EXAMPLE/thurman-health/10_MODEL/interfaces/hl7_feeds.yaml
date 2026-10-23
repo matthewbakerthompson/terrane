@@ -1,0 +1,367 @@
+# The HL7 v2 feeds, every one through the interface engine.
+#
+# Hub and spoke, which is how nearly every hospital is wired: a
+# departmental system has one connection, to the engine, and the engine
+# fans an admission out to everything that needs to know. Each feed is one
+# direction of one message family, because that is how they are built,
+# monitored and broken. MLLP over TLS inside the data center, so each is of
+# Thurman's own `hl7v2-feed` kind (library/24_CONNECTIONS/). The nine into
+# the engine go through the one listener it offers, OI-ENGINE-MLLP: one
+# door, nine feeds, drawn meeting at it.
+
+# --- out of the EHR -------------------------------------------------------------
+
+- interface_id: INT-EHR-ENGINE-ADT
+  name: EHR to Engine, ADT
+  description: Admissions, discharges, transfers and registration updates, as they happen.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Interoperability
+  source_system_id: SYS-EHR
+  target_system_id: SYS-INTERFACE-ENGINE
+  offered_interface_id: OI-ENGINE-MLLP
+  owner_org_id: ORG-INTEGRATION
+  protocol: MLLP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+- interface_id: INT-EHR-ENGINE-ORDERS
+  name: EHR to Engine, orders
+  description: Lab, imaging and medication orders, routed to the system that fills each.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Interoperability
+  source_system_id: SYS-EHR
+  target_system_id: SYS-INTERFACE-ENGINE
+  offered_interface_id: OI-ENGINE-MLLP
+  owner_org_id: ORG-INTEGRATION
+  protocol: MLLP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+- interface_id: INT-EHR-ENGINE-CHARGES
+  name: EHR to Engine, charges
+  description: Charges dropped as services are documented.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Revenue Cycle
+  source_system_id: SYS-EHR
+  target_system_id: SYS-INTERFACE-ENGINE
+  offered_interface_id: OI-ENGINE-MLLP
+  owner_org_id: ORG-INTEGRATION
+  protocol: MLLP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+# --- into the EHR ------------------------------------------------------------------
+
+- interface_id: INT-ENGINE-EHR-RESULTS
+  name: Engine to EHR, results
+  description: Lab results, signed radiology reports and validated device readings, filed to the chart.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Interoperability
+  source_system_id: SYS-INTERFACE-ENGINE
+  target_system_id: SYS-EHR
+  owner_org_id: ORG-INTEGRATION
+  protocol: MLLP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+# --- the departmental systems --------------------------------------------------------
+
+- interface_id: INT-ENGINE-LIS-ORDERS
+  name: Engine to LIS, lab orders
+  description: Lab orders, with the specimen and priority.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Diagnostics
+  source_system_id: SYS-INTERFACE-ENGINE
+  target_system_id: SYS-LIS
+  owner_org_id: ORG-INTEGRATION
+  protocol: MLLP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+- interface_id: INT-LIS-ENGINE-RESULTS
+  name: LIS to Engine, lab results
+  description: Verified results, corrected results and critical flags.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Diagnostics
+  source_system_id: SYS-LIS
+  target_system_id: SYS-INTERFACE-ENGINE
+  offered_interface_id: OI-ENGINE-MLLP
+  owner_org_id: ORG-INTEGRATION
+  protocol: MLLP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+- interface_id: INT-ENGINE-RIS-ORDERS
+  name: Engine to RIS, imaging orders
+  description: Imaging orders, which become the modality worklist.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Diagnostics
+  source_system_id: SYS-INTERFACE-ENGINE
+  target_system_id: SYS-RIS
+  owner_org_id: ORG-INTEGRATION
+  protocol: MLLP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+- interface_id: INT-RIS-ENGINE-REPORTS
+  name: RIS to Engine, radiology reports
+  description: Signed and addended reports.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Diagnostics
+  source_system_id: SYS-RIS
+  target_system_id: SYS-INTERFACE-ENGINE
+  offered_interface_id: OI-ENGINE-MLLP
+  owner_org_id: ORG-INTEGRATION
+  protocol: MLLP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+- interface_id: INT-ENGINE-PHARMACY-ORDERS
+  name: Engine to Pharmacy, medication orders
+  description: Medication orders for verification, and the patient's allergies and weight with them.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Clinical Care
+  source_system_id: SYS-INTERFACE-ENGINE
+  target_system_id: SYS-PHARMACY
+  owner_org_id: ORG-INTEGRATION
+  protocol: MLLP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+- interface_id: INT-PHARMACY-ENGINE-DISPENSE
+  name: Pharmacy to Engine, verification and dispense
+  description: The pharmacist's verification and each dispense, back to the medication record.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Clinical Care
+  source_system_id: SYS-PHARMACY
+  target_system_id: SYS-INTERFACE-ENGINE
+  offered_interface_id: OI-ENGINE-MLLP
+  owner_org_id: ORG-INTEGRATION
+  protocol: MLLP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+- interface_id: INT-ENGINE-ONCOLOGY
+  name: Engine to Oncology, patients and results
+  description: Registrations, encounters and lab results for the cancer center's patients, so a regimen is dosed on today's counts.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Oncology
+  source_system_id: SYS-INTERFACE-ENGINE
+  target_system_id: SYS-ONCOLOGY
+  owner_org_id: ORG-INTEGRATION
+  protocol: MLLP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+- interface_id: INT-ONCOLOGY-ENGINE
+  name: Oncology to Engine, treatment and charges
+  description: Treatment summaries for the chart and infusion charges for billing.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Oncology
+  source_system_id: SYS-ONCOLOGY
+  target_system_id: SYS-INTERFACE-ENGINE
+  offered_interface_id: OI-ENGINE-MLLP
+  owner_org_id: ORG-INTEGRATION
+  protocol: MLLP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+- interface_id: INT-ENGINE-EMPI-ADT
+  name: Engine to EMPI, registrations
+  description: Every registration, matched against the index as it arrives.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Interoperability
+  source_system_id: SYS-INTERFACE-ENGINE
+  target_system_id: SYS-EMPI
+  owner_org_id: ORG-INTEGRATION
+  protocol: MLLP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+- interface_id: INT-EMPI-ENGINE-MERGE
+  name: EMPI to Engine, merges and links
+  description: A merge or link worked by Health Information Management, sent on to every system that holds either record.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Interoperability
+  source_system_id: SYS-EMPI
+  target_system_id: SYS-INTERFACE-ENGINE
+  offered_interface_id: OI-ENGINE-MLLP
+  owner_org_id: ORG-INTEGRATION
+  protocol: MLLP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+- interface_id: INT-DEVICE-ENGINE-VITALS
+  name: Device Gateway to Engine, vitals
+  description: Device readings for the nurse to validate into the flowsheet.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Clinical Care
+  source_system_id: SYS-DEVICE-GW
+  target_system_id: SYS-INTERFACE-ENGINE
+  offered_interface_id: OI-ENGINE-MLLP
+  owner_org_id: ORG-CLIN-ENG
+  protocol: MLLP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+- interface_id: INT-ENGINE-BILLING
+  name: Engine to Patient Accounting, charges and ADT
+  description: Charges from the EHR and the cancer center, with the encounters they belong to.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Revenue Cycle
+  source_system_id: SYS-INTERFACE-ENGINE
+  target_system_id: SYS-PATIENT-ACCOUNTING
+  owner_org_id: ORG-INTEGRATION
+  protocol: MLLP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+- interface_id: INT-ENGINE-BED-ADT
+  name: Engine to Bed Board, ADT
+  description: Admissions, transfers and discharges for the bed board, over HTTPS to the vendor; names and locations only.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Clinical Care
+  source_system_id: SYS-INTERFACE-ENGINE
+  target_system_id: SYS-BED-MGMT
+  owner_org_id: ORG-INTEGRATION
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: OAuth2
+  data_classification: Confidential
+
+# --- outside the walls -------------------------------------------------------------------
+
+- interface_id: INT-LIS-REFLAB-ORDERS
+  name: LIS to Reference Lab, send-out orders
+  description: Tests the core lab does not run, over the site-to-site tunnel.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Diagnostics
+  source_system_id: SYS-LIS
+  target_system_id: SYS-REFERENCE-LAB
+  owner_org_id: ORG-LAB
+  protocol: MLLP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+- interface_id: INT-REFLAB-LIS-RESULTS
+  name: Reference Lab to LIS, results
+  description: Send-out results, verified in the LIS before they reach the chart.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Diagnostics
+  source_system_id: SYS-REFERENCE-LAB
+  target_system_id: SYS-LIS
+  owner_org_id: ORG-LAB
+  protocol: MLLP
+  direction: Inbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted
+
+- interface_id: INT-RIS-PACS-WORKLIST
+  name: RIS to PACS, study information
+  description: The order and patient for each study, so images arrive at the PACS already matched.
+  status: Active
+  togaf_layer: Application
+  architecture_domain: Application
+  company_domain: Diagnostics
+  source_system_id: SYS-RIS
+  target_system_id: SYS-PACS
+  owner_org_id: ORG-IMAGING
+  protocol: MLLP
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Event
+  auth_method: MutualTLS
+  data_classification: Restricted

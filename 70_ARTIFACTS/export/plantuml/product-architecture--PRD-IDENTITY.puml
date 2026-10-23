@@ -1,0 +1,114 @@
+@startuml
+' Customer Identity Service — Architecture
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Customer Identity Service — Architecture
+
+AddElementTag("offered_interfaces", $bgColor="#e6ecff", $borderColor="#6366f1", $fontColor="#0f172a", $legendText="offered interface")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("tech_services", $bgColor="#fed7aa", $borderColor="#c2410c", $fontColor="#0f172a", $legendText="technology service")
+AddRelTag("api-call", $legendText="API call")
+AddRelTag("event-over-https", $legendText="Event over HTTPS")
+
+Boundary(b_AWS, "AWS") {
+  Boundary(b_AWS__prod_lending, "account prod-lending") {
+    Boundary(b_AWS__prod_lending__Private_App, "Private-App") {
+      System(SYS_LENDING_API, "Installment Lending Service", "Domain service for Installment Lending, behind the Installment Lending API. Built with EKS · Installment Lending Cache.", $tags="systems")
+      ' aac SYS_LENDING_API: company_domain="Lending"; hosting="AWS"; technology="EKS · Installment Lending Cache"
+    }
+  }
+}
+Boundary(b_Azure, "Azure") {
+  Deployment_Node(TS_AZURE_APIM, "Azure API Management", "API gateway", "The API gateway every internal and partner API is published through.", $tags="tech_services") {
+    ' aac TS_AZURE_APIM: company_domain="Enterprise Platform"; technology="API gateway"
+  }
+  Deployment_Node(TS_AZURE_KEYVAULT, "Azure Key Vault", "Secrets manager", "Secret, key and certificate management.", $tags="tech_services") {
+    ' aac TS_AZURE_KEYVAULT: company_domain="Enterprise Platform"; technology="Secrets manager"
+  }
+  Deployment_Node(TS_AZURE_AKS, "Azure Kubernetes Service", "Container platform", "Managed Kubernetes hosting the containerized estate.", $tags="tech_services") {
+    ' aac TS_AZURE_AKS: company_domain="Enterprise Platform"; technology="Container platform"
+  }
+  Boundary(b_Azure__azure_cards_prod, "subscription azure-cards-prod") {
+    Boundary(b_Azure__azure_cards_prod__Private_App, "Private-App") {
+      System(SYS_CARDSVC_API, "Card Servicing Service", "The service behind the Card Servicing API, backing the channel. Built with AKS · Card Servicing Cache.", $tags="systems")
+      ' aac SYS_CARDSVC_API: company_domain="Servicing"; hosting="Azure"; technology="AKS · Card Servicing Cache"
+      System(SYS_COLLECT_API, "Collections Workspace Service", "The service behind the Collections Workspace API, backing the channel. Built with AKS · Collections Workspace Cache.", $tags="systems")
+      ' aac SYS_COLLECT_API: company_domain="Collections"; hosting="Azure"; technology="AKS · Collections Workspace Cache"
+    }
+  }
+  Boundary(b_Azure__azure_platform_prod, "subscription azure-platform-prod") {
+    Boundary(b_Azure__azure_platform_prod__Edge, "Edge") {
+      Deployment_Node(TS_IDENTITY_DNS, "Customer Identity Service DNS", "Azure DNS", "Name resolution and, in practice, the failover mechanism of last resort.", $tags="tech_services") {
+        ' aac TS_IDENTITY_DNS: company_domain="Enterprise Platform"; technology="Azure DNS"
+      }
+      Deployment_Node(TS_IDENTITY_WAF, "Customer Identity Service Web application firewall", "Azure WAF", "Request inspection at the edge. Blocks the traffic nobody wrote a test for.", $tags="tech_services") {
+        ' aac TS_IDENTITY_WAF: company_domain="Enterprise Platform"; technology="Azure WAF"
+      }
+    }
+    Boundary(b_Azure__azure_platform_prod__Shared_Services, "Shared-Services") {
+      System(OI_IDENTITY_API, "Customer Identity API", "Customer authentication and the profile behind it, for every product that signs a customer in. Built with HTTPS.", $tags="offered_interfaces")
+      ' aac OI_IDENTITY_API: company_domain="Enterprise Platform"; technology="HTTPS"
+      System(SYS_IDENTITY_SVC, "Customer Identity Service", "Shared platform service: Customer Identity Service. Built with AKS.", $tags="systems")
+      ' aac SYS_IDENTITY_SVC: company_domain="Enterprise Platform"; hosting="Azure"; technology="AKS"
+    }
+  }
+  Boundary(b_Azure__azure_risk_prod, "subscription azure-risk-prod") {
+    Boundary(b_Azure__azure_risk_prod__Public, "Public") {
+      System(SYS_IDV_WEBHOOKS, "Identity Document Verification Webhook Listener", "Receives Onfido callbacks, verifies their signature, and forwards the event. Public by necessity, small by design. Built with AKS.", $tags="systems")
+      ' aac SYS_IDV_WEBHOOKS: company_domain="Risk and Compliance"; hosting="Azure"; technology="AKS"
+    }
+    Boundary(b_Azure__azure_risk_prod__Private_App, "Private-App") {
+      System(SYS_IDV_GATEWAY, "Identity Document Verification Integration Gateway", "Our side of the Onfido integration: request mapping, retry and back-off, circuit breaking when the vendor is down, and the audit trail of what we sent them. Built with AKS.", $tags="systems")
+      ' aac SYS_IDV_GATEWAY: company_domain="Risk and Compliance"; hosting="Azure"; technology="AKS"
+    }
+  }
+}
+
+Rel(SYS_CARDSVC_API, OI_IDENTITY_API, "Card Servicing Service to Identity Service", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CARDSVC_API"; target="OI_IDENTITY_API"; label="Card Servicing Service to Identity Service"; interface_id="INT-CARDSVC-API-IDENTITY"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-IDENTITY-API"
+Rel(SYS_COLLECT_API, OI_IDENTITY_API, "Collections Service to Identity Service", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_COLLECT_API"; target="OI_IDENTITY_API"; label="Collections Service to Identity Service"; interface_id="INT-COLLECT-API-IDENTITY"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-IDENTITY-API"
+Rel(SYS_LENDING_API, OI_IDENTITY_API, "Installment Lending Service to Identity Service", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_LENDING_API"; target="OI_IDENTITY_API"; label="Installment Lending Service to Identity Service"; interface_id="INT-LENDING-API-IDENTITY"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-IDENTITY-API"
+Rel(SYS_IDENTITY_SVC, SYS_IDV_GATEWAY, "SYS-IDENTITY-SVC to Identity Document Verification Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_IDENTITY_SVC"; target="SYS_IDV_GATEWAY"; label="SYS-IDENTITY-SVC to Identity Document Verification Gateway"; interface_id="INT-IDV-CALLER-GATEWAY"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_IDV_WEBHOOKS, SYS_IDENTITY_SVC, "Identity Document Verification Webhook Listener to SYS-IDENTITY-SVC", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_IDV_WEBHOOKS"; target="SYS_IDENTITY_SVC"; label="Identity Document Verification Webhook Listener to SYS-IDENTITY-SVC"; interface_id="INT-IDV-WEBHOOKS-CONSUMER"; kind="event-over-https"; integration_style="Event"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_CARDSVC_API, TS_AZURE_APIM, "runs on")
+' aac rel: source="SYS_CARDSVC_API"; target="TS_AZURE_APIM"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_API, TS_AZURE_AKS, "runs on")
+' aac rel: source="SYS_CARDSVC_API"; target="TS_AZURE_AKS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_CARDSVC_API, TS_AZURE_KEYVAULT, "runs on")
+' aac rel: source="SYS_CARDSVC_API"; target="TS_AZURE_KEYVAULT"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_COLLECT_API, TS_AZURE_APIM, "runs on")
+' aac rel: source="SYS_COLLECT_API"; target="TS_AZURE_APIM"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_COLLECT_API, TS_AZURE_AKS, "runs on")
+' aac rel: source="SYS_COLLECT_API"; target="TS_AZURE_AKS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_COLLECT_API, TS_AZURE_KEYVAULT, "runs on")
+' aac rel: source="SYS_COLLECT_API"; target="TS_AZURE_KEYVAULT"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDENTITY_SVC, TS_IDENTITY_DNS, "runs on")
+' aac rel: source="SYS_IDENTITY_SVC"; target="TS_IDENTITY_DNS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDENTITY_SVC, TS_IDENTITY_WAF, "runs on")
+' aac rel: source="SYS_IDENTITY_SVC"; target="TS_IDENTITY_WAF"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDENTITY_SVC, TS_AZURE_APIM, "runs on")
+' aac rel: source="SYS_IDENTITY_SVC"; target="TS_AZURE_APIM"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDENTITY_SVC, TS_AZURE_AKS, "runs on")
+' aac rel: source="SYS_IDENTITY_SVC"; target="TS_AZURE_AKS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDENTITY_SVC, TS_AZURE_KEYVAULT, "runs on")
+' aac rel: source="SYS_IDENTITY_SVC"; target="TS_AZURE_KEYVAULT"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDV_GATEWAY, TS_AZURE_AKS, "runs on")
+' aac rel: source="SYS_IDV_GATEWAY"; target="TS_AZURE_AKS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDV_GATEWAY, TS_AZURE_APIM, "runs on")
+' aac rel: source="SYS_IDV_GATEWAY"; target="TS_AZURE_APIM"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDV_WEBHOOKS, TS_AZURE_APIM, "runs on")
+' aac rel: source="SYS_IDV_WEBHOOKS"; target="TS_AZURE_APIM"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDV_WEBHOOKS, TS_AZURE_AKS, "runs on")
+' aac rel: source="SYS_IDV_WEBHOOKS"; target="TS_AZURE_AKS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_IDV_GATEWAY, TS_AZURE_KEYVAULT, "runs on")
+' aac rel: source="SYS_IDV_GATEWAY"; target="TS_AZURE_KEYVAULT"; label="runs on"; relation="system_uses_tech_service"
+Rel(OI_IDENTITY_API, SYS_IDENTITY_SVC, "offered by")
+' aac rel: source="OI_IDENTITY_API"; target="SYS_IDENTITY_SVC"; label="offered by"; field="system_id"
+
+SHOW_LEGEND()
+@enduml

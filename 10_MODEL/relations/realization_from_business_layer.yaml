@@ -1,0 +1,292 @@
+# Which systems realize which capabilities, through the processes.
+#
+# Derived at import, never authored: a system a process uses in the Primary
+# role realizes every capability that process supports. Hand-authored
+# realizations live in `relations/imported_relations.yaml`; this file is the
+# business layer's answer, and where the two disagree the workshop decides.
+
+system_realizes_capability:
+  - system_id: SYS-AML
+    capability_id: CAP-RGOV-07
+  - system_id: SYS-APPFRAUD
+    capability_id: CAP-ORIG-03
+  - system_id: SYS-ARCHREPO
+    capability_id: CAP-DATA-07
+  - system_id: SYS-ARCHREPO
+    capability_id: CAP-RGOV-04
+  - system_id: SYS-ARCHREPO
+    capability_id: CAP-STRAT-02
+  - system_id: SYS-ARCHREPO
+    capability_id: CAP-STRAT-04
+  - system_id: SYS-ARCHREPO
+    capability_id: CAP-TECH-01
+  - system_id: SYS-ARCHREPO
+    capability_id: CAP-TECH-02
+  - system_id: SYS-ARCHREPO
+    capability_id: CAP-TECH-04
+  - system_id: SYS-ARCHREPO
+    capability_id: CAP-TECH-07
+  - system_id: SYS-ARCHREPO
+    capability_id: CAP-TPRM-01
+  - system_id: SYS-BUREAU-GW
+    capability_id: CAP-COLL-08
+  - system_id: SYS-CARD-FULFILL
+    capability_id: CAP-ORIG-07
+  - system_id: SYS-CARDSVC-WEB
+    capability_id: CAP-SERV-03
+  - system_id: SYS-CATALOG
+    capability_id: CAP-DATA-01
+  - system_id: SYS-CATALOG
+    capability_id: CAP-DATA-05
+  - system_id: SYS-CLIENT-PORTAL
+    capability_id: CAP-DATA-02
+  - system_id: SYS-CLIENT-PORTAL
+    capability_id: CAP-TPS-03
+  - system_id: SYS-COLLECT-API
+    capability_id: CAP-COLL-01
+  - system_id: SYS-COLLECT-API
+    capability_id: CAP-COLL-03
+  - system_id: SYS-COLLECT-API
+    capability_id: CAP-COLL-05
+  - system_id: SYS-COLLECT-API
+    capability_id: CAP-COLL-06
+  - system_id: SYS-COLLECT-API
+    capability_id: CAP-FIN-02
+  - system_id: SYS-COLLECT-API
+    capability_id: CAP-SERV-07
+  - system_id: SYS-CONTACT
+    capability_id: CAP-SERV-01
+  - system_id: SYS-CONTACT
+    capability_id: CAP-SERV-02
+  - system_id: SYS-CONTACT
+    capability_id: CAP-SERV-08
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-BILL-01
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-BILL-02
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-BILL-04
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-BILL-05
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-COLL-01
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-COLL-04
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-CRED-03
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-CRED-06
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-CRED-07
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-DATA-02
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-FIN-01
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-FIN-02
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-FIN-03
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-ORIG-05
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-ORIG-06
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-PART-02
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-PAY-01
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-PAY-02
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-PAY-05
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-PROD-01
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-PROD-02
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-PROD-05
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-SERV-02
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-TPS-01
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-TPS-02
+  - system_id: SYS-CREDIT-DATA
+    capability_id: CAP-ACQ-02
+  - system_id: SYS-CREDIT-DATA
+    capability_id: CAP-ACQ-04
+  - system_id: SYS-CREDIT-DATA
+    capability_id: CAP-CRED-04
+  - system_id: SYS-CRM
+    capability_id: CAP-RGOV-06
+  - system_id: SYS-CRM
+    capability_id: CAP-SERV-05
+  - system_id: SYS-CRM
+    capability_id: CAP-SERV-06
+  - system_id: SYS-DATA-INGEST
+    capability_id: CAP-ACQ-05
+  - system_id: SYS-DATA-INGEST
+    capability_id: CAP-CRED-04
+  - system_id: SYS-DATA-INGEST
+    capability_id: CAP-DATA-02
+  - system_id: SYS-DATA-INGEST
+    capability_id: CAP-DATA-03
+  - system_id: SYS-DATA-INGEST
+    capability_id: CAP-FIN-02
+  - system_id: SYS-DATA-INGEST
+    capability_id: CAP-FIN-04
+  - system_id: SYS-DATA-INGEST
+    capability_id: CAP-PAY-05
+  - system_id: SYS-DATA-INGEST
+    capability_id: CAP-STRAT-05
+  - system_id: SYS-DIALER
+    capability_id: CAP-COLL-02
+  - system_id: SYS-DIALER
+    capability_id: CAP-COLL-07
+  - system_id: SYS-DISPUTES-SAAS
+    capability_id: CAP-FRAUD-02
+  - system_id: SYS-DISPUTES-SAAS
+    capability_id: CAP-FRAUD-03
+  - system_id: SYS-DISPUTES-SAAS
+    capability_id: CAP-FRAUD-04
+  - system_id: SYS-DISPUTES-SAAS
+    capability_id: CAP-FRAUD-05
+  - system_id: SYS-DISPUTES-SAAS
+    capability_id: CAP-FRAUD-06
+  - system_id: SYS-DISPUTES-SAAS
+    capability_id: CAP-FRAUD-07
+  - system_id: SYS-DISPUTES-SAAS
+    capability_id: CAP-SERV-04
+  - system_id: SYS-DOC
+    capability_id: CAP-COLL-07
+  - system_id: SYS-DOC
+    capability_id: CAP-DATA-07
+  - system_id: SYS-DOC
+    capability_id: CAP-ORIG-05
+  - system_id: SYS-DOC
+    capability_id: CAP-PROD-03
+  - system_id: SYS-DOC
+    capability_id: CAP-SERV-04
+  - system_id: SYS-FRAUD-DETECT
+    capability_id: CAP-FRAUD-01
+  - system_id: SYS-GL
+    capability_id: CAP-FIN-01
+  - system_id: SYS-GL
+    capability_id: CAP-FIN-02
+  - system_id: SYS-GL
+    capability_id: CAP-FIN-05
+  - system_id: SYS-GL
+    capability_id: CAP-TPS-04
+  - system_id: SYS-GRC
+    capability_id: CAP-PART-01
+  - system_id: SYS-GRC
+    capability_id: CAP-RGOV-02
+  - system_id: SYS-GRC
+    capability_id: CAP-RGOV-03
+  - system_id: SYS-GRC
+    capability_id: CAP-RGOV-04
+  - system_id: SYS-GRC
+    capability_id: CAP-RGOV-05
+  - system_id: SYS-GRC
+    capability_id: CAP-RGOV-06
+  - system_id: SYS-GRC
+    capability_id: CAP-SEC-04
+  - system_id: SYS-GRC
+    capability_id: CAP-SEC-05
+  - system_id: SYS-GRC
+    capability_id: CAP-TPRM-01
+  - system_id: SYS-GRC
+    capability_id: CAP-TPRM-02
+  - system_id: SYS-GRC
+    capability_id: CAP-TPRM-03
+  - system_id: SYS-GRC
+    capability_id: CAP-TPRM-04
+  - system_id: SYS-GRC
+    capability_id: CAP-TPS-05
+  - system_id: SYS-IAM
+    capability_id: CAP-FRAUD-06
+  - system_id: SYS-IAM
+    capability_id: CAP-SEC-01
+  - system_id: SYS-ITSM
+    capability_id: CAP-SEC-02
+  - system_id: SYS-ITSM
+    capability_id: CAP-SEC-03
+  - system_id: SYS-ITSM
+    capability_id: CAP-TECH-01
+  - system_id: SYS-ITSM
+    capability_id: CAP-TECH-03
+  - system_id: SYS-ITSM
+    capability_id: CAP-TECH-05
+  - system_id: SYS-ITSM
+    capability_id: CAP-TECH-06
+  - system_id: SYS-KYC
+    capability_id: CAP-ORIG-02
+  - system_id: SYS-KYC
+    capability_id: CAP-RGOV-07
+  - system_id: SYS-MARKETING
+    capability_id: CAP-ACQ-03
+  - system_id: SYS-MODEL
+    capability_id: CAP-CRED-02
+  - system_id: SYS-MODEL
+    capability_id: CAP-CRED-05
+  - system_id: SYS-MODEL
+    capability_id: CAP-DATA-06
+  - system_id: SYS-MODEL
+    capability_id: CAP-RGOV-08
+  - system_id: SYS-OBSERV
+    capability_id: CAP-TECH-04
+  - system_id: SYS-OBSERV
+    capability_id: CAP-TECH-08
+  - system_id: SYS-ORIG-DECISION
+    capability_id: CAP-CRED-01
+  - system_id: SYS-ORIG-DECISION
+    capability_id: CAP-CRED-03
+  - system_id: SYS-ORIG-DECISION
+    capability_id: CAP-ORIG-01
+  - system_id: SYS-ORIG-DECISION
+    capability_id: CAP-ORIG-04
+  - system_id: SYS-PAYMENT-GW
+    capability_id: CAP-PAY-03
+  - system_id: SYS-PAYMENT-GW
+    capability_id: CAP-PAY-04
+  - system_id: SYS-PROSPECT-DATA
+    capability_id: CAP-ACQ-01
+  - system_id: SYS-RECON
+    capability_id: CAP-FIN-06
+  - system_id: SYS-RECON
+    capability_id: CAP-PAY-06
+  - system_id: SYS-REWARDS
+    capability_id: CAP-BILL-04
+  - system_id: SYS-REWARDS
+    capability_id: CAP-FIN-02
+  - system_id: SYS-SCM
+    capability_id: CAP-SEC-03
+  - system_id: SYS-SCM
+    capability_id: CAP-TECH-01
+  - system_id: SYS-SCM
+    capability_id: CAP-TECH-04
+  - system_id: SYS-STATEMENTS
+    capability_id: CAP-BILL-03
+  - system_id: SYS-TESTMGMT
+    capability_id: CAP-SEC-04
+  - system_id: SYS-TESTMGMT
+    capability_id: CAP-TECH-02
+  - system_id: SYS-TESTMGMT
+    capability_id: CAP-TECH-04
+  - system_id: SYS-TESTMGMT
+    capability_id: CAP-TECH-08
+  - system_id: SYS-TOKEN
+    capability_id: CAP-ORIG-08
+  - system_id: SYS-TOKEN
+    capability_id: CAP-PAY-07
+  - system_id: SYS-TREASURY
+    capability_id: CAP-FIN-03
+  - system_id: SYS-WORKTRACK
+    capability_id: CAP-STRAT-04
+  - system_id: SYS-WORKTRACK
+    capability_id: CAP-TECH-01
+  - system_id: SYS-WORKTRACK
+    capability_id: CAP-TECH-04
+  - system_id: SYS-WORKTRACK
+    capability_id: CAP-TECH-08
+  - system_id: SYS-WORKTRACK
+    capability_id: CAP-TPS-06

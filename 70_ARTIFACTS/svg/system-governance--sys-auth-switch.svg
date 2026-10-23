@@ -1,0 +1,182 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="657" viewBox="0 0 1100 657" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Authorization Switch — Governance</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Authorization Switch — Governance</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   10 nodes · 12 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One system and everything that governs it: the controls it enforces, the policies it is subject to, and the controls that apply through the capabilities it realizes. A</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">control reached only through a capability means either the system enforces it and nobody recorded that, or it is enforced somewhere else.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(31 110)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="281.72" y="221.3" width="212.57" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="323.72" y="238.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Control">
+<rect x="544.3" y="37.3" width="211.4" height="383.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="577.15" y="54.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Control</text>
+</g>
+<g class="boundary" data-id="grp::Policy">
+<rect x="806.3" y="37.3" width="221.4" height="383.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="836.1" y="54.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Policy</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="10.3" y="217.3" width="221.4" height="111.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="40.1" y="234.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::SYS-AUTH-SWITCH::CTL-AUTH-AVAIL">
+<title>enforces</title>
+<path d="M206 283 L235 283 L251 283 A10 10 0 0 1 261 293 L261 362.01 A10 10 0 0 0 270.99 372.01 L540.99 372.33 A10 10 0 0 0 541.01 372.33 L566.48 372.33" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M570 372.33 L560.43 377.12 L560.43 367.55 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::SYS-AUTH-SWITCH::CTL-AUTH-AVAIL">
+<rect x="364.58" y="349.5" width="46.84" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="388" y="361.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">enforces</text>
+</g>
+<g class="edge" data-id="e1::SYS-AUTH-SWITCH::CTL-PCI-EVIDENCE">
+<title>enforces</title>
+<path d="M206 263 L235 263 L251 263 A10 10 0 0 0 261 253 L261 107 A10 10 0 0 1 271 97 L541 97 L566.48 97" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M570 97 L560.43 101.78 L560.43 92.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::SYS-AUTH-SWITCH::CTL-PCI-EVIDENCE">
+<rect x="364.58" y="103.5" width="46.84" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="388" y="115.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">enforces</text>
+</g>
+<g class="edge" data-id="e2::SYS-AUTH-SWITCH::CAP-PAY">
+<title>realizes</title>
+<path d="M206 273 L235 273 L279 273 L304.48 273" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M308 273 L298.43 277.79 L298.43 268.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e3::CAP-PAY::CTL-AUTH-AVAIL">
+<title>governed by</title>
+<path d="M468 286 L497 286 L505 286 A8 8 0 0 1 513 294 L513 339.88 A10 10 0 0 0 523.12 349.88 L540.94 349.67 A10 10 0 0 1 541.06 349.67 L566.48 349.67" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M570 349.67 L560.43 354.45 L560.43 344.88 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e4::CAP-PAY::CTL-DAILY-RECON">
+<title>governed by</title>
+<path d="M468 273 L497 273 L541 273 L566.48 273" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M570 273 L560.43 277.79 L560.43 268.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e5::CAP-PAY::CTL-PMT-POSTING">
+<title>governed by</title>
+<path d="M468 260 L497 260 L505 260 A8 8 0 0 0 513 252 L513 195 A10 10 0 0 1 523 185 L541 185 L566.48 185" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M570 185 L560.43 189.78 L560.43 180.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e6::SYS-AUTH-SWITCH::POL-INFOSEC">
+<title>subject to</title>
+<path d="M206 253 L235 253 L243 253 A8 8 0 0 0 251 245 L251 22 A10 10 0 0 1 261 12 L388 12 L650 12 L765 12 A10 10 0 0 1 775 22 L775 75.88 A10 10 0 0 0 785.12 85.88 L802.94 85.67 A10 10 0 0 1 803.06 85.67 L828.48 85.67" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M832 85.67 L822.43 90.45 L822.43 80.88 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e7::SYS-AUTH-SWITCH::POL-CHANGE">
+<title>subject to</title>
+<path d="M206 293 L235 293 L243 293 A8 8 0 0 1 251 301 L251 421 A10 10 0 0 0 261 431 L388 431 L650 431 L765 431 A10 10 0 0 0 775 421 L775 382.12 A10 10 0 0 1 785.12 372.12 L802.94 372.33 A10 10 0 0 0 803.06 372.33 L828.48 372.33" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M832 372.33 L822.43 377.12 L822.43 367.55 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e8::CTL-AUTH-AVAIL::POL-CHANGE">
+<title>gives effect to</title>
+<path d="M730 361 L759 361 L769.5 361 A5.5 5.5 0 0 0 775 355.5 L775 355.5 A5.57 5.57 0 0 1 780.5 349.93 L802.94 349.67 A10 10 0 0 1 803.06 349.67 L828.48 349.67" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M832 349.67 L822.43 354.45 L822.43 344.88 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e9::CTL-DAILY-RECON::POL-RECORDS">
+<title>gives effect to</title>
+<path d="M730 273 L759 273 L803 273 L828.48 273" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M832 273 L822.43 277.79 L822.43 268.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e10::CTL-PCI-EVIDENCE::POL-INFOSEC">
+<title>gives effect to</title>
+<path d="M730 97 L759 97 L769.5 97 A5.5 5.5 0 0 1 775 102.5 L775 102.5 A5.57 5.57 0 0 0 780.5 108.07 L802.94 108.33 A10 10 0 0 0 803.06 108.33 L828.48 108.33" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M832 108.33 L822.43 113.12 L822.43 103.55 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e11::CTL-PMT-POSTING::POL-ERROR-RES">
+<title>gives effect to</title>
+<path d="M730 185 L759 185 L803 185 L828.48 185" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/>
+<path d="M832 185 L822.43 189.78 L822.43 180.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-PAY" data-type="capabilities">
+<title>Payments &amp; Transaction Processing</title>
+<path d="M348 247 L308 273 L348 299 L428 299 L468 273 L428 247 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="388" y="265.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Payments &amp;</text>
+<text x="388" y="277.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Transaction</text>
+<text x="388" y="289.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Processing</text>
+</g>
+<g class="node" data-id="CTL-AUTH-AVAIL" data-type="controls">
+<title>Authorization availability and stand-in</title>
+<path d="M616.86 327 L570 346.92 L570 375.08 L616.86 395 L683.14 395 L730 375.08 L730 346.92 L683.14 327 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="650" y="353.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Authorization</text>
+<text x="650" y="365.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">availability and</text>
+<text x="650" y="377.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">stand-in</text>
+</g>
+<g class="node" data-id="CTL-DAILY-RECON" data-type="controls">
+<title>Daily settlement and clearing reconciliation</title>
+<path d="M616.86 239 L570 258.92 L570 287.08 L616.86 307 L683.14 307 L730 287.08 L730 258.92 L683.14 239 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="650" y="271.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Daily settlement and</text>
+<text x="650" y="283.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">clearing reconciliation</text>
+</g>
+<g class="node" data-id="CTL-PCI-EVIDENCE" data-type="controls">
+<title>Cardholder data scope and evidence maintenance</title>
+<path d="M616.86 63 L570 82.92 L570 111.08 L616.86 131 L683.14 131 L730 111.08 L730 82.92 L683.14 63 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="650" y="89.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Cardholder data scope</text>
+<text x="650" y="101.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and evidence</text>
+<text x="650" y="113.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">maintenance</text>
+</g>
+<g class="node" data-id="CTL-PMT-POSTING" data-type="controls">
+<title>Payment posting timeliness</title>
+<path d="M616.86 151 L570 170.92 L570 199.08 L616.86 219 L683.14 219 L730 199.08 L730 170.92 L683.14 151 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="650" y="183.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Payment posting</text>
+<text x="650" y="195.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">timeliness</text>
+</g>
+<g class="node" data-id="POL-CHANGE" data-type="policies">
+<title>Technology Change Management Policy</title>
+<path d="M840 327 L994 327 L1002 335 L1002 387 L994 395 L840 395 L832 387 L832 335 Z" fill="#fecaca" stroke="#dc2626" stroke-width="1.4"/>
+<text x="913" y="359.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Technology Change</text>
+<text x="913" y="371.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management Policy</text>
+<svg x="984" y="332" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg>
+</g>
+<g class="node" data-id="POL-ERROR-RES" data-type="policies">
+<title>Error Resolution &amp; Billing Dispute Policy</title>
+<path d="M840 151 L994 151 L1002 159 L1002 211 L994 219 L840 219 L832 211 L832 159 Z" fill="#fecaca" stroke="#dc2626" stroke-width="1.4"/>
+<text x="913" y="183.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Error Resolution &amp;</text>
+<text x="913" y="195.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Billing Dispute Policy</text>
+<svg x="984" y="156" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg>
+</g>
+<g class="node" data-id="POL-INFOSEC" data-type="policies">
+<title>Information Security Policy</title>
+<path d="M840 63 L994 63 L1002 71 L1002 123 L994 131 L840 131 L832 123 L832 71 Z" fill="#fecaca" stroke="#dc2626" stroke-width="1.4"/>
+<text x="913" y="95.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Information Security</text>
+<text x="913" y="107.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Policy</text>
+<svg x="984" y="68" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg>
+</g>
+<g class="node" data-id="POL-RECORDS" data-type="policies">
+<title>Records Retention &amp; Disposition Policy</title>
+<path d="M840 239 L994 239 L1002 247 L1002 299 L994 307 L840 307 L832 299 L832 247 Z" fill="#fecaca" stroke="#dc2626" stroke-width="1.4"/>
+<text x="913" y="271.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Records Retention &amp;</text>
+<text x="913" y="283.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Disposition Policy</text>
+<svg x="984" y="244" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg>
+</g>
+<g class="node" data-id="SYS-AUTH-SWITCH" data-type="systems">
+<title>Authorization Switch</title>
+<rect x="36" y="243" width="170" height="60" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="117" y="277.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Authorization Switch</text>
+<svg x="188" y="248" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="555" x2="1072" y2="555" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="579" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 568)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="579" font-size="12" font-weight="400" fill="#343d50">capability · 1</text>
+<g transform="translate(177.5 568)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="203.5" y="579" font-size="12" font-weight="400" fill="#343d50">control · 4</text>
+<g transform="translate(275.82 568)" fill="#fecaca" stroke="#dc2626" stroke-width="1.4"><path d="M4 1h12l3 3v6l-3 3H4l-3-3V4z"/></g>
+<text x="301.82" y="579" font-size="12" font-weight="400" fill="#343d50">policy · 4</text>
+<g transform="translate(368.06 568)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="394.06" y="579" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
+<text x="28" y="601" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 590)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="601" font-size="12" font-weight="400" fill="#343d50">governed by</text>
+<g transform="translate(184.75 590)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="210.75" y="601" font-size="12" font-weight="400" fill="#343d50">gives effect to</text>
+<g transform="translate(306.41 590)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="332.41" y="601" font-size="12" font-weight="400" fill="#343d50">realizes</text>
+<g transform="translate(392.6 590)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="1 1"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="418.6" y="601" font-size="12" font-weight="400" fill="#343d50">subject to</text>
+<text x="28" y="635" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-governance--sys-auth-switch · edit the model, not the picture</text></g>
+</svg>

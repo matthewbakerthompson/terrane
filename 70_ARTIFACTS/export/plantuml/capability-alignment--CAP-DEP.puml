@@ -1,0 +1,51 @@
+@startuml
+' Deposit Products & Funding — Frameworks, Controls, Systems
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Deposit Products & Funding — Frameworks, Controls, Systems
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_DEP_03, "Brokered CD Program Management", "Issue and administer CDs through broker-dealer networks: allocations, settlement, and broker relationships. A primary funding channel.", $tags="capabilities")
+  ' aac CAP_DEP_03: company_domain="Deposits"
+  System(CAP_DEP_02, "Deposit Account Opening", "Open and fund consumer deposit accounts directly: identity, disclosures, initial funding.", $tags="capabilities")
+  ' aac CAP_DEP_02: company_domain="Deposits"
+  System(CAP_DEP_05, "Deposit Compliance & Insurance Administration", "FDIC insurance administration, interest reporting, escheatment, and deposit-side regulatory obligations.", $tags="capabilities")
+  ' aac CAP_DEP_05: company_domain="Deposits"
+  System(CAP_DEP_01, "Deposit Product Management", "Define and price CD and savings products: terms, rates, disclosures, and the rate sheet cadence.", $tags="capabilities")
+  ' aac CAP_DEP_01: company_domain="Deposits"
+  System(CAP_DEP, "Deposit Products & Funding", "Deposit Products & Funding. Level 0 enterprise capability domain (Core tier). Consumer CDs and savings, direct and brokered — the bank's funding engine.", $tags="capabilities")
+  ' aac CAP_DEP: company_domain="Deposits"
+  System(CAP_DEP_04, "Deposit Servicing, Interest & Maturities", "Accrue and pay interest, process maturities and renewals, and handle early withdrawal within terms.", $tags="capabilities")
+  ' aac CAP_DEP_04: company_domain="Deposits"
+}
+Boundary(b_Framework, "Framework") {
+  System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
+  ' aac FW_BIAN: company_domain=""
+  System(FW_CRI, "CRI Profile", "The Cyber Risk Institute's Profile: the financial sector's harmonization of NIST CSF, ISO 27001 and the regulators' expectations into one set of diagnostic statements. What a bank is examined against for cyber, and therefore what the security domain is governed by rather than informed by.", $tags="frameworks")
+  ' aac FW_CRI: company_domain=""
+}
+
+Rel(CAP_DEP_01, CAP_DEP, "part of")
+Rel(CAP_DEP_02, CAP_DEP, "part of")
+Rel(CAP_DEP_03, CAP_DEP, "part of")
+Rel(CAP_DEP_04, CAP_DEP, "part of")
+Rel(CAP_DEP_05, CAP_DEP, "part of")
+Rel(CAP_DEP, FW_BIAN, "Aligned to")
+' aac rel: source="CAP_DEP"; target="FW_BIAN"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
+Rel(CAP_DEP_01, FW_BIAN, "Operations and Execution > Loans and Deposits > Sales Product")
+' aac rel: source="CAP_DEP_01"; target="FW_BIAN"; label="Operations and Execution > Loans and Deposits > Sales Product"; relation="capability_references_framework"; ref="Operations and Execution > Loans and Deposits > Sales Product"
+Rel(CAP_DEP_02, FW_BIAN, "Operations and Execution > Loans and Deposits > Term Deposit")
+' aac rel: source="CAP_DEP_02"; target="FW_BIAN"; label="Operations and Execution > Loans and Deposits > Term Deposit"; relation="capability_references_framework"; ref="Operations and Execution > Loans and Deposits > Term Deposit"
+Rel(CAP_DEP_03, FW_BIAN, "Operations and Execution > Consumer Services > Brokered Product Proxy")
+' aac rel: source="CAP_DEP_03"; target="FW_BIAN"; label="Operations and Execution > Consumer Services > Brokered Product Proxy"; relation="capability_references_framework"; ref="Operations and Execution > Consumer Services > Brokered Product Proxy"
+Rel(CAP_DEP_04, FW_BIAN, "Operations and Execution > Loans and Deposits > Term Deposit")
+' aac rel: source="CAP_DEP_04"; target="FW_BIAN"; label="Operations and Execution > Loans and Deposits > Term Deposit"; relation="capability_references_framework"; ref="Operations and Execution > Loans and Deposits > Term Deposit"
+Rel(CAP_DEP_05, FW_CRI, "Govern > GV.OC-03")
+' aac rel: source="CAP_DEP_05"; target="FW_CRI"; label="Govern > GV.OC-03"; relation="capability_references_framework"; ref="Govern > GV.OC-03"
+
+SHOW_LEGEND()
+@enduml

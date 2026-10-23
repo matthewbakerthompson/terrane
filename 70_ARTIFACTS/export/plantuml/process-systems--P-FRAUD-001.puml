@@ -1,0 +1,65 @@
+@startuml
+' Detect and action transaction fraud alert — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Detect and action transaction fraud alert — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_FRAUD_01, "Transaction Fraud Detection & Strategy", "Detect fraudulent transactions in flight and set detection strategy.", $tags="capabilities")
+  ' aac CAP_FRAUD_01: company_domain="Servicing"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_FRAUD_SLA, "Fraud alert handling service level", "Fraud alerts are actioned within the loss-budget SLA with disposition quality sampling; Reg E liability decisions are documented per case.", $tags="controls")
+  ' aac CTL_FRAUD_SLA: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_TRANSACTION, "Card transaction history", "Authorized, cleared and settled card transactions.", $tags="data_assets")
+  ' aac DA_TRANSACTION: company_domain="Payments"
+  SystemDb(DA_CUSTOMER_PROFILE, "Customer profile", "Contact details, preferences and servicing history.", $tags="data_assets")
+  ' aac DA_CUSTOMER_PROFILE: company_domain="Servicing"
+  SystemDb(DA_DISPUTE_CASE, "Dispute case file", "Claims, evidence, correspondence, timers, and determinations for error resolution.", $tags="data_assets")
+  ' aac DA_DISPUTE_CASE: company_domain=""
+  SystemDb(DA_MODEL_FEAT, "Model feature store", "Curated features and scores for credit, fraud, and collections models.", $tags="data_assets")
+  ' aac DA_MODEL_FEAT: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_FRAUD_001, "Detect and action transaction fraud alert", "Detect a suspected fraudulent transaction, action the alert, and contact the cardholder. Alert handling runs against loss and customer-friction budgets; actions span block, reissue, and contact, and the clock matters because exposure grows per transaction.", $tags="processes")
+  ' aac P_FRAUD_001: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CONTACT, "Contact center platform", "Contact center routing, voice, and digital channels.", $tags="systems")
+  ' aac SYS_CONTACT: company_domain=""
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_FRAUD_DETECT, "Transaction fraud detection", "Real-time transaction fraud scoring and alerting.", $tags="systems")
+  ' aac SYS_FRAUD_DETECT: company_domain=""
+}
+
+Rel(P_FRAUD_001, SYS_FRAUD_DETECT, "Primary")
+' aac rel: source="P_FRAUD_001"; target="SYS_FRAUD_DETECT"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_FRAUD_001, SYS_CORE_LEDGER, "Supporting")
+' aac rel: source="P_FRAUD_001"; target="SYS_CORE_LEDGER"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_FRAUD_001, SYS_CONTACT, "Supporting")
+' aac rel: source="P_FRAUD_001"; target="SYS_CONTACT"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_FRAUD_001, DA_TRANSACTION, "Reads")
+' aac rel: source="P_FRAUD_001"; target="DA_TRANSACTION"; label="Reads"; relation="process_uses_data_asset"; access="Reads"
+Rel(P_FRAUD_001, DA_MODEL_FEAT, "Reads")
+' aac rel: source="P_FRAUD_001"; target="DA_MODEL_FEAT"; label="Reads"; relation="process_uses_data_asset"; access="Reads"
+Rel(P_FRAUD_001, DA_CUSTOMER_PROFILE, "Both")
+' aac rel: source="P_FRAUD_001"; target="DA_CUSTOMER_PROFILE"; label="Both"; relation="process_uses_data_asset"; access="Both"
+Rel(P_FRAUD_001, DA_DISPUTE_CASE, "Writes")
+' aac rel: source="P_FRAUD_001"; target="DA_DISPUTE_CASE"; label="Writes"; relation="process_uses_data_asset"; access="Writes"
+Rel(P_FRAUD_001, CTL_FRAUD_SLA, "governed by")
+' aac rel: source="P_FRAUD_001"; target="CTL_FRAUD_SLA"; label="governed by"; relation="process_governed_by_control"
+Rel(P_FRAUD_001, CAP_FRAUD_01, "supports")
+' aac rel: source="P_FRAUD_001"; target="CAP_FRAUD_01"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

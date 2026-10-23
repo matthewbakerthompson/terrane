@@ -1,0 +1,284 @@
+# Which capabilities each value stream stage depends on.
+#
+# This is the join that makes "what is on the critical path of originations"
+# answerable from the model rather than from a workshop.
+
+stage_crosses_capability:
+  - stage_id: VS-ACQUIRE-CUSTOMER-S01
+    capability_id: CAP-ACQ-01
+  - stage_id: VS-ACQUIRE-CUSTOMER-S01
+    capability_id: CAP-ACQ-02
+  - stage_id: VS-ACQUIRE-CUSTOMER-S01
+    capability_id: CAP-ACQ-03
+  - stage_id: VS-ACQUIRE-CUSTOMER-S01
+    capability_id: CAP-ACQ-04
+  - stage_id: VS-ACQUIRE-CUSTOMER-S02
+    capability_id: CAP-ORIG-01
+  - stage_id: VS-ACQUIRE-CUSTOMER-S03
+    capability_id: CAP-ORIG-02
+  - stage_id: VS-ACQUIRE-CUSTOMER-S03
+    capability_id: CAP-ORIG-03
+  - stage_id: VS-ACQUIRE-CUSTOMER-S03
+    capability_id: CAP-RGOV-07
+  - stage_id: VS-ACQUIRE-CUSTOMER-S04
+    capability_id: CAP-CRED-01
+  - stage_id: VS-ACQUIRE-CUSTOMER-S04
+    capability_id: CAP-CRED-03
+  - stage_id: VS-ACQUIRE-CUSTOMER-S04
+    capability_id: CAP-CRED-06
+  - stage_id: VS-ACQUIRE-CUSTOMER-S04
+    capability_id: CAP-ORIG-04
+  - stage_id: VS-ACQUIRE-CUSTOMER-S05
+    capability_id: CAP-ORIG-05
+  - stage_id: VS-ACQUIRE-CUSTOMER-S05
+    capability_id: CAP-ORIG-06
+  - stage_id: VS-ACQUIRE-CUSTOMER-S06
+    capability_id: CAP-ORIG-07
+  - stage_id: VS-ACQUIRE-CUSTOMER-S06
+    capability_id: CAP-ORIG-08
+  - stage_id: VS-ACQUIRE-CUSTOMER-S06
+    capability_id: CAP-PAY-07
+  - stage_id: VS-ACQUIRE-CUSTOMER-S07
+    capability_id: CAP-PAY-01
+  - stage_id: VS-ACQUIRE-CUSTOMER-S07
+    capability_id: CAP-SERV-03
+  - stage_id: VS-ENABLE-MERCHANT-S01
+    capability_id: CAP-MERCH-01
+  - stage_id: VS-ENABLE-MERCHANT-S02
+    capability_id: CAP-MERCH-02
+  - stage_id: VS-ENABLE-MERCHANT-S02
+    capability_id: CAP-RGOV-07
+  - stage_id: VS-ENABLE-MERCHANT-S03
+    capability_id: CAP-MERCH-03
+  - stage_id: VS-ENABLE-MERCHANT-S04
+    capability_id: CAP-MERCH-04
+  - stage_id: VS-ENABLE-MERCHANT-S04
+    capability_id: CAP-PAY-05
+  - stage_id: VS-ENABLE-MERCHANT-S05
+    capability_id: CAP-FRAUD-01
+  - stage_id: VS-ENABLE-MERCHANT-S05
+    capability_id: CAP-MERCH-06
+  - stage_id: VS-ENABLE-MERCHANT-S06
+    capability_id: CAP-MERCH-01
+  - stage_id: VS-ENABLE-MERCHANT-S06
+    capability_id: CAP-MERCH-05
+  - stage_id: VS-FINANCE-PURCHASE-S01
+    capability_id: CAP-LEND-01
+  - stage_id: VS-FINANCE-PURCHASE-S01
+    capability_id: CAP-LEND-02
+  - stage_id: VS-FINANCE-PURCHASE-S02
+    capability_id: CAP-CRED-01
+  - stage_id: VS-FINANCE-PURCHASE-S02
+    capability_id: CAP-LEND-02
+  - stage_id: VS-FINANCE-PURCHASE-S03
+    capability_id: CAP-LEND-03
+  - stage_id: VS-FINANCE-PURCHASE-S03
+    capability_id: CAP-RGOV-02
+  - stage_id: VS-FINANCE-PURCHASE-S04
+    capability_id: CAP-FIN-02
+  - stage_id: VS-FINANCE-PURCHASE-S04
+    capability_id: CAP-LEND-03
+  - stage_id: VS-FINANCE-PURCHASE-S05
+    capability_id: CAP-LEND-04
+  - stage_id: VS-FINANCE-PURCHASE-S06
+    capability_id: CAP-LEND-05
+  - stage_id: VS-FINANCE-PURCHASE-S06
+    capability_id: CAP-SERV-01
+  - stage_id: VS-FINANCE-PURCHASE-S07
+    capability_id: CAP-COLL-05
+  - stage_id: VS-FINANCE-PURCHASE-S07
+    capability_id: CAP-LEND-05
+  - stage_id: VS-FINANCE-PURCHASE-S07
+    capability_id: CAP-LEND-06
+  - stage_id: VS-GROW-SAVINGS-S01
+    capability_id: CAP-ACQ-01
+  - stage_id: VS-GROW-SAVINGS-S01
+    capability_id: CAP-DEP-01
+  - stage_id: VS-GROW-SAVINGS-S02
+    capability_id: CAP-DEP-02
+  - stage_id: VS-GROW-SAVINGS-S02
+    capability_id: CAP-ORIG-02
+  - stage_id: VS-GROW-SAVINGS-S03
+    capability_id: CAP-DEP-02
+  - stage_id: VS-GROW-SAVINGS-S03
+    capability_id: CAP-DEP-03
+  - stage_id: VS-GROW-SAVINGS-S03
+    capability_id: CAP-FIN-02
+  - stage_id: VS-GROW-SAVINGS-S04
+    capability_id: CAP-DEP-04
+  - stage_id: VS-GROW-SAVINGS-S04
+    capability_id: CAP-DEP-05
+  - stage_id: VS-GROW-SAVINGS-S04
+    capability_id: CAP-FIN-01
+  - stage_id: VS-GROW-SAVINGS-S05
+    capability_id: CAP-DEP-04
+  - stage_id: VS-GROW-SAVINGS-S06
+    capability_id: CAP-DEP-04
+  - stage_id: VS-GROW-SAVINGS-S06
+    capability_id: CAP-FIN-05
+  - stage_id: VS-LAUNCH-PRODUCT-S01
+    capability_id: CAP-PROD-01
+  - stage_id: VS-LAUNCH-PRODUCT-S01
+    capability_id: CAP-STRAT-02
+  - stage_id: VS-LAUNCH-PRODUCT-S02
+    capability_id: CAP-PROD-01
+  - stage_id: VS-LAUNCH-PRODUCT-S02
+    capability_id: CAP-PROD-02
+  - stage_id: VS-LAUNCH-PRODUCT-S02
+    capability_id: CAP-PROD-04
+  - stage_id: VS-LAUNCH-PRODUCT-S03
+    capability_id: CAP-ACQ-04
+  - stage_id: VS-LAUNCH-PRODUCT-S03
+    capability_id: CAP-PROD-03
+  - stage_id: VS-LAUNCH-PRODUCT-S03
+    capability_id: CAP-RGOV-02
+  - stage_id: VS-LAUNCH-PRODUCT-S04
+    capability_id: CAP-DATA-02
+  - stage_id: VS-LAUNCH-PRODUCT-S04
+    capability_id: CAP-TECH-01
+  - stage_id: VS-LAUNCH-PRODUCT-S04
+    capability_id: CAP-TPS-01
+  - stage_id: VS-LAUNCH-PRODUCT-S05
+    capability_id: CAP-ACQ-03
+  - stage_id: VS-LAUNCH-PRODUCT-S05
+    capability_id: CAP-PROD-05
+  - stage_id: VS-LAUNCH-PRODUCT-S06
+    capability_id: CAP-ACQ-05
+  - stage_id: VS-LAUNCH-PRODUCT-S06
+    capability_id: CAP-CRED-04
+  - stage_id: VS-LAUNCH-PRODUCT-S06
+    capability_id: CAP-RGOV-06
+  - stage_id: VS-ONBOARD-CLIENT-S01
+    capability_id: CAP-PART-03
+  - stage_id: VS-ONBOARD-CLIENT-S01
+    capability_id: CAP-STRAT-01
+  - stage_id: VS-ONBOARD-CLIENT-S02
+    capability_id: CAP-CORP-03
+  - stage_id: VS-ONBOARD-CLIENT-S02
+    capability_id: CAP-PART-03
+  - stage_id: VS-ONBOARD-CLIENT-S02
+    capability_id: CAP-RGOV-01
+  - stage_id: VS-ONBOARD-CLIENT-S03
+    capability_id: CAP-PART-04
+  - stage_id: VS-ONBOARD-CLIENT-S03
+    capability_id: CAP-PROD-01
+  - stage_id: VS-ONBOARD-CLIENT-S03
+    capability_id: CAP-TPS-01
+  - stage_id: VS-ONBOARD-CLIENT-S04
+    capability_id: CAP-TECH-01
+  - stage_id: VS-ONBOARD-CLIENT-S04
+    capability_id: CAP-TECH-04
+  - stage_id: VS-ONBOARD-CLIENT-S04
+    capability_id: CAP-TPS-01
+  - stage_id: VS-ONBOARD-CLIENT-S05
+    capability_id: CAP-DATA-02
+  - stage_id: VS-ONBOARD-CLIENT-S05
+    capability_id: CAP-SEC-04
+  - stage_id: VS-ONBOARD-CLIENT-S05
+    capability_id: CAP-TPS-02
+  - stage_id: VS-ONBOARD-CLIENT-S06
+    capability_id: CAP-SERV-01
+  - stage_id: VS-ONBOARD-CLIENT-S06
+    capability_id: CAP-TECH-03
+  - stage_id: VS-ONBOARD-CLIENT-S06
+    capability_id: CAP-TPS-06
+  - stage_id: VS-ONBOARD-CLIENT-S07
+    capability_id: CAP-PART-04
+  - stage_id: VS-ONBOARD-CLIENT-S07
+    capability_id: CAP-TPS-03
+  - stage_id: VS-ONBOARD-CLIENT-S07
+    capability_id: CAP-TPS-04
+  - stage_id: VS-ONBOARD-CLIENT-S07
+    capability_id: CAP-TPS-05
+  - stage_id: VS-RECOVER-VALUE-S01
+    capability_id: CAP-COLL-01
+  - stage_id: VS-RECOVER-VALUE-S01
+    capability_id: CAP-CRED-04
+  - stage_id: VS-RECOVER-VALUE-S02
+    capability_id: CAP-COLL-01
+  - stage_id: VS-RECOVER-VALUE-S03
+    capability_id: CAP-COLL-02
+  - stage_id: VS-RECOVER-VALUE-S03
+    capability_id: CAP-COLL-07
+  - stage_id: VS-RECOVER-VALUE-S04
+    capability_id: CAP-COLL-03
+  - stage_id: VS-RECOVER-VALUE-S04
+    capability_id: CAP-SERV-07
+  - stage_id: VS-RECOVER-VALUE-S05
+    capability_id: CAP-COLL-04
+  - stage_id: VS-RECOVER-VALUE-S05
+    capability_id: CAP-FIN-01
+  - stage_id: VS-RECOVER-VALUE-S06
+    capability_id: CAP-COLL-05
+  - stage_id: VS-RECOVER-VALUE-S06
+    capability_id: CAP-COLL-06
+  - stage_id: VS-RECOVER-VALUE-S07
+    capability_id: CAP-COLL-05
+  - stage_id: VS-RECOVER-VALUE-S07
+    capability_id: CAP-COLL-08
+  - stage_id: VS-RECOVER-VALUE-S07
+    capability_id: CAP-FIN-02
+  - stage_id: VS-RESOLVE-ISSUE-S01
+    capability_id: CAP-SERV-01
+  - stage_id: VS-RESOLVE-ISSUE-S01
+    capability_id: CAP-SERV-03
+  - stage_id: VS-RESOLVE-ISSUE-S02
+    capability_id: CAP-FRAUD-06
+  - stage_id: VS-RESOLVE-ISSUE-S02
+    capability_id: CAP-SEC-01
+  - stage_id: VS-RESOLVE-ISSUE-S03
+    capability_id: CAP-FRAUD-03
+  - stage_id: VS-RESOLVE-ISSUE-S03
+    capability_id: CAP-SERV-02
+  - stage_id: VS-RESOLVE-ISSUE-S03
+    capability_id: CAP-SERV-05
+  - stage_id: VS-RESOLVE-ISSUE-S04
+    capability_id: CAP-COLL-08
+  - stage_id: VS-RESOLVE-ISSUE-S04
+    capability_id: CAP-FRAUD-02
+  - stage_id: VS-RESOLVE-ISSUE-S04
+    capability_id: CAP-FRAUD-04
+  - stage_id: VS-RESOLVE-ISSUE-S05
+    capability_id: CAP-BILL-05
+  - stage_id: VS-RESOLVE-ISSUE-S05
+    capability_id: CAP-FRAUD-05
+  - stage_id: VS-RESOLVE-ISSUE-S06
+    capability_id: CAP-SERV-04
+  - stage_id: VS-RESOLVE-ISSUE-S07
+    capability_id: CAP-RGOV-06
+  - stage_id: VS-RESOLVE-ISSUE-S07
+    capability_id: CAP-SERV-08
+  - stage_id: VS-SERVICE-ACCOUNT-S01
+    capability_id: CAP-CRED-06
+  - stage_id: VS-SERVICE-ACCOUNT-S01
+    capability_id: CAP-FRAUD-01
+  - stage_id: VS-SERVICE-ACCOUNT-S01
+    capability_id: CAP-PAY-01
+  - stage_id: VS-SERVICE-ACCOUNT-S02
+    capability_id: CAP-PAY-02
+  - stage_id: VS-SERVICE-ACCOUNT-S03
+    capability_id: CAP-BILL-01
+  - stage_id: VS-SERVICE-ACCOUNT-S03
+    capability_id: CAP-PROD-02
+  - stage_id: VS-SERVICE-ACCOUNT-S04
+    capability_id: CAP-BILL-02
+  - stage_id: VS-SERVICE-ACCOUNT-S04
+    capability_id: CAP-BILL-04
+  - stage_id: VS-SERVICE-ACCOUNT-S05
+    capability_id: CAP-BILL-03
+  - stage_id: VS-SERVICE-ACCOUNT-S05
+    capability_id: CAP-SERV-04
+  - stage_id: VS-SERVICE-ACCOUNT-S06
+    capability_id: CAP-PAY-03
+  - stage_id: VS-SERVICE-ACCOUNT-S06
+    capability_id: CAP-PAY-04
+  - stage_id: VS-SERVICE-ACCOUNT-S06
+    capability_id: CAP-SERV-03
+  - stage_id: VS-SERVICE-ACCOUNT-S07
+    capability_id: CAP-FIN-02
+  - stage_id: VS-SERVICE-ACCOUNT-S07
+    capability_id: CAP-FIN-06
+  - stage_id: VS-SERVICE-ACCOUNT-S07
+    capability_id: CAP-PAY-05
+  - stage_id: VS-SERVICE-ACCOUNT-S07
+    capability_id: CAP-PAY-06

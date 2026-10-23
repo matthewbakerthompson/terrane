@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="359.4" viewBox="0 0 1100 359.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Hybrid connectivity</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Hybrid connectivity</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   2 nodes · 1 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">The paths back to the data center. There are always two, and the failover between them is the thing nobody has tested.</text>
+<line x1="28" y1="92" x2="1072" y2="92" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(458 91.7)">
+<g class="edge" data-id="e0::hybrid-link::dns">
+<path d="M92 59 L92 99.48" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M92 103 L87.22 93.43 L96.78 93.43 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="hybrid-link" data-type="tech_services">
+<title>Hybrid link</title>
+<path d="M12 12 L118.64 12 L172 59 L65.36 59 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="88" y="34.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Hybrid link</text>
+<text x="92" y="53.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AWS Direct Connect or Site-to-Site VP…</text>
+<svg x="143" y="17" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M8 3.5a1.5 1.5 0 1 0 0 .01 M3.5 12.5a1.5 1.5 0 1 0 0 .01 M12.5 12.5a1.5 1.5 0 1 0 0 .01 M8 5v3 M8 8l-4 3.5 M8 8l4 3.5" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="dns" data-type="tech_services">
+<title>DNS</title>
+<path d="M12 103 L118.64 103 L172 150 L65.36 150 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="88" y="125.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">DNS</text>
+<text x="92" y="144.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Amazon Route 53 · Azure DNS · Cloud …</text>
+<svg x="143" y="108" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M8 3.5a1.5 1.5 0 1 0 0 .01 M3.5 12.5a1.5 1.5 0 1 0 0 .01 M12.5 12.5a1.5 1.5 0 1 0 0 .01 M8 5v3 M8 8l-4 3.5 M8 8l4 3.5" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="257.4" x2="1072" y2="257.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="281.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 270.4)" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"><path d="M5 1h14l-4 12H1z"/></g>
+<text x="93.2" y="281.4" font-size="12" font-weight="400" fill="#343d50">technology service · 2</text>
+<text x="28" y="303.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 292.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="303.4" font-size="12" font-weight="400" fill="#343d50">connects to</text>
+<text x="28" y="337.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · block--hybrid-connectivity · edit the model, not the picture</text></g>
+</svg>

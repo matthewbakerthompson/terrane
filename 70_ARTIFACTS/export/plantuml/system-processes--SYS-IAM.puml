@@ -1,0 +1,87 @@
+@startuml
+' Identity and access management — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Identity and access management — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_SERV_03, "Digital Self-Service", "Enable cardholders to self-serve in web and mobile channels.", $tags="capabilities")
+  ' aac CAP_SERV_03: company_domain="Servicing"
+  System(CAP_FRAUD_03, "Dispute Intake & Provisional Credit", "Take dispute claims and apply provisional credit within regulatory timers.", $tags="capabilities")
+  ' aac CAP_FRAUD_03: company_domain="Servicing"
+  System(CAP_STRAT_04, "Enterprise Architecture & Change Portfolio", "Govern the shape of the estate and the pipeline of change.", $tags="capabilities")
+  ' aac CAP_STRAT_04: company_domain="Cross-Functional Services"
+  System(CAP_SEC_01, "Identity & Access Management", "Govern who can access what, and evidence it.", $tags="capabilities")
+  ' aac CAP_SEC_01: company_domain="Cross-Functional Services"
+  System(CAP_FRAUD_06, "Identity Theft & Account Takeover Response", "Respond to account takeover and identity theft events.", $tags="capabilities")
+  ' aac CAP_FRAUD_06: company_domain="Servicing"
+  System(CAP_DATA_07, "Records Retention & Disposition", "Retain and dispose of records to the retention schedule.", $tags="capabilities")
+  ' aac CAP_DATA_07: company_domain="Cross-Functional Services"
+  System(CAP_TECH_01, "Solution Delivery & Engineering", "Build and change software.", $tags="capabilities")
+  ' aac CAP_TECH_01: company_domain="Technology"
+  System(CAP_SEC_02, "Threat Detection & Response", "Detect and respond to security events.", $tags="capabilities")
+  ' aac CAP_SEC_02: company_domain="Cross-Functional Services"
+}
+Boundary(b_Process, "Process") {
+  System(P_SERVICING_005, "Authenticate cardholder", "Authenticate a cardholder to policy before disclosing information or executing a change. Authentication strength scales with request risk; failures route to step-up rather than disclosure, and the policy is tuned with the fraud team.", $tags="processes")
+  ' aac P_SERVICING_005: company_domain=""
+  System(P_APPDEV_009, "Decommission an application", "Retire an application: migrate or archive its data to the retention schedule, remove interfaces and access, and update the inventory.", $tags="processes")
+  ' aac P_APPDEV_009: company_domain=""
+  System(P_INFOSEC_002, "Detect and respond to security event", "Detect, investigate, contain, and remediate a security event. Detection through containment runs the incident playbook with severity-driven escalation; the timeline is evidence for both the CRI assessment and any notification duty.", $tags="processes")
+  ' aac P_INFOSEC_002: company_domain=""
+  System(P_DIGITAL_001, "Enroll cardholder in digital servicing", "Register and authenticate a cardholder for web and mobile self-service. Enrollment binds the cardholder to a verified identity with step-up options; weak enrollment is the account-takeover front door, so identity proofing follows the fraud strategy.", $tags="processes")
+  ' aac P_DIGITAL_001: company_domain=""
+  System(P_DISPUTE_001, "Process cardholder dispute claim", "Take a cardholder dispute claim, apply provisional credit, investigate, determine, and notify within regulatory timers.", $tags="processes")
+  ' aac P_DISPUTE_001: company_domain=""
+  System(P_INFOSEC_001, "Provision and certify access", "Grant, review, and certify access to systems and data. Access follows least privilege with owner approval; the quarterly certification and automatic revocation of uncertified access are the controls CRI assesses.", $tags="processes")
+  ' aac P_INFOSEC_001: company_domain=""
+  System(P_FRAUD_003, "Respond to account takeover event", "Contain, remediate, and communicate an account takeover or identity compromise event. Account takeover response contains first, then remediates credentials, reverses fraudulent activity, and communicates with the cardholder; speed limits the loss.", $tags="processes")
+  ' aac P_FRAUD_003: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_IAM, "Identity and access management", "Workforce identity, authentication, and access governance.", $tags="systems")
+  ' aac SYS_IAM: company_domain=""
+}
+
+Rel(P_SERVICING_005, SYS_IAM, "Primary")
+' aac rel: source="P_SERVICING_005"; target="SYS_IAM"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_DIGITAL_001, SYS_IAM, "Supporting")
+' aac rel: source="P_DIGITAL_001"; target="SYS_IAM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_FRAUD_003, SYS_IAM, "Supporting")
+' aac rel: source="P_FRAUD_003"; target="SYS_IAM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DISPUTE_001, SYS_IAM, "Supporting")
+' aac rel: source="P_DISPUTE_001"; target="SYS_IAM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_INFOSEC_001, SYS_IAM, "Primary")
+' aac rel: source="P_INFOSEC_001"; target="SYS_IAM"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_INFOSEC_002, SYS_IAM, "Supporting")
+' aac rel: source="P_INFOSEC_002"; target="SYS_IAM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_APPDEV_009, SYS_IAM, "Supporting")
+' aac rel: source="P_APPDEV_009"; target="SYS_IAM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_005, CAP_SEC_01, "supports")
+' aac rel: source="P_SERVICING_005"; target="CAP_SEC_01"; label="supports"; relation="process_supports_capability"
+Rel(P_SERVICING_005, CAP_FRAUD_06, "supports")
+' aac rel: source="P_SERVICING_005"; target="CAP_FRAUD_06"; label="supports"; relation="process_supports_capability"
+Rel(P_DIGITAL_001, CAP_SERV_03, "supports")
+' aac rel: source="P_DIGITAL_001"; target="CAP_SERV_03"; label="supports"; relation="process_supports_capability"
+Rel(P_FRAUD_003, CAP_FRAUD_06, "supports")
+' aac rel: source="P_FRAUD_003"; target="CAP_FRAUD_06"; label="supports"; relation="process_supports_capability"
+Rel(P_DISPUTE_001, CAP_FRAUD_03, "supports")
+' aac rel: source="P_DISPUTE_001"; target="CAP_FRAUD_03"; label="supports"; relation="process_supports_capability"
+Rel(P_INFOSEC_001, CAP_SEC_01, "supports")
+' aac rel: source="P_INFOSEC_001"; target="CAP_SEC_01"; label="supports"; relation="process_supports_capability"
+Rel(P_INFOSEC_002, CAP_SEC_02, "supports")
+' aac rel: source="P_INFOSEC_002"; target="CAP_SEC_02"; label="supports"; relation="process_supports_capability"
+Rel(P_APPDEV_009, CAP_TECH_01, "supports")
+' aac rel: source="P_APPDEV_009"; target="CAP_TECH_01"; label="supports"; relation="process_supports_capability"
+Rel(P_APPDEV_009, CAP_STRAT_04, "supports")
+' aac rel: source="P_APPDEV_009"; target="CAP_STRAT_04"; label="supports"; relation="process_supports_capability"
+Rel(P_APPDEV_009, CAP_DATA_07, "supports")
+' aac rel: source="P_APPDEV_009"; target="CAP_DATA_07"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

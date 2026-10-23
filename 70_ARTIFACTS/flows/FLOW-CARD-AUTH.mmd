@@ -1,0 +1,20 @@
+%% Card Authorization
+%% Generated from the model by `terrane render`. Do not edit by hand.
+sequenceDiagram
+  autonumber
+  actor ACT_MERCHANT as Merchant
+  participant SYS_AUTH_SWITCH as Authorization Switch
+  participant SYS_SCREENING_GATEWAY as NICE Actimize Screening Integ…
+  participant SYS_SCREENING_EGRESS as NICE Actimize Screening Priva…
+  participant SYS_SCREENING_VENDOR as NICE Actimize Screening
+  participant SYS_CORE_LEDGER as Core Card Ledger
+  ACT_MERCHANT->>SYS_AUTH_SWITCH: Cardholder presents a card at a merchant
+  SYS_AUTH_SWITCH->>SYS_SCREENING_GATEWAY: HTTPS
+  SYS_SCREENING_GATEWAY-->>SYS_AUTH_SWITCH: response
+  SYS_SCREENING_GATEWAY->>SYS_SCREENING_EGRESS: HTTPS
+  SYS_SCREENING_EGRESS-->>SYS_SCREENING_GATEWAY: response
+  SYS_SCREENING_EGRESS->>SYS_SCREENING_VENDOR: PrivateLink
+  SYS_SCREENING_VENDOR-->>SYS_SCREENING_EGRESS: response
+  SYS_AUTH_SWITCH->>SYS_CORE_LEDGER: MQ
+  SYS_CORE_LEDGER-->>SYS_AUTH_SWITCH: response
+  Note over SYS_AUTH_SWITCH: under 500ms end to end

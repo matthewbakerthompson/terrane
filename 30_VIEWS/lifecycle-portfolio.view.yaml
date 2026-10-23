@@ -1,0 +1,27 @@
+view_id: lifecycle-portfolio
+title: Portfolio Lifecycle
+category: Application
+section: Landscape
+kind: map
+description: >
+  Systems grouped by lifecycle status and shaded by criticality. Check the
+  Planned and Deprecated columns: what is arriving that nothing depends on
+  yet, and what is leaving that other systems still depend on.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+group_by: status
+
+scope:
+  include:
+    - type: systems
+
+edges:
+  - via: interfaces
+
+style:
+  color_by: criticality
+
+limits:
+  max_nodes: 50

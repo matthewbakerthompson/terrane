@@ -1,0 +1,254 @@
+# AWS landing zone services. Placement is recorded here so the infrastructure
+# views can nest by account, region and network zone rather than by what the
+# service is for.
+- tech_service_id: TS-AWS-ORG
+  name: AWS Organizations
+  service_name: Organizations
+  component_type: iac
+  description: Account vending, service control policies and consolidated billing.
+  status: Active
+  provider: AWS
+  service_category: Governance
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: shared-management
+  region: global
+  network_zone: Shared-Services
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [landing-zone]
+
+- tech_service_id: TS-AWS-TGW
+  name: AWS Transit Gateway
+  service_name: Transit Gateway
+  # It was typed `vpc`, which is what it connects, not what it is. The
+  # component type for the hub every network attaches to already existed.
+  component_type: transit-gateway
+  description: Hub for VPC-to-VPC and hybrid routing back to the data center.
+  status: Active
+  provider: AWS
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: shared-network
+  region: eu-west-2
+  network_zone: Shared-Services
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric, landing-zone]
+
+- tech_service_id: TS-AWS-EKS
+  name: Amazon EKS
+  service_name: EKS
+  component_type: container-platform
+  description: Managed Kubernetes running the containerized workloads.
+  status: Active
+  provider: AWS
+  service_category: Compute
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  region: eu-west-2
+  network_zone: Private-App
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [landing-zone]
+
+- tech_service_id: TS-AWS-RDS
+  name: Amazon RDS for PostgreSQL
+  service_name: RDS
+  component_type: relational-db
+  description: Managed relational database, Multi-AZ, encrypted with a customer managed key.
+  status: Active
+  provider: AWS
+  service_category: Data
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  region: eu-west-2
+  network_zone: Private-Data
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [landing-zone]
+
+- tech_service_id: TS-AWS-MSK
+  name: Amazon MSK
+  service_name: MSK
+  component_type: event-stream
+  description: Managed Kafka carrying domain events between products.
+  status: Active
+  provider: AWS
+  service_category: Integration
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  region: eu-west-2
+  network_zone: Private-App
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [landing-zone]
+
+# The queue the AWS landing zone did not have. Two parts ask for a
+# `message-queue` and neither could have landed on AWS; `terrane validate` says
+# so now (`library.landing_zone_gap`), and this record is the answer.
+- tech_service_id: TS-AWS-SQS
+  name: Amazon SQS
+  service_name: SQS
+  component_type: message-queue
+  description: Managed queues between a product's own services, where a message is owed to one consumer rather than published to any.
+  status: Active
+  provider: AWS
+  service_category: Integration
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  region: eu-west-2
+  network_zone: Private-App
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [landing-zone]
+
+- tech_service_id: TS-AWS-S3
+  name: Amazon S3
+  service_name: S3
+  component_type: object-store
+  description: Object storage for landing zones, artifacts and archives.
+  status: Active
+  provider: AWS
+  service_category: Data
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  region: eu-west-2
+  network_zone: Private-Data
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [landing-zone]
+
+- tech_service_id: TS-AWS-ALB
+  name: Application Load Balancer
+  service_name: ALB
+  component_type: load-balancer
+  description: Terminates TLS and routes to the application tier.
+  status: Active
+  provider: AWS
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  region: eu-west-2
+  network_zone: Public
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [landing-zone]
+
+- tech_service_id: TS-AWS-CLOUDFRONT
+  name: Amazon CloudFront and WAF
+  service_name: CloudFront
+  component_type: cdn
+  description: Edge distribution and the web application firewall in front of it.
+  status: Active
+  provider: AWS
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  region: global
+  network_zone: Edge
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [landing-zone]
+
+- tech_service_id: TS-AWS-KMS
+  name: AWS KMS
+  service_name: KMS
+  component_type: kms
+  description: Customer managed keys for data at rest.
+  status: Active
+  provider: AWS
+  service_category: Security
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  region: eu-west-2
+  network_zone: Shared-Services
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [landing-zone]
+
+- tech_service_id: TS-AWS-SECRETS
+  name: AWS Secrets Manager
+  service_name: Secrets Manager
+  component_type: secrets-manager
+  description: Application credentials and rotation.
+  status: Active
+  provider: AWS
+  service_category: Security
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  region: eu-west-2
+  network_zone: Shared-Services
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [landing-zone]
+
+- tech_service_id: TS-AWS-PRIVATELINK
+  name: AWS PrivateLink
+  service_name: PrivateLink
+  component_type: private-egress
+  description: Private egress to partner and vendor endpoints without internet transit.
+  status: Active
+  provider: AWS
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: shared-network
+  region: eu-west-2
+  network_zone: Shared-Services
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric, landing-zone]
+
+# Two platform services the block-built archetypes bind to. Both were always
+# in use and never written down, which is the kind of gap a block makes
+# visible: an archetype cannot say "the shared observability" without there
+# being one to point at.
+- tech_service_id: TS-AWS-CLOUDWATCH
+  name: Amazon CloudWatch
+  service_name: CloudWatch
+  component_type: observability
+  description: Metrics, logs and alarms for every workload in the landing zone.
+  status: Active
+  provider: AWS
+  service_category: Operations
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: shared-management
+  region: eu-west-2
+  network_zone: Shared-Services
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [landing-zone]
+
+- tech_service_id: TS-AWS-APIGW
+  name: Amazon API Gateway
+  service_name: API Gateway
+  component_type: api-gateway
+  description: The managed front door every AWS-hosted API is published through.
+  status: Active
+  provider: AWS
+  service_category: Integration
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: shared-network
+  region: eu-west-2
+  network_zone: Edge
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [landing-zone]

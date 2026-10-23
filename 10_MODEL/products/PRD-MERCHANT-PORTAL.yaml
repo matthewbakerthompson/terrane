@@ -1,0 +1,72 @@
+# A project assembled from parts of the library, with no shape.
+#
+# The two product shapes exist because the first products like them were
+# built, by hand, three times. A merchant portal is the first of its kind:
+# the same API, channel, datastore and event publisher a digital product has,
+# plus a role nobody held before merchants could sign themselves up. Rather
+# than write a shape for a product of one, the `compose` block below names
+# the parts and the landing zone, and the loader builds the shape of one
+# behind it. The day a second merchant-facing product is assembled from the
+# same parts, that block is the shape, and this file gains `archetype:`.
+#
+# Nothing here is drawn. The onboarding and architecture diagrams, the
+# interfaces, the platform services it runs on and the data it masters all
+# follow from the parts named.
+product_id: PRD-MERCHANT-PORTAL
+name: Merchant Portal
+description: >
+  Where a merchant applies for an account, sees settlements and chargebacks,
+  and downloads statements. Built in-house on the Azure landing zone, beside
+  Rewards Redemption; the first product assembled from parts rather than
+  built on a shape.
+status: Planned
+owner_org_id: ORG-MERCHANT
+criticality: Medium
+product_category: Digital channel
+company_domain: Payments
+launch_date: 2027-09-01
+
+build_type: digital-product
+compose:
+  provider: Azure
+  modules:
+    - module: api-service
+      with:
+        runs_on: [public-api-tier.api-gateway, stateless-service]
+        uses: [TS-AZURE-KEYVAULT]
+    - module: web-channel
+      with:
+        runs_on: [public-api-tier.dns, public-api-tier.waf, stateless-service.container-platform]
+        uses: [TS-ENTRA-ID]
+    - module: relational-datastore
+      with:
+        protocol: TDS
+        system_suffix: STORE
+        risk_level: Medium
+    - module: event-publisher
+    # The role the product creates: nobody reviewed a merchant's own
+    # application before merchants could make one.
+    - module: operator-role
+      with:
+        system: SYS-MERCHANT-API
+        roles:
+          - id: merchant-onboarding-analyst
+            name: Merchant Onboarding Analyst
+            description: Reviews a merchant's application and the documents behind it before the account opens.
+            interaction: Reviews applications
+
+parameters:
+  slug: merchant
+  product_name: Merchant Portal
+  owner_org: ORG-MERCHANT
+  domain: Payments
+  account: azure-payments-prod
+  region: uksouth
+  criticality: Medium
+  classification: Confidential
+
+overrides:
+  SYS-MERCHANT-API:
+    description: >
+      Domain API for the merchant portal: applications, settlement inquiries,
+      chargeback responses and statement downloads.

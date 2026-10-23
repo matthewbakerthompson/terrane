@@ -1,0 +1,643 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://architecture-as-code/schemas/view.schema.json",
+  "title": "View",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "view_id"
+  ],
+  "anyOf": [
+    {
+      "required": [
+        "scope"
+      ]
+    },
+    {
+      "required": [
+        "places"
+      ]
+    }
+  ],
+  "properties": {
+    "view_id": {
+      "type": "string"
+    },
+    "replaces": {
+      "type": "string",
+      "description": "In an estate reading the shipped views from the installed terrane: this view stands in for the shipped view of the same id."
+    },
+    "places": {
+      "type": "array",
+      "description": "Views placed on this one as boundaries, read as they are now whenever views are loaded, so the diagram stays in step with them. Each brings its scope, its lines and, unless this view groups by something of its own, its boundaries.",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "view"
+            ],
+            "properties": {
+              "view": {
+                "type": "string",
+                "description": "The id of the view placed."
+              },
+              "only": {
+                "type": "object",
+                "description": "Field to the values kept: the rest of the placed view is left off this diagram."
+              },
+              "leave_out": {
+                "type": "object",
+                "description": "Field to the values left off this diagram; they stay in the placed view."
+              },
+              "parts": {
+                "type": "boolean",
+                "description": "false keeps the placed view's boundaries without its own boxes, so only what is placed inside them is drawn."
+              }
+            }
+          }
+        ]
+      }
+    },
+    "positions": {
+      "type": "object",
+      "description": "Where each thing was put by hand on the canvas: a box keyed by the boundaries it sits in and its id, joined by ' / ', a boundary by its path, each to its top-left corner [x, y] in the boundary around it. A drawing with positions is arranged by hand: the layout places only what has none.",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "number"
+        },
+        "minItems": 2,
+        "maxItems": 2
+      }
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "description": "The layer the view is listed under: Business, Application, Data, Technology, Governance, Change."
+    },
+    "section": {
+      "type": "string",
+      "description": "The heading it sits under within its layer."
+    },
+    "kind": {
+      "enum": [
+        "diagram",
+        "map",
+        "report",
+        "timeline"
+      ]
+    },
+    "parameters": {
+      "type": "array",
+      "description": "What the view must be told before it can be drawn: a subject it is about.",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "type": {
+                "enum": [
+                  "actors",
+                  "architecture_change_requests",
+                  "capabilities",
+                  "controls",
+                  "data_assets",
+                  "flows",
+                  "frameworks",
+                  "interfaces",
+                  "offered_interfaces",
+                  "org_units",
+                  "policies",
+                  "processes",
+                  "products",
+                  "roadmaps",
+                  "systems",
+                  "tech_services",
+                  "value_stream_stages",
+                  "value_streams",
+                  "work_packages"
+                ]
+              },
+              "required": {
+                "type": "boolean"
+              },
+              "default": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "render_for": {
+      "type": "object",
+      "description": "Which subjects the view is drawn for when every view is rendered.",
+      "properties": {
+        "type": {
+          "enum": [
+            "actors",
+            "architecture_change_requests",
+            "capabilities",
+            "controls",
+            "data_assets",
+            "flows",
+            "frameworks",
+            "interfaces",
+            "offered_interfaces",
+            "org_units",
+            "policies",
+            "processes",
+            "products",
+            "roadmaps",
+            "systems",
+            "tech_services",
+            "value_stream_stages",
+            "value_streams",
+            "work_packages"
+          ]
+        },
+        "where": {
+          "type": "object",
+          "description": "Field to value or list of values. Also tags_any, tags_all, tags_none, has_any, has_all, has_none (relation names, testing whether the relation exists at all), id_in, id_prefix, and the {not: [...]} / {exists: true} forms."
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "order_by": {
+      "type": "string"
+    },
+    "group_direction": {
+      "enum": [
+        "LR",
+        "RL",
+        "TB",
+        "BT",
+        "lr",
+        "rl",
+        "tb",
+        "bt"
+      ]
+    },
+    "layout": {
+      "enum": [
+        "LR",
+        "RL",
+        "TB",
+        "BT",
+        "concentric",
+        "cose",
+        "grid"
+      ]
+    },
+    "group_by": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "One field, or a list for nested boundaries."
+    },
+    "node_label": {
+      "type": "string"
+    },
+    "lanes": {
+      "oneOf": [
+        {
+          "type": "boolean",
+          "enum": [
+            false
+          ]
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "description": "The order the grouped values are laid out in: a list for the innermost group_by field, a mapping of field to values, or false to leave the fields' own enumerations aside."
+    },
+    "renderers": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "mermaid",
+          "structurizr"
+        ]
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "include"
+          ]
+        },
+        {
+          "required": [
+            "pin"
+          ]
+        }
+      ],
+      "properties": {
+        "include": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "type": {
+                "enum": [
+                  "actors",
+                  "architecture_change_requests",
+                  "capabilities",
+                  "controls",
+                  "data_assets",
+                  "flows",
+                  "frameworks",
+                  "interfaces",
+                  "offered_interfaces",
+                  "org_units",
+                  "policies",
+                  "processes",
+                  "products",
+                  "roadmaps",
+                  "systems",
+                  "tech_services",
+                  "value_stream_stages",
+                  "value_streams",
+                  "work_packages"
+                ]
+              },
+              "where": {
+                "type": "object",
+                "description": "Field to value or list of values. Also tags_any, tags_all, tags_none, has_any, has_all, has_none (relation names, testing whether the relation exists at all), id_in, id_prefix, and the {not: [...]} / {exists: true} forms."
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "minItems": 1
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "type": {
+                "enum": [
+                  "actors",
+                  "architecture_change_requests",
+                  "capabilities",
+                  "controls",
+                  "data_assets",
+                  "flows",
+                  "frameworks",
+                  "interfaces",
+                  "offered_interfaces",
+                  "org_units",
+                  "policies",
+                  "processes",
+                  "products",
+                  "roadmaps",
+                  "systems",
+                  "tech_services",
+                  "value_stream_stages",
+                  "value_streams",
+                  "work_packages"
+                ]
+              },
+              "where": {
+                "type": "object",
+                "description": "Field to value or list of values. Also tags_any, tags_all, tags_none, has_any, has_all, has_none (relation names, testing whether the relation exists at all), id_in, id_prefix, and the {not: [...]} / {exists: true} forms."
+              }
+            },
+            "required": [
+              "type"
+            ]
+          }
+        },
+        "pin": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Ids kept on this drawing whatever the query finds. One thing each, not a seed for `expand`; kept first when the drawing is cut to max_nodes."
+        },
+        "hide": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Ids left off this drawing, applied last; a hide beats a pin."
+        },
+        "expand": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "relation": {
+                "type": "string"
+              },
+              "depth": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "types": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "actors",
+                    "architecture_change_requests",
+                    "capabilities",
+                    "controls",
+                    "data_assets",
+                    "flows",
+                    "frameworks",
+                    "interfaces",
+                    "offered_interfaces",
+                    "org_units",
+                    "policies",
+                    "processes",
+                    "products",
+                    "roadmaps",
+                    "systems",
+                    "tech_services",
+                    "value_stream_stages",
+                    "value_streams",
+                    "work_packages"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "via": {
+            "enum": [
+              "actor_uses_system",
+              "approver_org_id",
+              "capability_aligns_to_framework",
+              "capability_governed_by_control",
+              "capability_references_framework",
+              "capability_subject_to_policy",
+              "change_request_affects_system",
+              "change_request_id",
+              "data_governed_by_control",
+              "data_owner_org_id",
+              "data_steward_org_id",
+              "data_subject_to_policy",
+              "flow_step",
+              "interface_transports_data_asset",
+              "interfaces",
+              "offered_interface_id",
+              "owner",
+              "owner_org_id",
+              "parent_capability_id",
+              "parent_org_unit_id",
+              "policy_id",
+              "process_governed_by_control",
+              "process_subject_to_policy",
+              "process_supports_capability",
+              "process_uses_data_asset",
+              "process_uses_system",
+              "product_includes_system",
+              "product_realizes_capability",
+              "requestor_org_id",
+              "roadmap_id",
+              "source_of_truth",
+              "source_system_id",
+              "stage_crosses_capability",
+              "system_governed_by_control",
+              "system_id",
+              "system_reads_writes",
+              "system_realizes_capability",
+              "system_subject_to_policy",
+              "system_uses_tech_service",
+              "target_system_id",
+              "tech_service_connects_to",
+              "value_stream_id",
+              "work_package_affects_system"
+            ]
+          },
+          "label": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "via"
+        ]
+      }
+    },
+    "style": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "color_by": {
+          "type": "string"
+        },
+        "marks": {
+          "enum": [
+            "actor_uses_system",
+            "capability_aligns_to_framework",
+            "capability_governed_by_control",
+            "capability_references_framework",
+            "capability_subject_to_policy",
+            "change_request_affects_system",
+            "data_governed_by_control",
+            "data_subject_to_policy",
+            "flow_step",
+            "interface_transports_data_asset",
+            "process_governed_by_control",
+            "process_subject_to_policy",
+            "process_supports_capability",
+            "process_uses_data_asset",
+            "process_uses_system",
+            "product_includes_system",
+            "product_realizes_capability",
+            "stage_crosses_capability",
+            "system_governed_by_control",
+            "system_reads_writes",
+            "system_realizes_capability",
+            "system_subject_to_policy",
+            "system_uses_tech_service",
+            "tech_service_connects_to",
+            "work_package_affects_system"
+          ],
+          "description": "A relation whose other ends each node carries, for the app to show one at a time: the frameworks a capability is placed in."
+        },
+        "matrix": {
+          "type": "object",
+          "description": "A report drawn as a grid: rows down the side, an entity type across the top, a mark and a count in each cell.",
+          "additionalProperties": false,
+          "required": [
+            "columns"
+          ],
+          "properties": {
+            "rows": {
+              "type": "object",
+              "description": "Field to value: which things are rows."
+            },
+            "group": {
+              "type": "string",
+              "description": "A field the rows are sectioned by."
+            },
+            "columns": {
+              "enum": [
+                "actors",
+                "architecture_change_requests",
+                "capabilities",
+                "controls",
+                "data_assets",
+                "flows",
+                "frameworks",
+                "interfaces",
+                "offered_interfaces",
+                "org_units",
+                "policies",
+                "processes",
+                "products",
+                "roadmaps",
+                "systems",
+                "tech_services",
+                "value_stream_stages",
+                "value_streams",
+                "work_packages"
+              ]
+            },
+            "column_detail": {
+              "type": "string"
+            },
+            "roll_up": {
+              "type": "string",
+              "description": "A reference field a row counts what sits under it by."
+            },
+            "mark": {
+              "enum": [
+                "actor_uses_system",
+                "capability_aligns_to_framework",
+                "capability_governed_by_control",
+                "capability_references_framework",
+                "capability_subject_to_policy",
+                "change_request_affects_system",
+                "data_governed_by_control",
+                "data_subject_to_policy",
+                "flow_step",
+                "interface_transports_data_asset",
+                "process_governed_by_control",
+                "process_subject_to_policy",
+                "process_supports_capability",
+                "process_uses_data_asset",
+                "process_uses_system",
+                "product_includes_system",
+                "product_realizes_capability",
+                "stage_crosses_capability",
+                "system_governed_by_control",
+                "system_reads_writes",
+                "system_realizes_capability",
+                "system_subject_to_policy",
+                "system_uses_tech_service",
+                "tech_service_connects_to",
+                "work_package_affects_system"
+              ]
+            },
+            "count": {
+              "enum": [
+                "actor_uses_system",
+                "capability_aligns_to_framework",
+                "capability_governed_by_control",
+                "capability_references_framework",
+                "capability_subject_to_policy",
+                "change_request_affects_system",
+                "data_governed_by_control",
+                "data_subject_to_policy",
+                "flow_step",
+                "interface_transports_data_asset",
+                "process_governed_by_control",
+                "process_subject_to_policy",
+                "process_supports_capability",
+                "process_uses_data_asset",
+                "process_uses_system",
+                "product_includes_system",
+                "product_realizes_capability",
+                "stage_crosses_capability",
+                "system_governed_by_control",
+                "system_reads_writes",
+                "system_realizes_capability",
+                "system_subject_to_policy",
+                "system_uses_tech_service",
+                "tech_service_connects_to",
+                "work_package_affects_system"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_nodes": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    }
+  }
+}

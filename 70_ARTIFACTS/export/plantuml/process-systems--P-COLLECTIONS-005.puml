@@ -1,0 +1,49 @@
+@startuml
+' Furnish credit bureau data — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Furnish credit bureau data — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_COLL_08, "Credit Bureau Reporting & Dispute Handling", "Furnish data to bureaus and handle consumer reporting disputes.", $tags="capabilities")
+  ' aac CAP_COLL_08: company_domain="Collections"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_BUREAU_ACC, "Bureau furnishing accuracy", "Furnished tradeline data is reconciled to the system of record before transmission; consumer disputes update furnishing.", $tags="controls")
+  ' aac CTL_BUREAU_ACC: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_BUREAU_FILE, "Credit bureau furnishing file", "Monthly tradeline furnishing extract and consumer-dispute responses.", $tags="data_assets")
+  ' aac DA_BUREAU_FILE: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_COLLECTIONS_005, "Furnish credit bureau data", "Compile and furnish account data to the consumer reporting agencies. Monthly Metro 2 furnishing to the bureaus; accuracy is an FCRA obligation, and the file must reconcile to the system of record before transmission.", $tags="processes")
+  ' aac P_COLLECTIONS_005: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_BUREAU_GW, "Credit bureau gateway", "Credit bureau furnishing and consumer dispute exchange.", $tags="systems")
+  ' aac SYS_BUREAU_GW: company_domain=""
+}
+
+Rel(P_COLLECTIONS_005, SYS_BUREAU_GW, "Primary")
+' aac rel: source="P_COLLECTIONS_005"; target="SYS_BUREAU_GW"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_COLLECTIONS_005, SYS_CORE_LEDGER, "Supporting")
+' aac rel: source="P_COLLECTIONS_005"; target="SYS_CORE_LEDGER"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COLLECTIONS_005, DA_BUREAU_FILE, "Writes")
+' aac rel: source="P_COLLECTIONS_005"; target="DA_BUREAU_FILE"; label="Writes"; relation="process_uses_data_asset"; access="Writes"
+Rel(P_COLLECTIONS_005, CTL_BUREAU_ACC, "governed by")
+' aac rel: source="P_COLLECTIONS_005"; target="CTL_BUREAU_ACC"; label="governed by"; relation="process_governed_by_control"
+Rel(P_COLLECTIONS_005, CAP_COLL_08, "supports")
+' aac rel: source="P_COLLECTIONS_005"; target="CAP_COLL_08"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

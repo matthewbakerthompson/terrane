@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="668.4" viewBox="0 0 1100 668.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Construct and approve firm offer of credit — Systems, Data and Controls</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Construct and approve firm offer of credit — Systems, Data and Controls</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   6 nodes · 5 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(159.72 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="279.92" y="244.3" width="212.16" height="207.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="321.92" y="261.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.87" y="105.26" width="212.27" height="119.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.72" y="122.67" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="537.3" y="24.3" width="233.4" height="328.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="567.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-MARKETING-002::SYS-CREDIT-DATA">
+<title>Primary</title>
+<path d="M196 142.33 L224.94 142 A10 10 0 0 1 225.06 142 L233 142 A8 8 0 0 0 241 134 L241 99.98 A10 10 0 0 1 250.98 89.98 L533.99 89.5 A10 10 0 0 1 534.01 89.5 L559.48 89.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M563 89.5 L553.43 94.28 L553.43 84.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-MARKETING-002::SYS-CREDIT-DATA">
+<rect x="362.32" y="96.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="383.5" y="108.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-MARKETING-002::SYS-PROSPECT-DATA">
+<title>Supporting</title>
+<path d="M196 153.67 L224.94 154 A10 10 0 0 0 225.06 154 L496 154 A10 10 0 0 1 506 164 L506 277.82 A10 10 0 0 0 516.18 287.82 L533.91 287.5 A10 10 0 0 1 534.09 287.5 L559.48 287.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M563 287.5 L553.43 292.29 L553.43 282.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-MARKETING-002::SYS-PROSPECT-DATA">
+<rect x="354.46" y="160.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="383.5" y="172.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-MARKETING-002::SYS-MARKETING">
+<title>Supporting</title>
+<path d="M196 165 L225 165 L251 165 A10 10 0 0 1 261 175 L261 178.98 A10 10 0 0 0 271.02 188.98 L533.99 188.5 A10 10 0 0 1 534.01 188.5 L559.48 188.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M563 188.5 L553.43 193.28 L553.43 183.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-MARKETING-002::SYS-MARKETING">
+<rect x="354.46" y="195.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="383.5" y="207.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e3::P-MARKETING-002::CAP-ACQ-02">
+<title>supports</title>
+<path d="M196 176.33 L224.94 176 A10 10 0 0 1 225.06 176 L241 176 A10 10 0 0 1 251 186 L251 294 A10 10 0 0 0 261 304 L277 304 L302.48 304" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M306 304 L296.43 308.79 L296.43 299.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e4::P-MARKETING-002::CAP-ACQ-04">
+<title>supports</title>
+<path d="M196 187.67 L224.94 188 A10 10 0 0 0 225.06 188 L233 188 A8 8 0 0 1 241 196 L241 382 A10 10 0 0 0 251 392 L277 392 L302.48 392" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M306 392 L296.43 396.79 L296.43 387.21 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-ACQ-02" data-type="capabilities">
+<title>Offer &amp; Pre-Screen Management</title>
+<path d="M346 270 L306 304 L346 338 L426 338 L466 304 L426 270 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="386" y="302.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Offer &amp; Pre-Screen</text>
+<text x="386" y="314.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+</g>
+<g class="node" data-id="CAP-ACQ-04" data-type="capabilities">
+<title>Marketing Compliance &amp; Disclosure Review</title>
+<path d="M346 358 L306 392 L346 426 L426 426 L466 392 L426 358 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="386" y="390.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Marketing Compliance</text>
+<text x="386" y="402.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">&amp; Disclosure Review</text>
+</g>
+<g class="node" data-id="P-MARKETING-002" data-type="processes">
+<title>Construct and approve firm offer of credit</title>
+<path d="M116 131 L36 156.97 L66.56 199 L165.44 199 L196 156.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="163.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Construct and approve</text>
+<text x="116" y="175.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">firm offer of credit</text>
+</g>
+<g class="node" data-id="SYS-CREDIT-DATA" data-type="systems">
+<title>Credit data and decisioning environment</title>
+<rect x="563" y="50" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="644" y="76.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit data and</text>
+<text x="644" y="88.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">decisioning</text>
+<text x="644" y="100.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">environment</text>
+<text x="654" y="123.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Snowflake Data Cloud</text>
+<image x="723" y="54" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMjlCNUU4IiByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+U25vd2ZsYWtlPC90aXRsZT48cGF0aCBkPSJNMjQgMy40NTljMCAuNjQ2LS40MTggMS4xOC0xLjE0MSAxLjE4LS43MjMgMC0xLjE0Mi0uNTM0LTEuMTQyLTEuMTggMC0uNjQ3LjQxOS0xLjE4IDEuMTQyLTEuMTguNzIzIDAgMS4xNDEuNTMzIDEuMTQxIDEuMTh6bS0uMjI4IDBjMC0uNTMzLS4zOC0uOTUxLS45MTMtLjk1MXMtLjkxMy4zOC0uOTEzLjk1YzAgLjUzMy4zOC45NTIuOTEzLjk1Mi41NyAwIC45MTMtLjQxOS45MTMtLjk1MXptLTEuMzctLjUzM2guNDk1Yy4yNjYgMCAuNDU2LjE1Mi40NTYuMzggMCAuMTUzLS4wNzYuMjI5LS4xOS4zMDVsLjE5LjI2NnYuMDM4aC0uMjY2bC0uMTktLjI2NmgtLjIyOXYuMjY2aC0uMjY2em0uNDk1LjIyOGgtLjIyOXYuMjY3aC4yMjljLjExNCAwIC4xNTItLjAzOC4xNTItLjExNC4wMzgtLjA3Ny0uMDM4LS4xNTMtLjE1Mi0uMTUzek03LjYwMiAxMi40Yy4wMzgtLjE1MS4wNzYtLjMwNC4wNzYtLjQ1NiAwLS4xMTQtLjAzOC0uMjI4LS4wMzgtLjM0Mi0uMTE0LS4zNDMtLjMwNC0uNjQ3LS42NDYtLjgzOGwtNC44Ny0yLjc3N2MtLjY4NS0uMzgtMS41Ni0uMTUyLTEuOTQuNTMzLS4zODEuNjg1LS4xNTMgMS41Ni41MzIgMS45NGwyLjcwMSAxLjU2LTIuNzAxIDEuNTZjLS42ODUuMzgtLjkxMyAxLjI1Ni0uNTMzIDEuOTQuMzguNjg1IDEuMjU2LjkxNCAxLjk0LjUzM2w0LjgzMi0yLjc3N2MuMzQzLS4yNjcuNTcxLS41MzMuNjQ3LS44NzZ6bTEuMzMyIDIuNjI2Yy0uMjY2LS4wMzgtLjU3LjAzOC0uODM3LjE5bC00LjgzMiAyLjc3N2MtLjY4NS4zOC0uOTEzIDEuMjU2LS41MzIgMS45NC4zOC42ODYgMS4yNTUuOTE0IDEuOTQuNTMzbDIuNzAxLTEuNTZ2My4xMmMwIC44LjY0NyAxLjQwOCAxLjQ0NiAxLjQwOC43OTkgMCAxLjQwNy0uNjQ3IDEuNDA3LTEuNDA4di01LjU5MmMwLS43NjEtLjU3LTEuMzctMS4yOTMtMS40MDh6bTQuOTQ2LTYuMDg4Yy4yNjYuMDM4LjU3LS4wMzguODM3LS4xOWw0LjgzMi0yLjc3N2MuNjg1LS4zOC45MTMtMS4yNTYuNTMyLTEuOTQtLjM4LS42ODYtMS4yNTUtLjkxNC0xLjk0LS41MzNsLTIuNzAxIDEuNTZWMS45NzVjMC0uNzk5LS42NDctMS40MDgtMS40NDYtMS40MDgtLjc5OSAwLTEuNDQ2LjYwOS0xLjQ0NiAxLjQwOFY3LjUzYzAgLjc2LjYwOSAxLjM3IDEuMzMyIDEuNDA3ek0zLjI2NSA1Ljk3bDQuODMyIDIuNzc3Yy4yNjYuMTUyLjUzMy4xOS44MzcuMTkuNzIzLS4wMzggMS4zMzEtLjY4NCAxLjMzMS0xLjQwN1YxLjk3NWMwLS43OTktLjY0Ni0xLjQwOC0xLjQwNy0xLjQwOC0uNzk5IDAtMS40NDYuNjQ3LTEuNDQ2IDEuNDA4djMuMTJsLTIuNzAxLTEuNTZjLS42ODUtLjM4LTEuNTYtLjE1Mi0xLjk0LjUzMy0uNDE5LjY0Ni0uMTkgMS41MjEuNDk0IDEuOTAyem05LjA5MyA2LjAxMWEuNDEyLjQxMiAwIDAwLS4xMTQtLjI2NmwtLjU3LS41NzFhLjM0Ni4zNDYgMCAwMC0uMjY3LS4xMTQuNDEyLjQxMiAwIDAwLS4yNjYuMTE0bC0uNTcxLjU3YS40MTEuNDExIDAgMDAtLjExNC4yNjdjMCAuMDc2LjAzOC4xOS4xMTQuMjY3bC41Ny41N2EuMzQ1LjM0NSAwIDAwLjI2Ny4xMTRjLjA3NiAwIC4xOS0uMDM4LjI2Ni0uMTE0bC41NzEtLjU3YS40MTIuNDEyIDAgMDAuMTE0LS4yNjd6bTEuNTk4LjUzM0wxMS45NCAxNC41M2MtLjAzOS4wMzgtLjE1My4xMTQtLjIyOS4xMTRoLS42MDhhLjQxMS40MTEgMCAwMS0uMjY3LS4xMTRMOC44MiAxMi41MTRhLjQwOC40MDggMCAwMS0uMDc2LS4yMjl2LS42MDhjMC0uMDc2LjAzOC0uMTkuMTE0LS4yNjdsMi4wMTYtMi4wMTZhLjQxLjQxIDAgMDEuMjY3LS4xMTRoLjYwOGEuNDEuNDEgMCAwMS4yNjcuMTE0bDIuMDE2IDIuMDE2YS4zNDcuMzQ3IDAgMDEuMTE0LjI2N3YuNjA4Yy0uMDc2LjA3Ny0uMTE0LjE5LS4xOS4yMjl6bTUuNTkzIDUuNDRsLTQuODMyLTIuNzc3Yy0uMjY2LS4xNTItLjU3LS4xOS0uODM3LS4xNTItLjcyMy4wMzgtMS4zMzIuNjg0LTEuMzMyIDEuNDA4djUuNTU0YzAgLjguNjQ3IDEuNDA4IDEuNDA4IDEuNDA4Ljc5OSAwIDEuNDQ2LS42NDcgMS40NDYtMS40MDh2LTMuMTJsMi43IDEuNTZjLjY4Ni4zOCAxLjU2MS4xNTIgMS45NDEtLjUzMy40MTktLjY0Ni4xOS0xLjUyMS0uNDk0LTEuOTR6bTIuNTQ5LTcuNTMzbC0yLjcwMSAxLjU2IDIuNyAxLjU2Yy42ODYuMzguOTE0IDEuMjU2LjUzMyAxLjk0LS4zOC42ODUtMS4yNTUuOTEzLTEuOTQuNTMzbC00LjgzMi0yLjc3OGExLjY0NCAxLjY0NCAwIDAxLS42NDctLjc5OGMtLjAzNy0uMTUzLS4wNzYtLjMwNS0uMDc2LS40NTcgMC0uMTE0LjAzOS0uMjI4LjAzOS0uMzQyLjExNC0uMzQzLjM0Mi0uNjQ3LjY0Ni0uODM3bDQuODMyLTIuNzc4Yy42ODUtLjM4IDEuNTYtLjE1MiAxLjk0LjUzMy40NTcuNjA5LjE5IDEuNDg0LS40OTQgMS44NjQiLz48L3N2Zz4="/>
+</g>
+<g class="node" data-id="SYS-MARKETING" data-type="systems">
+<title>Campaign management</title>
+<rect x="563" y="149" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="650" y="186.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Campaign</text>
+<text x="650" y="198.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">management</text>
+<svg x="727" y="154" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-PROSPECT-DATA" data-type="systems">
+<title>Prospect and marketing data services</title>
+<rect x="563" y="248" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="650" y="279.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Prospect and</text>
+<text x="650" y="291.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">marketing data</text>
+<text x="650" y="303.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">services</text>
+<svg x="727" y="253" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="566.4" x2="1072" y2="566.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="590.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 579.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="590.4" font-size="12" font-weight="400" fill="#343d50">capability · 2</text>
+<g transform="translate(180.32 579.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="206.32" y="590.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(280.59 579.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="306.59" y="590.4" font-size="12" font-weight="400" fill="#343d50">system · 3</text>
+<text x="28" y="612.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 601.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="612.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 601.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="612.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="646.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-marketing-002 · edit the model, not the picture</text></g>
+</svg>

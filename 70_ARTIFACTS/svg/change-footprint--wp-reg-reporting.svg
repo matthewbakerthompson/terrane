@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1240" height="651.42" viewBox="0 0 1240 651.42" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Stand up the regulatory reporting engine — Footprint</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Stand up the regulatory reporting engine — Footprint</text>
+<text x="1212" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   8 nodes · 8 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One work package and its footprint: the systems it builds or changes, the data those systems read and write, the capabilities they realize, and the processes that depend on them. The</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">footprint is derived from the model, so it includes indirect effects.</text>
+<line x1="28" y1="112" x2="1212" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(19.2 99.22)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="712.32" y="84.3" width="212.57" height="175.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="754.32" y="101.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="969.9" y="227.3" width="221.4" height="207.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="1011.9" y="244.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="442.26" y="24.28" width="212.67" height="103.42" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="475.11" y="41.68" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="370.9" y="156.3" width="233.4" height="197.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="400.7" y="173.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="boundary" data-id="grp::Work Package">
+<rect x="10.3" y="165.3" width="211.4" height="119.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="58.4" y="182.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Work Package</text>
+</g>
+<g class="edge" data-id="e0::WP-REG-REPORTING::SYS-REG-REPORTING">
+<title>Builds</title>
+<path d="M196 236.33 L224.94 236 A10 10 0 0 1 225.06 236 L329.6 236 A10 10 0 0 1 339.6 246 L339.6 286.82 A10 10 0 0 0 349.78 296.82 L367.51 296.5 A10 10 0 0 1 367.69 296.5 L393.08 296.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M396.6 296.5 L387.03 301.29 L387.03 291.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::WP-REG-REPORTING::SYS-REG-REPORTING">
+<rect x="278.76" y="242.5" width="35.07" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="296.3" y="254.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Builds</text>
+</g>
+<g class="edge" data-id="e1::WP-REG-REPORTING::SYS-CUST360-SEMANTIC">
+<title>Changes</title>
+<path d="M196 213.67 L224.93 214 A10 10 0 0 0 225.08 214 L367.58 213.5 A10 10 0 0 1 367.62 213.5 L393.08 213.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M396.6 213.5 L387.03 218.28 L387.03 208.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::WP-REG-REPORTING::SYS-CUST360-SEMANTIC">
+<rect x="272.64" y="191.5" width="47.32" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="296.3" y="203.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Changes</text>
+</g>
+<g class="edge" data-id="e2::SYS-CUST360-SEMANTIC::DA-CUST360-CURATED">
+<title>Read</title>
+<path d="M578.6 224 L598.6 224 A10 10 0 0 1 608.6 234 L608.6 290.8 A10 10 0 0 0 618.55 300.8 L657.57 301 A10 10 0 0 0 657.63 301 L683.6 301 A10 10 0 0 0 693.6 291 L693.6 285.99 A10 10 0 0 1 703.59 275.99 L966.59 275.67 A10 10 0 0 1 966.61 275.67 L992.08 275.67" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M995.6 275.67 L986.03 280.45 L986.03 270.88 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::SYS-CUST360-SEMANTIC::DA-CUST360-CURATED">
+<rect x="801.06" y="282.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="816.1" y="294.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e3::SYS-REG-REPORTING::DA-LENDPERF-CURATED">
+<title>Read</title>
+<path d="M578.6 312.25 L584.35 312.25 A4.25 4.25 0 0 1 588.6 316.5 L588.6 316.5 A4.27 4.27 0 0 0 592.85 320.77 L657.58 321 A10 10 0 0 0 657.62 321 L665.6 321 A8 8 0 0 1 673.6 329 L673.6 365 A10 10 0 0 0 683.6 375 L966.6 375 L992.08 375" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M995.6 375 L986.03 379.79 L986.03 370.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::SYS-REG-REPORTING::DA-LENDPERF-CURATED">
+<rect x="801.06" y="381.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="816.1" y="393.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e4::SYS-REG-REPORTING::DA-CUST360-CURATED">
+<title>Read</title>
+<path d="M578.6 296.5 L591.48 296.5 A7.12 7.12 0 0 1 598.6 303.62 L598.6 303.62 A7.16 7.16 0 0 0 605.72 310.78 L657.58 311 A10 10 0 0 0 657.62 311 L932.1 311 A6.5 6.5 0 0 0 938.6 304.5 L938.6 304.5 A6.42 6.42 0 0 1 945.1 298.08 L966.54 298.33 A10 10 0 0 0 966.66 298.33 L992.08 298.33" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M995.6 298.33 L986.03 303.12 L986.03 293.55 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::SYS-REG-REPORTING::DA-CUST360-CURATED">
+<rect x="801.06" y="317.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="816.1" y="329.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e5::SYS-CUST360-SEMANTIC::CAP-DATA-04">
+<title>realizes</title>
+<path d="M578.6 203 L608.6 203 A10 10 0 0 1 618.6 213 L618.6 280.81 A10 10 0 0 0 628.54 290.81 L657.57 291 A10 10 0 0 0 657.63 291 L673.6 291 A10 10 0 0 0 683.6 281 L683.6 218 A10 10 0 0 1 693.6 208 L709.6 208 L735.08 208" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M738.6 208 L729.03 212.78 L729.03 203.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e6::SYS-REG-REPORTING::CAP-FIN-04">
+<title>realizes</title>
+<path d="M578.6 280.75 L657.58 281 A10 10 0 0 0 657.62 281 L665.6 281 A8 8 0 0 0 673.6 273 L673.6 154.91 A10 10 0 0 1 683.51 144.91 L709.55 144.67 A10 10 0 0 1 709.65 144.67 L735.08 144.67" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M738.6 144.67 L729.03 149.45 L729.03 139.88 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e7::P-REG-DATA-PREP-001::CAP-FIN-04">
+<title>supports</title>
+<path d="M628.6 76 L657.6 76 L665.6 76 A8 8 0 0 1 673.6 84 L673.6 117.09 A10 10 0 0 0 683.51 127.09 L709.55 127.33 A10 10 0 0 0 709.65 127.33 L735.08 127.33" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M738.6 127.33 L729.03 132.12 L729.03 122.55 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-DATA-04" data-type="capabilities">
+<title>Analytics, Reporting &amp; BI</title>
+<path d="M778.6 182 L738.6 208 L778.6 234 L858.6 234 L898.6 208 L858.6 182 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="818.6" y="206.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Analytics, Reporting &amp;</text>
+<text x="818.6" y="218.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">BI</text>
+</g>
+<g class="node" data-id="CAP-FIN-04" data-type="capabilities">
+<title>Regulatory &amp; Financial Reporting</title>
+<path d="M778.6 110 L738.6 136 L778.6 162 L858.6 162 L898.6 136 L858.6 110 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="818.6" y="134.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Regulatory &amp; Financial</text>
+<text x="818.6" y="146.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Reporting</text>
+</g>
+<g class="node" data-id="DA-CUST360-CURATED" data-type="data_assets">
+<title>Customer 360 curated dataset</title>
+<path d="M995.6 256.4 Q1004.1 253 1038.1 253 L1123.1 253 Q1157.1 253 1165.6 256.4 L1165.6 317.6 Q1157.1 321 1123.1 321 L1038.1 321 Q1004.1 321 995.6 317.6 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="1076.6" y="285.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer 360</text>
+<text x="1076.6" y="297.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">curated dataset</text>
+<svg x="1147.6" y="258" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-LENDPERF-CURATED" data-type="data_assets">
+<title>Lending Portfolio Performance curated dataset</title>
+<path d="M995.6 344.4 Q1004.1 341 1038.1 341 L1123.1 341 Q1157.1 341 1165.6 344.4 L1165.6 405.6 Q1157.1 409 1123.1 409 L1038.1 409 Q1004.1 409 995.6 405.6 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="1076.6" y="367.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Lending Portfolio</text>
+<text x="1076.6" y="379.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Performance curated</text>
+<text x="1076.6" y="391.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">dataset</text>
+<svg x="1147.6" y="346" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-REG-DATA-PREP-001" data-type="processes">
+<title>Prepare regulatory reporting data</title>
+<path d="M548.6 50 L468.6 69.86 L499.16 102 L598.04 102 L628.6 69.86 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="548.6" y="74.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Prepare regulatory</text>
+<text x="548.6" y="86.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">reporting data</text>
+</g>
+<g class="node" data-id="SYS-CUST360-SEMANTIC" data-type="systems">
+<title>Customer 360 Semantic Layer</title>
+<rect x="396.6" y="182" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="477.6" y="206.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer 360</text>
+<text x="477.6" y="218.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Semantic Layer</text>
+<text x="487.6" y="239.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Snowflake Data Cloud</text>
+<image x="556.6" y="186" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMjlCNUU4IiByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+U25vd2ZsYWtlPC90aXRsZT48cGF0aCBkPSJNMjQgMy40NTljMCAuNjQ2LS40MTggMS4xOC0xLjE0MSAxLjE4LS43MjMgMC0xLjE0Mi0uNTM0LTEuMTQyLTEuMTggMC0uNjQ3LjQxOS0xLjE4IDEuMTQyLTEuMTguNzIzIDAgMS4xNDEuNTMzIDEuMTQxIDEuMTh6bS0uMjI4IDBjMC0uNTMzLS4zOC0uOTUxLS45MTMtLjk1MXMtLjkxMy4zOC0uOTEzLjk1YzAgLjUzMy4zOC45NTIuOTEzLjk1Mi41NyAwIC45MTMtLjQxOS45MTMtLjk1MXptLTEuMzctLjUzM2guNDk1Yy4yNjYgMCAuNDU2LjE1Mi40NTYuMzggMCAuMTUzLS4wNzYuMjI5LS4xOS4zMDVsLjE5LjI2NnYuMDM4aC0uMjY2bC0uMTktLjI2NmgtLjIyOXYuMjY2aC0uMjY2em0uNDk1LjIyOGgtLjIyOXYuMjY3aC4yMjljLjExNCAwIC4xNTItLjAzOC4xNTItLjExNC4wMzgtLjA3Ny0uMDM4LS4xNTMtLjE1Mi0uMTUzek03LjYwMiAxMi40Yy4wMzgtLjE1MS4wNzYtLjMwNC4wNzYtLjQ1NiAwLS4xMTQtLjAzOC0uMjI4LS4wMzgtLjM0Mi0uMTE0LS4zNDMtLjMwNC0uNjQ3LS42NDYtLjgzOGwtNC44Ny0yLjc3N2MtLjY4NS0uMzgtMS41Ni0uMTUyLTEuOTQuNTMzLS4zODEuNjg1LS4xNTMgMS41Ni41MzIgMS45NGwyLjcwMSAxLjU2LTIuNzAxIDEuNTZjLS42ODUuMzgtLjkxMyAxLjI1Ni0uNTMzIDEuOTQuMzguNjg1IDEuMjU2LjkxNCAxLjk0LjUzM2w0LjgzMi0yLjc3N2MuMzQzLS4yNjcuNTcxLS41MzMuNjQ3LS44NzZ6bTEuMzMyIDIuNjI2Yy0uMjY2LS4wMzgtLjU3LjAzOC0uODM3LjE5bC00LjgzMiAyLjc3N2MtLjY4NS4zOC0uOTEzIDEuMjU2LS41MzIgMS45NC4zOC42ODYgMS4yNTUuOTE0IDEuOTQuNTMzbDIuNzAxLTEuNTZ2My4xMmMwIC44LjY0NyAxLjQwOCAxLjQ0NiAxLjQwOC43OTkgMCAxLjQwNy0uNjQ3IDEuNDA3LTEuNDA4di01LjU5MmMwLS43NjEtLjU3LTEuMzctMS4yOTMtMS40MDh6bTQuOTQ2LTYuMDg4Yy4yNjYuMDM4LjU3LS4wMzguODM3LS4xOWw0LjgzMi0yLjc3N2MuNjg1LS4zOC45MTMtMS4yNTYuNTMyLTEuOTQtLjM4LS42ODYtMS4yNTUtLjkxNC0xLjk0LS41MzNsLTIuNzAxIDEuNTZWMS45NzVjMC0uNzk5LS42NDctMS40MDgtMS40NDYtMS40MDgtLjc5OSAwLTEuNDQ2LjYwOS0xLjQ0NiAxLjQwOFY3LjUzYzAgLjc2LjYwOSAxLjM3IDEuMzMyIDEuNDA3ek0zLjI2NSA1Ljk3bDQuODMyIDIuNzc3Yy4yNjYuMTUyLjUzMy4xOS44MzcuMTkuNzIzLS4wMzggMS4zMzEtLjY4NCAxLjMzMS0xLjQwN1YxLjk3NWMwLS43OTktLjY0Ni0xLjQwOC0xLjQwNy0xLjQwOC0uNzk5IDAtMS40NDYuNjQ3LTEuNDQ2IDEuNDA4djMuMTJsLTIuNzAxLTEuNTZjLS42ODUtLjM4LTEuNTYtLjE1Mi0xLjk0LjUzMy0uNDE5LjY0Ni0uMTkgMS41MjEuNDk0IDEuOTAyem05LjA5MyA2LjAxMWEuNDEyLjQxMiAwIDAwLS4xMTQtLjI2NmwtLjU3LS41NzFhLjM0Ni4zNDYgMCAwMC0uMjY3LS4xMTQuNDEyLjQxMiAwIDAwLS4yNjYuMTE0bC0uNTcxLjU3YS40MTEuNDExIDAgMDAtLjExNC4yNjdjMCAuMDc2LjAzOC4xOS4xMTQuMjY3bC41Ny41N2EuMzQ1LjM0NSAwIDAwLjI2Ny4xMTRjLjA3NiAwIC4xOS0uMDM4LjI2Ni0uMTE0bC41NzEtLjU3YS40MTIuNDEyIDAgMDAuMTE0LS4yNjd6bTEuNTk4LjUzM0wxMS45NCAxNC41M2MtLjAzOS4wMzgtLjE1My4xMTQtLjIyOS4xMTRoLS42MDhhLjQxMS40MTEgMCAwMS0uMjY3LS4xMTRMOC44MiAxMi41MTRhLjQwOC40MDggMCAwMS0uMDc2LS4yMjl2LS42MDhjMC0uMDc2LjAzOC0uMTkuMTE0LS4yNjdsMi4wMTYtMi4wMTZhLjQxLjQxIDAgMDEuMjY3LS4xMTRoLjYwOGEuNDEuNDEgMCAwMS4yNjcuMTE0bDIuMDE2IDIuMDE2YS4zNDcuMzQ3IDAgMDEuMTE0LjI2N3YuNjA4Yy0uMDc2LjA3Ny0uMTE0LjE5LS4xOS4yMjl6bTUuNTkzIDUuNDRsLTQuODMyLTIuNzc3Yy0uMjY2LS4xNTItLjU3LS4xOS0uODM3LS4xNTItLjcyMy4wMzgtMS4zMzIuNjg0LTEuMzMyIDEuNDA4djUuNTU0YzAgLjguNjQ3IDEuNDA4IDEuNDA4IDEuNDA4Ljc5OSAwIDEuNDQ2LS42NDcgMS40NDYtMS40MDh2LTMuMTJsMi43IDEuNTZjLjY4Ni4zOCAxLjU2MS4xNTIgMS45NDEtLjUzMy40MTktLjY0Ni4xOS0xLjUyMS0uNDk0LTEuOTR6bTIuNTQ5LTcuNTMzbC0yLjcwMSAxLjU2IDIuNyAxLjU2Yy42ODYuMzguOTE0IDEuMjU2LjUzMyAxLjk0LS4zOC42ODUtMS4yNTUuOTEzLTEuOTQuNTMzbC00LjgzMi0yLjc3OGExLjY0NCAxLjY0NCAwIDAxLS42NDctLjc5OGMtLjAzNy0uMTUzLS4wNzYtLjMwNS0uMDc2LS40NTcgMC0uMTE0LjAzOS0uMjI4LjAzOS0uMzQyLjExNC0uMzQzLjM0Mi0uNjQ3LjY0Ni0uODM3bDQuODMyLTIuNzc4Yy42ODUtLjM4IDEuNTYtLjE1MiAxLjk0LjUzMy40NTcuNjA5LjE5IDEuNDg0LS40OTQgMS44NjQiLz48L3N2Zz4="/>
+</g>
+<g class="node" data-id="SYS-REG-REPORTING" data-type="systems">
+<title>Regulatory Reporting Engine</title>
+<rect x="396.6" y="265" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="477.6" y="289.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Regulatory</text>
+<text x="477.6" y="301.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Reporting Engine</text>
+<text x="487.6" y="322.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AKS · Snowflake Data Cloud</text>
+<image x="556.6" y="269" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYWY2YTJjNDItYmQ0OC00ODU3LWE0NzktYWVjZjhiM2RlNGY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImI3MGM5Y2YxLWJhYjgtNDdlMC1iYmRiLWNlMWNkNjY0ZDI2OCIgeDE9IjIuOTQiIHkxPSIzLjc0IiB4Mj0iOC42NyIgeTI9IjMuNzQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiZWI2OTk1My1iZDk2LTQ1MTUtODg0My1hYzEyNTQ2YWY5MzYiIHgxPSI5LjEzIiB5MT0iMy43OSIgeDI9IjE0Ljg1IiB5Mj0iMy43OSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImEzOWM3NmU4LTU0N2UtNGViNC1iYzI1LWQ4MWMwZjhjZGE2MiIgeDE9IjAuMDEiIHkxPSI5LjEyIiB4Mj0iNS43MyIgeTI9IjkuMTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJmMGEyYTQ5MS0xN2RjLTRiYjgtYmJmYy1lZTU4YTVjZjQ3ZGEiIHgxPSI2LjE4IiB5MT0iOS4wOCIgeDI9IjExLjkiIHkyPSI5LjA4IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwIiB4MT0iMTIuMzUiIHkxPSI5LjEzIiB4Mj0iMTguMDgiIHkyPSI5LjEzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZTM5OWFhOTMtMzQxZi00ZGYyLTljMDItNjAzYjgyYjQ4NGMyIiB4MT0iMi44NyIgeTE9IjE0LjU2IiB4Mj0iOC42IiB5Mj0iMTQuNTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJhMTUyYmJhMC1iYTJiLTQ4M2EtYjhjMS0wYWU3ZGUzNTU5OTAiIHgxPSI5LjA1IiB5MT0iMTQuNiIgeDI9IjE0Ljc4IiB5Mj0iMTQuNiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPkljb24tY29tcHV0ZS0yMzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSI1LjggMS4yMiAyLjk0IDEuNzUgMi45NCA1LjY1IDUuOCA2LjI2IDguNjcgNS4xMSA4LjY3IDIuMiA1LjggMS4yMiIgZmlsbD0idXJsKCNiNzBjOWNmMS1iYWI4LTQ3ZTAtYmJkYi1jZTFjZDY2NGQyNjgpIiAvPjxwYXRoIGQ9Ik01LjkxLDYuMiw4LjUzLDUuMTRBLjIuMiwwLDAsMCw4LjY1LDVWMi4zNmEuMjEuMjEsMCwwLDAtLjEzLS4xOGwtMi42NS0uOUg1Ljc1bC0yLjYuNDhBLjIuMiwwLDAsMCwzLDEuOTRWNS40N2EuMTkuMTksMCwwLDAsLjE1LjE5bDIuNjMuNTVBLjMyLjMyLDAsMCwwLDUuOTEsNi4yWiIgZmlsbD0ibm9uZSIgLz48cGF0aCBkPSJNMi45NCwxLjc1djMuOWwyLjg5LjYxdi01Wm0xLjIyLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYybC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMTEuOTkgMS4yNyA5LjEzIDEuOCA5LjEzIDUuNyAxMS45OSA2LjMxIDE0Ljg1IDUuMTUgMTQuODUgMi4yNSAxMS45OSAxLjI3IiBmaWxsPSJ1cmwoI2JlYjY5OTUzLWJkOTYtNDUxNS04ODQzLWFjMTI1NDZhZjkzNikiIC8+PHBhdGggZD0iTTkuMTMsMS44VjUuN0wxMiw2LjMxdi01Wm0xLjIxLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYyLjA1bC45My0uMTdaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMi44NyA2LjYgMC4wMSA3LjEzIDAuMDEgMTEuMDMgMi44NyAxMS42NCA1Ljc0IDEwLjQ5IDUuNzQgNy41OCAyLjg3IDYuNiIgZmlsbD0idXJsKCNhMzljNzZlOC01NDdlLTRlYjQtYmMyNS1kODFjMGY4Y2RhNjIpIiAvPjxwYXRoIGQ9Ik0wLDcuMTNWMTFsMi44OS42MXYtNVptMS4yMSwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFpNMi40OCwxMWwtLjkzLS4xNVY3LjM4bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iOS4wNCA2LjU2IDYuMTggNy4wOSA2LjE4IDEwLjk5IDkuMDQgMTEuNjEgMTEuOSAxMC40NSAxMS45IDcuNTQgOS4wNCA2LjU2IiBmaWxsPSJ1cmwoI2YwYTJhNDkxLTE3ZGMtNGJiOC1iYmZjLWVlNThhNWNmNDdkYSkiIC8+PHBhdGggZD0iTTYuMTgsNy4wOVYxMWwyLjg4LjYxdi01Wk03LjM5LDEwLjdsLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjcuMzRsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxNS4yMSA2LjYxIDEyLjM1IDcuMTQgMTIuMzUgMTEuMDQgMTUuMjEgMTEuNjUgMTguMDggMTAuNSAxOC4wOCA3LjU5IDE1LjIxIDYuNjEiIGZpbGw9InVybCgjZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwKSIgLz48cGF0aCBkPSJNMTIuMzUsNy4xNFYxMWwyLjg5LjYxdi01Wm0xLjIyLDMuNjEtLjgxLS4xN3YtM2wuODEtLjE0Wm0xLjI2LjIyLS45My0uMTVWNy4zOWwuOTMtLjE2WiIgZmlsbD0iIzM0MWE2ZSIgLz48cG9seWdvbiBwb2ludHM9IjUuNzMgMTIuMDQgMi44NyAxMi41NiAyLjg3IDE2LjQ2IDUuNzMgMTcuMDggOC42IDE1LjkyIDguNiAxMy4wMiA1LjczIDEyLjA0IiBmaWxsPSJ1cmwoI2UzOTlhYTkzLTM0MWYtNGRmMi05YzAyLTYwM2I4MmI0ODRjMikiIC8+PHBhdGggZD0iTTUuODQsMTcsOC40NSwxNmEuMTguMTgsMCwwLDAsLjEyLS4xOHYtMi42QS4yLjIsMCwwLDAsOC40NCwxM0w1LjgsMTIuMWEuMTcuMTcsMCwwLDAtLjEyLDBsLTIuNi40N2EuMTkuMTksMCwwLDAtLjE2LjE5djMuNTRhLjE5LjE5LDAsMCwwLC4xNS4xOUw1LjcsMTdBLjIzLjIzLDAsMCwwLDUuODQsMTdaIiBmaWxsPSJub25lIiAvPjxwYXRoIGQ9Ik0yLjg3LDEyLjU2djMuOWwyLjg5LjYyVjEyWm0xLjIyLDMuNjFMMy4yOCwxNlYxM2wuODEtLjE0Wm0xLjI2LjIzLS45My0uMTVWMTIuODFsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxMS45MSAxMi4wOCA5LjA1IDEyLjYxIDkuMDUgMTYuNTEgMTEuOTEgMTcuMTIgMTQuNzggMTUuOTcgMTQuNzggMTMuMDYgMTEuOTEgMTIuMDgiIGZpbGw9InVybCgjYTE1MmJiYTAtYmEyYi00ODNhLWI4YzEtMGFlN2RlMzU1OTkwKSIgLz48cGF0aCBkPSJNOS4wNSwxMi42MXYzLjlsMi44OS42MXYtNVptMS4yMiwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjEyLjg2bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="WP-REG-REPORTING" data-type="work_packages">
+<title>Stand up the regulatory reporting engine</title>
+<path d="M109.74 256.34 Q116 259 122.26 256.34 L189.74 227.66 Q196 225 189.74 222.34 L122.26 193.66 Q116 191 109.74 193.66 L42.26 222.34 Q36 225 42.26 227.66 Z" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.4"/>
+<text x="116" y="217.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Stand up the</text>
+<text x="116" y="229.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">regulatory reporting</text>
+<text x="116" y="241.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">engine</text>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="549.42" x2="1212" y2="549.42" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="573.42" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 562.42)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="573.42" font-size="12" font-weight="400" fill="#343d50">capability · 2</text>
+<g transform="translate(180.32 562.42)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="206.32" y="573.42" font-size="12" font-weight="400" fill="#343d50">data asset · 2</text>
+<g transform="translate(297.24 562.42)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="323.24" y="573.42" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(397.51 562.42)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="423.51" y="573.42" font-size="12" font-weight="400" fill="#343d50">system · 2</text>
+<g transform="translate(496.95 562.42)" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.4"><path d="M8.5 1.6a2 2 0 0 1 3 0l6.9 4.6a1.2 1.2 0 0 1 0 1.6l-6.9 4.6a2 2 0 0 1-3 0L1.6 7.8a1.2 1.2 0 0 1 0-1.6z"/></g>
+<text x="522.95" y="573.42" font-size="12" font-weight="400" fill="#343d50">work package · 1</text>
+<text x="28" y="595.42" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 584.42)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="595.42" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 584.42)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="595.42" font-size="12" font-weight="400" fill="#343d50">reads / writes</text>
+<g transform="translate(285.96 584.42)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="311.96" y="595.42" font-size="12" font-weight="400" fill="#343d50">realizes</text>
+<g transform="translate(372.16 584.42)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="398.16" y="595.42" font-size="12" font-weight="400" fill="#343d50">work package affects system</text>
+<text x="28" y="629.42" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · change-footprint--wp-reg-reporting · edit the model, not the picture</text></g>
+</svg>

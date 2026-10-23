@@ -1,0 +1,50 @@
+# The foundation model service of each landing zone, tagged `landing-zone` so
+# a part that asks for one (the inference service in 28_MODULES/) resolves to
+# it without the shape binding it. Named as the clouds name them in 2026;
+# the models behind each are the provider's own families and the third-party
+# ones it hosts, which change too often to list here.
+
+- tech_service_id: TS-AWS-BEDROCK
+  name: Amazon Bedrock
+  description: Managed access to foundation models (Amazon Nova, Claude, Llama and others) inside the account's own data boundary.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: AWS
+  cloud_provider: AWS
+  service_category: AI
+  service_name: Bedrock
+  component_type: foundation-model-service
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-FOUNDRY
+  name: Microsoft Foundry
+  description: Managed access to foundation models (OpenAI, Microsoft MAI, Claude and others), formerly Azure OpenAI Service and Azure AI Foundry.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: AI
+  service_name: Foundry
+  component_type: foundation-model-service
+  tags: [landing-zone]
+
+- tech_service_id: TS-GCP-GEMINI-PLATFORM
+  name: Gemini Enterprise Agent Platform
+  description: Managed access to foundation models (Gemini, Gemma, Claude and others) through Model Garden, formerly Vertex AI.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: AI
+  service_name: Gemini Enterprise Agent Platform
+  component_type: foundation-model-service
+  tags: [landing-zone]

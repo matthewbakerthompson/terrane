@@ -1,0 +1,60 @@
+@startuml
+' Lending Portfolio Performance — By part
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Lending Portfolio Performance — By part
+
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("tech_services", $bgColor="#fed7aa", $borderColor="#c2410c", $fontColor="#0f172a", $legendText="technology service")
+AddRelTag("pipeline-load", $legendText="Pipeline load")
+
+Deployment_Node(TS_GCP_BIGQUERY, "BigQuery", "Data warehouse", "Serverless warehouse; one dataset per data product, customer-managed keys, authorized views for the semantic layer.", $tags="tech_services") {
+  ' aac TS_GCP_BIGQUERY: company_domain="Enterprise Platform"; technology="Data warehouse"
+}
+Deployment_Node(TS_GCP_COMPOSER, "Cloud Composer", "Workflow orchestration", "Managed Airflow, the schedule a data product's jobs run on.", $tags="tech_services") {
+  ' aac TS_GCP_COMPOSER: company_domain="Enterprise Platform"; technology="Workflow orchestration"
+}
+Deployment_Node(TS_COLLIBRA, "Collibra", "Data catalog", "Governance catalog and the intended system of record for metadata.", $tags="tech_services") {
+  ' aac TS_COLLIBRA: company_domain="Data and Analytics"; technology="Data catalog"
+}
+Deployment_Node(TS_GCP_DATAFLOW, "Dataflow", "Data pipeline", "Managed batch and streaming jobs, the curation engine of a data product on this side.", $tags="tech_services") {
+  ' aac TS_GCP_DATAFLOW: company_domain="Enterprise Platform"; technology="Data pipeline"
+}
+SystemDb(DA_LENDPERF_CURATED, "Lending Portfolio Performance curated dataset", "Curated, governed dataset produced by Lending Portfolio Performance, held in BigQuery.", $tags="data_assets")
+' aac DA_LENDPERF_CURATED: company_domain="Lending"
+System(SYS_LENDPERF_PIPELINE, "Lending Portfolio Performance Pipeline", "Dataflow jobs on a Composer schedule, ingesting the source events of Lending Portfolio Performance from Pub/Sub and curating them into BigQuery. Built with BigQuery · Dataflow +3.", $tags="systems")
+' aac SYS_LENDPERF_PIPELINE: company_domain="Lending"; hosting="GCP"; technology="BigQuery · Dataflow +3"
+System(SYS_LENDPERF_SEMANTIC, "Lending Portfolio Performance Semantic Layer", "Governed models and metrics exposed to analysts for Lending Portfolio Performance, served from BigQuery through Looker. Built with BigQuery · Looker.", $tags="systems")
+' aac SYS_LENDPERF_SEMANTIC: company_domain="Lending"; hosting="GCP"; technology="BigQuery · Looker"
+Deployment_Node(TS_GCP_LOOKER, "Looker", "Business intelligence", "The governed semantic layer and the dashboards over BigQuery.", $tags="tech_services") {
+  ' aac TS_GCP_LOOKER: company_domain="Enterprise Platform"; technology="Business intelligence"
+}
+Deployment_Node(TS_GCP_PUBSUB, "Pub/Sub", "Message queue", "The enterprise bus on Google Cloud, topics and subscriptions with at-least-once delivery; the queue kind of the landing zone.", $tags="tech_services") {
+  ' aac TS_GCP_PUBSUB: company_domain="Enterprise Platform"; technology="Message queue"
+}
+
+Rel(SYS_LENDPERF_PIPELINE, SYS_LENDPERF_SEMANTIC, "Lending Portfolio Performance Pipeline to Semantic Layer", "SQL", $tags="pipeline-load")
+' aac rel: source="SYS_LENDPERF_PIPELINE"; target="SYS_LENDPERF_SEMANTIC"; label="Lending Portfolio Performance Pipeline to Semantic Layer"; interface_id="INT-LENDPERF-PIPE-SEMANTIC"; kind="pipeline-load"; integration_style="Batch"; auth_method="WorkloadIdentity"; frequency="Daily"; direction="Outbound"
+Rel(SYS_LENDPERF_PIPELINE, TS_GCP_PUBSUB, "runs on")
+' aac rel: source="SYS_LENDPERF_PIPELINE"; target="TS_GCP_PUBSUB"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_LENDPERF_PIPELINE, TS_GCP_DATAFLOW, "runs on")
+' aac rel: source="SYS_LENDPERF_PIPELINE"; target="TS_GCP_DATAFLOW"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_LENDPERF_PIPELINE, TS_GCP_COMPOSER, "runs on")
+' aac rel: source="SYS_LENDPERF_PIPELINE"; target="TS_GCP_COMPOSER"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_LENDPERF_PIPELINE, TS_GCP_BIGQUERY, "runs on")
+' aac rel: source="SYS_LENDPERF_PIPELINE"; target="TS_GCP_BIGQUERY"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_LENDPERF_PIPELINE, TS_COLLIBRA, "runs on")
+' aac rel: source="SYS_LENDPERF_PIPELINE"; target="TS_COLLIBRA"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_LENDPERF_SEMANTIC, TS_GCP_BIGQUERY, "runs on")
+' aac rel: source="SYS_LENDPERF_SEMANTIC"; target="TS_GCP_BIGQUERY"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_LENDPERF_SEMANTIC, TS_GCP_LOOKER, "runs on")
+' aac rel: source="SYS_LENDPERF_SEMANTIC"; target="TS_GCP_LOOKER"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_LENDPERF_PIPELINE, DA_LENDPERF_CURATED, "Write")
+' aac rel: source="SYS_LENDPERF_PIPELINE"; target="DA_LENDPERF_CURATED"; label="Write"; relation="system_reads_writes"; operation="Write"
+Rel(SYS_LENDPERF_SEMANTIC, DA_LENDPERF_CURATED, "Read")
+' aac rel: source="SYS_LENDPERF_SEMANTIC"; target="DA_LENDPERF_CURATED"; label="Read"; relation="system_reads_writes"; operation="Read"
+
+SHOW_LEGEND()
+@enduml

@@ -1,0 +1,96 @@
+# How things talk to each other.
+#
+# Worth modeling separately from what they connect, because the coupling is in
+# here: a queue between two systems is a different architecture from a call.
+
+- component_type_id: message-queue
+  name: Message queue
+  category: Integration
+  applies_to: tech_services
+  shape: rhomboid
+  description: >
+    Point-to-point buffering with delivery guarantees. Turns a synchronous dependency into a durable one.
+  providers:
+    AWS: Amazon SQS
+    Azure: Azure Service Bus
+    GCP: Pub/Sub
+    On-prem: IBM MQ
+  defaults:
+    service_category: Integration
+    network_zone: Private-App
+
+- component_type_id: event-stream
+  name: Event stream
+  category: Integration
+  applies_to: tech_services
+  shape: rhomboid
+  description: >
+    An append-only log several consumers read at their own pace. The one that changes who owns the data.
+  providers:
+    AWS: Amazon Kinesis or MSK
+    Azure: Azure Event Hubs
+    GCP: Pub/Sub
+    SaaS: Confluent Kafka
+  defaults:
+    service_category: Integration
+    network_zone: Private-App
+
+- component_type_id: event-bus
+  name: Event bus
+  category: Integration
+  applies_to: tech_services
+  shape: rhomboid
+  description: >
+    Routed events with filtering, usually between services rather than into a pipeline.
+  providers:
+    AWS: Amazon EventBridge
+    Azure: Azure Event Grid
+    GCP: Eventarc
+  defaults:
+    service_category: Integration
+    network_zone: Private-App
+
+- component_type_id: workflow
+  name: Workflow orchestration
+  category: Integration
+  applies_to: tech_services
+  shape: rhomboid
+  description: >
+    Long-running, stateful coordination of steps. Where a saga lives once it stops fitting in one service.
+  providers:
+    AWS: AWS Step Functions
+    Azure: Azure Logic Apps
+    GCP: Workflows
+    SaaS: Temporal
+  defaults:
+    service_category: Integration
+    network_zone: Private-App
+
+- component_type_id: file-transfer
+  name: Managed file transfer
+  category: Integration
+  applies_to: tech_services
+  shape: rhomboid
+  description: >
+    Scheduled file exchange, usually with a party who was never going to build an API.
+  providers:
+    AWS: AWS Transfer Family
+    Azure: Azure Logic Apps SFTP
+    On-prem: Managed file transfer appliance
+  defaults:
+    service_category: Integration
+    network_zone: Edge
+
+- component_type_id: ipaas
+  name: Integration platform
+  category: Integration
+  applies_to: tech_services
+  shape: rhomboid
+  description: >
+    Low-code connectors between applications. Fast to deliver and easy to lose track of.
+  providers:
+    SaaS: MuleSoft, Boomi or Workato
+    Azure: Azure Integration Services
+  defaults:
+    service_category: Integration
+    network_zone: Private-App

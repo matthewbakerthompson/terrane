@@ -1,0 +1,178 @@
+# How the network fabric fits together, and which subnet each system lands in.
+#
+# `tech_service_connects_to` is the relation that makes a topology diagram
+# possible: without it the model can say what a system runs on, but not how a
+# VPC reaches a data center, which is the whole content of a network drawing.
+
+tech_service_connects_to:
+  # --- hybrid edge: two paths to the data center, one of them a backup ------
+  - from_tech_service_id: TS-NET-DX
+    to_tech_service_id: TS-ONPREM-DC
+    connection: Direct Connect
+  - from_tech_service_id: TS-NET-VPN
+    to_tech_service_id: TS-ONPREM-DC
+    connection: IPsec backup
+  - from_tech_service_id: TS-AWS-TGW
+    to_tech_service_id: TS-NET-DX
+    connection: DX gateway
+  - from_tech_service_id: TS-AWS-TGW
+    to_tech_service_id: TS-NET-VPN
+    connection: VPN attachment
+
+  # --- transit hub: every VPC attaches, none peer directly -----------------
+  - from_tech_service_id: TS-AWS-TGW
+    to_tech_service_id: TS-NET-VPC-SHARED
+    connection: VPC attachment
+  - from_tech_service_id: TS-AWS-TGW
+    to_tech_service_id: TS-NET-VPC-LENDING
+    connection: VPC attachment
+  - from_tech_service_id: TS-AWS-TGW
+    to_tech_service_id: TS-NET-VPC-RISKOPS
+    connection: VPC attachment
+  - from_tech_service_id: TS-AWS-TGW
+    to_tech_service_id: TS-NET-VPC-LENDING-DR
+    connection: VPC attachment (DR)
+
+  # --- shared services reachable from the hub ------------------------------
+  - from_tech_service_id: TS-NET-VPC-SHARED
+    to_tech_service_id: TS-NET-ROUTE53
+    connection: resolver endpoints
+  - from_tech_service_id: TS-NET-VPC-SHARED
+    to_tech_service_id: TS-AWS-PRIVATELINK
+    connection: endpoint services
+
+  # --- inside the lending VPC ----------------------------------------------
+  - from_tech_service_id: TS-NET-VPC-LENDING
+    to_tech_service_id: TS-NET-SUB-LEND-PUB-A
+    connection: subnet
+  - from_tech_service_id: TS-NET-VPC-LENDING
+    to_tech_service_id: TS-NET-SUB-LEND-PUB-B
+    connection: subnet
+  - from_tech_service_id: TS-NET-VPC-LENDING
+    to_tech_service_id: TS-NET-SUB-LEND-APP-A
+    connection: subnet
+  - from_tech_service_id: TS-NET-VPC-LENDING
+    to_tech_service_id: TS-NET-SUB-LEND-APP-B
+    connection: subnet
+  - from_tech_service_id: TS-NET-VPC-LENDING
+    to_tech_service_id: TS-NET-SUB-LEND-DATA-A
+    connection: subnet
+  - from_tech_service_id: TS-NET-VPC-LENDING
+    to_tech_service_id: TS-NET-SUB-LEND-DATA-B
+    connection: subnet
+  - from_tech_service_id: TS-NET-SUB-LEND-PUB-A
+    to_tech_service_id: TS-NET-IGW-LENDING
+    connection: default route
+  - from_tech_service_id: TS-NET-SUB-LEND-PUB-B
+    to_tech_service_id: TS-NET-IGW-LENDING
+    connection: default route
+  - from_tech_service_id: TS-NET-SUB-LEND-APP-A
+    to_tech_service_id: TS-NET-NAT-LEND-A
+    connection: egress route
+  - from_tech_service_id: TS-NET-SUB-LEND-APP-B
+    to_tech_service_id: TS-NET-NAT-LEND-B
+    connection: egress route
+  - from_tech_service_id: TS-NET-NAT-LEND-A
+    to_tech_service_id: TS-NET-IGW-LENDING
+    connection: egress route
+  - from_tech_service_id: TS-NET-NAT-LEND-B
+    to_tech_service_id: TS-NET-IGW-LENDING
+    connection: egress route
+
+  # --- recovery region replication -----------------------------------------
+  - from_tech_service_id: TS-NET-VPC-LENDING
+    to_tech_service_id: TS-NET-VPC-LENDING-DR
+    connection: cross-region replication
+
+# Which subnet each system actually sits in. This is what lets a multi-AZ
+# diagram be drawn without cloning every system once per zone: the zones live
+# on the subnets, and systems attach to both.
+
+  # --- Google Cloud: the same two paths to the data center, a hub every
+  # spoke attaches to, and one global VPC whose tiers are regional subnetworks
+  - from_tech_service_id: TS-GCP-INTERCONNECT
+    to_tech_service_id: TS-ONPREM-DC
+    connection: Dedicated Interconnect
+  - from_tech_service_id: TS-GCPNET-HA-VPN
+    to_tech_service_id: TS-ONPREM-DC
+    connection: IPsec backup
+  - from_tech_service_id: TS-GCP-NCC
+    to_tech_service_id: TS-GCP-INTERCONNECT
+    connection: VLAN attachment
+  - from_tech_service_id: TS-GCP-NCC
+    to_tech_service_id: TS-GCPNET-HA-VPN
+    connection: VPN spoke
+  - from_tech_service_id: TS-GCP-NCC
+    to_tech_service_id: TS-GCP-SHARED-VPC
+    connection: VPC spoke
+  - from_tech_service_id: TS-GCP-SHARED-VPC
+    to_tech_service_id: TS-GCP-CLOUD-DNS
+    connection: DNS peering
+  - from_tech_service_id: TS-GCP-CLOUD-DNS
+    to_tech_service_id: TS-ONPREM-DC
+    connection: forwarding zone
+  - from_tech_service_id: TS-GCP-SHARED-VPC
+    to_tech_service_id: TS-GCPNET-PROXY-SUB-LEND
+    connection: subnetwork
+  - from_tech_service_id: TS-GCP-SHARED-VPC
+    to_tech_service_id: TS-GCPNET-SUB-LEND-APP
+    connection: subnetwork
+  - from_tech_service_id: TS-GCP-SHARED-VPC
+    to_tech_service_id: TS-GCPNET-SUB-LEND-DATA
+    connection: subnetwork
+  - from_tech_service_id: TS-GCP-SHARED-VPC
+    to_tech_service_id: TS-GCPNET-SUB-LEND-APP-DR
+    connection: subnetwork (DR)
+  - from_tech_service_id: TS-GCPNET-SUB-LEND-APP
+    to_tech_service_id: TS-GCPNET-NAT-LEND
+    connection: egress route
+  - from_tech_service_id: TS-GCPNET-EXT-LB-LEND
+    to_tech_service_id: TS-GCPNET-PROXY-SUB-LEND
+    connection: proxy-only subnet
+  - from_tech_service_id: TS-GCPNET-EXT-LB-LEND
+    to_tech_service_id: TS-GCPNET-SUB-LEND-APP
+    connection: backend
+  # The second spoke: the analytics project's subnetwork on the same shared VPC
+  - from_tech_service_id: TS-GCP-SHARED-VPC
+    to_tech_service_id: TS-GCPNET-SUB-ANALYTICS-DATA
+    connection: subnetwork
+  - from_tech_service_id: TS-GCPNET-SUB-ANALYTICS-DATA
+    to_tech_service_id: TS-GCPNET-NAT-ANALYTICS
+    connection: egress route
+  - from_tech_service_id: TS-GCP-SHARED-VPC
+    to_tech_service_id: TS-GCPNET-SUB-ANALYTICS-DATA-DR
+    connection: subnetwork (DR)
+
+system_uses_tech_service:
+  - system_id: SYS-LENDING-ALB
+    tech_service_id: TS-NET-SUB-LEND-PUB-A
+  - system_id: SYS-LENDING-ALB
+    tech_service_id: TS-NET-SUB-LEND-PUB-B
+  - system_id: SYS-LENDING-WEB
+    tech_service_id: TS-NET-SUB-LEND-APP-A
+  - system_id: SYS-LENDING-WEB
+    tech_service_id: TS-NET-SUB-LEND-APP-B
+  - system_id: SYS-LENDING-API
+    tech_service_id: TS-NET-SUB-LEND-APP-A
+  - system_id: SYS-LENDING-API
+    tech_service_id: TS-NET-SUB-LEND-APP-B
+  - system_id: SYS-LENDING-WORKER
+    tech_service_id: TS-NET-SUB-LEND-APP-A
+  - system_id: SYS-LENDING-WORKER
+    tech_service_id: TS-NET-SUB-LEND-APP-B
+  - system_id: SYS-LENDING-DB
+    tech_service_id: TS-NET-SUB-LEND-DATA-A
+  - system_id: SYS-LENDING-DB
+    tech_service_id: TS-NET-SUB-LEND-DATA-B
+  - system_id: SYS-LENDING-BUCKET
+    tech_service_id: TS-NET-SUB-LEND-DATA-A
+  - system_id: SYS-SCREENING-GATEWAY
+    tech_service_id: TS-NET-VPC-RISKOPS
+  - system_id: SYS-SCREENING-EGRESS
+    tech_service_id: TS-NET-VPC-SHARED
+  - system_id: SYS-CORE-LEDGER
+    tech_service_id: TS-ONPREM-DC
+  - system_id: SYS-AUTH-SWITCH
+    tech_service_id: TS-ONPREM-DC
+  - system_id: SYS-STATEMENTS
+    tech_service_id: TS-ONPREM-DC

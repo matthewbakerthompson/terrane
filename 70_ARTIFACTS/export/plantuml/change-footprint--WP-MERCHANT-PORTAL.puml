@@ -1,0 +1,43 @@
+@startuml
+' Assemble the merchant portal on Azure — Footprint
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Assemble the merchant portal on Azure — Footprint
+
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("work_packages", $bgColor="#ccfbf1", $borderColor="#0d9488", $fontColor="#0f172a", $legendText="work package")
+
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_MERCHANT_OPERATIONAL, "Merchant Portal operational data", "Operational records held by Merchant Portal.", $tags="data_assets")
+  ' aac DA_MERCHANT_OPERATIONAL: company_domain="Payments"
+}
+Boundary(b_System, "System") {
+  System(SYS_MERCHANT_STORE, "Merchant Portal Database", "Relational database for Merchant Portal, encrypted with a customer managed key. Built with Azure SQL.", $tags="systems")
+  ' aac SYS_MERCHANT_STORE: company_domain="Payments"; hosting="Azure"; technology="Azure SQL"
+  System(SYS_MERCHANT_EVENTS, "Merchant Portal Event Publisher", "Publishes Merchant Portal domain events onto the enterprise bus. Built with Service Bus.", $tags="systems")
+  ' aac SYS_MERCHANT_EVENTS: company_domain="Payments"; hosting="Azure"; technology="Service Bus"
+  System(SYS_MERCHANT_API, "Merchant Portal Service", "Domain API for the merchant portal: applications, settlement inquiries, chargeback responses and statement downloads. Built with AKS · Merchant Portal Cache.", $tags="systems")
+  ' aac SYS_MERCHANT_API: company_domain="Payments"; hosting="Azure"; technology="AKS · Merchant Portal Cache"
+  System(SYS_MERCHANT_WEB, "Merchant Portal Web", "Customer-facing front end for Merchant Portal. Built with AKS.", $tags="systems")
+  ' aac SYS_MERCHANT_WEB: company_domain="Payments"; hosting="Azure"; technology="AKS"
+}
+Boundary(b_Work_Package, "Work Package") {
+  System(WP_MERCHANT_PORTAL, "Assemble the merchant portal on Azure", "The merchant portal from the library's parts: the API, the web channel, the datastore, the event publisher, and the onboarding analyst role the product creates. Assembled as one product file with no shape; the landing zone answers for the gateway, the cluster, the database and the bus.", $tags="work_packages")
+  ' aac WP_MERCHANT_PORTAL: company_domain="Payments"
+}
+
+Rel(WP_MERCHANT_PORTAL, SYS_MERCHANT_WEB, "Builds")
+' aac rel: source="WP_MERCHANT_PORTAL"; target="SYS_MERCHANT_WEB"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_MERCHANT_PORTAL, SYS_MERCHANT_API, "Builds")
+' aac rel: source="WP_MERCHANT_PORTAL"; target="SYS_MERCHANT_API"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_MERCHANT_PORTAL, SYS_MERCHANT_STORE, "Builds")
+' aac rel: source="WP_MERCHANT_PORTAL"; target="SYS_MERCHANT_STORE"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_MERCHANT_PORTAL, SYS_MERCHANT_EVENTS, "Builds")
+' aac rel: source="WP_MERCHANT_PORTAL"; target="SYS_MERCHANT_EVENTS"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(SYS_MERCHANT_API, DA_MERCHANT_OPERATIONAL, "ReadWrite")
+' aac rel: source="SYS_MERCHANT_API"; target="DA_MERCHANT_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+
+SHOW_LEGEND()
+@enduml

@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="674.13" viewBox="0 0 1100 674.13" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Payment instructions — Where It Lives and Who Uses It</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Payment instructions — Where It Lives and Who Uses It</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   5 nodes · 5 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One data asset in full: the system that masters it, the systems that read or write it, the processes that use it, the controls that govern it and the policies it is subject</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">to. The page a privacy or audit question starts from.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(237.53 99.08)">
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="391.9" y="255.7" width="222.6" height="112.6" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="433.9" y="273.1" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="20.11" y="24.42" width="211.78" height="207.13" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="52.96" y="41.83" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="10.45" y="260.45" width="221.1" height="175.1" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="40.25" y="277.85" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::SYS-PAYMENT-GW::DA-PAYMENT-INSTR">
+<title>masters</title>
+<path d="M206 375.33 L234.94 375 A10 10 0 0 1 235.06 375 L312.1 375 L351.2 375 A10 10 0 0 0 361.2 365 L361.2 332 A10 10 0 0 1 371.2 322 L389.2 322 L414.68 322" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M418.2 322 L408.63 326.79 L408.63 317.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e1::SYS-PAYMENT-GW::DA-PAYMENT-INSTR">
+<title>ReadWrite</title>
+<path d="M206 392.67 L234.94 393 A10 10 0 0 0 235.06 393 L361.2 393 A10 10 0 0 0 371.2 383 L371.2 341 A9 9 0 0 1 380.2 332 L389.2 332 L414.68 332" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M418.2 332 L408.63 336.79 L408.63 327.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::SYS-PAYMENT-GW::DA-PAYMENT-INSTR">
+<rect x="284.71" y="399.5" width="54.78" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="411.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">ReadWrite</text>
+</g>
+<g class="edge" data-id="e2::SYS-CORE-LEDGER::DA-PAYMENT-INSTR">
+<title>Read</title>
+<path d="M206 312 L235 312 L389.2 312 L414.68 312" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M418.2 312 L408.63 316.79 L408.63 307.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::SYS-CORE-LEDGER::DA-PAYMENT-INSTR">
+<rect x="297.06" y="318.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="330.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e3::P-CARD-PMT-001::DA-PAYMENT-INSTR">
+<title>Both</title>
+<path d="M206 84 L235 84 L361.2 84 A10 10 0 0 1 371.2 94 L371.2 283 A9 9 0 0 0 380.2 292 L389.2 292 L414.68 292" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M418.2 292 L408.63 296.79 L408.63 287.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::P-CARD-PMT-001::DA-PAYMENT-INSTR">
+<rect x="297.95" y="61.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="73.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e4::P-PAYMENTS-002::DA-PAYMENT-INSTR">
+<title>Reads</title>
+<path d="M206 172 L235 172 L351.2 172 A10 10 0 0 1 361.2 182 L361.2 292 A10 10 0 0 0 371.2 302 L389.2 302 L414.68 302" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M418.2 302 L408.63 306.79 L408.63 297.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::P-PAYMENTS-002::DA-PAYMENT-INSTR">
+<rect x="294.42" y="178.5" width="35.36" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="190.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Reads</text>
+</g>
+<g class="node" data-id="DA-PAYMENT-INSTR" data-type="data_assets">
+<title>Payment instructions</title>
+<path d="M418.2 285 Q426.7 282 460.7 282 L545.7 282 Q579.7 282 588.2 285 L588.2 339 Q579.7 342 545.7 342 L460.7 342 Q426.7 342 418.2 339 Z" fill="#70c9a7" stroke="#047857" stroke-width="2.6"/>
+<text x="499.2" y="316.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Payment instructions</text>
+<svg x="570.2" y="287" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-CARD-PMT-001" data-type="processes">
+<title>Capture and apply cardholder payment</title>
+<path d="M126 50 L46 75.97 L76.56 118 L175.44 118 L206 75.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="126" y="82.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Capture and apply</text>
+<text x="126" y="94.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">cardholder payment</text>
+</g>
+<g class="node" data-id="P-PAYMENTS-002" data-type="processes">
+<title>Ingest clearing file and post transactions</title>
+<path d="M126 138 L46 163.97 L76.56 206 L175.44 206 L206 163.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="126" y="170.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Ingest clearing file and</text>
+<text x="126" y="182.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">post transactions</text>
+</g>
+<g class="node" data-id="SYS-CORE-LEDGER" data-type="systems">
+<title>Core Card Ledger</title>
+<rect x="36" y="286" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="117" y="316.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Core Card Ledger</text>
+<svg x="188" y="291" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-PAYMENT-GW" data-type="systems">
+<title>Payment capture gateway</title>
+<rect x="36" y="358" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="117" y="382.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Payment capture</text>
+<text x="117" y="394.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">gateway</text>
+<svg x="188" y="363" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="550.13" x2="1072" y2="550.13" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="574.13" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 563.13)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="93.2" y="574.13" font-size="12" font-weight="400" fill="#343d50">data asset · 1</text>
+<g transform="translate(181.3 563.13)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="207.3" y="574.13" font-size="12" font-weight="400" fill="#343d50">process · 2</text>
+<g transform="translate(284.39 563.13)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="310.39" y="574.13" font-size="12" font-weight="400" fill="#343d50">system · 2</text>
+<text x="28" y="596.13" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">CLASSIFICATION</text>
+<g transform="translate(130.2 585.13)" fill="#70c9a7" stroke="#047857" stroke-width="2.6"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="156.2" y="596.13" font-size="12" font-weight="400" fill="#343d50">Restricted · 1</text>
+<g transform="translate(243.85 585.13)" fill="#a7f3d0" stroke="#047857" stroke-width="1.1"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="269.85" y="596.13" font-size="12" font-weight="400" fill="#343d50">not recorded · 4</text>
+<text x="28" y="618.13" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 607.13)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="618.13" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<g transform="translate(143.25 607.13)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="169.25" y="618.13" font-size="12" font-weight="400" fill="#343d50">masters</text>
+<g transform="translate(231.51 607.13)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="257.51" y="618.13" font-size="12" font-weight="400" fill="#343d50">reads / writes</text>
+<text x="28" y="652.13" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · data-asset-context--da-payment-instr · edit the model, not the picture</text></g>
+</svg>

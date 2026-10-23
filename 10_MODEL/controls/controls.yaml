@@ -1,0 +1,617 @@
+# The control register, as the business architecture repository holds it.
+#
+# Imported by `50_ENGINE/tools/import_business_layer.py`; edit it there. A
+# control is an obligation with a mechanism: something that runs, at some
+# frequency, to give effect to a policy. Which systems and data assets enforce
+# each one is recorded in `relations/governance.yaml`, by hand, because that
+# is a fact about the estate rather than about the register.
+
+- control_id: CTL-ACCESS-CERT
+  name: Periodic access certification
+  description: Access to systems handling cardholder data is re-certified by the owning manager on a fixed cycle; uncertified access is revoked.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Quarterly
+  regulatory_framework: CRI Profile
+  policy_id: POL-INFOSEC
+  owner_org_id: ORG-INFOSEC
+  cri_ref: PR.AA-05
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-ADVERSE-ACT
+  name: Adverse action notice completeness
+  description: Every declined application generates a compliant adverse action notice with the principal reasons, within the required period.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Per event
+  regulatory_framework: ECOA; FCRA
+  policy_id: POL-FAIR-LEND
+  owner_org_id: ORG-ORIG
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-APP-INTAKE
+  name: Application completeness and disclosure
+  description: Applications are complete and required disclosures delivered before decisioning; incomplete files route to cure with notice-of-incompleteness timing honored.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Continuous
+  regulatory_framework: ECOA; Reg B
+  policy_id: POL-FAIR-LEND
+  owner_org_id: ORG-ORIG
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-AUTH-AVAIL
+  name: Authorization availability and stand-in
+  description: Authorization availability is monitored against the network SLA with tested stand-in arrangements; incidents invoke the resilience playbook.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Continuous
+  regulatory_framework: CRI Profile
+  policy_id: POL-CHANGE
+  owner_org_id: ORG-TECH
+  cri_ref: PR.IR-04
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-AUTH-POLICY
+  name: Cardholder authentication to policy
+  description: Cardholder authentication meets the risk-tiered policy before disclosure or account change, across every servicing channel.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Continuous
+  regulatory_framework: GLBA Safeguards
+  policy_id: POL-INFOSEC
+  owner_org_id: ORG-SERVICING
+  cri_ref: PR.AA-03
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-BUREAU-ACC
+  name: Bureau furnishing accuracy
+  description: Furnished tradeline data is reconciled to the system of record before transmission; consumer disputes update furnishing.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Monthly
+  regulatory_framework: FCRA
+  policy_id: POL-FAIR-LEND
+  owner_org_id: ORG-COLLECTIONS
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-CHARGEOFF-TIME
+  name: Charge-off timing to policy
+  description: Charge-off executes at the policy timing aligned to regulatory guidance, with exceptions approved and documented.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Monthly
+  regulatory_framework: FFIEC guidance
+  policy_id: POL-COLLECT
+  owner_org_id: ORG-COLLECTIONS
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-CHG-APPROVAL
+  name: Production change approval
+  description: No change reaches production without an approved change record, test evidence, and a rollback plan; emergency changes are reviewed after the fact.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Per event
+  regulatory_framework: CRI Profile
+  policy_id: POL-CHANGE
+  owner_org_id: ORG-TECH
+  cri_ref: PR.PS-01
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-CLIENT-SLA
+  name: Client reporting and feed monitoring
+  description: Contracted client reporting and data feeds are monitored to schedule and specification; misses alert before the client notices and count against the SLA.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Continuous
+  regulatory_framework: Client contracts
+  policy_id: POL-TPRM
+  owner_org_id: ORG-TPS
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-CLOSE-SIGNOFF
+  name: Close reconciliation sign-off
+  description: Period-end reconciliations and journal approvals complete with segregation of duties before financial sign-off.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Monthly
+  regulatory_framework: SOX-aligned
+  policy_id: POL-RECORDS
+  owner_org_id: ORG-FINANCE
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-COMPLAINT-REG
+  name: Complaint regulatory routing
+  description: Complaints are classified to taxonomy, resolved to SLA, and routed to regulators where required; executive and regulator complaints carry expedited handling.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Continuous
+  regulatory_framework: UDAAP; CFPB
+  policy_id: POL-MKT-UDAAP
+  owner_org_id: ORG-SERVICING
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-CONTACT-LIM
+  name: Collections contact limits
+  description: Outbound contact respects time-of-day, frequency, and channel-consent constraints; blocked numbers and cease requests are honored.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Continuous
+  regulatory_framework: FDCPA; Reg F; TCPA
+  policy_id: POL-COLLECT
+  owner_org_id: ORG-COLLECTIONS
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-CONV-VERIFY
+  name: Conversion balance and record verification
+  description: Portfolio conversions verify record counts, balances, and regulatory continuity before and after cutover, with client sign-off at each gate.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Per event
+  regulatory_framework: Interagency TPRM guidance
+  policy_id: POL-TPRM
+  owner_org_id: ORG-TPS
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-CYCLE-VALID
+  name: Cycle assessment validation
+  description: Interest, fee, and minimum-payment computation is validated against the cardholder agreement on every pricing or product change, and sampled each cycle.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Monthly
+  regulatory_framework: Reg Z; TILA
+  policy_id: POL-ERROR-RES
+  owner_org_id: ORG-SERVICING
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-DAILY-RECON
+  name: Daily settlement and clearing reconciliation
+  description: Network settlement, clearing files, and interchange postings reconcile to network totals daily; unreconciled variances stop downstream posting.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Daily
+  regulatory_framework: Network rules
+  policy_id: POL-RECORDS
+  owner_org_id: ORG-SETTLEMENT
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-DQ-GATE
+  name: Ingestion data quality gate
+  description: Source ingestion enforces schema and quality thresholds at the boundary; failing loads quarantine rather than land.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Continuous
+  regulatory_framework: DMBOK-aligned
+  policy_id: POL-RECORDS
+  owner_org_id: ORG-DATAENG
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-DR-TEST
+  name: Recovery test against committed objectives
+  description: Recovery is exercised at least annually against stated RTO/RPO; misses produce tracked remediation.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Annually
+  regulatory_framework: CRI Profile
+  policy_id: POL-CHANGE
+  owner_org_id: ORG-TECH
+  cri_ref: PR.IR-03
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-FDCPA-NOTICE
+  name: Statutory collections notices
+  description: Validation and other statutory notices issue within the prescribed period with content owned by legal; continued collection is blocked until issued.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Per event
+  regulatory_framework: FDCPA; Reg F
+  policy_id: POL-COLLECT
+  owner_org_id: ORG-COLLECTIONS
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-FRAUD-SLA
+  name: Fraud alert handling service level
+  description: Fraud alerts are actioned within the loss-budget SLA with disposition quality sampling; Reg E liability decisions are documented per case.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Continuous
+  regulatory_framework: Reg E
+  policy_id: POL-ERROR-RES
+  owner_org_id: ORG-FRAUD
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-FUNDING-CONF
+  name: Settlement funding confirmation
+  description: The daily funding position is confirmed funded by the network deadline with dual verification and same-day escalation on a miss.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Daily
+  regulatory_framework: Network rules
+  policy_id: POL-RECORDS
+  owner_org_id: ORG-TREASURY
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-IR-PLAYBOOK
+  name: Security incident response execution
+  description: Security events run the incident response playbook with severity-driven escalation and post-incident review; the timeline is evidence.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Corrective
+  frequency: Per event
+  regulatory_framework: CRI Profile
+  policy_id: POL-INFOSEC
+  owner_org_id: ORG-INFOSEC
+  cri_ref: RS.MA-01
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-MASK-NONPROD
+  name: Masked data outside production
+  description: Non-production environments carry masked or synthetic data; unmasked extracts require a time-boxed exception.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Continuous
+  regulatory_framework: CRI Profile
+  policy_id: POL-INFOSEC
+  owner_org_id: ORG-QE
+  cri_ref: PR.DS-01
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-METRO2-RECON
+  name: Furnishing and bucketing reconciliation
+  description: Delinquency bucketing and bureau furnishing reconcile to the system of record each cycle; unexplained movement blocks the file.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Monthly
+  regulatory_framework: FCRA
+  policy_id: POL-FAIR-LEND
+  owner_org_id: ORG-COLLECTIONS
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-MKT-REVIEW
+  name: Marketing material compliance review
+  description: No creative or offer reaches market without documented compliance sign-off.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Per event
+  regulatory_framework: UDAAP; TILA
+  policy_id: POL-MKT-UDAAP
+  owner_org_id: ORG-COMPLIANCE
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-NOTICE-CONTENT
+  name: Notice content and delivery evidence
+  description: Required notices use legal-owned templates with version control, and delivery evidence is retained per notice.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Per event
+  regulatory_framework: Various
+  policy_id: POL-ERROR-RES
+  owner_org_id: ORG-SERVICING
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-PCI-EVIDENCE
+  name: Cardholder data scope and evidence maintenance
+  description: CDE scope, segmentation, and assessment evidence are maintained continuously against the PCI DSS requirement set.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Quarterly
+  regulatory_framework: PCI DSS
+  policy_id: POL-INFOSEC
+  owner_org_id: ORG-INFOSEC
+  cri_ref: PR.DS-01
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-PMT-POSTING
+  name: Payment posting timeliness
+  description: Cardholder payments post as of the day of receipt per Reg Z crediting rules, with cutoff disclosures honored and exceptions reported.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Daily
+  regulatory_framework: Reg Z
+  policy_id: POL-ERROR-RES
+  owner_org_id: ORG-PAYMENTS
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-PRIV-REQ
+  name: Consumer privacy request fulfillment
+  description: Access and deletion requests are verified, fulfilled, and evidenced within the applicable statutory window.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Per event
+  regulatory_framework: GLBA; State privacy
+  policy_id: POL-PRIVACY
+  owner_org_id: ORG-PRIVACY
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-REGCHANGE-TRACK
+  name: Regulatory change implementation tracking
+  description: Applicability decisions and implementation actions for regulatory changes are tracked to evidenced completion with compliance sign-off.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Monthly
+  regulatory_framework: Various
+  policy_id: POL-BSA-AML
+  owner_org_id: ORG-COMPLIANCE
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-REGE-ACK
+  name: Dispute acknowledgment timeliness
+  description: Written acknowledgment of an error claim is issued within the regulatory window; the timer starts at claim receipt, not triage.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Per event
+  regulatory_framework: Reg E
+  policy_id: POL-ERROR-RES
+  owner_org_id: ORG-DISPUTE
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-REGE-DETERM
+  name: Dispute determination timeliness and notice
+  description: Final dispute determinations, account adjustment, and the written explanation complete within the Reg E / Reg Z window; the clock is measured from claim receipt.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Per event
+  regulatory_framework: Reg E; Reg Z
+  policy_id: POL-ERROR-RES
+  owner_org_id: ORG-DISPUTE
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-REGE-PROVCR
+  name: Provisional credit within regulatory window
+  description: Provisional credit is applied within the Reg E window when investigation extends past it, and collection on the disputed amount is suspended.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Per event
+  regulatory_framework: Reg E
+  policy_id: POL-ERROR-RES
+  owner_org_id: ORG-DISPUTE
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-REGRPT-CERT
+  name: Regulatory report certification
+  description: Regulatory submissions reconcile to the ledger and prior filings and carry a named officer certification before transmission.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Per event
+  regulatory_framework: Call Report; various
+  policy_id: POL-RECORDS
+  owner_org_id: ORG-FINANCE
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-RETENTION
+  name: Retention schedule enforcement
+  description: Records are retained to schedule and destroyed on expiry with a certificate of disposition.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Quarterly
+  regulatory_framework: Various
+  policy_id: POL-RECORDS
+  owner_org_id: ORG-DATAGOV
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-SANCTIONS
+  name: Sanctions and watchlist screening
+  description: Parties are screened at onboarding and on list updates; hits are dispositioned before processing continues.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Continuous
+  regulatory_framework: BSA/AML; OFAC
+  policy_id: POL-BSA-AML
+  owner_org_id: ORG-COMPLIANCE
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-SAR-FILING
+  name: Suspicious activity investigation and filing
+  description: Alerts are investigated and SARs filed within the statutory window, with supporting documentation retained.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Per event
+  regulatory_framework: BSA/AML
+  policy_id: POL-BSA-AML
+  owner_org_id: ORG-COMPLIANCE
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-SCRA-MLA
+  name: Servicemember protections screening
+  description: SCRA and MLA eligibility is screened at origination and on notification, with rate and protection application evidenced.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Continuous
+  regulatory_framework: SCRA; MLA
+  policy_id: POL-FAIR-LEND
+  owner_org_id: ORG-SERVICING
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-TPRM-DD
+  name: Third-party due diligence before onboarding
+  description: No supplier processes cardholder data before risk-tiered due diligence is complete and accepted.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Per event
+  regulatory_framework: Interagency TPRM guidance
+  policy_id: POL-TPRM
+  owner_org_id: ORG-VENDORMGMT
+  cri_ref: EX.DD-01
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-TREATMENT-APPR
+  name: Treatment strategy approval
+  description: Collections treatment strategies and authorization strategies deploy only with documented risk and compliance approval and champion-challenger evidence.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Per event
+  regulatory_framework: Model risk; UDAAP
+  policy_id: POL-FAIR-LEND
+  owner_org_id: ORG-CREDIT
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-VULN-SLA
+  name: Vulnerability remediation service level
+  description: Vulnerabilities are remediated within the SLA for their severity; breaches of the SLA are escalated and tracked.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Corrective
+  frequency: Continuous
+  regulatory_framework: CRI Profile
+  policy_id: POL-INFOSEC
+  owner_org_id: ORG-INFOSEC
+  cri_ref: ID.RA-01
+  last_reviewed: 2026-08-24
+  source: Business architecture repository

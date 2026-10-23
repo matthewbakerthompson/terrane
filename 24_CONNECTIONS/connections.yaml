@@ -1,0 +1,159 @@
+# The ways two systems are connected here.
+#
+# Read off the interfaces the model holds rather than invented: each kind is a
+# shape that recurs -- an integration style, the protocols that carry it, the
+# authentication it uses -- with the pattern that says how that kind of
+# connection is built in this estate. An interface is of a kind when its style
+# is the kind's and its protocol is one of the kind's, so the catalog describes
+# the estate before anything is made from it; no two kinds share a style and a
+# protocol, so an interface is of one kind at most. The first protocol and
+# authentication listed are what a new connection of the kind is proposed with.
+
+- connection_id: api-call
+  name: API call
+  description: >
+    One system calls another's API and waits for the answer. The house rule is
+    that every programmatic entry point sits behind the gateway, so the caller
+    is coupled to a contract rather than to a service.
+  integration_style: Request-response
+  protocols: [HTTPS]
+  auth_methods: [OAuth2, MutualTLS, IAM, WorkloadIdentity]
+  frequency: Realtime
+  direction: Outbound
+  patterns: [api-front-door]
+
+- connection_id: queued-request
+  name: Request on a queue
+  description: >
+    A request put on a message queue for a system that answers in its own
+    time and in order: how a mainframe ledger is spoken to. The queue is the
+    contract, and the answer comes back the same way.
+  integration_style: Request-response
+  protocols: [MQ]
+  auth_methods: [MutualTLS]
+  frequency: Realtime
+  direction: Outbound
+
+- connection_id: own-datastore
+  name: Its own datastore
+  description: >
+    A service reading and writing the store that holds its state. Not an
+    integration between two systems: the store is the service's own, and a
+    second system reaching into it would be the deprecated shared database.
+  integration_style: Request-response
+  protocols: [TDS, PostgreSQL]
+  auth_methods: [ManagedIdentity, IAM, WorkloadIdentity]
+  frequency: Realtime
+  direction: Outbound
+  patterns: [stateless-request-service]
+
+- connection_id: private-egress
+  name: Private path to a vendor
+  description: >
+    A call out to a bought service over a private endpoint rather than the
+    internet, through a gateway we own: the boundary we run when somebody else
+    runs the software.
+  integration_style: Request-response
+  protocols: [PrivateLink]
+  auth_methods: [MutualTLS, WorkloadIdentity]
+  frequency: Realtime
+  direction: Outbound
+  patterns: [private-egress-to-saas]
+
+- connection_id: sign-on-federation
+  name: Sign-on federation
+  description: >
+    A bought service trusting our identity provider rather than keeping its
+    own accounts: one place to grant and revoke, and no vendor holding a
+    password of ours.
+  integration_style: Request-response
+  protocols: [SAML, OIDC]
+  auth_methods: [Certificate]
+  frequency: Realtime
+  direction: Outbound
+
+- connection_id: event
+  name: Event on the bus
+  description: >
+    A system publishes what happened and never learns who consumed it.
+    Consumers arrive and leave without the producer changing.
+  integration_style: Event
+  protocols: [AMQP, Kafka, Pub/Sub]
+  auth_methods: [OAuth2, ManagedIdentity]
+  frequency: Realtime
+  direction: Outbound
+  patterns: [event-fanout]
+
+- connection_id: event-over-https
+  name: Event over HTTPS
+  description: >
+    An event delivered to an endpoint rather than to the bus: a webhook from
+    a bought service, or a platform's own event delivery. The endpoint is a
+    programmatic entry point, so it sits behind the gateway like any other.
+  integration_style: Event
+  protocols: [HTTPS]
+  auth_methods: [OAuth2, HMAC, IAM]
+  frequency: Realtime
+  direction: Inbound
+  patterns: [api-front-door]
+
+- connection_id: log-stream
+  name: Log stream
+  description: >
+    Logs shipped as they are written to where they are watched. What makes a
+    service observed rather than merely logging.
+  integration_style: Event
+  protocols: [Syslog]
+  auth_methods: [MutualTLS]
+  frequency: Realtime
+  direction: Outbound
+  patterns: [observed-service]
+
+- connection_id: scheduled-file
+  name: Scheduled file
+  description: >
+    A file produced on a schedule for another system to pick up, with a
+    window it has to arrive in. Lateness is a business event, so the window is
+    modeled rather than assumed.
+  integration_style: Batch
+  protocols: [FileTransfer]
+  auth_methods: [MutualTLS, KeyPair]
+  frequency: Daily
+  direction: Outbound
+  patterns: [windowed-batch]
+
+- connection_id: partner-file
+  name: Partner file
+  description: >
+    Files exchanged with a party outside the estate that was never going to
+    build an API: landed under orchestration that knows when one is late.
+  integration_style: Batch
+  protocols: [SFTP]
+  auth_methods: [KeyPair]
+  frequency: Daily
+  direction: Inbound
+  patterns: [partner-file-exchange]
+
+- connection_id: pipeline-load
+  name: Pipeline load
+  description: >
+    Data landed once and built forward: from ingestion into the warehouse, and
+    from one layer of the warehouse to the next. Where lineage is recorded or
+    lost.
+  integration_style: Batch
+  protocols: [SQL, Snowpipe, S3]
+  auth_methods: [KeyPair, ManagedIdentity, IAM, WorkloadIdentity]
+  frequency: Daily
+  direction: Outbound
+  patterns: [analytics-landing-zone]
+
+- connection_id: scheduled-pull
+  name: Scheduled API pull
+  description: >
+    A batch of records fetched over an API on a schedule: evidence gathered
+    for an audit trail, figures collected for a return. An API used as a file.
+  integration_style: Batch
+  protocols: [HTTPS]
+  auth_methods: [OAuth2, WorkloadIdentity]
+  frequency: Weekly
+  direction: Inbound

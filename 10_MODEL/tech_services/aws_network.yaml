@@ -1,0 +1,337 @@
+# The network fabric. Modeled by hand rather than by the onboarding archetype
+# on purpose: account-level networking is provisioned by the landing zone, not
+# by the product team, and in a real estate several products share a VPC. An
+# archetype that vended a VPC per product would be describing a different
+# operating model from the one this estate actually runs.
+#
+# Subnets are per availability zone, which is what makes a multi-AZ diagram
+# drawable without duplicating every system once per zone.
+
+# --- shared network account -------------------------------------------------
+- tech_service_id: TS-NET-VPC-SHARED
+  name: Shared Services VPC
+  service_name: VPC
+  component_type: vpc
+  description: Hub VPC holding the transit attachments, egress and resolver endpoints.
+  status: Active
+  provider: AWS
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: shared-network
+  region: eu-west-2
+  network_zone: Shared-Services
+  cidr: 10.20.0.0/16
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric, landing-zone]
+
+- tech_service_id: TS-NET-DX
+  name: Direct Connect
+  service_name: Direct Connect
+  component_type: hybrid-link
+  description: >
+    Dual 10G circuits to the data center, one per carrier hall. The primary
+    hybrid path, and the long-lead item on any onboarding that touches the
+    mainframe.
+  status: Active
+  provider: AWS
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: shared-network
+  region: eu-west-2
+  network_zone: Shared-Services
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric, landing-zone]
+
+- tech_service_id: TS-NET-VPN
+  name: Site-to-Site VPN
+  service_name: VPN
+  component_type: hybrid-link
+  description: Encrypted backup path over the internet, used only when Direct Connect is down.
+  status: Active
+  provider: AWS
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: shared-network
+  region: eu-west-2
+  network_zone: Shared-Services
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric, landing-zone]
+
+- tech_service_id: TS-NET-ROUTE53
+  name: Route 53 Resolver
+  service_name: Route 53
+  component_type: dns
+  description: Private hosted zones and inbound/outbound resolution to on-premise DNS.
+  status: Active
+  provider: AWS
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: shared-network
+  region: eu-west-2
+  network_zone: Shared-Services
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric, landing-zone]
+
+# --- the data center, so the hybrid edge has two ends ------------------------
+- tech_service_id: TS-ONPREM-DC
+  name: Primary Data Center
+  service_name: Data Center
+  component_type: vpc
+  description: >
+    The data center the mainframe and the authorization switch live in. Modeled
+    because half the integration cost of any cloud onboarding is the path back
+    to here.
+  status: Active
+  provider: In-house
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: On-prem
+  network_zone: On-prem
+  cidr: 10.10.0.0/16
+  company_domain: Enterprise Platform
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric, landing-zone]
+
+# --- lending workload account ----------------------------------------------
+- tech_service_id: TS-NET-VPC-LENDING
+  name: Lending VPC
+  service_name: VPC
+  component_type: vpc
+  description: Workload VPC for the lending product, three tiers across two zones.
+  status: Active
+  provider: AWS
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: prod-lending
+  region: eu-west-2
+  network_zone: Private-App
+  cidr: 10.40.0.0/16
+  company_domain: Lending
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+
+- tech_service_id: TS-NET-SUB-LEND-PUB-A
+  name: Lending Public Subnet A
+  service_name: Subnet
+  component_type: subnet
+  status: Active
+  provider: AWS
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: prod-lending
+  region: eu-west-2
+  availability_zone: eu-west-2a
+  network_zone: Public
+  cidr: 10.40.0.0/20
+  company_domain: Lending
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+
+- tech_service_id: TS-NET-SUB-LEND-PUB-B
+  name: Lending Public Subnet B
+  service_name: Subnet
+  component_type: subnet
+  status: Active
+  provider: AWS
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: prod-lending
+  region: eu-west-2
+  availability_zone: eu-west-2b
+  network_zone: Public
+  cidr: 10.40.16.0/20
+  company_domain: Lending
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+
+- tech_service_id: TS-NET-SUB-LEND-APP-A
+  name: Lending App Subnet A
+  service_name: Subnet
+  component_type: subnet
+  status: Active
+  provider: AWS
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: prod-lending
+  region: eu-west-2
+  availability_zone: eu-west-2a
+  network_zone: Private-App
+  cidr: 10.40.32.0/20
+  company_domain: Lending
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+
+- tech_service_id: TS-NET-SUB-LEND-APP-B
+  name: Lending App Subnet B
+  service_name: Subnet
+  component_type: subnet
+  status: Active
+  provider: AWS
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: prod-lending
+  region: eu-west-2
+  availability_zone: eu-west-2b
+  network_zone: Private-App
+  cidr: 10.40.48.0/20
+  company_domain: Lending
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+
+- tech_service_id: TS-NET-SUB-LEND-DATA-A
+  name: Lending Data Subnet A
+  service_name: Subnet
+  component_type: subnet
+  status: Active
+  provider: AWS
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: prod-lending
+  region: eu-west-2
+  availability_zone: eu-west-2a
+  network_zone: Private-Data
+  cidr: 10.40.64.0/20
+  company_domain: Lending
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+
+- tech_service_id: TS-NET-SUB-LEND-DATA-B
+  name: Lending Data Subnet B
+  service_name: Subnet
+  component_type: subnet
+  status: Active
+  provider: AWS
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: prod-lending
+  region: eu-west-2
+  availability_zone: eu-west-2b
+  network_zone: Private-Data
+  cidr: 10.40.80.0/20
+  company_domain: Lending
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+
+- tech_service_id: TS-NET-IGW-LENDING
+  name: Lending Internet Gateway
+  service_name: Internet Gateway
+  component_type: load-balancer
+  description: The only route to the internet, and only from the public subnets.
+  status: Active
+  provider: AWS
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: prod-lending
+  region: eu-west-2
+  network_zone: Edge
+  company_domain: Lending
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+
+- tech_service_id: TS-NET-NAT-LEND-A
+  name: Lending NAT Gateway A
+  service_name: NAT Gateway
+  component_type: private-egress
+  description: Outbound-only egress for the private tiers. One per zone, so a zone loss is not an outage.
+  status: Active
+  provider: AWS
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: prod-lending
+  region: eu-west-2
+  availability_zone: eu-west-2a
+  network_zone: Public
+  company_domain: Lending
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+
+- tech_service_id: TS-NET-NAT-LEND-B
+  name: Lending NAT Gateway B
+  service_name: NAT Gateway
+  component_type: private-egress
+  status: Active
+  provider: AWS
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: prod-lending
+  region: eu-west-2
+  availability_zone: eu-west-2b
+  network_zone: Public
+  company_domain: Lending
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+
+# --- risk operations account ------------------------------------------------
+- tech_service_id: TS-NET-VPC-RISKOPS
+  name: Risk Operations VPC
+  service_name: VPC
+  component_type: vpc
+  description: Workload VPC for screening and risk tooling.
+  status: Active
+  provider: AWS
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: prod-riskops
+  region: eu-west-2
+  network_zone: Private-App
+  cidr: 10.41.0.0/16
+  company_domain: Risk and Compliance
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+
+# --- disaster recovery region ----------------------------------------------
+- tech_service_id: TS-NET-VPC-LENDING-DR
+  name: Lending VPC (DR)
+  service_name: VPC
+  component_type: vpc
+  description: >
+    Warm standby VPC in the recovery region. Built by the same Terraform as the
+    primary; capacity is scaled to zero until a declaration.
+  status: Planned
+  provider: AWS
+  service_category: Network
+  owner_org_id: ORG-TECH
+  cloud_provider: AWS
+  cloud_account: prod-lending
+  region: eu-west-1
+  network_zone: Private-App
+  cidr: 10.42.0.0/16
+  company_domain: Lending
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]

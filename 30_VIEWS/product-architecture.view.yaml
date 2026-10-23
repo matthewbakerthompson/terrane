@@ -1,0 +1,72 @@
+view_id: product-architecture
+title: "{product} — Architecture"
+category: Application
+section: Products and systems
+kind: diagram
+description: >
+  One product in full: the systems it is made of, what each runs on, the data
+  it masters, who uses it, and everything one hop away that it connects to.
+  For a product built from modules, every box corresponds to a part.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+parameters:
+  - name: product
+    type: products
+    required: true
+    description: The product this diagram is about
+
+# Placement as boundaries: whose cloud, which account, which tier. Shared
+# services land in their own accounts; the vendor lands outside ours.
+group_by: [cloud_provider, cloud_account, network_zone]
+
+scope:
+  include:
+    - type: products
+      where:
+        id_in: ["{product}"]
+  exclude:
+    - type: products
+  expand:
+    - relation: product_includes_system
+      depth: 1
+      types: [systems]
+    # From the product's own systems only, before the hop out: what they run
+    # on, what they master, and who uses them.
+    - relation: system_uses_tech_service
+      depth: 1
+      types: [tech_services]
+    - relation: system_reads_writes
+      depth: 1
+      types: [data_assets]
+    - relation: actor_uses_system
+      depth: 1
+      types: [actors]
+    # Then one hop out along the interfaces: what the product has to reach.
+    - relation: interfaces
+      depth: 1
+      types: [systems]
+
+edges:
+  - via: interfaces
+    label: protocol
+  - via: system_uses_tech_service
+    text: runs on
+  - via: system_reads_writes
+    label: operation
+  - via: actor_uses_system
+    label: interaction
+
+style:
+  color_by: type
+
+limits:
+  max_nodes: 48
+
+# One committed diagram per product that is live or on its way.
+render_for:
+  parameter: product
+  type: products
+  where:
+    status: [Active, Planned]

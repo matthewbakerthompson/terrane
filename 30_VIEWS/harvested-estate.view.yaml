@@ -1,0 +1,47 @@
+view_id: harvested-estate
+title: The Harvested Estate, Connected
+category: Application
+section: Landscape
+kind: diagram
+description: >
+  The systems the business layer harvested that serve customers and the
+  books, with the connections drafted from the process map and the pattern
+  library, and the estate systems they reach. Every connection carries its
+  integration style and names its pattern in the inspector; the operations
+  chain is its own drawing. Proposed throughout, so an owner has something
+  to confirm or strike.
+layout: LR
+node_label: name
+renderers: [mermaid]
+
+# No boundary: the harvested systems carry an owner and no domain, and
+# grouping by owner drew twenty-five boxes around forty nodes, which is a
+# directory, not a drawing. The dotted border already says which are
+# Proposed.
+
+scope:
+  include:
+    - type: systems
+      where:
+        source: Business architecture repository
+  exclude:
+    # The change-evidence and workforce-identity chain has its own view;
+    # here it was ten nodes on the far side of the sheet from the customer.
+    - type: systems
+      where:
+        id_in: [SYS-SCM, SYS-TESTMGMT, SYS-WORKTRACK, SYS-ARCHREPO, SYS-ITSM,
+                SYS-OBSERV, SYS-SIEM, SYS-HRIS, SYS-IAM, SYS-GRC]
+  expand:
+    - relation: interfaces
+      depth: 1
+      types: [systems]
+
+edges:
+  - via: interfaces
+    label: integration_style
+
+style:
+  color_by: status
+
+limits:
+  max_nodes: 45

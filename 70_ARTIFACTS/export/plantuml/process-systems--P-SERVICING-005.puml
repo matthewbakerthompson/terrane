@@ -1,0 +1,50 @@
+@startuml
+' Authenticate cardholder — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Authenticate cardholder — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_SEC_01, "Identity & Access Management", "Govern who can access what, and evidence it.", $tags="capabilities")
+  ' aac CAP_SEC_01: company_domain="Cross-Functional Services"
+  System(CAP_FRAUD_06, "Identity Theft & Account Takeover Response", "Respond to account takeover and identity theft events.", $tags="capabilities")
+  ' aac CAP_FRAUD_06: company_domain="Servicing"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_AUTH_POLICY, "Cardholder authentication to policy", "Cardholder authentication meets the risk-tiered policy before disclosure or account change, across every servicing channel.", $tags="controls")
+  ' aac CTL_AUTH_POLICY: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_SERVICING_005, "Authenticate cardholder", "Authenticate a cardholder to policy before disclosing information or executing a change. Authentication strength scales with request risk; failures route to step-up rather than disclosure, and the policy is tuned with the fraud team.", $tags="processes")
+  ' aac P_SERVICING_005: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CONTACT, "Contact center platform", "Contact center routing, voice, and digital channels.", $tags="systems")
+  ' aac SYS_CONTACT: company_domain=""
+  System_Ext(SYS_CRM, "Dynamics 365 Customer Service", "Contact center desktop and case management for servicing agents. Built with Microsoft.", $tags="systems")
+  ' aac SYS_CRM: company_domain="Servicing"; hosting="SaaS"; technology="Microsoft"
+  System(SYS_IAM, "Identity and access management", "Workforce identity, authentication, and access governance.", $tags="systems")
+  ' aac SYS_IAM: company_domain=""
+}
+
+Rel(P_SERVICING_005, SYS_IAM, "Primary")
+' aac rel: source="P_SERVICING_005"; target="SYS_IAM"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_SERVICING_005, SYS_CONTACT, "Supporting")
+' aac rel: source="P_SERVICING_005"; target="SYS_CONTACT"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_005, SYS_CRM, "Supporting")
+' aac rel: source="P_SERVICING_005"; target="SYS_CRM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_005, CTL_AUTH_POLICY, "governed by")
+' aac rel: source="P_SERVICING_005"; target="CTL_AUTH_POLICY"; label="governed by"; relation="process_governed_by_control"
+Rel(P_SERVICING_005, CAP_SEC_01, "supports")
+' aac rel: source="P_SERVICING_005"; target="CAP_SEC_01"; label="supports"; relation="process_supports_capability"
+Rel(P_SERVICING_005, CAP_FRAUD_06, "supports")
+' aac rel: source="P_SERVICING_005"; target="CAP_FRAUD_06"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

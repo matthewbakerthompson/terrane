@@ -1,0 +1,32 @@
+@startuml
+' Installment Lending operational data — Where It Lives and Who Uses It
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Installment Lending operational data — Where It Lives and Who Uses It
+
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_LENDING_OPERATIONAL, "Installment Lending operational data", "Operational records held by Installment Lending.", $tags="data_assets")
+  ' aac DA_LENDING_OPERATIONAL: company_domain="Lending"
+}
+Boundary(b_System, "System") {
+  System(SYS_LENDING_WORKER, "Installment Lending Async Worker", "Consumes Installment Lending domain events and drives long-running work. Built with EKS · MSK.", $tags="systems")
+  ' aac SYS_LENDING_WORKER: company_domain="Lending"; hosting="AWS"; technology="EKS · MSK"
+  System(SYS_LENDING_DB, "Installment Lending Database", "Relational database for Installment Lending, encrypted with a customer managed key. Built with RDS.", $tags="systems")
+  ' aac SYS_LENDING_DB: company_domain="Lending"; hosting="AWS"; technology="RDS"
+  System(SYS_LENDING_API, "Installment Lending Service", "Domain service for Installment Lending, behind the Installment Lending API. Built with EKS · Installment Lending Cache.", $tags="systems")
+  ' aac SYS_LENDING_API: company_domain="Lending"; hosting="AWS"; technology="EKS · Installment Lending Cache"
+}
+
+Rel(SYS_LENDING_DB, DA_LENDING_OPERATIONAL, "masters")
+' aac rel: source="SYS_LENDING_DB"; target="DA_LENDING_OPERATIONAL"; label="masters"; field="source_of_truth"
+Rel(SYS_LENDING_API, DA_LENDING_OPERATIONAL, "ReadWrite")
+' aac rel: source="SYS_LENDING_API"; target="DA_LENDING_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_LENDING_WORKER, DA_LENDING_OPERATIONAL, "Read")
+' aac rel: source="SYS_LENDING_WORKER"; target="DA_LENDING_OPERATIONAL"; label="Read"; relation="system_reads_writes"; operation="Read"
+
+SHOW_LEGEND()
+@enduml

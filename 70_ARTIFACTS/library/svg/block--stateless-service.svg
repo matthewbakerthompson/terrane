@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="333.4" viewBox="0 0 1100 333.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Stateless service</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Stateless service</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   3 nodes · 2 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">A container platform, its cache, and the observability to know it is alive. Stateless is the claim; the cache is where that claim usually turns out to be false.</text>
+<line x1="28" y1="92" x2="1072" y2="92" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(356 91.7)">
+<g class="edge" data-id="e0::container-platform::cache">
+<path d="M172 36 L212.48 36" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M216 36 L206.43 40.78 L206.43 31.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e1::container-platform::observability">
+<path d="M172 51 L180 51 A8 8 0 0 1 188 59 L188 91 A10 10 0 0 0 198 101 L212.48 101" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M216 101 L206.43 105.78 L206.43 96.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="container-platform" data-type="tech_services">
+<title>Container platform</title>
+<path d="M12 20 L118.64 20 L172 67 L65.36 67 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="88" y="42.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Container platform</text>
+<text x="92" y="61.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Amazon EKS or ECS · Azure Kubernete…</text>
+<svg x="143" y="25" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M4.5 4.5h7v7h-7z M8 2v2.5 M8 11.5V14 M2 8h2.5 M11.5 8H14" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="cache" data-type="tech_services">
+<title>Cache</title>
+<path d="M216 12 L322.64 12 L376 59 L269.36 59 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="292" y="34.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Cache</text>
+<text x="296" y="53.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Amazon ElastiCache · Azure Cache for …</text>
+<svg x="347" y="17" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M8 3c3.3 0 5 .9 5 2s-1.7 2-5 2-5-.9-5-2 1.7-2 5-2z M3 5v6c0 1.1 1.7 2 5 2s5-.9 5-2V5" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+<g class="node" data-id="observability" data-type="tech_services">
+<title>Observability</title>
+<path d="M216 77 L322.64 77 L376 124 L269.36 124 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="292" y="99.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Observability</text>
+<text x="296" y="118.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Amazon CloudWatch · Azure Monitor · …</text>
+<svg x="347" y="82" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M2.5 11a5.5 5.5 0 0 1 11 0 M8 11l2.5-4" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="231.4" x2="1072" y2="231.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="255.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 244.4)" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"><path d="M5 1h14l-4 12H1z"/></g>
+<text x="93.2" y="255.4" font-size="12" font-weight="400" fill="#343d50">technology service · 3</text>
+<text x="28" y="277.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 266.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="277.4" font-size="12" font-weight="400" fill="#343d50">connects to</text>
+<text x="28" y="311.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · block--stateless-service · edit the model, not the picture</text></g>
+</svg>

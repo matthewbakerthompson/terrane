@@ -1,0 +1,87 @@
+@startuml
+' NICE Actimize Screening — Architecture
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title NICE Actimize Screening — Architecture
+
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("tech_services", $bgColor="#fed7aa", $borderColor="#c2410c", $fontColor="#0f172a", $legendText="technology service")
+AddRelTag("event-over-https", $legendText="Event over HTTPS")
+AddRelTag("partner-file", $legendText="Partner file")
+AddRelTag("private-egress", $legendText="Private path to a vendor")
+AddRelTag("sign-on-federation", $legendText="Sign-on federation")
+
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_DISPUTES_VENDOR_FEED, "Dispute Management Platform vendor feed", "Landed vendor extract from Pegasystems.", $tags="data_assets")
+  ' aac DA_DISPUTES_VENDOR_FEED: company_domain="Servicing"
+  SystemDb(DA_MODEL_FEAT, "Model feature store", "Curated features and scores for credit, fraud, and collections models.", $tags="data_assets")
+  ' aac DA_MODEL_FEAT: company_domain=""
+  SystemDb(DA_SCREENING_OUTCOMES, "NICE Actimize Screening outcomes", "What the vendor decided and why, landed our side. Held because a decision we cannot explain is a decision we cannot defend.", $tags="data_assets")
+  ' aac DA_SCREENING_OUTCOMES: company_domain="Risk and Compliance"
+}
+Boundary(b_System, "System") {
+  System(SYS_DATA_INGEST, "Enterprise Data Ingestion Hub", "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse. Built with Service Bus · Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_DATA_INGEST: company_domain="Data and Analytics"; hosting="Azure"; technology="Service Bus · Snowflake Data Cloud"
+  System_Ext(SYS_SCREENING_VENDOR, "NICE Actimize Screening", "Financial Crime Screening, operated by NICE Actimize in their own tenancy. Contractually pinned to EU processing; the DPA restricts sub-processors and sets a 90-day retention ceiling. Built with NICE Actimize.", $tags="systems")
+  ' aac SYS_SCREENING_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="NICE Actimize"
+  System(SYS_SCREENING_FEDERATION, "NICE Actimize Screening Identity Federation", "Single sign-on into NICE Actimize: assertions from our identity provider, so access is granted and revoked where the joiner and leaver process already runs.", $tags="systems")
+  ' aac SYS_SCREENING_FEDERATION: company_domain="Enterprise Platform"; hosting="AWS"
+  System(SYS_SCREENING_EGRESS, "NICE Actimize Screening Private Egress", "PrivateLink endpoint and egress allow-list for NICE Actimize. The control that keeps regulated data off the public internet, and the thing a security review asks to see first.", $tags="systems")
+  ' aac SYS_SCREENING_EGRESS: company_domain="Enterprise Platform"; hosting="AWS"
+  System_Ext(SYS_SIEM, "Security Monitoring", "Security information and event management: the audit trails of the estate and of every bought service, correlated in one place, and the console the incident response playbook runs from. Built with Microsoft Sentinel.", $tags="systems")
+  ' aac SYS_SIEM: company_domain="Enterprise Platform"; hosting="SaaS"; technology="Microsoft Sentinel"
+}
+Boundary(b_Technology_Service, "Technology Service") {
+  Deployment_Node(TS_AWS_PRIVATELINK, "AWS PrivateLink", "Private egress", "Private egress to partner and vendor endpoints without internet transit.", $tags="tech_services") {
+    ' aac TS_AWS_PRIVATELINK: company_domain="Enterprise Platform"; technology="Private egress"
+  }
+  Deployment_Node(TS_AWS_TGW, "AWS Transit Gateway", "Transit hub", "Hub for VPC-to-VPC and hybrid routing back to the data center.", $tags="tech_services") {
+    ' aac TS_AWS_TGW: company_domain="Enterprise Platform"; technology="Transit hub"
+  }
+  Deployment_Node(TS_AZURE_SERVICEBUS, "Azure Service Bus", "Message queue", "Enterprise messaging backbone for domain events.", $tags="tech_services") {
+    ' aac TS_AZURE_SERVICEBUS: company_domain="Enterprise Platform"; technology="Message queue"
+  }
+  Deployment_Node(TS_ENTRA_ID, "Microsoft Entra ID", "Identity provider", "Workforce and customer identity provider.", $tags="tech_services") {
+    ' aac TS_ENTRA_ID: company_domain="Enterprise Platform"; technology="Identity provider"
+  }
+  Deployment_Node(TS_NET_VPC_SHARED, "Shared Services VPC", "Virtual network", "Hub VPC holding the transit attachments, egress and resolver endpoints.", $tags="tech_services") {
+    ' aac TS_NET_VPC_SHARED: company_domain="Enterprise Platform"; technology="Virtual network"
+  }
+  Deployment_Node(TS_SNOWFLAKE, "Snowflake", "Data warehouse", "The enterprise warehouse and analytics compute.", $tags="tech_services") {
+    ' aac TS_SNOWFLAKE: company_domain="Data and Analytics"; technology="Data warehouse"
+  }
+}
+
+Rel(SYS_SCREENING_FEDERATION, SYS_SCREENING_VENDOR, "Identity Federation to NICE Actimize", "SAML", $tags="sign-on-federation")
+' aac rel: source="SYS_SCREENING_FEDERATION"; target="SYS_SCREENING_VENDOR"; label="Identity Federation to NICE Actimize"; interface_id="INT-SCREENING-FEDERATION-VENDOR"; kind="sign-on-federation"; integration_style="Request-response"; auth_method="Certificate"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_SCREENING_VENDOR, SYS_SIEM, "NICE Actimize audit log to security monitoring", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_SCREENING_VENDOR"; target="SYS_SIEM"; label="NICE Actimize audit log to security monitoring"; interface_id="INT-SCREENING-VENDOR-AUDIT"; kind="event-over-https"; integration_style="Event"; auth_method="Token"; frequency="Realtime"; direction="Inbound"
+Rel(SYS_SCREENING_EGRESS, SYS_SCREENING_VENDOR, "Private Egress to NICE Actimize", "PrivateLink", $tags="private-egress")
+' aac rel: source="SYS_SCREENING_EGRESS"; target="SYS_SCREENING_VENDOR"; label="Private Egress to NICE Actimize"; interface_id="INT-SCREENING-EGRESS-VENDOR"; kind="private-egress"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_SCREENING_VENDOR, SYS_DATA_INGEST, "NICE Actimize return feed", "SFTP", $tags="partner-file")
+' aac rel: source="SYS_SCREENING_VENDOR"; target="SYS_DATA_INGEST"; label="NICE Actimize return feed"; interface_id="INT-SCREENING-VENDOR-RETURN"; kind="partner-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Inbound"
+Rel(SYS_SCREENING_FEDERATION, TS_ENTRA_ID, "runs on")
+' aac rel: source="SYS_SCREENING_FEDERATION"; target="TS_ENTRA_ID"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_SCREENING_EGRESS, TS_AWS_PRIVATELINK, "runs on")
+' aac rel: source="SYS_SCREENING_EGRESS"; target="TS_AWS_PRIVATELINK"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_SCREENING_EGRESS, TS_AWS_TGW, "runs on")
+' aac rel: source="SYS_SCREENING_EGRESS"; target="TS_AWS_TGW"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_DATA_INGEST, TS_AZURE_SERVICEBUS, "runs on")
+' aac rel: source="SYS_DATA_INGEST"; target="TS_AZURE_SERVICEBUS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_DATA_INGEST, TS_SNOWFLAKE, "runs on")
+' aac rel: source="SYS_DATA_INGEST"; target="TS_SNOWFLAKE"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_SCREENING_EGRESS, TS_NET_VPC_SHARED, "runs on")
+' aac rel: source="SYS_SCREENING_EGRESS"; target="TS_NET_VPC_SHARED"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_DATA_INGEST, DA_DISPUTES_VENDOR_FEED, "Read")
+' aac rel: source="SYS_DATA_INGEST"; target="DA_DISPUTES_VENDOR_FEED"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_SCREENING_VENDOR, DA_SCREENING_OUTCOMES, "Write")
+' aac rel: source="SYS_SCREENING_VENDOR"; target="DA_SCREENING_OUTCOMES"; label="Write"; relation="system_reads_writes"; operation="Write"
+Rel(SYS_DATA_INGEST, DA_SCREENING_OUTCOMES, "Read")
+' aac rel: source="SYS_DATA_INGEST"; target="DA_SCREENING_OUTCOMES"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_DATA_INGEST, DA_MODEL_FEAT, "ReadWrite")
+' aac rel: source="SYS_DATA_INGEST"; target="DA_MODEL_FEAT"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+
+SHOW_LEGEND()
+@enduml

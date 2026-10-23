@@ -1,0 +1,185 @@
+# How the estate is watched and changed.
+#
+# Absent from most architecture diagrams and present in every incident, which
+# is a reasonable argument for putting them on the diagram.
+
+- component_type_id: observability
+  name: Observability
+  category: Operations
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Metrics, logs and traces in one place. What turns "it is slow" into a named component.
+  providers:
+    AWS: Amazon CloudWatch
+    Azure: Azure Monitor
+    GCP: Cloud Operations
+    SaaS: Datadog or Grafana
+  defaults:
+    service_category: Observability
+    network_zone: Shared-Services
+
+- component_type_id: ci-cd
+  name: Delivery pipeline
+  category: Operations
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Build, test and deploy. A production dependency whether or not anybody has drawn it as one.
+  providers:
+    SaaS: GitHub Actions, GitLab CI or Jenkins
+    AWS: AWS CodePipeline
+    Azure: Azure Pipelines
+    GCP: Cloud Build
+  defaults:
+    service_category: Operations
+    network_zone: Shared-Services
+
+- component_type_id: iac
+  name: Infrastructure as code
+  category: Operations
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    The definition the environment is built from. Where drift is either prevented or discovered.
+  providers:
+    SaaS: Terraform or Pulumi
+    AWS: AWS CloudFormation or CDK
+    Azure: Bicep
+    GCP: Infrastructure Manager
+  defaults:
+    service_category: Operations
+    network_zone: Shared-Services
+
+- component_type_id: itsm
+  name: Service management
+  category: Operations
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Incidents, changes and the configuration management database. The system of record for the estate itself.
+  providers:
+    SaaS: ServiceNow ITSM, Jira Service Management or BMC Helix
+  defaults:
+    service_category: Operations
+    network_zone: Shared-Services
+
+- component_type_id: backup
+  name: Backup and recovery
+  category: Operations
+  applies_to: tech_services
+  shape: cylinder
+  description: >
+    Copies that survive the thing they came from. The recovery objective is a property of this, not of the database.
+  providers:
+    AWS: AWS Backup
+    Azure: Azure Backup
+    GCP: Backup and DR Service
+  defaults:
+    service_category: Operations
+    network_zone: Private-Data
+
+- component_type_id: source-control
+  name: Source control
+  category: Operations
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    The repositories the estate is built from, and the review that gates a change. Also where this model lives.
+  providers:
+    SaaS: GitHub or GitLab
+    Azure: Azure Repos
+  defaults:
+    service_category: Operations
+    network_zone: Shared-Services
+
+- component_type_id: artifact-registry
+  name: Artifact registry
+  category: Operations
+  applies_to: tech_services
+  shape: cylinder
+  description: >
+    Built packages and container images, signed and scanned. What a deployment actually pulls.
+  providers:
+    AWS: Amazon ECR and CodeArtifact
+    Azure: Azure Container Registry
+    GCP: Artifact Registry
+    SaaS: JFrog Artifactory
+  defaults:
+    service_category: Operations
+    network_zone: Shared-Services
+
+- component_type_id: feature-flags
+  name: Feature flags
+  category: Operations
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Configuration that turns behavior on and off at runtime. A deployment dependency that is easy to forget until it is down.
+  providers:
+    AWS: AWS AppConfig
+    Azure: Azure App Configuration
+    GCP: Firebase Remote Config
+    SaaS: LaunchDarkly
+  defaults:
+    service_category: Operations
+    network_zone: Shared-Services
+
+- component_type_id: incident-management
+  name: On-call and incident response
+  category: Operations
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Alert routing, escalation and the record of each incident. What turns a page into a person.
+  providers:
+    SaaS: PagerDuty or incident.io
+  defaults:
+    service_category: Operations
+    network_zone: Shared-Services
+
+- component_type_id: cloud-policy
+  name: Cloud policy and configuration compliance
+  category: Operations
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Rules the cloud enforces on what can be created and how, and the record of what drifted.
+  providers:
+    AWS: AWS Config and Service Control Policies
+    Azure: Azure Policy
+    GCP: Organization Policy Service
+  defaults:
+    service_category: Operations
+    network_zone: Shared-Services
+
+- component_type_id: systems-management
+  name: Systems management
+  category: Operations
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Patching, inventory and run commands across a fleet of instances, in the cloud and out of it.
+  providers:
+    AWS: AWS Systems Manager
+    Azure: Azure Arc and Azure Automation
+    GCP: VM Manager
+  defaults:
+    service_category: Operations
+    network_zone: Shared-Services
+
+- component_type_id: cost-management
+  name: Cost management
+  category: Operations
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Spend by account, service and tag, with budgets and the anomaly alert. The number a cloud migration is judged on.
+  providers:
+    AWS: AWS Cost Explorer and Budgets
+    Azure: Microsoft Cost Management
+    GCP: Cloud Billing reports
+    SaaS: Apptio Cloudability or CloudHealth
+  defaults:
+    service_category: Operations
+    network_zone: Shared-Services

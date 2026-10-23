@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The same slice as Archi saves it: its own XML, folders by layer, every
+     relationship an element too, the diagram's boxes nested as drawn. Read it
+     with `terrane draw -\-from-archimate sample.archimate`. -->
+<archimate:model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:archimate="http://www.archimatetool.com"
+                 name="Card payments, in Archi" id="id-model" version="5.0.0">
+  <folder name="Strategy" id="id-f-strategy" type="strategy">
+    <element xsi:type="archimate:Capability" name="Payment processing" id="id-cap-payments"/>
+    <element xsi:type="archimate:Capability" name="Fraud detection" id="id-cap-fraud"/>
+  </folder>
+  <folder name="Business" id="id-f-business" type="business">
+    <element xsi:type="archimate:BusinessActor" name="Merchant" id="id-merchant"/>
+    <element xsi:type="archimate:BusinessProcess" name="Authorize a card payment" id="id-authorize"/>
+  </folder>
+  <folder name="Application" id="id-f-application" type="application">
+    <element xsi:type="archimate:ApplicationComponent" name="Authorization switch" id="id-switch">
+      <documentation>Routes every authorization request to the scheme and the ledger.</documentation>
+    </element>
+    <element xsi:type="archimate:ApplicationService" name="Authorization service" id="id-auth-service"/>
+    <element xsi:type="archimate:ApplicationComponent" name="Fraud scoring" id="id-fraud"/>
+    <element xsi:type="archimate:ApplicationComponent" name="Card ledger" id="id-ledger"/>
+    <element xsi:type="archimate:DataObject" name="Transactions" id="id-transactions"/>
+  </folder>
+  <folder name="Technology &amp; Physical" id="id-f-technology" type="technology">
+    <element xsi:type="archimate:Node" name="Kubernetes cluster" id="id-kubernetes"/>
+  </folder>
+  <folder name="Other" id="id-f-other" type="other">
+    <element xsi:type="archimate:Grouping" name="Payments" id="id-payments-domain"/>
+  </folder>
+  <folder name="Relations" id="id-f-relations" type="relations">
+    <element xsi:type="archimate:ServingRelationship" id="id-r1" source="id-auth-service" target="id-merchant"/>
+    <element xsi:type="archimate:RealizationRelationship" id="id-r2" source="id-switch" target="id-auth-service"/>
+    <element xsi:type="archimate:FlowRelationship" id="id-r3" name="Scores the transaction" source="id-switch" target="id-fraud"/>
+    <element xsi:type="archimate:FlowRelationship" id="id-r4" name="Posts the authorization" source="id-switch" target="id-ledger"/>
+    <element xsi:type="archimate:AccessRelationship" id="id-r5" source="id-ledger" target="id-transactions" accessType="3"/>
+    <element xsi:type="archimate:AccessRelationship" id="id-r6" source="id-fraud" target="id-transactions" accessType="1"/>
+    <element xsi:type="archimate:RealizationRelationship" id="id-r7" source="id-switch" target="id-cap-payments"/>
+    <element xsi:type="archimate:RealizationRelationship" id="id-r8" source="id-fraud" target="id-cap-fraud"/>
+    <element xsi:type="archimate:RealizationRelationship" id="id-r9" source="id-authorize" target="id-cap-payments"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-r10" source="id-kubernetes" target="id-switch"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-r13" source="id-payments-domain" target="id-switch"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-r14" source="id-payments-domain" target="id-fraud"/>
+    <element xsi:type="archimate:AggregationRelationship" id="id-r15" source="id-payments-domain" target="id-ledger"/>
+  </folder>
+  <folder name="Views" id="id-f-views" type="diagrams">
+    <element xsi:type="archimate:ArchimateDiagramModel" name="Application cooperation" id="id-view-apps">
+      <child xsi:type="archimate:DiagramObject" id="id-n1" archimateElement="id-payments-domain">
+        <bounds x="10" y="10" width="600" height="300"/>
+        <child xsi:type="archimate:DiagramObject" id="id-n2" archimateElement="id-switch">
+          <bounds x="20" y="40" width="120" height="55"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-c1" source="id-n2" target="id-n3" archimateRelationship="id-r3"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-c2" source="id-n2" target="id-n4" archimateRelationship="id-r4"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-n3" archimateElement="id-fraud">
+          <bounds x="200" y="40" width="120" height="55"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-n4" archimateElement="id-ledger">
+          <bounds x="380" y="40" width="120" height="55"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-c3" source="id-n4" target="id-n6" archimateRelationship="id-r5"/>
+        </child>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-n6" archimateElement="id-transactions">
+        <bounds x="380" y="340" width="120" height="55"/>
+      </child>
+    </element>
+    <element xsi:type="archimate:ArchimateDiagramModel" name="Capability realization" id="id-view-caps">
+      <child xsi:type="archimate:Group" id="id-g1" name="Strategy">
+        <bounds x="10" y="10" width="400" height="100"/>
+        <child xsi:type="archimate:DiagramObject" id="id-n7" archimateElement="id-cap-payments">
+          <bounds x="10" y="30" width="120" height="55"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-n8" archimateElement="id-cap-fraud">
+          <bounds x="200" y="30" width="120" height="55"/>
+        </child>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-n9" archimateElement="id-switch">
+        <bounds x="10" y="150" width="120" height="55"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-c5" source="id-n9" target="id-n7" archimateRelationship="id-r7"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-n10" archimateElement="id-fraud">
+        <bounds x="200" y="150" width="120" height="55"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-c6" source="id-n10" target="id-n8" archimateRelationship="id-r8"/>
+      </child>
+    </element>
+  </folder>
+</archimate:model>

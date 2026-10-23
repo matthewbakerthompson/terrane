@@ -1,0 +1,48 @@
+@startuml
+' Customer Identity Service — Governance
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Customer Identity Service — Governance
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("policies", $bgColor="#fecaca", $borderColor="#dc2626", $fontColor="#0f172a", $legendText="policy")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_SEC_01, "Identity & Access Management", "Govern who can access what, and evidence it.", $tags="capabilities")
+  ' aac CAP_SEC_01: company_domain="Cross-Functional Services"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_AUTH_POLICY, "Cardholder authentication to policy", "Cardholder authentication meets the risk-tiered policy before disclosure or account change, across every servicing channel.", $tags="controls")
+  ' aac CTL_AUTH_POLICY: company_domain=""
+  System(CTL_ACCESS_CERT, "Periodic access certification", "Access to systems handling cardholder data is re-certified by the owning manager on a fixed cycle; uncertified access is revoked.", $tags="controls")
+  ' aac CTL_ACCESS_CERT: company_domain=""
+}
+Boundary(b_Policy, "Policy") {
+  System(POL_INFOSEC, "Information Security Policy", $tags="policies")
+  ' aac POL_INFOSEC: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_IDENTITY_SVC, "Customer Identity Service", "Shared platform service: Customer Identity Service. Built with AKS.", $tags="systems")
+  ' aac SYS_IDENTITY_SVC: company_domain="Enterprise Platform"; hosting="Azure"; technology="AKS"
+}
+
+Rel(SYS_IDENTITY_SVC, CTL_AUTH_POLICY, "enforces")
+' aac rel: source="SYS_IDENTITY_SVC"; target="CTL_AUTH_POLICY"; label="enforces"; relation="system_governed_by_control"
+Rel(SYS_IDENTITY_SVC, CTL_ACCESS_CERT, "enforces")
+' aac rel: source="SYS_IDENTITY_SVC"; target="CTL_ACCESS_CERT"; label="enforces"; relation="system_governed_by_control"
+Rel(SYS_IDENTITY_SVC, CAP_SEC_01, "realizes")
+' aac rel: source="SYS_IDENTITY_SVC"; target="CAP_SEC_01"; label="realizes"; relation="system_realizes_capability"
+Rel(CAP_SEC_01, CTL_ACCESS_CERT, "governed by")
+' aac rel: source="CAP_SEC_01"; target="CTL_ACCESS_CERT"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_SEC_01, CTL_AUTH_POLICY, "governed by")
+' aac rel: source="CAP_SEC_01"; target="CTL_AUTH_POLICY"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(SYS_IDENTITY_SVC, POL_INFOSEC, "subject to")
+' aac rel: source="SYS_IDENTITY_SVC"; target="POL_INFOSEC"; label="subject to"; relation="system_subject_to_policy"
+Rel(CTL_ACCESS_CERT, POL_INFOSEC, "gives effect to")
+Rel(CTL_AUTH_POLICY, POL_INFOSEC, "gives effect to")
+
+SHOW_LEGEND()
+@enduml

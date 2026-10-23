@@ -1,0 +1,731 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1240" height="3585" viewBox="0 0 1240 3585" font-family="Geist, system-ui, sans-serif" data-layout="table">
+<title>Policies, Their Controls, and Their Subjects</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Policies, Their Controls, and Their Subjects</text>
+<text x="1212" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   75 rows · 70 entities</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">Each policy, the controls that implement it, and the systems and data it applies to directly. A policy with subjects but no controls is only a statement of intent; a policy with controls but no</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">subjects is enforced somewhere the model has not recorded.</text>
+<line x1="28" y1="112" x2="1212" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(28 122)">
+<rect x="0" y="0" width="1184" height="30" fill="#f4f6fb"/>
+<text x="10" y="19" font-size="10.5" font-weight="600" fill="#334155" letter-spacing="0.06em">FROM</text>
+<text x="365.2" y="19" font-size="10.5" font-weight="600" fill="#334155" letter-spacing="0.06em">RELATIONSHIP</text>
+<text x="554.64" y="19" font-size="10.5" font-weight="600" fill="#334155" letter-spacing="0.06em">TO</text>
+<text x="909.84" y="19" font-size="10.5" font-weight="600" fill="#334155" letter-spacing="0.06em">DETAIL</text>
+<line x1="0" y1="30" x2="1184" y2="30" stroke="#c9d0dc" stroke-width="1.2"/>
+<g class="row" data-row="1">
+<text x="10" y="49" font-size="12" font-weight="500" fill="#0f172a">Card account master</text>
+<text x="10" y="63" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CARD-ACCOUNT</text>
+<text x="365.2" y="49" font-size="12" font-weight="400" fill="#0f172a">data subject to policy</text>
+<text x="554.64" y="49" font-size="12" font-weight="500" fill="#0f172a">Consumer Privacy &amp; Data Handling Policy</text>
+<text x="554.64" y="63" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-PRIVACY</text>
+<text x="909.84" y="49" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="75" x2="1184" y2="75" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="75" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="2">
+<text x="10" y="94" font-size="12" font-weight="500" fill="#0f172a">Card account master</text>
+<text x="10" y="108" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CARD-ACCOUNT</text>
+<text x="365.2" y="94" font-size="12" font-weight="400" fill="#0f172a">data subject to policy</text>
+<text x="554.64" y="94" font-size="12" font-weight="500" fill="#0f172a">Records Retention &amp; Disposition Policy</text>
+<text x="554.64" y="108" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-RECORDS</text>
+<text x="909.84" y="94" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="120" x2="1184" y2="120" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="3">
+<text x="10" y="139" font-size="12" font-weight="500" fill="#0f172a">Card transaction history</text>
+<text x="10" y="153" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-TRANSACTION</text>
+<text x="365.2" y="139" font-size="12" font-weight="400" fill="#0f172a">data subject to policy</text>
+<text x="554.64" y="139" font-size="12" font-weight="500" fill="#0f172a">Records Retention &amp; Disposition Policy</text>
+<text x="554.64" y="153" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-RECORDS</text>
+<text x="909.84" y="139" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="165" x2="1184" y2="165" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="165" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="4">
+<text x="10" y="184" font-size="12" font-weight="500" fill="#0f172a">Customer 360 curated dataset</text>
+<text x="10" y="198" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CUST360-CURATED</text>
+<text x="365.2" y="184" font-size="12" font-weight="400" fill="#0f172a">data subject to policy</text>
+<text x="554.64" y="184" font-size="12" font-weight="500" fill="#0f172a">Consumer Privacy &amp; Data Handling Policy</text>
+<text x="554.64" y="198" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-PRIVACY</text>
+<text x="909.84" y="184" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="210" x2="1184" y2="210" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="5">
+<text x="10" y="229" font-size="12" font-weight="500" fill="#0f172a">Customer profile</text>
+<text x="10" y="243" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-CUSTOMER-PROFILE</text>
+<text x="365.2" y="229" font-size="12" font-weight="400" fill="#0f172a">data subject to policy</text>
+<text x="554.64" y="229" font-size="12" font-weight="500" fill="#0f172a">Consumer Privacy &amp; Data Handling Policy</text>
+<text x="554.64" y="243" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-PRIVACY</text>
+<text x="909.84" y="229" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="255" x2="1184" y2="255" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="255" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="6">
+<text x="10" y="274" font-size="12" font-weight="500" fill="#0f172a">Dispute Management Platform vendor feed</text>
+<text x="10" y="288" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-DISPUTES-VENDOR-FEED</text>
+<text x="365.2" y="274" font-size="12" font-weight="400" fill="#0f172a">data subject to policy</text>
+<text x="554.64" y="274" font-size="12" font-weight="500" fill="#0f172a">Records Retention &amp; Disposition Policy</text>
+<text x="554.64" y="288" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-RECORDS</text>
+<text x="909.84" y="274" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="300" x2="1184" y2="300" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="7">
+<text x="10" y="319" font-size="12" font-weight="500" fill="#0f172a">Dispute Management Platform vendor feed</text>
+<text x="10" y="333" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-DISPUTES-VENDOR-FEED</text>
+<text x="365.2" y="319" font-size="12" font-weight="400" fill="#0f172a">data subject to policy</text>
+<text x="554.64" y="319" font-size="12" font-weight="500" fill="#0f172a">Consumer Privacy &amp; Data Handling Policy</text>
+<text x="554.64" y="333" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-PRIVACY</text>
+<text x="909.84" y="319" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="345" x2="1184" y2="345" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="345" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="8">
+<text x="10" y="364" font-size="12" font-weight="500" fill="#0f172a">Dispute Management Platform vendor feed</text>
+<text x="10" y="378" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-DISPUTES-VENDOR-FEED</text>
+<text x="365.2" y="364" font-size="12" font-weight="400" fill="#0f172a">data subject to policy</text>
+<text x="554.64" y="364" font-size="12" font-weight="500" fill="#0f172a">Third-Party Risk Management Policy</text>
+<text x="554.64" y="378" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-TPRM</text>
+<text x="909.84" y="364" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="390" x2="1184" y2="390" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="9">
+<text x="10" y="409" font-size="12" font-weight="500" fill="#0f172a">NICE Actimize Screening outcomes</text>
+<text x="10" y="423" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-SCREENING-OUTCOMES</text>
+<text x="365.2" y="409" font-size="12" font-weight="400" fill="#0f172a">data subject to policy</text>
+<text x="554.64" y="409" font-size="12" font-weight="500" fill="#0f172a">Records Retention &amp; Disposition Policy</text>
+<text x="554.64" y="423" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-RECORDS</text>
+<text x="909.84" y="409" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="435" x2="1184" y2="435" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="435" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="10">
+<text x="10" y="454" font-size="12" font-weight="500" fill="#0f172a">NICE Actimize Screening outcomes</text>
+<text x="10" y="468" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">DA-SCREENING-OUTCOMES</text>
+<text x="365.2" y="454" font-size="12" font-weight="400" fill="#0f172a">data subject to policy</text>
+<text x="554.64" y="454" font-size="12" font-weight="500" fill="#0f172a">Consumer Privacy &amp; Data Handling Policy</text>
+<text x="554.64" y="468" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-PRIVACY</text>
+<text x="909.84" y="454" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="480" x2="1184" y2="480" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="11">
+<text x="10" y="499" font-size="12" font-weight="500" fill="#0f172a">Adverse action notice completeness</text>
+<text x="10" y="513" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-ADVERSE-ACT</text>
+<text x="365.2" y="499" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="499" font-size="12" font-weight="500" fill="#0f172a">Fair Lending &amp; Credit Decision Policy</text>
+<text x="554.64" y="513" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-FAIR-LEND</text>
+<text x="909.84" y="499" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="525" x2="1184" y2="525" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="525" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="12">
+<text x="10" y="544" font-size="12" font-weight="500" fill="#0f172a">Application completeness and disclosure</text>
+<text x="10" y="558" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-APP-INTAKE</text>
+<text x="365.2" y="544" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="544" font-size="12" font-weight="500" fill="#0f172a">Fair Lending &amp; Credit Decision Policy</text>
+<text x="554.64" y="558" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-FAIR-LEND</text>
+<text x="909.84" y="544" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="570" x2="1184" y2="570" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="13">
+<text x="10" y="589" font-size="12" font-weight="500" fill="#0f172a">Authorization availability and stand-in</text>
+<text x="10" y="603" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-AUTH-AVAIL</text>
+<text x="365.2" y="589" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="589" font-size="12" font-weight="500" fill="#0f172a">Technology Change Management Policy</text>
+<text x="554.64" y="603" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-CHANGE</text>
+<text x="909.84" y="589" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="615" x2="1184" y2="615" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="615" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="14">
+<text x="10" y="634" font-size="12" font-weight="500" fill="#0f172a">Bureau furnishing accuracy</text>
+<text x="10" y="648" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-BUREAU-ACC</text>
+<text x="365.2" y="634" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="634" font-size="12" font-weight="500" fill="#0f172a">Fair Lending &amp; Credit Decision Policy</text>
+<text x="554.64" y="648" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-FAIR-LEND</text>
+<text x="909.84" y="634" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="660" x2="1184" y2="660" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="15">
+<text x="10" y="679" font-size="12" font-weight="500" fill="#0f172a">Cardholder authentication to policy</text>
+<text x="10" y="693" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-AUTH-POLICY</text>
+<text x="365.2" y="679" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="679" font-size="12" font-weight="500" fill="#0f172a">Information Security Policy</text>
+<text x="554.64" y="693" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-INFOSEC</text>
+<text x="909.84" y="679" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="705" x2="1184" y2="705" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="705" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="16">
+<text x="10" y="724" font-size="12" font-weight="500" fill="#0f172a">Cardholder data scope and evidence maintenance</text>
+<text x="10" y="738" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-PCI-EVIDENCE</text>
+<text x="365.2" y="724" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="724" font-size="12" font-weight="500" fill="#0f172a">Information Security Policy</text>
+<text x="554.64" y="738" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-INFOSEC</text>
+<text x="909.84" y="724" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="750" x2="1184" y2="750" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="17">
+<text x="10" y="769" font-size="12" font-weight="500" fill="#0f172a">Charge-off timing to policy</text>
+<text x="10" y="783" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-CHARGEOFF-TIME</text>
+<text x="365.2" y="769" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="769" font-size="12" font-weight="500" fill="#0f172a">Collections Conduct Policy</text>
+<text x="554.64" y="783" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-COLLECT</text>
+<text x="909.84" y="769" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="795" x2="1184" y2="795" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="795" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="18">
+<text x="10" y="814" font-size="12" font-weight="500" fill="#0f172a">Client reporting and feed monitoring</text>
+<text x="10" y="828" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-CLIENT-SLA</text>
+<text x="365.2" y="814" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="814" font-size="12" font-weight="500" fill="#0f172a">Third-Party Risk Management Policy</text>
+<text x="554.64" y="828" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-TPRM</text>
+<text x="909.84" y="814" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="840" x2="1184" y2="840" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="19">
+<text x="10" y="859" font-size="12" font-weight="500" fill="#0f172a">Close reconciliation sign-off</text>
+<text x="10" y="873" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-CLOSE-SIGNOFF</text>
+<text x="365.2" y="859" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="859" font-size="12" font-weight="500" fill="#0f172a">Records Retention &amp; Disposition Policy</text>
+<text x="554.64" y="873" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-RECORDS</text>
+<text x="909.84" y="859" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="885" x2="1184" y2="885" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="885" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="20">
+<text x="10" y="904" font-size="12" font-weight="500" fill="#0f172a">Collections contact limits</text>
+<text x="10" y="918" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-CONTACT-LIM</text>
+<text x="365.2" y="904" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="904" font-size="12" font-weight="500" fill="#0f172a">Collections Conduct Policy</text>
+<text x="554.64" y="918" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-COLLECT</text>
+<text x="909.84" y="904" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="930" x2="1184" y2="930" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="21">
+<text x="10" y="949" font-size="12" font-weight="500" fill="#0f172a">Complaint regulatory routing</text>
+<text x="10" y="963" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-COMPLAINT-REG</text>
+<text x="365.2" y="949" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="949" font-size="12" font-weight="500" fill="#0f172a">Marketing Review &amp; UDAAP Policy</text>
+<text x="554.64" y="963" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-MKT-UDAAP</text>
+<text x="909.84" y="949" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="975" x2="1184" y2="975" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="975" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="22">
+<text x="10" y="994" font-size="12" font-weight="500" fill="#0f172a">Consumer privacy request fulfillment</text>
+<text x="10" y="1008" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-PRIV-REQ</text>
+<text x="365.2" y="994" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="994" font-size="12" font-weight="500" fill="#0f172a">Consumer Privacy &amp; Data Handling Policy</text>
+<text x="554.64" y="1008" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-PRIVACY</text>
+<text x="909.84" y="994" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1020" x2="1184" y2="1020" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="23">
+<text x="10" y="1039" font-size="12" font-weight="500" fill="#0f172a">Conversion balance and record verification</text>
+<text x="10" y="1053" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-CONV-VERIFY</text>
+<text x="365.2" y="1039" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1039" font-size="12" font-weight="500" fill="#0f172a">Third-Party Risk Management Policy</text>
+<text x="554.64" y="1053" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-TPRM</text>
+<text x="909.84" y="1039" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1065" x2="1184" y2="1065" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1065" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="24">
+<text x="10" y="1084" font-size="12" font-weight="500" fill="#0f172a">Cycle assessment validation</text>
+<text x="10" y="1098" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-CYCLE-VALID</text>
+<text x="365.2" y="1084" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1084" font-size="12" font-weight="500" fill="#0f172a">Error Resolution &amp; Billing Dispute Policy</text>
+<text x="554.64" y="1098" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-ERROR-RES</text>
+<text x="909.84" y="1084" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1110" x2="1184" y2="1110" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="25">
+<text x="10" y="1129" font-size="12" font-weight="500" fill="#0f172a">Daily settlement and clearing reconciliation</text>
+<text x="10" y="1143" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-DAILY-RECON</text>
+<text x="365.2" y="1129" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1129" font-size="12" font-weight="500" fill="#0f172a">Records Retention &amp; Disposition Policy</text>
+<text x="554.64" y="1143" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-RECORDS</text>
+<text x="909.84" y="1129" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1155" x2="1184" y2="1155" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1155" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="26">
+<text x="10" y="1174" font-size="12" font-weight="500" fill="#0f172a">Dispute acknowledgment timeliness</text>
+<text x="10" y="1188" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-REGE-ACK</text>
+<text x="365.2" y="1174" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1174" font-size="12" font-weight="500" fill="#0f172a">Error Resolution &amp; Billing Dispute Policy</text>
+<text x="554.64" y="1188" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-ERROR-RES</text>
+<text x="909.84" y="1174" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1200" x2="1184" y2="1200" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="27">
+<text x="10" y="1219" font-size="12" font-weight="500" fill="#0f172a">Dispute determination timeliness and notice</text>
+<text x="10" y="1233" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-REGE-DETERM</text>
+<text x="365.2" y="1219" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1219" font-size="12" font-weight="500" fill="#0f172a">Error Resolution &amp; Billing Dispute Policy</text>
+<text x="554.64" y="1233" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-ERROR-RES</text>
+<text x="909.84" y="1219" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1245" x2="1184" y2="1245" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1245" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="28">
+<text x="10" y="1264" font-size="12" font-weight="500" fill="#0f172a">Fraud alert handling service level</text>
+<text x="10" y="1278" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-FRAUD-SLA</text>
+<text x="365.2" y="1264" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1264" font-size="12" font-weight="500" fill="#0f172a">Error Resolution &amp; Billing Dispute Policy</text>
+<text x="554.64" y="1278" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-ERROR-RES</text>
+<text x="909.84" y="1264" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1290" x2="1184" y2="1290" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="29">
+<text x="10" y="1309" font-size="12" font-weight="500" fill="#0f172a">Furnishing and bucketing reconciliation</text>
+<text x="10" y="1323" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-METRO2-RECON</text>
+<text x="365.2" y="1309" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1309" font-size="12" font-weight="500" fill="#0f172a">Fair Lending &amp; Credit Decision Policy</text>
+<text x="554.64" y="1323" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-FAIR-LEND</text>
+<text x="909.84" y="1309" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1335" x2="1184" y2="1335" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1335" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="30">
+<text x="10" y="1354" font-size="12" font-weight="500" fill="#0f172a">Ingestion data quality gate</text>
+<text x="10" y="1368" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-DQ-GATE</text>
+<text x="365.2" y="1354" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1354" font-size="12" font-weight="500" fill="#0f172a">Records Retention &amp; Disposition Policy</text>
+<text x="554.64" y="1368" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-RECORDS</text>
+<text x="909.84" y="1354" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1380" x2="1184" y2="1380" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="31">
+<text x="10" y="1399" font-size="12" font-weight="500" fill="#0f172a">Marketing material compliance review</text>
+<text x="10" y="1413" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-MKT-REVIEW</text>
+<text x="365.2" y="1399" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1399" font-size="12" font-weight="500" fill="#0f172a">Marketing Review &amp; UDAAP Policy</text>
+<text x="554.64" y="1413" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-MKT-UDAAP</text>
+<text x="909.84" y="1399" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1425" x2="1184" y2="1425" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1425" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="32">
+<text x="10" y="1444" font-size="12" font-weight="500" fill="#0f172a">Masked data outside production</text>
+<text x="10" y="1458" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-MASK-NONPROD</text>
+<text x="365.2" y="1444" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1444" font-size="12" font-weight="500" fill="#0f172a">Information Security Policy</text>
+<text x="554.64" y="1458" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-INFOSEC</text>
+<text x="909.84" y="1444" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1470" x2="1184" y2="1470" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="33">
+<text x="10" y="1489" font-size="12" font-weight="500" fill="#0f172a">Notice content and delivery evidence</text>
+<text x="10" y="1503" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-NOTICE-CONTENT</text>
+<text x="365.2" y="1489" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1489" font-size="12" font-weight="500" fill="#0f172a">Error Resolution &amp; Billing Dispute Policy</text>
+<text x="554.64" y="1503" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-ERROR-RES</text>
+<text x="909.84" y="1489" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1515" x2="1184" y2="1515" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1515" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="34">
+<text x="10" y="1534" font-size="12" font-weight="500" fill="#0f172a">Payment posting timeliness</text>
+<text x="10" y="1548" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-PMT-POSTING</text>
+<text x="365.2" y="1534" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1534" font-size="12" font-weight="500" fill="#0f172a">Error Resolution &amp; Billing Dispute Policy</text>
+<text x="554.64" y="1548" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-ERROR-RES</text>
+<text x="909.84" y="1534" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1560" x2="1184" y2="1560" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="35">
+<text x="10" y="1579" font-size="12" font-weight="500" fill="#0f172a">Periodic access certification</text>
+<text x="10" y="1593" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-ACCESS-CERT</text>
+<text x="365.2" y="1579" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1579" font-size="12" font-weight="500" fill="#0f172a">Information Security Policy</text>
+<text x="554.64" y="1593" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-INFOSEC</text>
+<text x="909.84" y="1579" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1605" x2="1184" y2="1605" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1605" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="36">
+<text x="10" y="1624" font-size="12" font-weight="500" fill="#0f172a">Production change approval</text>
+<text x="10" y="1638" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-CHG-APPROVAL</text>
+<text x="365.2" y="1624" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1624" font-size="12" font-weight="500" fill="#0f172a">Technology Change Management Policy</text>
+<text x="554.64" y="1638" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-CHANGE</text>
+<text x="909.84" y="1624" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1650" x2="1184" y2="1650" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="37">
+<text x="10" y="1669" font-size="12" font-weight="500" fill="#0f172a">Provisional credit within regulatory window</text>
+<text x="10" y="1683" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-REGE-PROVCR</text>
+<text x="365.2" y="1669" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1669" font-size="12" font-weight="500" fill="#0f172a">Error Resolution &amp; Billing Dispute Policy</text>
+<text x="554.64" y="1683" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-ERROR-RES</text>
+<text x="909.84" y="1669" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1695" x2="1184" y2="1695" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1695" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="38">
+<text x="10" y="1714" font-size="12" font-weight="500" fill="#0f172a">Recovery test against committed objectives</text>
+<text x="10" y="1728" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-DR-TEST</text>
+<text x="365.2" y="1714" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1714" font-size="12" font-weight="500" fill="#0f172a">Technology Change Management Policy</text>
+<text x="554.64" y="1728" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-CHANGE</text>
+<text x="909.84" y="1714" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1740" x2="1184" y2="1740" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="39">
+<text x="10" y="1759" font-size="12" font-weight="500" fill="#0f172a">Regulatory change implementation tracking</text>
+<text x="10" y="1773" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-REGCHANGE-TRACK</text>
+<text x="365.2" y="1759" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1759" font-size="12" font-weight="500" fill="#0f172a">BSA/AML &amp; Sanctions Policy</text>
+<text x="554.64" y="1773" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-BSA-AML</text>
+<text x="909.84" y="1759" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1785" x2="1184" y2="1785" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1785" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="40">
+<text x="10" y="1804" font-size="12" font-weight="500" fill="#0f172a">Regulatory report certification</text>
+<text x="10" y="1818" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-REGRPT-CERT</text>
+<text x="365.2" y="1804" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1804" font-size="12" font-weight="500" fill="#0f172a">Records Retention &amp; Disposition Policy</text>
+<text x="554.64" y="1818" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-RECORDS</text>
+<text x="909.84" y="1804" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1830" x2="1184" y2="1830" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="41">
+<text x="10" y="1849" font-size="12" font-weight="500" fill="#0f172a">Retention schedule enforcement</text>
+<text x="10" y="1863" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-RETENTION</text>
+<text x="365.2" y="1849" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1849" font-size="12" font-weight="500" fill="#0f172a">Records Retention &amp; Disposition Policy</text>
+<text x="554.64" y="1863" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-RECORDS</text>
+<text x="909.84" y="1849" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1875" x2="1184" y2="1875" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1875" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="42">
+<text x="10" y="1894" font-size="12" font-weight="500" fill="#0f172a">Sanctions and watchlist screening</text>
+<text x="10" y="1908" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-SANCTIONS</text>
+<text x="365.2" y="1894" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1894" font-size="12" font-weight="500" fill="#0f172a">BSA/AML &amp; Sanctions Policy</text>
+<text x="554.64" y="1908" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-BSA-AML</text>
+<text x="909.84" y="1894" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1920" x2="1184" y2="1920" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="43">
+<text x="10" y="1939" font-size="12" font-weight="500" fill="#0f172a">Security incident response execution</text>
+<text x="10" y="1953" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-IR-PLAYBOOK</text>
+<text x="365.2" y="1939" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1939" font-size="12" font-weight="500" fill="#0f172a">Information Security Policy</text>
+<text x="554.64" y="1953" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-INFOSEC</text>
+<text x="909.84" y="1939" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="1965" x2="1184" y2="1965" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="1965" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="44">
+<text x="10" y="1984" font-size="12" font-weight="500" fill="#0f172a">Servicemember protections screening</text>
+<text x="10" y="1998" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-SCRA-MLA</text>
+<text x="365.2" y="1984" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="1984" font-size="12" font-weight="500" fill="#0f172a">Fair Lending &amp; Credit Decision Policy</text>
+<text x="554.64" y="1998" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-FAIR-LEND</text>
+<text x="909.84" y="1984" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="2010" x2="1184" y2="2010" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="45">
+<text x="10" y="2029" font-size="12" font-weight="500" fill="#0f172a">Settlement funding confirmation</text>
+<text x="10" y="2043" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-FUNDING-CONF</text>
+<text x="365.2" y="2029" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="2029" font-size="12" font-weight="500" fill="#0f172a">Records Retention &amp; Disposition Policy</text>
+<text x="554.64" y="2043" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-RECORDS</text>
+<text x="909.84" y="2029" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="2055" x2="1184" y2="2055" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2055" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="46">
+<text x="10" y="2074" font-size="12" font-weight="500" fill="#0f172a">Statutory collections notices</text>
+<text x="10" y="2088" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-FDCPA-NOTICE</text>
+<text x="365.2" y="2074" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="2074" font-size="12" font-weight="500" fill="#0f172a">Collections Conduct Policy</text>
+<text x="554.64" y="2088" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-COLLECT</text>
+<text x="909.84" y="2074" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="2100" x2="1184" y2="2100" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="47">
+<text x="10" y="2119" font-size="12" font-weight="500" fill="#0f172a">Suspicious activity investigation and filing</text>
+<text x="10" y="2133" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-SAR-FILING</text>
+<text x="365.2" y="2119" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="2119" font-size="12" font-weight="500" fill="#0f172a">BSA/AML &amp; Sanctions Policy</text>
+<text x="554.64" y="2133" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-BSA-AML</text>
+<text x="909.84" y="2119" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="2145" x2="1184" y2="2145" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2145" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="48">
+<text x="10" y="2164" font-size="12" font-weight="500" fill="#0f172a">Third-party due diligence before onboarding</text>
+<text x="10" y="2178" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-TPRM-DD</text>
+<text x="365.2" y="2164" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="2164" font-size="12" font-weight="500" fill="#0f172a">Third-Party Risk Management Policy</text>
+<text x="554.64" y="2178" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-TPRM</text>
+<text x="909.84" y="2164" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="2190" x2="1184" y2="2190" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="49">
+<text x="10" y="2209" font-size="12" font-weight="500" fill="#0f172a">Treatment strategy approval</text>
+<text x="10" y="2223" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-TREATMENT-APPR</text>
+<text x="365.2" y="2209" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="2209" font-size="12" font-weight="500" fill="#0f172a">Fair Lending &amp; Credit Decision Policy</text>
+<text x="554.64" y="2223" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-FAIR-LEND</text>
+<text x="909.84" y="2209" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="2235" x2="1184" y2="2235" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2235" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="50">
+<text x="10" y="2254" font-size="12" font-weight="500" fill="#0f172a">Vulnerability remediation service level</text>
+<text x="10" y="2268" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">CTL-VULN-SLA</text>
+<text x="365.2" y="2254" font-size="12" font-weight="400" fill="#0f172a">policy id</text>
+<text x="554.64" y="2254" font-size="12" font-weight="500" fill="#0f172a">Information Security Policy</text>
+<text x="554.64" y="2268" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-INFOSEC</text>
+<text x="909.84" y="2254" font-size="12" font-weight="400" fill="#0f172a">gives effect to</text>
+</g>
+<line x1="0" y1="2280" x2="1184" y2="2280" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="51">
+<text x="10" y="2299" font-size="12" font-weight="500" fill="#0f172a">Authorization Switch</text>
+<text x="10" y="2313" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-AUTH-SWITCH</text>
+<text x="365.2" y="2299" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="2299" font-size="12" font-weight="500" fill="#0f172a">Information Security Policy</text>
+<text x="554.64" y="2313" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-INFOSEC</text>
+<text x="909.84" y="2299" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="2325" x2="1184" y2="2325" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2325" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="52">
+<text x="10" y="2344" font-size="12" font-weight="500" fill="#0f172a">Authorization Switch</text>
+<text x="10" y="2358" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-AUTH-SWITCH</text>
+<text x="365.2" y="2344" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="2344" font-size="12" font-weight="500" fill="#0f172a">Technology Change Management Policy</text>
+<text x="554.64" y="2358" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-CHANGE</text>
+<text x="909.84" y="2344" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="2370" x2="1184" y2="2370" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="53">
+<text x="10" y="2389" font-size="12" font-weight="500" fill="#0f172a">Collections Workspace Service</text>
+<text x="10" y="2403" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-COLLECT-API</text>
+<text x="365.2" y="2389" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="2389" font-size="12" font-weight="500" fill="#0f172a">Collections Conduct Policy</text>
+<text x="554.64" y="2403" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-COLLECT</text>
+<text x="909.84" y="2389" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="2415" x2="1184" y2="2415" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2415" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="54">
+<text x="10" y="2434" font-size="12" font-weight="500" fill="#0f172a">Core Card Ledger</text>
+<text x="10" y="2448" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CORE-LEDGER</text>
+<text x="365.2" y="2434" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="2434" font-size="12" font-weight="500" fill="#0f172a">Information Security Policy</text>
+<text x="554.64" y="2448" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-INFOSEC</text>
+<text x="909.84" y="2434" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="2460" x2="1184" y2="2460" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="55">
+<text x="10" y="2479" font-size="12" font-weight="500" fill="#0f172a">Core Card Ledger</text>
+<text x="10" y="2493" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CORE-LEDGER</text>
+<text x="365.2" y="2479" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="2479" font-size="12" font-weight="500" fill="#0f172a">Technology Change Management Policy</text>
+<text x="554.64" y="2493" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-CHANGE</text>
+<text x="909.84" y="2479" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="2505" x2="1184" y2="2505" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2505" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="56">
+<text x="10" y="2524" font-size="12" font-weight="500" fill="#0f172a">Core Card Ledger</text>
+<text x="10" y="2538" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CORE-LEDGER</text>
+<text x="365.2" y="2524" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="2524" font-size="12" font-weight="500" fill="#0f172a">Records Retention &amp; Disposition Policy</text>
+<text x="554.64" y="2538" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-RECORDS</text>
+<text x="909.84" y="2524" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="2550" x2="1184" y2="2550" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="57">
+<text x="10" y="2569" font-size="12" font-weight="500" fill="#0f172a">Customer 360 Pipeline</text>
+<text x="10" y="2583" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CUST360-PIPELINE</text>
+<text x="365.2" y="2569" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="2569" font-size="12" font-weight="500" fill="#0f172a">Consumer Privacy &amp; Data Handling Policy</text>
+<text x="554.64" y="2583" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-PRIVACY</text>
+<text x="909.84" y="2569" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="2595" x2="1184" y2="2595" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2595" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="58">
+<text x="10" y="2614" font-size="12" font-weight="500" fill="#0f172a">Customer 360 Pipeline</text>
+<text x="10" y="2628" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CUST360-PIPELINE</text>
+<text x="365.2" y="2614" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="2614" font-size="12" font-weight="500" fill="#0f172a">Records Retention &amp; Disposition Policy</text>
+<text x="554.64" y="2628" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-RECORDS</text>
+<text x="909.84" y="2614" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="2640" x2="1184" y2="2640" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="59">
+<text x="10" y="2659" font-size="12" font-weight="500" fill="#0f172a">Customer Identity Service</text>
+<text x="10" y="2673" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-IDENTITY-SVC</text>
+<text x="365.2" y="2659" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="2659" font-size="12" font-weight="500" fill="#0f172a">Information Security Policy</text>
+<text x="554.64" y="2673" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-INFOSEC</text>
+<text x="909.84" y="2659" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="2685" x2="1184" y2="2685" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2685" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="60">
+<text x="10" y="2704" font-size="12" font-weight="500" fill="#0f172a">Dynamics 365 Customer Service</text>
+<text x="10" y="2718" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CRM</text>
+<text x="365.2" y="2704" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="2704" font-size="12" font-weight="500" fill="#0f172a">Consumer Privacy &amp; Data Handling Policy</text>
+<text x="554.64" y="2718" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-PRIVACY</text>
+<text x="909.84" y="2704" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="2730" x2="1184" y2="2730" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="61">
+<text x="10" y="2749" font-size="12" font-weight="500" fill="#0f172a">Experian Credit Bureau</text>
+<text x="10" y="2763" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CREDIT-BUREAU</text>
+<text x="365.2" y="2749" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="2749" font-size="12" font-weight="500" fill="#0f172a">Fair Lending &amp; Credit Decision Policy</text>
+<text x="554.64" y="2763" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-FAIR-LEND</text>
+<text x="909.84" y="2749" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="2775" x2="1184" y2="2775" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2775" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="62">
+<text x="10" y="2794" font-size="12" font-weight="500" fill="#0f172a">Experian Credit Bureau</text>
+<text x="10" y="2808" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-CREDIT-BUREAU</text>
+<text x="365.2" y="2794" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="2794" font-size="12" font-weight="500" fill="#0f172a">Third-Party Risk Management Policy</text>
+<text x="554.64" y="2808" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-TPRM</text>
+<text x="909.84" y="2794" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="2820" x2="1184" y2="2820" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="63">
+<text x="10" y="2839" font-size="12" font-weight="500" fill="#0f172a">Identity Document Verification</text>
+<text x="10" y="2853" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-IDV-VENDOR</text>
+<text x="365.2" y="2839" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="2839" font-size="12" font-weight="500" fill="#0f172a">Third-Party Risk Management Policy</text>
+<text x="554.64" y="2853" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-TPRM</text>
+<text x="909.84" y="2839" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="2865" x2="1184" y2="2865" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2865" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="64">
+<text x="10" y="2884" font-size="12" font-weight="500" fill="#0f172a">Identity Document Verification</text>
+<text x="10" y="2898" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-IDV-VENDOR</text>
+<text x="365.2" y="2884" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="2884" font-size="12" font-weight="500" fill="#0f172a">BSA/AML &amp; Sanctions Policy</text>
+<text x="554.64" y="2898" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-BSA-AML</text>
+<text x="909.84" y="2884" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="2910" x2="1184" y2="2910" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="65">
+<text x="10" y="2929" font-size="12" font-weight="500" fill="#0f172a">Installment Lending Integration Hub</text>
+<text x="10" y="2943" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-LENDING-HUB</text>
+<text x="365.2" y="2929" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="2929" font-size="12" font-weight="500" fill="#0f172a">Technology Change Management Policy</text>
+<text x="554.64" y="2943" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-CHANGE</text>
+<text x="909.84" y="2929" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="2955" x2="1184" y2="2955" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="2955" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="66">
+<text x="10" y="2974" font-size="12" font-weight="500" fill="#0f172a">NICE Actimize Screening</text>
+<text x="10" y="2988" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-SCREENING-VENDOR</text>
+<text x="365.2" y="2974" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="2974" font-size="12" font-weight="500" fill="#0f172a">Third-Party Risk Management Policy</text>
+<text x="554.64" y="2988" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-TPRM</text>
+<text x="909.84" y="2974" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="3000" x2="1184" y2="3000" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="67">
+<text x="10" y="3019" font-size="12" font-weight="500" fill="#0f172a">NICE Actimize Screening</text>
+<text x="10" y="3033" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-SCREENING-VENDOR</text>
+<text x="365.2" y="3019" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="3019" font-size="12" font-weight="500" fill="#0f172a">BSA/AML &amp; Sanctions Policy</text>
+<text x="554.64" y="3033" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-BSA-AML</text>
+<text x="909.84" y="3019" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="3045" x2="1184" y2="3045" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="3045" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="68">
+<text x="10" y="3064" font-size="12" font-weight="500" fill="#0f172a">NICE Actimize Screening Identity Federation</text>
+<text x="10" y="3078" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-SCREENING-FEDERATION</text>
+<text x="365.2" y="3064" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="3064" font-size="12" font-weight="500" fill="#0f172a">Information Security Policy</text>
+<text x="554.64" y="3078" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-INFOSEC</text>
+<text x="909.84" y="3064" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="3090" x2="1184" y2="3090" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="69">
+<text x="10" y="3109" font-size="12" font-weight="500" fill="#0f172a">Open Banking Affordability</text>
+<text x="10" y="3123" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-OBAFF-VENDOR</text>
+<text x="365.2" y="3109" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="3109" font-size="12" font-weight="500" fill="#0f172a">Third-Party Risk Management Policy</text>
+<text x="554.64" y="3123" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-TPRM</text>
+<text x="909.84" y="3109" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="3135" x2="1184" y2="3135" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="3135" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="70">
+<text x="10" y="3154" font-size="12" font-weight="500" fill="#0f172a">Open Banking Affordability</text>
+<text x="10" y="3168" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-OBAFF-VENDOR</text>
+<text x="365.2" y="3154" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="3154" font-size="12" font-weight="500" fill="#0f172a">Consumer Privacy &amp; Data Handling Policy</text>
+<text x="554.64" y="3168" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-PRIVACY</text>
+<text x="909.84" y="3154" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="3180" x2="1184" y2="3180" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="71">
+<text x="10" y="3199" font-size="12" font-weight="500" fill="#0f172a">Open Banking Affordability</text>
+<text x="10" y="3213" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-OBAFF-VENDOR</text>
+<text x="365.2" y="3199" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="3199" font-size="12" font-weight="500" fill="#0f172a">Fair Lending &amp; Credit Decision Policy</text>
+<text x="554.64" y="3213" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-FAIR-LEND</text>
+<text x="909.84" y="3199" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="3225" x2="1184" y2="3225" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="3225" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="72">
+<text x="10" y="3244" font-size="12" font-weight="500" fill="#0f172a">Pega Smart Dispute</text>
+<text x="10" y="3258" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-DISPUTES-SAAS</text>
+<text x="365.2" y="3244" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="3244" font-size="12" font-weight="500" fill="#0f172a">Third-Party Risk Management Policy</text>
+<text x="554.64" y="3258" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-TPRM</text>
+<text x="909.84" y="3244" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="3270" x2="1184" y2="3270" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="73">
+<text x="10" y="3289" font-size="12" font-weight="500" fill="#0f172a">Pega Smart Dispute</text>
+<text x="10" y="3303" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-DISPUTES-SAAS</text>
+<text x="365.2" y="3289" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="3289" font-size="12" font-weight="500" fill="#0f172a">Error Resolution &amp; Billing Dispute Policy</text>
+<text x="554.64" y="3303" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-ERROR-RES</text>
+<text x="909.84" y="3289" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="3315" x2="1184" y2="3315" stroke="#c9d0dc" stroke-width="0.6"/>
+<rect x="0" y="3315" width="1184" height="45" fill="#f4f6fb"/>
+<g class="row" data-row="74">
+<text x="10" y="3334" font-size="12" font-weight="500" fill="#0f172a">Security Monitoring</text>
+<text x="10" y="3348" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-SIEM</text>
+<text x="365.2" y="3334" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="3334" font-size="12" font-weight="500" fill="#0f172a">Information Security Policy</text>
+<text x="554.64" y="3348" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-INFOSEC</text>
+<text x="909.84" y="3334" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="3360" x2="1184" y2="3360" stroke="#c9d0dc" stroke-width="0.6"/>
+<g class="row" data-row="75">
+<text x="10" y="3379" font-size="12" font-weight="500" fill="#0f172a">Security Monitoring</text>
+<text x="10" y="3393" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">SYS-SIEM</text>
+<text x="365.2" y="3379" font-size="12" font-weight="400" fill="#0f172a">system subject to policy</text>
+<text x="554.64" y="3379" font-size="12" font-weight="500" fill="#0f172a">Records Retention &amp; Disposition Policy</text>
+<text x="554.64" y="3393" font-size="10" font-weight="400" fill="#5b6577" font-family="'Geist Mono', ui-monospace, monospace">POL-RECORDS</text>
+<text x="909.84" y="3379" font-size="12" font-weight="400" fill="#0f172a">binds</text>
+</g>
+<line x1="0" y1="3405" x2="1184" y2="3405" stroke="#c9d0dc" stroke-width="0.6"/>
+</g>
+<g class="foot"><line x1="28" y1="3541" x2="1212" y2="3541" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="3563" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · policy-landscape · edit the model, not the picture</text></g>
+</svg>

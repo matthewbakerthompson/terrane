@@ -1,0 +1,35 @@
+# Thurman Health's own connection kinds, read after the shipped twelve
+# through `library_paths` in this estate's model.yaml.
+#
+# Most of a health system's connections are of kinds the shipped library
+# already has -- a FHIR call is an `api-call`, an 837 to a clearinghouse a
+# `partner-file`, the audit trail a `log-stream` -- and the two that are not
+# are the two every hospital has hundreds of: an HL7 v2 feed and a DICOM
+# transfer. Neither is a card issuer's, so neither belongs in the shipped
+# library; both belong in a health system's, which is what this folder is.
+
+- connection_id: hl7v2-feed
+  name: HL7 v2 feed
+  description: >
+    A clinical event -- an admission, an order, a result, a charge -- sent as
+    an HL7 v2 message over MLLP the moment it happens, acknowledged message
+    by message, and routed through the interface engine. The engine is the
+    contract: a departmental system speaks to it, never to the EHR directly,
+    so a queue that stops is seen in one place.
+  integration_style: Event
+  protocols: [MLLP]
+  auth_methods: [MutualTLS]
+  frequency: Realtime
+  direction: Outbound
+
+- connection_id: dicom-transfer
+  name: DICOM transfer
+  description: >
+    Images pushed from where they are made or read to where they are kept,
+    as DICOM storage. Studies are large and the push is retried, not
+    queued, so what is modeled is where a study lives after each hop.
+  integration_style: Event
+  protocols: [DICOM]
+  auth_methods: [MutualTLS]
+  frequency: Realtime
+  direction: Outbound

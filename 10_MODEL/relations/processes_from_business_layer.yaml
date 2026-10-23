@@ -1,0 +1,1834 @@
+# What each process touches, as the business layer records it.
+#
+# Imported from the business architecture repository by
+# `50_ENGINE/tools/import_business_layer.py`. Systems and data assets are
+# mapped through `60_SOURCES/business_layer/aliases.yaml`, so a process lands
+# on the id this estate uses.
+
+process_governed_by_control:
+  - process_id: P-APPDEV-004
+    control_id: CTL-CHG-APPROVAL
+  - process_id: P-APPDEV-005
+    control_id: CTL-VULN-SLA
+  - process_id: P-COLLECTIONS-002
+    control_id: CTL-CONTACT-LIM
+  - process_id: P-COLLECTIONS-005
+    control_id: CTL-BUREAU-ACC
+  - process_id: P-COMPLIANCE-003
+    control_id: CTL-SANCTIONS
+  - process_id: P-COMPLIANCE-004
+    control_id: CTL-SAR-FILING
+  - process_id: P-DATAGOV-004
+    control_id: CTL-RETENTION
+  - process_id: P-DISPUTE-001
+    control_id: CTL-REGE-ACK
+  - process_id: P-DISPUTE-001
+    control_id: CTL-REGE-PROVCR
+  - process_id: P-INFOSEC-001
+    control_id: CTL-ACCESS-CERT
+  - process_id: P-INFOSEC-003
+    control_id: CTL-VULN-SLA
+  - process_id: P-MARKETING-004
+    control_id: CTL-MKT-REVIEW
+  - process_id: P-ORIG-002
+    control_id: CTL-SANCTIONS
+  - process_id: P-ORIG-004
+    control_id: CTL-ADVERSE-ACT
+  - process_id: P-ORIG-005
+    control_id: CTL-ADVERSE-ACT
+  - process_id: P-PRIVACY-001
+    control_id: CTL-PRIV-REQ
+  - process_id: P-QE-007
+    control_id: CTL-MASK-NONPROD
+  - process_id: P-QE-008
+    control_id: CTL-CHG-APPROVAL
+  - process_id: P-TECH-001
+    control_id: CTL-CHG-APPROVAL
+  - process_id: P-TECH-003
+    control_id: CTL-DR-TEST
+  - process_id: P-VENDORMGMT-001
+    control_id: CTL-TPRM-DD
+  - process_id: P-CARD-PMT-001
+    control_id: CTL-PMT-POSTING
+  - process_id: P-COLLECTIONS-001
+    control_id: CTL-TREATMENT-APPR
+  - process_id: P-COLLECTIONS-004
+    control_id: CTL-CHARGEOFF-TIME
+  - process_id: P-COLLECTIONS-006
+    control_id: CTL-METRO2-RECON
+  - process_id: P-COLLECTIONS-007
+    control_id: CTL-FDCPA-NOTICE
+  - process_id: P-COMPLIANCE-001
+    control_id: CTL-REGCHANGE-TRACK
+  - process_id: P-CREDIT-007
+    control_id: CTL-TREATMENT-APPR
+  - process_id: P-DATAENG-001
+    control_id: CTL-DQ-GATE
+  - process_id: P-DELQ-001
+    control_id: CTL-METRO2-RECON
+  - process_id: P-DISPUTE-002
+    control_id: CTL-REGE-DETERM
+  - process_id: P-DISPUTE-004
+    control_id: CTL-REGE-DETERM
+  - process_id: P-FRAUD-001
+    control_id: CTL-FRAUD-SLA
+  - process_id: P-FRAUD-002
+    control_id: CTL-FRAUD-SLA
+  - process_id: P-FRAUD-003
+    control_id: CTL-IR-PLAYBOOK
+  - process_id: P-FUNDING-001
+    control_id: CTL-FUNDING-CONF
+  - process_id: P-GL-CLOSE-001
+    control_id: CTL-CLOSE-SIGNOFF
+  - process_id: P-INFOSEC-002
+    control_id: CTL-IR-PLAYBOOK
+  - process_id: P-INFOSEC-004
+    control_id: CTL-PCI-EVIDENCE
+  - process_id: P-INTERCHANGE-POST-001
+    control_id: CTL-DAILY-RECON
+  - process_id: P-NETWORK-RECON-001
+    control_id: CTL-DAILY-RECON
+  - process_id: P-ORIG-001
+    control_id: CTL-APP-INTAKE
+  - process_id: P-ORIG-001
+    control_id: CTL-SCRA-MLA
+  - process_id: P-ORIG-003
+    control_id: CTL-APP-INTAKE
+  - process_id: P-ORIG-006
+    control_id: CTL-AUTH-POLICY
+  - process_id: P-PAYMENTS-001
+    control_id: CTL-AUTH-AVAIL
+  - process_id: P-PAYMENTS-002
+    control_id: CTL-DAILY-RECON
+  - process_id: P-PRODUCT-002
+    control_id: CTL-NOTICE-CONTENT
+  - process_id: P-RECOVERY-003
+    control_id: CTL-FDCPA-NOTICE
+  - process_id: P-REG-DATA-PREP-001
+    control_id: CTL-DQ-GATE
+  - process_id: P-REG-DATA-PREP-001
+    control_id: CTL-REGRPT-CERT
+  - process_id: P-RISK-003
+    control_id: CTL-REGRPT-CERT
+  - process_id: P-SERVICING-001
+    control_id: CTL-CYCLE-VALID
+  - process_id: P-SERVICING-005
+    control_id: CTL-AUTH-POLICY
+  - process_id: P-SERVICING-006
+    control_id: CTL-COMPLAINT-REG
+  - process_id: P-SERVICING-007
+    control_id: CTL-NOTICE-CONTENT
+  - process_id: P-SERVICING-012
+    control_id: CTL-SCRA-MLA
+  - process_id: P-SETTLEMENT-001
+    control_id: CTL-DAILY-RECON
+  - process_id: P-STMT-GEN-001
+    control_id: CTL-CYCLE-VALID
+  - process_id: P-TECH-002
+    control_id: CTL-AUTH-AVAIL
+  - process_id: P-TPS-001
+    control_id: CTL-CLIENT-SLA
+  - process_id: P-TPS-002
+    control_id: CTL-CONV-VERIFY
+  - process_id: P-TPS-003
+    control_id: CTL-CONV-VERIFY
+  - process_id: P-TPS-004
+    control_id: CTL-CLIENT-SLA
+  - process_id: P-TPS-005
+    control_id: CTL-CLIENT-SLA
+
+process_subject_to_policy:
+  - process_id: P-APPDEV-004
+    policy_id: POL-CHANGE
+  - process_id: P-APPDEV-005
+    policy_id: POL-INFOSEC
+  - process_id: P-COLLECTIONS-002
+    policy_id: POL-COLLECT
+  - process_id: P-COLLECTIONS-005
+    policy_id: POL-FAIR-LEND
+  - process_id: P-COMPLIANCE-003
+    policy_id: POL-BSA-AML
+  - process_id: P-COMPLIANCE-004
+    policy_id: POL-BSA-AML
+  - process_id: P-DATAGOV-004
+    policy_id: POL-RECORDS
+  - process_id: P-DISPUTE-001
+    policy_id: POL-ERROR-RES
+  - process_id: P-INFOSEC-001
+    policy_id: POL-INFOSEC
+  - process_id: P-INFOSEC-003
+    policy_id: POL-INFOSEC
+  - process_id: P-MARKETING-004
+    policy_id: POL-MKT-UDAAP
+  - process_id: P-ORIG-002
+    policy_id: POL-BSA-AML
+  - process_id: P-ORIG-004
+    policy_id: POL-FAIR-LEND
+  - process_id: P-ORIG-005
+    policy_id: POL-FAIR-LEND
+  - process_id: P-PRIVACY-001
+    policy_id: POL-PRIVACY
+  - process_id: P-QE-007
+    policy_id: POL-INFOSEC
+  - process_id: P-QE-008
+    policy_id: POL-CHANGE
+  - process_id: P-TECH-001
+    policy_id: POL-CHANGE
+  - process_id: P-TECH-003
+    policy_id: POL-CHANGE
+  - process_id: P-VENDORMGMT-001
+    policy_id: POL-TPRM
+  - process_id: P-CARD-PMT-001
+    policy_id: POL-ERROR-RES
+  - process_id: P-COLLECTIONS-001
+    policy_id: POL-FAIR-LEND
+  - process_id: P-COLLECTIONS-004
+    policy_id: POL-COLLECT
+  - process_id: P-COLLECTIONS-006
+    policy_id: POL-FAIR-LEND
+  - process_id: P-COLLECTIONS-007
+    policy_id: POL-COLLECT
+  - process_id: P-COMPLIANCE-001
+    policy_id: POL-BSA-AML
+  - process_id: P-CREDIT-007
+    policy_id: POL-FAIR-LEND
+  - process_id: P-DATAENG-001
+    policy_id: POL-RECORDS
+  - process_id: P-DELQ-001
+    policy_id: POL-FAIR-LEND
+  - process_id: P-DISPUTE-002
+    policy_id: POL-ERROR-RES
+  - process_id: P-DISPUTE-004
+    policy_id: POL-ERROR-RES
+  - process_id: P-FRAUD-001
+    policy_id: POL-ERROR-RES
+  - process_id: P-FRAUD-002
+    policy_id: POL-ERROR-RES
+  - process_id: P-FRAUD-003
+    policy_id: POL-INFOSEC
+  - process_id: P-FUNDING-001
+    policy_id: POL-RECORDS
+  - process_id: P-GL-CLOSE-001
+    policy_id: POL-RECORDS
+  - process_id: P-INFOSEC-002
+    policy_id: POL-INFOSEC
+  - process_id: P-INFOSEC-004
+    policy_id: POL-INFOSEC
+  - process_id: P-INTERCHANGE-POST-001
+    policy_id: POL-RECORDS
+  - process_id: P-NETWORK-RECON-001
+    policy_id: POL-RECORDS
+  - process_id: P-ORIG-001
+    policy_id: POL-FAIR-LEND
+  - process_id: P-ORIG-003
+    policy_id: POL-FAIR-LEND
+  - process_id: P-ORIG-006
+    policy_id: POL-INFOSEC
+  - process_id: P-PAYMENTS-001
+    policy_id: POL-CHANGE
+  - process_id: P-PAYMENTS-002
+    policy_id: POL-RECORDS
+  - process_id: P-PRODUCT-002
+    policy_id: POL-ERROR-RES
+  - process_id: P-RECOVERY-003
+    policy_id: POL-COLLECT
+  - process_id: P-REG-DATA-PREP-001
+    policy_id: POL-RECORDS
+  - process_id: P-RISK-003
+    policy_id: POL-RECORDS
+  - process_id: P-SERVICING-001
+    policy_id: POL-ERROR-RES
+  - process_id: P-SERVICING-005
+    policy_id: POL-INFOSEC
+  - process_id: P-SERVICING-006
+    policy_id: POL-MKT-UDAAP
+  - process_id: P-SERVICING-007
+    policy_id: POL-ERROR-RES
+  - process_id: P-SERVICING-012
+    policy_id: POL-FAIR-LEND
+  - process_id: P-SETTLEMENT-001
+    policy_id: POL-RECORDS
+  - process_id: P-STMT-GEN-001
+    policy_id: POL-ERROR-RES
+  - process_id: P-TECH-002
+    policy_id: POL-CHANGE
+  - process_id: P-TPS-001
+    policy_id: POL-TPRM
+  - process_id: P-TPS-002
+    policy_id: POL-TPRM
+  - process_id: P-TPS-003
+    policy_id: POL-TPRM
+  - process_id: P-TPS-004
+    policy_id: POL-TPRM
+  - process_id: P-TPS-005
+    policy_id: POL-TPRM
+
+process_supports_capability:
+  - process_id: P-MARKETING-001
+    capability_id: CAP-ACQ-01
+  - process_id: P-MARKETING-002
+    capability_id: CAP-ACQ-02
+  - process_id: P-MARKETING-002
+    capability_id: CAP-ACQ-04
+  - process_id: P-MARKETING-003
+    capability_id: CAP-ACQ-03
+  - process_id: P-MARKETING-004
+    capability_id: CAP-ACQ-04
+  - process_id: P-MARKETING-005
+    capability_id: CAP-ACQ-05
+  - process_id: P-ORIG-001
+    capability_id: CAP-ORIG-01
+  - process_id: P-ORIG-002
+    capability_id: CAP-ORIG-02
+  - process_id: P-ORIG-002
+    capability_id: CAP-RGOV-07
+  - process_id: P-ORIG-003
+    capability_id: CAP-ORIG-03
+  - process_id: P-ORIG-004
+    capability_id: CAP-ORIG-04
+  - process_id: P-ORIG-004
+    capability_id: CAP-CRED-01
+  - process_id: P-ORIG-004
+    capability_id: CAP-CRED-03
+  - process_id: P-ORIG-005
+    capability_id: CAP-ORIG-05
+  - process_id: P-ORIG-006
+    capability_id: CAP-ORIG-06
+  - process_id: P-ORIG-007
+    capability_id: CAP-ORIG-07
+  - process_id: P-ORIG-008
+    capability_id: CAP-ORIG-08
+  - process_id: P-ORIG-008
+    capability_id: CAP-PAY-07
+  - process_id: P-ORIG-009
+    capability_id: CAP-ORIG-01
+  - process_id: P-CREDIT-001
+    capability_id: CAP-CRED-01
+  - process_id: P-CREDIT-002
+    capability_id: CAP-CRED-02
+  - process_id: P-CREDIT-002
+    capability_id: CAP-RGOV-08
+  - process_id: P-CREDIT-003
+    capability_id: CAP-CRED-03
+  - process_id: P-CREDIT-004
+    capability_id: CAP-CRED-03
+  - process_id: P-CREDIT-004
+    capability_id: CAP-ORIG-05
+  - process_id: P-CREDIT-005
+    capability_id: CAP-CRED-04
+  - process_id: P-CREDIT-006
+    capability_id: CAP-CRED-05
+  - process_id: P-CREDIT-007
+    capability_id: CAP-CRED-06
+  - process_id: P-CREDIT-008
+    capability_id: CAP-CRED-07
+  - process_id: P-PAYMENTS-001
+    capability_id: CAP-PAY-01
+  - process_id: P-PAYMENTS-001
+    capability_id: CAP-CRED-06
+  - process_id: P-PAYMENTS-002
+    capability_id: CAP-PAY-02
+  - process_id: P-CARD-PMT-001
+    capability_id: CAP-PAY-03
+  - process_id: P-PAYMENTS-003
+    capability_id: CAP-PAY-04
+  - process_id: P-PAYMENTS-004
+    capability_id: CAP-PAY-07
+  - process_id: P-PAYMENTS-005
+    capability_id: CAP-PART-02
+  - process_id: P-NETWORK-RECON-001
+    capability_id: CAP-PAY-06
+  - process_id: P-INTERCHANGE-POST-001
+    capability_id: CAP-PAY-05
+  - process_id: P-INTERCHANGE-POST-001
+    capability_id: CAP-FIN-02
+  - process_id: P-SETTLEMENT-001
+    capability_id: CAP-PAY-05
+  - process_id: P-SETTLEMENT-001
+    capability_id: CAP-FIN-03
+  - process_id: P-SETTLEMENT-002
+    capability_id: CAP-FIN-06
+  - process_id: P-SETTLEMENT-003
+    capability_id: CAP-PAY-06
+  - process_id: P-SERVICING-001
+    capability_id: CAP-BILL-01
+  - process_id: P-STMT-GEN-001
+    capability_id: CAP-BILL-02
+  - process_id: P-STMT-GEN-001
+    capability_id: CAP-BILL-04
+  - process_id: P-SERVICING-002
+    capability_id: CAP-BILL-03
+  - process_id: P-SERVICING-003
+    capability_id: CAP-BILL-05
+  - process_id: P-CUST-INQ-001
+    capability_id: CAP-SERV-01
+  - process_id: P-CUST-INQ-001
+    capability_id: CAP-SERV-02
+  - process_id: P-SERVICING-004
+    capability_id: CAP-SERV-02
+  - process_id: P-SERVICING-005
+    capability_id: CAP-SEC-01
+  - process_id: P-SERVICING-005
+    capability_id: CAP-FRAUD-06
+  - process_id: P-SERVICING-006
+    capability_id: CAP-SERV-05
+  - process_id: P-SERVICING-006
+    capability_id: CAP-RGOV-06
+  - process_id: P-SERVICING-007
+    capability_id: CAP-SERV-04
+  - process_id: P-SERVICING-008
+    capability_id: CAP-SERV-07
+  - process_id: P-SERVICING-009
+    capability_id: CAP-SERV-06
+  - process_id: P-SERVICING-010
+    capability_id: CAP-SERV-08
+  - process_id: P-REWARDS-001
+    capability_id: CAP-BILL-04
+  - process_id: P-REWARDS-002
+    capability_id: CAP-BILL-04
+  - process_id: P-REWARDS-003
+    capability_id: CAP-BILL-04
+  - process_id: P-REWARDS-003
+    capability_id: CAP-FIN-02
+  - process_id: P-DIGITAL-001
+    capability_id: CAP-SERV-03
+  - process_id: P-DIGITAL-002
+    capability_id: CAP-SERV-03
+  - process_id: P-FRAUD-001
+    capability_id: CAP-FRAUD-01
+  - process_id: P-FRAUD-002
+    capability_id: CAP-FRAUD-02
+  - process_id: P-FRAUD-003
+    capability_id: CAP-FRAUD-06
+  - process_id: P-FRAUD-004
+    capability_id: CAP-FRAUD-05
+  - process_id: P-FRAUD-005
+    capability_id: CAP-FRAUD-07
+  - process_id: P-FRAUD-006
+    capability_id: CAP-FRAUD-01
+  - process_id: P-DISPUTE-001
+    capability_id: CAP-FRAUD-03
+  - process_id: P-DISPUTE-002
+    capability_id: CAP-FRAUD-04
+  - process_id: P-DISPUTE-003
+    capability_id: CAP-FRAUD-04
+  - process_id: P-DISPUTE-004
+    capability_id: CAP-FRAUD-03
+  - process_id: P-DISPUTE-004
+    capability_id: CAP-SERV-04
+  - process_id: P-DELQ-001
+    capability_id: CAP-COLL-01
+  - process_id: P-COLLECTIONS-001
+    capability_id: CAP-COLL-01
+  - process_id: P-COLLECTIONS-002
+    capability_id: CAP-COLL-02
+  - process_id: P-COLLECTIONS-002
+    capability_id: CAP-COLL-07
+  - process_id: P-COLLECTIONS-003
+    capability_id: CAP-COLL-03
+  - process_id: P-COLLECTIONS-004
+    capability_id: CAP-COLL-04
+  - process_id: P-COLLECTIONS-004
+    capability_id: CAP-FIN-01
+  - process_id: P-COLLECTIONS-005
+    capability_id: CAP-COLL-08
+  - process_id: P-COLLECTIONS-006
+    capability_id: CAP-COLL-08
+  - process_id: P-COLLECTIONS-007
+    capability_id: CAP-COLL-07
+  - process_id: P-RECOVERY-001
+    capability_id: CAP-COLL-05
+  - process_id: P-RECOVERY-002
+    capability_id: CAP-COLL-05
+  - process_id: P-RECOVERY-003
+    capability_id: CAP-COLL-06
+  - process_id: P-RECOVERY-004
+    capability_id: CAP-COLL-06
+  - process_id: P-RECOVERY-005
+    capability_id: CAP-COLL-05
+  - process_id: P-RECOVERY-005
+    capability_id: CAP-FIN-02
+  - process_id: P-TPS-001
+    capability_id: CAP-TPS-01
+  - process_id: P-TPS-002
+    capability_id: CAP-TPS-02
+  - process_id: P-TPS-002
+    capability_id: CAP-DATA-02
+  - process_id: P-TPS-003
+    capability_id: CAP-TPS-02
+  - process_id: P-TPS-004
+    capability_id: CAP-TPS-03
+  - process_id: P-TPS-005
+    capability_id: CAP-TPS-03
+  - process_id: P-TPS-005
+    capability_id: CAP-DATA-02
+  - process_id: P-TPS-006
+    capability_id: CAP-TPS-04
+  - process_id: P-TPS-007
+    capability_id: CAP-TPS-05
+  - process_id: P-TPS-008
+    capability_id: CAP-TPS-06
+  - process_id: P-GL-CLOSE-001
+    capability_id: CAP-FIN-01
+  - process_id: P-FUNDING-001
+    capability_id: CAP-FIN-03
+  - process_id: P-REG-DATA-PREP-001
+    capability_id: CAP-FIN-04
+  - process_id: P-REG-DATA-PREP-001
+    capability_id: CAP-DATA-03
+  - process_id: P-FINANCE-001
+    capability_id: CAP-FIN-02
+  - process_id: P-FINANCE-002
+    capability_id: CAP-FIN-05
+  - process_id: P-COMPLIANCE-001
+    capability_id: CAP-RGOV-02
+  - process_id: P-COMPLIANCE-002
+    capability_id: CAP-RGOV-03
+  - process_id: P-COMPLIANCE-003
+    capability_id: CAP-RGOV-07
+  - process_id: P-COMPLIANCE-004
+    capability_id: CAP-RGOV-07
+  - process_id: P-COMPLIANCE-005
+    capability_id: CAP-RGOV-06
+  - process_id: P-RISK-001
+    capability_id: CAP-RGOV-04
+  - process_id: P-RISK-002
+    capability_id: CAP-RGOV-08
+  - process_id: P-RISK-003
+    capability_id: CAP-RGOV-05
+  - process_id: P-DATAGOV-001
+    capability_id: CAP-DATA-01
+  - process_id: P-DATAGOV-002
+    capability_id: CAP-DATA-03
+  - process_id: P-DATAGOV-003
+    capability_id: CAP-DATA-05
+  - process_id: P-DATAGOV-004
+    capability_id: CAP-DATA-07
+  - process_id: P-DATAENG-001
+    capability_id: CAP-DATA-02
+  - process_id: P-DATAENG-002
+    capability_id: CAP-DATA-06
+  - process_id: P-TECH-001
+    capability_id: CAP-TECH-01
+  - process_id: P-TECH-001
+    capability_id: CAP-TECH-04
+  - process_id: P-TECH-002
+    capability_id: CAP-TECH-03
+  - process_id: P-TECH-003
+    capability_id: CAP-TECH-05
+  - process_id: P-TECH-004
+    capability_id: CAP-TECH-06
+  - process_id: P-INFOSEC-001
+    capability_id: CAP-SEC-01
+  - process_id: P-INFOSEC-002
+    capability_id: CAP-SEC-02
+  - process_id: P-INFOSEC-003
+    capability_id: CAP-SEC-03
+  - process_id: P-INFOSEC-004
+    capability_id: CAP-SEC-04
+  - process_id: P-PRIVACY-001
+    capability_id: CAP-SEC-05
+  - process_id: P-VENDORMGMT-001
+    capability_id: CAP-TPRM-01
+  - process_id: P-VENDORMGMT-001
+    capability_id: CAP-TPRM-02
+  - process_id: P-VENDORMGMT-002
+    capability_id: CAP-TPRM-03
+  - process_id: P-VENDORMGMT-003
+    capability_id: CAP-TPRM-04
+  - process_id: P-PRODUCT-001
+    capability_id: CAP-PROD-01
+  - process_id: P-PRODUCT-001
+    capability_id: CAP-PROD-02
+  - process_id: P-PRODUCT-002
+    capability_id: CAP-PROD-03
+  - process_id: P-PRODUCT-003
+    capability_id: CAP-PROD-05
+  - process_id: P-PRODUCT-004
+    capability_id: CAP-PROD-05
+  - process_id: P-SERVICING-011
+    capability_id: CAP-SERV-02
+  - process_id: P-SERVICING-012
+    capability_id: CAP-SERV-02
+  - process_id: P-STRATEGY-001
+    capability_id: CAP-STRAT-05
+  - process_id: P-CREDIT-009
+    capability_id: CAP-CRED-04
+  - process_id: P-CREDIT-009
+    capability_id: CAP-ACQ-02
+  - process_id: P-PARTNERSHIPS-001
+    capability_id: CAP-PART-01
+  - process_id: P-SETTLEMENT-004
+    capability_id: CAP-PAY-05
+  - process_id: P-SETTLEMENT-004
+    capability_id: CAP-FIN-02
+  - process_id: P-EA-001
+    capability_id: CAP-STRAT-04
+  - process_id: P-EA-001
+    capability_id: CAP-STRAT-02
+  - process_id: P-EA-002
+    capability_id: CAP-STRAT-04
+  - process_id: P-EA-003
+    capability_id: CAP-STRAT-04
+  - process_id: P-EA-003
+    capability_id: CAP-RGOV-04
+  - process_id: P-EA-004
+    capability_id: CAP-STRAT-04
+  - process_id: P-EA-005
+    capability_id: CAP-STRAT-04
+  - process_id: P-EA-005
+    capability_id: CAP-TECH-02
+  - process_id: P-EA-006
+    capability_id: CAP-STRAT-04
+  - process_id: P-EA-007
+    capability_id: CAP-STRAT-04
+  - process_id: P-EA-007
+    capability_id: CAP-TECH-04
+  - process_id: P-EA-008
+    capability_id: CAP-STRAT-04
+  - process_id: P-EA-008
+    capability_id: CAP-TPRM-01
+  - process_id: P-EA-009
+    capability_id: CAP-STRAT-04
+  - process_id: P-EA-009
+    capability_id: CAP-TECH-07
+  - process_id: P-QE-001
+    capability_id: CAP-TECH-08
+  - process_id: P-QE-002
+    capability_id: CAP-TECH-08
+  - process_id: P-QE-003
+    capability_id: CAP-TECH-08
+  - process_id: P-QE-004
+    capability_id: CAP-TECH-08
+  - process_id: P-QE-004
+    capability_id: CAP-TECH-02
+  - process_id: P-QE-005
+    capability_id: CAP-TECH-08
+  - process_id: P-QE-006
+    capability_id: CAP-TECH-08
+  - process_id: P-QE-007
+    capability_id: CAP-TECH-08
+  - process_id: P-QE-007
+    capability_id: CAP-TECH-02
+  - process_id: P-QE-007
+    capability_id: CAP-SEC-04
+  - process_id: P-QE-008
+    capability_id: CAP-TECH-08
+  - process_id: P-QE-008
+    capability_id: CAP-TECH-04
+  - process_id: P-QE-009
+    capability_id: CAP-TECH-08
+  - process_id: P-QE-009
+    capability_id: CAP-TECH-04
+  - process_id: P-APPDEV-001
+    capability_id: CAP-TECH-01
+  - process_id: P-APPDEV-002
+    capability_id: CAP-TECH-01
+  - process_id: P-APPDEV-003
+    capability_id: CAP-TECH-01
+  - process_id: P-APPDEV-004
+    capability_id: CAP-TECH-01
+  - process_id: P-APPDEV-004
+    capability_id: CAP-TECH-04
+  - process_id: P-APPDEV-005
+    capability_id: CAP-TECH-01
+  - process_id: P-APPDEV-005
+    capability_id: CAP-SEC-03
+  - process_id: P-APPDEV-006
+    capability_id: CAP-TECH-01
+  - process_id: P-APPDEV-006
+    capability_id: CAP-STRAT-04
+  - process_id: P-APPDEV-007
+    capability_id: CAP-TECH-01
+  - process_id: P-APPDEV-007
+    capability_id: CAP-TECH-04
+  - process_id: P-APPDEV-008
+    capability_id: CAP-TECH-01
+  - process_id: P-APPDEV-008
+    capability_id: CAP-TECH-03
+  - process_id: P-APPDEV-009
+    capability_id: CAP-TECH-01
+  - process_id: P-APPDEV-009
+    capability_id: CAP-STRAT-04
+  - process_id: P-APPDEV-009
+    capability_id: CAP-DATA-07
+
+process_uses_data_asset:
+  - process_id: P-CARD-PMT-001
+    data_asset_id: DA-PAYMENT-INSTR
+    access: Both
+  - process_id: P-COLLECTIONS-001
+    data_asset_id: DA-COLLECT-ACT
+    access: Reads
+  - process_id: P-COLLECTIONS-002
+    data_asset_id: DA-COLLECT-ACT
+    access: Writes
+  - process_id: P-COLLECTIONS-003
+    data_asset_id: DA-COLLECT-ACT
+    access: Writes
+  - process_id: P-COLLECTIONS-005
+    data_asset_id: DA-BUREAU-FILE
+    access: Writes
+  - process_id: P-CREDIT-001
+    data_asset_id: DA-BUREAU-FILE
+    access: Reads
+  - process_id: P-CREDIT-001
+    data_asset_id: DA-MODEL-FEAT
+    access: Reads
+  - process_id: P-DATAENG-001
+    data_asset_id: DA-MODEL-FEAT
+    access: Writes
+  - process_id: P-DATAENG-002
+    data_asset_id: DA-MODEL-FEAT
+    access: Both
+  - process_id: P-DISPUTE-001
+    data_asset_id: DA-CUSTOMER-PROFILE
+    access: Reads
+  - process_id: P-DISPUTE-001
+    data_asset_id: DA-DISPUTE-CASE
+    access: Both
+  - process_id: P-DISPUTE-001
+    data_asset_id: DA-STATEMENTS
+    access: Reads
+  - process_id: P-DISPUTE-001
+    data_asset_id: DA-TRANSACTION
+    access: Reads
+  - process_id: P-DISPUTE-002
+    data_asset_id: DA-DISPUTE-CASE
+    access: Both
+  - process_id: P-FINANCE-001
+    data_asset_id: DA-GL
+    access: Both
+  - process_id: P-MARKETING-001
+    data_asset_id: DA-PROSPECT
+    access: Both
+  - process_id: P-MARKETING-003
+    data_asset_id: DA-PROSPECT
+    access: Reads
+  - process_id: P-ORIG-006
+    data_asset_id: DA-CUSTOMER-PROFILE
+    access: Writes
+  - process_id: P-PAYMENTS-001
+    data_asset_id: DA-TRANSACTION
+    access: Writes
+  - process_id: P-PRIVACY-001
+    data_asset_id: DA-CUSTOMER-PROFILE
+    access: Both
+  - process_id: P-SETTLEMENT-001
+    data_asset_id: DA-GL
+    access: Writes
+  - process_id: P-TPS-001
+    data_asset_id: DA-CLIENT-SERV
+    access: Both
+  - process_id: P-ORIG-001
+    data_asset_id: DA-APPLICATION
+    access: Writes
+  - process_id: P-ORIG-001
+    data_asset_id: DA-PROSPECT
+    access: Both
+  - process_id: P-ORIG-002
+    data_asset_id: DA-APPLICATION
+    access: Both
+  - process_id: P-ORIG-003
+    data_asset_id: DA-APPLICATION
+    access: Reads
+  - process_id: P-ORIG-003
+    data_asset_id: DA-MODEL-FEAT
+    access: Reads
+  - process_id: P-ORIG-004
+    data_asset_id: DA-APPLICATION
+    access: Both
+  - process_id: P-ORIG-004
+    data_asset_id: DA-BUREAU-FILE
+    access: Reads
+  - process_id: P-ORIG-004
+    data_asset_id: DA-MODEL-FEAT
+    access: Reads
+  - process_id: P-ORIG-005
+    data_asset_id: DA-APPLICATION
+    access: Reads
+  - process_id: P-ORIG-005
+    data_asset_id: DA-BUREAU-FILE
+    access: Reads
+  - process_id: P-PAYMENTS-002
+    data_asset_id: DA-TRANSACTION
+    access: Writes
+  - process_id: P-PAYMENTS-002
+    data_asset_id: DA-CUSTOMER-PROFILE
+    access: Reads
+  - process_id: P-PAYMENTS-002
+    data_asset_id: DA-PAYMENT-INSTR
+    access: Reads
+  - process_id: P-NETWORK-RECON-001
+    data_asset_id: DA-TRANSACTION
+    access: Reads
+  - process_id: P-NETWORK-RECON-001
+    data_asset_id: DA-GL
+    access: Writes
+  - process_id: P-SERVICING-001
+    data_asset_id: DA-CUSTOMER-PROFILE
+    access: Reads
+  - process_id: P-SERVICING-001
+    data_asset_id: DA-TRANSACTION
+    access: Both
+  - process_id: P-STMT-GEN-001
+    data_asset_id: DA-STATEMENTS
+    access: Writes
+  - process_id: P-STMT-GEN-001
+    data_asset_id: DA-CUSTOMER-PROFILE
+    access: Reads
+  - process_id: P-STMT-GEN-001
+    data_asset_id: DA-TRANSACTION
+    access: Reads
+  - process_id: P-FRAUD-001
+    data_asset_id: DA-TRANSACTION
+    access: Reads
+  - process_id: P-FRAUD-001
+    data_asset_id: DA-MODEL-FEAT
+    access: Reads
+  - process_id: P-FRAUD-001
+    data_asset_id: DA-CUSTOMER-PROFILE
+    access: Both
+  - process_id: P-FRAUD-001
+    data_asset_id: DA-DISPUTE-CASE
+    access: Writes
+  - process_id: P-TPS-002
+    data_asset_id: DA-CLIENT-SERV
+    access: Both
+  - process_id: P-TPS-002
+    data_asset_id: DA-CUSTOMER-PROFILE
+    access: Writes
+  - process_id: P-TPS-002
+    data_asset_id: DA-TRANSACTION
+    access: Writes
+
+process_uses_system:
+  - process_id: P-MARKETING-001
+    system_id: SYS-PROSPECT-DATA
+    role: Primary
+  - process_id: P-MARKETING-001
+    system_id: SYS-DATA-INGEST
+    role: Supporting
+  - process_id: P-MARKETING-002
+    system_id: SYS-CREDIT-DATA
+    role: Primary
+  - process_id: P-MARKETING-002
+    system_id: SYS-PROSPECT-DATA
+    role: Supporting
+  - process_id: P-MARKETING-002
+    system_id: SYS-MARKETING
+    role: Supporting
+  - process_id: P-MARKETING-003
+    system_id: SYS-MARKETING
+    role: Primary
+  - process_id: P-MARKETING-003
+    system_id: SYS-DATA-INGEST
+    role: Supporting
+  - process_id: P-MARKETING-004
+    system_id: SYS-DOC
+    role: Supporting
+  - process_id: P-MARKETING-005
+    system_id: SYS-DATA-INGEST
+    role: Primary
+  - process_id: P-MARKETING-005
+    system_id: SYS-CREDIT-DATA
+    role: Supporting
+  - process_id: P-ORIG-001
+    system_id: SYS-ORIG-DECISION
+    role: Primary
+  - process_id: P-ORIG-001
+    system_id: SYS-CARDSVC-WEB
+    role: Supporting
+  - process_id: P-ORIG-001
+    system_id: SYS-MOBILE
+    role: Supporting
+  - process_id: P-ORIG-001
+    system_id: SYS-CONTACT
+    role: Supporting
+  - process_id: P-ORIG-002
+    system_id: SYS-KYC
+    role: Primary
+  - process_id: P-ORIG-002
+    system_id: SYS-ORIG-DECISION
+    role: Supporting
+  - process_id: P-ORIG-002
+    system_id: SYS-AML
+    role: Supporting
+  - process_id: P-ORIG-003
+    system_id: SYS-APPFRAUD
+    role: Primary
+  - process_id: P-ORIG-003
+    system_id: SYS-ORIG-DECISION
+    role: Supporting
+  - process_id: P-ORIG-004
+    system_id: SYS-ORIG-DECISION
+    role: Primary
+  - process_id: P-ORIG-004
+    system_id: SYS-CREDIT-DATA
+    role: Supporting
+  - process_id: P-ORIG-005
+    system_id: SYS-DOC
+    role: Primary
+  - process_id: P-ORIG-005
+    system_id: SYS-ORIG-DECISION
+    role: Supporting
+  - process_id: P-ORIG-005
+    system_id: SYS-STATEMENTS
+    role: Supporting
+  - process_id: P-ORIG-006
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-ORIG-006
+    system_id: SYS-ORIG-DECISION
+    role: Supporting
+  - process_id: P-ORIG-007
+    system_id: SYS-CARD-FULFILL
+    role: Primary
+  - process_id: P-ORIG-007
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-ORIG-008
+    system_id: SYS-TOKEN
+    role: Primary
+  - process_id: P-ORIG-008
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-ORIG-008
+    system_id: SYS-MOBILE
+    role: Supporting
+  - process_id: P-ORIG-009
+    system_id: SYS-ORIG-DECISION
+    role: Primary
+  - process_id: P-CREDIT-001
+    system_id: SYS-ORIG-DECISION
+    role: Primary
+  - process_id: P-CREDIT-001
+    system_id: SYS-MODEL
+    role: Supporting
+  - process_id: P-CREDIT-001
+    system_id: SYS-CREDIT-DATA
+    role: Supporting
+  - process_id: P-CREDIT-002
+    system_id: SYS-MODEL
+    role: Primary
+  - process_id: P-CREDIT-002
+    system_id: SYS-DATA-INGEST
+    role: Supporting
+  - process_id: P-CREDIT-003
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-CREDIT-003
+    system_id: SYS-ORIG-DECISION
+    role: Supporting
+  - process_id: P-CREDIT-004
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-CREDIT-004
+    system_id: SYS-DOC
+    role: Supporting
+  - process_id: P-CREDIT-005
+    system_id: SYS-DATA-INGEST
+    role: Primary
+  - process_id: P-CREDIT-005
+    system_id: SYS-CREDIT-DATA
+    role: Supporting
+  - process_id: P-CREDIT-006
+    system_id: SYS-MODEL
+    role: Primary
+  - process_id: P-CREDIT-006
+    system_id: SYS-DATA-INGEST
+    role: Supporting
+  - process_id: P-CREDIT-006
+    system_id: SYS-GL
+    role: Supporting
+  - process_id: P-CREDIT-007
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-CREDIT-007
+    system_id: SYS-FRAUD-DETECT
+    role: Supporting
+  - process_id: P-CREDIT-008
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-CREDIT-008
+    system_id: SYS-CREDIT-DATA
+    role: Supporting
+  - process_id: P-PAYMENTS-001
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-PAYMENTS-001
+    system_id: SYS-FRAUD-DETECT
+    role: Supporting
+  - process_id: P-PAYMENTS-002
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-CARD-PMT-001
+    system_id: SYS-PAYMENT-GW
+    role: Primary
+  - process_id: P-CARD-PMT-001
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-CARD-PMT-001
+    system_id: SYS-CARDSVC-WEB
+    role: Supporting
+  - process_id: P-CARD-PMT-001
+    system_id: SYS-MOBILE
+    role: Supporting
+  - process_id: P-CARD-PMT-001
+    system_id: SYS-IVR
+    role: Supporting
+  - process_id: P-PAYMENTS-003
+    system_id: SYS-PAYMENT-GW
+    role: Primary
+  - process_id: P-PAYMENTS-003
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-PAYMENTS-004
+    system_id: SYS-TOKEN
+    role: Primary
+  - process_id: P-PAYMENTS-004
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-PAYMENTS-005
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-PAYMENTS-005
+    system_id: SYS-DOC
+    role: Supporting
+  - process_id: P-NETWORK-RECON-001
+    system_id: SYS-RECON
+    role: Primary
+  - process_id: P-NETWORK-RECON-001
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-NETWORK-RECON-001
+    system_id: SYS-GL
+    role: Supporting
+  - process_id: P-INTERCHANGE-POST-001
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-INTERCHANGE-POST-001
+    system_id: SYS-GL
+    role: Supporting
+  - process_id: P-SETTLEMENT-001
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-SETTLEMENT-001
+    system_id: SYS-TREASURY
+    role: Supporting
+  - process_id: P-SETTLEMENT-001
+    system_id: SYS-GL
+    role: Supporting
+  - process_id: P-SETTLEMENT-002
+    system_id: SYS-RECON
+    role: Primary
+  - process_id: P-SETTLEMENT-002
+    system_id: SYS-GL
+    role: Supporting
+  - process_id: P-SETTLEMENT-002
+    system_id: SYS-TREASURY
+    role: Supporting
+  - process_id: P-SETTLEMENT-003
+    system_id: SYS-RECON
+    role: Primary
+  - process_id: P-SETTLEMENT-003
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-SERVICING-001
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-STMT-GEN-001
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-STMT-GEN-001
+    system_id: SYS-STATEMENTS
+    role: Supporting
+  - process_id: P-SERVICING-002
+    system_id: SYS-STATEMENTS
+    role: Primary
+  - process_id: P-SERVICING-002
+    system_id: SYS-DOC
+    role: Supporting
+  - process_id: P-SERVICING-003
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-SERVICING-003
+    system_id: SYS-CRM
+    role: Supporting
+  - process_id: P-CUST-INQ-001
+    system_id: SYS-CONTACT
+    role: Primary
+  - process_id: P-CUST-INQ-001
+    system_id: SYS-CRM
+    role: Supporting
+  - process_id: P-CUST-INQ-001
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-CUST-INQ-001
+    system_id: SYS-IVR
+    role: Supporting
+  - process_id: P-SERVICING-004
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-SERVICING-004
+    system_id: SYS-CRM
+    role: Supporting
+  - process_id: P-SERVICING-004
+    system_id: SYS-CONTACT
+    role: Supporting
+  - process_id: P-SERVICING-005
+    system_id: SYS-IAM
+    role: Primary
+  - process_id: P-SERVICING-005
+    system_id: SYS-CONTACT
+    role: Supporting
+  - process_id: P-SERVICING-005
+    system_id: SYS-CRM
+    role: Supporting
+  - process_id: P-SERVICING-006
+    system_id: SYS-CRM
+    role: Primary
+  - process_id: P-SERVICING-006
+    system_id: SYS-GRC
+    role: Supporting
+  - process_id: P-SERVICING-006
+    system_id: SYS-CONTACT
+    role: Supporting
+  - process_id: P-SERVICING-007
+    system_id: SYS-DOC
+    role: Primary
+  - process_id: P-SERVICING-007
+    system_id: SYS-STATEMENTS
+    role: Supporting
+  - process_id: P-SERVICING-008
+    system_id: SYS-COLLECT-API
+    role: Primary
+  - process_id: P-SERVICING-008
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-SERVICING-008
+    system_id: SYS-CRM
+    role: Supporting
+  - process_id: P-SERVICING-009
+    system_id: SYS-CRM
+    role: Primary
+  - process_id: P-SERVICING-009
+    system_id: SYS-DOC
+    role: Supporting
+  - process_id: P-SERVICING-010
+    system_id: SYS-CONTACT
+    role: Primary
+  - process_id: P-SERVICING-010
+    system_id: SYS-DATA-INGEST
+    role: Supporting
+  - process_id: P-REWARDS-001
+    system_id: SYS-REWARDS
+    role: Primary
+  - process_id: P-REWARDS-001
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-REWARDS-002
+    system_id: SYS-REWARDS
+    role: Primary
+  - process_id: P-REWARDS-002
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-REWARDS-002
+    system_id: SYS-CARDSVC-WEB
+    role: Supporting
+  - process_id: P-REWARDS-003
+    system_id: SYS-REWARDS
+    role: Primary
+  - process_id: P-REWARDS-003
+    system_id: SYS-GL
+    role: Supporting
+  - process_id: P-REWARDS-003
+    system_id: SYS-RECON
+    role: Supporting
+  - process_id: P-DIGITAL-001
+    system_id: SYS-CARDSVC-WEB
+    role: Primary
+  - process_id: P-DIGITAL-001
+    system_id: SYS-MOBILE
+    role: Supporting
+  - process_id: P-DIGITAL-001
+    system_id: SYS-IAM
+    role: Supporting
+  - process_id: P-DIGITAL-002
+    system_id: SYS-CARDSVC-WEB
+    role: Primary
+  - process_id: P-DIGITAL-002
+    system_id: SYS-MOBILE
+    role: Supporting
+  - process_id: P-DIGITAL-002
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-FRAUD-001
+    system_id: SYS-FRAUD-DETECT
+    role: Primary
+  - process_id: P-FRAUD-001
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-FRAUD-001
+    system_id: SYS-CONTACT
+    role: Supporting
+  - process_id: P-FRAUD-002
+    system_id: SYS-DISPUTES-SAAS
+    role: Primary
+  - process_id: P-FRAUD-002
+    system_id: SYS-FRAUD-DETECT
+    role: Supporting
+  - process_id: P-FRAUD-002
+    system_id: SYS-CRM
+    role: Supporting
+  - process_id: P-FRAUD-003
+    system_id: SYS-DISPUTES-SAAS
+    role: Primary
+  - process_id: P-FRAUD-003
+    system_id: SYS-IAM
+    role: Supporting
+  - process_id: P-FRAUD-003
+    system_id: SYS-CRM
+    role: Supporting
+  - process_id: P-FRAUD-003
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-FRAUD-004
+    system_id: SYS-DISPUTES-SAAS
+    role: Primary
+  - process_id: P-FRAUD-004
+    system_id: SYS-GL
+    role: Supporting
+  - process_id: P-FRAUD-005
+    system_id: SYS-DISPUTES-SAAS
+    role: Primary
+  - process_id: P-FRAUD-005
+    system_id: SYS-DATA-INGEST
+    role: Supporting
+  - process_id: P-FRAUD-006
+    system_id: SYS-FRAUD-DETECT
+    role: Primary
+  - process_id: P-FRAUD-006
+    system_id: SYS-MODEL
+    role: Supporting
+  - process_id: P-DISPUTE-001
+    system_id: SYS-DISPUTES-SAAS
+    role: Primary
+  - process_id: P-DISPUTE-001
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-DISPUTE-001
+    system_id: SYS-CONTACT
+    role: Supporting
+  - process_id: P-DISPUTE-001
+    system_id: SYS-DOC
+    role: Supporting
+  - process_id: P-DISPUTE-001
+    system_id: SYS-CARDSVC-WEB
+    role: Supporting
+  - process_id: P-DISPUTE-001
+    system_id: SYS-MOBILE
+    role: Supporting
+  - process_id: P-DISPUTE-001
+    system_id: SYS-IAM
+    role: Supporting
+  - process_id: P-DISPUTE-001
+    system_id: SYS-COLLECT-API
+    role: Supporting
+  - process_id: P-DISPUTE-001
+    system_id: SYS-STATEMENTS
+    role: Supporting
+  - process_id: P-DISPUTE-001
+    system_id: SYS-BUREAU-GW
+    role: Supporting
+  - process_id: P-DISPUTE-001
+    system_id: SYS-CRM
+    role: Supporting
+  - process_id: P-DISPUTE-002
+    system_id: SYS-DISPUTES-SAAS
+    role: Primary
+  - process_id: P-DISPUTE-002
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-DISPUTE-003
+    system_id: SYS-DISPUTES-SAAS
+    role: Primary
+  - process_id: P-DISPUTE-003
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-DISPUTE-004
+    system_id: SYS-DISPUTES-SAAS
+    role: Primary
+  - process_id: P-DISPUTE-004
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-DISPUTE-004
+    system_id: SYS-DOC
+    role: Supporting
+  - process_id: P-DELQ-001
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-DELQ-001
+    system_id: SYS-COLLECT-API
+    role: Supporting
+  - process_id: P-COLLECTIONS-001
+    system_id: SYS-COLLECT-API
+    role: Primary
+  - process_id: P-COLLECTIONS-001
+    system_id: SYS-DATA-INGEST
+    role: Supporting
+  - process_id: P-COLLECTIONS-001
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-COLLECTIONS-002
+    system_id: SYS-DIALER
+    role: Primary
+  - process_id: P-COLLECTIONS-002
+    system_id: SYS-COLLECT-API
+    role: Supporting
+  - process_id: P-COLLECTIONS-002
+    system_id: SYS-CONTACT
+    role: Supporting
+  - process_id: P-COLLECTIONS-003
+    system_id: SYS-COLLECT-API
+    role: Primary
+  - process_id: P-COLLECTIONS-003
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-COLLECTIONS-004
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-COLLECTIONS-004
+    system_id: SYS-GL
+    role: Supporting
+  - process_id: P-COLLECTIONS-004
+    system_id: SYS-COLLECT-API
+    role: Supporting
+  - process_id: P-COLLECTIONS-005
+    system_id: SYS-BUREAU-GW
+    role: Primary
+  - process_id: P-COLLECTIONS-005
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-COLLECTIONS-006
+    system_id: SYS-BUREAU-GW
+    role: Primary
+  - process_id: P-COLLECTIONS-006
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-COLLECTIONS-006
+    system_id: SYS-CRM
+    role: Supporting
+  - process_id: P-COLLECTIONS-007
+    system_id: SYS-DOC
+    role: Primary
+  - process_id: P-COLLECTIONS-007
+    system_id: SYS-COLLECT-API
+    role: Supporting
+  - process_id: P-RECOVERY-001
+    system_id: SYS-COLLECT-API
+    role: Primary
+  - process_id: P-RECOVERY-001
+    system_id: SYS-GL
+    role: Supporting
+  - process_id: P-RECOVERY-002
+    system_id: SYS-COLLECT-API
+    role: Primary
+  - process_id: P-RECOVERY-002
+    system_id: SYS-GL
+    role: Supporting
+  - process_id: P-RECOVERY-002
+    system_id: SYS-DATA-INGEST
+    role: Supporting
+  - process_id: P-RECOVERY-003
+    system_id: SYS-COLLECT-API
+    role: Primary
+  - process_id: P-RECOVERY-003
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-RECOVERY-003
+    system_id: SYS-DOC
+    role: Supporting
+  - process_id: P-RECOVERY-004
+    system_id: SYS-COLLECT-API
+    role: Primary
+  - process_id: P-RECOVERY-004
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-RECOVERY-004
+    system_id: SYS-DOC
+    role: Supporting
+  - process_id: P-RECOVERY-005
+    system_id: SYS-COLLECT-API
+    role: Primary
+  - process_id: P-RECOVERY-005
+    system_id: SYS-GL
+    role: Supporting
+  - process_id: P-TPS-001
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-TPS-001
+    system_id: SYS-WORKTRACK
+    role: Supporting
+  - process_id: P-TPS-002
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-TPS-002
+    system_id: SYS-DATA-INGEST
+    role: Supporting
+  - process_id: P-TPS-002
+    system_id: SYS-RECON
+    role: Supporting
+  - process_id: P-TPS-003
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-TPS-003
+    system_id: SYS-DATA-INGEST
+    role: Supporting
+  - process_id: P-TPS-003
+    system_id: SYS-DOC
+    role: Supporting
+  - process_id: P-TPS-004
+    system_id: SYS-CLIENT-PORTAL
+    role: Primary
+  - process_id: P-TPS-004
+    system_id: SYS-DATA-INGEST
+    role: Supporting
+  - process_id: P-TPS-005
+    system_id: SYS-CLIENT-PORTAL
+    role: Primary
+  - process_id: P-TPS-005
+    system_id: SYS-DATA-INGEST
+    role: Supporting
+  - process_id: P-TPS-006
+    system_id: SYS-GL
+    role: Primary
+  - process_id: P-TPS-006
+    system_id: SYS-CLIENT-PORTAL
+    role: Supporting
+  - process_id: P-TPS-007
+    system_id: SYS-GRC
+    role: Primary
+  - process_id: P-TPS-007
+    system_id: SYS-DOC
+    role: Supporting
+  - process_id: P-TPS-007
+    system_id: SYS-CLIENT-PORTAL
+    role: Supporting
+  - process_id: P-TPS-008
+    system_id: SYS-WORKTRACK
+    role: Primary
+  - process_id: P-TPS-008
+    system_id: SYS-CLIENT-PORTAL
+    role: Supporting
+  - process_id: P-GL-CLOSE-001
+    system_id: SYS-GL
+    role: Primary
+  - process_id: P-GL-CLOSE-001
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-GL-CLOSE-001
+    system_id: SYS-RECON
+    role: Supporting
+  - process_id: P-FUNDING-001
+    system_id: SYS-TREASURY
+    role: Primary
+  - process_id: P-FUNDING-001
+    system_id: SYS-GL
+    role: Supporting
+  - process_id: P-REG-DATA-PREP-001
+    system_id: SYS-DATA-INGEST
+    role: Primary
+  - process_id: P-REG-DATA-PREP-001
+    system_id: SYS-GL
+    role: Supporting
+  - process_id: P-FINANCE-001
+    system_id: SYS-GL
+    role: Primary
+  - process_id: P-FINANCE-001
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-FINANCE-002
+    system_id: SYS-GL
+    role: Primary
+  - process_id: P-COMPLIANCE-001
+    system_id: SYS-GRC
+    role: Primary
+  - process_id: P-COMPLIANCE-001
+    system_id: SYS-WORKTRACK
+    role: Supporting
+  - process_id: P-COMPLIANCE-002
+    system_id: SYS-GRC
+    role: Primary
+  - process_id: P-COMPLIANCE-002
+    system_id: SYS-DATA-INGEST
+    role: Supporting
+  - process_id: P-COMPLIANCE-003
+    system_id: SYS-AML
+    role: Primary
+  - process_id: P-COMPLIANCE-003
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-COMPLIANCE-003
+    system_id: SYS-KYC
+    role: Supporting
+  - process_id: P-COMPLIANCE-004
+    system_id: SYS-AML
+    role: Primary
+  - process_id: P-COMPLIANCE-004
+    system_id: SYS-DOC
+    role: Supporting
+  - process_id: P-COMPLIANCE-005
+    system_id: SYS-GRC
+    role: Primary
+  - process_id: P-COMPLIANCE-005
+    system_id: SYS-CRM
+    role: Supporting
+  - process_id: P-COMPLIANCE-005
+    system_id: SYS-DATA-INGEST
+    role: Supporting
+  - process_id: P-RISK-001
+    system_id: SYS-GRC
+    role: Primary
+  - process_id: P-RISK-001
+    system_id: SYS-WORKTRACK
+    role: Supporting
+  - process_id: P-RISK-002
+    system_id: SYS-MODEL
+    role: Primary
+  - process_id: P-RISK-002
+    system_id: SYS-GRC
+    role: Supporting
+  - process_id: P-RISK-003
+    system_id: SYS-GRC
+    role: Primary
+  - process_id: P-RISK-003
+    system_id: SYS-DOC
+    role: Supporting
+  - process_id: P-DATAGOV-001
+    system_id: SYS-CATALOG
+    role: Primary
+  - process_id: P-DATAGOV-001
+    system_id: SYS-DATA-INGEST
+    role: Supporting
+  - process_id: P-DATAGOV-002
+    system_id: SYS-DATA-INGEST
+    role: Primary
+  - process_id: P-DATAGOV-002
+    system_id: SYS-CATALOG
+    role: Supporting
+  - process_id: P-DATAGOV-003
+    system_id: SYS-CATALOG
+    role: Primary
+  - process_id: P-DATAGOV-003
+    system_id: SYS-DATA-INGEST
+    role: Supporting
+  - process_id: P-DATAGOV-004
+    system_id: SYS-DOC
+    role: Primary
+  - process_id: P-DATAGOV-004
+    system_id: SYS-CATALOG
+    role: Supporting
+  - process_id: P-DATAENG-001
+    system_id: SYS-DATA-INGEST
+    role: Primary
+  - process_id: P-DATAENG-001
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-DATAENG-002
+    system_id: SYS-MODEL
+    role: Primary
+  - process_id: P-DATAENG-002
+    system_id: SYS-DATA-INGEST
+    role: Supporting
+  - process_id: P-TECH-001
+    system_id: SYS-WORKTRACK
+    role: Primary
+  - process_id: P-TECH-001
+    system_id: SYS-ITSM
+    role: Supporting
+  - process_id: P-TECH-002
+    system_id: SYS-ITSM
+    role: Primary
+  - process_id: P-TECH-003
+    system_id: SYS-ITSM
+    role: Primary
+  - process_id: P-TECH-003
+    system_id: SYS-GRC
+    role: Supporting
+  - process_id: P-TECH-004
+    system_id: SYS-ITSM
+    role: Primary
+  - process_id: P-TECH-004
+    system_id: SYS-WORKTRACK
+    role: Supporting
+  - process_id: P-INFOSEC-001
+    system_id: SYS-IAM
+    role: Primary
+  - process_id: P-INFOSEC-001
+    system_id: SYS-ITSM
+    role: Supporting
+  - process_id: P-INFOSEC-002
+    system_id: SYS-ITSM
+    role: Primary
+  - process_id: P-INFOSEC-002
+    system_id: SYS-IAM
+    role: Supporting
+  - process_id: P-INFOSEC-003
+    system_id: SYS-ITSM
+    role: Primary
+  - process_id: P-INFOSEC-004
+    system_id: SYS-GRC
+    role: Primary
+  - process_id: P-INFOSEC-004
+    system_id: SYS-ITSM
+    role: Supporting
+  - process_id: P-PRIVACY-001
+    system_id: SYS-GRC
+    role: Primary
+  - process_id: P-PRIVACY-001
+    system_id: SYS-CRM
+    role: Supporting
+  - process_id: P-PRIVACY-001
+    system_id: SYS-CATALOG
+    role: Supporting
+  - process_id: P-VENDORMGMT-001
+    system_id: SYS-GRC
+    role: Primary
+  - process_id: P-VENDORMGMT-001
+    system_id: SYS-WORKTRACK
+    role: Supporting
+  - process_id: P-VENDORMGMT-002
+    system_id: SYS-GRC
+    role: Primary
+  - process_id: P-VENDORMGMT-003
+    system_id: SYS-GRC
+    role: Primary
+  - process_id: P-VENDORMGMT-003
+    system_id: SYS-WORKTRACK
+    role: Supporting
+  - process_id: P-PRODUCT-001
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-PRODUCT-001
+    system_id: SYS-WORKTRACK
+    role: Supporting
+  - process_id: P-PRODUCT-002
+    system_id: SYS-DOC
+    role: Primary
+  - process_id: P-PRODUCT-002
+    system_id: SYS-GRC
+    role: Supporting
+  - process_id: P-PRODUCT-003
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-PRODUCT-003
+    system_id: SYS-ORIG-DECISION
+    role: Supporting
+  - process_id: P-PRODUCT-003
+    system_id: SYS-WORKTRACK
+    role: Supporting
+  - process_id: P-PRODUCT-004
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-PRODUCT-004
+    system_id: SYS-DOC
+    role: Supporting
+  - process_id: P-SERVICING-011
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-SERVICING-011
+    system_id: SYS-PAYMENT-GW
+    role: Supporting
+  - process_id: P-SERVICING-011
+    system_id: SYS-GL
+    role: Supporting
+  - process_id: P-SERVICING-011
+    system_id: SYS-DOC
+    role: Supporting
+  - process_id: P-SERVICING-012
+    system_id: SYS-CORE-LEDGER
+    role: Primary
+  - process_id: P-SERVICING-012
+    system_id: SYS-KYC
+    role: Supporting
+  - process_id: P-SERVICING-012
+    system_id: SYS-DOC
+    role: Supporting
+  - process_id: P-STRATEGY-001
+    system_id: SYS-DATA-INGEST
+    role: Primary
+  - process_id: P-CREDIT-009
+    system_id: SYS-CREDIT-DATA
+    role: Primary
+  - process_id: P-CREDIT-009
+    system_id: SYS-DATA-INGEST
+    role: Supporting
+  - process_id: P-PARTNERSHIPS-001
+    system_id: SYS-GRC
+    role: Primary
+  - process_id: P-PARTNERSHIPS-001
+    system_id: SYS-DOC
+    role: Supporting
+  - process_id: P-SETTLEMENT-004
+    system_id: SYS-DATA-INGEST
+    role: Primary
+  - process_id: P-SETTLEMENT-004
+    system_id: SYS-CORE-LEDGER
+    role: Supporting
+  - process_id: P-SETTLEMENT-004
+    system_id: SYS-RECON
+    role: Supporting
+  - process_id: P-EA-001
+    system_id: SYS-ARCHREPO
+    role: Primary
+  - process_id: P-EA-002
+    system_id: SYS-ARCHREPO
+    role: Primary
+  - process_id: P-EA-002
+    system_id: SYS-WORKTRACK
+    role: Supporting
+  - process_id: P-EA-003
+    system_id: SYS-ARCHREPO
+    role: Primary
+  - process_id: P-EA-003
+    system_id: SYS-GRC
+    role: Supporting
+  - process_id: P-EA-004
+    system_id: SYS-ARCHREPO
+    role: Primary
+  - process_id: P-EA-005
+    system_id: SYS-ARCHREPO
+    role: Primary
+  - process_id: P-EA-005
+    system_id: SYS-CATALOG
+    role: Supporting
+  - process_id: P-EA-006
+    system_id: SYS-ARCHREPO
+    role: Primary
+  - process_id: P-EA-006
+    system_id: SYS-CATALOG
+    role: Supporting
+  - process_id: P-EA-007
+    system_id: SYS-ARCHREPO
+    role: Primary
+  - process_id: P-EA-007
+    system_id: SYS-ITSM
+    role: Supporting
+  - process_id: P-EA-008
+    system_id: SYS-ARCHREPO
+    role: Primary
+  - process_id: P-EA-008
+    system_id: SYS-GRC
+    role: Supporting
+  - process_id: P-EA-009
+    system_id: SYS-ARCHREPO
+    role: Primary
+  - process_id: P-EA-009
+    system_id: SYS-ITSM
+    role: Supporting
+  - process_id: P-QE-001
+    system_id: SYS-TESTMGMT
+    role: Primary
+  - process_id: P-QE-001
+    system_id: SYS-WORKTRACK
+    role: Supporting
+  - process_id: P-QE-002
+    system_id: SYS-TESTMGMT
+    role: Primary
+  - process_id: P-QE-002
+    system_id: SYS-SCM
+    role: Supporting
+  - process_id: P-QE-003
+    system_id: SYS-TESTMGMT
+    role: Primary
+  - process_id: P-QE-003
+    system_id: SYS-SCM
+    role: Supporting
+  - process_id: P-QE-004
+    system_id: SYS-TESTMGMT
+    role: Primary
+  - process_id: P-QE-004
+    system_id: SYS-OBSERV
+    role: Supporting
+  - process_id: P-QE-005
+    system_id: SYS-TESTMGMT
+    role: Primary
+  - process_id: P-QE-006
+    system_id: SYS-WORKTRACK
+    role: Primary
+  - process_id: P-QE-006
+    system_id: SYS-TESTMGMT
+    role: Supporting
+  - process_id: P-QE-007
+    system_id: SYS-TESTMGMT
+    role: Primary
+  - process_id: P-QE-007
+    system_id: SYS-SCM
+    role: Supporting
+  - process_id: P-QE-008
+    system_id: SYS-TESTMGMT
+    role: Primary
+  - process_id: P-QE-008
+    system_id: SYS-ITSM
+    role: Supporting
+  - process_id: P-QE-009
+    system_id: SYS-OBSERV
+    role: Primary
+  - process_id: P-QE-009
+    system_id: SYS-TESTMGMT
+    role: Supporting
+  - process_id: P-APPDEV-001
+    system_id: SYS-WORKTRACK
+    role: Primary
+  - process_id: P-APPDEV-002
+    system_id: SYS-SCM
+    role: Primary
+  - process_id: P-APPDEV-002
+    system_id: SYS-WORKTRACK
+    role: Supporting
+  - process_id: P-APPDEV-003
+    system_id: SYS-SCM
+    role: Primary
+  - process_id: P-APPDEV-004
+    system_id: SYS-SCM
+    role: Primary
+  - process_id: P-APPDEV-004
+    system_id: SYS-TESTMGMT
+    role: Supporting
+  - process_id: P-APPDEV-005
+    system_id: SYS-SCM
+    role: Primary
+  - process_id: P-APPDEV-005
+    system_id: SYS-GRC
+    role: Supporting
+  - process_id: P-APPDEV-006
+    system_id: SYS-WORKTRACK
+    role: Primary
+  - process_id: P-APPDEV-006
+    system_id: SYS-ARCHREPO
+    role: Supporting
+  - process_id: P-APPDEV-007
+    system_id: SYS-SCM
+    role: Primary
+  - process_id: P-APPDEV-007
+    system_id: SYS-ITSM
+    role: Supporting
+  - process_id: P-APPDEV-008
+    system_id: SYS-ITSM
+    role: Primary
+  - process_id: P-APPDEV-008
+    system_id: SYS-OBSERV
+    role: Supporting
+  - process_id: P-APPDEV-008
+    system_id: SYS-SCM
+    role: Supporting
+  - process_id: P-APPDEV-009
+    system_id: SYS-ARCHREPO
+    role: Primary
+  - process_id: P-APPDEV-009
+    system_id: SYS-DOC
+    role: Supporting
+  - process_id: P-APPDEV-009
+    system_id: SYS-IAM
+    role: Supporting

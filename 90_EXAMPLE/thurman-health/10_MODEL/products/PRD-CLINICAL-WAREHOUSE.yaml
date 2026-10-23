@@ -1,0 +1,38 @@
+# The clinical warehouse, on the shipped batch data product shape the card
+# issuer's Customer 360 was written from. Its pipeline reads what the
+# estate's ingestion system lands, which `model.yaml` answers once for every
+# data product: `SYS-CLINICAL-INGEST`.
+product_id: PRD-CLINICAL-WAREHOUSE
+name: Clinical Data Warehouse
+description: >
+  Encounters, results, medications, charges and remittances, conformed and
+  curated nightly, for quality measures, readmissions, the cancer center's
+  outcomes and the cost of care.
+status: Active
+owner_org_id: ORG-DATAENG
+criticality: Medium
+product_category: Data product
+company_domain: Data and Analytics
+
+build_type: data-product
+archetype: batch-data-product
+parameters:
+  slug: cdw
+  product_name: Clinical Data Warehouse
+  owner_org: ORG-DATAENG
+  domain: Data and Analytics
+  classification: Restricted
+  contains_pii: "Yes"
+
+overrides:
+  INT-CDW-INGEST:
+    integration_style: Batch
+  INT-CDW-PIPE-SEMANTIC:
+    integration_style: Batch
+  DA-CDW-CURATED:
+    description: >
+      The conformed clinical and financial model: one row per encounter,
+      result, administration and charge, keyed on the enterprise patient
+      identifier. Identified, so Restricted; de-identified extracts for
+      research are made from it and are not modeled here.
+    pii_types: Patient name;Medical record number;Date of birth;Diagnoses

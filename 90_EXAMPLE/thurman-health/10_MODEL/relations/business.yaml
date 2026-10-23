@@ -1,0 +1,133 @@
+# The business layer joined to the estate: which system realizes which
+# capability, what each stage of a value stream needs, and what each
+# process touches.
+#
+# Workforce Identity and Access is realized by nothing on purpose. It runs
+# on a technology service, not a system, and the coverage view is the
+# right place to see that said rather than a placeholder system to hide it.
+
+system_realizes_capability:
+  - {system_id: SYS-EHR, capability_id: CAP-CLINICAL-DOCUMENTATION}
+  - {system_id: SYS-EHR, capability_id: CAP-ORDER-MANAGEMENT}
+  - {system_id: SYS-EHR, capability_id: CAP-MEDICATION-MANAGEMENT}
+  - {system_id: SYS-EHR, capability_id: CAP-SCHEDULING}
+  - {system_id: SYS-EHR, capability_id: CAP-CHARGE-CAPTURE}
+  - {system_id: SYS-PHARMACY, capability_id: CAP-MEDICATION-MANAGEMENT}
+  - {system_id: SYS-DEVICE-GW, capability_id: CAP-BEDSIDE-MONITORING}
+  - {system_id: SYS-BED-MGMT, capability_id: CAP-PATIENT-FLOW}
+  - {system_id: SYS-LIS, capability_id: CAP-LAB-TESTING}
+  - {system_id: SYS-LIS, capability_id: CAP-RESULTS-MANAGEMENT}
+  - {system_id: SYS-RIS, capability_id: CAP-IMAGING}
+  - {system_id: SYS-RIS, capability_id: CAP-RESULTS-MANAGEMENT}
+  - {system_id: SYS-PACS, capability_id: CAP-IMAGING}
+  - {system_id: SYS-VNA, capability_id: CAP-IMAGING}
+  - {system_id: SYS-ONCOLOGY, capability_id: CAP-TREATMENT-PLANNING}
+  - {system_id: SYS-TUMOR-REGISTRY, capability_id: CAP-CANCER-REGISTRY}
+  - {system_id: SYS-INTERFACE-ENGINE, capability_id: CAP-CLINICAL-INTEGRATION}
+  - {system_id: SYS-FHIR-SERVER, capability_id: CAP-HEALTH-INFO-EXCHANGE}
+  - {system_id: SYS-FHIR-SERVER, capability_id: CAP-PATIENT-ENGAGEMENT}
+  - {system_id: SYS-EMPI, capability_id: CAP-PATIENT-IDENTITY}
+  - {system_id: SYS-REGIONAL-HIE, capability_id: CAP-HEALTH-INFO-EXCHANGE}
+  - {system_id: SYS-REFERENCE-LAB, capability_id: CAP-LAB-TESTING}
+  - {system_id: SYS-PATIENT-ACCOUNTING, capability_id: CAP-CHARGE-CAPTURE}
+  - {system_id: SYS-PATIENT-ACCOUNTING, capability_id: CAP-CLAIMS-MANAGEMENT}
+  - {system_id: SYS-ERP, capability_id: CAP-FINANCIAL-ACCOUNTING}
+  - {system_id: SYS-ERP, capability_id: CAP-SUPPLY-CHAIN}
+  - {system_id: SYS-CLINICAL-INGEST, capability_id: CAP-CLINICAL-ANALYTICS}
+  - {system_id: SYS-SIEM, capability_id: CAP-ACCESS-MONITORING}
+  - {system_id: SYS-PORTAL-WEB, capability_id: CAP-PATIENT-ENGAGEMENT}
+  - {system_id: SYS-PORTAL-API, capability_id: CAP-PATIENT-ENGAGEMENT}
+  - {system_id: SYS-TELEHEALTH-VENDOR, capability_id: CAP-VIRTUAL-CARE}
+  - {system_id: SYS-CLAIMS-VENDOR, capability_id: CAP-CLAIMS-MANAGEMENT}
+  - {system_id: SYS-CDW-SEMANTIC, capability_id: CAP-CLINICAL-ANALYTICS}
+  - {system_id: SYS-CDW-SEMANTIC, capability_id: CAP-POPULATION-HEALTH}
+
+product_realizes_capability:
+  - {product_id: PRD-PATIENT-PORTAL, capability_id: CAP-PATIENT-ENGAGEMENT}
+  - {product_id: PRD-VIRTUAL-VISITS, capability_id: CAP-VIRTUAL-CARE}
+  - {product_id: PRD-CLAIMS, capability_id: CAP-CLAIMS-MANAGEMENT}
+  - {product_id: PRD-CLINICAL-WAREHOUSE, capability_id: CAP-CLINICAL-ANALYTICS}
+  - {product_id: PRD-CLINICAL-WAREHOUSE, capability_id: CAP-POPULATION-HEALTH}
+
+stage_crosses_capability:
+  - {stage_id: VS-EMERGENCY-CARE-S01, capability_id: CAP-SCHEDULING}
+  - {stage_id: VS-EMERGENCY-CARE-S01, capability_id: CAP-PATIENT-IDENTITY}
+  - {stage_id: VS-EMERGENCY-CARE-S02, capability_id: CAP-ORDER-MANAGEMENT}
+  - {stage_id: VS-EMERGENCY-CARE-S02, capability_id: CAP-CLINICAL-DOCUMENTATION}
+  - {stage_id: VS-EMERGENCY-CARE-S03, capability_id: CAP-MEDICATION-MANAGEMENT}
+  - {stage_id: VS-EMERGENCY-CARE-S03, capability_id: CAP-BEDSIDE-MONITORING}
+  - {stage_id: VS-EMERGENCY-CARE-S04, capability_id: CAP-PATIENT-FLOW}
+  - {stage_id: VS-EMERGENCY-CARE-S04, capability_id: CAP-HEALTH-INFO-EXCHANGE}
+  - {stage_id: VS-DIAGNOSTICS-S01, capability_id: CAP-ORDER-MANAGEMENT}
+  - {stage_id: VS-DIAGNOSTICS-S02, capability_id: CAP-LAB-TESTING}
+  - {stage_id: VS-DIAGNOSTICS-S02, capability_id: CAP-IMAGING}
+  - {stage_id: VS-DIAGNOSTICS-S03, capability_id: CAP-LAB-TESTING}
+  - {stage_id: VS-DIAGNOSTICS-S03, capability_id: CAP-IMAGING}
+  - {stage_id: VS-DIAGNOSTICS-S04, capability_id: CAP-RESULTS-MANAGEMENT}
+  - {stage_id: VS-DIAGNOSTICS-S04, capability_id: CAP-PATIENT-ENGAGEMENT}
+  - {stage_id: VS-CANCER-CARE-S01, capability_id: CAP-LAB-TESTING}
+  - {stage_id: VS-CANCER-CARE-S01, capability_id: CAP-IMAGING}
+  - {stage_id: VS-CANCER-CARE-S02, capability_id: CAP-TREATMENT-PLANNING}
+  - {stage_id: VS-CANCER-CARE-S03, capability_id: CAP-TREATMENT-PLANNING}
+  - {stage_id: VS-CANCER-CARE-S03, capability_id: CAP-MEDICATION-MANAGEMENT}
+  - {stage_id: VS-CANCER-CARE-S04, capability_id: CAP-CANCER-REGISTRY}
+  - {stage_id: VS-CANCER-CARE-S04, capability_id: CAP-CLINICAL-ANALYTICS}
+
+process_supports_capability:
+  - {process_id: P-ED-001, capability_id: CAP-CLINICAL-DOCUMENTATION}
+  - {process_id: P-ED-002, capability_id: CAP-PATIENT-FLOW}
+  - {process_id: P-LAB-001, capability_id: CAP-LAB-TESTING}
+  - {process_id: P-LAB-001, capability_id: CAP-RESULTS-MANAGEMENT}
+  - {process_id: P-IMG-001, capability_id: CAP-IMAGING}
+  - {process_id: P-MED-001, capability_id: CAP-MEDICATION-MANAGEMENT}
+  - {process_id: P-ONC-001, capability_id: CAP-TREATMENT-PLANNING}
+  - {process_id: P-ONC-002, capability_id: CAP-CANCER-REGISTRY}
+  - {process_id: P-REV-001, capability_id: CAP-CLAIMS-MANAGEMENT}
+  - {process_id: P-SEC-001, capability_id: CAP-ACCESS-MONITORING}
+
+process_uses_system:
+  - {process_id: P-ED-001, system_id: SYS-EHR, role: Primary}
+  - {process_id: P-ED-001, system_id: SYS-EMPI, role: Supporting}
+  - {process_id: P-ED-001, system_id: SYS-DEVICE-GW, role: Supporting}
+  - {process_id: P-ED-002, system_id: SYS-BED-MGMT, role: Primary}
+  - {process_id: P-ED-002, system_id: SYS-EHR, role: Supporting}
+  - {process_id: P-LAB-001, system_id: SYS-LIS, role: Primary}
+  - {process_id: P-LAB-001, system_id: SYS-EHR, role: Supporting}
+  - {process_id: P-LAB-001, system_id: SYS-INTERFACE-ENGINE, role: Supporting}
+  - {process_id: P-LAB-001, system_id: SYS-REFERENCE-LAB, role: Supporting}
+  - {process_id: P-IMG-001, system_id: SYS-RIS, role: Primary}
+  - {process_id: P-IMG-001, system_id: SYS-PACS, role: Primary}
+  - {process_id: P-IMG-001, system_id: SYS-INTERFACE-ENGINE, role: Supporting}
+  - {process_id: P-MED-001, system_id: SYS-EHR, role: Primary}
+  - {process_id: P-MED-001, system_id: SYS-PHARMACY, role: Primary}
+  - {process_id: P-ONC-001, system_id: SYS-ONCOLOGY, role: Primary}
+  - {process_id: P-ONC-001, system_id: SYS-EHR, role: Supporting}
+  - {process_id: P-ONC-002, system_id: SYS-TUMOR-REGISTRY, role: Primary}
+  - {process_id: P-ONC-002, system_id: SYS-LIS, role: Supporting}
+  - {process_id: P-REV-001, system_id: SYS-PATIENT-ACCOUNTING, role: Primary}
+  - {process_id: P-REV-001, system_id: SYS-CLAIMS-VENDOR, role: Supporting}
+  - {process_id: P-SEC-001, system_id: SYS-SIEM, role: Primary}
+
+process_uses_data_asset:
+  - {process_id: P-ED-001, data_asset_id: DA-ENCOUNTER, access: Write}
+  - {process_id: P-ED-001, data_asset_id: DA-PATIENT-IDENTITY, access: Read}
+  - {process_id: P-ED-002, data_asset_id: DA-BED-STATUS, access: Write}
+  - {process_id: P-LAB-001, data_asset_id: DA-CLINICAL-ORDER, access: Read}
+  - {process_id: P-LAB-001, data_asset_id: DA-LAB-RESULT, access: Write}
+  - {process_id: P-IMG-001, data_asset_id: DA-IMAGING-STUDY, access: Write}
+  - {process_id: P-IMG-001, data_asset_id: DA-IMAGING-REPORT, access: Write}
+  - {process_id: P-MED-001, data_asset_id: DA-MEDICATION-ORDER, access: Read}
+  - {process_id: P-MED-001, data_asset_id: DA-MED-ADMIN, access: Write}
+  - {process_id: P-ONC-001, data_asset_id: DA-TREATMENT-PLAN, access: Write}
+  - {process_id: P-ONC-002, data_asset_id: DA-CANCER-CASE, access: Write}
+  - {process_id: P-REV-001, data_asset_id: DA-CLAIM, access: Write}
+  - {process_id: P-SEC-001, data_asset_id: DA-ACCESS-AUDIT, access: Read}
+
+process_governed_by_control:
+  - {process_id: P-LAB-001, control_id: CTL-CRITICAL-RESULTS}
+  - {process_id: P-MED-001, control_id: CTL-PHARM-VERIFY}
+  - {process_id: P-MED-001, control_id: CTL-BCMA}
+  - {process_id: P-ED-001, control_id: CTL-PATIENT-ID}
+  - {process_id: P-ONC-002, control_id: CTL-REGISTRY-TIMELINESS}
+  - {process_id: P-SEC-001, control_id: CTL-ACCESS-AUDIT}
+  - {process_id: P-REV-001, control_id: CTL-MIN-NECESSARY}

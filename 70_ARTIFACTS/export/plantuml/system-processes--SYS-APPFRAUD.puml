@@ -1,0 +1,31 @@
+@startuml
+' Application fraud screening — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Application fraud screening — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_ORIG_03, "Application Fraud Screening", "Detect synthetic, stolen, and first-party application fraud.", $tags="capabilities")
+  ' aac CAP_ORIG_03: company_domain="Originations"
+}
+Boundary(b_Process, "Process") {
+  System(P_ORIG_003, "Screen application for fraud", "Score and adjudicate the application for synthetic, stolen, and first-party fraud risk. Fraud screening runs before credit decisioning so stolen and synthetic identities never consume a bureau pull; referred applications go to manual review with an SLA.", $tags="processes")
+  ' aac P_ORIG_003: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_APPFRAUD, "Application fraud screening", "Application fraud and identity risk screening.", $tags="systems")
+  ' aac SYS_APPFRAUD: company_domain=""
+}
+
+Rel(P_ORIG_003, SYS_APPFRAUD, "Primary")
+' aac rel: source="P_ORIG_003"; target="SYS_APPFRAUD"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_ORIG_003, CAP_ORIG_03, "supports")
+' aac rel: source="P_ORIG_003"; target="CAP_ORIG_03"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

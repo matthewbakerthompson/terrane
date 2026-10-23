@@ -1,0 +1,70 @@
+# The revenue cycle's data, the ledger, and the audit trail. A claim is
+# PHI as much as a lab result is: it names the patient, the diagnosis and
+# what was done.
+
+- data_asset_id: DA-CHARGE
+  name: Charges
+  description: Every billable service, coded in CPT and HCPCS, dropped from the EHR as HL7 DFT and held in patient accounting.
+  status: Active
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  company_domain: Revenue Cycle
+  tags: [financial, hl7v2]
+  data_owner_org_id: ORG-REV-CYCLE
+  data_steward_org_id: ORG-REV-CYCLE
+  source_of_truth: SYS-PATIENT-ACCOUNTING
+  classification: Restricted
+  risk_level: Medium
+  pii_flag: "Yes"
+  pii_types: Medical record number;Dates of service;Procedures
+
+- data_asset_id: DA-CLAIM
+  name: Claims
+  description: Institutional and professional claims to payers, as X12 837.
+  status: Active
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Physical
+  company_domain: Revenue Cycle
+  tags: [financial, x12]
+  data_owner_org_id: ORG-REV-CYCLE
+  data_steward_org_id: ORG-REV-CYCLE
+  source_of_truth: SYS-PATIENT-ACCOUNTING
+  classification: Restricted
+  risk_level: High
+  pii_flag: "Yes"
+  pii_types: Name;Date of birth;Member id;Diagnoses;Procedures
+
+- data_asset_id: DA-GL-JOURNAL
+  name: General ledger journals
+  description: Revenue, cash and adjustments posted from patient accounting each night, summarized; no patient detail leaves billing for the ledger.
+  status: Active
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Physical
+  company_domain: Revenue Cycle
+  tags: [financial]
+  data_owner_org_id: ORG-FINANCE
+  data_steward_org_id: ORG-FINANCE
+  source_of_truth: SYS-ERP
+  classification: Confidential
+  risk_level: Medium
+  pii_flag: "No"
+
+- data_asset_id: DA-ACCESS-AUDIT
+  name: PHI access audit trail
+  description: Who opened which patient's record, when, from where, and the reason given for an emergency access.
+  status: Active
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Physical
+  company_domain: Security
+  tags: [audit, security]
+  data_owner_org_id: ORG-COMPLIANCE
+  data_steward_org_id: ORG-INFOSEC
+  source_of_truth: SYS-SIEM
+  classification: Restricted
+  risk_level: High
+  pii_flag: "Yes"
+  pii_types: Medical record number;Workforce identity

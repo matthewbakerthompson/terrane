@@ -1,0 +1,76 @@
+# The first product on the Azure digital shape, and the one that asked the
+# landing zone for something it did not have.
+#
+# The shape's claim is that its parts are the AWS shape's parts and only the
+# bindings differ. Nothing had tested it: every Azure product in the estate
+# predates the shapes and is plain rows. This one adds a part the shape does
+# not carry by default -- the worker that fulfills a redemption after the
+# response -- and the worker asks for an event stream, which the Azure landing
+# zone did not have. `terrane validate` had said so for two rounds
+# (`library.landing_zone_gap`); the day a product asked, Event Hubs was a
+# record and a tag, and nothing here names it.
+product_id: PRD-REWARDS
+name: Rewards Redemption
+description: >
+  Cardholders browse the rewards catalog and redeem points for statement
+  credit, gift cards and merchandise. Built in-house on the Azure landing
+  zone; a redemption is confirmed in the response and fulfilled afterward
+  by a worker consuming the product's own events.
+status: Planned
+owner_org_id: ORG-REWARDS
+criticality: Medium
+product_category: Digital channel
+company_domain: Card Issuing
+launch_date: 2027-03-08
+
+build_type: digital-product
+archetype: azure-digital-product
+parameters:
+  slug: rewards
+  product_name: Rewards Redemption
+  owner_org: ORG-REWARDS
+  domain: Card Issuing
+  account: azure-cards-prod
+  region: uksouth
+  criticality: Medium
+  classification: Confidential
+
+# The part the shape does not carry by default. Fulfillment -- posting the
+# statement credit, ordering the gift card -- happens after the response.
+modules:
+  - module: async-worker
+
+overrides:
+  # Redemption is not in the authorization path: an outage delays a reward
+  # rather than declining a transaction.
+  SYS-REWARDS-API:
+    service_tier: Tier 3
+  SYS-REWARDS-WORKER:
+    service_tier: Tier 3
+    description: >
+      Consumes redemption events and fulfills them: statement credits posted
+      to the ledger, gift-card orders placed with the fulfillment partner.
+
+# What the shape cannot know: where a fulfilled redemption goes. A statement
+# credit is a posting on the card ledger, so the worker calls it, the way the
+# authorization switch and the servicing API do. The ledger gains a caller and
+# is not changed by one, which is why the work package does not list it.
+extra:
+  interfaces:
+    - interface_id: INT-REWARDS-WORKER-LEDGER
+      name: Rewards Redemption Worker to Core Ledger
+      description: Statement credits posted to the cardholder's account when a redemption is fulfilled.
+      status: Planned
+      togaf_layer: Application
+      architecture_domain: Application
+      company_domain: Card Issuing
+      source_system_id: SYS-REWARDS-WORKER
+      target_system_id: SYS-CORE-LEDGER
+      offered_interface_id: OI-LEDGER-QUEUE
+      owner_org_id: ORG-REWARDS
+      protocol: MQ
+      direction: Outbound
+      frequency: Realtime
+      integration_style: Request-response
+      auth_method: MutualTLS
+      data_classification: Confidential

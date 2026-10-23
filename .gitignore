@@ -1,0 +1,49 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.idea/
+.vscode/
+*.tmp
+
+# Built by 80_APP/tools/export_site.py and the Pages workflow
+site/
+
+# Installed on demand by 50_ENGINE/tools/mermaid_parse_check.mjs and
+# the probes in 80_APP/tools/dev
+node_modules/
+
+# Built by 80_APP/tools/review_pack.mjs: a picture of a commit, not a record
+*.pptx
+# The workbook `terrane pack --excel` writes beside the default deck: the same picture, as sheets
+70_ARTIFACTS/review-pack.xlsx
+
+# Pictures the developer probes in 80_APP/tools/dev/ write
+80_APP/tools/dev/out/
+
+# Written by `terrane render --png` through resvg-py, which CI does not have, so
+# a committed PNG would be the one generated file nothing holds fresh
+70_ARTIFACTS/png/
+
+# What `terrane --root 90_EXAMPLE/thurman-health render` and friends write. The
+# second estate commits its model and views, not its pictures: the gate and
+# its own test hold it, and a second copy of every generated file would be a
+# second thing for every drawing change to keep fresh.
+90_EXAMPLE/thurman-health/40_SCHEMAS/
+90_EXAMPLE/thurman-health/70_ARTIFACTS/
+
+# Built by 50_ENGINE/tools/wheel_check.py: the sdist and the wheel, before a release
+/dist/
+
+# Credentials never belong in the repository: a connection names where its
+# secret lives (an environment variable, a secrets manager), not the secret.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+secrets.yaml
+secrets.yml
+.secrets/

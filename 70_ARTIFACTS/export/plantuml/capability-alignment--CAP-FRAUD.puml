@@ -1,0 +1,184 @@
+@startuml
+' Fraud, Disputes & Chargeback Management — Frameworks, Controls, Systems
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Fraud, Disputes & Chargeback Management — Frameworks, Controls, Systems
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_FRAUD_04, "Chargeback & Representment Processing", "Execute network chargeback and representment cycles.", $tags="capabilities")
+  ' aac CAP_FRAUD_04: company_domain="Servicing"
+  System(CAP_FRAUD_03, "Dispute Intake & Provisional Credit", "Take dispute claims and apply provisional credit within regulatory timers.", $tags="capabilities")
+  ' aac CAP_FRAUD_03: company_domain="Servicing"
+  System(CAP_FRAUD_02, "Fraud Case Investigation", "Investigate and adjudicate fraud cases.", $tags="capabilities")
+  ' aac CAP_FRAUD_02: company_domain="Servicing"
+  System(CAP_FRAUD_05, "Fraud Loss Recovery & Write-off", "Recover and account for fraud losses.", $tags="capabilities")
+  ' aac CAP_FRAUD_05: company_domain="Servicing"
+  System(CAP_FRAUD_07, "Fraud Reporting & Network Compliance", "Meet network fraud reporting thresholds and obligations.", $tags="capabilities")
+  ' aac CAP_FRAUD_07: company_domain="Servicing"
+  System(CAP_FRAUD, "Fraud, Disputes & Chargeback Management", "Fraud, Disputes & Chargeback Management. Level 0 enterprise capability domain (Core tier).", $tags="capabilities")
+  ' aac CAP_FRAUD: company_domain="Servicing"
+  System(CAP_FRAUD_06, "Identity Theft & Account Takeover Response", "Respond to account takeover and identity theft events.", $tags="capabilities")
+  ' aac CAP_FRAUD_06: company_domain="Servicing"
+  System(CAP_FRAUD_01, "Transaction Fraud Detection & Strategy", "Detect fraudulent transactions in flight and set detection strategy.", $tags="capabilities")
+  ' aac CAP_FRAUD_01: company_domain="Servicing"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_AUTH_POLICY, "Cardholder authentication to policy", "Cardholder authentication meets the risk-tiered policy before disclosure or account change, across every servicing channel.", $tags="controls")
+  ' aac CTL_AUTH_POLICY: company_domain=""
+  System(CTL_REGE_ACK, "Dispute acknowledgment timeliness", "Written acknowledgment of an error claim is issued within the regulatory window; the timer starts at claim receipt, not triage.", $tags="controls")
+  ' aac CTL_REGE_ACK: company_domain=""
+  System(CTL_REGE_DETERM, "Dispute determination timeliness and notice", "Final dispute determinations, account adjustment, and the written explanation complete within the Reg E / Reg Z window; the clock is measured from claim receipt.", $tags="controls")
+  ' aac CTL_REGE_DETERM: company_domain=""
+  System(CTL_FRAUD_SLA, "Fraud alert handling service level", "Fraud alerts are actioned within the loss-budget SLA with disposition quality sampling; Reg E liability decisions are documented per case.", $tags="controls")
+  ' aac CTL_FRAUD_SLA: company_domain=""
+  System(CTL_REGE_PROVCR, "Provisional credit within regulatory window", "Provisional credit is applied within the Reg E window when investigation extends past it, and collection on the disputed amount is suspended.", $tags="controls")
+  ' aac CTL_REGE_PROVCR: company_domain=""
+  System(CTL_IR_PLAYBOOK, "Security incident response execution", "Security events run the incident response playbook with severity-driven escalation and post-incident review; the timeline is evidence.", $tags="controls")
+  ' aac CTL_IR_PLAYBOOK: company_domain=""
+}
+Boundary(b_Framework, "Framework") {
+  System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
+  ' aac FW_BIAN: company_domain=""
+  System(FW_PCI_DSS, "PCI DSS", "The card industry's data security standard. Not a framework anybody chose: it is a condition of processing card transactions, which is why it governs the payment and merchant domains whatever anyone thinks of it.", $tags="frameworks")
+  ' aac FW_PCI_DSS: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_SERVICING_005, "Authenticate cardholder", "Authenticate a cardholder to policy before disclosing information or executing a change. Authentication strength scales with request risk; failures route to step-up rather than disclosure, and the policy is tuned with the fraud team.", $tags="processes")
+  ' aac P_SERVICING_005: company_domain=""
+  System(P_FRAUD_001, "Detect and action transaction fraud alert", "Detect a suspected fraudulent transaction, action the alert, and contact the cardholder. Alert handling runs against loss and customer-friction budgets; actions span block, reissue, and contact, and the clock matters because exposure grows per transaction.", $tags="processes")
+  ' aac P_FRAUD_001: company_domain=""
+  System(P_DISPUTE_002, "Execute network chargeback", "Submit and track a chargeback through the network within the applicable filing window. Chargeback rights and filing windows differ by network and reason code; a missed window converts a recoverable dispute into an issuer loss.", $tags="processes")
+  ' aac P_DISPUTE_002: company_domain=""
+  System(P_DISPUTE_004, "Finalize dispute determination and notify", "Make the final dispute determination, adjust the account, and issue the compliant notice. The determination closes the Reg E or Reg Z clock: account adjustment, provisional credit disposition, and the written explanation must all land within the window.", $tags="processes")
+  ' aac P_DISPUTE_004: company_domain=""
+  System(P_FRAUD_002, "Investigate and adjudicate fraud case", "Investigate a suspected fraud case and reach a documented determination. The case determination separates true fraud from friendly fraud and abuse, drives the Reg E liability decision, and feeds the loss and strategy data.", $tags="processes")
+  ' aac P_FRAUD_002: company_domain=""
+  System(P_FRAUD_006, "Maintain fraud detection strategy", "Define, test, and deploy changes to fraud detection rules and models. Strategy changes are tested against recent fraud and false-positive performance before deployment; every rule change is versioned and reversible.", $tags="processes")
+  ' aac P_FRAUD_006: company_domain=""
+  System(P_DISPUTE_001, "Process cardholder dispute claim", "Take a cardholder dispute claim, apply provisional credit, investigate, determine, and notify within regulatory timers.", $tags="processes")
+  ' aac P_DISPUTE_001: company_domain=""
+  System(P_DISPUTE_003, "Process representment and pre-arbitration", "Evaluate merchant representment and pursue pre-arbitration where warranted. Representment evidence is weighed against the reason code requirements; pre-arbitration is pursued only where the economics and the evidence support it.", $tags="processes")
+  ' aac P_DISPUTE_003: company_domain=""
+  System(P_FRAUD_004, "Recover and write off fraud loss", "Pursue recovery of fraud losses and write off the residual with correct accounting. Recovery pursues merchants, networks, and other issuers where rights exist; the residual writes off to the fraud loss line with the accounting evidenced.", $tags="processes")
+  ' aac P_FRAUD_004: company_domain=""
+  System(P_FRAUD_003, "Respond to account takeover event", "Contain, remediate, and communicate an account takeover or identity compromise event. Account takeover response contains first, then remediates credentials, reverses fraudulent activity, and communicates with the cardholder; speed limits the loss.", $tags="processes")
+  ' aac P_FRAUD_003: company_domain=""
+  System(P_FRAUD_005, "Submit network fraud reporting", "Compile and submit fraud reporting to the networks within required thresholds. Network fraud reporting (TC40, SAFE) has thresholds and deadlines; late or wrong reporting risks network compliance programs and fines.", $tags="processes")
+  ' aac P_FRAUD_005: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_DISPUTES_GATEWAY, "Dispute Management Platform Integration Gateway", "Our side of the Pegasystems integration: mapping, retry and audit. Built with AKS.", $tags="systems")
+  ' aac SYS_DISPUTES_GATEWAY: company_domain="Servicing"; hosting="Azure"; technology="AKS"
+  System(SYS_IAM, "Identity and access management", "Workforce identity, authentication, and access governance.", $tags="systems")
+  ' aac SYS_IAM: company_domain=""
+  System_Ext(SYS_DISPUTES_SAAS, "Pega Smart Dispute", "Dispute Management Platform, provided by Pegasystems and running in the vendor tenancy. Built with Pegasystems.", $tags="systems")
+  ' aac SYS_DISPUTES_SAAS: company_domain="Servicing"; hosting="SaaS"; technology="Pegasystems"
+  System(SYS_FRAUD_DETECT, "Transaction fraud detection", "Real-time transaction fraud scoring and alerting.", $tags="systems")
+  ' aac SYS_FRAUD_DETECT: company_domain=""
+}
+
+Rel(CAP_FRAUD_01, CAP_FRAUD, "part of")
+Rel(CAP_FRAUD_02, CAP_FRAUD, "part of")
+Rel(CAP_FRAUD_03, CAP_FRAUD, "part of")
+Rel(CAP_FRAUD_04, CAP_FRAUD, "part of")
+Rel(CAP_FRAUD_05, CAP_FRAUD, "part of")
+Rel(CAP_FRAUD_06, CAP_FRAUD, "part of")
+Rel(CAP_FRAUD_07, CAP_FRAUD, "part of")
+Rel(CAP_FRAUD, FW_BIAN, "Aligned to")
+' aac rel: source="CAP_FRAUD"; target="FW_BIAN"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
+Rel(CAP_FRAUD, FW_PCI_DSS, "Governed by")
+' aac rel: source="CAP_FRAUD"; target="FW_PCI_DSS"; label="Governed by"; relation="capability_aligns_to_framework"; alignment="Governed by"
+Rel(CAP_FRAUD_01, FW_BIAN, "Operations and Execution > Cards > Card Authorization / Fraud Check")
+' aac rel: source="CAP_FRAUD_01"; target="FW_BIAN"; label="Operations and Execution > Cards > Card Authorization / Fraud Check"; relation="capability_references_framework"; ref="Operations and Execution > Cards > Card Authorization / Fraud Check"
+Rel(CAP_FRAUD_02, FW_BIAN, "Operations and Execution > Account Management > Fraud Diagnosis")
+' aac rel: source="CAP_FRAUD_02"; target="FW_BIAN"; label="Operations and Execution > Account Management > Fraud Diagnosis"; relation="capability_references_framework"; ref="Operations and Execution > Account Management > Fraud Diagnosis"
+Rel(CAP_FRAUD_03, FW_BIAN, "Sales and Service > Servicing > Card Case")
+' aac rel: source="CAP_FRAUD_03"; target="FW_BIAN"; label="Sales and Service > Servicing > Card Case"; relation="capability_references_framework"; ref="Sales and Service > Servicing > Card Case"
+Rel(CAP_FRAUD_04, FW_BIAN, "Sales and Service > Servicing > Card Case")
+' aac rel: source="CAP_FRAUD_04"; target="FW_BIAN"; label="Sales and Service > Servicing > Card Case"; relation="capability_references_framework"; ref="Sales and Service > Servicing > Card Case"
+Rel(CAP_FRAUD_05, FW_BIAN, "Risk and Compliance > Regulations and Compliance > Fraud Resolution")
+' aac rel: source="CAP_FRAUD_05"; target="FW_BIAN"; label="Risk and Compliance > Regulations and Compliance > Fraud Resolution"; relation="capability_references_framework"; ref="Risk and Compliance > Regulations and Compliance > Fraud Resolution"
+Rel(CAP_FRAUD_06, FW_BIAN, "Risk and Compliance > Regulations and Compliance > Fraud Resolution")
+' aac rel: source="CAP_FRAUD_06"; target="FW_BIAN"; label="Risk and Compliance > Regulations and Compliance > Fraud Resolution"; relation="capability_references_framework"; ref="Risk and Compliance > Regulations and Compliance > Fraud Resolution"
+Rel(CAP_FRAUD_07, FW_BIAN, "Operations and Execution > Account Management > Fraud Diagnosis")
+' aac rel: source="CAP_FRAUD_07"; target="FW_BIAN"; label="Operations and Execution > Account Management > Fraud Diagnosis"; relation="capability_references_framework"; ref="Operations and Execution > Account Management > Fraud Diagnosis"
+Rel(P_SERVICING_005, CAP_FRAUD_06, "supported by")
+' aac rel: source="P_SERVICING_005"; target="CAP_FRAUD_06"; label="supported by"; relation="process_supports_capability"
+Rel(P_FRAUD_001, CAP_FRAUD_01, "supported by")
+' aac rel: source="P_FRAUD_001"; target="CAP_FRAUD_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_FRAUD_002, CAP_FRAUD_02, "supported by")
+' aac rel: source="P_FRAUD_002"; target="CAP_FRAUD_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_FRAUD_003, CAP_FRAUD_06, "supported by")
+' aac rel: source="P_FRAUD_003"; target="CAP_FRAUD_06"; label="supported by"; relation="process_supports_capability"
+Rel(P_FRAUD_004, CAP_FRAUD_05, "supported by")
+' aac rel: source="P_FRAUD_004"; target="CAP_FRAUD_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_FRAUD_005, CAP_FRAUD_07, "supported by")
+' aac rel: source="P_FRAUD_005"; target="CAP_FRAUD_07"; label="supported by"; relation="process_supports_capability"
+Rel(P_FRAUD_006, CAP_FRAUD_01, "supported by")
+' aac rel: source="P_FRAUD_006"; target="CAP_FRAUD_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_DISPUTE_001, CAP_FRAUD_03, "supported by")
+' aac rel: source="P_DISPUTE_001"; target="CAP_FRAUD_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_DISPUTE_002, CAP_FRAUD_04, "supported by")
+' aac rel: source="P_DISPUTE_002"; target="CAP_FRAUD_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_DISPUTE_003, CAP_FRAUD_04, "supported by")
+' aac rel: source="P_DISPUTE_003"; target="CAP_FRAUD_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_DISPUTE_004, CAP_FRAUD_03, "supported by")
+' aac rel: source="P_DISPUTE_004"; target="CAP_FRAUD_03"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_FRAUD, CTL_AUTH_POLICY, "governed by")
+' aac rel: source="CAP_FRAUD"; target="CTL_AUTH_POLICY"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_FRAUD, CTL_FRAUD_SLA, "governed by")
+' aac rel: source="CAP_FRAUD"; target="CTL_FRAUD_SLA"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_FRAUD, CTL_IR_PLAYBOOK, "governed by")
+' aac rel: source="CAP_FRAUD"; target="CTL_IR_PLAYBOOK"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_FRAUD, CTL_REGE_ACK, "governed by")
+' aac rel: source="CAP_FRAUD"; target="CTL_REGE_ACK"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_FRAUD, CTL_REGE_DETERM, "governed by")
+' aac rel: source="CAP_FRAUD"; target="CTL_REGE_DETERM"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_FRAUD, CTL_REGE_PROVCR, "governed by")
+' aac rel: source="CAP_FRAUD"; target="CTL_REGE_PROVCR"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_FRAUD_01, CTL_FRAUD_SLA, "governed by")
+' aac rel: source="CAP_FRAUD_01"; target="CTL_FRAUD_SLA"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_FRAUD_02, CTL_FRAUD_SLA, "governed by")
+' aac rel: source="CAP_FRAUD_02"; target="CTL_FRAUD_SLA"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_FRAUD_03, CTL_REGE_ACK, "governed by")
+' aac rel: source="CAP_FRAUD_03"; target="CTL_REGE_ACK"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_FRAUD_03, CTL_REGE_DETERM, "governed by")
+' aac rel: source="CAP_FRAUD_03"; target="CTL_REGE_DETERM"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_FRAUD_03, CTL_REGE_PROVCR, "governed by")
+' aac rel: source="CAP_FRAUD_03"; target="CTL_REGE_PROVCR"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_FRAUD_04, CTL_REGE_DETERM, "governed by")
+' aac rel: source="CAP_FRAUD_04"; target="CTL_REGE_DETERM"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_FRAUD_06, CTL_AUTH_POLICY, "governed by")
+' aac rel: source="CAP_FRAUD_06"; target="CTL_AUTH_POLICY"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_FRAUD_06, CTL_IR_PLAYBOOK, "governed by")
+' aac rel: source="CAP_FRAUD_06"; target="CTL_IR_PLAYBOOK"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(SYS_DISPUTES_GATEWAY, CAP_FRAUD, "realizes")
+' aac rel: source="SYS_DISPUTES_GATEWAY"; target="CAP_FRAUD"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DISPUTES_SAAS, CAP_FRAUD, "realizes")
+' aac rel: source="SYS_DISPUTES_SAAS"; target="CAP_FRAUD"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DISPUTES_SAAS, CAP_FRAUD_02, "realizes")
+' aac rel: source="SYS_DISPUTES_SAAS"; target="CAP_FRAUD_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DISPUTES_SAAS, CAP_FRAUD_03, "realizes")
+' aac rel: source="SYS_DISPUTES_SAAS"; target="CAP_FRAUD_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DISPUTES_SAAS, CAP_FRAUD_04, "realizes")
+' aac rel: source="SYS_DISPUTES_SAAS"; target="CAP_FRAUD_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DISPUTES_SAAS, CAP_FRAUD_05, "realizes")
+' aac rel: source="SYS_DISPUTES_SAAS"; target="CAP_FRAUD_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DISPUTES_SAAS, CAP_FRAUD_06, "realizes")
+' aac rel: source="SYS_DISPUTES_SAAS"; target="CAP_FRAUD_06"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DISPUTES_SAAS, CAP_FRAUD_07, "realizes")
+' aac rel: source="SYS_DISPUTES_SAAS"; target="CAP_FRAUD_07"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_FRAUD_DETECT, CAP_FRAUD_01, "realizes")
+' aac rel: source="SYS_FRAUD_DETECT"; target="CAP_FRAUD_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_IAM, CAP_FRAUD_06, "realizes")
+' aac rel: source="SYS_IAM"; target="CAP_FRAUD_06"; label="realizes"; relation="system_realizes_capability"
+
+SHOW_LEGEND()
+@enduml

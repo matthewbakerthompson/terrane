@@ -1,0 +1,98 @@
+# Who is outside the estate looking in.
+#
+# Deliberately coarse. A context diagram with twenty actor types is not a
+# context diagram, it is a landscape with people drawn on it. These are the
+# parties whose needs actually shape the architecture: if removing one would
+# not change a design decision, it does not belong here.
+
+- actor_id: ACT-CARDHOLDER
+  name: Cardholder
+  description: >
+    The customer. Uses the self-service channels, and is the reason the
+    authorization path has a latency budget rather than a throughput one.
+  status: Active
+  actor_kind: Person
+  internal: "No"
+  volume: ~2.4M active accounts
+  company_domain: Servicing
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-APPLICANT
+  name: Loan Applicant
+  description: A prospect applying for installment credit, not yet a customer.
+  status: Active
+  actor_kind: Person
+  internal: "No"
+  company_domain: Lending
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-SERVICING-AGENT
+  name: Servicing Agent
+  description: Contact center staff handling balance, dispute and account queries.
+  status: Active
+  actor_kind: Role
+  internal: "Yes"
+  owner_org_id: ORG-SERVICING
+  volume: ~450 seats
+  company_domain: Servicing
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-COLLECTIONS-AGENT
+  name: Collections Agent
+  description: Handles arrears treatment and payment arrangements.
+  status: Active
+  actor_kind: Role
+  internal: "Yes"
+  owner_org_id: ORG-COLLECTIONS
+  company_domain: Collections
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-UNDERWRITER
+  name: Credit Underwriter
+  description: Reviews referred applications the automated decision would not take.
+  status: Active
+  actor_kind: Role
+  internal: "Yes"
+  owner_org_id: ORG-CREDIT
+  company_domain: Risk and Compliance
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-MERCHANT
+  name: Merchant
+  description: Accepts the card at point of sale. Reached through the scheme, never directly.
+  status: Active
+  actor_kind: Organization
+  internal: "No"
+  company_domain: Payments
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-CARD-SCHEME
+  name: Card Scheme
+  description: >
+    The network carrying authorization and clearing. An external system we
+    integrate with on their terms, not ours, which is why their availability is
+    a design constraint rather than a requirement.
+  status: Active
+  actor_kind: External system
+  internal: "No"
+  company_domain: Payments
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-REGULATOR
+  name: Regulator
+  description: >
+    Consumes periodic regulatory returns. Never integrates directly; the
+    relationship is a reporting obligation with a deadline.
+  status: Active
+  actor_kind: Regulator
+  internal: "No"
+  company_domain: Risk and Compliance
+  togaf_layer: Business
+  architecture_domain: Governance

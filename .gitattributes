@@ -1,0 +1,15 @@
+# Generated output is byte-compared by CI to detect a stale render, so the
+# working tree must not vary by platform. Without this, a render on Windows
+# rewrites every file as LF against a CRLF checkout and the whole repository
+# reads as modified.
+* text=auto eol=lf
+# Except a batch file: cmd's goto and call misread a file with LF endings and
+# can land on the wrong line, so it is checked out with the endings cmd expects.
+*.cmd text eol=crlf
+
+*.png binary
+*.jpg binary
+*.pdf binary
+*.xlsx binary
+*.woff2 binary
+*.min.js -diff

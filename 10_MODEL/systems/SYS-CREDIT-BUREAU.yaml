@@ -1,0 +1,25 @@
+# A third party, modeled because the connection to it is ours to secure and
+# operate even though the system is not. Placement is recorded as SaaS with no
+# account or region: we do not know, and inventing values would be worse than
+# leaving the boundary honest.
+system_id: SYS-CREDIT-BUREAU
+name: Experian Credit Bureau
+description: >
+  External credit reference agency used for affordability and bureau search at
+  application time. Reached over PrivateLink from the lending workload account.
+status: Active
+owner_org_id: ORG-COMPLIANCE
+criticality: High
+service_tier: Tier 2
+hosting: SaaS
+environment: Production
+provider: Experian
+system_category: Vendor
+company_domain: Risk and Compliance
+cloud_provider: SaaS
+network_zone: Edge
+togaf_layer: Application
+architecture_domain: Application
+abstraction_level: Physical
+data_classification_supported: Restricted
+tags: [vendor, third-party, external]

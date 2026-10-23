@@ -1,0 +1,19 @@
+%% Dispute and Chargeback
+%% Generated from the model by `terrane render`. Do not edit by hand.
+sequenceDiagram
+  autonumber
+  actor ACT_SERVICING_AGENT as Servicing Agent
+  participant SYS_CRM as Dynamics 365 Customer Service
+  participant SYS_CORE_LEDGER as Core Card Ledger
+  participant SYS_DISPUTES_GATEWAY as Dispute Management Platform I…
+  participant SYS_DISPUTES_SAAS as Pega Smart Dispute
+  participant SYS_DATA_INGEST as Enterprise Data Ingestion Hub
+  ACT_SERVICING_AGENT->>SYS_CRM: Cardholder disputes a transaction
+  SYS_CRM->>SYS_CORE_LEDGER: HTTPS
+  SYS_CORE_LEDGER-->>SYS_CRM: response
+  SYS_CORE_LEDGER->>SYS_DISPUTES_GATEWAY: HTTPS
+  SYS_DISPUTES_GATEWAY-->>SYS_CORE_LEDGER: response
+  SYS_DISPUTES_GATEWAY->>SYS_DISPUTES_SAAS: HTTPS
+  SYS_DISPUTES_SAAS-->>SYS_DISPUTES_GATEWAY: response
+  SYS_DISPUTES_SAAS-)SYS_DATA_INGEST: SFTP
+  Note over SYS_CRM: scheme deadline, measured in days

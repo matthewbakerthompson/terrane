@@ -1,0 +1,222 @@
+# Where data is kept, moved, and asked questions of.
+#
+# The line between these and Storage is what the thing can answer: a store
+# hands back what you put in it, a database answers a query about it.
+
+- component_type_id: relational-db
+  name: Relational database
+  category: Data
+  applies_to: tech_services
+  shape: cylinder
+  description: >
+    Transactional, schema-first, and still the right answer far more often than the alternatives suggest.
+  providers:
+    AWS: Amazon RDS or Aurora
+    Azure: Azure SQL Database
+    GCP: Cloud SQL
+    On-prem: PostgreSQL or Oracle
+  defaults:
+    service_category: Data
+    network_zone: Private-Data
+
+- component_type_id: document-db
+  name: Document database
+  category: Data
+  applies_to: tech_services
+  shape: cylinder
+  description: >
+    Schema-on-read documents. Fast to start with and where the schema ends up living in application code.
+  providers:
+    AWS: Amazon DocumentDB or DynamoDB
+    Azure: Azure Cosmos DB
+    GCP: Firestore
+  defaults:
+    service_category: Data
+    network_zone: Private-Data
+
+- component_type_id: cache
+  name: Cache
+  category: Data
+  applies_to: tech_services
+  shape: cylinder
+  description: >
+    In-memory key-value store. Also, in most estates, an accidental database with no backup.
+  providers:
+    AWS: Amazon ElastiCache
+    Azure: Azure Cache for Redis
+    GCP: Memorystore
+  defaults:
+    service_category: Data
+    network_zone: Private-Data
+
+- component_type_id: warehouse
+  name: Data warehouse
+  category: Data
+  applies_to: tech_services
+  shape: cylinder
+  description: >
+    Columnar analytical store. Where the reporting answers come from and where the cost surprises come from.
+  providers:
+    AWS: Amazon Redshift
+    Azure: Azure Synapse
+    GCP: BigQuery
+    SaaS: Snowflake
+  defaults:
+    service_category: Data
+    network_zone: Private-Data
+
+- component_type_id: lakehouse
+  name: Lakehouse
+  category: Data
+  applies_to: tech_services
+  shape: cylinder
+  description: >
+    Table formats over object storage. A warehouse that admits where its files actually live.
+  providers:
+    AWS: AWS Lake Formation
+    Azure: Microsoft Fabric
+    GCP: BigLake
+    SaaS: Databricks
+  defaults:
+    service_category: Data
+    network_zone: Private-Data
+
+- component_type_id: etl
+  name: Data pipeline
+  category: Data
+  applies_to: tech_services
+  shape: rhomboid
+  description: >
+    Scheduled or streaming movement and reshaping of data. The layer where lineage is either recorded or lost.
+  providers:
+    AWS: AWS Glue
+    Azure: Azure Data Factory
+    GCP: Dataflow
+    SaaS: dbt or Fivetran
+  defaults:
+    service_category: Data
+    network_zone: Private-Data
+
+- component_type_id: catalog
+  name: Data catalog
+  category: Data
+  applies_to: tech_services
+  shape: cylinder
+  description: >
+    What data exists, what it means, who owns it. The register a data governance function is judged on.
+  providers:
+    AWS: AWS Glue Data Catalog
+    Azure: Microsoft Purview
+    GCP: Dataplex
+    SaaS: Collibra
+  defaults:
+    service_category: Data
+    network_zone: Shared-Services
+
+- component_type_id: bi
+  name: Business intelligence
+  category: Data
+  applies_to: tech_services
+  shape: rectangle
+  description: >
+    Dashboards and self-service reporting. The place the model's data quality becomes everyone's problem.
+  providers:
+    AWS: Amazon QuickSight
+    Azure: Power BI
+    GCP: Looker
+  defaults:
+    service_category: Data
+    network_zone: Private-App
+
+- component_type_id: search
+  name: Search engine
+  category: Data
+  applies_to: tech_services
+  shape: cylinder
+  description: >
+    Full-text and faceted search over indexed documents and logs. Not the system of record for what it indexes, however it is used.
+  providers:
+    AWS: Amazon OpenSearch Service
+    Azure: Azure AI Search
+    SaaS: Elasticsearch
+  defaults:
+    service_category: Data
+    network_zone: Private-Data
+
+- component_type_id: graph-db
+  name: Graph database
+  category: Data
+  applies_to: tech_services
+  shape: cylinder
+  description: >
+    Entities and the relationships between them as the first-class thing, for questions that are joins all the way down.
+  providers:
+    AWS: Amazon Neptune
+    Azure: Azure Cosmos DB for Apache Gremlin
+    GCP: Spanner Graph
+    SaaS: Neo4j
+  defaults:
+    service_category: Data
+    network_zone: Private-Data
+
+- component_type_id: time-series
+  name: Time-series database
+  category: Data
+  applies_to: tech_services
+  shape: cylinder
+  description: >
+    Measurements by time, written constantly and queried by window. Where telemetry and market data go.
+  providers:
+    AWS: Amazon Timestream
+    Azure: Azure Data Explorer
+    GCP: Bigtable
+    SaaS: InfluxDB
+  defaults:
+    service_category: Data
+    network_zone: Private-Data
+
+- component_type_id: distributed-sql
+  name: Distributed relational database
+  category: Data
+  applies_to: tech_services
+  shape: cylinder
+  description: >
+    A relational database spread across regions with one consistent view. The answer when a single-region database is the availability problem.
+  providers:
+    AWS: Amazon Aurora DSQL
+    Azure: Azure Cosmos DB for PostgreSQL
+    GCP: Spanner
+    SaaS: CockroachDB
+  defaults:
+    service_category: Data
+    network_zone: Private-Data
+
+- component_type_id: stream-processing
+  name: Stream processing
+  category: Data
+  applies_to: tech_services
+  shape: rhomboid
+  description: >
+    Computation over events as they arrive: enrichment, aggregation, detection. The pipeline that cannot wait for the batch window.
+  providers:
+    AWS: Amazon Managed Service for Apache Flink
+    Azure: Azure Stream Analytics
+    GCP: Dataflow
+    SaaS: Confluent or Databricks
+  defaults:
+    service_category: Data
+    network_zone: Private-Data
+
+- component_type_id: mdm
+  name: Master data management
+  category: Data
+  applies_to: tech_services
+  shape: cylinder
+  description: >
+    One governed record for customers, products and suppliers, matched and merged from the systems that each hold a version.
+  providers:
+    SaaS: Informatica MDM or Reltio
+    Azure: Microsoft Purview master data (Profisee)
+  defaults:
+    service_category: Data
+    network_zone: Private-Data

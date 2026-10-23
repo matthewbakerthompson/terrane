@@ -1,0 +1,135 @@
+@startuml
+' Third-Party Servicing Delivery — Frameworks, Controls, Systems
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Third-Party Servicing Delivery — Frameworks, Controls, Systems
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_TPS_05, "Client Audit & Oversight Support", "Support client and client-regulator oversight activity.", $tags="capabilities")
+  ' aac CAP_TPS_05: company_domain="Cross-Functional Services"
+  System(CAP_TPS_04, "Client Billing & Revenue Management", "Bill servicing fees and manage revenue recognition.", $tags="capabilities")
+  ' aac CAP_TPS_04: company_domain="Cross-Functional Services"
+  System(CAP_TPS_01, "Client Program Configuration & Setup", "Configure platform, product, and treatment for a client program.", $tags="capabilities")
+  ' aac CAP_TPS_01: company_domain="Cross-Functional Services"
+  System(CAP_TPS_03, "Client Reporting & Data Exchange", "Deliver contracted reporting and data feeds to clients.", $tags="capabilities")
+  ' aac CAP_TPS_03: company_domain="Cross-Functional Services"
+  System(CAP_TPS_06, "Client-Directed Change Management", "Intake, price, and deliver client-requested change.", $tags="capabilities")
+  ' aac CAP_TPS_06: company_domain="Cross-Functional Services"
+  System(CAP_TPS_02, "Portfolio Conversion & Deconversion", "Convert client portfolios onto and off the servicing platform.", $tags="capabilities")
+  ' aac CAP_TPS_02: company_domain="Cross-Functional Services"
+  System(CAP_TPS, "Third-Party Servicing Delivery", "Third-Party Servicing Delivery. Level 0 enterprise capability domain (Core tier).", $tags="capabilities")
+  ' aac CAP_TPS: company_domain="Cross-Functional Services"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_CLIENT_SLA, "Client reporting and feed monitoring", "Contracted client reporting and data feeds are monitored to schedule and specification; misses alert before the client notices and count against the SLA.", $tags="controls")
+  ' aac CTL_CLIENT_SLA: company_domain=""
+  System(CTL_CONV_VERIFY, "Conversion balance and record verification", "Portfolio conversions verify record counts, balances, and regulatory continuity before and after cutover, with client sign-off at each gate.", $tags="controls")
+  ' aac CTL_CONV_VERIFY: company_domain=""
+}
+Boundary(b_Framework, "Framework") {
+  System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
+  ' aac FW_BIAN: company_domain=""
+  System(FW_DMBOK, "DAMA-DMBOK", "The data management body of knowledge: governance, quality, architecture, metadata, master data, security. The only one of these with a defensible account of what a data function is responsible for.", $tags="frameworks")
+  ' aac FW_DMBOK: company_domain=""
+  System(FW_ITIL, "ITIL 4", "Service management practice: incident, change, problem, service level. The frame technology operations is actually run and audited against, and the vocabulary a service management tool already speaks.", $tags="frameworks")
+  ' aac FW_ITIL: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_TPS_006, "Bill client servicing fees", "Calculate and invoice servicing fees per the contract and recognize the revenue. Fee billing calculates from contracted schedules against actual volumes; invoices carry the detail clients audit, and revenue recognition follows the contract.", $tags="processes")
+  ' aac P_TPS_006: company_domain=""
+  System(P_TPS_001, "Configure client program", "Configure platform, product, treatment, and reporting for a new client program. Program configuration translates the client contract into platform, product, treatment, and reporting settings; every setting traces to a contract clause or a documented default.", $tags="processes")
+  ' aac P_TPS_001: company_domain=""
+  System(P_TPS_002, "Convert client portfolio", "Migrate a client portfolio onto the servicing platform with reconciled balances and no cardholder disruption.", $tags="processes")
+  ' aac P_TPS_002: company_domain=""
+  System(P_TPS_003, "Deconvert client portfolio", "Migrate a client portfolio off the servicing platform and hand over records. Deconversion hands a portfolio off with data, documents, and cutover timing per contract; the obligation to do it well survives the relationship ending.", $tags="processes")
+  ' aac P_TPS_003: company_domain=""
+  System(P_TPS_005, "Exchange client data feed", "Send and receive contracted data feeds with the client on schedule. Data feeds run both directions on contracted schedules with schema and quality checks at the boundary; feed failures page, because clients reconcile against them.", $tags="processes")
+  ' aac P_TPS_005: company_domain=""
+  System(P_TPS_008, "Intake and deliver client-directed change", "Receive, price, approve, and deliver a change requested by a servicing client. Client-directed changes are priced, approved, and delivered under the contract's change provisions; scope discipline here is what keeps serviced portfolios profitable.", $tags="processes")
+  ' aac P_TPS_008: company_domain=""
+  System(P_TPS_004, "Produce contracted client reporting", "Produce and deliver reporting to the schedule and specification in the client contract. Contracted reporting ships to specification and schedule; late or wrong reporting is an SLA breach with credits, so production is monitored like any critical batch.", $tags="processes")
+  ' aac P_TPS_004: company_domain=""
+  System(P_TPS_007, "Support client audit or examination", "Assemble evidence and respond to client and client-regulator oversight requests. Client audits and client-regulator exams get coordinated evidence with the same discipline as the bank's own exams; commitments made in responses are tracked.", $tags="processes")
+  ' aac P_TPS_007: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_GL, "General ledger", "General ledger and financial accounting.", $tags="systems")
+  ' aac SYS_GL: company_domain=""
+  System(SYS_GRC, "Governance, risk and compliance platform", "Policy, control, issue, and risk register management.", $tags="systems")
+  ' aac SYS_GRC: company_domain=""
+  System(SYS_CLIENT_PORTAL, "Servicing client portal", "Client reporting, data exchange, and interaction.", $tags="systems")
+  ' aac SYS_CLIENT_PORTAL: company_domain=""
+  System_Ext(SYS_WORKTRACK, "Work and change tracking", "Work item and change tracking. Built with SaaS.", $tags="systems")
+  ' aac SYS_WORKTRACK: company_domain=""; hosting="SaaS"; technology="SaaS"
+}
+
+Rel(CAP_TPS_01, CAP_TPS, "part of")
+Rel(CAP_TPS_02, CAP_TPS, "part of")
+Rel(CAP_TPS_03, CAP_TPS, "part of")
+Rel(CAP_TPS_04, CAP_TPS, "part of")
+Rel(CAP_TPS_05, CAP_TPS, "part of")
+Rel(CAP_TPS_06, CAP_TPS, "part of")
+Rel(CAP_TPS, FW_BIAN, "Informed by")
+' aac rel: source="CAP_TPS"; target="FW_BIAN"; label="Informed by"; relation="capability_aligns_to_framework"; alignment="Informed by"
+Rel(CAP_TPS_01, FW_BIAN, "Reference Data > Product Management > Product Deployment")
+' aac rel: source="CAP_TPS_01"; target="FW_BIAN"; label="Reference Data > Product Management > Product Deployment"; relation="capability_references_framework"; ref="Reference Data > Product Management > Product Deployment"
+Rel(CAP_TPS_02, FW_BIAN, "Reference Data > Product Management > Product Deployment")
+' aac rel: source="CAP_TPS_02"; target="FW_BIAN"; label="Reference Data > Product Management > Product Deployment"; relation="capability_references_framework"; ref="Reference Data > Product Management > Product Deployment"
+Rel(CAP_TPS_03, FW_DMBOK, "Data Integration and Interoperability")
+' aac rel: source="CAP_TPS_03"; target="FW_DMBOK"; label="Data Integration and Interoperability"; relation="capability_references_framework"; ref="Data Integration and Interoperability"
+Rel(CAP_TPS_04, FW_BIAN, "Operations and Execution > Account Management > Accounts Receivable")
+' aac rel: source="CAP_TPS_04"; target="FW_BIAN"; label="Operations and Execution > Account Management > Accounts Receivable"; relation="capability_references_framework"; ref="Operations and Execution > Account Management > Accounts Receivable"
+Rel(CAP_TPS_05, FW_BIAN, "Risk and Compliance > Regulations and Compliance > Regulatory Compliance")
+' aac rel: source="CAP_TPS_05"; target="FW_BIAN"; label="Risk and Compliance > Regulations and Compliance > Regulatory Compliance"; relation="capability_references_framework"; ref="Risk and Compliance > Regulations and Compliance > Regulatory Compliance"
+Rel(CAP_TPS_06, FW_ITIL, "Service management > Change Enablement")
+' aac rel: source="CAP_TPS_06"; target="FW_ITIL"; label="Service management > Change Enablement"; relation="capability_references_framework"; ref="Service management > Change Enablement"
+Rel(P_TPS_001, CAP_TPS_01, "supported by")
+' aac rel: source="P_TPS_001"; target="CAP_TPS_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_TPS_002, CAP_TPS_02, "supported by")
+' aac rel: source="P_TPS_002"; target="CAP_TPS_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_TPS_003, CAP_TPS_02, "supported by")
+' aac rel: source="P_TPS_003"; target="CAP_TPS_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_TPS_004, CAP_TPS_03, "supported by")
+' aac rel: source="P_TPS_004"; target="CAP_TPS_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_TPS_005, CAP_TPS_03, "supported by")
+' aac rel: source="P_TPS_005"; target="CAP_TPS_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_TPS_006, CAP_TPS_04, "supported by")
+' aac rel: source="P_TPS_006"; target="CAP_TPS_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_TPS_007, CAP_TPS_05, "supported by")
+' aac rel: source="P_TPS_007"; target="CAP_TPS_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_TPS_008, CAP_TPS_06, "supported by")
+' aac rel: source="P_TPS_008"; target="CAP_TPS_06"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_TPS, CTL_CLIENT_SLA, "governed by")
+' aac rel: source="CAP_TPS"; target="CTL_CLIENT_SLA"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_TPS, CTL_CONV_VERIFY, "governed by")
+' aac rel: source="CAP_TPS"; target="CTL_CONV_VERIFY"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_TPS_01, CTL_CLIENT_SLA, "governed by")
+' aac rel: source="CAP_TPS_01"; target="CTL_CLIENT_SLA"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_TPS_02, CTL_CONV_VERIFY, "governed by")
+' aac rel: source="CAP_TPS_02"; target="CTL_CONV_VERIFY"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_TPS_03, CTL_CLIENT_SLA, "governed by")
+' aac rel: source="CAP_TPS_03"; target="CTL_CLIENT_SLA"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(SYS_CLIENT_PORTAL, CAP_TPS_03, "realizes")
+' aac rel: source="SYS_CLIENT_PORTAL"; target="CAP_TPS_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CORE_LEDGER, CAP_TPS_01, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_TPS_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CORE_LEDGER, CAP_TPS_02, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_TPS_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_GL, CAP_TPS_04, "realizes")
+' aac rel: source="SYS_GL"; target="CAP_TPS_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_GRC, CAP_TPS_05, "realizes")
+' aac rel: source="SYS_GRC"; target="CAP_TPS_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_WORKTRACK, CAP_TPS_06, "realizes")
+' aac rel: source="SYS_WORKTRACK"; target="CAP_TPS_06"; label="realizes"; relation="system_realizes_capability"
+
+SHOW_LEGEND()
+@enduml

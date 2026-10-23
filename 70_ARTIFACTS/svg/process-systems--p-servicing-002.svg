@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="534.4" viewBox="0 0 1100 534.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Deliver and archive statement — Systems, Data and Controls</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Deliver and archive statement — Systems, Data and Controls</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   4 nodes · 3 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(169.82 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="271.72" y="214.3" width="212.57" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="313.72" y="231.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.66" y="109.28" width="212.67" height="103.42" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.51" y="126.68" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="529.3" y="24.3" width="221.4" height="175.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="559.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-SERVICING-002::SYS-STATEMENTS">
+<title>Primary</title>
+<path d="M196 148 L225 148 L526 148 L551.48 148" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 148 L545.43 152.78 L545.43 143.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-SERVICING-002::SYS-STATEMENTS">
+<rect x="354.32" y="125.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="137.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-SERVICING-002::SYS-DOC">
+<title>Supporting</title>
+<path d="M196 161 L225 161 L240 161 A1 1 0 0 0 241 160 L241 160 A1 1 0 0 1 242 159 L488 159 A10 10 0 0 0 498 149 L498 86 A10 10 0 0 1 508 76 L526 76 L551.48 76" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 76 L545.43 80.78 L545.43 71.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-SERVICING-002::SYS-DOC">
+<rect x="346.46" y="165.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="177.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-SERVICING-002::CAP-BILL-03">
+<title>supports</title>
+<path d="M196 174 L225 174 L233 174 A8 8 0 0 1 241 182 L241 256 A10 10 0 0 0 251 266 L269 266 L294.48 266" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M298 266 L288.43 270.79 L288.43 261.21 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-BILL-03" data-type="capabilities">
+<title>Statement Delivery &amp; Archive</title>
+<path d="M338 240 L298 266 L338 292 L418 292 L458 266 L418 240 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="378" y="264.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Statement Delivery &amp;</text>
+<text x="378" y="276.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Archive</text>
+</g>
+<g class="node" data-id="P-SERVICING-002" data-type="processes">
+<title>Deliver and archive statement</title>
+<path d="M116 135 L36 154.86 L66.56 187 L165.44 187 L196 154.86 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="159.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Deliver and archive</text>
+<text x="116" y="171.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">statement</text>
+</g>
+<g class="node" data-id="SYS-DOC" data-type="systems">
+<title>Document management and archive</title>
+<rect x="555" y="50" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="636" y="68.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Document</text>
+<text x="636" y="80.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">management and</text>
+<text x="636" y="92.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">archive</text>
+<svg x="707" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-STATEMENTS" data-type="systems">
+<title>Statement Generation</title>
+<rect x="555" y="122" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="636" y="146.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Statement</text>
+<text x="636" y="158.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Generation</text>
+<svg x="707" y="127" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="432.4" x2="1072" y2="432.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="456.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 445.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="456.4" font-size="12" font-weight="400" fill="#343d50">capability · 1</text>
+<g transform="translate(177.5 445.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="203.5" y="456.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(277.77 445.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="303.77" y="456.4" font-size="12" font-weight="400" fill="#343d50">system · 2</text>
+<text x="28" y="478.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 467.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="478.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 467.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="478.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="512.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-servicing-002 · edit the model, not the picture</text></g>
+</svg>

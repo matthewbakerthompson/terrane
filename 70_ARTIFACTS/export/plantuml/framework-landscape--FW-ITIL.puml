@@ -1,0 +1,88 @@
+@startuml
+' ITIL 4 — Landscape
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title ITIL 4 — Landscape
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+
+Boundary(b_General_management, "General management") {
+  Boundary(b_General_management__Architecture_Management, "Architecture Management") {
+    System(CAP_STRAT_04, "Enterprise Architecture & Change Portfolio", "Govern the shape of the estate and the pipeline of change.", $tags="capabilities")
+    ' aac CAP_STRAT_04: company_domain="Cross-Functional Services"
+  }
+}
+Boundary(b_Service_management, "Service management") {
+  Boundary(b_Service_management__Capacity_and_Performance_Management, "Capacity and Performance Management") {
+    System(CAP_TECH_02_02, "Capacity & Performance Management", "Ensure services meet demand and performance targets at acceptable cost.", $tags="capabilities")
+    ' aac CAP_TECH_02_02: company_domain="Technology"
+    System(CAP_TECH_02, "Platform & Infrastructure Operations", "Run the technology estate.", $tags="capabilities")
+    ' aac CAP_TECH_02: company_domain="Technology"
+  }
+  Boundary(b_Service_management__Change_Enablement, "Change Enablement") {
+    System(CAP_TECH_04_01, "Change Enablement", "Authorize change with risk assessed and rollback ready.", $tags="capabilities")
+    ' aac CAP_TECH_04_01: company_domain="Technology"
+    System(CAP_TPS_06, "Client-Directed Change Management", "Intake, price, and deliver client-requested change.", $tags="capabilities")
+    ' aac CAP_TPS_06: company_domain="Cross-Functional Services"
+    System(CAP_TECH_04, "Release & Change Management", "Move change into production safely.", $tags="capabilities")
+    ' aac CAP_TECH_04: company_domain="Technology"
+  }
+  Boundary(b_Service_management__IT_Asset_Management, "IT Asset Management") {
+    System(CAP_TECH_07, "End-User Computing & Workplace Technology", "Equip and support the workforce with workplace technology.", $tags="capabilities")
+    ' aac CAP_TECH_07: company_domain="Technology"
+    System(CAP_TECH_07_01, "IT Asset Management", "Track hardware and software assets through their lifecycle and cost.", $tags="capabilities")
+    ' aac CAP_TECH_07_01: company_domain="Technology"
+  }
+  Boundary(b_Service_management__Incident_Management, "Incident Management") {
+    System(CAP_TECH_03_02, "Incident Management", "Restore normal service after an unplanned interruption, fast and visibly.", $tags="capabilities")
+    ' aac CAP_TECH_03_02: company_domain="Technology"
+    System(CAP_TECH_03, "Service Management & Incident Response", "Detect, triage, and resolve service incidents.", $tags="capabilities")
+    ' aac CAP_TECH_03: company_domain="Technology"
+  }
+  Boundary(b_Service_management__Problem_Management, "Problem Management") {
+    System(CAP_TECH_03_03, "Problem Management", "Find and remove the causes of recurring incidents.", $tags="capabilities")
+    ' aac CAP_TECH_03_03: company_domain="Technology"
+  }
+  Boundary(b_Service_management__Release_Management, "Release Management") {
+    System(CAP_TECH_04_02, "Release Management", "Package changes into releases the business can absorb.", $tags="capabilities")
+    ' aac CAP_TECH_04_02: company_domain="Technology"
+  }
+  Boundary(b_Service_management__Service_Continuity_Management, "Service Continuity Management") {
+    System(CAP_TECH_05, "Business Continuity & Disaster Recovery", "Recover the business to committed objectives.", $tags="capabilities")
+    ' aac CAP_TECH_05: company_domain="Technology"
+  }
+  Boundary(b_Service_management__Service_Desk, "Service Desk") {
+    System(CAP_TECH_03_01, "Service Desk", "Single point of contact for users: intake, triage, and communication.", $tags="capabilities")
+    ' aac CAP_TECH_03_01: company_domain="Technology"
+  }
+  Boundary(b_Service_management__Service_Request_Management, "Service Request Management") {
+    System(CAP_TECH_07_02, "Service Request Management", "Fulfill standard requests through defined, often automated, paths.", $tags="capabilities")
+    ' aac CAP_TECH_07_02: company_domain="Technology"
+  }
+  Boundary(b_Service_management__Service_Validation_and_Testing, "Service Validation and Testing") {
+    System(CAP_TECH_08, "Quality Engineering & Testing", "Prove that a change does what it claims before and after it reaches production: test strategy, automation, performance, acceptance, defects, and release certification.", $tags="capabilities")
+    ' aac CAP_TECH_08: company_domain="Technology"
+  }
+}
+Boundary(b_Technical_management, "Technical management") {
+  Boundary(b_Technical_management__Deployment_Management, "Deployment Management") {
+    System(CAP_TECH_04_03, "Deployment Management", "Move release components into production environments.", $tags="capabilities")
+    ' aac CAP_TECH_04_03: company_domain="Technology"
+  }
+  Boundary(b_Technical_management__Infrastructure_and_Platform_Management, "Infrastructure and Platform Management") {
+    System(CAP_TECH_06, "Enterprise Integration & API Management", "Operate the integration and API estate.", $tags="capabilities")
+    ' aac CAP_TECH_06: company_domain="Technology"
+    System(CAP_TECH_02_01, "Infrastructure & Platform Management", "Provision and operate compute, storage, network, and platform services.", $tags="capabilities")
+    ' aac CAP_TECH_02_01: company_domain="Technology"
+  }
+  Boundary(b_Technical_management__Software_Development_and_Management, "Software Development and Management") {
+    System(CAP_TECH_01_01, "Software Development & Management", "Design, build, and maintain application software through its lifecycle.", $tags="capabilities")
+    ' aac CAP_TECH_01_01: company_domain="Technology"
+    System(CAP_TECH_01, "Solution Delivery & Engineering", "Build and change software.", $tags="capabilities")
+    ' aac CAP_TECH_01: company_domain="Technology"
+  }
+}
+
+SHOW_LEGEND()
+@enduml

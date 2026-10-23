@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="872.13" viewBox="0 0 1100 872.13" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Credit bureau furnishing file — Where It Lives and Who Uses It</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Credit bureau furnishing file — Where It Lives and Who Uses It</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   7 nodes · 7 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One data asset in full: the system that masters it, the systems that read or write it, the processes that use it, the controls that govern it and the policies it is subject</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">to. The page a privacy or audit question starts from.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(233.53 99.08)">
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="399.9" y="279.7" width="222.6" height="136.6" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="441.9" y="297.1" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="20.11" y="24.42" width="211.78" height="383.13" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="52.96" y="41.83" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="10.45" y="436.45" width="221.1" height="197.1" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="40.25" y="453.85" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::SYS-BUREAU-GW::DA-BUREAU-FILE">
+<title>masters</title>
+<path d="M206 483 L235 483 L312.1 483 L351.2 483 A10 10 0 0 0 361.2 473 L361.2 368.86 A10 10 0 0 1 371.06 358.86 L397.13 358.5 A10 10 0 0 1 397.27 358.5 L422.68 358.5" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M426.2 358.5 L416.63 363.29 L416.63 353.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e1::SYS-BUREAU-GW::DA-BUREAU-FILE">
+<title>ReadWrite</title>
+<path d="M206 504 L235 504 L361.2 504 A10 10 0 0 0 371.2 494 L371.2 379 A10 10 0 0 1 381.2 369 L397.2 369 L422.68 369" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M426.2 369 L416.63 373.79 L416.63 364.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::SYS-BUREAU-GW::DA-BUREAU-FILE">
+<rect x="284.71" y="510.5" width="54.78" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="522.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">ReadWrite</text>
+</g>
+<g class="edge" data-id="e2::SYS-CREDIT-BUREAU::DA-BUREAU-FILE">
+<title>Read</title>
+<path d="M206 576.5 L234.91 577 A10 10 0 0 0 235.09 577 L371.2 577 A10 10 0 0 0 381.2 567 L381.2 388 A8.26 8.26 0 0 1 389.2 379.75 L397.04 379.5 A10 10 0 0 1 397.36 379.5 L422.68 379.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M426.2 379.5 L416.63 384.29 L416.63 374.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::SYS-CREDIT-BUREAU::DA-BUREAU-FILE">
+<rect x="297.06" y="583.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="595.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e3::P-COLLECTIONS-005::DA-BUREAU-FILE">
+<title>Writes</title>
+<path d="M206 172 L235 172 L361.2 172 A10 10 0 0 1 371.2 182 L371.2 317 A10 10 0 0 0 381.2 327 L397.2 327 L422.68 327" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M426.2 327 L416.63 331.79 L416.63 322.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::P-COLLECTIONS-005::DA-BUREAU-FILE">
+<rect x="294.01" y="178.5" width="36.18" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="190.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Writes</text>
+</g>
+<g class="edge" data-id="e4::P-CREDIT-001::DA-BUREAU-FILE">
+<title>Reads</title>
+<path d="M206 260 L235 260 L351.2 260 A10 10 0 0 1 361.2 270 L361.2 327.86 A10 10 0 0 0 371.34 337.86 L397.13 337.5 A10 10 0 0 1 397.27 337.5 L422.68 337.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M426.2 337.5 L416.63 342.29 L416.63 332.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::P-CREDIT-001::DA-BUREAU-FILE">
+<rect x="294.42" y="266.5" width="35.36" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="278.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Reads</text>
+</g>
+<g class="edge" data-id="e5::P-ORIG-004::DA-BUREAU-FILE">
+<title>Reads</title>
+<path d="M206 84 L235 84 L371.2 84 A10 10 0 0 1 381.2 94 L381.2 309 A7.76 7.76 0 0 0 389.2 316.75 L397.04 316.5 A10 10 0 0 1 397.36 316.5 L422.68 316.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M426.2 316.5 L416.63 321.29 L416.63 311.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e5::P-ORIG-004::DA-BUREAU-FILE">
+<rect x="294.42" y="90.5" width="35.36" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="102.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Reads</text>
+</g>
+<g class="edge" data-id="e6::P-ORIG-005::DA-BUREAU-FILE">
+<title>Reads</title>
+<path d="M206 348 L235 348 L397.2 348 L422.68 348" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M426.2 348 L416.63 352.79 L416.63 343.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e6::P-ORIG-005::DA-BUREAU-FILE">
+<rect x="294.42" y="354.5" width="35.36" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="366.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Reads</text>
+</g>
+<g class="node" data-id="DA-BUREAU-FILE" data-type="data_assets">
+<title>Credit bureau furnishing file</title>
+<path d="M426.2 310.2 Q434.7 306 468.7 306 L553.7 306 Q587.7 306 596.2 310.2 L596.2 385.8 Q587.7 390 553.7 390 L468.7 390 Q434.7 390 426.2 385.8 Z" fill="#70c9a7" stroke="#047857" stroke-width="2.6"/>
+<text x="507.2" y="346.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit bureau</text>
+<text x="507.2" y="358.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">furnishing file</text>
+<svg x="578.2" y="311" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-COLLECTIONS-005" data-type="processes">
+<title>Furnish credit bureau data</title>
+<path d="M126 138 L46 163.97 L76.56 206 L175.44 206 L206 163.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="126" y="170.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Furnish credit bureau</text>
+<text x="126" y="182.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">data</text>
+</g>
+<g class="node" data-id="P-CREDIT-001" data-type="processes">
+<title>Set and deploy credit decision strategy</title>
+<path d="M126 226 L46 251.97 L76.56 294 L175.44 294 L206 251.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="126" y="258.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Set and deploy credit</text>
+<text x="126" y="270.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">decision strategy</text>
+</g>
+<g class="node" data-id="P-ORIG-004" data-type="processes">
+<title>Execute credit decision</title>
+<path d="M126 50 L46 75.97 L76.56 118 L175.44 118 L206 75.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="126" y="82.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Execute credit</text>
+<text x="126" y="94.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">decision</text>
+</g>
+<g class="node" data-id="P-ORIG-005" data-type="processes">
+<title>Issue adverse action notice</title>
+<path d="M126 314 L46 339.97 L76.56 382 L175.44 382 L206 339.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="126" y="346.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Issue adverse action</text>
+<text x="126" y="358.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">notice</text>
+</g>
+<g class="node" data-id="SYS-BUREAU-GW" data-type="systems">
+<title>Credit bureau gateway</title>
+<rect x="36" y="462" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="117" y="491.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit bureau</text>
+<text x="117" y="503.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">gateway</text>
+<svg x="188" y="467" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-CREDIT-BUREAU" data-type="systems">
+<title>Experian Credit Bureau</title>
+<rect x="36" y="545" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="117" y="569.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Experian Credit</text>
+<text x="117" y="581.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Bureau</text>
+<text x="121" y="602.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Experian</text>
+<svg x="188" y="550" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="748.13" x2="1072" y2="748.13" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="772.13" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 761.13)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="93.2" y="772.13" font-size="12" font-weight="400" fill="#343d50">data asset · 1</text>
+<g transform="translate(181.3 761.13)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="207.3" y="772.13" font-size="12" font-weight="400" fill="#343d50">process · 4</text>
+<g transform="translate(284.34 761.13)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="310.34" y="772.13" font-size="12" font-weight="400" fill="#343d50">system · 2</text>
+<text x="28" y="794.13" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">CLASSIFICATION</text>
+<g transform="translate(130.2 783.13)" fill="#70c9a7" stroke="#047857" stroke-width="2.6"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="156.2" y="794.13" font-size="12" font-weight="400" fill="#343d50">Restricted · 1</text>
+<g transform="translate(243.85 783.13)" fill="#a7f3d0" stroke="#047857" stroke-width="1.1"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="269.85" y="794.13" font-size="12" font-weight="400" fill="#343d50">not recorded · 6</text>
+<text x="28" y="816.13" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 805.13)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="816.13" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<g transform="translate(143.25 805.13)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="169.25" y="816.13" font-size="12" font-weight="400" fill="#343d50">masters</text>
+<g transform="translate(231.51 805.13)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="257.51" y="816.13" font-size="12" font-weight="400" fill="#343d50">reads / writes</text>
+<text x="28" y="850.13" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · data-asset-context--da-bureau-file · edit the model, not the picture</text></g>
+</svg>

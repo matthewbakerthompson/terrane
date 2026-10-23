@@ -1,0 +1,232 @@
+@startuml
+' Network Topology
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Network Topology
+
+AddElementTag("tech_services", $bgColor="#fed7aa", $borderColor="#c2410c", $fontColor="#0f172a", $legendText="technology service")
+
+Boundary(b_AWS, "AWS") {
+  Boundary(b_AWS__prod_lending, "account prod-lending") {
+    Boundary(b_AWS__prod_lending__eu_west_1, "region eu-west-1") {
+      Deployment_Node(TS_NET_VPC_LENDING_DR, "Lending VPC (DR)", "Virtual network", "Warm standby VPC in the recovery region. Built by the same Terraform as the primary; capacity is scaled to zero until a declaration.", $tags="tech_services") {
+        ' aac TS_NET_VPC_LENDING_DR: company_domain="Lending"; technology="Virtual network"
+      }
+    }
+    Boundary(b_AWS__prod_lending__eu_west_2, "region eu-west-2") {
+      Deployment_Node(TS_NET_IGW_LENDING, "Lending Internet Gateway", "Load balancer", "The only route to the internet, and only from the public subnets.", $tags="tech_services") {
+        ' aac TS_NET_IGW_LENDING: company_domain="Lending"; technology="Load balancer"
+      }
+      Deployment_Node(TS_NET_VPC_LENDING, "Lending VPC", "Virtual network", "Workload VPC for the lending product, three tiers across two zones.", $tags="tech_services") {
+        ' aac TS_NET_VPC_LENDING: company_domain="Lending"; technology="Virtual network"
+      }
+      Boundary(b_AWS__prod_lending__eu_west_2__eu_west_2a, "zone eu-west-2a") {
+        Deployment_Node(TS_NET_SUB_LEND_APP_A, "Lending App Subnet A", "Subnet", $tags="tech_services") {
+          ' aac TS_NET_SUB_LEND_APP_A: company_domain="Lending"; technology="Subnet"
+        }
+        Deployment_Node(TS_NET_SUB_LEND_DATA_A, "Lending Data Subnet A", "Subnet", $tags="tech_services") {
+          ' aac TS_NET_SUB_LEND_DATA_A: company_domain="Lending"; technology="Subnet"
+        }
+        Deployment_Node(TS_NET_NAT_LEND_A, "Lending NAT Gateway A", "Private egress", "Outbound-only egress for the private tiers. One per zone, so a zone loss is not an outage.", $tags="tech_services") {
+          ' aac TS_NET_NAT_LEND_A: company_domain="Lending"; technology="Private egress"
+        }
+        Deployment_Node(TS_NET_SUB_LEND_PUB_A, "Lending Public Subnet A", "Subnet", $tags="tech_services") {
+          ' aac TS_NET_SUB_LEND_PUB_A: company_domain="Lending"; technology="Subnet"
+        }
+      }
+      Boundary(b_AWS__prod_lending__eu_west_2__eu_west_2b, "zone eu-west-2b") {
+        Deployment_Node(TS_NET_SUB_LEND_APP_B, "Lending App Subnet B", "Subnet", $tags="tech_services") {
+          ' aac TS_NET_SUB_LEND_APP_B: company_domain="Lending"; technology="Subnet"
+        }
+        Deployment_Node(TS_NET_SUB_LEND_DATA_B, "Lending Data Subnet B", "Subnet", $tags="tech_services") {
+          ' aac TS_NET_SUB_LEND_DATA_B: company_domain="Lending"; technology="Subnet"
+        }
+        Deployment_Node(TS_NET_NAT_LEND_B, "Lending NAT Gateway B", "Private egress", $tags="tech_services") {
+          ' aac TS_NET_NAT_LEND_B: company_domain="Lending"; technology="Private egress"
+        }
+        Deployment_Node(TS_NET_SUB_LEND_PUB_B, "Lending Public Subnet B", "Subnet", $tags="tech_services") {
+          ' aac TS_NET_SUB_LEND_PUB_B: company_domain="Lending"; technology="Subnet"
+        }
+      }
+    }
+  }
+  Boundary(b_AWS__prod_riskops, "account prod-riskops") {
+    Boundary(b_AWS__prod_riskops__eu_west_2, "region eu-west-2") {
+      Deployment_Node(TS_NET_VPC_RISKOPS, "Risk Operations VPC", "Virtual network", "Workload VPC for screening and risk tooling.", $tags="tech_services") {
+        ' aac TS_NET_VPC_RISKOPS: company_domain="Risk and Compliance"; technology="Virtual network"
+      }
+    }
+  }
+  Boundary(b_AWS__shared_network, "account shared-network") {
+    Boundary(b_AWS__shared_network__eu_west_2, "region eu-west-2") {
+      Deployment_Node(TS_AWS_PRIVATELINK, "AWS PrivateLink", "Private egress", "Private egress to partner and vendor endpoints without internet transit.", $tags="tech_services") {
+        ' aac TS_AWS_PRIVATELINK: company_domain="Enterprise Platform"; technology="Private egress"
+      }
+      Deployment_Node(TS_AWS_TGW, "AWS Transit Gateway", "Transit hub", "Hub for VPC-to-VPC and hybrid routing back to the data center.", $tags="tech_services") {
+        ' aac TS_AWS_TGW: company_domain="Enterprise Platform"; technology="Transit hub"
+      }
+      Deployment_Node(TS_NET_DX, "Direct Connect", "Hybrid link", "Dual 10G circuits to the data center, one per carrier hall. The primary hybrid path, and the long-lead item on any onboarding that touches the mainframe.", $tags="tech_services") {
+        ' aac TS_NET_DX: company_domain="Enterprise Platform"; technology="Hybrid link"
+      }
+      Deployment_Node(TS_NET_ROUTE53, "Route 53 Resolver", "DNS", "Private hosted zones and inbound/outbound resolution to on-premise DNS.", $tags="tech_services") {
+        ' aac TS_NET_ROUTE53: company_domain="Enterprise Platform"; technology="DNS"
+      }
+      Deployment_Node(TS_NET_VPC_SHARED, "Shared Services VPC", "Virtual network", "Hub VPC holding the transit attachments, egress and resolver endpoints.", $tags="tech_services") {
+        ' aac TS_NET_VPC_SHARED: company_domain="Enterprise Platform"; technology="Virtual network"
+      }
+      Deployment_Node(TS_NET_VPN, "Site-to-Site VPN", "Hybrid link", "Encrypted backup path over the internet, used only when Direct Connect is down.", $tags="tech_services") {
+        ' aac TS_NET_VPN: company_domain="Enterprise Platform"; technology="Hybrid link"
+      }
+    }
+  }
+}
+Boundary(b_GCP, "GCP") {
+  Boundary(b_GCP__gcp_analytics_prod, "project gcp-analytics-prod") {
+    Boundary(b_GCP__gcp_analytics_prod__europe_west1, "region europe-west1") {
+      Deployment_Node(TS_GCPNET_SUB_ANALYTICS_DATA_DR, "Analytics Data Subnetwork (DR)", "Subnet", "The warm-standby region's subnetwork for the analytics jobs, empty until a failover. BigQuery keeps the dataset in a multi-region of its own, so what fails over is the jobs and the schedule, not the data.", $tags="tech_services") {
+        ' aac TS_GCPNET_SUB_ANALYTICS_DATA_DR: company_domain="Data and Analytics"; technology="Subnet"
+      }
+    }
+    Boundary(b_GCP__gcp_analytics_prod__europe_west2, "region europe-west2") {
+      Deployment_Node(TS_GCPNET_NAT_ANALYTICS, "Analytics Cloud NAT", "Private egress", "Regional NAT for the Dataflow workers' egress to the package mirrors and nothing else; the data never leaves by it.", $tags="tech_services") {
+        ' aac TS_GCPNET_NAT_ANALYTICS: company_domain="Data and Analytics"; technology="Private egress"
+      }
+      Deployment_Node(TS_GCPNET_SUB_ANALYTICS_DATA, "Analytics Data Subnetwork", "Subnet", "The analytics project's one subnetwork, for the Dataflow workers and the Composer environment; BigQuery and Pub/Sub are reached over Private Google Access rather than through it.", $tags="tech_services") {
+        ' aac TS_GCPNET_SUB_ANALYTICS_DATA: company_domain="Data and Analytics"; technology="Subnet"
+      }
+    }
+  }
+  Boundary(b_GCP__gcp_lending_prod, "project gcp-lending-prod") {
+    Boundary(b_GCP__gcp_lending_prod__europe_west1, "region europe-west1") {
+      Deployment_Node(TS_GCPNET_SUB_LEND_APP_DR, "Lending App Subnetwork (DR)", "Subnet", "The warm-standby region's application tier, empty until a failover; the same VPC, since a Google Cloud VPC is global, so no peering to maintain.", $tags="tech_services") {
+        ' aac TS_GCPNET_SUB_LEND_APP_DR: company_domain="Lending"; technology="Subnet"
+      }
+    }
+    Boundary(b_GCP__gcp_lending_prod__europe_west2, "region europe-west2") {
+      Deployment_Node(TS_GCPNET_SUB_LEND_APP, "Lending App Subnetwork", "Subnet", "Where the GKE nodes land. Regional, shared to the lending project from the host project, so the zones are the cluster's to spread across.", $tags="tech_services") {
+        ' aac TS_GCPNET_SUB_LEND_APP: company_domain="Lending"; technology="Subnet"
+      }
+      Deployment_Node(TS_GCPNET_NAT_LEND, "Lending Cloud NAT", "Private egress", "Regional NAT for the private subnetworks' egress, the only way out that is not a Private Service Connect endpoint; one gateway per region, not one per zone.", $tags="tech_services") {
+        ' aac TS_GCPNET_NAT_LEND: company_domain="Lending"; technology="Private egress"
+      }
+      Deployment_Node(TS_GCPNET_SUB_LEND_DATA, "Lending Data Subnetwork", "Subnet", "Cloud SQL's private services access range and the Memorystore endpoints; no route to the internet, in or out.", $tags="tech_services") {
+        ' aac TS_GCPNET_SUB_LEND_DATA: company_domain="Lending"; technology="Subnet"
+      }
+      Deployment_Node(TS_GCPNET_EXT_LB_LEND, "Lending External Load Balancer", "Load balancer", "The external HTTPS load balancer in front of the product's channel, with Cloud Armor attached; the edge of the lending workload on Google Cloud.", $tags="tech_services") {
+        ' aac TS_GCPNET_EXT_LB_LEND: company_domain="Lending"; technology="Load balancer"
+      }
+      Deployment_Node(TS_GCPNET_PROXY_SUB_LEND, "Lending Proxy-only Subnetwork", "Subnet", "The proxy-only subnetwork the regional external load balancer's proxies sit in; nothing of ours runs there, and nothing of ours may.", $tags="tech_services") {
+        ' aac TS_GCPNET_PROXY_SUB_LEND: company_domain="Lending"; technology="Subnet"
+      }
+    }
+  }
+  Boundary(b_GCP__gcp_shared_network, "project gcp-shared-network") {
+    Boundary(b_GCP__gcp_shared_network__europe_west2, "region europe-west2") {
+      Deployment_Node(TS_GCP_CLOUD_DNS, "Cloud DNS", "DNS", "Public and private zones for the Google Cloud estate, peered to the data center's resolvers.", $tags="tech_services") {
+        ' aac TS_GCP_CLOUD_DNS: company_domain="Enterprise Platform"; technology="DNS"
+      }
+      Deployment_Node(TS_GCP_INTERCONNECT, "Cloud Interconnect", "Hybrid link", "Dedicated Interconnect back to the data center, two attachments in two edge availability domains; the failover between them is tested quarterly.", $tags="tech_services") {
+        ' aac TS_GCP_INTERCONNECT: company_domain="Enterprise Platform"; technology="Hybrid link"
+      }
+      Deployment_Node(TS_GCPNET_HA_VPN, "HA VPN", "Hybrid link", "The backup path to the data center: HA VPN over the internet, two tunnels with BGP, carrying the traffic when the Interconnect does not. Tested on the same quarterly failover as the Interconnect's second attachment.", $tags="tech_services") {
+        ' aac TS_GCPNET_HA_VPN: company_domain="Enterprise Platform"; technology="Hybrid link"
+      }
+      Deployment_Node(TS_GCP_NCC, "Network Connectivity Center", "Transit hub", "The hub the workload VPC spokes and the interconnect attach to; the transit of the Google Cloud zone.", $tags="tech_services") {
+        ' aac TS_GCP_NCC: company_domain="Enterprise Platform"; technology="Transit hub"
+      }
+      Deployment_Node(TS_GCP_SHARED_VPC, "Shared VPC network", "Virtual network", "The host project's network the workload projects attach to, with the tiers as subnetworks.", $tags="tech_services") {
+        ' aac TS_GCP_SHARED_VPC: company_domain="Enterprise Platform"; technology="Virtual network"
+      }
+    }
+  }
+}
+Boundary(b_On_prem, "On-prem") {
+  Deployment_Node(TS_ONPREM_DC, "Primary Data Center", "Virtual network", "The data center the mainframe and the authorization switch live in. Modeled because half the integration cost of any cloud onboarding is the path back to here.", $tags="tech_services") {
+    ' aac TS_ONPREM_DC: company_domain="Enterprise Platform"; technology="Virtual network"
+  }
+}
+
+Rel(TS_NET_DX, TS_ONPREM_DC, "Direct Connect")
+' aac rel: source="TS_NET_DX"; target="TS_ONPREM_DC"; label="Direct Connect"; relation="tech_service_connects_to"; connection="Direct Connect"
+Rel(TS_NET_VPN, TS_ONPREM_DC, "IPsec backup")
+' aac rel: source="TS_NET_VPN"; target="TS_ONPREM_DC"; label="IPsec backup"; relation="tech_service_connects_to"; connection="IPsec backup"
+Rel(TS_AWS_TGW, TS_NET_DX, "DX gateway")
+' aac rel: source="TS_AWS_TGW"; target="TS_NET_DX"; label="DX gateway"; relation="tech_service_connects_to"; connection="DX gateway"
+Rel(TS_AWS_TGW, TS_NET_VPN, "VPN attachment")
+' aac rel: source="TS_AWS_TGW"; target="TS_NET_VPN"; label="VPN attachment"; relation="tech_service_connects_to"; connection="VPN attachment"
+Rel(TS_AWS_TGW, TS_NET_VPC_SHARED, "VPC attachment")
+' aac rel: source="TS_AWS_TGW"; target="TS_NET_VPC_SHARED"; label="VPC attachment"; relation="tech_service_connects_to"; connection="VPC attachment"
+Rel(TS_AWS_TGW, TS_NET_VPC_LENDING, "VPC attachment")
+' aac rel: source="TS_AWS_TGW"; target="TS_NET_VPC_LENDING"; label="VPC attachment"; relation="tech_service_connects_to"; connection="VPC attachment"
+Rel(TS_AWS_TGW, TS_NET_VPC_RISKOPS, "VPC attachment")
+' aac rel: source="TS_AWS_TGW"; target="TS_NET_VPC_RISKOPS"; label="VPC attachment"; relation="tech_service_connects_to"; connection="VPC attachment"
+Rel(TS_AWS_TGW, TS_NET_VPC_LENDING_DR, "VPC attachment (DR)")
+' aac rel: source="TS_AWS_TGW"; target="TS_NET_VPC_LENDING_DR"; label="VPC attachment (DR)"; relation="tech_service_connects_to"; connection="VPC attachment (DR)"
+Rel(TS_NET_VPC_SHARED, TS_NET_ROUTE53, "resolver endpoints")
+' aac rel: source="TS_NET_VPC_SHARED"; target="TS_NET_ROUTE53"; label="resolver endpoints"; relation="tech_service_connects_to"; connection="resolver endpoints"
+Rel(TS_NET_VPC_SHARED, TS_AWS_PRIVATELINK, "endpoint services")
+' aac rel: source="TS_NET_VPC_SHARED"; target="TS_AWS_PRIVATELINK"; label="endpoint services"; relation="tech_service_connects_to"; connection="endpoint services"
+Rel(TS_NET_VPC_LENDING, TS_NET_SUB_LEND_PUB_A, "subnet")
+' aac rel: source="TS_NET_VPC_LENDING"; target="TS_NET_SUB_LEND_PUB_A"; label="subnet"; relation="tech_service_connects_to"; connection="subnet"
+Rel(TS_NET_VPC_LENDING, TS_NET_SUB_LEND_PUB_B, "subnet")
+' aac rel: source="TS_NET_VPC_LENDING"; target="TS_NET_SUB_LEND_PUB_B"; label="subnet"; relation="tech_service_connects_to"; connection="subnet"
+Rel(TS_NET_VPC_LENDING, TS_NET_SUB_LEND_APP_A, "subnet")
+' aac rel: source="TS_NET_VPC_LENDING"; target="TS_NET_SUB_LEND_APP_A"; label="subnet"; relation="tech_service_connects_to"; connection="subnet"
+Rel(TS_NET_VPC_LENDING, TS_NET_SUB_LEND_APP_B, "subnet")
+' aac rel: source="TS_NET_VPC_LENDING"; target="TS_NET_SUB_LEND_APP_B"; label="subnet"; relation="tech_service_connects_to"; connection="subnet"
+Rel(TS_NET_VPC_LENDING, TS_NET_SUB_LEND_DATA_A, "subnet")
+' aac rel: source="TS_NET_VPC_LENDING"; target="TS_NET_SUB_LEND_DATA_A"; label="subnet"; relation="tech_service_connects_to"; connection="subnet"
+Rel(TS_NET_VPC_LENDING, TS_NET_SUB_LEND_DATA_B, "subnet")
+' aac rel: source="TS_NET_VPC_LENDING"; target="TS_NET_SUB_LEND_DATA_B"; label="subnet"; relation="tech_service_connects_to"; connection="subnet"
+Rel(TS_NET_SUB_LEND_PUB_A, TS_NET_IGW_LENDING, "default route")
+' aac rel: source="TS_NET_SUB_LEND_PUB_A"; target="TS_NET_IGW_LENDING"; label="default route"; relation="tech_service_connects_to"; connection="default route"
+Rel(TS_NET_SUB_LEND_PUB_B, TS_NET_IGW_LENDING, "default route")
+' aac rel: source="TS_NET_SUB_LEND_PUB_B"; target="TS_NET_IGW_LENDING"; label="default route"; relation="tech_service_connects_to"; connection="default route"
+Rel(TS_NET_SUB_LEND_APP_A, TS_NET_NAT_LEND_A, "egress route")
+' aac rel: source="TS_NET_SUB_LEND_APP_A"; target="TS_NET_NAT_LEND_A"; label="egress route"; relation="tech_service_connects_to"; connection="egress route"
+Rel(TS_NET_SUB_LEND_APP_B, TS_NET_NAT_LEND_B, "egress route")
+' aac rel: source="TS_NET_SUB_LEND_APP_B"; target="TS_NET_NAT_LEND_B"; label="egress route"; relation="tech_service_connects_to"; connection="egress route"
+Rel(TS_NET_NAT_LEND_A, TS_NET_IGW_LENDING, "egress route")
+' aac rel: source="TS_NET_NAT_LEND_A"; target="TS_NET_IGW_LENDING"; label="egress route"; relation="tech_service_connects_to"; connection="egress route"
+Rel(TS_NET_NAT_LEND_B, TS_NET_IGW_LENDING, "egress route")
+' aac rel: source="TS_NET_NAT_LEND_B"; target="TS_NET_IGW_LENDING"; label="egress route"; relation="tech_service_connects_to"; connection="egress route"
+Rel(TS_NET_VPC_LENDING, TS_NET_VPC_LENDING_DR, "cross-region replication")
+' aac rel: source="TS_NET_VPC_LENDING"; target="TS_NET_VPC_LENDING_DR"; label="cross-region replication"; relation="tech_service_connects_to"; connection="cross-region replication"
+Rel(TS_GCP_INTERCONNECT, TS_ONPREM_DC, "Dedicated Interconnect")
+' aac rel: source="TS_GCP_INTERCONNECT"; target="TS_ONPREM_DC"; label="Dedicated Interconnect"; relation="tech_service_connects_to"; connection="Dedicated Interconnect"
+Rel(TS_GCPNET_HA_VPN, TS_ONPREM_DC, "IPsec backup")
+' aac rel: source="TS_GCPNET_HA_VPN"; target="TS_ONPREM_DC"; label="IPsec backup"; relation="tech_service_connects_to"; connection="IPsec backup"
+Rel(TS_GCP_NCC, TS_GCP_INTERCONNECT, "VLAN attachment")
+' aac rel: source="TS_GCP_NCC"; target="TS_GCP_INTERCONNECT"; label="VLAN attachment"; relation="tech_service_connects_to"; connection="VLAN attachment"
+Rel(TS_GCP_NCC, TS_GCPNET_HA_VPN, "VPN spoke")
+' aac rel: source="TS_GCP_NCC"; target="TS_GCPNET_HA_VPN"; label="VPN spoke"; relation="tech_service_connects_to"; connection="VPN spoke"
+Rel(TS_GCP_NCC, TS_GCP_SHARED_VPC, "VPC spoke")
+' aac rel: source="TS_GCP_NCC"; target="TS_GCP_SHARED_VPC"; label="VPC spoke"; relation="tech_service_connects_to"; connection="VPC spoke"
+Rel(TS_GCP_SHARED_VPC, TS_GCP_CLOUD_DNS, "DNS peering")
+' aac rel: source="TS_GCP_SHARED_VPC"; target="TS_GCP_CLOUD_DNS"; label="DNS peering"; relation="tech_service_connects_to"; connection="DNS peering"
+Rel(TS_GCP_CLOUD_DNS, TS_ONPREM_DC, "forwarding zone")
+' aac rel: source="TS_GCP_CLOUD_DNS"; target="TS_ONPREM_DC"; label="forwarding zone"; relation="tech_service_connects_to"; connection="forwarding zone"
+Rel(TS_GCP_SHARED_VPC, TS_GCPNET_PROXY_SUB_LEND, "subnetwork")
+' aac rel: source="TS_GCP_SHARED_VPC"; target="TS_GCPNET_PROXY_SUB_LEND"; label="subnetwork"; relation="tech_service_connects_to"; connection="subnetwork"
+Rel(TS_GCP_SHARED_VPC, TS_GCPNET_SUB_LEND_APP, "subnetwork")
+' aac rel: source="TS_GCP_SHARED_VPC"; target="TS_GCPNET_SUB_LEND_APP"; label="subnetwork"; relation="tech_service_connects_to"; connection="subnetwork"
+Rel(TS_GCP_SHARED_VPC, TS_GCPNET_SUB_LEND_DATA, "subnetwork")
+' aac rel: source="TS_GCP_SHARED_VPC"; target="TS_GCPNET_SUB_LEND_DATA"; label="subnetwork"; relation="tech_service_connects_to"; connection="subnetwork"
+Rel(TS_GCP_SHARED_VPC, TS_GCPNET_SUB_LEND_APP_DR, "subnetwork (DR)")
+' aac rel: source="TS_GCP_SHARED_VPC"; target="TS_GCPNET_SUB_LEND_APP_DR"; label="subnetwork (DR)"; relation="tech_service_connects_to"; connection="subnetwork (DR)"
+Rel(TS_GCPNET_SUB_LEND_APP, TS_GCPNET_NAT_LEND, "egress route")
+' aac rel: source="TS_GCPNET_SUB_LEND_APP"; target="TS_GCPNET_NAT_LEND"; label="egress route"; relation="tech_service_connects_to"; connection="egress route"
+Rel(TS_GCPNET_EXT_LB_LEND, TS_GCPNET_PROXY_SUB_LEND, "proxy-only subnet")
+' aac rel: source="TS_GCPNET_EXT_LB_LEND"; target="TS_GCPNET_PROXY_SUB_LEND"; label="proxy-only subnet"; relation="tech_service_connects_to"; connection="proxy-only subnet"
+Rel(TS_GCPNET_EXT_LB_LEND, TS_GCPNET_SUB_LEND_APP, "backend")
+' aac rel: source="TS_GCPNET_EXT_LB_LEND"; target="TS_GCPNET_SUB_LEND_APP"; label="backend"; relation="tech_service_connects_to"; connection="backend"
+Rel(TS_GCP_SHARED_VPC, TS_GCPNET_SUB_ANALYTICS_DATA, "subnetwork")
+' aac rel: source="TS_GCP_SHARED_VPC"; target="TS_GCPNET_SUB_ANALYTICS_DATA"; label="subnetwork"; relation="tech_service_connects_to"; connection="subnetwork"
+Rel(TS_GCPNET_SUB_ANALYTICS_DATA, TS_GCPNET_NAT_ANALYTICS, "egress route")
+' aac rel: source="TS_GCPNET_SUB_ANALYTICS_DATA"; target="TS_GCPNET_NAT_ANALYTICS"; label="egress route"; relation="tech_service_connects_to"; connection="egress route"
+Rel(TS_GCP_SHARED_VPC, TS_GCPNET_SUB_ANALYTICS_DATA_DR, "subnetwork (DR)")
+' aac rel: source="TS_GCP_SHARED_VPC"; target="TS_GCPNET_SUB_ANALYTICS_DATA_DR"; label="subnetwork (DR)"; relation="tech_service_connects_to"; connection="subnetwork (DR)"
+
+SHOW_LEGEND()
+@enduml

@@ -1,0 +1,61 @@
+@startuml
+' Build installment lending on AWS — Footprint
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Build installment lending on AWS — Footprint
+
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddElementTag("work_packages", $bgColor="#ccfbf1", $borderColor="#0d9488", $fontColor="#0f172a", $legendText="work package")
+
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_LENDING_OPERATIONAL, "Installment Lending operational data", "Operational records held by Installment Lending.", $tags="data_assets")
+  ' aac DA_LENDING_OPERATIONAL: company_domain="Lending"
+}
+Boundary(b_System, "System") {
+  System(SYS_LENDING_WORKER, "Installment Lending Async Worker", "Consumes Installment Lending domain events and drives long-running work. Built with EKS · MSK.", $tags="systems")
+  ' aac SYS_LENDING_WORKER: company_domain="Lending"; hosting="AWS"; technology="EKS · MSK"
+  System(SYS_LENDING_DB, "Installment Lending Database", "Relational database for Installment Lending, encrypted with a customer managed key. Built with RDS.", $tags="systems")
+  ' aac SYS_LENDING_DB: company_domain="Lending"; hosting="AWS"; technology="RDS"
+  System(SYS_LENDING_EDGE, "Installment Lending Edge", "CDN distribution and WAF ruleset for Installment Lending.", $tags="systems")
+  ' aac SYS_LENDING_EDGE: company_domain="Lending"; hosting="AWS"
+  System(SYS_LENDING_HUB, "Installment Lending Integration Hub", "Mediates every Installment Lending integration: one place for mapping, routing, retry and the audit trail, so the spokes do not each carry their own.", $tags="systems")
+  ' aac SYS_LENDING_HUB: company_domain="Lending"; hosting="AWS"
+  System(SYS_LENDING_ALB, "Installment Lending Load Balancer", "Public load balancer terminating TLS for Installment Lending.", $tags="systems")
+  ' aac SYS_LENDING_ALB: company_domain="Lending"; hosting="AWS"
+  System(SYS_LENDING_BUCKET, "Installment Lending Object Store", "S3 bucket holding signed credit agreements and disbursement evidence. Seven-year retention with Object Lock; a records-management obligation rather than ordinary product storage. Built with S3.", $tags="systems")
+  ' aac SYS_LENDING_BUCKET: company_domain="Lending"; hosting="AWS"; technology="S3"
+  System(SYS_LENDING_API, "Installment Lending Service", "Domain service for Installment Lending, behind the Installment Lending API. Built with EKS · Installment Lending Cache.", $tags="systems")
+  ' aac SYS_LENDING_API: company_domain="Lending"; hosting="AWS"; technology="EKS · Installment Lending Cache"
+  System(SYS_LENDING_WEB, "Installment Lending Web", "Customer-facing front end for Installment Lending. Built with EKS.", $tags="systems")
+  ' aac SYS_LENDING_WEB: company_domain="Lending"; hosting="AWS"; technology="EKS"
+}
+Boundary(b_Work_Package, "Work Package") {
+  System(WP_LENDING_AWS, "Build installment lending on AWS", "Stand up the installment lending product on the AWS landing zone: the edge and load balancer, the web and API tiers, the database, the object store, the async worker and the integration hub that fronts the ledger, the bureau and the CRM.", $tags="work_packages")
+  ' aac WP_LENDING_AWS: company_domain="Lending"
+}
+
+Rel(WP_LENDING_AWS, SYS_LENDING_EDGE, "Builds")
+' aac rel: source="WP_LENDING_AWS"; target="SYS_LENDING_EDGE"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_LENDING_AWS, SYS_LENDING_ALB, "Builds")
+' aac rel: source="WP_LENDING_AWS"; target="SYS_LENDING_ALB"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_LENDING_AWS, SYS_LENDING_WEB, "Builds")
+' aac rel: source="WP_LENDING_AWS"; target="SYS_LENDING_WEB"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_LENDING_AWS, SYS_LENDING_API, "Builds")
+' aac rel: source="WP_LENDING_AWS"; target="SYS_LENDING_API"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_LENDING_AWS, SYS_LENDING_WORKER, "Builds")
+' aac rel: source="WP_LENDING_AWS"; target="SYS_LENDING_WORKER"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_LENDING_AWS, SYS_LENDING_DB, "Builds")
+' aac rel: source="WP_LENDING_AWS"; target="SYS_LENDING_DB"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_LENDING_AWS, SYS_LENDING_BUCKET, "Builds")
+' aac rel: source="WP_LENDING_AWS"; target="SYS_LENDING_BUCKET"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(WP_LENDING_AWS, SYS_LENDING_HUB, "Builds")
+' aac rel: source="WP_LENDING_AWS"; target="SYS_LENDING_HUB"; label="Builds"; relation="work_package_affects_system"; effect="Builds"
+Rel(SYS_LENDING_API, DA_LENDING_OPERATIONAL, "ReadWrite")
+' aac rel: source="SYS_LENDING_API"; target="DA_LENDING_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_LENDING_WORKER, DA_LENDING_OPERATIONAL, "Read")
+' aac rel: source="SYS_LENDING_WORKER"; target="DA_LENDING_OPERATIONAL"; label="Read"; relation="system_reads_writes"; operation="Read"
+
+SHOW_LEGEND()
+@enduml

@@ -1,0 +1,51 @@
+# Transactions as they cross the estate, step by step over the interfaces.
+# The steps are in `relations/flows.yaml`, ordered by `sequence`.
+
+- flow_id: FLOW-LAB-RESULT
+  name: Lab Order to Result
+  description: >
+    A lab order signed in the EHR reaches the LIS, is resulted, and is filed
+    back to the chart and published to the FHIR server, where the patient
+    sees it in the portal. Every hop but the last goes through the
+    interface engine, which is why its queues are watched as a safety
+    control and not only as an IT one.
+  status: Active
+  owner_org_id: ORG-LAB
+  trigger: Clinician signs a lab order
+  criticality: High
+  target_latency: Result in the chart within a minute of verification
+  company_domain: Diagnostics
+  togaf_layer: Business
+  architecture_domain: Business
+
+- flow_id: FLOW-ADMISSION
+  name: Admission
+  description: >
+    A decision to admit in the emergency department fans out from one ADT
+    message: the patient index checks the identity, the bed board shows a
+    bed is needed, billing opens the account and the cancer center hears
+    if the patient is one of theirs.
+  status: Active
+  owner_org_id: ORG-INPATIENT
+  trigger: Decision to admit
+  criticality: High
+  target_latency: Every subscriber within seconds
+  company_domain: Clinical Care
+  togaf_layer: Business
+  architecture_domain: Business
+
+- flow_id: FLOW-CLAIM
+  name: Charge to Remittance
+  description: >
+    A charge dropped in the EHR is billed, leaves as a claim through the
+    clearinghouse over the private path, and comes back as a remittance
+    landed for posting and analysis. The hops after patient accounting are
+    the vendor shape's; nothing about them was written for healthcare.
+  status: Active
+  owner_org_id: ORG-REV-CYCLE
+  trigger: Encounter closed and coded
+  criticality: High
+  target_latency: Claim out within a day; remittance back as the payer pays
+  company_domain: Revenue Cycle
+  togaf_layer: Business
+  architecture_domain: Business

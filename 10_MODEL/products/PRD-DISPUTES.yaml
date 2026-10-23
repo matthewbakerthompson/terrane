@@ -1,0 +1,66 @@
+# The vendor shape was written after this product and named things
+# otherwise: the vendor system is `-VENDOR` where the estate said `-SAAS`,
+# the return feed `-VENDOR-RETURN` where the estate said `-SAAS-FEED`, the
+# landed data `-OUTCOMES` where the estate said `-VENDOR-FEED`. Eight
+# processes, seven capability realizations, five controls and a flow point
+# at the estate's names, so the move keeps them: `ids` maps what the shape
+# makes to what the estate calls it, and nothing that pointed at the old
+# ids changed. What the shape's defaults get wrong -- Pega's own product
+# name, the CMDB record, the descriptions people wrote, the ledger's OAuth
+# call -- is overrides, written against the kept names.
+product_id: PRD-DISPUTES
+name: Dispute Management
+description: Chargeback and dispute handling, bought rather than built.
+status: Active
+owner_org_id: ORG-SERVICING
+criticality: Medium
+product_category: Vendor capability
+company_domain: Servicing
+
+build_type: bought-saas
+archetype: vendor-saas-service
+parameters:
+  slug: disputes
+  product_name: Dispute Management
+  vendor: Pegasystems
+  owner_org: ORG-SERVICING
+  domain: Servicing
+  upstream_system: SYS-CORE-LEDGER
+  account: azure-cards-prod
+  criticality: Medium
+  classification: Restricted
+
+# Patterns from 27_PATTERNS/ this product applies beyond its shape's.
+patterns: [partner-file-exchange, customer-communication-archive]
+
+ids:
+  SYS-DISPUTES-VENDOR: SYS-DISPUTES-SAAS
+  INT-DISPUTES-CALLER-GATEWAY: INT-DISPUTES-UP-GATEWAY
+  INT-DISPUTES-GATEWAY-VENDOR: INT-DISPUTES-GATEWAY-SAAS
+  INT-DISPUTES-VENDOR-RETURN: INT-DISPUTES-SAAS-FEED
+  DA-DISPUTES-OUTCOMES: DA-DISPUTES-VENDOR-FEED
+
+overrides:
+  SYS-DISPUTES-SAAS:
+    name: Pega Smart Dispute
+    description: Dispute Management Platform, provided by Pegasystems and running in the vendor tenancy.
+    tags: [vendor, third-party]
+    cmdb_ci_sys_id: 0718293040506a7b
+    cmdb_ci_class: cmdb_ci_service
+  SYS-DISPUTES-GATEWAY:
+    name: Dispute Management Platform Integration Gateway
+    description: "Our side of the Pegasystems integration: mapping, retry and audit."
+    tags: [vendor, integration]
+  INT-DISPUTES-UP-GATEWAY:
+    name: SYS-CORE-LEDGER to Dispute Management Platform Gateway
+    auth_method: OAuth2
+  INT-DISPUTES-GATEWAY-SAAS:
+    name: Dispute Management Platform Gateway to Pegasystems
+  INT-DISPUTES-SAAS-FEED:
+    description: Nightly extract returned by the vendor and landed in the warehouse.
+    owner_org_id: ORG-DATAENG
+  DA-DISPUTES-VENDOR-FEED:
+    name: Dispute Management Platform vendor feed
+    description: Landed vendor extract from Pegasystems.
+    tags: [vendor]
+    risk_level: Medium

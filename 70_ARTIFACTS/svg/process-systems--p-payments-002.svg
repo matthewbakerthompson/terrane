@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="785.4" viewBox="0 0 1100 785.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Ingest clearing file and post transactions — Systems, Data and Controls</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Ingest clearing file and post transactions — Systems, Data and Controls</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   7 nodes · 6 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(165.7 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="279.72" y="465.3" width="212.57" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="321.72" y="482.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Control">
+<rect x="280.3" y="317.3" width="211.4" height="119.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="313.15" y="334.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Control</text>
+</g>
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="537.3" y="140.3" width="221.4" height="247.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="579.3" y="157.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.9" y="170.26" width="212.2" height="123.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.75" y="187.66" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="537.3" y="24.3" width="198.4" height="87.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="567.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-PAYMENTS-002::SYS-CORE-LEDGER">
+<title>Primary</title>
+<path d="M196 206.29 L224.95 206 A10 10 0 0 1 225.05 206 L233 206 A8 8 0 0 0 241 198 L241 78 A10 10 0 0 1 251 68 L534 68 L559.48 68" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M563 68 L553.43 72.78 L553.43 63.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-PAYMENTS-002::SYS-CORE-LEDGER">
+<rect x="362.32" y="74.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="383.5" y="86.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-PAYMENTS-002::DA-TRANSACTION">
+<title>Writes</title>
+<path d="M196 216.57 L224.93 217 A10 10 0 0 0 225.07 217 L241 217 A10 10 0 0 0 251 207 L251 202 A10 10 0 0 1 261 192 L534 192 L559.48 192" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M563 192 L553.43 196.78 L553.43 187.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-PAYMENTS-002::DA-TRANSACTION">
+<rect x="365.41" y="198.5" width="36.18" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="383.5" y="210.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Writes</text>
+</g>
+<g class="edge" data-id="e2::P-PAYMENTS-002::DA-CUSTOMER-PROFILE">
+<title>Reads</title>
+<path d="M196 226.86 L224.98 227 A10 10 0 0 0 225.02 227 L506 227 A10 10 0 0 1 516 237 L516 255 A9 9 0 0 0 525 264 L534 264 L559.48 264" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M563 264 L553.43 268.79 L553.43 259.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-PAYMENTS-002::DA-CUSTOMER-PROFILE">
+<rect x="365.82" y="233.5" width="35.36" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="383.5" y="245.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Reads</text>
+</g>
+<g class="edge" data-id="e3::P-PAYMENTS-002::DA-PAYMENT-INSTR">
+<title>Reads</title>
+<path d="M196 237.14 L224.98 237 A10 10 0 0 1 225.02 237 L251 237 A10 10 0 0 1 261 247 L261 252 A10 10 0 0 0 271 262 L496 262 A10 10 0 0 1 506 272 L506 326 A10 10 0 0 0 516 336 L534 336 L559.48 336" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M563 336 L553.43 340.79 L553.43 331.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::P-PAYMENTS-002::DA-PAYMENT-INSTR">
+<rect x="365.82" y="268.5" width="35.36" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="383.5" y="280.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Reads</text>
+</g>
+<g class="edge" data-id="e4::P-PAYMENTS-002::CTL-DAILY-RECON">
+<title>governed by</title>
+<path d="M196 247.43 L224.93 247 A10 10 0 0 1 225.07 247 L241 247 A10 10 0 0 1 251 257 L251 367 A10 10 0 0 0 261 377 L277 377 L302.48 377" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M306 377 L296.43 381.79 L296.43 372.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e5::P-PAYMENTS-002::CAP-PAY-02">
+<title>supports</title>
+<path d="M196 257.71 L224.95 258 A10 10 0 0 0 225.05 258 L233 258 A8 8 0 0 1 241 266 L241 507 A10 10 0 0 0 251 517 L277 517 L302.48 517" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M306 517 L296.43 521.78 L296.43 512.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-PAY-02" data-type="capabilities">
+<title>Clearing &amp; Transaction Posting</title>
+<path d="M346 491 L306 517 L346 543 L426 543 L466 517 L426 491 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="386" y="515.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Clearing &amp; Transaction</text>
+<text x="386" y="527.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Posting</text>
+</g>
+<g class="node" data-id="CTL-DAILY-RECON" data-type="controls">
+<title>Daily settlement and clearing reconciliation</title>
+<path d="M352.86 343 L306 362.92 L306 391.08 L352.86 411 L419.14 411 L466 391.08 L466 362.92 L419.14 343 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="386" y="375.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Daily settlement and</text>
+<text x="386" y="387.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">clearing reconciliation</text>
+</g>
+<g class="node" data-id="DA-CUSTOMER-PROFILE" data-type="data_assets">
+<title>Customer profile</title>
+<path d="M563 240.6 Q571.5 238 605.5 238 L690.5 238 Q724.5 238 733 240.6 L733 287.4 Q724.5 290 690.5 290 L605.5 290 Q571.5 290 563 287.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="644" y="268.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer profile</text>
+<svg x="715" y="243" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-PAYMENT-INSTR" data-type="data_assets">
+<title>Payment instructions</title>
+<path d="M563 312.6 Q571.5 310 605.5 310 L690.5 310 Q724.5 310 733 312.6 L733 359.4 Q724.5 362 690.5 362 L605.5 362 Q571.5 362 563 359.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="644" y="340.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Payment instructions</text>
+<svg x="715" y="315" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-TRANSACTION" data-type="data_assets">
+<title>Card transaction history</title>
+<path d="M563 168.6 Q571.5 166 605.5 166 L690.5 166 Q724.5 166 733 168.6 L733 215.4 Q724.5 218 690.5 218 L605.5 218 Q571.5 218 563 215.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="644" y="190.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Card transaction</text>
+<text x="644" y="202.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">history</text>
+<svg x="715" y="171" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-PAYMENTS-002" data-type="processes">
+<title>Ingest clearing file and post transactions</title>
+<path d="M116 196 L36 223.5 L66.56 268 L165.44 268 L196 223.5 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="230.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Ingest clearing file and</text>
+<text x="116" y="242.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">post transactions</text>
+</g>
+<g class="node" data-id="SYS-CORE-LEDGER" data-type="systems">
+<title>Core Card Ledger</title>
+<rect x="563" y="50" width="147" height="36" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="632.5" y="72.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Core Card Ledger</text>
+<svg x="692" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="683.4" x2="1072" y2="683.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="707.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 696.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="707.4" font-size="12" font-weight="400" fill="#343d50">capability · 1</text>
+<g transform="translate(177.5 696.4)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="203.5" y="707.4" font-size="12" font-weight="400" fill="#343d50">control · 1</text>
+<g transform="translate(273.05 696.4)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="299.05" y="707.4" font-size="12" font-weight="400" fill="#343d50">data asset · 3</text>
+<g transform="translate(389.9 696.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="415.9" y="707.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(490.17 696.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="516.17" y="707.4" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
+<text x="28" y="729.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 718.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="729.4" font-size="12" font-weight="400" fill="#343d50">governed by</text>
+<g transform="translate(184.75 718.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="210.75" y="729.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(277.26 718.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="303.26" y="729.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="763.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-payments-002 · edit the model, not the picture</text></g>
+</svg>

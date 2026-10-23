@@ -1,0 +1,47 @@
+@startuml
+' Financial crimes platform — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Financial crimes platform — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_RGOV_07, "Financial Crimes & BSA/AML Compliance", "Operate the KYC/CIP program, transaction monitoring, sanctions screening, and regulatory filing.", $tags="capabilities")
+  ' aac CAP_RGOV_07: company_domain="Cross-Functional Services"
+  System(CAP_ORIG_02, "Identity Verification & KYC/CIP", "Verify applicant identity and satisfy customer identification obligations.", $tags="capabilities")
+  ' aac CAP_ORIG_02: company_domain="Originations"
+}
+Boundary(b_Process, "Process") {
+  System(P_COMPLIANCE_004, "Investigate and file suspicious activity report", "Investigate an alert and, where warranted, prepare and file the regulatory report. The SAR decision and filing run on the BSA clock from alert qualification; the investigation file must stand on its own for examiner review, and filing is confidential by law.", $tags="processes")
+  ' aac P_COMPLIANCE_004: company_domain=""
+  System(P_COMPLIANCE_003, "Screen for sanctions and watchlists", "Screen parties and transactions against sanctions and watchlists and adjudicate hits. Screening runs at onboarding and on list updates across cardholders, clients, and suppliers; a hit blocks processing until dispositioned, and the disposition is retained as evidence.", $tags="processes")
+  ' aac P_COMPLIANCE_003: company_domain=""
+  System(P_ORIG_002, "Verify applicant identity and satisfy CIP", "Verify the applicant's identity and record evidence satisfying customer identification obligations. CIP evidence is retained per BSA requirements; verification failures route to document request rather than automatic decline, and synthetic identity signals feed fraud screening.", $tags="processes")
+  ' aac P_ORIG_002: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_AML, "Financial crimes platform", "Sanctions screening, transaction monitoring, and case management.", $tags="systems")
+  ' aac SYS_AML: company_domain=""
+}
+
+Rel(P_ORIG_002, SYS_AML, "Supporting")
+' aac rel: source="P_ORIG_002"; target="SYS_AML"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COMPLIANCE_003, SYS_AML, "Primary")
+' aac rel: source="P_COMPLIANCE_003"; target="SYS_AML"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_COMPLIANCE_004, SYS_AML, "Primary")
+' aac rel: source="P_COMPLIANCE_004"; target="SYS_AML"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_ORIG_002, CAP_ORIG_02, "supports")
+' aac rel: source="P_ORIG_002"; target="CAP_ORIG_02"; label="supports"; relation="process_supports_capability"
+Rel(P_ORIG_002, CAP_RGOV_07, "supports")
+' aac rel: source="P_ORIG_002"; target="CAP_RGOV_07"; label="supports"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_003, CAP_RGOV_07, "supports")
+' aac rel: source="P_COMPLIANCE_003"; target="CAP_RGOV_07"; label="supports"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_004, CAP_RGOV_07, "supports")
+' aac rel: source="P_COMPLIANCE_004"; target="CAP_RGOV_07"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

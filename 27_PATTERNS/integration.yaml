@@ -1,0 +1,122 @@
+# Patterns for reaching things this estate does not run, and for letting
+# systems inside it talk without holding each other up.
+
+- pattern_id: private-egress-to-saas
+  name: Private egress to a bought service
+  status: Approved
+  category: Integration
+  blocks: [private-egress-to-saas]
+  intent: >
+    Reach a vendor's service without the traffic touching the internet and
+    without the vendor holding a credential of ours: a gateway we own, a
+    private path out, and federated identity. This is the whole of what we
+    build when we buy something. The vendor runs the software; we run the
+    boundary.
+  consequences: >
+    A private endpoint per vendor per region, and a vendor that offers one,
+    which not all do. The gateway is a system with an owner, a change process
+    and a service tier, and it is easy to forget that a bought capability
+    still leaves something to operate.
+  when_not_to_use: >
+    A vendor with no private connectivity offer, where the pattern degrades
+    to a gateway and a public path and should be modeled honestly as that. A
+    service exchanging only Public data, where the boundary is the cost of a
+    control the data does not need.
+  method_ref: PAT-011
+
+- pattern_id: event-fanout
+  name: Event fan-out
+  status: Approved
+  category: Integration
+  blocks: [event-tier]
+  intent: >
+    A producer publishes domain events to a stream and never learns who
+    consumed them. Consumers arrive and leave without the producer changing,
+    which is the decoupling every integration architecture claims and this
+    is the shape that actually delivers it.
+  consequences: >
+    Once a consumer reads the stream the producer no longer controls who
+    depends on it, so the event schema is a public contract with all the
+    versioning discipline that implies. Ordering, replay and duplicate
+    delivery each have to be decided rather than hoped for, and every
+    consumer is on the impact list of a schema change whether or not anybody
+    can name it.
+  when_not_to_use: >
+    A caller that needs an answer before it can continue. Wrapping a
+    request-response conversation in events produces a distributed
+    transaction with extra steps.
+  method_ref: PAT-002
+
+- pattern_id: partner-file-exchange
+  name: Partner file exchange
+  status: Approved
+  category: Integration
+  blocks: [file-exchange]
+  intent: >
+    Scheduled files with a party who was never going to build an API,
+    landed in object storage under orchestration that knows when a file is
+    late. Older than every other pattern here and still how most
+    inter-company data actually moves, so it is worth doing deliberately.
+  consequences: >
+    File formats drift silently on the other side, so validation on arrival
+    is part of the pattern and not an optional extra. The schedule is an
+    agreement with a partner and changes at the speed of contracts. Monitoring
+    for a file that did not arrive is harder than monitoring for one that
+    did, and is the part most implementations skip.
+  when_not_to_use: >
+    A partner who does offer an API, where a file exchange adds a day of
+    latency to an integration that could take a second. Data that is
+    personal and leaves the estate, unless the transfer control has been
+    designed first.
+  method_ref: PAT-003
+
+- pattern_id: shared-database-integration
+  name: Shared database integration
+  status: Deprecated
+  category: Integration
+  blocks: [transactional-store]
+  intent: >
+    Two systems integrate by reading and writing one database. It was the
+    default for twenty years and it still turns up wherever a deadline met a
+    schema somebody already had access to.
+  consequences: >
+    Neither system can change its schema without the other, neither owns the
+    data, and the database becomes the integration contract with no version,
+    no owner and no test. Every reconciliation problem in the estate can be
+    traced to one of these eventually.
+  when_not_to_use: >
+    Always, for new work. Where one already exists, model it honestly as two
+    writers to one asset so the data lineage view shows it, and replace it
+    with the event fan-out or a service interface when the next change to
+    either side is planned.
+
+- pattern_id: regulatory-file-furnishing
+  name: Regulatory file furnishing with reconciliation
+  status: Approved
+  category: Integration
+  blocks: [file-exchange, batch-tier]
+  intent: >
+    A file the regulation prescribes -- the monthly furnishing to the credit
+    bureaus is the one every card business has -- is produced from the
+    ledger by one gateway, validated against the format before it leaves,
+    sent on the schedule, and reconciled against what the recipient
+    acknowledged. The disputes the recipient sends back come in through the
+    same gateway and are cases from the moment they land. The gateway
+    exists so the ledger never speaks to a bureau and the bureau never
+    speaks to the ledger.
+  consequences: >
+    A reconciliation that finds a difference is a finding, and the pattern
+    produces one every month there is a difference; teams used to a file
+    that was simply sent find this unwelcome. Format changes arrive from the
+    regulator or the recipient on their schedule, and the validation step
+    is the thing that breaks first, deliberately. A dispute returned in a
+    file has a statutory clock running from the day it landed, not the day
+    somebody opened the file, so the landing has to create the case.
+  when_not_to_use: >
+    Files exchanged with a commercial partner under a contract rather than a
+    regulation, which is the partner file exchange pattern, where the
+    schedule and format are negotiated rather than prescribed and a missed
+    file is a service-level matter rather than a furnishing failure.
+    Regulatory reports that are forms rather than files, which go through
+    the reporting platform and its certification control.
+  method_ref: PAT-014

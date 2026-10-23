@@ -1,0 +1,126 @@
+# The policy register, as the business architecture repository holds it.
+#
+# Imported by `50_ENGINE/tools/import_business_layer.py`; edit it there. A
+# policy is what a control gives effect to, and what a system or a data asset
+# is subject to. Nothing here says where a policy is enforced -- the controls
+# under it and the `*_subject_to_policy` relations do.
+
+- policy_id: POL-BSA-AML
+  name: BSA/AML & Sanctions Policy
+  purpose: Customer identification, screening, monitoring, and suspicious activity reporting.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  regulatory_framework: BSA/AML; OFAC
+  owner_org_id: ORG-COMPLIANCE
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- policy_id: POL-CHANGE
+  name: Technology Change Management Policy
+  purpose: "How change reaches production: approval, testing evidence, segregation of duties, rollback."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  regulatory_framework: CRI Profile
+  owner_org_id: ORG-TECH
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- policy_id: POL-COLLECT
+  name: Collections Conduct Policy
+  purpose: Contact conduct, disclosures, and treatment boundaries for delinquent account handling.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  regulatory_framework: FDCPA; Reg F; TCPA
+  owner_org_id: ORG-COMPLIANCE
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- policy_id: POL-ERROR-RES
+  name: Error Resolution & Billing Dispute Policy
+  purpose: How cardholder error claims are acknowledged, investigated, and resolved within Reg E / Reg Z timeframes.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  regulatory_framework: Reg E; Reg Z
+  owner_org_id: ORG-COMPLIANCE
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- policy_id: POL-FAIR-LEND
+  name: Fair Lending & Credit Decision Policy
+  purpose: Credit decisions are made and documented consistently with ECOA and FCRA, including adverse action.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  regulatory_framework: ECOA; FCRA
+  owner_org_id: ORG-COMPLIANCE
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- policy_id: POL-INFOSEC
+  name: Information Security Policy
+  purpose: The enterprise security control baseline, assessed against the CRI Profile.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  regulatory_framework: CRI Profile; GLBA Safeguards
+  owner_org_id: ORG-INFOSEC
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- policy_id: POL-MKT-UDAAP
+  name: Marketing Review & UDAAP Policy
+  purpose: Marketing material and offers are reviewed for accuracy, clarity, and UDAAP risk before release.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  regulatory_framework: UDAAP; TILA
+  owner_org_id: ORG-COMPLIANCE
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- policy_id: POL-PRIVACY
+  name: Consumer Privacy & Data Handling Policy
+  purpose: Collection, sharing, retention, and consumer-rights handling for personal information.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  regulatory_framework: GLBA; State privacy
+  owner_org_id: ORG-PRIVACY
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- policy_id: POL-RECORDS
+  name: Records Retention & Disposition Policy
+  purpose: What is kept, for how long, and how it is destroyed.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  regulatory_framework: Various
+  owner_org_id: ORG-DATAGOV
+  last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- policy_id: POL-TPRM
+  name: Third-Party Risk Management Policy
+  purpose: Due diligence, contract standards, monitoring, and exit for suppliers and servicers.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  regulatory_framework: Interagency TPRM guidance
+  owner_org_id: ORG-VENDORMGMT
+  last_reviewed: 2026-08-24
+  source: Business architecture repository

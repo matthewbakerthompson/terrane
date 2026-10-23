@@ -1,0 +1,17 @@
+# Imported from data_assets.csv.
+data_asset_id: DA-TRANSACTION
+name: Card transaction history
+description: Authorized, cleared and settled card transactions.
+status: Active
+togaf_layer: Data
+architecture_domain: Data
+company_domain: Payments
+tags: [enterprise, transactional]
+data_owner_org_id: ORG-PAYMENTS
+data_steward_org_id: ORG-DATAENG
+source_of_truth: SYS-AUTH-SWITCH
+classification: Restricted
+risk_level: High
+pii_flag: "Yes"
+pii_types: Account number;Merchant;Location
+table_name: CARD_TRANSACTION

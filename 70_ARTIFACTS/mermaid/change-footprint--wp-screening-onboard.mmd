@@ -1,0 +1,73 @@
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Onboard the screening vendor — Footprint
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Capability["Capability"]
+    direction LR
+    CAP_PAY{{"Payments & Transaction<br/>Processing"}}
+  end
+
+  subgraph grp_Data_Asset["Data Asset"]
+    direction LR
+    DA_CARD_ACCOUNT[("Card account master")]
+    DA_TRANSACTION[("Card transaction history")]
+    DA_SCREENING_OUTCOMES[("NICE Actimize Screening<br/>outcomes")]
+  end
+
+  subgraph grp_Process["Process"]
+    direction LR
+    P_SERVICING_001[\"Assess interest, fees, and<br/>minimum payment"/]
+    P_TPS_002[\"Convert client portfolio"/]
+    P_STMT_GEN_001[\"Cut cycle and generate<br/>statement"/]
+    P_FRAUD_001[\"Detect and action<br/>transaction fraud alert"/]
+    P_PAYMENTS_002[\"Ingest clearing file and<br/>post transactions"/]
+    P_PAYMENTS_001[\"Process authorization<br/>request"/]
+    P_DISPUTE_001[\"Process cardholder dispute<br/>claim"/]
+    P_NETWORK_RECON_001[\"Reconcile network<br/>settlement"/]
+  end
+
+  subgraph grp_System["System"]
+    direction LR
+    SYS_AUTH_SWITCH["Authorization Switch"]
+    SYS_SCREENING_VENDOR["NICE Actimize Screening<br/>[NICE Actimize]"]
+    SYS_SCREENING_FEDERATION["NICE Actimize Screening<br/>Identity Federation"]
+    SYS_SCREENING_GATEWAY["NICE Actimize Screening<br/>Integration Gateway<br/>[EKS]"]
+    SYS_SCREENING_EGRESS["NICE Actimize Screening<br/>Private Egress"]
+  end
+
+  subgraph grp_Work_Package["Work Package"]
+    direction LR
+    WP_SCREENING_ONBOARD["Onboard the screening<br/>vendor"]
+  end
+
+  WP_SCREENING_ONBOARD -->|"Builds"| SYS_SCREENING_VENDOR
+  WP_SCREENING_ONBOARD -->|"Builds"| SYS_SCREENING_GATEWAY
+  WP_SCREENING_ONBOARD -->|"Builds"| SYS_SCREENING_EGRESS
+  WP_SCREENING_ONBOARD -->|"Builds"| SYS_SCREENING_FEDERATION
+  WP_SCREENING_ONBOARD -->|"Changes"| SYS_AUTH_SWITCH
+  SYS_SCREENING_VENDOR -->|"Write"| DA_SCREENING_OUTCOMES
+  SYS_AUTH_SWITCH -->|"Read"| DA_CARD_ACCOUNT
+  SYS_AUTH_SWITCH -->|"ReadWrite"| DA_TRANSACTION
+  SYS_AUTH_SWITCH -->|"realizes"| CAP_PAY
+  P_DISPUTE_001 -->|"Reads"| DA_TRANSACTION
+  P_PAYMENTS_001 -->|"Writes"| DA_TRANSACTION
+  P_PAYMENTS_002 -->|"Writes"| DA_TRANSACTION
+  P_NETWORK_RECON_001 -->|"Reads"| DA_TRANSACTION
+  P_SERVICING_001 -->|"Both"| DA_TRANSACTION
+  P_STMT_GEN_001 -->|"Reads"| DA_TRANSACTION
+  P_FRAUD_001 -->|"Reads"| DA_TRANSACTION
+  P_TPS_002 -->|"Writes"| DA_TRANSACTION
+
+  classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
+  classDef s_data_assets__data_assets fill:#a7f3d0,stroke:#047857,color:#0f172a,stroke-width:1.4px;
+  classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  classDef s_work_packages__work_packages fill:#ccfbf1,stroke:#0d9488,color:#0f172a,stroke-width:1.4px;
+  class CAP_PAY s_capabilities__capabilities;
+  class DA_CARD_ACCOUNT,DA_SCREENING_OUTCOMES,DA_TRANSACTION s_data_assets__data_assets;
+  class P_DISPUTE_001,P_FRAUD_001,P_NETWORK_RECON_001,P_PAYMENTS_001,P_PAYMENTS_002,P_SERVICING_001,P_STMT_GEN_001,P_TPS_002 s_processes__processes;
+  class SYS_AUTH_SWITCH,SYS_SCREENING_EGRESS,SYS_SCREENING_FEDERATION,SYS_SCREENING_GATEWAY,SYS_SCREENING_VENDOR s_systems__systems;
+  class WP_SCREENING_ONBOARD s_work_packages__work_packages;
+  classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_Capability,grp_Data_Asset,grp_Process,grp_System,grp_Work_Package boundary1;

@@ -1,0 +1,56 @@
+@startuml
+' Card Servicing Service — Governance
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Card Servicing Service — Governance
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("policies", $bgColor="#fecaca", $borderColor="#dc2626", $fontColor="#0f172a", $legendText="policy")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_SERV, "Customer Servicing & Care", "Customer Servicing & Care. Level 0 enterprise capability domain (Core tier).", $tags="capabilities")
+  ' aac CAP_SERV: company_domain="Servicing"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_COMPLAINT_REG, "Complaint regulatory routing", "Complaints are classified to taxonomy, resolved to SLA, and routed to regulators where required; executive and regulator complaints carry expedited handling.", $tags="controls")
+  ' aac CTL_COMPLAINT_REG: company_domain=""
+  System(CTL_REGE_DETERM, "Dispute determination timeliness and notice", "Final dispute determinations, account adjustment, and the written explanation complete within the Reg E / Reg Z window; the clock is measured from claim receipt.", $tags="controls")
+  ' aac CTL_REGE_DETERM: company_domain=""
+  System(CTL_NOTICE_CONTENT, "Notice content and delivery evidence", "Required notices use legal-owned templates with version control, and delivery evidence is retained per notice.", $tags="controls")
+  ' aac CTL_NOTICE_CONTENT: company_domain=""
+  System(CTL_SCRA_MLA, "Servicemember protections screening", "SCRA and MLA eligibility is screened at origination and on notification, with rate and protection application evidenced.", $tags="controls")
+  ' aac CTL_SCRA_MLA: company_domain=""
+}
+Boundary(b_Policy, "Policy") {
+  System(POL_ERROR_RES, "Error Resolution & Billing Dispute Policy", $tags="policies")
+  ' aac POL_ERROR_RES: company_domain=""
+  System(POL_FAIR_LEND, "Fair Lending & Credit Decision Policy", $tags="policies")
+  ' aac POL_FAIR_LEND: company_domain=""
+  System(POL_MKT_UDAAP, "Marketing Review & UDAAP Policy", $tags="policies")
+  ' aac POL_MKT_UDAAP: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CARDSVC_API, "Card Servicing Service", "The service behind the Card Servicing API, backing the channel. Built with AKS · Card Servicing Cache.", $tags="systems")
+  ' aac SYS_CARDSVC_API: company_domain="Servicing"; hosting="Azure"; technology="AKS · Card Servicing Cache"
+}
+
+Rel(SYS_CARDSVC_API, CAP_SERV, "realizes")
+' aac rel: source="SYS_CARDSVC_API"; target="CAP_SERV"; label="realizes"; relation="system_realizes_capability"
+Rel(CAP_SERV, CTL_COMPLAINT_REG, "governed by")
+' aac rel: source="CAP_SERV"; target="CTL_COMPLAINT_REG"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_SERV, CTL_NOTICE_CONTENT, "governed by")
+' aac rel: source="CAP_SERV"; target="CTL_NOTICE_CONTENT"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_SERV, CTL_REGE_DETERM, "governed by")
+' aac rel: source="CAP_SERV"; target="CTL_REGE_DETERM"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_SERV, CTL_SCRA_MLA, "governed by")
+' aac rel: source="CAP_SERV"; target="CTL_SCRA_MLA"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CTL_COMPLAINT_REG, POL_MKT_UDAAP, "gives effect to")
+Rel(CTL_NOTICE_CONTENT, POL_ERROR_RES, "gives effect to")
+Rel(CTL_REGE_DETERM, POL_ERROR_RES, "gives effect to")
+Rel(CTL_SCRA_MLA, POL_FAIR_LEND, "gives effect to")
+
+SHOW_LEGEND()
+@enduml

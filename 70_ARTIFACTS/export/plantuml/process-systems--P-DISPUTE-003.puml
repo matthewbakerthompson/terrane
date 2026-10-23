@@ -1,0 +1,35 @@
+@startuml
+' Process representment and pre-arbitration — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Process representment and pre-arbitration — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_FRAUD_04, "Chargeback & Representment Processing", "Execute network chargeback and representment cycles.", $tags="capabilities")
+  ' aac CAP_FRAUD_04: company_domain="Servicing"
+}
+Boundary(b_Process, "Process") {
+  System(P_DISPUTE_003, "Process representment and pre-arbitration", "Evaluate merchant representment and pursue pre-arbitration where warranted. Representment evidence is weighed against the reason code requirements; pre-arbitration is pursued only where the economics and the evidence support it.", $tags="processes")
+  ' aac P_DISPUTE_003: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System_Ext(SYS_DISPUTES_SAAS, "Pega Smart Dispute", "Dispute Management Platform, provided by Pegasystems and running in the vendor tenancy. Built with Pegasystems.", $tags="systems")
+  ' aac SYS_DISPUTES_SAAS: company_domain="Servicing"; hosting="SaaS"; technology="Pegasystems"
+}
+
+Rel(P_DISPUTE_003, SYS_DISPUTES_SAAS, "Primary")
+' aac rel: source="P_DISPUTE_003"; target="SYS_DISPUTES_SAAS"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_DISPUTE_003, SYS_CORE_LEDGER, "Supporting")
+' aac rel: source="P_DISPUTE_003"; target="SYS_CORE_LEDGER"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DISPUTE_003, CAP_FRAUD_04, "supports")
+' aac rel: source="P_DISPUTE_003"; target="CAP_FRAUD_04"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

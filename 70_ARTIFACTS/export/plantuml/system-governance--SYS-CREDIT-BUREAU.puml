@@ -1,0 +1,46 @@
+@startuml
+' Experian Credit Bureau — Governance
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Experian Credit Bureau — Governance
+
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("policies", $bgColor="#fecaca", $borderColor="#dc2626", $fontColor="#0f172a", $legendText="policy")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Control, "Control") {
+  System(CTL_BUREAU_ACC, "Bureau furnishing accuracy", "Furnished tradeline data is reconciled to the system of record before transmission; consumer disputes update furnishing.", $tags="controls")
+  ' aac CTL_BUREAU_ACC: company_domain=""
+  System(CTL_METRO2_RECON, "Furnishing and bucketing reconciliation", "Delinquency bucketing and bureau furnishing reconcile to the system of record each cycle; unexplained movement blocks the file.", $tags="controls")
+  ' aac CTL_METRO2_RECON: company_domain=""
+  System(CTL_TPRM_DD, "Third-party due diligence before onboarding", "No supplier processes cardholder data before risk-tiered due diligence is complete and accepted.", $tags="controls")
+  ' aac CTL_TPRM_DD: company_domain=""
+}
+Boundary(b_Policy, "Policy") {
+  System(POL_FAIR_LEND, "Fair Lending & Credit Decision Policy", $tags="policies")
+  ' aac POL_FAIR_LEND: company_domain=""
+  System(POL_TPRM, "Third-Party Risk Management Policy", $tags="policies")
+  ' aac POL_TPRM: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_CREDIT_BUREAU, "Experian Credit Bureau", "External credit reference agency used for affordability and bureau search at application time. Reached over PrivateLink from the lending workload account. Built with Experian.", $tags="systems")
+  ' aac SYS_CREDIT_BUREAU: company_domain="Risk and Compliance"; hosting="SaaS"; technology="Experian"
+}
+
+Rel(SYS_CREDIT_BUREAU, CTL_BUREAU_ACC, "enforces")
+' aac rel: source="SYS_CREDIT_BUREAU"; target="CTL_BUREAU_ACC"; label="enforces"; relation="system_governed_by_control"
+Rel(SYS_CREDIT_BUREAU, CTL_METRO2_RECON, "enforces")
+' aac rel: source="SYS_CREDIT_BUREAU"; target="CTL_METRO2_RECON"; label="enforces"; relation="system_governed_by_control"
+Rel(SYS_CREDIT_BUREAU, CTL_TPRM_DD, "enforces")
+' aac rel: source="SYS_CREDIT_BUREAU"; target="CTL_TPRM_DD"; label="enforces"; relation="system_governed_by_control"
+Rel(SYS_CREDIT_BUREAU, POL_FAIR_LEND, "subject to")
+' aac rel: source="SYS_CREDIT_BUREAU"; target="POL_FAIR_LEND"; label="subject to"; relation="system_subject_to_policy"
+Rel(SYS_CREDIT_BUREAU, POL_TPRM, "subject to")
+' aac rel: source="SYS_CREDIT_BUREAU"; target="POL_TPRM"; label="subject to"; relation="system_subject_to_policy"
+Rel(CTL_BUREAU_ACC, POL_FAIR_LEND, "gives effect to")
+Rel(CTL_METRO2_RECON, POL_FAIR_LEND, "gives effect to")
+Rel(CTL_TPRM_DD, POL_TPRM, "gives effect to")
+
+SHOW_LEGEND()
+@enduml

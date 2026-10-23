@@ -1,0 +1,64 @@
+# A bought capability on the Google Cloud side. Point-of-sale finance decides
+# at the checkout, and an affordability check that waits for payslips does
+# not; open banking gives the shopper's bank data in the time the decision
+# has. The vendor is reached over Private Service Connect and calls back with
+# the result, which is the vendor shape's private path and webhook return,
+# resolved against Google Cloud for the first time.
+product_id: PRD-OB-AFFORDABILITY
+name: Open Banking Affordability
+description: >
+  Affordability assessment from the shopper's own bank data, with consent,
+  in the seconds a point-of-sale decision has. Bought rather than built; the
+  vendor runs the open banking connections and the categorization, we send
+  the consent and receive the assessment. Restricted from the first byte, so
+  the path to the vendor is private.
+status: Planned
+owner_org_id: ORG-LENDING
+criticality: Medium
+product_category: Vendor capability
+company_domain: Lending
+launch_date: 2027-12-01
+
+build_type: bought-saas
+archetype: vendor-saas-service-gcp
+parameters:
+  slug: obaff
+  product_name: Open Banking Affordability
+  vendor: TrueLayer
+  owner_org: ORG-LENDING
+  domain: Lending
+  upstream_system: SYS-POSFIN-API
+  account: gcp-lending-prod
+  region: europe-west2
+  criticality: Medium
+  classification: Restricted
+
+overrides:
+  SYS-OBAFF-VENDOR:
+    description: >
+      Open banking data access and affordability categorization, operated by
+      TrueLayer in their own tenancy under the UK open banking framework;
+      bank data is held for the assessment and deleted at the vendor once the
+      result is returned.
+
+# Restricted data from the first byte: the systems of ours record the
+# controls they run under, and the vendor is subject to the policies that
+# govern a third party holding consumer bank data for a credit decision.
+extra:
+  relations:
+    system_governed_by_control:
+      - system_id: SYS-OBAFF-GATEWAY
+        control_id: CTL-TPRM-DD
+      - system_id: SYS-OBAFF-GATEWAY
+        control_id: CTL-PRIV-REQ
+      - system_id: SYS-OBAFF-EGRESS
+        control_id: CTL-ACCESS-CERT
+      - system_id: SYS-OBAFF-WEBHOOKS
+        control_id: CTL-IR-PLAYBOOK
+    # The part already makes the vendor subject to the third-party policy;
+    # these two are the ones this product adds.
+    system_subject_to_policy:
+      - system_id: SYS-OBAFF-VENDOR
+        policy_id: POL-PRIVACY
+      - system_id: SYS-OBAFF-VENDOR
+        policy_id: POL-FAIR-LEND

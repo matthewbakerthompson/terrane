@@ -1,0 +1,31 @@
+# The second live product moved onto a shape, and the first onto one built
+# on no blocks. Customer 360 is the product the batch shape was written
+# from -- the shape's templates are these records with the name made a
+# parameter -- so the slug `cust360` makes exactly the ids the estate had,
+# and the controls, the flows and the planned feed to regulatory reporting
+# that point at them did not change. What the shape's defaults get wrong
+# about it: the two interfaces are batch rather than request-response, and
+# the data is Restricted rather than the shape's Confidential.
+product_id: PRD-CUSTOMER-360
+name: Customer 360
+description: Curated single view of the customer for analytics and servicing.
+status: Active
+owner_org_id: ORG-DATAENG
+criticality: Medium
+product_category: Data product
+company_domain: Data and Analytics
+
+build_type: data-product
+archetype: batch-data-product
+parameters:
+  slug: cust360
+  product_name: Customer 360
+  owner_org: ORG-DATAENG
+  domain: Data and Analytics
+  classification: Restricted
+
+overrides:
+  INT-CUST360-INGEST:
+    integration_style: Batch
+  INT-CUST360-PIPE-SEMANTIC:
+    integration_style: Batch

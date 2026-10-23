@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://architecture-as-code/schemas/connection.schema.json",
+  "title": "Connection kind",
+  "description": "A way two systems are connected here, or a list of them in one file.",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "connection_id",
+        "name",
+        "integration_style",
+        "protocols"
+      ],
+      "properties": {
+        "connection_id": {
+          "type": "string"
+        },
+        "replaces": {
+          "type": "string",
+          "description": "This record's own id, said to stand in for the record of that id in a library read before this one. Without it a second record of an id is an error."
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "integration_style": {
+          "enum": [
+            "Request-response",
+            "Event",
+            "Batch"
+          ]
+        },
+        "protocols": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          },
+          "description": "An interface over any of these, in this style, is of this kind; the first is proposed."
+        },
+        "auth_methods": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The first is what a new connection of the kind is proposed with."
+        },
+        "frequency": {
+          "type": "string"
+        },
+        "direction": {
+          "type": "string"
+        },
+        "patterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "From 27_PATTERNS: how this kind of connection is built here."
+        }
+      }
+    },
+    {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "connection_id",
+          "name",
+          "integration_style",
+          "protocols"
+        ],
+        "properties": {
+          "connection_id": {
+            "type": "string"
+          },
+          "replaces": {
+            "type": "string",
+            "description": "This record's own id, said to stand in for the record of that id in a library read before this one. Without it a second record of an id is an error."
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "integration_style": {
+            "enum": [
+              "Request-response",
+              "Event",
+              "Batch"
+            ]
+          },
+          "protocols": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "description": "An interface over any of these, in this style, is of this kind; the first is proposed."
+          },
+          "auth_methods": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The first is what a new connection of the kind is proposed with."
+          },
+          "frequency": {
+            "type": "string"
+          },
+          "direction": {
+            "type": "string"
+          },
+          "patterns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "From 27_PATTERNS: how this kind of connection is built here."
+          }
+        }
+      }
+    }
+  ]
+}

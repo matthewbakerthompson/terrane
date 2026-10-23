@@ -1,0 +1,24 @@
+# Patterns for where data goes to be asked questions of.
+
+- pattern_id: analytics-landing-zone
+  name: Analytics landing zone
+  status: Approved
+  category: Data
+  blocks: [analytics-platform, data-governance]
+  intent: >
+    Data lands once, in object storage, and everything analytical is built
+    from that landing: pipelines into a warehouse, reporting on top, and a
+    catalog that records what each dataset is and where it came from. The
+    boundary between landing and warehouse is where lineage is either
+    recorded or lost, so the pattern makes it a step rather than a leap.
+  consequences: >
+    A second copy of every operational dataset, with its own classification,
+    retention and masking obligations, and its own owner who is usually not
+    the operational one. The catalog is only worth having if registration is
+    part of landing rather than a task for later, which means the pipeline
+    has to refuse a dataset nobody has described.
+  when_not_to_use: >
+    A single operational report from a single system, which is a query, not
+    a platform. Data that must not leave its source system's classification
+    boundary, where landing it elsewhere is the control failure.
+  method_ref: PAT-005

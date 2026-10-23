@@ -1,0 +1,68 @@
+# Servicing client portal — Processes and Capabilities
+
+One system, every process that uses it and in what role, and the capabilities those processes support. This shows the business impact of changing the system. A long list against a low criticality rating is worth a second look.
+
+```mermaid
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Servicing client portal — Processes and Capabilities
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Capability["Capability"]
+    direction LR
+    CAP_TPS_05{{"Client Audit & Oversight<br/>Support"}}
+    CAP_TPS_04{{"Client Billing & Revenue<br/>Management"}}
+    CAP_TPS_03{{"Client Reporting & Data<br/>Exchange"}}
+    CAP_TPS_06{{"Client-Directed Change<br/>Management"}}
+    CAP_DATA_02{{"Data Sourcing &<br/>Integration"}}
+  end
+
+  subgraph grp_Process["Process"]
+    direction LR
+    P_TPS_006[\"Bill client servicing fees"/]
+    P_TPS_005[\"Exchange client data feed"/]
+    P_TPS_008[\"Intake and deliver<br/>client-directed change"/]
+    P_TPS_004[\"Produce contracted client<br/>reporting"/]
+    P_TPS_007[\"Support client audit or<br/>examination"/]
+  end
+
+  subgraph grp_System["System"]
+    direction LR
+    SYS_CLIENT_PORTAL["Servicing client portal"]
+  end
+
+  P_TPS_004 -->|"Primary"| SYS_CLIENT_PORTAL
+  P_TPS_005 -->|"Primary"| SYS_CLIENT_PORTAL
+  P_TPS_006 -->|"Supporting"| SYS_CLIENT_PORTAL
+  P_TPS_007 -->|"Supporting"| SYS_CLIENT_PORTAL
+  P_TPS_008 -->|"Supporting"| SYS_CLIENT_PORTAL
+  P_TPS_004 -->|"supports"| CAP_TPS_03
+  P_TPS_005 -->|"supports"| CAP_TPS_03
+  P_TPS_005 -->|"supports"| CAP_DATA_02
+  P_TPS_006 -->|"supports"| CAP_TPS_04
+  P_TPS_007 -->|"supports"| CAP_TPS_05
+  P_TPS_008 -->|"supports"| CAP_TPS_06
+
+  classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
+  classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  class CAP_DATA_02,CAP_TPS_03,CAP_TPS_04,CAP_TPS_05,CAP_TPS_06 s_capabilities__capabilities;
+  class P_TPS_004,P_TPS_005,P_TPS_006,P_TPS_007,P_TPS_008 s_processes__processes;
+  class SYS_CLIENT_PORTAL s_systems__systems;
+  classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_Capability,grp_Process,grp_System boundary1;
+```
+
+The same view as the app draws it, written beside the Mermaid by `terrane render`:
+
+![Servicing client portal — Processes and Capabilities](../svg/system-processes--sys-client-portal.svg)
+
+**Hue is the entity type.**
+
+| | Entity type |
+|---|---|
+| `#6d28d9` | capabilities |
+| `#0369a1` | processes |
+| `#4338ca` | systems |
+
+11 entities, 11 relationships. Generated from the model; edit the model, not this file.

@@ -1,0 +1,28 @@
+# A product on a shipped shape, from one file.
+#
+# The shape brings what a digital product on the Azure landing zone is made
+# of: the API, the web and mobile channels, the operational database, the
+# event publisher, the platform services each runs on, the data it masters.
+# The file says which product it is and adds the one part the shape does not
+# carry: the worker that fulfills a redemption after the response. What the
+# shape asks for and the file leaves out (the owner, the slug, the account)
+# is answered and said in a note; write it under `parameters` to choose.
+# `terrane draw --library` lists the shapes, the kits and the parts.
+model:
+  name: Rewards, on a shape
+products:
+  - product_id: PRD-REWARDS
+    name: Rewards Redemption
+    company_domain: Card Issuing
+    archetype: azure-digital-product
+    parameters:
+      account: azure-cards-prod
+    modules:
+      - module: async-worker
+views:
+  - use: product-architecture
+    with: {product: PRD-REWARDS}
+  - use: product-parts
+    with: {product: PRD-REWARDS}
+  - use: onboarding
+    with: {product: PRD-REWARDS}

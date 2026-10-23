@@ -1,0 +1,86 @@
+@startuml
+' Card Servicing in Context
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Card Servicing in Context
+
+AddElementTag("offered_interfaces", $bgColor="#e6ecff", $borderColor="#6366f1", $fontColor="#0f172a", $legendText="offered interface")
+AddElementTag("products", $bgColor="#fbcfe8", $borderColor="#be185d", $fontColor="#0f172a", $legendText="product")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddRelTag("api-call", $legendText="API call")
+AddRelTag("event", $legendText="Event on the bus")
+AddRelTag("own-datastore", $legendText="Its own datastore")
+AddRelTag("queued-request", $legendText="Request on a queue")
+AddRelTag("scheduled-file", $legendText="Scheduled file")
+
+Boundary(b_Card_Issuing, "Card Issuing") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(OI_LEDGER_QUEUE, "Core Ledger request queue", "Postings, holds and balance requests put on the ledger's MQ request queue, answered on the reply queue in the order they arrived. Built with MQ.", $tags="offered_interfaces")
+  ' aac OI_LEDGER_QUEUE: company_domain="Card Issuing"; technology="MQ"
+}
+Boundary(b_Data_and_Analytics, "Data and Analytics") {
+  System(SYS_DATA_INGEST, "Enterprise Data Ingestion Hub", "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse. Built with Service Bus · Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_DATA_INGEST: company_domain="Data and Analytics"; hosting="Azure"; technology="Service Bus · Snowflake Data Cloud"
+}
+Boundary(b_Enterprise_Platform, "Enterprise Platform") {
+  System(OI_IDENTITY_API, "Customer Identity API", "Customer authentication and the profile behind it, for every product that signs a customer in. Built with HTTPS.", $tags="offered_interfaces")
+  ' aac OI_IDENTITY_API: company_domain="Enterprise Platform"; technology="HTTPS"
+  System(SYS_IDENTITY_SVC, "Customer Identity Service", "Shared platform service: Customer Identity Service. Built with AKS.", $tags="systems")
+  ' aac SYS_IDENTITY_SVC: company_domain="Enterprise Platform"; hosting="Azure"; technology="AKS"
+}
+Boundary(b_Servicing, "Servicing") {
+  System(PRD_CARD_SERVICING, "Card Servicing", "Self-service balance, statement, limit and payment servicing for cardholders.", $tags="products")
+  ' aac PRD_CARD_SERVICING: company_domain="Servicing"
+  System(OI_CARDSVC_API, "Card Servicing API", "The domain API Card Servicing offers its channels, its jobs and its partners. Built with HTTPS.", $tags="offered_interfaces")
+  ' aac OI_CARDSVC_API: company_domain="Servicing"; technology="HTTPS"
+  System(SYS_CARDSVC_STORE, "Card Servicing Datastore", "Operational datastore owned by Card Servicing. Built with Azure SQL.", $tags="systems")
+  ' aac SYS_CARDSVC_STORE: company_domain="Servicing"; hosting="Azure"; technology="Azure SQL"
+  System(SYS_CARDSVC_EVENTS, "Card Servicing Event Publisher", "Publishes Card Servicing domain events onto the enterprise bus. Built with Service Bus.", $tags="systems")
+  ' aac SYS_CARDSVC_EVENTS: company_domain="Servicing"; hosting="Azure"; technology="Service Bus"
+  System(SYS_CARDSVC_API, "Card Servicing Service", "The service behind the Card Servicing API, backing the channel. Built with AKS · Card Servicing Cache.", $tags="systems")
+  ' aac SYS_CARDSVC_API: company_domain="Servicing"; hosting="Azure"; technology="AKS · Card Servicing Cache"
+  System(SYS_CARDSVC_WEB, "Card Servicing Web", "Browser front end for Card Servicing. Built with AKS.", $tags="systems")
+  ' aac SYS_CARDSVC_WEB: company_domain="Servicing"; hosting="Azure"; technology="AKS"
+}
+System(SYS_MOBILE, "Cardholder mobile application", "Cardholder mobile self-service.", $tags="systems")
+' aac SYS_MOBILE: company_domain=""
+System(SYS_IVR, "IVR and self-service voice", "Interactive voice response and voice self-service.", $tags="systems")
+' aac SYS_IVR: company_domain=""
+
+Rel(PRD_CARD_SERVICING, SYS_CARDSVC_API, "includes")
+' aac rel: source="PRD_CARD_SERVICING"; target="SYS_CARDSVC_API"; label="includes"; relation="product_includes_system"
+Rel(PRD_CARD_SERVICING, SYS_CARDSVC_WEB, "includes")
+' aac rel: source="PRD_CARD_SERVICING"; target="SYS_CARDSVC_WEB"; label="includes"; relation="product_includes_system"
+Rel(PRD_CARD_SERVICING, SYS_CARDSVC_STORE, "includes")
+' aac rel: source="PRD_CARD_SERVICING"; target="SYS_CARDSVC_STORE"; label="includes"; relation="product_includes_system"
+Rel(PRD_CARD_SERVICING, SYS_CARDSVC_EVENTS, "includes")
+' aac rel: source="PRD_CARD_SERVICING"; target="SYS_CARDSVC_EVENTS"; label="includes"; relation="product_includes_system"
+Rel(SYS_MOBILE, OI_CARDSVC_API, "Cardholder Mobile to Card Servicing API", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_MOBILE"; target="OI_CARDSVC_API"; label="Cardholder Mobile to Card Servicing API"; interface_id="INT-MOBILE-CARDSVC"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="api-front-door"; offered_interface_id="OI-CARDSVC-API"
+Rel(SYS_IVR, OI_CARDSVC_API, "IVR to Card Servicing API", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_IVR"; target="OI_CARDSVC_API"; label="IVR to Card Servicing API"; interface_id="INT-IVR-CARDSVC"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="contact-center-integration;api-front-door"; offered_interface_id="OI-CARDSVC-API"
+Rel(SYS_CARDSVC_API, OI_IDENTITY_API, "Card Servicing Service to Identity Service", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CARDSVC_API"; target="OI_IDENTITY_API"; label="Card Servicing Service to Identity Service"; interface_id="INT-CARDSVC-API-IDENTITY"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-IDENTITY-API"
+Rel(SYS_CARDSVC_API, OI_LEDGER_QUEUE, "Card Servicing Service to Core Ledger", "MQ", $tags="queued-request")
+' aac rel: source="SYS_CARDSVC_API"; target="OI_LEDGER_QUEUE"; label="Card Servicing Service to Core Ledger"; interface_id="INT-CARDSVC-API-LEDGER"; kind="queued-request"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-LEDGER-QUEUE"
+Rel(SYS_CARDSVC_EVENTS, SYS_DATA_INGEST, "Card Servicing Events to Data Ingestion Hub", "AMQP", $tags="event")
+' aac rel: source="SYS_CARDSVC_EVENTS"; target="SYS_DATA_INGEST"; label="Card Servicing Events to Data Ingestion Hub"; interface_id="INT-CARDSVC-EVENTS-INGEST"; kind="event"; integration_style="Event"; auth_method="ManagedIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_CORE_LEDGER, SYS_DATA_INGEST, "Core Ledger to Data Ingestion Hub", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_DATA_INGEST"; label="Core Ledger to Data Ingestion Hub"; interface_id="INT-LEDGER-INGEST"; kind="scheduled-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Outbound"
+Rel(SYS_CARDSVC_WEB, OI_CARDSVC_API, "Card Servicing Web to API", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CARDSVC_WEB"; target="OI_CARDSVC_API"; label="Card Servicing Web to API"; interface_id="INT-CARDSVC-WEB-API"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-CARDSVC-API"
+Rel(SYS_CARDSVC_API, SYS_CARDSVC_STORE, "Card Servicing Service to Datastore", "TDS", $tags="own-datastore")
+' aac rel: source="SYS_CARDSVC_API"; target="SYS_CARDSVC_STORE"; label="Card Servicing Service to Datastore"; interface_id="INT-CARDSVC-API-STORE"; kind="own-datastore"; integration_style="Request-response"; auth_method="ManagedIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_CARDSVC_API, SYS_CARDSVC_EVENTS, "Card Servicing Service to Event Publisher", "AMQP", $tags="event")
+' aac rel: source="SYS_CARDSVC_API"; target="SYS_CARDSVC_EVENTS"; label="Card Servicing Service to Event Publisher"; interface_id="INT-CARDSVC-API-EVENTS"; kind="event"; integration_style="Event"; auth_method="ManagedIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(OI_CARDSVC_API, SYS_CARDSVC_API, "offered by")
+' aac rel: source="OI_CARDSVC_API"; target="SYS_CARDSVC_API"; label="offered by"; field="system_id"
+Rel(OI_IDENTITY_API, SYS_IDENTITY_SVC, "offered by")
+' aac rel: source="OI_IDENTITY_API"; target="SYS_IDENTITY_SVC"; label="offered by"; field="system_id"
+Rel(OI_LEDGER_QUEUE, SYS_CORE_LEDGER, "offered by")
+' aac rel: source="OI_LEDGER_QUEUE"; target="SYS_CORE_LEDGER"; label="offered by"; field="system_id"
+
+SHOW_LEGEND()
+@enduml

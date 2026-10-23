@@ -1,0 +1,72 @@
+@startuml
+' NICE Actimize Screening — Onboarding
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title NICE Actimize Screening — Onboarding
+
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddRelTag("api-call", $legendText="API call")
+AddRelTag("event-over-https", $legendText="Event over HTTPS")
+AddRelTag("partner-file", $legendText="Partner file")
+AddRelTag("private-egress", $legendText="Private path to a vendor")
+AddRelTag("sign-on-federation", $legendText="Sign-on federation")
+
+Boundary(b_AWS, "AWS") {
+  Boundary(b_AWS__prod_riskops, "account prod-riskops") {
+    Boundary(b_AWS__prod_riskops__eu_west_2, "region eu-west-2") {
+      Boundary(b_AWS__prod_riskops__eu_west_2__Private_App, "Private-App") {
+        System(SYS_SCREENING_GATEWAY, "NICE Actimize Screening Integration Gateway", "Our side of the NICE Actimize integration: request mapping, retry and back-off, circuit breaking when the vendor is down, and the audit trail of what we sent them. Built with EKS.", $tags="systems")
+        ' aac SYS_SCREENING_GATEWAY: company_domain="Risk and Compliance"; hosting="AWS"; technology="EKS"
+      }
+      Boundary(b_AWS__prod_riskops__eu_west_2__Shared_Services, "Shared-Services") {
+        System(SYS_SCREENING_FEDERATION, "NICE Actimize Screening Identity Federation", "Single sign-on into NICE Actimize: assertions from our identity provider, so access is granted and revoked where the joiner and leaver process already runs.", $tags="systems")
+        ' aac SYS_SCREENING_FEDERATION: company_domain="Enterprise Platform"; hosting="AWS"
+        System(SYS_SCREENING_EGRESS, "NICE Actimize Screening Private Egress", "PrivateLink endpoint and egress allow-list for NICE Actimize. The control that keeps regulated data off the public internet, and the thing a security review asks to see first.", $tags="systems")
+        ' aac SYS_SCREENING_EGRESS: company_domain="Enterprise Platform"; hosting="AWS"
+      }
+    }
+  }
+}
+Boundary(b_Azure, "Azure") {
+  Boundary(b_Azure__azure_data_prod, "subscription azure-data-prod") {
+    Boundary(b_Azure__azure_data_prod__uksouth, "region uksouth") {
+      Boundary(b_Azure__azure_data_prod__uksouth__Private_Data, "Private-Data") {
+        System(SYS_DATA_INGEST, "Enterprise Data Ingestion Hub", "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse. Built with Service Bus · Snowflake Data Cloud.", $tags="systems")
+        ' aac SYS_DATA_INGEST: company_domain="Data and Analytics"; hosting="Azure"; technology="Service Bus · Snowflake Data Cloud"
+      }
+    }
+  }
+}
+Boundary(b_On_prem, "On-prem") {
+  System(SYS_AUTH_SWITCH, "Authorization Switch", "Real-time card authorization switch connected to the scheme networks.", $tags="systems")
+  ' aac SYS_AUTH_SWITCH: company_domain="Payments"; hosting="On-prem"
+}
+Boundary(b_SaaS, "SaaS") {
+  Boundary(b_SaaS__Edge, "Edge") {
+    System_Ext(SYS_SIEM, "Security Monitoring", "Security information and event management: the audit trails of the estate and of every bought service, correlated in one place, and the console the incident response playbook runs from. Built with Microsoft Sentinel.", $tags="systems")
+    ' aac SYS_SIEM: company_domain="Enterprise Platform"; hosting="SaaS"; technology="Microsoft Sentinel"
+  }
+  Boundary(b_SaaS__eu_west_1, "region eu-west-1") {
+    Boundary(b_SaaS__eu_west_1__Edge, "Edge") {
+      System_Ext(SYS_SCREENING_VENDOR, "NICE Actimize Screening", "Financial Crime Screening, operated by NICE Actimize in their own tenancy. Contractually pinned to EU processing; the DPA restricts sub-processors and sets a 90-day retention ceiling. Built with NICE Actimize.", $tags="systems")
+      ' aac SYS_SCREENING_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="NICE Actimize"
+    }
+  }
+}
+
+Rel(SYS_AUTH_SWITCH, SYS_SCREENING_GATEWAY, "SYS-AUTH-SWITCH to NICE Actimize Screening Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_AUTH_SWITCH"; target="SYS_SCREENING_GATEWAY"; label="SYS-AUTH-SWITCH to NICE Actimize Screening Gateway"; interface_id="INT-SCREENING-CALLER-GATEWAY"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_SCREENING_FEDERATION, SYS_SCREENING_VENDOR, "Identity Federation to NICE Actimize", "SAML", $tags="sign-on-federation")
+' aac rel: source="SYS_SCREENING_FEDERATION"; target="SYS_SCREENING_VENDOR"; label="Identity Federation to NICE Actimize"; interface_id="INT-SCREENING-FEDERATION-VENDOR"; kind="sign-on-federation"; integration_style="Request-response"; auth_method="Certificate"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_SCREENING_VENDOR, SYS_SIEM, "NICE Actimize audit log to security monitoring", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_SCREENING_VENDOR"; target="SYS_SIEM"; label="NICE Actimize audit log to security monitoring"; interface_id="INT-SCREENING-VENDOR-AUDIT"; kind="event-over-https"; integration_style="Event"; auth_method="Token"; frequency="Realtime"; direction="Inbound"
+Rel(SYS_SCREENING_GATEWAY, SYS_SCREENING_EGRESS, "NICE Actimize Screening Gateway to Private Egress", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_SCREENING_GATEWAY"; target="SYS_SCREENING_EGRESS"; label="NICE Actimize Screening Gateway to Private Egress"; interface_id="INT-SCREENING-GATEWAY-EGRESS"; kind="api-call"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_SCREENING_EGRESS, SYS_SCREENING_VENDOR, "Private Egress to NICE Actimize", "PrivateLink", $tags="private-egress")
+' aac rel: source="SYS_SCREENING_EGRESS"; target="SYS_SCREENING_VENDOR"; label="Private Egress to NICE Actimize"; interface_id="INT-SCREENING-EGRESS-VENDOR"; kind="private-egress"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_SCREENING_VENDOR, SYS_DATA_INGEST, "NICE Actimize return feed", "SFTP", $tags="partner-file")
+' aac rel: source="SYS_SCREENING_VENDOR"; target="SYS_DATA_INGEST"; label="NICE Actimize return feed"; interface_id="INT-SCREENING-VENDOR-RETURN"; kind="partner-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Inbound"
+
+SHOW_LEGEND()
+@enduml

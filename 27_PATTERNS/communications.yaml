@@ -1,0 +1,58 @@
+# Patterns for what the customer is told, and for what the customer says back.
+
+- pattern_id: customer-communication-archive
+  name: Customer communications through one archive
+  status: Approved
+  category: Communications
+  blocks: [document-services]
+  intent: >
+    Every statement, notice and letter is generated from a reviewed template
+    by one service, delivered through it, and archived by it with the
+    evidence of delivery beside the document. The systems that decide a
+    communication is due say so and hand over the facts; they never render
+    or send. The question an examiner asks, "show me what this customer was
+    told and when", has one place to be answered from.
+  consequences: >
+    One service is on the path of every regulated communication and on the
+    schedule of every cycle, so its backlog is everyone's backlog and its
+    outage is a notice-timing finding for every product at once. Templates
+    are governed artifacts with a review process, which is slower than a
+    developer editing a string, and that is the point. The archive grows
+    forever at the pace of the retention schedule and is the single largest
+    store in the estate within a few years.
+  when_not_to_use: >
+    Operational messages with no regulatory content and no retention
+    requirement, such as a one-time passcode or a delivery notification,
+    which the archive would keep for seven years for no reason anyone can
+    name. Communications a vendor is contracted to produce and archive,
+    where the pattern applies to the evidence we receive back and not to the
+    production.
+  method_ref: PAT-016
+
+- pattern_id: contact-center-integration
+  name: Contact center through the servicing gateway
+  status: Approved
+  category: Communications
+  blocks: [contact-channel]
+  intent: >
+    The voice self-service and the agent desktop reach customer and account
+    data through the same gateway the digital channels use, with the same
+    authentication policy, so a cardholder is verified once and the context
+    follows the call from the voice menu to the agent. Contact outcomes,
+    complaints among them, are written back as events the servicing systems
+    consume, which is how a complaint reaches the regulatory register
+    without a person re-keying it.
+  consequences: >
+    The gateway's latency is now audible: a screen that takes two seconds to
+    populate is two seconds of silence on a call. Call context has to be
+    carried across a transfer, which means a session the telephony and the
+    servicing systems both understand, and nobody's telephony came with
+    one. Every outcome written back is a classification decision made by an
+    agent under time pressure, and the register inherits its quality.
+  when_not_to_use: >
+    An outsourced contact center that works inside its own desktop with our
+    data exported to it, where the integration is a vendor file exchange
+    and pretending it is this pattern hides where the data went. Outbound
+    campaigns with no servicing component, which are a marketing channel
+    and belong to the marketing platform's rules.
+  method_ref: PAT-018

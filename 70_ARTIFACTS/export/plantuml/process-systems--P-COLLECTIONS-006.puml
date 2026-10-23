@@ -1,0 +1,46 @@
+@startuml
+' Handle credit reporting dispute — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Handle credit reporting dispute — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_COLL_08, "Credit Bureau Reporting & Dispute Handling", "Furnish data to bureaus and handle consumer reporting disputes.", $tags="capabilities")
+  ' aac CAP_COLL_08: company_domain="Collections"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_METRO2_RECON, "Furnishing and bucketing reconciliation", "Delinquency bucketing and bureau furnishing reconcile to the system of record each cycle; unexplained movement blocks the file.", $tags="controls")
+  ' aac CTL_METRO2_RECON: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_COLLECTIONS_006, "Handle credit reporting dispute", "Investigate and respond to a consumer credit reporting dispute within the required period. Direct and bureau-routed disputes both land here; FCRA sets the investigation window, and the outcome must correct both the bureau file and the account when the consumer is right.", $tags="processes")
+  ' aac P_COLLECTIONS_006: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_BUREAU_GW, "Credit bureau gateway", "Credit bureau furnishing and consumer dispute exchange.", $tags="systems")
+  ' aac SYS_BUREAU_GW: company_domain=""
+  System_Ext(SYS_CRM, "Dynamics 365 Customer Service", "Contact center desktop and case management for servicing agents. Built with Microsoft.", $tags="systems")
+  ' aac SYS_CRM: company_domain="Servicing"; hosting="SaaS"; technology="Microsoft"
+}
+
+Rel(P_COLLECTIONS_006, SYS_BUREAU_GW, "Primary")
+' aac rel: source="P_COLLECTIONS_006"; target="SYS_BUREAU_GW"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_COLLECTIONS_006, SYS_CORE_LEDGER, "Supporting")
+' aac rel: source="P_COLLECTIONS_006"; target="SYS_CORE_LEDGER"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COLLECTIONS_006, SYS_CRM, "Supporting")
+' aac rel: source="P_COLLECTIONS_006"; target="SYS_CRM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COLLECTIONS_006, CTL_METRO2_RECON, "governed by")
+' aac rel: source="P_COLLECTIONS_006"; target="CTL_METRO2_RECON"; label="governed by"; relation="process_governed_by_control"
+Rel(P_COLLECTIONS_006, CAP_COLL_08, "supports")
+' aac rel: source="P_COLLECTIONS_006"; target="CAP_COLL_08"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

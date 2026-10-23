@@ -1,0 +1,42 @@
+@startuml
+' Issue debt validation notice — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Issue debt validation notice — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_COLL_07, "Collections Compliance Oversight", "Assure conformance with debt collection, contact, and state-law requirements.", $tags="capabilities")
+  ' aac CAP_COLL_07: company_domain="Collections"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_FDCPA_NOTICE, "Statutory collections notices", "Validation and other statutory notices issue within the prescribed period with content owned by legal; continued collection is blocked until issued.", $tags="controls")
+  ' aac CTL_FDCPA_NOTICE: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_COLLECTIONS_007, "Issue debt validation notice", "Generate and deliver the required validation notice within the prescribed period. The validation notice is a statutory precondition to continued collection on affected accounts; timing and content mistakes surface directly as regulatory findings.", $tags="processes")
+  ' aac P_COLLECTIONS_007: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_COLLECT_API, "Collections Workspace Service", "The service behind the Collections Workspace API, backing the channel. Built with AKS · Collections Workspace Cache.", $tags="systems")
+  ' aac SYS_COLLECT_API: company_domain="Collections"; hosting="Azure"; technology="AKS · Collections Workspace Cache"
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+}
+
+Rel(P_COLLECTIONS_007, SYS_DOC, "Primary")
+' aac rel: source="P_COLLECTIONS_007"; target="SYS_DOC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_COLLECTIONS_007, SYS_COLLECT_API, "Supporting")
+' aac rel: source="P_COLLECTIONS_007"; target="SYS_COLLECT_API"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COLLECTIONS_007, CTL_FDCPA_NOTICE, "governed by")
+' aac rel: source="P_COLLECTIONS_007"; target="CTL_FDCPA_NOTICE"; label="governed by"; relation="process_governed_by_control"
+Rel(P_COLLECTIONS_007, CAP_COLL_07, "supports")
+' aac rel: source="P_COLLECTIONS_007"; target="CAP_COLL_07"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

@@ -1,0 +1,2724 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://architecture-as-code/schemas/import_mapping.schema.json",
+  "title": "Import mapping",
+  "description": "How an inventory's columns, values and codes become the model's, for terrane import csv --map.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "description": {
+      "type": "string"
+    },
+    "systems": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entry"
+        }
+      ],
+      "properties": {
+        "columns": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "anyOf": [
+                  {
+                    "const": "system_id"
+                  },
+                  {
+                    "$ref": "#/$defs/systems-fields"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "const": "system_id"
+                    },
+                    {
+                      "$ref": "#/$defs/systems-fields"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "values": {
+          "propertyNames": {
+            "$ref": "#/$defs/systems-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-values"
+            }
+          ],
+          "properties": {
+            "owner_org_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "criticality": {
+              "$ref": "#/$defs/criticality-values"
+            },
+            "service_tier": {
+              "$ref": "#/$defs/service_tier-values"
+            },
+            "hosting": {
+              "$ref": "#/$defs/hosting-values"
+            },
+            "environment": {
+              "$ref": "#/$defs/environment-values"
+            },
+            "data_classification_supported": {
+              "$ref": "#/$defs/data_classification_supported-values"
+            },
+            "cloud_provider": {
+              "$ref": "#/$defs/cloud_provider-values"
+            },
+            "network_zone": {
+              "$ref": "#/$defs/network_zone-values"
+            },
+            "resilience": {
+              "$ref": "#/$defs/resilience-values"
+            }
+          }
+        },
+        "defaults": {
+          "propertyNames": {
+            "$ref": "#/$defs/systems-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-defaults"
+            }
+          ],
+          "properties": {
+            "owner_org_id": {
+              "$ref": "#/$defs/id"
+            },
+            "criticality": {
+              "$ref": "#/$defs/criticality"
+            },
+            "service_tier": {
+              "$ref": "#/$defs/service_tier"
+            },
+            "hosting": {
+              "$ref": "#/$defs/hosting"
+            },
+            "environment": {
+              "$ref": "#/$defs/environment"
+            },
+            "data_classification_supported": {
+              "$ref": "#/$defs/data_classification_supported"
+            },
+            "cloud_provider": {
+              "$ref": "#/$defs/cloud_provider"
+            },
+            "network_zone": {
+              "$ref": "#/$defs/network_zone"
+            },
+            "resilience": {
+              "$ref": "#/$defs/resilience"
+            }
+          }
+        }
+      }
+    },
+    "interfaces": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entry"
+        }
+      ],
+      "properties": {
+        "columns": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "anyOf": [
+                  {
+                    "const": "interface_id"
+                  },
+                  {
+                    "$ref": "#/$defs/interfaces-fields"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "const": "interface_id"
+                    },
+                    {
+                      "$ref": "#/$defs/interfaces-fields"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "values": {
+          "propertyNames": {
+            "$ref": "#/$defs/interfaces-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-values"
+            }
+          ],
+          "properties": {
+            "source_system_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "target_system_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "owner_org_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "integration_style": {
+              "$ref": "#/$defs/integration_style-values"
+            },
+            "data_classification": {
+              "$ref": "#/$defs/data_classification_supported-values"
+            },
+            "offered_interface_id": {
+              "$ref": "#/$defs/id-values"
+            }
+          }
+        },
+        "defaults": {
+          "propertyNames": {
+            "$ref": "#/$defs/interfaces-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-defaults"
+            }
+          ],
+          "properties": {
+            "source_system_id": {
+              "$ref": "#/$defs/id"
+            },
+            "target_system_id": {
+              "$ref": "#/$defs/id"
+            },
+            "owner_org_id": {
+              "$ref": "#/$defs/id"
+            },
+            "integration_style": {
+              "$ref": "#/$defs/integration_style"
+            },
+            "data_classification": {
+              "$ref": "#/$defs/data_classification_supported"
+            },
+            "offered_interface_id": {
+              "$ref": "#/$defs/id"
+            }
+          }
+        }
+      }
+    },
+    "offered_interfaces": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entry"
+        }
+      ],
+      "properties": {
+        "columns": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "anyOf": [
+                  {
+                    "const": "offered_interface_id"
+                  },
+                  {
+                    "$ref": "#/$defs/offered_interfaces-fields"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "const": "offered_interface_id"
+                    },
+                    {
+                      "$ref": "#/$defs/offered_interfaces-fields"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "values": {
+          "propertyNames": {
+            "$ref": "#/$defs/offered_interfaces-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-values"
+            }
+          ],
+          "properties": {
+            "system_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "owner_org_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "integration_style": {
+              "$ref": "#/$defs/integration_style-values"
+            },
+            "data_classification": {
+              "$ref": "#/$defs/data_classification_supported-values"
+            }
+          }
+        },
+        "defaults": {
+          "propertyNames": {
+            "$ref": "#/$defs/offered_interfaces-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-defaults"
+            }
+          ],
+          "properties": {
+            "system_id": {
+              "$ref": "#/$defs/id"
+            },
+            "owner_org_id": {
+              "$ref": "#/$defs/id"
+            },
+            "integration_style": {
+              "$ref": "#/$defs/integration_style"
+            },
+            "data_classification": {
+              "$ref": "#/$defs/data_classification_supported"
+            }
+          }
+        }
+      }
+    },
+    "data_assets": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entry"
+        }
+      ],
+      "properties": {
+        "columns": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "anyOf": [
+                  {
+                    "const": "data_asset_id"
+                  },
+                  {
+                    "$ref": "#/$defs/data_assets-fields"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "const": "data_asset_id"
+                    },
+                    {
+                      "$ref": "#/$defs/data_assets-fields"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "values": {
+          "propertyNames": {
+            "$ref": "#/$defs/data_assets-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-values"
+            }
+          ],
+          "properties": {
+            "data_owner_org_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "data_steward_org_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "source_of_truth": {
+              "$ref": "#/$defs/id-values"
+            },
+            "classification": {
+              "$ref": "#/$defs/data_classification_supported-values"
+            },
+            "risk_level": {
+              "$ref": "#/$defs/criticality-values"
+            },
+            "pii_flag": {
+              "$ref": "#/$defs/pii_flag-values"
+            }
+          }
+        },
+        "defaults": {
+          "propertyNames": {
+            "$ref": "#/$defs/data_assets-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-defaults"
+            }
+          ],
+          "properties": {
+            "data_owner_org_id": {
+              "$ref": "#/$defs/id"
+            },
+            "data_steward_org_id": {
+              "$ref": "#/$defs/id"
+            },
+            "source_of_truth": {
+              "$ref": "#/$defs/id"
+            },
+            "classification": {
+              "$ref": "#/$defs/data_classification_supported"
+            },
+            "risk_level": {
+              "$ref": "#/$defs/criticality"
+            },
+            "pii_flag": {
+              "$ref": "#/$defs/pii_flag"
+            }
+          }
+        }
+      }
+    },
+    "tech_services": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entry"
+        }
+      ],
+      "properties": {
+        "columns": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "anyOf": [
+                  {
+                    "const": "tech_service_id"
+                  },
+                  {
+                    "$ref": "#/$defs/tech_services-fields"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "const": "tech_service_id"
+                    },
+                    {
+                      "$ref": "#/$defs/tech_services-fields"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "values": {
+          "propertyNames": {
+            "$ref": "#/$defs/tech_services-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-values"
+            }
+          ],
+          "properties": {
+            "owner_org_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "cloud_provider": {
+              "$ref": "#/$defs/cloud_provider-values"
+            },
+            "network_zone": {
+              "$ref": "#/$defs/network_zone-values"
+            }
+          }
+        },
+        "defaults": {
+          "propertyNames": {
+            "$ref": "#/$defs/tech_services-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-defaults"
+            }
+          ],
+          "properties": {
+            "owner_org_id": {
+              "$ref": "#/$defs/id"
+            },
+            "cloud_provider": {
+              "$ref": "#/$defs/cloud_provider"
+            },
+            "network_zone": {
+              "$ref": "#/$defs/network_zone"
+            }
+          }
+        }
+      }
+    },
+    "capabilities": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entry"
+        }
+      ],
+      "properties": {
+        "columns": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "anyOf": [
+                  {
+                    "const": "capability_id"
+                  },
+                  {
+                    "$ref": "#/$defs/capabilities-fields"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "const": "capability_id"
+                    },
+                    {
+                      "$ref": "#/$defs/capabilities-fields"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "values": {
+          "propertyNames": {
+            "$ref": "#/$defs/capabilities-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-values"
+            }
+          ],
+          "properties": {
+            "owner_org_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "parent_capability_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "capability_level": {
+              "$ref": "#/$defs/capability_level-values"
+            },
+            "capability_tier": {
+              "$ref": "#/$defs/capability_tier-values"
+            },
+            "strategic_importance": {
+              "$ref": "#/$defs/strategic_importance-values"
+            }
+          }
+        },
+        "defaults": {
+          "propertyNames": {
+            "$ref": "#/$defs/capabilities-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-defaults"
+            }
+          ],
+          "properties": {
+            "owner_org_id": {
+              "$ref": "#/$defs/id"
+            },
+            "parent_capability_id": {
+              "$ref": "#/$defs/id"
+            },
+            "capability_level": {
+              "$ref": "#/$defs/capability_level"
+            },
+            "capability_tier": {
+              "$ref": "#/$defs/capability_tier"
+            },
+            "strategic_importance": {
+              "$ref": "#/$defs/strategic_importance"
+            }
+          }
+        }
+      }
+    },
+    "frameworks": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entry"
+        }
+      ],
+      "properties": {
+        "columns": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "anyOf": [
+                  {
+                    "const": "framework_id"
+                  },
+                  {
+                    "$ref": "#/$defs/frameworks-fields"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "const": "framework_id"
+                    },
+                    {
+                      "$ref": "#/$defs/frameworks-fields"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "values": {
+          "propertyNames": {
+            "$ref": "#/$defs/frameworks-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-values"
+            }
+          ],
+          "properties": {
+            "framework_type": {
+              "$ref": "#/$defs/framework_type-values"
+            }
+          }
+        },
+        "defaults": {
+          "propertyNames": {
+            "$ref": "#/$defs/frameworks-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-defaults"
+            }
+          ],
+          "properties": {
+            "framework_type": {
+              "$ref": "#/$defs/framework_type"
+            }
+          }
+        }
+      }
+    },
+    "value_streams": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entry"
+        }
+      ],
+      "properties": {
+        "columns": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "anyOf": [
+                  {
+                    "const": "value_stream_id"
+                  },
+                  {
+                    "$ref": "#/$defs/value_streams-fields"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "const": "value_stream_id"
+                    },
+                    {
+                      "$ref": "#/$defs/value_streams-fields"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "values": {
+          "propertyNames": {
+            "$ref": "#/$defs/value_streams-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-values"
+            }
+          ],
+          "properties": {
+            "value_stream_type": {
+              "$ref": "#/$defs/value_stream_type-values"
+            },
+            "owner_org_id": {
+              "$ref": "#/$defs/id-values"
+            }
+          }
+        },
+        "defaults": {
+          "propertyNames": {
+            "$ref": "#/$defs/value_streams-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-defaults"
+            }
+          ],
+          "properties": {
+            "value_stream_type": {
+              "$ref": "#/$defs/value_stream_type"
+            },
+            "owner_org_id": {
+              "$ref": "#/$defs/id"
+            }
+          }
+        }
+      }
+    },
+    "value_stream_stages": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entry"
+        }
+      ],
+      "properties": {
+        "columns": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "anyOf": [
+                  {
+                    "const": "stage_id"
+                  },
+                  {
+                    "$ref": "#/$defs/value_stream_stages-fields"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "const": "stage_id"
+                    },
+                    {
+                      "$ref": "#/$defs/value_stream_stages-fields"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "values": {
+          "propertyNames": {
+            "$ref": "#/$defs/value_stream_stages-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-values"
+            }
+          ],
+          "properties": {
+            "value_stream_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "owner_org_id": {
+              "$ref": "#/$defs/id-values"
+            }
+          }
+        },
+        "defaults": {
+          "propertyNames": {
+            "$ref": "#/$defs/value_stream_stages-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-defaults"
+            }
+          ],
+          "properties": {
+            "value_stream_id": {
+              "$ref": "#/$defs/id"
+            },
+            "owner_org_id": {
+              "$ref": "#/$defs/id"
+            }
+          }
+        }
+      }
+    },
+    "org_units": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entry"
+        }
+      ],
+      "properties": {
+        "columns": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "anyOf": [
+                  {
+                    "const": "org_unit_id"
+                  },
+                  {
+                    "$ref": "#/$defs/org_units-fields"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "const": "org_unit_id"
+                    },
+                    {
+                      "$ref": "#/$defs/org_units-fields"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "values": {
+          "propertyNames": {
+            "$ref": "#/$defs/org_units-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-values"
+            }
+          ],
+          "properties": {
+            "parent_org_unit_id": {
+              "$ref": "#/$defs/id-values"
+            }
+          }
+        },
+        "defaults": {
+          "propertyNames": {
+            "$ref": "#/$defs/org_units-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-defaults"
+            }
+          ],
+          "properties": {
+            "parent_org_unit_id": {
+              "$ref": "#/$defs/id"
+            }
+          }
+        }
+      }
+    },
+    "policies": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entry"
+        }
+      ],
+      "properties": {
+        "columns": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "anyOf": [
+                  {
+                    "const": "policy_id"
+                  },
+                  {
+                    "$ref": "#/$defs/policies-fields"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "const": "policy_id"
+                    },
+                    {
+                      "$ref": "#/$defs/policies-fields"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "values": {
+          "propertyNames": {
+            "$ref": "#/$defs/policies-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-values"
+            }
+          ],
+          "properties": {
+            "owner_org_id": {
+              "$ref": "#/$defs/id-values"
+            }
+          }
+        },
+        "defaults": {
+          "propertyNames": {
+            "$ref": "#/$defs/policies-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-defaults"
+            }
+          ],
+          "properties": {
+            "owner_org_id": {
+              "$ref": "#/$defs/id"
+            }
+          }
+        }
+      }
+    },
+    "controls": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entry"
+        }
+      ],
+      "properties": {
+        "columns": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "anyOf": [
+                  {
+                    "const": "control_id"
+                  },
+                  {
+                    "$ref": "#/$defs/controls-fields"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "const": "control_id"
+                    },
+                    {
+                      "$ref": "#/$defs/controls-fields"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "values": {
+          "propertyNames": {
+            "$ref": "#/$defs/controls-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-values"
+            }
+          ],
+          "properties": {
+            "control_type": {
+              "$ref": "#/$defs/control_type-values"
+            },
+            "frequency": {
+              "$ref": "#/$defs/frequency-values"
+            },
+            "owner_org_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "policy_id": {
+              "$ref": "#/$defs/id-values"
+            }
+          }
+        },
+        "defaults": {
+          "propertyNames": {
+            "$ref": "#/$defs/controls-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-defaults"
+            }
+          ],
+          "properties": {
+            "control_type": {
+              "$ref": "#/$defs/control_type"
+            },
+            "frequency": {
+              "$ref": "#/$defs/frequency"
+            },
+            "owner_org_id": {
+              "$ref": "#/$defs/id"
+            },
+            "policy_id": {
+              "$ref": "#/$defs/id"
+            }
+          }
+        }
+      }
+    },
+    "actors": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entry"
+        }
+      ],
+      "properties": {
+        "columns": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "anyOf": [
+                  {
+                    "const": "actor_id"
+                  },
+                  {
+                    "$ref": "#/$defs/actors-fields"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "const": "actor_id"
+                    },
+                    {
+                      "$ref": "#/$defs/actors-fields"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "values": {
+          "propertyNames": {
+            "$ref": "#/$defs/actors-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-values"
+            }
+          ],
+          "properties": {
+            "actor_kind": {
+              "$ref": "#/$defs/actor_kind-values"
+            },
+            "internal": {
+              "$ref": "#/$defs/pii_flag-values"
+            },
+            "owner_org_id": {
+              "$ref": "#/$defs/id-values"
+            }
+          }
+        },
+        "defaults": {
+          "propertyNames": {
+            "$ref": "#/$defs/actors-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-defaults"
+            }
+          ],
+          "properties": {
+            "actor_kind": {
+              "$ref": "#/$defs/actor_kind"
+            },
+            "internal": {
+              "$ref": "#/$defs/pii_flag"
+            },
+            "owner_org_id": {
+              "$ref": "#/$defs/id"
+            }
+          }
+        }
+      }
+    },
+    "flows": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entry"
+        }
+      ],
+      "properties": {
+        "columns": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "anyOf": [
+                  {
+                    "const": "flow_id"
+                  },
+                  {
+                    "$ref": "#/$defs/flows-fields"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "const": "flow_id"
+                    },
+                    {
+                      "$ref": "#/$defs/flows-fields"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "values": {
+          "propertyNames": {
+            "$ref": "#/$defs/flows-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-values"
+            }
+          ],
+          "properties": {
+            "owner_org_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "criticality": {
+              "$ref": "#/$defs/criticality-values"
+            }
+          }
+        },
+        "defaults": {
+          "propertyNames": {
+            "$ref": "#/$defs/flows-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-defaults"
+            }
+          ],
+          "properties": {
+            "owner_org_id": {
+              "$ref": "#/$defs/id"
+            },
+            "criticality": {
+              "$ref": "#/$defs/criticality"
+            }
+          }
+        }
+      }
+    },
+    "processes": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entry"
+        }
+      ],
+      "properties": {
+        "columns": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "anyOf": [
+                  {
+                    "const": "process_id"
+                  },
+                  {
+                    "$ref": "#/$defs/processes-fields"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "const": "process_id"
+                    },
+                    {
+                      "$ref": "#/$defs/processes-fields"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "values": {
+          "propertyNames": {
+            "$ref": "#/$defs/processes-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-values"
+            }
+          ],
+          "properties": {
+            "value_stream_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "owner_org_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "criticality": {
+              "$ref": "#/$defs/criticality-values"
+            },
+            "data_classification": {
+              "$ref": "#/$defs/data_classification_supported-values"
+            }
+          }
+        },
+        "defaults": {
+          "propertyNames": {
+            "$ref": "#/$defs/processes-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-defaults"
+            }
+          ],
+          "properties": {
+            "value_stream_id": {
+              "$ref": "#/$defs/id"
+            },
+            "owner_org_id": {
+              "$ref": "#/$defs/id"
+            },
+            "criticality": {
+              "$ref": "#/$defs/criticality"
+            },
+            "data_classification": {
+              "$ref": "#/$defs/data_classification_supported"
+            }
+          }
+        }
+      }
+    },
+    "products": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entry"
+        }
+      ],
+      "properties": {
+        "columns": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "anyOf": [
+                  {
+                    "const": "product_id"
+                  },
+                  {
+                    "$ref": "#/$defs/products-fields"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "const": "product_id"
+                    },
+                    {
+                      "$ref": "#/$defs/products-fields"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "values": {
+          "propertyNames": {
+            "$ref": "#/$defs/products-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-values"
+            }
+          ],
+          "properties": {
+            "owner_org_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "criticality": {
+              "$ref": "#/$defs/criticality-values"
+            }
+          }
+        },
+        "defaults": {
+          "propertyNames": {
+            "$ref": "#/$defs/products-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-defaults"
+            }
+          ],
+          "properties": {
+            "owner_org_id": {
+              "$ref": "#/$defs/id"
+            },
+            "criticality": {
+              "$ref": "#/$defs/criticality"
+            }
+          }
+        }
+      }
+    },
+    "roadmaps": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entry"
+        }
+      ],
+      "properties": {
+        "columns": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "anyOf": [
+                  {
+                    "const": "roadmap_id"
+                  },
+                  {
+                    "$ref": "#/$defs/roadmaps-fields"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "const": "roadmap_id"
+                    },
+                    {
+                      "$ref": "#/$defs/roadmaps-fields"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "values": {
+          "propertyNames": {
+            "$ref": "#/$defs/roadmaps-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-values"
+            }
+          ],
+          "properties": {
+            "owner_org_id": {
+              "$ref": "#/$defs/id-values"
+            }
+          }
+        },
+        "defaults": {
+          "propertyNames": {
+            "$ref": "#/$defs/roadmaps-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-defaults"
+            }
+          ],
+          "properties": {
+            "owner_org_id": {
+              "$ref": "#/$defs/id"
+            }
+          }
+        }
+      }
+    },
+    "work_packages": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entry"
+        }
+      ],
+      "properties": {
+        "columns": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "anyOf": [
+                  {
+                    "const": "work_package_id"
+                  },
+                  {
+                    "$ref": "#/$defs/work_packages-fields"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "const": "work_package_id"
+                    },
+                    {
+                      "$ref": "#/$defs/work_packages-fields"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "values": {
+          "propertyNames": {
+            "$ref": "#/$defs/work_packages-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-values"
+            }
+          ],
+          "properties": {
+            "owner_org_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "roadmap_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "change_request_id": {
+              "$ref": "#/$defs/id-values"
+            }
+          }
+        },
+        "defaults": {
+          "propertyNames": {
+            "$ref": "#/$defs/work_packages-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-defaults"
+            }
+          ],
+          "properties": {
+            "owner_org_id": {
+              "$ref": "#/$defs/id"
+            },
+            "roadmap_id": {
+              "$ref": "#/$defs/id"
+            },
+            "change_request_id": {
+              "$ref": "#/$defs/id"
+            }
+          }
+        }
+      }
+    },
+    "architecture_change_requests": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entry"
+        }
+      ],
+      "properties": {
+        "columns": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "anyOf": [
+                  {
+                    "const": "change_request_id"
+                  },
+                  {
+                    "$ref": "#/$defs/architecture_change_requests-fields"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "anyOf": [
+                    {
+                      "const": "change_request_id"
+                    },
+                    {
+                      "$ref": "#/$defs/architecture_change_requests-fields"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "values": {
+          "propertyNames": {
+            "$ref": "#/$defs/architecture_change_requests-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-values"
+            }
+          ],
+          "properties": {
+            "requestor_org_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "approver_org_id": {
+              "$ref": "#/$defs/id-values"
+            },
+            "governance_decision": {
+              "$ref": "#/$defs/governance_decision-values"
+            }
+          }
+        },
+        "defaults": {
+          "propertyNames": {
+            "$ref": "#/$defs/architecture_change_requests-fields"
+          },
+          "allOf": [
+            {
+              "$ref": "#/$defs/common-defaults"
+            }
+          ],
+          "properties": {
+            "requestor_org_id": {
+              "$ref": "#/$defs/id"
+            },
+            "approver_org_id": {
+              "$ref": "#/$defs/id"
+            },
+            "governance_decision": {
+              "$ref": "#/$defs/governance_decision"
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "abstraction_level": {
+      "enum": [
+        "Contextual",
+        "Conceptual",
+        "Logical",
+        "Physical"
+      ]
+    },
+    "abstraction_level-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/abstraction_level"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "actor_kind": {
+      "enum": [
+        "Person",
+        "Role",
+        "Organization",
+        "External system",
+        "Regulator",
+        "Device"
+      ]
+    },
+    "actor_kind-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/actor_kind"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "actors-fields": {
+      "enum": [
+        "name",
+        "description",
+        "status",
+        "togaf_layer",
+        "architecture_domain",
+        "abstraction_level",
+        "last_reviewed",
+        "company_domain",
+        "company_subdomain",
+        "tags",
+        "module",
+        "source",
+        "actor_kind",
+        "internal",
+        "owner_org_id",
+        "volume"
+      ]
+    },
+    "architecture_change_requests-fields": {
+      "enum": [
+        "name",
+        "description",
+        "status",
+        "togaf_layer",
+        "architecture_domain",
+        "abstraction_level",
+        "last_reviewed",
+        "company_domain",
+        "company_subdomain",
+        "tags",
+        "module",
+        "source",
+        "requestor_org_id",
+        "approver_org_id",
+        "request_date",
+        "decision_date",
+        "governance_decision",
+        "decision_rationale",
+        "impact_assessment",
+        "principle_alignment",
+        "affected_system_ids",
+        "affected_process_ids",
+        "notes"
+      ]
+    },
+    "architecture_domain": {
+      "enum": [
+        "Business",
+        "Application",
+        "Data",
+        "Technology",
+        "Governance"
+      ]
+    },
+    "architecture_domain-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/architecture_domain"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "capabilities-fields": {
+      "enum": [
+        "name",
+        "description",
+        "status",
+        "togaf_layer",
+        "architecture_domain",
+        "abstraction_level",
+        "last_reviewed",
+        "company_domain",
+        "company_subdomain",
+        "tags",
+        "module",
+        "source",
+        "owner_org_id",
+        "maturity_level",
+        "parent_capability_id",
+        "capability_level",
+        "capability_tier",
+        "strategic_importance"
+      ]
+    },
+    "capability_level": {
+      "enum": [
+        "L0",
+        "L1",
+        "L2",
+        "L3"
+      ]
+    },
+    "capability_level-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/capability_level"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "capability_tier": {
+      "enum": [
+        "Direct",
+        "Core",
+        "Enable"
+      ]
+    },
+    "capability_tier-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/capability_tier"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "cloud_provider": {
+      "enum": [
+        "AWS",
+        "Azure",
+        "GCP",
+        "On-prem",
+        "SaaS"
+      ]
+    },
+    "cloud_provider-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/cloud_provider"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "common-defaults": {
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "togaf_layer": {
+          "$ref": "#/$defs/togaf_layer"
+        },
+        "architecture_domain": {
+          "$ref": "#/$defs/architecture_domain"
+        },
+        "abstraction_level": {
+          "$ref": "#/$defs/abstraction_level"
+        }
+      }
+    },
+    "common-values": {
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/status-values"
+        },
+        "togaf_layer": {
+          "$ref": "#/$defs/togaf_layer-values"
+        },
+        "architecture_domain": {
+          "$ref": "#/$defs/architecture_domain-values"
+        },
+        "abstraction_level": {
+          "$ref": "#/$defs/abstraction_level-values"
+        }
+      }
+    },
+    "control_type": {
+      "enum": [
+        "Preventive",
+        "Detective",
+        "Corrective"
+      ]
+    },
+    "control_type-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/control_type"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "controls-fields": {
+      "enum": [
+        "name",
+        "description",
+        "status",
+        "togaf_layer",
+        "architecture_domain",
+        "abstraction_level",
+        "last_reviewed",
+        "company_domain",
+        "company_subdomain",
+        "tags",
+        "module",
+        "source",
+        "control_type",
+        "frequency",
+        "regulatory_framework",
+        "owner_org_id",
+        "maturity_rating",
+        "policy_id",
+        "external_ref",
+        "cri_ref"
+      ]
+    },
+    "criticality": {
+      "enum": [
+        "High",
+        "Medium",
+        "Low"
+      ]
+    },
+    "criticality-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/criticality"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "data_assets-fields": {
+      "enum": [
+        "name",
+        "description",
+        "status",
+        "togaf_layer",
+        "architecture_domain",
+        "abstraction_level",
+        "last_reviewed",
+        "company_domain",
+        "company_subdomain",
+        "tags",
+        "module",
+        "source",
+        "data_owner_org_id",
+        "data_steward_org_id",
+        "source_of_truth",
+        "classification",
+        "risk_level",
+        "pii_flag",
+        "pii_types",
+        "table_name",
+        "schema",
+        "lineage_reference",
+        "quality_rules",
+        "governance_policy_ids",
+        "control_ids"
+      ]
+    },
+    "data_classification_supported": {
+      "enum": [
+        "Public",
+        "Internal",
+        "Confidential",
+        "Restricted"
+      ]
+    },
+    "data_classification_supported-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/data_classification_supported"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "entry": {
+      "type": "object",
+      "propertyNames": {
+        "enum": [
+          "file",
+          "sheet",
+          "code",
+          "id",
+          "columns",
+          "ignore",
+          "values",
+          "defaults"
+        ]
+      },
+      "properties": {
+        "file": {
+          "type": "string",
+          "description": "The inventory file, in the --from folder: a .csv, or an .xlsx workbook. Default: <type>.csv."
+        },
+        "sheet": {
+          "type": "string",
+          "description": "The sheet of a workbook the rows are on. Default: the first sheet with a header row."
+        },
+        "code": {
+          "type": "string",
+          "description": "The column holding the inventory's own id. Kept in cmdb_ci_sys_id where the type has it, and matched when another row names this one."
+        },
+        "id": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "prefix"
+          ],
+          "properties": {
+            "prefix": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9]*-?$"
+            },
+            "from": {
+              "enum": [
+                "name",
+                "code"
+              ],
+              "description": "Slug the name or the code. Default: name."
+            }
+          }
+        },
+        "columns": {
+          "type": "object",
+          "description": "Inventory column: the field, or the fields, it fills."
+        },
+        "ignore": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Columns read by nothing, on purpose; any other column not mapped is reported as left out."
+        },
+        "values": {
+          "type": "object",
+          "description": "Per field, inventory value: the model's value."
+        },
+        "defaults": {
+          "type": "object",
+          "description": "Per field, the value when the inventory's is empty or there is no column."
+        }
+      }
+    },
+    "environment": {
+      "enum": [
+        "Production",
+        "UAT",
+        "Test",
+        "Dev"
+      ]
+    },
+    "environment-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/environment"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "flows-fields": {
+      "enum": [
+        "name",
+        "description",
+        "status",
+        "togaf_layer",
+        "architecture_domain",
+        "abstraction_level",
+        "last_reviewed",
+        "company_domain",
+        "company_subdomain",
+        "tags",
+        "module",
+        "source",
+        "owner_org_id",
+        "trigger",
+        "criticality",
+        "target_latency"
+      ]
+    },
+    "framework_type": {
+      "enum": [
+        "Standard",
+        "Reference model",
+        "Practice framework",
+        "Governance framework",
+        "Body of knowledge",
+        "Method",
+        "Regulation"
+      ]
+    },
+    "framework_type-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/framework_type"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "frameworks-fields": {
+      "enum": [
+        "name",
+        "description",
+        "status",
+        "togaf_layer",
+        "architecture_domain",
+        "abstraction_level",
+        "last_reviewed",
+        "company_domain",
+        "company_subdomain",
+        "tags",
+        "module",
+        "source",
+        "publisher",
+        "framework_type",
+        "scope",
+        "version",
+        "url"
+      ]
+    },
+    "frequency": {
+      "enum": [
+        "Continuous",
+        "Per event",
+        "Daily",
+        "Weekly",
+        "Monthly",
+        "Quarterly",
+        "Annually"
+      ]
+    },
+    "frequency-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/frequency"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "governance_decision": {
+      "enum": [
+        "Approved",
+        "Rejected",
+        "Deferred"
+      ]
+    },
+    "governance_decision-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/governance_decision"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "hosting": {
+      "enum": [
+        "On-prem",
+        "Azure",
+        "AWS",
+        "GCP",
+        "External",
+        "SaaS"
+      ]
+    },
+    "hosting-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/hosting"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9]*(-[A-Z0-9]+)+$"
+    },
+    "id-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/id"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "integration_style": {
+      "enum": [
+        "Request-response",
+        "Event",
+        "Batch"
+      ]
+    },
+    "integration_style-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/integration_style"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "interfaces-fields": {
+      "enum": [
+        "name",
+        "description",
+        "status",
+        "togaf_layer",
+        "architecture_domain",
+        "abstraction_level",
+        "last_reviewed",
+        "company_domain",
+        "company_subdomain",
+        "tags",
+        "module",
+        "source",
+        "source_system_id",
+        "target_system_id",
+        "owner_org_id",
+        "protocol",
+        "direction",
+        "frequency",
+        "integration_style",
+        "auth_method",
+        "data_classification",
+        "patterns",
+        "offered_interface_id"
+      ]
+    },
+    "network_zone": {
+      "enum": [
+        "Edge",
+        "Public",
+        "Private-App",
+        "Private-Data",
+        "Shared-Services",
+        "On-prem"
+      ]
+    },
+    "network_zone-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/network_zone"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "offered_interfaces-fields": {
+      "enum": [
+        "name",
+        "description",
+        "status",
+        "togaf_layer",
+        "architecture_domain",
+        "abstraction_level",
+        "last_reviewed",
+        "company_domain",
+        "company_subdomain",
+        "tags",
+        "module",
+        "source",
+        "system_id",
+        "owner_org_id",
+        "protocol",
+        "integration_style",
+        "auth_method",
+        "data_classification",
+        "frequency",
+        "specification",
+        "patterns"
+      ]
+    },
+    "org_units-fields": {
+      "enum": [
+        "name",
+        "description",
+        "status",
+        "togaf_layer",
+        "architecture_domain",
+        "abstraction_level",
+        "last_reviewed",
+        "company_domain",
+        "company_subdomain",
+        "tags",
+        "module",
+        "source",
+        "dama_role",
+        "parent_org_unit_id"
+      ]
+    },
+    "pii_flag": {
+      "enum": [
+        "Yes",
+        "No"
+      ]
+    },
+    "pii_flag-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/pii_flag"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "policies-fields": {
+      "enum": [
+        "name",
+        "description",
+        "status",
+        "togaf_layer",
+        "architecture_domain",
+        "abstraction_level",
+        "last_reviewed",
+        "company_domain",
+        "company_subdomain",
+        "tags",
+        "module",
+        "source",
+        "purpose",
+        "regulatory_framework",
+        "owner_org_id",
+        "effective_date",
+        "external_ref"
+      ]
+    },
+    "processes-fields": {
+      "enum": [
+        "name",
+        "description",
+        "status",
+        "togaf_layer",
+        "architecture_domain",
+        "abstraction_level",
+        "last_reviewed",
+        "company_domain",
+        "company_subdomain",
+        "tags",
+        "module",
+        "source",
+        "value_stream_id",
+        "owner_org_id",
+        "business_unit",
+        "criticality",
+        "risk_level",
+        "process_level",
+        "trigger",
+        "frequency",
+        "rto_hours",
+        "rpo_hours",
+        "data_classification",
+        "pii_flag"
+      ]
+    },
+    "products-fields": {
+      "enum": [
+        "name",
+        "description",
+        "status",
+        "togaf_layer",
+        "architecture_domain",
+        "abstraction_level",
+        "last_reviewed",
+        "company_domain",
+        "company_subdomain",
+        "tags",
+        "module",
+        "source",
+        "owner_org_id",
+        "criticality",
+        "product_category",
+        "launch_date",
+        "patterns",
+        "build_type"
+      ]
+    },
+    "resilience": {
+      "enum": [
+        "Multi-region",
+        "Multi-AZ",
+        "Single-AZ",
+        "Single-node"
+      ]
+    },
+    "resilience-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/resilience"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "roadmaps-fields": {
+      "enum": [
+        "name",
+        "description",
+        "status",
+        "togaf_layer",
+        "architecture_domain",
+        "abstraction_level",
+        "last_reviewed",
+        "company_domain",
+        "company_subdomain",
+        "tags",
+        "module",
+        "source",
+        "owner_org_id",
+        "start_date",
+        "end_date",
+        "time_horizon_years",
+        "governance_board",
+        "principle_ids",
+        "notes"
+      ]
+    },
+    "service_tier": {
+      "enum": [
+        "Tier 1",
+        "Tier 2",
+        "Tier 3"
+      ]
+    },
+    "service_tier-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/service_tier"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "status": {
+      "enum": [
+        "Proposed",
+        "Planned",
+        "Active",
+        "Deprecated",
+        "Retired"
+      ]
+    },
+    "status-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/status"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "strategic_importance": {
+      "enum": [
+        "Differentiating",
+        "Essential",
+        "Advantage",
+        "Parity",
+        "Commodity"
+      ]
+    },
+    "strategic_importance-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/strategic_importance"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "systems-fields": {
+      "enum": [
+        "name",
+        "description",
+        "status",
+        "togaf_layer",
+        "architecture_domain",
+        "abstraction_level",
+        "last_reviewed",
+        "company_domain",
+        "company_subdomain",
+        "tags",
+        "module",
+        "source",
+        "owner_org_id",
+        "criticality",
+        "service_tier",
+        "hosting",
+        "environment",
+        "provider",
+        "system_category",
+        "data_classification_supported",
+        "platform_service_dependencies",
+        "governance_policy_ids",
+        "control_ids",
+        "component_type",
+        "product",
+        "cmdb_ci_sys_id",
+        "cmdb_ci_class",
+        "cloud_provider",
+        "cloud_account",
+        "region",
+        "network_zone",
+        "availability_zone",
+        "deployment_unit",
+        "resilience"
+      ]
+    },
+    "tech_services-fields": {
+      "enum": [
+        "name",
+        "description",
+        "status",
+        "togaf_layer",
+        "architecture_domain",
+        "abstraction_level",
+        "last_reviewed",
+        "company_domain",
+        "company_subdomain",
+        "tags",
+        "module",
+        "source",
+        "owner_org_id",
+        "provider",
+        "service_category",
+        "service_name",
+        "component_type",
+        "answers_for",
+        "product",
+        "cloud_provider",
+        "cloud_account",
+        "region",
+        "network_zone",
+        "availability_zone",
+        "cidr"
+      ]
+    },
+    "togaf_layer": {
+      "enum": [
+        "Business",
+        "Application",
+        "Data",
+        "Technology"
+      ]
+    },
+    "togaf_layer-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/togaf_layer"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "value_stream_stages-fields": {
+      "enum": [
+        "name",
+        "description",
+        "status",
+        "togaf_layer",
+        "architecture_domain",
+        "abstraction_level",
+        "last_reviewed",
+        "company_domain",
+        "company_subdomain",
+        "tags",
+        "module",
+        "source",
+        "value_stream_id",
+        "stage_order",
+        "exit_criterion",
+        "owner_org_id"
+      ]
+    },
+    "value_stream_type": {
+      "enum": [
+        "Core",
+        "Management",
+        "Supporting"
+      ]
+    },
+    "value_stream_type-values": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/value_stream_type"
+          },
+          {
+            "enum": [
+              "",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    "value_streams-fields": {
+      "enum": [
+        "name",
+        "description",
+        "status",
+        "togaf_layer",
+        "architecture_domain",
+        "abstraction_level",
+        "last_reviewed",
+        "company_domain",
+        "company_subdomain",
+        "tags",
+        "module",
+        "source",
+        "value_stream_type",
+        "stakeholders",
+        "value_proposition",
+        "owner_org_id"
+      ]
+    },
+    "work_packages-fields": {
+      "enum": [
+        "name",
+        "description",
+        "status",
+        "togaf_layer",
+        "architecture_domain",
+        "abstraction_level",
+        "last_reviewed",
+        "company_domain",
+        "company_subdomain",
+        "tags",
+        "module",
+        "source",
+        "owner_org_id",
+        "roadmap_id",
+        "change_request_id",
+        "start_date",
+        "end_date",
+        "budget_usd",
+        "risk_level",
+        "affected_system_ids",
+        "affected_process_ids",
+        "principle_ids",
+        "notes"
+      ]
+    }
+  }
+}

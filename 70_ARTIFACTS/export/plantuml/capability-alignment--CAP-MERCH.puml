@@ -1,0 +1,58 @@
+@startuml
+' Merchant Acquiring & Sponsorship — Frameworks, Controls, Systems
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Merchant Acquiring & Sponsorship — Frameworks, Controls, Systems
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_MERCH_05, "Acquiring Chargeback Processing", "Work chargebacks from the acquiring side: represent on behalf of merchants and pass losses to the right party.", $tags="capabilities")
+  ' aac CAP_MERCH_05: company_domain="Merchant Services"
+  System(CAP_MERCH_01, "ISO & Agent Program Management", "Recruit, contract, and oversee ISOs and agents who bring merchant volume; manage program economics and liability.", $tags="capabilities")
+  ' aac CAP_MERCH_01: company_domain="Merchant Services"
+  System(CAP_MERCH, "Merchant Acquiring & Sponsorship", "Merchant Acquiring & Sponsorship. Level 0 enterprise capability domain (Core tier). ISO programs and network sponsorship, including specialty and higher-risk verticals.", $tags="capabilities")
+  ' aac CAP_MERCH: company_domain="Merchant Services"
+  System(CAP_MERCH_03, "Merchant Boarding & Network Sponsorship", "Board approved merchants and sponsor them into the card networks under the bank's licenses.", $tags="capabilities")
+  ' aac CAP_MERCH_03: company_domain="Merchant Services"
+  System(CAP_MERCH_06, "Merchant Monitoring & Exposure Management", "Monitor merchant transaction behavior, credit exposure, and collusion or bust-out patterns across the portfolio.", $tags="capabilities")
+  ' aac CAP_MERCH_06: company_domain="Merchant Services"
+  System(CAP_MERCH_04, "Merchant Settlement & Funding", "Clear and settle merchant card volume and fund merchant accounts daily, with reserves where risk requires them.", $tags="capabilities")
+  ' aac CAP_MERCH_04: company_domain="Merchant Services"
+  System(CAP_MERCH_02, "Merchant Underwriting & Risk Vetting", "Underwrite merchants against credit and brand risk appetite — the specialty-vertical appetite is the differentiator.", $tags="capabilities")
+  ' aac CAP_MERCH_02: company_domain="Merchant Services"
+}
+Boundary(b_Framework, "Framework") {
+  System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
+  ' aac FW_BIAN: company_domain=""
+  System(FW_PCI_DSS, "PCI DSS", "The card industry's data security standard. Not a framework anybody chose: it is a condition of processing card transactions, which is why it governs the payment and merchant domains whatever anyone thinks of it.", $tags="frameworks")
+  ' aac FW_PCI_DSS: company_domain=""
+}
+
+Rel(CAP_MERCH_01, CAP_MERCH, "part of")
+Rel(CAP_MERCH_02, CAP_MERCH, "part of")
+Rel(CAP_MERCH_03, CAP_MERCH, "part of")
+Rel(CAP_MERCH_04, CAP_MERCH, "part of")
+Rel(CAP_MERCH_05, CAP_MERCH, "part of")
+Rel(CAP_MERCH_06, CAP_MERCH, "part of")
+Rel(CAP_MERCH, FW_BIAN, "Aligned to")
+' aac rel: source="CAP_MERCH"; target="FW_BIAN"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
+Rel(CAP_MERCH, FW_PCI_DSS, "Governed by")
+' aac rel: source="CAP_MERCH"; target="FW_PCI_DSS"; label="Governed by"; relation="capability_aligns_to_framework"; alignment="Governed by"
+Rel(CAP_MERCH_01, FW_BIAN, "Reference Data > External Agency > Partner Administration")
+' aac rel: source="CAP_MERCH_01"; target="FW_BIAN"; label="Reference Data > External Agency > Partner Administration"; relation="capability_references_framework"; ref="Reference Data > External Agency > Partner Administration"
+Rel(CAP_MERCH_02, FW_BIAN, "Sales and Service > Sales > Merchant Relations")
+' aac rel: source="CAP_MERCH_02"; target="FW_BIAN"; label="Sales and Service > Sales > Merchant Relations"; relation="capability_references_framework"; ref="Sales and Service > Sales > Merchant Relations"
+Rel(CAP_MERCH_03, FW_BIAN, "Operations and Execution > Cards > Merchant Acquiring Facility")
+' aac rel: source="CAP_MERCH_03"; target="FW_BIAN"; label="Operations and Execution > Cards > Merchant Acquiring Facility"; relation="capability_references_framework"; ref="Operations and Execution > Cards > Merchant Acquiring Facility"
+Rel(CAP_MERCH_04, FW_BIAN, "Operations and Execution > Account Management > Account Reconciliation")
+' aac rel: source="CAP_MERCH_04"; target="FW_BIAN"; label="Operations and Execution > Account Management > Account Reconciliation"; relation="capability_references_framework"; ref="Operations and Execution > Account Management > Account Reconciliation"
+Rel(CAP_MERCH_05, FW_BIAN, "Sales and Service > Servicing > Card Case")
+' aac rel: source="CAP_MERCH_05"; target="FW_BIAN"; label="Sales and Service > Servicing > Card Case"; relation="capability_references_framework"; ref="Sales and Service > Servicing > Card Case"
+Rel(CAP_MERCH_06, FW_BIAN, "Operations and Execution > Account Management > Fraud Evaluation")
+' aac rel: source="CAP_MERCH_06"; target="FW_BIAN"; label="Operations and Execution > Account Management > Fraud Evaluation"; relation="capability_references_framework"; ref="Operations and Execution > Account Management > Fraud Evaluation"
+
+SHOW_LEGEND()
+@enduml
