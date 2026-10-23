@@ -250,6 +250,8 @@ class Deck:
             for name, data in self.parts():
                 info = zipfile.ZipInfo(name, date_time=STAMP)
                 info.compress_type = zipfile.ZIP_DEFLATED
+                # The same bytes on every platform; see render_excel.
+                info.create_system = 0
                 zf.writestr(info, data)
         return buffer.getvalue()
 

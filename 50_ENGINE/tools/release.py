@@ -3,6 +3,8 @@
     python tools/release.py                 (from 50_ENGINE) every check, the sdist and wheel built and proved, nothing sent
     python tools/release.py --upload --test the same, then those two sent to TestPyPI, nothing tagged
     python tools/release.py --upload        the same, then those two sent to PyPI and the commit tagged
+    python tools/release.py --tag           the same, then the commit tagged and the tag pushed, and the
+                                            Release workflow publishes it by trusted publishing, no token
 
 A release is made on a machine, in this order, stopping at the first thing
 that fails:
@@ -88,7 +90,11 @@ def main(argv: list | None = None) -> int:
     parser = argparse.ArgumentParser(description="Check, build, prove and (with --upload) publish the package to PyPI.")
     parser.add_argument("--upload", action="store_true", help="upload the proved sdist and wheel and tag the commit")
     parser.add_argument("--test", action="store_true", help="TestPyPI instead of PyPI, and nothing tagged")
+    parser.add_argument("--tag", action="store_true",
+                        help="tag the commit and push the tag: the public repository's Release workflow publishes it")
     args = parser.parse_args(argv)
+    if args.tag and (args.upload or args.test):
+        parser.error("--tag publishes through the Release workflow; it takes neither --upload nor --test")
     index = "TestPyPI" if args.test else "PyPI"
     version = _version()
     tag = "v" + version
@@ -101,7 +107,7 @@ def main(argv: list | None = None) -> int:
         unpublishable.append("the working tree has changes")
     if head != _git("rev-parse", "origin/main"):
         unpublishable.append("HEAD is not origin/main")
-    if unpublishable and args.upload:
+    if unpublishable and (args.upload or args.tag):
         return _stop("; ".join(unpublishable) + ". A release is a commit on main, pushed.")
     for reason in unpublishable:
         print("(an upload would stop here: %s)" % reason)
@@ -135,9 +141,17 @@ def main(argv: list | None = None) -> int:
     if not _run([sys.executable, "-m", "twine", "check", "--strict"] + [str(f) for f in files]):
         return _stop("twine does not pass the sdist or the wheel (pip install twine, if it is not installed).")
 
+    if args.tag:
+        if not tagged:
+            _git("tag", "-a", tag, "-m", "%s %s" % (NAME, version))
+        if not _run(["git", "push", "origin", tag], cwd=REPO):
+            return _stop("pushing %s failed; nothing is published." % tag)
+        print("%s pushed: the Release workflow builds, proves and publishes %s %s; follow it under Actions"
+              % (tag, NAME, version))
+        return 0
     if not args.upload:
-        print("ready: %s and %s, proved; nothing was sent. --upload sends them and tags %s."
-              % (files[0].name, wheel.name, tag))
+        print("ready: %s and %s, proved; nothing was sent. --tag tags %s for the Release workflow to publish;"
+              " --upload sends them from here." % (files[0].name, wheel.name, tag))
         return 0
     if not _run([sys.executable, "-m", "twine", "upload", "--repository-url", INDEXES[index][1]]
                 + [str(f) for f in files]):

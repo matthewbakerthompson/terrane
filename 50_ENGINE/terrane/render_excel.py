@@ -165,6 +165,11 @@ def workbook_bytes(sheets: Sequence[Sheet]) -> bytes:
                            ("xl/styles.xml", styles), ("xl/sharedStrings.xml", "".join(shared))] + parts:
             info = zipfile.ZipInfo(name, date_time=STAMP)
             info.compress_type = zipfile.ZIP_DEFLATED
+            # The system that made the entry, fixed: zipfile writes 0 on
+            # Windows and 3 elsewhere, so the committed workbook, made on
+            # Windows, was stale on the first Linux run of the public
+            # repository's CI, same size and different bytes.
+            info.create_system = 0
             archive.writestr(info, text)
     return buffer.getvalue()
 

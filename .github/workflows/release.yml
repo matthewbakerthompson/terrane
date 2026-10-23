@@ -1,0 +1,88 @@
+name: Release
+
+# Publishes to PyPI by trusted publishing: GitHub tells PyPI which
+# repository, workflow and environment is uploading, and PyPI checks that
+# against the publisher registered for `terrane`, so no token is kept
+# anywhere. A tag `v<version>` publishes that version, and the version in
+# `50_ENGINE/terrane/__init__.py` has to be the tag's.
+#
+# PyPI never takes a version back. `python tools/release.py` (from
+# 50_ENGINE) runs every check first and sends nothing; `--tag` then tags
+# HEAD and pushes the tag, which starts this.
+#
+# TestPyPI, before a first release: "Run workflow" on this page publishes to
+# TestPyPI instead, once a publisher for this workflow with the environment
+# `testpypi` is registered there too.
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    # Only the public repository is registered with PyPI; a copy of this
+    # file anywhere else does nothing.
+    if: github.repository == 'matthewbakerthompson/terrane'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: The tag is the package's version
+        if: github.event_name == 'push'
+        working-directory: 50_ENGINE
+        run: |
+          version=$(python -c "import terrane; print(terrane.__version__)")
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "The tag is $GITHUB_REF_NAME and the package is $version."
+            exit 1
+          fi
+      # The same proof a release made on a machine gets: the sdist, the
+      # wheel built from it alone, installed into a fresh environment and
+      # used from an empty folder, the app opened from it, and the metadata
+      # read as PyPI reads it.
+      - name: Build and prove the sdist and the wheel
+        working-directory: 50_ENGINE
+        run: |
+          pip install build twine
+          python tools/wheel_check.py
+          python -m twine check --strict ../dist/*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  pypi:
+    if: github.repository == 'matthewbakerthompson/terrane' && github.event_name == 'push'
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+
+  testpypi:
+    if: github.repository == 'matthewbakerthompson/terrane' && github.event_name == 'workflow_dispatch'
+    needs: build
+    runs-on: ubuntu-latest
+    environment: testpypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/

@@ -38,6 +38,27 @@ class TestWorkbook(unittest.TestCase):
         self.assertEqual(workbook_bytes(rows), workbook_bytes(rows))
 
 
+class TestTheSameOnEveryPlatform(unittest.TestCase):
+    """zipfile records the system that made each entry, 0 on Windows and 3
+    elsewhere, unless the writer says: the workbook committed from Windows
+    was stale on the public repository's first Linux run. Both writers say
+    0, and a test can see that from any platform."""
+
+    def test_every_entry_says_the_same_system_and_time(self) -> None:
+        import io
+        import zipfile
+
+        from terrane.pptx import Deck
+
+        workbook = workbook_bytes([("Contents", [["Sheet", "Holds"], ["a", "b"]])])
+        deck = Deck("x")
+        deck.slide()
+        for made in (workbook, deck.to_bytes()):
+            with zipfile.ZipFile(io.BytesIO(made)) as z:
+                self.assertEqual({(i.create_system, i.date_time) for i in z.infolist()},
+                                 {(0, (1980, 1, 1, 0, 0, 0))})
+
+
 class TestEstate(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
