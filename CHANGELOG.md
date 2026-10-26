@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.0 (not yet released)
+## 1.1.0 (2026-10-25)
 
 The canvas draws from scratch, and the sample estate comes with a pip
 install.
