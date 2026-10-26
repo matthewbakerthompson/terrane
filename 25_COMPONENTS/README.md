@@ -22,6 +22,10 @@ It carries four things a bare name cannot:
   Application Gateway on Azure, Cloud Load Balancing on GCP. Naming the type
   rather than the product is what makes a cloud migration a re-parameterization
   instead of a re-drawing.
+  The canvas's Add finds a type by any of these, and a part dropped into an
+  account of a provider is recorded as that provider's `product`: the first
+  product an answer offers, "Amazon EKS or ECS" offering two, unless the
+  person picks the other.
 - **Defaults** worth pre-filling: a load balancer lives at the edge, a database
   lives in the data tier, and having to remember that every time is how those
   fields end up empty.

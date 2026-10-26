@@ -429,6 +429,40 @@ class TestViews(unittest.TestCase):
         graph = resolve(self.model, view)
         self.assertEqual(len(graph.nodes), 3)
         self.assertTrue(any("max_nodes" in note for note in graph.notes))
+        whole = resolve(self.model, view._replace(limits={}))
+        self.assertEqual(graph.cut, len(whole.nodes) - 3)
+        # The scope names every system, so all three kept are of what it
+        # named; this said "showing the 3 the scope names and the first 0
+        # of the rest".
+        self.assertIn("showing the first 3 of the %d the scope names" % len(whole.nodes), graph.notes[0])
+
+    def test_a_report_is_never_cut_and_says_when_it_passes_its_limit(self) -> None:
+        """A table has no page to fit. Cut at its sixty, the capability
+        realization report kept the estate's systems and the first five
+        capabilities by id, and so listed five of its rows. Past its limit a
+        report is listed whole, and the limit says only that the scope may
+        have stopped filtering."""
+        view = parse_view(
+            {
+                "view_id": "t",
+                "kind": "report",
+                "scope": {"include": [{"type": "systems"}]},
+                "limits": {"max_nodes": 3},
+            }
+        )
+        graph = resolve(self.model, view)
+        whole = resolve(self.model, view._replace(limits={}))
+        self.assertGreater(len(whole.nodes), 3)
+        self.assertEqual([n.key for n in graph.nodes], [n.key for n in whole.nodes])
+        self.assertEqual(graph.cut, 0)
+        self.assertTrue(any("a report is listed whole" in note for note in graph.notes), graph.notes)
+        codes = [f.code for f in validate.run(self.model, [view]).warnings]
+        self.assertIn("view.past_limit", codes)
+        self.assertNotIn("view.truncated", codes)
+        # Within its limit it says nothing.
+        roomy = view._replace(limits={"max_nodes": len(whole.nodes)})
+        self.assertFalse(resolve(self.model, roomy).notes)
+        self.assertNotIn("view.past_limit", [f.code for f in validate.run(self.model, [roomy]).warnings])
 
     def test_empty_selection_is_an_error(self) -> None:
         view = parse_view(

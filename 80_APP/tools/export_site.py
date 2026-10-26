@@ -53,8 +53,9 @@ from terrane.schema import ENTITY_TYPES  # noqa: E402
 #: Copied verbatim into the site. `fonts/` and `vendor/` are what make the
 #: hosted page work with no third-party requests at all.
 # The marks travel with the site: without the icons folder every corner of
-# the hosted demo asked for a file that was not there.
-ASSETS = ("app.js", "styles.css", "favicon.svg", "vendor", "fonts", "icons")
+# the hosted demo asked for a file that was not there. `canvas/` is the
+# canvas's own script, which index.html loads after app.js.
+ASSETS =("app.js", "canvas", "styles.css", "favicon.svg", "vendor", "fonts", "icons")
 
 #: The estates published beside the checkout's own model: the folder of the
 #: site each is baked into, its root, and the line the other estates' home
@@ -264,15 +265,19 @@ def _bake_graphs(api: Path, overview: dict, tone: str) -> int:
         for param in view.get("parameters") or []:
             spec = next((p for p in payload.get("parameters", []) if p["name"] == param), None)
             type_name = spec.get("type") if spec else None
-            if not type_name:
-                continue
-            for item in _call(server.api_list, {"type": [type_name]})["items"]:
+            # A subject that is a field's value (a business domain) has no
+            # records to list; the payload carries the values it is drawn for.
+            if type_name:
+                values = [item["id"] for item in _call(server.api_list, {"type": [type_name]})["items"]]
+            else:
+                values = list((spec or {}).get("choices") or [])
+            for value in values:
                 try:
                     subject = _call(server.api_graph,
-                                    {"view": [view_id], "p_" + param: [item["id"]], "tone": [tone]})
+                                    {"view": [view_id], "p_" + param: [value], "tone": [tone]})
                 except server.ApiError as exc:
                     subject = {"error": exc.message}
-                _write(api / "graph" / view_id / ("%s--%s.json" % (param, item["id"])), subject)
+                _write(api / "graph" / view_id / ("%s--%s.json" % (param, value)), subject)
                 written += 1
     return written
 

@@ -180,6 +180,35 @@ a subfolder of its repository is copied for the drawing with the library it
 names and its own. From Python, `terrane.adopt(source, root)` and
 `terrane.change(source, root)`.
 
+A page the file drew is written as the diagram of the things on it, pinned
+to it, which is what a diagram drawn on the canvas is: the one page of a
+file, which every reader calls `imported`, is named for the file, so a
+second drawing adopted keeps its page beside the first; a type a reader
+names bare (`- type: systems`) is the file's own records of it, never every
+system the estate holds; and the page is filed under the layer most of its
+things belong to. The app adopts a file the same way. A drawing dropped on
+New diagram's sheet, on Settings > Sources or on an empty estate's first
+page is staged outside the repository and read with the estate's own
+connection kinds; its page shows the change picture without its title
+block, what it would add, who owns what it names no owner for, and what the
+estate has and the drawing says differently, with a box to correct it; and
+Adopt writes what `terrane adopt FILE --owner ORG-X`, with `--correct` when
+ticked, writes. The first page then opens on the canvas, its boxes the
+records.
+
+A diagram drawn on the canvas may also hold things of its own: shapes,
+text, notes, frames and free lines, drawn with the canvas's tools, none of
+them records. Its file lists them under `annotations:`, each with a key that
+never changes, the frames it sits in by key, its corner in the innermost of
+them or on the sheet, and its size, or a line's two ends, each a record by
+id, a key of the list or a point, and its route, straight, square or
+curved; `terrane.annotations` reads the list and
+says what is wrong with it. Every picture of the diagram draws them as the
+canvas does, from the same paths, fills and sizes: the frames, and what sits
+in them, under the boundaries, and the rest over the boxes. A diagram of
+them alone, nothing of the estate on it yet, draws them and nothing of the
+model.
+
 ## Out again
 
 Five formats take the estate to the tools other teams use, each rebuilt by
@@ -368,6 +397,8 @@ alone is whole.
   only as one of its presets.
 - A nominal field a view colors by changes nothing, by the palette's own
   rule, so the product on the Parts in Use view is read off the names.
+- A diagram's own shapes are in its SVG and the PNG made from it; the deck
+  and the draw.io export leave them out for now.
 - The draw.io and C4-PlantUML exports carry a tile map as boxes in bands
   and a system's technology line as a tooltip or a sentence; the ArchiMate
   export leaves roadmaps out, which have no counterpart.

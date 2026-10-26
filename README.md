@@ -40,7 +40,9 @@ is the first week of filling it.
 The pictures on this page are of the sample estate, a card issuer, which lives
 in this repository and, read-only, on
 [the demo](https://matthewbakerthompson.github.io/terrane/), with nothing to
-install. To open it in the app, clone the repository and, from its root folder:
+install. `terrane init --sample sample` copies it out of the installed package
+into a folder of your own, where `terrane app` opens it. Or clone the
+repository and, from its root folder:
 
 ```bash
 pip install .
@@ -204,6 +206,9 @@ records of its own, each in its own file with a header saying where it came
 from. Nothing already in the estate changes unless `--correct` is given, which
 is how corrections made by a reviewer in a workbook come back; `--dry-run` lists
 what would be written, and `--picture change.svg` draws it first.
+In the app, the same file dropped on New diagram's sheet, on Sources or on an
+empty estate's first page shows that picture and what it would add, asks who
+owns what the drawing names no owner for, and adopts it as the command does.
 
 Each format, how it is read, and what writes the estate out in it:
 
@@ -302,7 +307,7 @@ regional health system built with the same engine, library and views: an EHR
 and its departmental
 systems, an HL7 interface engine, a FHIR API and a patient portal, 31 systems in
 all, under HIPAA and Joint Commission controls. Its four products are on the
-shipped shapes, 31 of its 32 views are the shipped views unchanged, and it adds
+shipped shapes, 32 of its 33 views are the shipped views unchanged, and it adds
 two connection kinds of its own, HL7 v2 feeds and DICOM transfers. The app opens
 it with `terrane --root 90_EXAMPLE/thurman-health app --port 8021`,
 and every `terrane` command takes the same `--root`.

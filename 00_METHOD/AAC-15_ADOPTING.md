@@ -263,22 +263,23 @@ again after fixing the CSVs; nothing is written twice.
 python -m terrane validate
 ```
 
-Measured with three systems and an org unit, and again with the mapped sample,
-five errors are left, the same five both times, and they are of two kinds.
-Three views are about things in the sample estate: one business domain
-(`domain-servicing`) and named systems (`harvested-estate`,
-`change-evidence-chain`). Two wait on a field the inventory did not fill:
-`tiered-architecture` draws systems with a `network_zone`, and
-`vendor-exposure` draws systems tagged `vendor` or `third-party`. Every view of
+Measured with three systems and an org unit, five errors are left, and they
+are of two kinds. Two views are about named systems in the sample estate
+(`harvested-estate`, `change-evidence-chain`). Three wait on something the
+inventory did not fill: `tiered-architecture` draws systems with a
+`network_zone`, `vendor-exposure` systems tagged `vendor` or `third-party`,
+and `parts-in-use` systems a part of the library made. A business domain's
+landscape is not among them: `domain-landscape` is drawn for each domain your
+own systems name. Every view of
 a layer not brought in yet -- capabilities, processes, people, data -- says
 `view.nothing_yet` and waits; on the shipped repository those were thirty-five
 more errors.
 
-Those are the views written about the sample estate: a drawing of one of its
-products, one of its business domains, one of its cloud accounts. Open each
-in the app and press **Edit view**: the composer shows what it filters on, and
-changing `Servicing` to a domain you have is one choice in a list. Or delete
-the ones you will not use. Every other view follows your data as it arrives.
+Two of those are views written about the sample estate: a drawing of the
+systems it harvested from its business layer, and of the evidence behind one of
+its changes. Open each in the app and press **Edit view**: the composer shows
+what it filters on. Or delete the ones you will not use. Every other view
+follows your data as it arrives.
 
 Connections come next. An `interfaces.csv` imports like the rest; on the
 drawing, dropping one system on another offers every way the two can be

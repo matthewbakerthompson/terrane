@@ -150,9 +150,14 @@ class TestTheDrawing(unittest.TestCase):
         self.assertIn(("SYS-CRM", "SYS-CORE-LEDGER", "HTTPS"), {(e.source, e.target, e.label) for e in graph.edges})
 
     def test_an_interface_is_part_of_its_owner_s_box_in_the_count(self) -> None:
-        graph = resolve(self.model, self.views["integration-architecture"])
+        # Held at 40, below the 55 systems the view matches: the shipped view
+        # was raised to 80 and draws them all, which would no longer show that
+        # the interfaces ride on their owners' boxes rather than the limit.
+        view = self.views["integration-architecture"]
+        view = view._replace(limits=dict(view.limits, max_nodes=40))
+        graph = resolve(self.model, view)
         boxes = [n for n in graph.nodes if n.entity_type != "offered_interfaces"]
-        self.assertLessEqual(len(boxes), 40)
+        self.assertEqual(len(boxes), 40)
         self.assertGreater(len(graph.nodes), len(boxes))
 
     def test_a_map_keeps_its_lines_on_the_boxes(self) -> None:

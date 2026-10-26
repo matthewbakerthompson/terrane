@@ -870,6 +870,10 @@ def render_root(root: Path, wanted: Sequence[str], notes: List[str], *, mermaid:
         # code, since a sketch has no CMDB ids and does not need telling
         # seventy times.
         report = validate_module.run(model, list(views.values()))
+        # A sketch copies the few shipped views it draws and never the
+        # levels above them, so a view's `up` naming one is not the sketch's
+        # to fix.
+        report = validate_module.Report([f for f in report.findings if f.code != "view.up"])
         if not own_library:
             # The shipped library's own findings (a shape binding a service
             # the scratch repository does not carry) are not the sketch's.

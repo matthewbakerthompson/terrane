@@ -21,7 +21,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from terrane import cli, importer, model as model_module, validate  # noqa: E402
 from terrane.loader import read_data_file  # noqa: E402
-from terrane.query import load_views  # noqa: E402
+from terrane.query import load_views, render_targets  # noqa: E402
 
 from _fixture import REPO, Sandbox  # noqa: E402
 
@@ -130,12 +130,17 @@ class TestTheFirstDay(unittest.TestCase):
         self.assertEqual(codes.get("system-context"), "view.nothing_yet")
 
     def test_what_still_fails_is_a_filter_on_something_that_exists(self) -> None:
-        """A view of systems in the sample's Servicing domain, in an estate
-        with systems and no such domain, is a view to retarget: still an
-        error, and the only kind left."""
+        """A view of named things the sample has, in an estate with systems
+        and none of those, is a view to retarget: still an error, and the
+        only kind left. A domain's landscape is not one of them: it is drawn
+        for the domains the estate's own systems name."""
         failing = {f.message.split()[1] for f in self.imported.errors}
-        self.assertIn("domain-servicing", failing)
+        self.assertNotIn("domain-landscape", failing)
+        self.assertIn("harvested-estate", failing)
         self.assertEqual({f.code for f in self.imported.errors}, {"view.unresolvable"})
+        landscape = [v for v in load_views(self.root / "30_VIEWS") if v.view_id == "domain-landscape"][0]
+        self.assertEqual([value for _p, value in render_targets(model_module.load(self.root), landscape)],
+                         ["Claims", "Distribution", "Underwriting"])
         for view_id in failing:
             view = [v for v in load_views(self.root / "30_VIEWS") if v.view_id == view_id][0]
             kinds = [c.get("type") for c in view.scope.get("include") or []]

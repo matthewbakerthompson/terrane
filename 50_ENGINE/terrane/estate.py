@@ -1,5 +1,6 @@
 """An estate in a repository of its own: the views it is drawn with, the
-versions it is checked with, and the files `terrane init` starts it from.
+versions it is checked with, the files `terrane init` starts it from, and
+the copy of the sample estate `terrane init --sample` makes.
 
 An organization's architecture lives in a repository it owns, in Azure
 DevOps or wherever its code is, and every person who works on it installs
@@ -31,6 +32,7 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 from .library import PACKAGE, SHIPPED
 from .loader import read_data_file
 from .places import with_places
+from .shipped import HOME
 from .query import VIEW_CATEGORIES, View, ViewError, load_views
 
 VIEWS = "30_VIEWS"
@@ -399,33 +401,47 @@ _VIEWS_README = "\n".join([
 ])
 
 
+def _refuse_taken(folder: Path, also: Sequence[str] = ()) -> None:
+    from .library import LAYER_FOLDERS
+
+    if (folder / CONFIG).exists():
+        raise InitError("%s already holds an estate (%s)" % (folder, CONFIG.as_posix()))
+    names = dict.fromkeys(("10_MODEL", VIEWS) + tuple(LAYER_FOLDERS) + tuple(also))
+    taken = [p for p in names if (folder / p).exists()]
+    if taken:
+        raise InitError("%s already holds %s; an estate is started in a folder without them"
+                        % (folder, ", ".join(taken)))
+
+
+def _requirement(requirement: str, version: str) -> str:
+    requirement = requirement or default_requirement(version)
+    if version_accepted(requirement, version) is None:
+        raise InitError("%r is not a version range terrane reads" % requirement)
+    return requirement
+
+
 def init_estate(folder: Path, name: str, version: str, repository: str = "", ref: str = "",
                 requirement: str = "") -> Tuple[List[Path], List[Path]]:
     """Write a new estate into `folder`, and say what was written and what
     was already there and left alone. A folder that already holds an estate,
     or views or library layers of one, is refused rather than mixed into."""
-    from .library import LAYER_FOLDERS
-
     folder = Path(folder)
-    if (folder / CONFIG).exists():
-        raise InitError("%s already holds an estate (%s)" % (folder, CONFIG.as_posix()))
-    taken = [p for p in ("10_MODEL", VIEWS) + tuple(LAYER_FOLDERS) if (folder / p).exists()]
-    if taken:
-        raise InitError("%s already holds %s; an estate is started in a folder without them"
-                        % (folder, ", ".join(taken)))
+    _refuse_taken(folder)
     if bool(repository) != bool(ref):
         raise InitError("a governance pin is a repository and a ref together")
     if not name.strip():
         raise InitError("an estate has a name")
-    requirement = requirement or default_requirement(version)
-    if version_accepted(requirement, version) is None:
-        raise InitError("%r is not a version range terrane reads" % requirement)
+    requirement = _requirement(requirement, version)
     files = {
         CONFIG: _model_yaml(name.strip(), requirement, repository, ref),
         Path(VIEWS) / "README.md": _VIEWS_README,
         Path("README.md"): _readme(name.strip()),
         Path(".gitignore"): _GITIGNORE,
     }
+    return _write_files(folder, files)
+
+
+def _write_files(folder: Path, files: Dict[Path, str]) -> Tuple[List[Path], List[Path]]:
     written, kept = [], []
     for rel, text in files.items():
         path = folder / rel
@@ -442,3 +458,121 @@ def init_estate(folder: Path, name: str, version: str, repository: str = "", ref
         path.write_text(text, encoding="utf-8", newline="\n")
         written.append(path)
     return written, kept
+
+
+# -- terrane init --sample -------------------------------------------------------
+
+#: The sample estate beside its settings: the records, and the sources its
+#: pages read -- the inventory kept as a source, the CMDB export the drift
+#: page compares against, the aliases a harvested record's refusal names.
+SAMPLE_FOLDERS = ("10_MODEL", "60_SOURCES")
+#: The key in `model.yaml` that says the model is the sample estate.
+SAMPLE = "sample_estate"
+
+
+def _sample_yaml(text: str, version: str, requirement: str) -> str:
+    """The sample's settings for a copy of it: every one it has, with the
+    paragraph on what it is in the repository (where `terrane refresh` seeds
+    the engine's tests from it) swapped for what the copy is, and the lines
+    an estate of one's own has, which read the shipped library and views
+    from the installed terrane. The description is the copy's own too: the
+    repository's is written to outlast `terrane clear`, and names the app's
+    folder. Swapped by key, not by line, so a sample whose settings are
+    reworded still copies."""
+    from .compose import _blocks
+
+    head, blocks = _blocks(text.splitlines(), 0)
+    lines = list(head)
+    for key, block in blocks:
+        if key == "description":
+            lines += list(block.lead) + [
+                "description: >",
+                "  A made-up card issuer's application, data and technology landscape: the",
+                "  sample estate terrane ships with, here to show what a full estate draws.",
+            ]
+        elif key == SAMPLE:
+            lines += [
+                "",
+                "# Copied out of terrane %s by `terrane init --sample`: a copy of its own," % version,
+                "# to open in the app and change. An estate of your own starts empty, with",
+                "# `terrane init`.",
+                "%s: true" % SAMPLE,
+                "",
+                "# The shipped library and the shipped views are read from the installed",
+                "# terrane, and the sample is checked with the release it was copied from.",
+                "%s: %s" % (SHIPPED, PACKAGE),
+                "%s: %s" % (SHIPPED_VIEWS, PACKAGE),
+                "%s: %s" % (REQUIRES, _quoted(requirement)),
+            ]
+        elif key not in (SHIPPED, SHIPPED_VIEWS, REQUIRES, GOVERNANCE):
+            lines += block.lines()
+    return "\n".join(lines).rstrip("\n") + "\n"
+
+
+def _sample_readme(version: str) -> str:
+    return "\n".join([
+        "# The sample estate",
+        "",
+        "A made-up card issuer, here to show what a full estate draws, copied out of",
+        "terrane %s by `terrane init --sample`. The records are under `10_MODEL/`," % version,
+        "the inventory and the CMDB export the app's Sources and Drift pages read",
+        "are under `60_SOURCES/`, and the shipped library and views come from the",
+        "installed terrane, as `10_MODEL/model.yaml` says.",
+        "",
+        "```bash",
+        "terrane app               # the app on this folder; a first visit offers a two-minute tour",
+        "terrane validate          # the gate: no errors, and the warnings the sample is there to show",
+        "terrane render            # every view as Mermaid and SVG, under 70_ARTIFACTS/",
+        "```",
+        "",
+        "The copy is yours to change. A fresh one is `terrane init --sample` into",
+        "another folder, and an estate of your own starts empty, with `terrane init`.",
+        "",
+        "The comments in its files were written in terrane's repository, and the",
+        "folders they name, `00_METHOD/` and `50_ENGINE/` among them, are there:",
+        "%s." % HOME,
+        "",
+    ])
+
+
+def init_sample(folder: Path, version: str, requirement: str = "",
+                source: Optional[Path] = None) -> Tuple[List[Path], List[Path]]:
+    """Copy the sample estate into `folder`, out of the installed terrane
+    (in a clone, out of the repository), with settings that read the shipped
+    library and views from the package as an estate `terrane init` starts
+    does; and say, as `init_estate` does, what was written and what was
+    kept. The package's own copy is never opened in place: the app writes
+    where it reads, and an edit there would land in site-packages and go
+    with the next upgrade."""
+    source = Path(source) if source is not None else _installed_root()
+    folder = Path(folder)
+    if not _config(source).get(SAMPLE):
+        raise InitError("%s holds no sample estate: its %s does not say %s: true"
+                        % (source, CONFIG.as_posix(), SAMPLE))
+    where = folder.resolve()
+    for home in [Path(__file__).resolve().parent] + [(source / name).resolve() for name in SAMPLE_FOLDERS]:
+        if where == home or home in where.parents:
+            raise InitError("%s is inside %s; the sample is copied out, into a folder of your own" % (folder, home))
+    _refuse_taken(folder, SAMPLE_FOLDERS)
+    requirement = _requirement(requirement, version)
+    written: List[Path] = []
+    for name in SAMPLE_FOLDERS:
+        if not (source / name).is_dir():
+            continue
+        # File by file rather than copytree, which hands the package's
+        # modes on: from a read-only install (a system Python, a container
+        # image) the app could not have saved a record into the copy.
+        for path in sorted((source / name).rglob("*")):
+            if path.is_file() and "__pycache__" not in path.parts:
+                target = folder / path.relative_to(source)
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(path.read_bytes())
+        written.append(folder / name)
+    text = (source / CONFIG).read_text(encoding="utf-8-sig")
+    (folder / CONFIG).write_text(_sample_yaml(text, version, requirement), encoding="utf-8", newline="\n")
+    more, kept = _write_files(folder, {
+        Path(VIEWS) / "README.md": _VIEWS_README,
+        Path("README.md"): _sample_readme(version),
+        Path(".gitignore"): _GITIGNORE,
+    })
+    return written + more, kept

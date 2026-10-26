@@ -135,9 +135,9 @@ class TestChoice(unittest.TestCase):
         self.assertTrue(all(not subject for _, subject, _ in chosen[:first_product]))
 
     def test_named_views_as_named_with_a_subject(self):
-        chosen = choose(self.views, self.model, ["domain-servicing", "product-architecture:PRD-IDENTITY"])
+        chosen = choose(self.views, self.model, ["domain-landscape:Servicing", "product-architecture:PRD-IDENTITY"])
         self.assertEqual([(v.view_id, s) for v, s, _ in chosen],
-                         [("domain-servicing", ""), ("product-architecture", "PRD-IDENTITY")])
+                         [("domain-landscape", "Servicing"), ("product-architecture", "PRD-IDENTITY")])
 
     def test_a_reader_file_is_read_by_its_suffix_without_a_flag(self):
         from terrane.quick import draw_sketch
@@ -163,7 +163,7 @@ class TestPack(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp) / "deck.pptx"
             path, slides = build_pack(REPO_ROOT, out,
-                                      ["system-context", "domain-servicing", "product-architecture:PRD-IDENTITY",
+                                      ["system-context", "domain-landscape:Servicing", "product-architecture:PRD-IDENTITY",
                                        "change-roadmap"], date="2026-10-17", log=said.append)
             self.assertEqual(path, out)
             self.assertEqual(slides, 6)

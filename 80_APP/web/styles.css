@@ -4763,7 +4763,6 @@ button.mx-count:hover { box-shadow: 0 0 0 2px var(--cap-fill); }
 .shell.canvas-mode #btnEditView, .shell.canvas-mode #actsMenu, .shell.canvas-mode #legend { display: none !important; }
 .shell.canvas-mode .sheet { margin: 20px; border: 1px solid var(--rule); border-radius: 10px; background: var(--illo-plate); }
 .shell.canvas-mode .canvas { background-image: none; }
-.sheet.cv-connecting .canvas { cursor: crosshair; }
 
 .cv-tools {
   position: absolute; top: 16px; left: 16px; z-index: var(--z-chrome);
@@ -5252,3 +5251,201 @@ button.sb-ws:focus-visible { outline: 2px solid var(--focus); outline-offset: 2p
 @media (prefers-reduced-motion: reduce) {
   .tour-ring::after { animation: none; }
 }
+
+/* ---- the levels ------------------------------------------------------------
+   The diagrams about a box, about what it sits in and about its domain, as a
+   list per subject; the other views about a subject as tabs beside its
+   picker; the one on screen marked rather than linked. */
+
+.lv-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
+.lv-head { margin: 0; font-size: var(--t-small); font-weight: 600; color: var(--ink-3); }
+.lv-list { display: flex; flex-direction: column; border: 1px solid var(--rule); border-radius: var(--r-m); overflow: hidden; }
+.lv-row {
+  display: flex; align-items: center; gap: 9px; width: 100%;
+  padding: 6px 10px;
+  background: none; border: 0; border-bottom: 1px solid var(--rule);
+  font: inherit; font-size: var(--t-base); color: var(--ink); text-align: left;
+}
+.lv-row:last-child { border-bottom: 0; }
+button.lv-row { cursor: pointer; }
+button.lv-row:hover, button.lv-row:focus-visible { background: var(--accent-wash); outline: none; }
+.lv-row .vglyph { color: var(--ink-3); flex: none; }
+.lv-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lv-n { flex: none; font-size: var(--t-micro); color: var(--ink-3); }
+.lv-row.is-here { background: var(--accent-wash); font-weight: 600; }
+.lv-row.is-here .vglyph, .lv-row.is-here .lv-n { color: var(--accent-2); }
+.lv-row.is-thin .lv-name { color: var(--ink-3); }
+.lv-hint { margin: 2px 0 0; font-size: var(--t-small); color: var(--ink-3); }
+#inspIdle .lv-list { margin-bottom: 4px; }
+
+/* The tabs keep to the picker's line: beside a long system name they scroll
+   rather than wrap to a second row of their own. */
+.subject-bar:has(.subject-across) { flex-wrap: nowrap; gap: 10px; }
+.subject-bar:has(.subject-across) .subject-tag, .subject-bar:has(.subject-across) .subject-pick { flex: none; white-space: nowrap; }
+.subject-bar:has(.subject-across) .subject-pick select { max-width: 190px; }
+.subject-across {
+  display: inline-flex; align-items: center; gap: 2px; margin-left: auto; min-width: 0; flex-shrink: 1;
+  overflow-x: auto; scrollbar-width: none;
+  padding: 3px; background: var(--panel); border: 1px solid var(--rule); border-radius: var(--r-m);
+}
+.sa-tab {
+  flex: none; padding: 4px 9px; background: none; border: 0; border-radius: var(--r-s);
+  font: inherit; font-size: var(--t-small); font-weight: 500; color: var(--ink-2); cursor: pointer; white-space: nowrap;
+}
+.sa-tab:hover { color: var(--ink); background: var(--sunk); }
+.sa-tab[aria-pressed="true"] { background: var(--sheet); color: var(--ink); font-weight: 600; cursor: default; box-shadow: 0 1px 2px rgba(28, 25, 23, 0.08); }
+
+.ctx-menu .ctx-sub { padding: 6px 10px 2px; font-size: var(--t-small); font-weight: 600; color: var(--ink-3); }
+
+/* ---- A drawing brought in (V7 frames) ---------------------------------------
+ * The drop on the canvas, and the page that says what adopting it would add:
+ * the engine's change picture given the column, the counts, the owner and
+ * the corrections beside it. */
+.cv-empty-file { margin: 6px 0 0 !important; max-width: 440px; color: var(--ink-3) !important; font-size: 12.5px !important; }
+.cv-file-drop { position: absolute; inset: 0; z-index: var(--z-overlay); display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 10px; text-align: center; border: 2px solid var(--accent); border-radius: inherit;
+  background: var(--accent-wash); pointer-events: none; }
+.cv-file-drop[hidden] { display: none; }
+.cv-file-drop strong { font-size: 15px; font-weight: 600; color: var(--accent-2); }
+.cv-file-drop span:last-child { font-size: 12.5px; color: var(--ink-2); }
+.cv-file-badge { width: 52px; height: 52px; border-radius: 26px; background: var(--sheet); color: var(--accent-2);
+  display: inline-flex; align-items: center; justify-content: center; }
+.cv-file-badge .i { width: 24px; height: 24px; }
+.adopt .st-head { align-items: flex-end; }
+/* A page with the sticky bar of steps at its foot ends at the panel's edge:
+ * the panel's own padding below it showed the page scrolling under the bar,
+ * a drawing's notes read beneath Adopt and a long export's rows beneath
+ * Bring in. */
+.panel:has(> .settings) { padding-bottom: 0; }
+.adopt-chip { flex: none; display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px 6px 10px; border-radius: 999px;
+  background: var(--sheet); border: 1px solid var(--rule); color: var(--ink-2); font-size: 12.5px; font-weight: 600; }
+.adopt-chip .i { width: 14px; height: 14px; }
+.adopt-picture { position: relative; margin: 0; display: flex; flex-direction: column; gap: 10px; padding: 12px 16px;
+  background: #ffffff; border: 1px solid var(--rule); border-radius: 10px; }
+.adopt-drawing { height: min(62vh, 560px); min-height: 280px; display: flex; align-items: center; justify-content: center;
+  cursor: zoom-in; }
+.adopt-drawing img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.adopt-picture.is-busy .adopt-drawing { opacity: 0.35; }
+.adopt-picture.is-busy:not(:has(.adopt-drawing)) { height: min(62vh, 560px); align-items: center; justify-content: center; }
+.adopt-busy { position: absolute; inset: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; align-items: center;
+  justify-content: center; color: var(--ink-2); font-size: 13px; font-weight: 600; }
+.adopt-busy span { font-weight: 400; color: #6b7280; }
+.adopt-failed { min-height: 280px; display: flex; flex-direction: column; gap: 6px; align-items: center; justify-content: center;
+  text-align: center; padding: 24px; color: #374151; font-size: 13px; }
+.adopt-failed .i { width: 22px; height: 22px; color: var(--high); }
+.adopt-failed p { margin: 0; max-width: 60ch; line-height: 1.5; }
+.adopt-nothing { margin: 0; padding: 40px 12px; text-align: center; color: var(--ink-2); font-size: 13px; }
+.adopt-key { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; padding-top: 10px; border-top: 1px solid var(--rule);
+  font-size: 12px; color: #4b5563; }
+.adopt-key .grow { flex: 1; }
+.adopt-key-item { display: inline-flex; align-items: center; gap: 7px; }
+.adopt-key .sw { width: 20px; height: 13px; border-radius: 3px; background: #c7d2fe; border: 1.5px solid #4338ca; }
+.adopt-key .sw.here { opacity: 0.45; }
+.adopt-key .sw.heavy { border-width: 3px; }
+.adopt-pages { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.adopt-pages .say { font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
+.adopt-page { display: inline-flex; align-items: center; gap: 7px; padding: 5px 10px 5px 8px; border-radius: 7px;
+  background: var(--sheet); border: 1px solid var(--rule); font-size: 12.5px; }
+.adopt-page .i { width: 13px; height: 13px; color: var(--ink-2); }
+.adopt-page span { color: var(--ink-3); font-size: 12px; }
+.adopt-counts { display: flex; flex-direction: column; gap: 10px; }
+.adopt-count { display: flex; gap: 12px; align-items: flex-start; }
+.adopt-count strong { width: 24px; flex: none; font-family: var(--display); font-size: 22px; font-weight: 800; line-height: 1.1; }
+.adopt-count .words { display: flex; flex-direction: column; gap: 1px; padding-top: 3px; min-width: 0; }
+.adopt-count .label { font-size: 13px; font-weight: 600; color: var(--ink); }
+.adopt-count .sub { font-size: 12px; color: var(--ink-3); line-height: 1.45; }
+.adopt-count.accent strong, .adopt-count.accent .label { color: var(--accent-2); }
+.adopt-block { padding-top: 16px; border-top: 1px solid var(--rule); gap: 8px; }
+.adopt-block .st-input { width: 100%; }
+.adopt-changes { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 3px; font-size: 12.5px;
+  color: var(--ink-2); line-height: 1.5; }
+
+/* ---- the canvas drawn by maxGraph (canvas/engine.js) ----------------------
+ * While the gestures are still Cytoscape's, maxGraph draws over Cytoscape's
+ * own drawing, which stays laid out and takes the pointer, made invisible
+ * beneath. The surface lets every event through to it. */
+.under-mirror > div > canvas, .under-mirror > canvas.tech-layer { opacity: 0; }
+/* Laid over #cy by engine.js, at the canvas's own layer: over the drawing,
+ * under the tools, guides and overview that float above it. */
+.mg-surface { position: absolute; z-index: var(--z-canvas); pointer-events: none; overflow: hidden; }
+.mg-surface.takes-pointer { pointer-events: auto; touch-action: none; }
+.mg-surface svg { overflow: visible; }
+
+/* ---- the diagram's own shapes, drawn with the tools (canvas/engine.js) */
+.mg-surface.is-drawing { cursor: crosshair; }
+.mg-ghost { position: absolute; pointer-events: none; border: 1.5px dashed var(--accent); border-radius: 4px;
+  background: color-mix(in srgb, var(--accent) 6%, transparent); }
+.mg-ghost.is-line { height: 0; border: 0; border-top: 1.5px dashed var(--accent); border-radius: 0; background: none; transform-origin: 0 0; }
+/* Typed in where it is drawn: over the shape, outside maxGraph's sheet. */
+.mg-edit { position: absolute; z-index: var(--z-overlay); box-sizing: border-box; margin: 0; resize: none; overflow: hidden;
+  border: 0; border-radius: 3px; outline: 2px solid var(--accent); outline-offset: 0; background: rgba(255, 255, 255, 0.94);
+  font-family: Geist, system-ui, sans-serif; line-height: 1.32; color: #272b33; }
+.mg-edit.is-note { background: #fdf0b8; }
+.cv-tool.is-icon { padding: 6px 8px; }
+.cv-tool:disabled { opacity: 0.38; cursor: default; background: none; }
+.cv-tool .cv-caret { width: 12px; height: 12px; margin-left: -3px; color: var(--ink-3); }
+.cv-tools.no-own .cv-own { display: none; }
+/* Room for the chips on a narrower sheet: the drawing tools say their names
+ * in their titles. */
+@media (max-width: 1480px) { .cv-tools .cv-tool.cv-own > span { display: none; } .cv-tools .cv-tool.cv-own { padding: 6px 8px; } }
+.cv-empty { pointer-events: none; }
+.cv-empty-card { pointer-events: auto; }
+.cv-shape-menu {
+  position: absolute; top: 62px; left: 16px; z-index: var(--z-chrome); width: 268px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2px; padding: 6px;
+  background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; box-shadow: var(--shadow-float);
+}
+.cv-shape-menu[hidden] { display: none; }
+.cv-shape-item { display: flex; align-items: center; gap: 9px; padding: 6px 8px; border: 0; border-radius: 7px; background: none;
+  font: inherit; font-size: var(--t-base); color: var(--ink); cursor: pointer; text-align: left; }
+.cv-shape-item:hover, .cv-shape-item:focus-visible, .cv-shape-item[aria-pressed="true"] { background: var(--ground); outline: none; }
+.cv-shape-pic { width: 28px; height: 21px; flex: none; fill: var(--sheet); stroke: var(--ink-2); stroke-width: 1.4; }
+.cv-badge.is-own { background: var(--ground); color: var(--ink-2); }
+.cv-swatches { display: flex; gap: 8px; }
+.cv-swatch { width: 26px; height: 26px; padding: 0; border-radius: 13px; border: 1.5px solid var(--sw-edge); background: var(--sw); cursor: pointer; }
+.cv-swatch[aria-checked="true"] { box-shadow: 0 0 0 2px var(--sheet), 0 0 0 4px var(--accent); }
+.cv-look-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.cv-seg { display: inline-flex; gap: 2px; padding: 2px; border-radius: 8px; background: var(--ground); border: 1px solid var(--rule); }
+.cv-seg-b { padding: 4px 10px; border: 0; border-radius: 6px; background: none; font: inherit; font-size: var(--t-small); color: var(--ink-2); cursor: pointer; }
+.cv-seg-b[aria-checked="true"] { background: var(--sheet); color: var(--ink); font-weight: 600; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08); }
+.cv-shape-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+.cv-shape-b { display: inline-flex; align-items: center; justify-content: center; padding: 5px; border: 1px solid var(--rule);
+  border-radius: 7px; background: var(--sheet); cursor: pointer; }
+.cv-shape-b[aria-checked="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.cv-keys { padding-top: 12px; border-top: 1px solid var(--rule); }
+/* A line drawn between two records, asked what it is: the answer that
+ * keeps it the diagram's own, set apart from the connections. */
+.connect-opt.is-line .co-s { color: var(--ink-2); }
+
+/* ---- several picked, and the hand (canvas/engine.js) */
+.mg-ghost.is-marquee { border-style: solid; border-width: 1px; border-radius: 2px; background: color-mix(in srgb, var(--accent) 8%, transparent); }
+.mg-surface.is-panning { cursor: grab; }
+.mg-surface.is-grabbing { cursor: grabbing; }
+.cv-bar {
+  position: absolute; z-index: var(--z-chrome); display: flex; align-items: center; gap: 2px; padding: 4px;
+  background: var(--sheet); border: 1px solid var(--rule); border-radius: 9px; box-shadow: var(--shadow-float);
+}
+.cv-bar[hidden] { display: none; }
+.cv-bar .sep { width: 1px; height: 18px; margin: 0 3px; background: var(--rule); }
+.cv-bar-b { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 28px; padding: 0;
+  border: 0; border-radius: 6px; background: none; color: var(--ink-2); cursor: pointer; }
+.cv-bar-b:hover:not(:disabled) { background: var(--ground); color: var(--ink); }
+.cv-bar-b:disabled { opacity: 0.35; cursor: default; }
+.cv-bar-b .i { width: 16px; height: 16px; }
+.cv-picks { display: flex; flex-direction: column; gap: 6px; }
+.cv-pick { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border: 0; border-radius: 7px; background: var(--ground);
+  font: inherit; font-size: var(--t-base); color: var(--ink); text-align: left; cursor: pointer; }
+.cv-pick:hover { background: var(--sunk); }
+.cv-pick-dot { width: 8px; height: 8px; flex: none; border-radius: 4px; background: var(--accent); }
+.cv-pick.is-own .cv-pick-dot { background: var(--ink-3); }
+.cv-pick-n { flex: 1; min-width: 0; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cv-pick-id { flex: none; font-size: var(--t-small); color: var(--ink-3); }
+/* The Line menu: three routes, one column. */
+.cv-shape-menu.is-lines { grid-template-columns: 1fr; width: 168px; }
+.cv-shape-pic.is-line { fill: none; stroke-width: 1.6; }
+/* What a cloud calls a part, offered when it is dropped into one of its
+ * accounts: the product it is recorded as. */
+.cv-offers { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 10px; }
+.cv-offer { padding: 4px 10px; border: 1px solid var(--rule-2); border-radius: 999px; background: var(--sheet);
+  font: inherit; font-size: var(--t-small); color: var(--ink-2); cursor: pointer; }
+.cv-offer[aria-checked="true"] { border-color: var(--accent); background: var(--accent-wash); color: var(--accent-2); font-weight: 600; }

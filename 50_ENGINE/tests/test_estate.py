@@ -163,6 +163,111 @@ class TestInit(_Estate):
                          "https://dev.azure.com/contoso/a/_git/governance at v1.0.0")
 
 
+class TestSample(_Estate):
+    """`terrane init --sample`: the sample estate copied out of the package
+    into a folder of the person's own, read as an estate `terrane init`
+    starts is. Until 1.1.0 the tour and the sample were on the demo and in a
+    clone, and a pip install had neither."""
+
+    def sample(self, *extra: str) -> int:
+        with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+            return cli.main(["init", "--sample", str(self.root), *extra])
+
+    def test_the_sample_copies_out_whole_and_reads_the_package(self) -> None:
+        self.assertEqual(self.sample(), 0)
+        source = shipped_root()
+        for folder in estate.SAMPLE_FOLDERS:
+            for path in sorted((source / folder).rglob("*")):
+                if not path.is_file() or "__pycache__" in path.parts or path == source / estate.CONFIG:
+                    continue
+                copied = self.root / path.relative_to(source)
+                self.assertEqual(copied.read_bytes(), path.read_bytes(), copied)
+        for rel in ("30_VIEWS/README.md", "README.md", ".gitignore"):
+            self.assertTrue((self.root / rel).is_file(), rel)
+        text = (self.root / "10_MODEL" / "model.yaml").read_text(encoding="utf-8")
+        self.assertIn("shipped_library: package", text)
+        self.assertIn("shipped_views: package", text)
+        self.assertIn('requires_terrane: "%s"' % estate.default_requirement(__version__), text)
+        self.assertNotIn("90_EXAMPLE/csv", text)
+        self.assertNotIn("80_APP", text)
+        self.assertTrue(cli.is_sample_estate(self.root))
+        # Every setting the sample has, the answers and the patterns among
+        # them, which name its records; the description is the copy's own.
+        theirs = estate._config(source)
+        ours = estate._config(self.root)
+        for key in theirs:
+            if key != "description":
+                self.assertEqual(ours[key], theirs[key], key)
+        self.assertIn("card issuer", ours["description"])
+        self.assertEqual(library_roots(self.root)[0].path, shipped_root().resolve())
+        views = estate.views_of(self.root)
+        self.assertEqual(len(views), SHIPPED_VIEWS)
+        self.assertTrue(all(estate.from_the_package(self.root, v) for v in views))
+        model = load(self.root)
+        self.assertEqual(model.counts(), load(source).counts())
+        report = validate.run(model, views)
+        self.assertEqual([f.format() for f in report.findings if f.severity == "error"], [])
+        # Its files' comments name folders of terrane's repository, and the
+        # README says where that is.
+        self.assertIn(estate.HOME, (self.root / "README.md").read_text(encoding="utf-8"))
+
+    def test_the_app_on_the_copy_says_it_is_the_sample_and_has_the_tours_view(self) -> None:
+        self.assertEqual(self.sample(), 0)
+        server = _server()
+        server.REPO_ROOT = self.root
+        overview = server.api_overview({}, None)
+        self.assertTrue(overview["estate"]["sample"])
+        self.assertEqual(Path(overview["estate"]["path"]), self.root.resolve())
+        context = [v for v in overview["views"] if v["viewId"] == "system-context"]
+        self.assertEqual(len(context), 1)
+        self.assertTrue(context[0]["ok"], context[0])
+        self.assertGreater(context[0]["nodes"], 0)
+
+    def test_it_says_where_it_went_and_how_to_open_it(self) -> None:
+        out = io.StringIO()
+        with redirect_stdout(out), redirect_stderr(io.StringIO()):
+            self.assertEqual(cli.main(["init", "--sample", str(self.root)]), 0)
+        said = out.getvalue()
+        self.assertIn("wrote  10_MODEL/ (", said)
+        self.assertIn(" 0 error(s)", said)
+        # The option before the command, where argparse reads it, and the
+        # folder as the person typed it.
+        self.assertIn("  terrane --root %s app" % cli._shell_word(str(self.root)), said)
+
+    def test_the_sample_is_not_copied_over_an_estate(self) -> None:
+        self.assertEqual(self.init(), 0)
+        self.assertEqual(self.sample(), 2)
+        self.root = self.tmp / "sources"
+        (self.root / "60_SOURCES").mkdir(parents=True)
+        self.assertEqual(self.sample(), 2)
+        self.assertFalse((self.root / "10_MODEL").exists())
+
+    def test_the_sample_is_copied_as_it_ships(self) -> None:
+        self.assertEqual(self.sample("--name", "Ours"), 2)
+        self.assertEqual(self.sample("--governance", "https://dev.azure.com/contoso/a/_git/governance",
+                                     "--governance-ref", "v1"), 2)
+        self.assertFalse(self.root.exists())
+
+    def test_a_copy_inside_the_sample_or_from_no_sample_is_refused(self) -> None:
+        # A source of the test's own, so a refusal that failed would write
+        # into the scratch folder and nowhere else.
+        source = self.tmp / "source"
+        (source / "10_MODEL").mkdir(parents=True)
+        (source / "10_MODEL" / "model.yaml").write_text("name: Plain\n", encoding="utf-8")
+        with self.assertRaises(estate.InitError) as caught:
+            estate.init_sample(self.tmp / "copy", __version__, source=source)
+        self.assertIn("holds no sample estate", str(caught.exception))
+        (source / "10_MODEL" / "model.yaml").write_text("name: Sample\nsample_estate: true\n", encoding="utf-8")
+        inside = source / "10_MODEL" / "copy"
+        with self.assertRaises(estate.InitError) as caught:
+            estate.init_sample(inside, __version__, source=source)
+        self.assertIn("copied out", str(caught.exception))
+        self.assertFalse(inside.exists())
+        written, _kept = estate.init_sample(self.tmp / "copy", __version__, source=source)
+        self.assertIn(self.tmp / "copy" / "10_MODEL", written)
+        self.assertTrue(cli.is_sample_estate(self.tmp / "copy"))
+
+
 class TestPins(_Estate):
     def setUp(self) -> None:
         super().setUp()

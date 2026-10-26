@@ -1,0 +1,509 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="3480.5" height="1177.2" viewBox="0 0 3480.5 1177.2" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Card Issuing — Landscape</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Card Issuing — Landscape</text>
+<text x="3452.5" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   26 nodes · 34 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One business domain and its immediate neighbors: every system in the domain plus everything one interface away. Smaller and easier to read than the full landscape, and drawn for every domain the systems name.</text>
+<line x1="28" y1="92" x2="3452.5" y2="92" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(17.7 91.7)">
+<g class="boundary" data-id="grp::Card Issuing">
+<rect x="528.3" y="363.3" width="1287" height="363" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="576.4" y="380.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Card Issuing</text>
+</g>
+<g class="boundary" data-id="grp::Collections">
+<rect x="236.3" y="784.3" width="233.4" height="130.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="281.35" y="801.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Collections</text>
+</g>
+<g class="boundary" data-id="grp::Data and Analytics">
+<rect x="2071.6" y="363.3" width="272" height="130.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="2138" y="380.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data and Analytics</text>
+</g>
+<g class="boundary" data-id="grp::Lending">
+<rect x="3181.5" y="74.7" width="234.6" height="230.6" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="3214.35" y="92.11" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Lending</text>
+</g>
+<g class="boundary" data-id="grp::Payments">
+<rect x="235.7" y="421.7" width="234.6" height="131.6" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="271.6" y="439.1" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Payments</text>
+</g>
+<g class="boundary" data-id="grp::Servicing">
+<rect x="2505.5" y="386.3" width="499" height="379.5" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="2544.45" y="403.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Servicing</text>
+</g>
+<g class="edge" data-id="e0::SYS-ORIG-DECISION::SYS-CORE-LEDGER">
+<title>FileTransfer</title>
+<path d="M194 367 L525 367 L1577 367 A10 10 0 0 1 1587 377 L1587 628.76 A8.24 8.24 0 0 0 1595.24 637 L1603.48 637" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1607 637 L1597.43 641.78 L1597.43 632.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::SYS-ORIG-DECISION::SYS-CORE-LEDGER">
+<rect x="325.2" y="373.5" width="60.6" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="355.5" y="385.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">FileTransfer</text>
+</g>
+<g class="edge" data-id="e1::SYS-ORIG-DECISION::SYS-DOC">
+<title>AMQP</title>
+<path d="M194 394 L202 394 A8 8 0 0 1 210 402 L210 915 A10 10 0 0 0 220 925 L355.5 925 L1201.5 925 L2001.8 925 L2408.4 925 L2754.7 925 L3093 925 L3150.8 925 A10 10 0 0 0 3160.8 915 L3160.8 864.74 A9.74 9.74 0 0 1 3170.54 855 L3180.28 855" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M3183.8 855 L3174.23 859.78 L3174.23 850.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::SYS-ORIG-DECISION::SYS-DOC">
+<rect x="2187.33" y="931.5" width="35.54" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="2205.1" y="943.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">AMQP</text>
+</g>
+<g class="edge" data-id="e2::SYS-CORE-LEDGER::SYS-CARD-FULFILL">
+<title>FileTransfer</title>
+<path d="M1789 616 L1814.5 616 A4.5 4.5 0 0 0 1819 611.5 L1819 611.5 A4.5 4.5 0 0 1 1823.5 607 L1878 607 L1904 607 A10 10 0 0 0 1914 597 L1914 281 A10 10 0 0 1 1924 271 L2049.6 271 A10 10 0 0 0 2059.6 261 L2059.6 261 A10 10 0 0 1 2069.6 251 L2089.08 251" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M2092.6 251 L2083.03 255.78 L2083.03 246.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::SYS-CORE-LEDGER::SYS-CARD-FULFILL">
+<rect x="1971.5" y="277.5" width="60.6" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="2001.8" y="289.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">FileTransfer</text>
+</g>
+<g class="edge" data-id="e3::SYS-PAYMENT-GW::OI-LEDGER-QUEUE">
+<path d="M468 65 L479 65 A10 10 0 0 1 489 75 L489 346 A10 10 0 0 0 499 356 L525 356 L1395 356 A10 10 0 0 1 1405 366 L1405 631.76 A8.24 8.24 0 0 0 1413.24 640 L1421.48 640" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1425 640 L1415.43 644.78 L1415.43 635.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e4::SYS-PAYMENT-GW::SYS-GL">
+<title>FileTransfer</title>
+<path d="M468 38 L2001.8 38 L2049.6 38 A10 10 0 0 1 2059.6 48 L2059.6 123 A10 10 0 0 0 2069.6 133 L2103.41 133" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M2106.93 133 L2097.36 137.78 L2097.36 128.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::SYS-PAYMENT-GW::SYS-GL">
+<rect x="1171.2" y="15.5" width="60.6" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="1201.5" y="27.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">FileTransfer</text>
+</g>
+<g class="edge" data-id="e5::SYS-CORE-LEDGER::SYS-GL">
+<title>FileTransfer</title>
+<path d="M1789 609 L1803 609 A6 6 0 0 0 1809 603 L1809 603 A6 6 0 0 1 1815 597 L1878 597 L1894 597 A10 10 0 0 0 1904 587 L1904 246 A10 10 0 0 1 1914 236 L2049.6 236 A10 10 0 0 0 2059.6 226 L2059.6 170 A10 10 0 0 1 2069.6 160 L2103.41 160" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M2106.93 160 L2097.36 164.78 L2097.36 155.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e5::SYS-CORE-LEDGER::SYS-GL">
+<rect x="1971.5" y="242.5" width="60.6" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="2001.8" y="254.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">FileTransfer</text>
+</g>
+<g class="edge" data-id="e6::SYS-CORE-LEDGER::SYS-RECON">
+<title>FileTransfer</title>
+<path d="M1789 623 L1826 623 A3 3 0 0 0 1829 620 L1829 620 A3 3 0 0 1 1832 617 L1878 617 L1914 617 A10 10 0 0 0 1924 607 L1924 318 A10 10 0 0 1 1934 308 L2001.8 308 L2408.4 308 L2456.2 308 A10 10 0 0 0 2466.2 298 L2466.2 170 A10 10 0 0 1 2476.2 160 L2503.68 160" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M2507.2 160 L2497.63 164.78 L2497.63 155.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e6::SYS-CORE-LEDGER::SYS-RECON">
+<rect x="2174.8" y="314.5" width="60.6" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="2205.1" y="326.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">FileTransfer</text>
+</g>
+<g class="edge" data-id="e7::SYS-GL::SYS-RECON">
+<title>SQL</title>
+<path d="M2288.93 147 L2331.6 147 A7 7 0 0 0 2338.6 140 L2338.6 140 A7 7 0 0 1 2345.6 133 L2503.68 133" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M2507.2 133 L2497.63 137.78 L2497.63 128.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e7::SYS-GL::SYS-RECON">
+<rect x="2395.54" y="139.5" width="25.71" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="2408.4" y="151.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">SQL</text>
+</g>
+<g class="edge" data-id="e8::SYS-CORE-LEDGER::SYS-BUREAU-GW">
+<title>FileTransfer</title>
+<path d="M1789 644 L1837.5 644 A1.5 1.5 0 0 1 1839 645.5 L1839 645.5 A1.5 1.5 0 0 0 1840.5 647 L1878 647 L2110.58 647" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M2114.1 647 L2104.53 651.78 L2104.53 642.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e8::SYS-CORE-LEDGER::SYS-BUREAU-GW">
+<rect x="1971.5" y="653.5" width="60.6" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="2001.8" y="665.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">FileTransfer</text>
+</g>
+<g class="edge" data-id="e9::SYS-BUREAU-GW::SYS-CRM">
+<title>FileTransfer</title>
+<path d="M2296.1 647 L2456.2 647 A10 10 0 0 0 2466.2 637 L2466.2 461.86 A10 10 0 0 1 2476.06 451.86 L2502.13 451.5 A10 10 0 0 1 2502.27 451.5 L2527.68 451.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M2531.2 451.5 L2521.63 456.29 L2521.63 446.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e9::SYS-BUREAU-GW::SYS-CRM">
+<rect x="2378.1" y="653.5" width="60.6" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="2408.4" y="665.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">FileTransfer</text>
+</g>
+<g class="edge" data-id="e10::SYS-COLLECT-API::SYS-DOC">
+<title>AMQP</title>
+<path d="M444 862.67 L472.94 863 A10 10 0 0 0 473.06 863 L481 863 A8 8 0 0 1 489 871 L489 880 A10 10 0 0 0 499 890 L1201.5 890 L2001.8 890 L2408.4 890 L2754.7 890 L3093 890 L3140.8 890 A10 10 0 0 0 3150.8 880 L3150.8 852 A10 10 0 0 1 3160.8 842 L3180.28 842" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M3183.8 842 L3174.23 846.78 L3174.23 837.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e10::SYS-COLLECT-API::SYS-DOC">
+<rect x="2187.33" y="896.5" width="35.54" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="2205.1" y="908.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">AMQP</text>
+</g>
+<g class="edge" data-id="e11::SYS-CORE-LEDGER::SYS-DOC">
+<title>FileTransfer</title>
+<path d="M1789 665 L1803 665 A6 6 0 0 1 1809 671 L1809 671 A6 6 0 0 0 1815 677 L1878 677 L1894 677 A10 10 0 0 1 1904 687 L1904 766 A10 10 0 0 0 1914 776 L2001.8 776 L2205.1 776 L2754.7 776 L3093 776 L3140.8 776 A10 10 0 0 1 3150.8 786 L3150.8 805 A10 10 0 0 0 3160.8 815 L3180.28 815" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M3183.8 815 L3174.23 819.78 L3174.23 810.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e11::SYS-CORE-LEDGER::SYS-DOC">
+<rect x="2378.1" y="782.5" width="60.6" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="2408.4" y="794.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">FileTransfer</text>
+</g>
+<g class="edge" data-id="e12::SYS-STATEMENTS::SYS-DOC">
+<title>FileTransfer</title>
+<path d="M2713.2 550.5 L3007.19 551 A10 10 0 0 0 3007.21 551 L3150.8 551 A10 10 0 0 1 3160.8 561 L3160.8 792.26 A9.74 9.74 0 0 0 3170.54 802 L3180.28 802" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M3183.8 802 L3174.23 806.78 L3174.23 797.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e12::SYS-STATEMENTS::SYS-DOC">
+<rect x="3062.7" y="557.5" width="60.6" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="3093" y="569.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">FileTransfer</text>
+</g>
+<g class="edge" data-id="e13::SYS-CLIENT-PORTAL::SYS-DOC">
+<title>HTTPS</title>
+<path d="M2845.7 829 L3180.28 829" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M3183.8 829 L3174.23 833.78 L3174.23 824.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e13::SYS-CLIENT-PORTAL::SYS-DOC">
+<rect x="3074.51" y="835.5" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="3093" y="847.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+</g>
+<g class="edge" data-id="e14::SYS-CORE-LEDGER::SYS-CLIENT-PORTAL">
+<title>FileTransfer</title>
+<path d="M1789 672 L1794 672 A5 5 0 0 1 1799 677 L1799 679.5 A7.5 7.5 0 0 0 1806.5 687 L1878 687 L1886 687 A8 8 0 0 1 1894 695 L1894 819 A10 10 0 0 0 1904 829 L2001.8 829 L2408.4 829 L2660.18 829" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M2663.7 829 L2654.13 833.78 L2654.13 824.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e14::SYS-CORE-LEDGER::SYS-CLIENT-PORTAL">
+<rect x="2174.8" y="835.5" width="60.6" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="2205.1" y="847.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">FileTransfer</text>
+</g>
+<g class="edge" data-id="e15::SYS-CRM::SYS-DISPUTES-GATEWAY">
+<title>HTTPS</title>
+<path d="M2713.2 471.25 L2776.2 471.25 A10 10 0 0 1 2786.2 481.25 L2786.2 584.59 A3.24 3.24 0 0 0 2789.44 587.83 L2792.68 587.83" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M2796.2 587.83 L2786.63 592.62 L2786.63 583.05 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e15::SYS-CRM::SYS-DISPUTES-GATEWAY">
+<rect x="2736.2" y="475.75" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="2754.7" y="487.3" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+</g>
+<g class="edge" data-id="e16::SYS-CORE-LEDGER::SYS-AML">
+<title>FileTransfer</title>
+<path d="M1789 637 L1878 637 L1934 637 A10 10 0 0 0 1944 627 L1944 560 A10 10 0 0 1 1954 550 L2089.08 550" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M2092.6 550 L2083.03 554.78 L2083.03 545.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e16::SYS-CORE-LEDGER::SYS-AML">
+<rect x="1971.5" y="556.5" width="60.6" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="2001.8" y="568.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">FileTransfer</text>
+</g>
+<g class="edge" data-id="e17::SYS-AUTH-SWITCH::OI-LEDGER-QUEUE">
+<path d="M444 487.5 L472.91 488 A10 10 0 0 0 473.09 488 L481 488 A8 8 0 0 0 489 480 L489 388 A10 10 0 0 1 499 378 L525 378 L1385 378 A10 10 0 0 1 1395 388 L1395 642 A10 10 0 0 0 1405 652 L1421.48 652" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1425 652 L1415.43 656.78 L1415.43 647.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e18::SYS-CARDSVC-API::OI-LEDGER-QUEUE">
+<path d="M2978.2 700 L3007.2 700 L3015.2 700 A8 8 0 0 1 3023.2 708 L3023.2 870 A10 10 0 0 1 3013.2 880 L2754.7 880 L2467.7 880 A1.5 1.5 0 0 1 2466.2 878.5 L2466.2 878.5 A1.5 1.5 0 0 0 2464.7 877 L2408.4 877 L2205.1 877 L2001.8 877 L1201.5 877 L519 877 A10 10 0 0 1 509 867 L509 696 A8 8 0 0 1 517 688 L525 688 L1421.48 688" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1425 688 L1415.43 692.78 L1415.43 683.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e19::SYS-COLLECT-API::OI-LEDGER-QUEUE">
+<path d="M444 836.33 L472.94 836 A10 10 0 0 1 473.06 836 L481 836 A8 8 0 0 0 489 828 L489 686 A10 10 0 0 1 499 676 L525 676 L1421.48 676" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1425 676 L1415.43 680.78 L1415.43 671.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e20::SYS-CRM::SYS-CORE-LEDGER">
+<title>HTTPS</title>
+<path d="M2713.2 431.75 L3007.2 432 A10 10 0 0 0 3007.2 432 L3015.2 432 A8 8 0 0 0 3023.2 424 L3023.2 74 A10 10 0 0 0 3013.2 64 L2754.7 64 L2408.4 64 L2001.8 64 L1201.5 64 L519 64 A10 10 0 0 0 509 74 L509 326 A8 8 0 0 0 517 334 L525 334 L1587 334 A10 10 0 0 1 1597 344 L1597 612.76 A3.24 3.24 0 0 0 1600.24 616 L1603.48 616" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1607 616 L1597.43 620.78 L1597.43 611.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e20::SYS-CRM::SYS-CORE-LEDGER">
+<rect x="2186.61" y="70.5" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="2205.1" y="82.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+</g>
+<g class="edge" data-id="e21::SYS-CORE-LEDGER::SYS-DATA-INGEST">
+<title>FileTransfer</title>
+<path d="M1789 630 L1837.5 630 A1.5 1.5 0 0 0 1839 628.5 L1839 628.5 A1.5 1.5 0 0 1 1840.5 627 L1878 627 L1924 627 A10 10 0 0 0 1934 617 L1934 438.97 A10 10 0 0 1 1943.97 428.97 L2087.58 428.5 A10 10 0 0 1 2087.62 428.5 L2113.08 428.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M2116.6 428.5 L2107.03 433.29 L2107.03 423.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e21::SYS-CORE-LEDGER::SYS-DATA-INGEST">
+<rect x="1971.5" y="435.5" width="60.6" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="2001.8" y="447.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">FileTransfer</text>
+</g>
+<g class="edge" data-id="e22::SYS-CORE-LEDGER::SYS-STATEMENTS">
+<title>FileTransfer</title>
+<path d="M1789 651 L1826 651 A3 3 0 0 1 1829 654 L1829 654 A3 3 0 0 0 1832 657 L1878 657 L1914 657 A10 10 0 0 1 1924 667 L1924 718 A10 10 0 0 0 1934 728 L2001.8 728 L2408.4 728 L2466.2 728 A10 10 0 0 0 2476.2 718 L2476.2 560.81 A10 10 0 0 1 2486.01 550.81 L2502.1 550.5 A10 10 0 0 1 2502.3 550.5 L2527.68 550.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M2531.2 550.5 L2521.63 555.28 L2521.63 545.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e22::SYS-CORE-LEDGER::SYS-STATEMENTS">
+<rect x="2174.8" y="705.5" width="60.6" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="2205.1" y="717.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">FileTransfer</text>
+</g>
+<g class="edge" data-id="e23::SYS-LENDING-API::OI-LEDGER-QUEUE">
+<path d="M3389.8 140.5 L3418.71 141 A10 10 0 0 0 3418.89 141 L3426.8 141 A8 8 0 0 0 3434.8 133 L3434.8 61 A10 10 0 0 0 3424.8 51 L3298.8 51 L3093 51 L2754.7 51 L2408.4 51 L2205.1 51 L2001.8 51 L1201.5 51 L509 51 A10 10 0 0 0 499 61 L499 335 A10 10 0 0 0 509 345 L525 345 L1405 345 A10 10 0 0 1 1415 355 L1415 624.76 A3.24 3.24 0 0 0 1418.24 628 L1421.48 628" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1425 628 L1415.43 632.78 L1415.43 623.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e24::SYS-CORE-LEDGER::SYS-DISPUTES-GATEWAY">
+<title>HTTPS</title>
+<path d="M1789 658 L1814.5 658 A4.5 4.5 0 0 1 1819 662.5 L1819 662.5 A4.5 4.5 0 0 0 1823.5 667 L1878 667 L1904 667 A10 10 0 0 1 1914 677 L1914 729 A10 10 0 0 0 1924 739 L2001.8 739 L2408.4 739 L2476.2 739 A10 10 0 0 0 2486.2 729 L2486.2 622 A7.92 7.92 0 0 1 2494.2 614.08 L2502.15 614.17 A10 10 0 0 0 2502.25 614.17 L2792.68 614.17" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M2796.2 614.17 L2786.63 618.95 L2786.63 609.38 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e24::SYS-CORE-LEDGER::SYS-DISPUTES-GATEWAY">
+<rect x="2186.61" y="745.5" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="2205.1" y="757.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+</g>
+<g class="edge" data-id="e25::SYS-CORE-LEDGER::SYS-LENDING-HUB">
+<title>HTTPS</title>
+<path d="M1789 602 L1794 602 A5 5 0 0 0 1799 597 L1799 594.5 A7.5 7.5 0 0 1 1806.5 587 L1878 587 L1886 587 A8 8 0 0 0 1894 579 L1894 208 A10 10 0 0 1 1904 198 L2001.8 198 L2205.1 198 L2754.7 198 L3093 198 L3140.8 198 A10 10 0 0 1 3150.8 208 L3150.8 216.12 A10 10 0 0 0 3160.68 226.12 L3178.74 226.33 A10 10 0 0 0 3178.86 226.33 L3204.28 226.33" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M3207.8 226.33 L3198.23 231.12 L3198.23 221.55 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e25::SYS-CORE-LEDGER::SYS-LENDING-HUB">
+<rect x="2389.91" y="204.5" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="2408.4" y="216.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+</g>
+<g class="edge" data-id="e26::SYS-CRM::SYS-LENDING-HUB">
+<title>HTTPS</title>
+<path d="M2713.2 451.5 L3007.19 452 A10 10 0 0 0 3007.21 452 L3023.2 452 A10 10 0 0 0 3033.2 442 L3033.2 262.98 A10 10 0 0 1 3043.18 252.98 L3178.79 252.67 A10 10 0 0 1 3178.81 252.67 L3204.28 252.67" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M3207.8 252.67 L3198.23 257.45 L3198.23 247.88 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e26::SYS-CRM::SYS-LENDING-HUB">
+<rect x="3074.51" y="259.5" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="3093" y="271.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+</g>
+<g class="edge" data-id="e27::SYS-REWARDS-WEB::OI-REWARDS-API">
+<path d="M736 527.5 L752.48 527.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M756 527.5 L746.43 532.28 L746.43 522.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e28::SYS-REWARDS-API::SYS-REWARDS-STORE">
+<title>TDS</title>
+<path d="M1110 507.75 L1115 507.75 A5 5 0 0 0 1120 502.75 L1120 438.5 A10 10 0 0 1 1130 428.5 L1189.48 428.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1193 428.5 L1183.43 433.29 L1183.43 423.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e28::SYS-REWARDS-API::SYS-REWARDS-STORE">
+<rect x="1139.02" y="433" width="24.97" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="1151.5" y="444.55" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">TDS</text>
+</g>
+<g class="edge" data-id="e29::SYS-REWARDS-API::SYS-REWARDS-EVENTS">
+<title>AMQP</title>
+<path d="M1110 527.5 L1189.48 527.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1193 527.5 L1183.43 532.28 L1183.43 522.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e29::SYS-REWARDS-API::SYS-REWARDS-EVENTS">
+<rect x="1133.73" y="532" width="35.54" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="1151.5" y="543.55" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">AMQP</text>
+</g>
+<g class="edge" data-id="e30::SYS-REWARDS-API::SYS-REWARDS-WORKER">
+<title>Kafka</title>
+<path d="M1110 547.25 L1115 547.25 A5 5 0 0 1 1120 552.25 L1120 616.5 A10 10 0 0 0 1130 626.5 L1189.48 626.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1193 626.5 L1183.43 631.28 L1183.43 621.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e30::SYS-REWARDS-API::SYS-REWARDS-WORKER">
+<rect x="1135.03" y="631" width="32.95" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="1151.5" y="642.55" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Kafka</text>
+</g>
+<g class="edge" data-id="e31::SYS-REWARDS-WORKER::OI-LEDGER-QUEUE">
+<path d="M1375 626.5 L1380 626.5 A5 5 0 0 1 1385 631.5 L1385 654 A10 10 0 0 0 1395 664 L1421.48 664" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1425 664 L1415.43 668.78 L1415.43 659.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e32::OI-LEDGER-QUEUE::SYS-CORE-LEDGER">
+<path d="M1577 658 L1607 658" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+</g>
+<g class="edge" data-id="e33::OI-REWARDS-API::SYS-REWARDS-API">
+<path d="M908 527.5 L928 527.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+</g>
+<g class="node" data-id="OI-LEDGER-QUEUE" data-type="offered_interfaces">
+<title>Core Ledger request queue</title>
+<rect x="1425" y="616" width="152" height="84" rx="14" fill="#b9befa" stroke="#6366f1" stroke-width="2.6"/>
+<text x="1501" y="650.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Core Ledger request</text>
+<text x="1501" y="662.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">queue</text>
+<text x="1501" y="694.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">MQ</text>
+</g>
+<g class="node" data-id="OI-REWARDS-API" data-type="offered_interfaces">
+<title>Rewards Redemption API</title>
+<rect x="756" y="502" width="152" height="51" rx="14" fill="#dde3fe" stroke="#6366f1" stroke-width="1.4"/>
+<text x="832" y="520.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Rewards Redemption</text>
+<text x="832" y="532.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">API</text>
+<text x="832" y="547.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">HTTPS</text>
+</g>
+<g class="node" data-id="SYS-AML" data-type="systems">
+<title>Financial crimes platform</title>
+<rect x="2092.6" y="510" width="182" height="79" rx="8" fill="#becbfb" stroke="#4338ca" stroke-width="1.4"/>
+<text x="2179.6" y="547.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Financial crimes</text>
+<text x="2179.6" y="559.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">platform</text>
+<svg x="2256.6" y="515" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-AUTH-SWITCH" data-type="systems">
+<title>Authorization Switch</title>
+<rect x="262" y="448" width="182" height="79" rx="8" fill="#9aa0ed" stroke="#4338ca" stroke-width="2.6"/>
+<text x="349" y="491.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Authorization Switch</text>
+<svg x="426" y="453" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-BUREAU-GW" data-type="systems">
+<title>Credit bureau gateway</title>
+<rect x="2114.1" y="607" width="182" height="79" rx="8" fill="#becbfb" stroke="#4338ca" stroke-width="1.4"/>
+<text x="2201.1" y="644.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit bureau</text>
+<text x="2201.1" y="656.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">gateway</text>
+<svg x="2278.1" y="612" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-CARD-FULFILL" data-type="systems">
+<title>Card production and fulfillment</title>
+<rect x="2092.6" y="211" width="182" height="79" rx="8" fill="#becbfb" stroke="#4338ca" stroke-width="1.4"/>
+<text x="2179.6" y="243.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Card production and</text>
+<text x="2179.6" y="255.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">fulfillment</text>
+<text x="2183.6" y="284.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">external</text>
+<svg x="2256.6" y="216" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-CARDSVC-API" data-type="systems">
+<title>Card Servicing Service</title>
+<rect x="2796.2" y="660.5" width="182" height="79" rx="8" fill="#9aa0ed" stroke="#4338ca" stroke-width="2.6"/>
+<text x="2877.2" y="692.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Card Servicing</text>
+<text x="2877.2" y="704.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Service</text>
+<text x="2887.2" y="734" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AKS · Card Servicing Cache</text>
+<image x="2956.2" y="664.5" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYWY2YTJjNDItYmQ0OC00ODU3LWE0NzktYWVjZjhiM2RlNGY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImI3MGM5Y2YxLWJhYjgtNDdlMC1iYmRiLWNlMWNkNjY0ZDI2OCIgeDE9IjIuOTQiIHkxPSIzLjc0IiB4Mj0iOC42NyIgeTI9IjMuNzQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiZWI2OTk1My1iZDk2LTQ1MTUtODg0My1hYzEyNTQ2YWY5MzYiIHgxPSI5LjEzIiB5MT0iMy43OSIgeDI9IjE0Ljg1IiB5Mj0iMy43OSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImEzOWM3NmU4LTU0N2UtNGViNC1iYzI1LWQ4MWMwZjhjZGE2MiIgeDE9IjAuMDEiIHkxPSI5LjEyIiB4Mj0iNS43MyIgeTI9IjkuMTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJmMGEyYTQ5MS0xN2RjLTRiYjgtYmJmYy1lZTU4YTVjZjQ3ZGEiIHgxPSI2LjE4IiB5MT0iOS4wOCIgeDI9IjExLjkiIHkyPSI5LjA4IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwIiB4MT0iMTIuMzUiIHkxPSI5LjEzIiB4Mj0iMTguMDgiIHkyPSI5LjEzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZTM5OWFhOTMtMzQxZi00ZGYyLTljMDItNjAzYjgyYjQ4NGMyIiB4MT0iMi44NyIgeTE9IjE0LjU2IiB4Mj0iOC42IiB5Mj0iMTQuNTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJhMTUyYmJhMC1iYTJiLTQ4M2EtYjhjMS0wYWU3ZGUzNTU5OTAiIHgxPSI5LjA1IiB5MT0iMTQuNiIgeDI9IjE0Ljc4IiB5Mj0iMTQuNiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPkljb24tY29tcHV0ZS0yMzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSI1LjggMS4yMiAyLjk0IDEuNzUgMi45NCA1LjY1IDUuOCA2LjI2IDguNjcgNS4xMSA4LjY3IDIuMiA1LjggMS4yMiIgZmlsbD0idXJsKCNiNzBjOWNmMS1iYWI4LTQ3ZTAtYmJkYi1jZTFjZDY2NGQyNjgpIiAvPjxwYXRoIGQ9Ik01LjkxLDYuMiw4LjUzLDUuMTRBLjIuMiwwLDAsMCw4LjY1LDVWMi4zNmEuMjEuMjEsMCwwLDAtLjEzLS4xOGwtMi42NS0uOUg1Ljc1bC0yLjYuNDhBLjIuMiwwLDAsMCwzLDEuOTRWNS40N2EuMTkuMTksMCwwLDAsLjE1LjE5bDIuNjMuNTVBLjMyLjMyLDAsMCwwLDUuOTEsNi4yWiIgZmlsbD0ibm9uZSIgLz48cGF0aCBkPSJNMi45NCwxLjc1djMuOWwyLjg5LjYxdi01Wm0xLjIyLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYybC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMTEuOTkgMS4yNyA5LjEzIDEuOCA5LjEzIDUuNyAxMS45OSA2LjMxIDE0Ljg1IDUuMTUgMTQuODUgMi4yNSAxMS45OSAxLjI3IiBmaWxsPSJ1cmwoI2JlYjY5OTUzLWJkOTYtNDUxNS04ODQzLWFjMTI1NDZhZjkzNikiIC8+PHBhdGggZD0iTTkuMTMsMS44VjUuN0wxMiw2LjMxdi01Wm0xLjIxLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYyLjA1bC45My0uMTdaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMi44NyA2LjYgMC4wMSA3LjEzIDAuMDEgMTEuMDMgMi44NyAxMS42NCA1Ljc0IDEwLjQ5IDUuNzQgNy41OCAyLjg3IDYuNiIgZmlsbD0idXJsKCNhMzljNzZlOC01NDdlLTRlYjQtYmMyNS1kODFjMGY4Y2RhNjIpIiAvPjxwYXRoIGQ9Ik0wLDcuMTNWMTFsMi44OS42MXYtNVptMS4yMSwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFpNMi40OCwxMWwtLjkzLS4xNVY3LjM4bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iOS4wNCA2LjU2IDYuMTggNy4wOSA2LjE4IDEwLjk5IDkuMDQgMTEuNjEgMTEuOSAxMC40NSAxMS45IDcuNTQgOS4wNCA2LjU2IiBmaWxsPSJ1cmwoI2YwYTJhNDkxLTE3ZGMtNGJiOC1iYmZjLWVlNThhNWNmNDdkYSkiIC8+PHBhdGggZD0iTTYuMTgsNy4wOVYxMWwyLjg4LjYxdi01Wk03LjM5LDEwLjdsLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjcuMzRsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxNS4yMSA2LjYxIDEyLjM1IDcuMTQgMTIuMzUgMTEuMDQgMTUuMjEgMTEuNjUgMTguMDggMTAuNSAxOC4wOCA3LjU5IDE1LjIxIDYuNjEiIGZpbGw9InVybCgjZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwKSIgLz48cGF0aCBkPSJNMTIuMzUsNy4xNFYxMWwyLjg5LjYxdi01Wm0xLjIyLDMuNjEtLjgxLS4xN3YtM2wuODEtLjE0Wm0xLjI2LjIyLS45My0uMTVWNy4zOWwuOTMtLjE2WiIgZmlsbD0iIzM0MWE2ZSIgLz48cG9seWdvbiBwb2ludHM9IjUuNzMgMTIuMDQgMi44NyAxMi41NiAyLjg3IDE2LjQ2IDUuNzMgMTcuMDggOC42IDE1LjkyIDguNiAxMy4wMiA1LjczIDEyLjA0IiBmaWxsPSJ1cmwoI2UzOTlhYTkzLTM0MWYtNGRmMi05YzAyLTYwM2I4MmI0ODRjMikiIC8+PHBhdGggZD0iTTUuODQsMTcsOC40NSwxNmEuMTguMTgsMCwwLDAsLjEyLS4xOHYtMi42QS4yLjIsMCwwLDAsOC40NCwxM0w1LjgsMTIuMWEuMTcuMTcsMCwwLDAtLjEyLDBsLTIuNi40N2EuMTkuMTksMCwwLDAtLjE2LjE5djMuNTRhLjE5LjE5LDAsMCwwLC4xNS4xOUw1LjcsMTdBLjIzLjIzLDAsMCwwLDUuODQsMTdaIiBmaWxsPSJub25lIiAvPjxwYXRoIGQ9Ik0yLjg3LDEyLjU2djMuOWwyLjg5LjYyVjEyWm0xLjIyLDMuNjFMMy4yOCwxNlYxM2wuODEtLjE0Wm0xLjI2LjIzLS45My0uMTVWMTIuODFsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxMS45MSAxMi4wOCA5LjA1IDEyLjYxIDkuMDUgMTYuNTEgMTEuOTEgMTcuMTIgMTQuNzggMTUuOTcgMTQuNzggMTMuMDYgMTEuOTEgMTIuMDgiIGZpbGw9InVybCgjYTE1MmJiYTAtYmEyYi00ODNhLWI4YzEtMGFlN2RlMzU1OTkwKSIgLz48cGF0aCBkPSJNOS4wNSwxMi42MXYzLjlsMi44OS42MXYtNVptMS4yMiwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjEyLjg2bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-CLIENT-PORTAL" data-type="systems">
+<title>Servicing client portal</title>
+<rect x="2663.7" y="789" width="182" height="79" rx="8" fill="#becbfb" stroke="#4338ca" stroke-width="1.4"/>
+<text x="2750.7" y="826.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Servicing client</text>
+<text x="2750.7" y="838.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">portal</text>
+<svg x="2827.7" y="794" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-COLLECT-API" data-type="systems">
+<title>Collections Workspace Service</title>
+<rect x="262" y="810" width="182" height="79" rx="8" fill="#becbfb" stroke="#4338ca" stroke-width="1.4"/>
+<text x="343" y="842.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Collections</text>
+<text x="343" y="854.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Workspace Service</text>
+<text x="353" y="883.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AKS · Collections Workspace Cache</text>
+<image x="422" y="814" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYWY2YTJjNDItYmQ0OC00ODU3LWE0NzktYWVjZjhiM2RlNGY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImI3MGM5Y2YxLWJhYjgtNDdlMC1iYmRiLWNlMWNkNjY0ZDI2OCIgeDE9IjIuOTQiIHkxPSIzLjc0IiB4Mj0iOC42NyIgeTI9IjMuNzQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiZWI2OTk1My1iZDk2LTQ1MTUtODg0My1hYzEyNTQ2YWY5MzYiIHgxPSI5LjEzIiB5MT0iMy43OSIgeDI9IjE0Ljg1IiB5Mj0iMy43OSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImEzOWM3NmU4LTU0N2UtNGViNC1iYzI1LWQ4MWMwZjhjZGE2MiIgeDE9IjAuMDEiIHkxPSI5LjEyIiB4Mj0iNS43MyIgeTI9IjkuMTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJmMGEyYTQ5MS0xN2RjLTRiYjgtYmJmYy1lZTU4YTVjZjQ3ZGEiIHgxPSI2LjE4IiB5MT0iOS4wOCIgeDI9IjExLjkiIHkyPSI5LjA4IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwIiB4MT0iMTIuMzUiIHkxPSI5LjEzIiB4Mj0iMTguMDgiIHkyPSI5LjEzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZTM5OWFhOTMtMzQxZi00ZGYyLTljMDItNjAzYjgyYjQ4NGMyIiB4MT0iMi44NyIgeTE9IjE0LjU2IiB4Mj0iOC42IiB5Mj0iMTQuNTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJhMTUyYmJhMC1iYTJiLTQ4M2EtYjhjMS0wYWU3ZGUzNTU5OTAiIHgxPSI5LjA1IiB5MT0iMTQuNiIgeDI9IjE0Ljc4IiB5Mj0iMTQuNiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPkljb24tY29tcHV0ZS0yMzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSI1LjggMS4yMiAyLjk0IDEuNzUgMi45NCA1LjY1IDUuOCA2LjI2IDguNjcgNS4xMSA4LjY3IDIuMiA1LjggMS4yMiIgZmlsbD0idXJsKCNiNzBjOWNmMS1iYWI4LTQ3ZTAtYmJkYi1jZTFjZDY2NGQyNjgpIiAvPjxwYXRoIGQ9Ik01LjkxLDYuMiw4LjUzLDUuMTRBLjIuMiwwLDAsMCw4LjY1LDVWMi4zNmEuMjEuMjEsMCwwLDAtLjEzLS4xOGwtMi42NS0uOUg1Ljc1bC0yLjYuNDhBLjIuMiwwLDAsMCwzLDEuOTRWNS40N2EuMTkuMTksMCwwLDAsLjE1LjE5bDIuNjMuNTVBLjMyLjMyLDAsMCwwLDUuOTEsNi4yWiIgZmlsbD0ibm9uZSIgLz48cGF0aCBkPSJNMi45NCwxLjc1djMuOWwyLjg5LjYxdi01Wm0xLjIyLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYybC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMTEuOTkgMS4yNyA5LjEzIDEuOCA5LjEzIDUuNyAxMS45OSA2LjMxIDE0Ljg1IDUuMTUgMTQuODUgMi4yNSAxMS45OSAxLjI3IiBmaWxsPSJ1cmwoI2JlYjY5OTUzLWJkOTYtNDUxNS04ODQzLWFjMTI1NDZhZjkzNikiIC8+PHBhdGggZD0iTTkuMTMsMS44VjUuN0wxMiw2LjMxdi01Wm0xLjIxLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYyLjA1bC45My0uMTdaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMi44NyA2LjYgMC4wMSA3LjEzIDAuMDEgMTEuMDMgMi44NyAxMS42NCA1Ljc0IDEwLjQ5IDUuNzQgNy41OCAyLjg3IDYuNiIgZmlsbD0idXJsKCNhMzljNzZlOC01NDdlLTRlYjQtYmMyNS1kODFjMGY4Y2RhNjIpIiAvPjxwYXRoIGQ9Ik0wLDcuMTNWMTFsMi44OS42MXYtNVptMS4yMSwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFpNMi40OCwxMWwtLjkzLS4xNVY3LjM4bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iOS4wNCA2LjU2IDYuMTggNy4wOSA2LjE4IDEwLjk5IDkuMDQgMTEuNjEgMTEuOSAxMC40NSAxMS45IDcuNTQgOS4wNCA2LjU2IiBmaWxsPSJ1cmwoI2YwYTJhNDkxLTE3ZGMtNGJiOC1iYmZjLWVlNThhNWNmNDdkYSkiIC8+PHBhdGggZD0iTTYuMTgsNy4wOVYxMWwyLjg4LjYxdi01Wk03LjM5LDEwLjdsLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjcuMzRsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxNS4yMSA2LjYxIDEyLjM1IDcuMTQgMTIuMzUgMTEuMDQgMTUuMjEgMTEuNjUgMTguMDggMTAuNSAxOC4wOCA3LjU5IDE1LjIxIDYuNjEiIGZpbGw9InVybCgjZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwKSIgLz48cGF0aCBkPSJNMTIuMzUsNy4xNFYxMWwyLjg5LjYxdi01Wm0xLjIyLDMuNjEtLjgxLS4xN3YtM2wuODEtLjE0Wm0xLjI2LjIyLS45My0uMTVWNy4zOWwuOTMtLjE2WiIgZmlsbD0iIzM0MWE2ZSIgLz48cG9seWdvbiBwb2ludHM9IjUuNzMgMTIuMDQgMi44NyAxMi41NiAyLjg3IDE2LjQ2IDUuNzMgMTcuMDggOC42IDE1LjkyIDguNiAxMy4wMiA1LjczIDEyLjA0IiBmaWxsPSJ1cmwoI2UzOTlhYTkzLTM0MWYtNGRmMi05YzAyLTYwM2I4MmI0ODRjMikiIC8+PHBhdGggZD0iTTUuODQsMTcsOC40NSwxNmEuMTguMTgsMCwwLDAsLjEyLS4xOHYtMi42QS4yLjIsMCwwLDAsOC40NCwxM0w1LjgsMTIuMWEuMTcuMTcsMCwwLDAtLjEyLDBsLTIuNi40N2EuMTkuMTksMCwwLDAtLjE2LjE5djMuNTRhLjE5LjE5LDAsMCwwLC4xNS4xOUw1LjcsMTdBLjIzLjIzLDAsMCwwLDUuODQsMTdaIiBmaWxsPSJub25lIiAvPjxwYXRoIGQ9Ik0yLjg3LDEyLjU2djMuOWwyLjg5LjYyVjEyWm0xLjIyLDMuNjFMMy4yOCwxNlYxM2wuODEtLjE0Wm0xLjI2LjIzLS45My0uMTVWMTIuODFsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxMS45MSAxMi4wOCA5LjA1IDEyLjYxIDkuMDUgMTYuNTEgMTEuOTEgMTcuMTIgMTQuNzggMTUuOTcgMTQuNzggMTMuMDYgMTEuOTEgMTIuMDgiIGZpbGw9InVybCgjYTE1MmJiYTAtYmEyYi00ODNhLWI4YzEtMGFlN2RlMzU1OTkwKSIgLz48cGF0aCBkPSJNOS4wNSwxMi42MXYzLjlsMi44OS42MXYtNVptMS4yMiwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjEyLjg2bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-CORE-LEDGER" data-type="systems">
+<title>Core Card Ledger</title>
+<rect x="1607" y="595" width="182" height="84" rx="8" fill="#9aa0ed" stroke="#4338ca" stroke-width="2.6"/>
+<text x="1694" y="641.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Core Card Ledger</text>
+<svg x="1771" y="600" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-CRM" data-type="systems">
+<title>Dynamics 365 Customer Service</title>
+<rect x="2531.2" y="412" width="182" height="79" rx="8" fill="#becbfb" stroke="#4338ca" stroke-width="1.4"/>
+<text x="2618.2" y="444.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dynamics 365</text>
+<text x="2618.2" y="456.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer Service</text>
+<text x="2622.2" y="485.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Microsoft</text>
+<svg x="2695.2" y="417" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-DATA-INGEST" data-type="systems">
+<title>Enterprise Data Ingestion Hub</title>
+<rect x="2116.6" y="389" width="182" height="79" rx="8" fill="#becbfb" stroke="#4338ca" stroke-width="1.4"/>
+<text x="2197.6" y="421.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Enterprise Data</text>
+<text x="2197.6" y="433.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Ingestion Hub</text>
+<text x="2207.6" y="462.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Service Bus · Snowflake Data Cloud</text>
+<image x="2276.6" y="393" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJiZDAyODc4LTMwOWEtNDQ5MC04MTk2LTk0NjMzOGQwZjU5MyIgeDE9IjguOTk1IiB5MT0iMTAuMjk5IiB4Mj0iOC45OTUiIHkyPSIxMy4xOTkiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMwMDViYTEiIC8+PHN0b3Agb2Zmc2V0PSIwLjI1OCIgc3RvcC1jb2xvcj0iIzAwNTg5ZCIgLz48c3RvcCBvZmZzZXQ9IjAuNTI1IiBzdG9wLWNvbG9yPSIjMDA0ZjkwIiAvPjxzdG9wIG9mZnNldD0iMC43OTYiIHN0b3AtY29sb3I9IiMwMDNmN2MiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMDAzMDY3IiAvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxnPjxnIGlkPSJiNTMyZTYwMC0zNjIzLTRiZTYtOWZhNi0zMGQwNWZmZjU2YjEiPjxwb2x5Z29uIHBvaW50cz0iMTMuMzg3IDcuNCAxMy4zODIgNy4zOTYgMTMuMzgyIDcuMzg0IDEzLjM2MyA3LjM4NCA4Ljk5NyA0LjQwNSA0LjYzMSA3LjM4NCA0LjYxMiA3LjM4NCA0LjYxMiA3LjM5NiA0LjYwNiA3LjQgNC42MTIgNy40IDQuNjEyIDEzLjIwMSAxMy4zODIgMTMuMjAxIDEzLjM4MiA3LjQgMTMuMzg3IDcuNCIgZmlsbD0iIzUwZTZmZiIgLz48cGF0aCBkPSJNNC42MDYsNy40YzAtLjEuMDA4LDUuNjgxLjAwOCw1LjhMOC45OTUsMTAuM1oiIGZpbGw9IiMzMmJlZGQiIC8+PHBhdGggZD0iTTEzLjM4NCw3LjQsOC45OTUsMTAuMywxMy4zNzYsMTMuMkMxMy4zNzYsMTMuMDgzLDEzLjM4NCw3LjMsMTMuMzg0LDcuNFoiIGZpbGw9IiMxOThhYjMiIC8+PHBvbHlnb24gcG9pbnRzPSI4Ljk5NSAxMC4yOTkgNC42MTQgMTMuMTk0IDQuNjE0IDEzLjE5OSAxMy4zNzYgMTMuMTk5IDEzLjM3NiAxMy4xOTQgOC45OTUgMTAuMjk5IiBmaWxsPSJ1cmwoI2JiZDAyODc4LTMwOWEtNDQ5MC04MTk2LTk0NjMzOGQwZjU5MykiIC8+PGc+PHBhdGggZD0iTTEuMDcyLDEuNDNoMS4yOWEwLDAsMCwwLDEsMCwwdjMuNmEuMjg2LjI4NiwwLDAsMS0uMjg2LjI4NkguNzg2QS4yODYuMjg2LDAsMCwxLC41LDUuMDM1VjJBLjU3Mi41NzIsMCwwLDEsMS4wNzIsMS40M1oiIGZpbGw9IiM5OTkiIC8+PHBhdGggZD0iTTEuMDcyLDEuNDNoMS4yOWEwLDAsMCwwLDEsMCwwdjMuNmEuMjg2LjI4NiwwLDAsMS0uMjg2LjI4NkguNzg2QS4yODYuMjg2LDAsMCwxLC41LDUuMDM1VjJBLjU3Mi41NzIsMCwwLDEsMS4wNzIsMS40M1oiIGZpbGw9IiM5OTkiIG9wYWNpdHk9IjAuNSIgLz48L2c+PGc+PHBhdGggZD0iTTE1LjYzOCwxLjQzaDEuMjlBLjU3Mi41NzIsMCwwLDEsMTcuNSwyVjUuMDM1YS4yODYuMjg2LDAsMCwxLS4yODYuMjg2aC0xLjI5YS4yODYuMjg2LDAsMCwxLS4yODYtLjI4NlYxLjQzQTAsMCwwLDAsMSwxNS42MzgsMS40M1oiIGZpbGw9IiM5OTkiIC8+PHBhdGggZD0iTTE1LjYzOCwxLjQzaDEuMjlBLjU3Mi41NzIsMCwwLDEsMTcuNSwyVjUuMDM1YS4yODYuMjg2LDAsMCwxLS4yODYuMjg2aC0xLjI5YS4yODYuMjg2LDAsMCwxLS4yODYtLjI4NlYxLjQzQTAsMCwwLDAsMSwxNS42MzgsMS40M1oiIGZpbGw9IiM5OTkiIG9wYWNpdHk9IjAuNSIgLz48L2c+PHBhdGggZD0iTTguNjYtNi4xNjNIOS45MDdhMCwwLDAsMCwxLDAsMHYxN2EwLDAsMCwwLDEsMCwwSDguNjZhLjU2Ny41NjcsMCwwLDEtLjU2Ny0uNTY3Vi01LjZBLjU2Ny41NjcsMCwwLDEsOC42Ni02LjE2M1oiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDExLjMzNyAtNi42NjMpIHJvdGF0ZSg5MCkiIGZpbGw9IiM5NDk0OTQiIC8+PGc+PHBhdGggZD0iTS43ODYsMTIuNjc5aDEuMjlhLjI4Ni4yODYsMCwwLDEsLjI4Ni4yODZ2My42YTAsMCwwLDAsMSwwLDBIMS4wNzJBLjU3Mi41NzIsMCwwLDEsLjUsMTZWMTIuOTY1QS4yODYuMjg2LDAsMCwxLC43ODYsMTIuNjc5WiIgZmlsbD0iIzk5OSIgLz48cGF0aCBkPSJNLjc4NiwxMi42NzloMS4yOWEuMjg2LjI4NiwwLDAsMSwuMjg2LjI4NnYzLjZhMCwwLDAsMCwxLDAsMEgxLjA3MkEuNTcyLjU3MiwwLDAsMSwuNSwxNlYxMi45NjVBLjI4Ni4yODYsMCwwLDEsLjc4NiwxMi42NzlaIiBmaWxsPSIjOTk5IiBvcGFjaXR5PSIwLjUiIC8+PC9nPjxnPjxwYXRoIGQ9Ik0xNS45MjQsMTIuNjc5aDEuMjlhLjI4Ni4yODYsMCwwLDEsLjI4Ni4yODZWMTZhLjU3Mi41NzIsMCwwLDEtLjU3Mi41NzJoLTEuMjlhMCwwLDAsMCwxLDAsMHYtMy42QS4yODYuMjg2LDAsMCwxLDE1LjkyNCwxMi42NzlaIiBmaWxsPSIjOTk5IiAvPjxwYXRoIGQ9Ik0xNS45MjQsMTIuNjc5aDEuMjlhLjI4Ni4yODYsMCwwLDEsLjI4Ni4yODZWMTZhLjU3Mi41NzIsMCwwLDEtLjU3Mi41NzJoLTEuMjlhMCwwLDAsMCwxLDAsMHYtMy42QS4yODYuMjg2LDAsMCwxLDE1LjkyNCwxMi42NzlaIiBmaWxsPSIjOTk5IiBvcGFjaXR5PSIwLjUiIC8+PC9nPjxwYXRoIGQ9Ik04LjY2LDcuMTYzSDkuOTA3YTAsMCwwLDAsMSwwLDB2MTdhMCwwLDAsMCwxLDAsMEg4LjY2YS41NjcuNTY3LDAsMCwxLS41NjctLjU2N1Y3LjczQS41NjcuNTY3LDAsMCwxLDguNjYsNy4xNjNaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNi42NjMgMjQuNjYzKSByb3RhdGUoLTkwKSIgZmlsbD0iIzk0OTQ5NCIgLz48L2c+PC9nPjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-DISPUTES-GATEWAY" data-type="systems">
+<title>Dispute Management Platform Integration Gateway</title>
+<rect x="2796.2" y="561.5" width="182" height="79" rx="8" fill="#becbfb" stroke="#4338ca" stroke-width="1.4"/>
+<text x="2877.2" y="575.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dispute</text>
+<text x="2877.2" y="587.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+<text x="2877.2" y="599.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Platform</text>
+<text x="2877.2" y="611.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Integration</text>
+<text x="2877.2" y="623.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Gateway</text>
+<text x="2887.2" y="635" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AKS</text>
+<image x="2956.2" y="565.5" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYWY2YTJjNDItYmQ0OC00ODU3LWE0NzktYWVjZjhiM2RlNGY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImI3MGM5Y2YxLWJhYjgtNDdlMC1iYmRiLWNlMWNkNjY0ZDI2OCIgeDE9IjIuOTQiIHkxPSIzLjc0IiB4Mj0iOC42NyIgeTI9IjMuNzQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiZWI2OTk1My1iZDk2LTQ1MTUtODg0My1hYzEyNTQ2YWY5MzYiIHgxPSI5LjEzIiB5MT0iMy43OSIgeDI9IjE0Ljg1IiB5Mj0iMy43OSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImEzOWM3NmU4LTU0N2UtNGViNC1iYzI1LWQ4MWMwZjhjZGE2MiIgeDE9IjAuMDEiIHkxPSI5LjEyIiB4Mj0iNS43MyIgeTI9IjkuMTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJmMGEyYTQ5MS0xN2RjLTRiYjgtYmJmYy1lZTU4YTVjZjQ3ZGEiIHgxPSI2LjE4IiB5MT0iOS4wOCIgeDI9IjExLjkiIHkyPSI5LjA4IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwIiB4MT0iMTIuMzUiIHkxPSI5LjEzIiB4Mj0iMTguMDgiIHkyPSI5LjEzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZTM5OWFhOTMtMzQxZi00ZGYyLTljMDItNjAzYjgyYjQ4NGMyIiB4MT0iMi44NyIgeTE9IjE0LjU2IiB4Mj0iOC42IiB5Mj0iMTQuNTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJhMTUyYmJhMC1iYTJiLTQ4M2EtYjhjMS0wYWU3ZGUzNTU5OTAiIHgxPSI5LjA1IiB5MT0iMTQuNiIgeDI9IjE0Ljc4IiB5Mj0iMTQuNiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPkljb24tY29tcHV0ZS0yMzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSI1LjggMS4yMiAyLjk0IDEuNzUgMi45NCA1LjY1IDUuOCA2LjI2IDguNjcgNS4xMSA4LjY3IDIuMiA1LjggMS4yMiIgZmlsbD0idXJsKCNiNzBjOWNmMS1iYWI4LTQ3ZTAtYmJkYi1jZTFjZDY2NGQyNjgpIiAvPjxwYXRoIGQ9Ik01LjkxLDYuMiw4LjUzLDUuMTRBLjIuMiwwLDAsMCw4LjY1LDVWMi4zNmEuMjEuMjEsMCwwLDAtLjEzLS4xOGwtMi42NS0uOUg1Ljc1bC0yLjYuNDhBLjIuMiwwLDAsMCwzLDEuOTRWNS40N2EuMTkuMTksMCwwLDAsLjE1LjE5bDIuNjMuNTVBLjMyLjMyLDAsMCwwLDUuOTEsNi4yWiIgZmlsbD0ibm9uZSIgLz48cGF0aCBkPSJNMi45NCwxLjc1djMuOWwyLjg5LjYxdi01Wm0xLjIyLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYybC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMTEuOTkgMS4yNyA5LjEzIDEuOCA5LjEzIDUuNyAxMS45OSA2LjMxIDE0Ljg1IDUuMTUgMTQuODUgMi4yNSAxMS45OSAxLjI3IiBmaWxsPSJ1cmwoI2JlYjY5OTUzLWJkOTYtNDUxNS04ODQzLWFjMTI1NDZhZjkzNikiIC8+PHBhdGggZD0iTTkuMTMsMS44VjUuN0wxMiw2LjMxdi01Wm0xLjIxLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYyLjA1bC45My0uMTdaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMi44NyA2LjYgMC4wMSA3LjEzIDAuMDEgMTEuMDMgMi44NyAxMS42NCA1Ljc0IDEwLjQ5IDUuNzQgNy41OCAyLjg3IDYuNiIgZmlsbD0idXJsKCNhMzljNzZlOC01NDdlLTRlYjQtYmMyNS1kODFjMGY4Y2RhNjIpIiAvPjxwYXRoIGQ9Ik0wLDcuMTNWMTFsMi44OS42MXYtNVptMS4yMSwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFpNMi40OCwxMWwtLjkzLS4xNVY3LjM4bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iOS4wNCA2LjU2IDYuMTggNy4wOSA2LjE4IDEwLjk5IDkuMDQgMTEuNjEgMTEuOSAxMC40NSAxMS45IDcuNTQgOS4wNCA2LjU2IiBmaWxsPSJ1cmwoI2YwYTJhNDkxLTE3ZGMtNGJiOC1iYmZjLWVlNThhNWNmNDdkYSkiIC8+PHBhdGggZD0iTTYuMTgsNy4wOVYxMWwyLjg4LjYxdi01Wk03LjM5LDEwLjdsLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjcuMzRsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxNS4yMSA2LjYxIDEyLjM1IDcuMTQgMTIuMzUgMTEuMDQgMTUuMjEgMTEuNjUgMTguMDggMTAuNSAxOC4wOCA3LjU5IDE1LjIxIDYuNjEiIGZpbGw9InVybCgjZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwKSIgLz48cGF0aCBkPSJNMTIuMzUsNy4xNFYxMWwyLjg5LjYxdi01Wm0xLjIyLDMuNjEtLjgxLS4xN3YtM2wuODEtLjE0Wm0xLjI2LjIyLS45My0uMTVWNy4zOWwuOTMtLjE2WiIgZmlsbD0iIzM0MWE2ZSIgLz48cG9seWdvbiBwb2ludHM9IjUuNzMgMTIuMDQgMi44NyAxMi41NiAyLjg3IDE2LjQ2IDUuNzMgMTcuMDggOC42IDE1LjkyIDguNiAxMy4wMiA1LjczIDEyLjA0IiBmaWxsPSJ1cmwoI2UzOTlhYTkzLTM0MWYtNGRmMi05YzAyLTYwM2I4MmI0ODRjMikiIC8+PHBhdGggZD0iTTUuODQsMTcsOC40NSwxNmEuMTguMTgsMCwwLDAsLjEyLS4xOHYtMi42QS4yLjIsMCwwLDAsOC40NCwxM0w1LjgsMTIuMWEuMTcuMTcsMCwwLDAtLjEyLDBsLTIuNi40N2EuMTkuMTksMCwwLDAtLjE2LjE5djMuNTRhLjE5LjE5LDAsMCwwLC4xNS4xOUw1LjcsMTdBLjIzLjIzLDAsMCwwLDUuODQsMTdaIiBmaWxsPSJub25lIiAvPjxwYXRoIGQ9Ik0yLjg3LDEyLjU2djMuOWwyLjg5LjYyVjEyWm0xLjIyLDMuNjFMMy4yOCwxNlYxM2wuODEtLjE0Wm0xLjI2LjIzLS45My0uMTVWMTIuODFsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxMS45MSAxMi4wOCA5LjA1IDEyLjYxIDkuMDUgMTYuNTEgMTEuOTEgMTcuMTIgMTQuNzggMTUuOTcgMTQuNzggMTMuMDYgMTEuOTEgMTIuMDgiIGZpbGw9InVybCgjYTE1MmJiYTAtYmEyYi00ODNhLWI4YzEtMGFlN2RlMzU1OTkwKSIgLz48cGF0aCBkPSJNOS4wNSwxMi42MXYzLjlsMi44OS42MXYtNVptMS4yMiwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjEyLjg2bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-DOC" data-type="systems">
+<title>Document management and archive</title>
+<rect x="3183.8" y="789" width="182" height="79" rx="8" fill="#becbfb" stroke="#4338ca" stroke-width="1.4"/>
+<text x="3270.8" y="820.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Document</text>
+<text x="3270.8" y="832.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">management and</text>
+<text x="3270.8" y="844.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">archive</text>
+<svg x="3347.8" y="794" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-GL" data-type="systems">
+<title>General ledger</title>
+<rect x="2106.93" y="107" width="182" height="79" rx="8" fill="#becbfb" stroke="#4338ca" stroke-width="1.4"/>
+<text x="2193.93" y="150.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">General ledger</text>
+<svg x="2270.93" y="112" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-LENDING-API" data-type="systems">
+<title>Installment Lending Service</title>
+<rect x="3207.8" y="101" width="182" height="79" rx="8" fill="#9aa0ed" stroke="#4338ca" stroke-width="2.6"/>
+<text x="3288.8" y="133.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment</text>
+<text x="3288.8" y="145.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Lending Service</text>
+<text x="3298.8" y="174.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">EKS · Installment Lending Cache</text>
+<image x="3367.8" y="105" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNjRweCIgaGVpZ2h0PSI2NHB4IiB2aWV3Qm94PSIwIDAgNjQgNjQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8dGl0bGU+SWNvbi1BcmNoaXRlY3R1cmUvNDgvQXJjaF9BbWF6b24tRWxhc3RpYy1LdWJlcm5ldGVzLVNlcnZpY2VfNDg8L3RpdGxlPgogICAgPGcgaWQ9Ikljb24tQXJjaGl0ZWN0dXJlLzQ4L0FyY2hfQW1hem9uLUVsYXN0aWMtS3ViZXJuZXRlcy1TZXJ2aWNlXzQ4IiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0iSWNvbi1BcmNoaXRlY3R1cmUtQkcvNDgvQ29tcHV0ZSIgZmlsbD0iI0VENzEwMCI+CiAgICAgICAgICAgIDxyZWN0IGlkPSJSZWN0YW5nbGUiIHg9IjAiIHk9IjAiIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PC9yZWN0PgogICAgICAgIDwvZz4KICAgICAgICA8cGF0aCBkPSJNMzcuNzA4LDI1LjAwMDQwNTggTDMyLjY1LDMxLjM0MDMxNzEgTDM3Ljk2NywzOC4wMjEyMjM2IEwzNS43NTIsMzguMDIxMjIzNiBMMzEsMzIuMDAwMzA3OSBMMzEsMzguMDAwMjIzOSBMMjksMzguMDAwMjIzOSBMMjksMjUuMDAwNDA1OCBMMzEsMjUuMDAwNDA1OCBMMzEsMzAuMjQxMzMyNSBMMzUuNDYzLDI1LjAwMDQwNTggTDM3LjcwOCwyNS4wMDA0MDU4IFogTTUwLDM2LjM4MjI0NjYgTDQ0LDMzLjM4MjI4ODUgTDQ0LDI1LjAwMDQwNTggQzQ0LDI0LjYzNzQxMDkgNDMuODAzLDI0LjMwMjQxNTYgNDMuNDg1LDI0LjEyNjQxODEgTDM1LDE5LjQxMjQ4NCBMMzUsMTIuNzQ5NTc3MyBMNTAsMjEuNTcyNDUzOCBMNTAsMzYuMzgyMjQ2NiBaIE01MS41MDcsMjAuMTM4NDczOSBMMzQuNTA3LDEwLjEzODYxMzggQzM0LjE5OSw5Ljk1NzYxNjM3IDMzLjgxNSw5Ljk1NDYxNjQxIDMzLjUwNCwxMC4xMzI2MTM5IEMzMy4xOTIsMTAuMzEwNjExNCAzMywxMC42NDE2MDY4IDMzLDExLjAwMDYwMTggTDMzLDIwLjAwMDQ3NTggQzMzLDIwLjM2MzQ3MDcgMzMuMTk3LDIwLjY5ODQ2NjEgMzMuNTE1LDIwLjg3NDQ2MzYgTDQyLDI1LjU4ODM5NzYgTDQyLDM0LjAwMDI3OTkgQzQyLDM0LjM3OTI3NDYgNDIuMjE0LDM0LjcyNTI2OTcgNDIuNTUzLDM0Ljg5NTI2NzQgTDUwLjU1MywzOC44OTUyMTE0IEM1MC42OTQsMzguOTY1MjEwNCA1MC44NDcsMzkuMDAwMjA5OSA1MSwzOS4wMDAyMDk5IEM1MS4xODMsMzkuMDAwMjA5OSA1MS4zNjUsMzguOTUwMjEwNiA1MS41MjUsMzguODUxMjEyIEM1MS44MiwzOC42NjgyMTQ2IDUyLDM4LjM0NzIxOTEgNTIsMzguMDAwMjIzOSBMNTIsMjEuMDAwNDYxOCBDNTIsMjAuNjQ2NDY2OCA1MS44MTIsMjAuMzE4NDcxNCA1MS41MDcsMjAuMTM4NDczOSBMNTEuNTA3LDIwLjEzODQ3MzkgWiBNMzIsNTEuODI4MDMwNCBMMTUsNDEuNDM5MTc1OCBMMTUsMjEuNTU0NDU0MSBMMjksMTIuODA0NTc2NSBMMjksMTkuNDQ2NDgzNiBMMjEuNDcsMjQuMTUyNDE3NyBDMjEuMTc4LDI0LjMzNTQxNTIgMjEsMjQuNjU1NDEwNyAyMSwyNS4wMDA0MDU4IEwyMSwzOC4wMDAyMjM5IEMyMSwzOC4zNTEyMTkgMjEuMTg1LDM4LjY3NzIxNDQgMjEuNDg1LDM4Ljg1NzIxMTkgTDMxLjQ4NSw0NC44NTcxMjggQzMxLjc4OSw0NS4wNDAxMjU0IDMyLjE2Nyw0NS4wNDgxMjUzIDMyLjQ3OSw0NC44NzgxMjc3IEw0Mi45ODgsMzkuMTQ2MjA3OSBMNDguMDM1LDQyLjAyOTE2NzUgTDMyLDUxLjgyODAzMDQgWiBNNTAuNDk2LDQxLjEzMjE4MDEgTDQzLjQ5NiwzNy4xMzIyMzYxIEM0My4xOTQsMzYuOTU5MjM4NSA0Mi44MjUsMzYuOTU2MjM4NSA0Mi41MjEsMzcuMTIyMjM2MiBMMzIuMDIzLDQyLjg0ODE1NjEgTDIzLDM3LjQzNDIzMTggTDIzLDI1LjU1NDM5ODEgTDMwLjUzLDIwLjg0ODQ2NCBDMzAuODIyLDIwLjY2NTQ2NjUgMzEsMjAuMzQ1NDcxIDMxLDIwLjAwMDQ3NTggTDMxLDExLjAwMDYwMTggQzMxLDEwLjYzNjYwNjkgMzAuODAzLDEwLjMwMjYxMTUgMzAuNDg0LDEwLjEyNTYxNCBDMzAuMTY4LDkuOTQ4NjE2NSAyOS43NzgsOS45NTk2MTYzNCAyOS40NywxMC4xNTI2MTM2IEwxMy40NywyMC4xNTI0NzM3IEMxMy4xNzgsMjAuMzM1NDcxMSAxMywyMC42NTU0NjY3IDEzLDIxLjAwMDQ2MTggTDEzLDQyLjAwMDE2NzkgQzEzLDQyLjM0ODE2MzEgMTMuMTgyLDQyLjY3MTE1ODUgMTMuNDc5LDQyLjg1NDE1NiBMMzEuNDc5LDUzLjg1NDAwMiBDMzEuNjM5LDUzLjk1MTAwMDcgMzEuODE5LDU0IDMyLDU0IEMzMi4xODEsNTQgMzIuMzYxLDUzLjk1MTAwMDcgMzIuNTIxLDUzLjg1NDAwMiBMNTAuNTIxLDQyLjg1NDE1NiBDNTAuODIzLDQyLjY2OTE1ODYgNTEuMDA1LDQyLjMzOTE2MzIgNTEuMDAwMTAwNCw0MS45ODUxNjgxIEM1MC45OTUsNDEuNjMyMTczMSA1MC44MDMsNDEuMzA3MTc3NiA1MC40OTYsNDEuMTMyMTgwMSBMNTAuNDk2LDQxLjEzMjE4MDEgWiIgaWQ9IkFtYXpvbi1FbGFzdGljLUt1YmVybmV0ZXMtU2VydmljZV9JY29uXzQ4X1NxdWlkIiBmaWxsPSIjRkZGRkZGIj48L3BhdGg+CiAgICA8L2c+Cjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-LENDING-HUB" data-type="systems">
+<title>Installment Lending Integration Hub</title>
+<rect x="3207.8" y="200" width="182" height="79" rx="8" fill="#9aa0ed" stroke="#4338ca" stroke-width="2.6"/>
+<text x="3294.8" y="237.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment Lending</text>
+<text x="3294.8" y="249.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Integration Hub</text>
+<svg x="3371.8" y="205" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-ORIG-DECISION" data-type="systems">
+<title>Originations decision engine</title>
+<rect x="12" y="341" width="182" height="79" rx="8" fill="#becbfb" stroke="#4338ca" stroke-width="1.4"/>
+<text x="99" y="378.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Originations decision</text>
+<text x="99" y="390.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">engine</text>
+<svg x="176" y="346" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-PAYMENT-GW" data-type="systems">
+<title>Payment capture gateway</title>
+<rect x="286" y="12" width="182" height="79" rx="8" fill="#becbfb" stroke="#4338ca" stroke-width="1.4"/>
+<text x="373" y="49.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Payment capture</text>
+<text x="373" y="61.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">gateway</text>
+<svg x="450" y="17" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-RECON" data-type="systems">
+<title>Reconciliation platform</title>
+<rect x="2507.2" y="107" width="182" height="79" rx="8" fill="#becbfb" stroke="#4338ca" stroke-width="1.4"/>
+<text x="2594.2" y="144.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Reconciliation</text>
+<text x="2594.2" y="156.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">platform</text>
+<svg x="2671.2" y="112" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-REWARDS-API" data-type="systems">
+<title>Rewards Redemption Service</title>
+<rect x="928" y="488" width="182" height="79" rx="8" fill="#becbfb" stroke="#4338ca" stroke-width="1.4"/>
+<text x="1009" y="514.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Rewards</text>
+<text x="1009" y="526.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Redemption</text>
+<text x="1009" y="538.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Service</text>
+<text x="1019" y="561.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AKS · Rewards Redemption Cache</text>
+<image x="1088" y="492" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYWY2YTJjNDItYmQ0OC00ODU3LWE0NzktYWVjZjhiM2RlNGY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImI3MGM5Y2YxLWJhYjgtNDdlMC1iYmRiLWNlMWNkNjY0ZDI2OCIgeDE9IjIuOTQiIHkxPSIzLjc0IiB4Mj0iOC42NyIgeTI9IjMuNzQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiZWI2OTk1My1iZDk2LTQ1MTUtODg0My1hYzEyNTQ2YWY5MzYiIHgxPSI5LjEzIiB5MT0iMy43OSIgeDI9IjE0Ljg1IiB5Mj0iMy43OSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImEzOWM3NmU4LTU0N2UtNGViNC1iYzI1LWQ4MWMwZjhjZGE2MiIgeDE9IjAuMDEiIHkxPSI5LjEyIiB4Mj0iNS43MyIgeTI9IjkuMTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJmMGEyYTQ5MS0xN2RjLTRiYjgtYmJmYy1lZTU4YTVjZjQ3ZGEiIHgxPSI2LjE4IiB5MT0iOS4wOCIgeDI9IjExLjkiIHkyPSI5LjA4IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwIiB4MT0iMTIuMzUiIHkxPSI5LjEzIiB4Mj0iMTguMDgiIHkyPSI5LjEzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZTM5OWFhOTMtMzQxZi00ZGYyLTljMDItNjAzYjgyYjQ4NGMyIiB4MT0iMi44NyIgeTE9IjE0LjU2IiB4Mj0iOC42IiB5Mj0iMTQuNTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJhMTUyYmJhMC1iYTJiLTQ4M2EtYjhjMS0wYWU3ZGUzNTU5OTAiIHgxPSI5LjA1IiB5MT0iMTQuNiIgeDI9IjE0Ljc4IiB5Mj0iMTQuNiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPkljb24tY29tcHV0ZS0yMzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSI1LjggMS4yMiAyLjk0IDEuNzUgMi45NCA1LjY1IDUuOCA2LjI2IDguNjcgNS4xMSA4LjY3IDIuMiA1LjggMS4yMiIgZmlsbD0idXJsKCNiNzBjOWNmMS1iYWI4LTQ3ZTAtYmJkYi1jZTFjZDY2NGQyNjgpIiAvPjxwYXRoIGQ9Ik01LjkxLDYuMiw4LjUzLDUuMTRBLjIuMiwwLDAsMCw4LjY1LDVWMi4zNmEuMjEuMjEsMCwwLDAtLjEzLS4xOGwtMi42NS0uOUg1Ljc1bC0yLjYuNDhBLjIuMiwwLDAsMCwzLDEuOTRWNS40N2EuMTkuMTksMCwwLDAsLjE1LjE5bDIuNjMuNTVBLjMyLjMyLDAsMCwwLDUuOTEsNi4yWiIgZmlsbD0ibm9uZSIgLz48cGF0aCBkPSJNMi45NCwxLjc1djMuOWwyLjg5LjYxdi01Wm0xLjIyLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYybC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMTEuOTkgMS4yNyA5LjEzIDEuOCA5LjEzIDUuNyAxMS45OSA2LjMxIDE0Ljg1IDUuMTUgMTQuODUgMi4yNSAxMS45OSAxLjI3IiBmaWxsPSJ1cmwoI2JlYjY5OTUzLWJkOTYtNDUxNS04ODQzLWFjMTI1NDZhZjkzNikiIC8+PHBhdGggZD0iTTkuMTMsMS44VjUuN0wxMiw2LjMxdi01Wm0xLjIxLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYyLjA1bC45My0uMTdaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMi44NyA2LjYgMC4wMSA3LjEzIDAuMDEgMTEuMDMgMi44NyAxMS42NCA1Ljc0IDEwLjQ5IDUuNzQgNy41OCAyLjg3IDYuNiIgZmlsbD0idXJsKCNhMzljNzZlOC01NDdlLTRlYjQtYmMyNS1kODFjMGY4Y2RhNjIpIiAvPjxwYXRoIGQ9Ik0wLDcuMTNWMTFsMi44OS42MXYtNVptMS4yMSwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFpNMi40OCwxMWwtLjkzLS4xNVY3LjM4bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iOS4wNCA2LjU2IDYuMTggNy4wOSA2LjE4IDEwLjk5IDkuMDQgMTEuNjEgMTEuOSAxMC40NSAxMS45IDcuNTQgOS4wNCA2LjU2IiBmaWxsPSJ1cmwoI2YwYTJhNDkxLTE3ZGMtNGJiOC1iYmZjLWVlNThhNWNmNDdkYSkiIC8+PHBhdGggZD0iTTYuMTgsNy4wOVYxMWwyLjg4LjYxdi01Wk03LjM5LDEwLjdsLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjcuMzRsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxNS4yMSA2LjYxIDEyLjM1IDcuMTQgMTIuMzUgMTEuMDQgMTUuMjEgMTEuNjUgMTguMDggMTAuNSAxOC4wOCA3LjU5IDE1LjIxIDYuNjEiIGZpbGw9InVybCgjZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwKSIgLz48cGF0aCBkPSJNMTIuMzUsNy4xNFYxMWwyLjg5LjYxdi01Wm0xLjIyLDMuNjEtLjgxLS4xN3YtM2wuODEtLjE0Wm0xLjI2LjIyLS45My0uMTVWNy4zOWwuOTMtLjE2WiIgZmlsbD0iIzM0MWE2ZSIgLz48cG9seWdvbiBwb2ludHM9IjUuNzMgMTIuMDQgMi44NyAxMi41NiAyLjg3IDE2LjQ2IDUuNzMgMTcuMDggOC42IDE1LjkyIDguNiAxMy4wMiA1LjczIDEyLjA0IiBmaWxsPSJ1cmwoI2UzOTlhYTkzLTM0MWYtNGRmMi05YzAyLTYwM2I4MmI0ODRjMikiIC8+PHBhdGggZD0iTTUuODQsMTcsOC40NSwxNmEuMTguMTgsMCwwLDAsLjEyLS4xOHYtMi42QS4yLjIsMCwwLDAsOC40NCwxM0w1LjgsMTIuMWEuMTcuMTcsMCwwLDAtLjEyLDBsLTIuNi40N2EuMTkuMTksMCwwLDAtLjE2LjE5djMuNTRhLjE5LjE5LDAsMCwwLC4xNS4xOUw1LjcsMTdBLjIzLjIzLDAsMCwwLDUuODQsMTdaIiBmaWxsPSJub25lIiAvPjxwYXRoIGQ9Ik0yLjg3LDEyLjU2djMuOWwyLjg5LjYyVjEyWm0xLjIyLDMuNjFMMy4yOCwxNlYxM2wuODEtLjE0Wm0xLjI2LjIzLS45My0uMTVWMTIuODFsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxMS45MSAxMi4wOCA5LjA1IDEyLjYxIDkuMDUgMTYuNTEgMTEuOTEgMTcuMTIgMTQuNzggMTUuOTcgMTQuNzggMTMuMDYgMTEuOTEgMTIuMDgiIGZpbGw9InVybCgjYTE1MmJiYTAtYmEyYi00ODNhLWI4YzEtMGFlN2RlMzU1OTkwKSIgLz48cGF0aCBkPSJNOS4wNSwxMi42MXYzLjlsMi44OS42MXYtNVptMS4yMiwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjEyLjg2bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-REWARDS-EVENTS" data-type="systems">
+<title>Rewards Redemption Event Publisher</title>
+<rect x="1193" y="488" width="182" height="79" rx="8" fill="#becbfb" stroke="#4338ca" stroke-width="1.4"/>
+<text x="1274" y="514.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Rewards</text>
+<text x="1274" y="526.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Redemption Event</text>
+<text x="1274" y="538.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Publisher</text>
+<text x="1284" y="561.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Service Bus</text>
+<image x="1353" y="492" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJiZDAyODc4LTMwOWEtNDQ5MC04MTk2LTk0NjMzOGQwZjU5MyIgeDE9IjguOTk1IiB5MT0iMTAuMjk5IiB4Mj0iOC45OTUiIHkyPSIxMy4xOTkiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMwMDViYTEiIC8+PHN0b3Agb2Zmc2V0PSIwLjI1OCIgc3RvcC1jb2xvcj0iIzAwNTg5ZCIgLz48c3RvcCBvZmZzZXQ9IjAuNTI1IiBzdG9wLWNvbG9yPSIjMDA0ZjkwIiAvPjxzdG9wIG9mZnNldD0iMC43OTYiIHN0b3AtY29sb3I9IiMwMDNmN2MiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMDAzMDY3IiAvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxnPjxnIGlkPSJiNTMyZTYwMC0zNjIzLTRiZTYtOWZhNi0zMGQwNWZmZjU2YjEiPjxwb2x5Z29uIHBvaW50cz0iMTMuMzg3IDcuNCAxMy4zODIgNy4zOTYgMTMuMzgyIDcuMzg0IDEzLjM2MyA3LjM4NCA4Ljk5NyA0LjQwNSA0LjYzMSA3LjM4NCA0LjYxMiA3LjM4NCA0LjYxMiA3LjM5NiA0LjYwNiA3LjQgNC42MTIgNy40IDQuNjEyIDEzLjIwMSAxMy4zODIgMTMuMjAxIDEzLjM4MiA3LjQgMTMuMzg3IDcuNCIgZmlsbD0iIzUwZTZmZiIgLz48cGF0aCBkPSJNNC42MDYsNy40YzAtLjEuMDA4LDUuNjgxLjAwOCw1LjhMOC45OTUsMTAuM1oiIGZpbGw9IiMzMmJlZGQiIC8+PHBhdGggZD0iTTEzLjM4NCw3LjQsOC45OTUsMTAuMywxMy4zNzYsMTMuMkMxMy4zNzYsMTMuMDgzLDEzLjM4NCw3LjMsMTMuMzg0LDcuNFoiIGZpbGw9IiMxOThhYjMiIC8+PHBvbHlnb24gcG9pbnRzPSI4Ljk5NSAxMC4yOTkgNC42MTQgMTMuMTk0IDQuNjE0IDEzLjE5OSAxMy4zNzYgMTMuMTk5IDEzLjM3NiAxMy4xOTQgOC45OTUgMTAuMjk5IiBmaWxsPSJ1cmwoI2JiZDAyODc4LTMwOWEtNDQ5MC04MTk2LTk0NjMzOGQwZjU5MykiIC8+PGc+PHBhdGggZD0iTTEuMDcyLDEuNDNoMS4yOWEwLDAsMCwwLDEsMCwwdjMuNmEuMjg2LjI4NiwwLDAsMS0uMjg2LjI4NkguNzg2QS4yODYuMjg2LDAsMCwxLC41LDUuMDM1VjJBLjU3Mi41NzIsMCwwLDEsMS4wNzIsMS40M1oiIGZpbGw9IiM5OTkiIC8+PHBhdGggZD0iTTEuMDcyLDEuNDNoMS4yOWEwLDAsMCwwLDEsMCwwdjMuNmEuMjg2LjI4NiwwLDAsMS0uMjg2LjI4NkguNzg2QS4yODYuMjg2LDAsMCwxLC41LDUuMDM1VjJBLjU3Mi41NzIsMCwwLDEsMS4wNzIsMS40M1oiIGZpbGw9IiM5OTkiIG9wYWNpdHk9IjAuNSIgLz48L2c+PGc+PHBhdGggZD0iTTE1LjYzOCwxLjQzaDEuMjlBLjU3Mi41NzIsMCwwLDEsMTcuNSwyVjUuMDM1YS4yODYuMjg2LDAsMCwxLS4yODYuMjg2aC0xLjI5YS4yODYuMjg2LDAsMCwxLS4yODYtLjI4NlYxLjQzQTAsMCwwLDAsMSwxNS42MzgsMS40M1oiIGZpbGw9IiM5OTkiIC8+PHBhdGggZD0iTTE1LjYzOCwxLjQzaDEuMjlBLjU3Mi41NzIsMCwwLDEsMTcuNSwyVjUuMDM1YS4yODYuMjg2LDAsMCwxLS4yODYuMjg2aC0xLjI5YS4yODYuMjg2LDAsMCwxLS4yODYtLjI4NlYxLjQzQTAsMCwwLDAsMSwxNS42MzgsMS40M1oiIGZpbGw9IiM5OTkiIG9wYWNpdHk9IjAuNSIgLz48L2c+PHBhdGggZD0iTTguNjYtNi4xNjNIOS45MDdhMCwwLDAsMCwxLDAsMHYxN2EwLDAsMCwwLDEsMCwwSDguNjZhLjU2Ny41NjcsMCwwLDEtLjU2Ny0uNTY3Vi01LjZBLjU2Ny41NjcsMCwwLDEsOC42Ni02LjE2M1oiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDExLjMzNyAtNi42NjMpIHJvdGF0ZSg5MCkiIGZpbGw9IiM5NDk0OTQiIC8+PGc+PHBhdGggZD0iTS43ODYsMTIuNjc5aDEuMjlhLjI4Ni4yODYsMCwwLDEsLjI4Ni4yODZ2My42YTAsMCwwLDAsMSwwLDBIMS4wNzJBLjU3Mi41NzIsMCwwLDEsLjUsMTZWMTIuOTY1QS4yODYuMjg2LDAsMCwxLC43ODYsMTIuNjc5WiIgZmlsbD0iIzk5OSIgLz48cGF0aCBkPSJNLjc4NiwxMi42NzloMS4yOWEuMjg2LjI4NiwwLDAsMSwuMjg2LjI4NnYzLjZhMCwwLDAsMCwxLDAsMEgxLjA3MkEuNTcyLjU3MiwwLDAsMSwuNSwxNlYxMi45NjVBLjI4Ni4yODYsMCwwLDEsLjc4NiwxMi42NzlaIiBmaWxsPSIjOTk5IiBvcGFjaXR5PSIwLjUiIC8+PC9nPjxnPjxwYXRoIGQ9Ik0xNS45MjQsMTIuNjc5aDEuMjlhLjI4Ni4yODYsMCwwLDEsLjI4Ni4yODZWMTZhLjU3Mi41NzIsMCwwLDEtLjU3Mi41NzJoLTEuMjlhMCwwLDAsMCwxLDAsMHYtMy42QS4yODYuMjg2LDAsMCwxLDE1LjkyNCwxMi42NzlaIiBmaWxsPSIjOTk5IiAvPjxwYXRoIGQ9Ik0xNS45MjQsMTIuNjc5aDEuMjlhLjI4Ni4yODYsMCwwLDEsLjI4Ni4yODZWMTZhLjU3Mi41NzIsMCwwLDEtLjU3Mi41NzJoLTEuMjlhMCwwLDAsMCwxLDAsMHYtMy42QS4yODYuMjg2LDAsMCwxLDE1LjkyNCwxMi42NzlaIiBmaWxsPSIjOTk5IiBvcGFjaXR5PSIwLjUiIC8+PC9nPjxwYXRoIGQ9Ik04LjY2LDcuMTYzSDkuOTA3YTAsMCwwLDAsMSwwLDB2MTdhMCwwLDAsMCwxLDAsMEg4LjY2YS41NjcuNTY3LDAsMCwxLS41NjctLjU2N1Y3LjczQS41NjcuNTY3LDAsMCwxLDguNjYsNy4xNjNaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNi42NjMgMjQuNjYzKSByb3RhdGUoLTkwKSIgZmlsbD0iIzk0OTQ5NCIgLz48L2c+PC9nPjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-REWARDS-STORE" data-type="systems">
+<title>Rewards Redemption Database</title>
+<rect x="1193" y="389" width="182" height="79" rx="8" fill="#becbfb" stroke="#4338ca" stroke-width="1.4"/>
+<text x="1274" y="415.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Rewards</text>
+<text x="1274" y="427.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Redemption</text>
+<text x="1274" y="439.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Database</text>
+<text x="1284" y="462.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Azure SQL</text>
+<image x="1353" y="393" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYTk2NzkyYjctY2UyOC00Y2EzLTk3NjctNGUwNjVlZjQ4MjBmIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImVmMTZiZjlkLWE4YjYtNDE4MS1iNmNkLTY2ZmM1MjAzZjk1NiIgeDE9IjIuNTkiIHkxPSIxMC4xNiIgeDI9IjE1LjQxIiB5Mj0iMTAuMTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMwMDViYTEiIC8+PHN0b3Agb2Zmc2V0PSIwLjA3IiBzdG9wLWNvbG9yPSIjMDA2MGE5IiAvPjxzdG9wIG9mZnNldD0iMC4zNiIgc3RvcC1jb2xvcj0iIzAwNzFjOCIgLz48c3RvcCBvZmZzZXQ9IjAuNTIiIHN0b3AtY29sb3I9IiMwMDc4ZDQiIC8+PHN0b3Agb2Zmc2V0PSIwLjY0IiBzdG9wLWNvbG9yPSIjMDA3NGNkIiAvPjxzdG9wIG9mZnNldD0iMC44MiIgc3RvcC1jb2xvcj0iIzAwNmFiYiIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwMDViYTEiIC8+PC9saW5lYXJHcmFkaWVudD48cmFkaWFsR3JhZGllbnQgaWQ9ImJmMzg0NmMzLTRkNzQtNDc0My1hYjlhLWYzMzRjMjQ4YmQ5MiIgY3g9IjkuMzYiIGN5PSIxMC41NyIgcj0iNy4wNyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2YyZjJmMiIgLz48c3RvcCBvZmZzZXQ9IjAuNTgiIHN0b3AtY29sb3I9IiNlZWUiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZTZlNmU2IiAvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjx0aXRsZT5JY29uLWRhdGFiYXNlcy0xMzA8L3RpdGxlPjxwYXRoIGQ9Ik05LDUuMTRjLTMuNTQsMC02LjQxLTEtNi40MS0yLjMyVjE1LjE4YzAsMS4yNywyLjgyLDIuMyw2LjMyLDIuMzJIOWMzLjU0LDAsNi40MS0xLDYuNDEtMi4zMlYyLjgyQzE1LjQxLDQuMTEsMTIuNTQsNS4xNCw5LDUuMTRaIiBmaWxsPSJ1cmwoI2VmMTZiZjlkLWE4YjYtNDE4MS1iNmNkLTY2ZmM1MjAzZjk1NikiIC8+PHBhdGggZD0iTTE1LjQxLDIuODJjMCwxLjI5LTIuODcsMi4zMi02LjQxLDIuMzJzLTYuNDEtMS02LjQxLTIuMzJTNS40Ni41LDksLjVzNi40MSwxLDYuNDEsMi4zMiIgZmlsbD0iI2U4ZThlOCIgLz48cGF0aCBkPSJNMTMuOTIsMi42M2MwLC44Mi0yLjIxLDEuNDgtNC45MiwxLjQ4UzQuMDgsMy40NSw0LjA4LDIuNjMsNi4yOSwxLjE2LDksMS4xNnM0LjkyLjY2LDQuOTIsMS40NyIgZmlsbD0iIzUwZTZmZiIgLz48cGF0aCBkPSJNOSwzYTExLjU1LDExLjU1LDAsMCwwLTMuODkuNTdBMTEuNDIsMTEuNDIsMCwwLDAsOSw0LjExYTExLjE1LDExLjE1LDAsMCwwLDMuODktLjU4QTExLjg0LDExLjg0LDAsMCwwLDksM1oiIGZpbGw9IiMxOThhYjMiIC8+PHBhdGggZD0iTTEyLjksMTEuNFY4SDEydjQuMTNoMi40NlYxMS40Wk01Ljc2LDkuNzNhMS44MywxLjgzLDAsMCwxLS41MS0uMzEuNDQuNDQsMCwwLDEtLjEyLS4zMi4zNC4zNCwwLDAsMSwuMTUtLjMuNjguNjgsMCwwLDEsLjQyLS4xMiwxLjYyLDEuNjIsMCwwLDEsMSwuMjlWOC4xMWEyLjU4LDIuNTgsMCwwLDAtMS0uMTYsMS42NCwxLjY0LDAsMCwwLTEuMDkuMzQsMS4wOCwxLjA4LDAsMCwwLS40Mi44OWMwLC41MS4zMi45MSwxLDEuMjFhMi44OCwyLjg4LDAsMCwxLC42Mi4zNi40Mi40MiwwLDAsMSwuMTUuMzIuMzguMzgsMCwwLDEtLjE2LjMxLjgxLjgxLDAsMCwxLS40NS4xMSwxLjY2LDEuNjYsMCwwLDEtMS4wOS0uNDJWMTJhMi4xNywyLjE3LDAsMCwwLDEuMDcuMjQsMS44OCwxLjg4LDAsMCwwLDEuMTgtLjMzQTEuMDgsMS4wOCwwLDAsMCw2Ljg0LDExYTEuMDUsMS4wNSwwLDAsMC0uMjUtLjdBMi40MiwyLjQyLDAsMCwwLDUuNzYsOS43M1pNMTEsMTEuMzJhMi4zNCwyLjM0LDAsMCwwLC4zMy0xLjI2QTIuMzIsMi4zMiwwLDAsMCwxMSw5YTEuODEsMS44MSwwLDAsMC0uNy0uNzUsMiwyLDAsMCwwLTEtLjI2LDIuMTEsMi4xMSwwLDAsMC0xLjA4LjI3QTEuODYsMS44NiwwLDAsMCw3LjQ5LDlhMi40NiwyLjQ2LDAsMCwwLS4yNiwxLjE0LDIuMjYsMi4yNiwwLDAsMCwuMjQsMSwxLjc2LDEuNzYsMCwwLDAsLjY5Ljc0LDIuMDYsMi4wNiwwLDAsMCwxLC4zbC44NiwxaDEuMjFMMTAsMTIuMDhBMS43OSwxLjc5LDAsMCwwLDExLDExLjMyWk0xMCwxMS4wN2EuOTQuOTQsMCwwLDEtLjc2LjM1LjkyLjkyLDAsMCwxLS43Ni0uMzYsMS41MiwxLjUyLDAsMCwxLS4yOS0xLDEuNTMsMS41MywwLDAsMSwuMjktMSwxLDEsMCwwLDEsLjc4LS4zNy44Ny44NywwLDAsMSwuNzUuMzcsMS42MiwxLjYyLDAsMCwxLC4yNywxQTEuNDYsMS40NiwwLDAsMSwxMCwxMS4wN1oiIGZpbGw9InVybCgjYmYzODQ2YzMtNGQ3NC00NzQzLWFiOWEtZjMzNGMyNDhiZDkyKSIgLz48L3N2Zz4="/>
+</g>
+<g class="node" data-id="SYS-REWARDS-WEB" data-type="systems">
+<title>Rewards Redemption Web</title>
+<rect x="554" y="488" width="182" height="79" rx="8" fill="#becbfb" stroke="#4338ca" stroke-width="1.4"/>
+<text x="635" y="520.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Rewards</text>
+<text x="635" y="532.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Redemption Web</text>
+<text x="645" y="561.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AKS</text>
+<image x="714" y="492" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYWY2YTJjNDItYmQ0OC00ODU3LWE0NzktYWVjZjhiM2RlNGY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImI3MGM5Y2YxLWJhYjgtNDdlMC1iYmRiLWNlMWNkNjY0ZDI2OCIgeDE9IjIuOTQiIHkxPSIzLjc0IiB4Mj0iOC42NyIgeTI9IjMuNzQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiZWI2OTk1My1iZDk2LTQ1MTUtODg0My1hYzEyNTQ2YWY5MzYiIHgxPSI5LjEzIiB5MT0iMy43OSIgeDI9IjE0Ljg1IiB5Mj0iMy43OSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImEzOWM3NmU4LTU0N2UtNGViNC1iYzI1LWQ4MWMwZjhjZGE2MiIgeDE9IjAuMDEiIHkxPSI5LjEyIiB4Mj0iNS43MyIgeTI9IjkuMTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJmMGEyYTQ5MS0xN2RjLTRiYjgtYmJmYy1lZTU4YTVjZjQ3ZGEiIHgxPSI2LjE4IiB5MT0iOS4wOCIgeDI9IjExLjkiIHkyPSI5LjA4IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwIiB4MT0iMTIuMzUiIHkxPSI5LjEzIiB4Mj0iMTguMDgiIHkyPSI5LjEzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZTM5OWFhOTMtMzQxZi00ZGYyLTljMDItNjAzYjgyYjQ4NGMyIiB4MT0iMi44NyIgeTE9IjE0LjU2IiB4Mj0iOC42IiB5Mj0iMTQuNTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJhMTUyYmJhMC1iYTJiLTQ4M2EtYjhjMS0wYWU3ZGUzNTU5OTAiIHgxPSI5LjA1IiB5MT0iMTQuNiIgeDI9IjE0Ljc4IiB5Mj0iMTQuNiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPkljb24tY29tcHV0ZS0yMzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSI1LjggMS4yMiAyLjk0IDEuNzUgMi45NCA1LjY1IDUuOCA2LjI2IDguNjcgNS4xMSA4LjY3IDIuMiA1LjggMS4yMiIgZmlsbD0idXJsKCNiNzBjOWNmMS1iYWI4LTQ3ZTAtYmJkYi1jZTFjZDY2NGQyNjgpIiAvPjxwYXRoIGQ9Ik01LjkxLDYuMiw4LjUzLDUuMTRBLjIuMiwwLDAsMCw4LjY1LDVWMi4zNmEuMjEuMjEsMCwwLDAtLjEzLS4xOGwtMi42NS0uOUg1Ljc1bC0yLjYuNDhBLjIuMiwwLDAsMCwzLDEuOTRWNS40N2EuMTkuMTksMCwwLDAsLjE1LjE5bDIuNjMuNTVBLjMyLjMyLDAsMCwwLDUuOTEsNi4yWiIgZmlsbD0ibm9uZSIgLz48cGF0aCBkPSJNMi45NCwxLjc1djMuOWwyLjg5LjYxdi01Wm0xLjIyLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYybC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMTEuOTkgMS4yNyA5LjEzIDEuOCA5LjEzIDUuNyAxMS45OSA2LjMxIDE0Ljg1IDUuMTUgMTQuODUgMi4yNSAxMS45OSAxLjI3IiBmaWxsPSJ1cmwoI2JlYjY5OTUzLWJkOTYtNDUxNS04ODQzLWFjMTI1NDZhZjkzNikiIC8+PHBhdGggZD0iTTkuMTMsMS44VjUuN0wxMiw2LjMxdi01Wm0xLjIxLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYyLjA1bC45My0uMTdaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMi44NyA2LjYgMC4wMSA3LjEzIDAuMDEgMTEuMDMgMi44NyAxMS42NCA1Ljc0IDEwLjQ5IDUuNzQgNy41OCAyLjg3IDYuNiIgZmlsbD0idXJsKCNhMzljNzZlOC01NDdlLTRlYjQtYmMyNS1kODFjMGY4Y2RhNjIpIiAvPjxwYXRoIGQ9Ik0wLDcuMTNWMTFsMi44OS42MXYtNVptMS4yMSwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFpNMi40OCwxMWwtLjkzLS4xNVY3LjM4bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iOS4wNCA2LjU2IDYuMTggNy4wOSA2LjE4IDEwLjk5IDkuMDQgMTEuNjEgMTEuOSAxMC40NSAxMS45IDcuNTQgOS4wNCA2LjU2IiBmaWxsPSJ1cmwoI2YwYTJhNDkxLTE3ZGMtNGJiOC1iYmZjLWVlNThhNWNmNDdkYSkiIC8+PHBhdGggZD0iTTYuMTgsNy4wOVYxMWwyLjg4LjYxdi01Wk03LjM5LDEwLjdsLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjcuMzRsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxNS4yMSA2LjYxIDEyLjM1IDcuMTQgMTIuMzUgMTEuMDQgMTUuMjEgMTEuNjUgMTguMDggMTAuNSAxOC4wOCA3LjU5IDE1LjIxIDYuNjEiIGZpbGw9InVybCgjZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwKSIgLz48cGF0aCBkPSJNMTIuMzUsNy4xNFYxMWwyLjg5LjYxdi01Wm0xLjIyLDMuNjEtLjgxLS4xN3YtM2wuODEtLjE0Wm0xLjI2LjIyLS45My0uMTVWNy4zOWwuOTMtLjE2WiIgZmlsbD0iIzM0MWE2ZSIgLz48cG9seWdvbiBwb2ludHM9IjUuNzMgMTIuMDQgMi44NyAxMi41NiAyLjg3IDE2LjQ2IDUuNzMgMTcuMDggOC42IDE1LjkyIDguNiAxMy4wMiA1LjczIDEyLjA0IiBmaWxsPSJ1cmwoI2UzOTlhYTkzLTM0MWYtNGRmMi05YzAyLTYwM2I4MmI0ODRjMikiIC8+PHBhdGggZD0iTTUuODQsMTcsOC40NSwxNmEuMTguMTgsMCwwLDAsLjEyLS4xOHYtMi42QS4yLjIsMCwwLDAsOC40NCwxM0w1LjgsMTIuMWEuMTcuMTcsMCwwLDAtLjEyLDBsLTIuNi40N2EuMTkuMTksMCwwLDAtLjE2LjE5djMuNTRhLjE5LjE5LDAsMCwwLC4xNS4xOUw1LjcsMTdBLjIzLjIzLDAsMCwwLDUuODQsMTdaIiBmaWxsPSJub25lIiAvPjxwYXRoIGQ9Ik0yLjg3LDEyLjU2djMuOWwyLjg5LjYyVjEyWm0xLjIyLDMuNjFMMy4yOCwxNlYxM2wuODEtLjE0Wm0xLjI2LjIzLS45My0uMTVWMTIuODFsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxMS45MSAxMi4wOCA5LjA1IDEyLjYxIDkuMDUgMTYuNTEgMTEuOTEgMTcuMTIgMTQuNzggMTUuOTcgMTQuNzggMTMuMDYgMTEuOTEgMTIuMDgiIGZpbGw9InVybCgjYTE1MmJiYTAtYmEyYi00ODNhLWI4YzEtMGFlN2RlMzU1OTkwKSIgLz48cGF0aCBkPSJNOS4wNSwxMi42MXYzLjlsMi44OS42MXYtNVptMS4yMiwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjEyLjg2bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-REWARDS-WORKER" data-type="systems">
+<title>Rewards Redemption Async Worker</title>
+<rect x="1193" y="587" width="182" height="79" rx="8" fill="#becbfb" stroke="#4338ca" stroke-width="1.4"/>
+<text x="1274" y="613.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Rewards</text>
+<text x="1274" y="625.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Redemption Async</text>
+<text x="1274" y="637.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Worker</text>
+<text x="1284" y="660.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AKS · Event Hubs</text>
+<image x="1353" y="591" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYWY2YTJjNDItYmQ0OC00ODU3LWE0NzktYWVjZjhiM2RlNGY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImI3MGM5Y2YxLWJhYjgtNDdlMC1iYmRiLWNlMWNkNjY0ZDI2OCIgeDE9IjIuOTQiIHkxPSIzLjc0IiB4Mj0iOC42NyIgeTI9IjMuNzQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiZWI2OTk1My1iZDk2LTQ1MTUtODg0My1hYzEyNTQ2YWY5MzYiIHgxPSI5LjEzIiB5MT0iMy43OSIgeDI9IjE0Ljg1IiB5Mj0iMy43OSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImEzOWM3NmU4LTU0N2UtNGViNC1iYzI1LWQ4MWMwZjhjZGE2MiIgeDE9IjAuMDEiIHkxPSI5LjEyIiB4Mj0iNS43MyIgeTI9IjkuMTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJmMGEyYTQ5MS0xN2RjLTRiYjgtYmJmYy1lZTU4YTVjZjQ3ZGEiIHgxPSI2LjE4IiB5MT0iOS4wOCIgeDI9IjExLjkiIHkyPSI5LjA4IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwIiB4MT0iMTIuMzUiIHkxPSI5LjEzIiB4Mj0iMTguMDgiIHkyPSI5LjEzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZTM5OWFhOTMtMzQxZi00ZGYyLTljMDItNjAzYjgyYjQ4NGMyIiB4MT0iMi44NyIgeTE9IjE0LjU2IiB4Mj0iOC42IiB5Mj0iMTQuNTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJhMTUyYmJhMC1iYTJiLTQ4M2EtYjhjMS0wYWU3ZGUzNTU5OTAiIHgxPSI5LjA1IiB5MT0iMTQuNiIgeDI9IjE0Ljc4IiB5Mj0iMTQuNiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPkljb24tY29tcHV0ZS0yMzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSI1LjggMS4yMiAyLjk0IDEuNzUgMi45NCA1LjY1IDUuOCA2LjI2IDguNjcgNS4xMSA4LjY3IDIuMiA1LjggMS4yMiIgZmlsbD0idXJsKCNiNzBjOWNmMS1iYWI4LTQ3ZTAtYmJkYi1jZTFjZDY2NGQyNjgpIiAvPjxwYXRoIGQ9Ik01LjkxLDYuMiw4LjUzLDUuMTRBLjIuMiwwLDAsMCw4LjY1LDVWMi4zNmEuMjEuMjEsMCwwLDAtLjEzLS4xOGwtMi42NS0uOUg1Ljc1bC0yLjYuNDhBLjIuMiwwLDAsMCwzLDEuOTRWNS40N2EuMTkuMTksMCwwLDAsLjE1LjE5bDIuNjMuNTVBLjMyLjMyLDAsMCwwLDUuOTEsNi4yWiIgZmlsbD0ibm9uZSIgLz48cGF0aCBkPSJNMi45NCwxLjc1djMuOWwyLjg5LjYxdi01Wm0xLjIyLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYybC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMTEuOTkgMS4yNyA5LjEzIDEuOCA5LjEzIDUuNyAxMS45OSA2LjMxIDE0Ljg1IDUuMTUgMTQuODUgMi4yNSAxMS45OSAxLjI3IiBmaWxsPSJ1cmwoI2JlYjY5OTUzLWJkOTYtNDUxNS04ODQzLWFjMTI1NDZhZjkzNikiIC8+PHBhdGggZD0iTTkuMTMsMS44VjUuN0wxMiw2LjMxdi01Wm0xLjIxLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYyLjA1bC45My0uMTdaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMi44NyA2LjYgMC4wMSA3LjEzIDAuMDEgMTEuMDMgMi44NyAxMS42NCA1Ljc0IDEwLjQ5IDUuNzQgNy41OCAyLjg3IDYuNiIgZmlsbD0idXJsKCNhMzljNzZlOC01NDdlLTRlYjQtYmMyNS1kODFjMGY4Y2RhNjIpIiAvPjxwYXRoIGQ9Ik0wLDcuMTNWMTFsMi44OS42MXYtNVptMS4yMSwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFpNMi40OCwxMWwtLjkzLS4xNVY3LjM4bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iOS4wNCA2LjU2IDYuMTggNy4wOSA2LjE4IDEwLjk5IDkuMDQgMTEuNjEgMTEuOSAxMC40NSAxMS45IDcuNTQgOS4wNCA2LjU2IiBmaWxsPSJ1cmwoI2YwYTJhNDkxLTE3ZGMtNGJiOC1iYmZjLWVlNThhNWNmNDdkYSkiIC8+PHBhdGggZD0iTTYuMTgsNy4wOVYxMWwyLjg4LjYxdi01Wk03LjM5LDEwLjdsLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjcuMzRsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxNS4yMSA2LjYxIDEyLjM1IDcuMTQgMTIuMzUgMTEuMDQgMTUuMjEgMTEuNjUgMTguMDggMTAuNSAxOC4wOCA3LjU5IDE1LjIxIDYuNjEiIGZpbGw9InVybCgjZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwKSIgLz48cGF0aCBkPSJNMTIuMzUsNy4xNFYxMWwyLjg5LjYxdi01Wm0xLjIyLDMuNjEtLjgxLS4xN3YtM2wuODEtLjE0Wm0xLjI2LjIyLS45My0uMTVWNy4zOWwuOTMtLjE2WiIgZmlsbD0iIzM0MWE2ZSIgLz48cG9seWdvbiBwb2ludHM9IjUuNzMgMTIuMDQgMi44NyAxMi41NiAyLjg3IDE2LjQ2IDUuNzMgMTcuMDggOC42IDE1LjkyIDguNiAxMy4wMiA1LjczIDEyLjA0IiBmaWxsPSJ1cmwoI2UzOTlhYTkzLTM0MWYtNGRmMi05YzAyLTYwM2I4MmI0ODRjMikiIC8+PHBhdGggZD0iTTUuODQsMTcsOC40NSwxNmEuMTguMTgsMCwwLDAsLjEyLS4xOHYtMi42QS4yLjIsMCwwLDAsOC40NCwxM0w1LjgsMTIuMWEuMTcuMTcsMCwwLDAtLjEyLDBsLTIuNi40N2EuMTkuMTksMCwwLDAtLjE2LjE5djMuNTRhLjE5LjE5LDAsMCwwLC4xNS4xOUw1LjcsMTdBLjIzLjIzLDAsMCwwLDUuODQsMTdaIiBmaWxsPSJub25lIiAvPjxwYXRoIGQ9Ik0yLjg3LDEyLjU2djMuOWwyLjg5LjYyVjEyWm0xLjIyLDMuNjFMMy4yOCwxNlYxM2wuODEtLjE0Wm0xLjI2LjIzLS45My0uMTVWMTIuODFsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxMS45MSAxMi4wOCA5LjA1IDEyLjYxIDkuMDUgMTYuNTEgMTEuOTEgMTcuMTIgMTQuNzggMTUuOTcgMTQuNzggMTMuMDYgMTEuOTEgMTIuMDgiIGZpbGw9InVybCgjYTE1MmJiYTAtYmEyYi00ODNhLWI4YzEtMGFlN2RlMzU1OTkwKSIgLz48cGF0aCBkPSJNOS4wNSwxMi42MXYzLjlsMi44OS42MXYtNVptMS4yMiwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjEyLjg2bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-STATEMENTS" data-type="systems">
+<title>Statement Generation</title>
+<rect x="2531.2" y="511" width="182" height="79" rx="8" fill="#becbfb" stroke="#4338ca" stroke-width="1.4"/>
+<text x="2618.2" y="548.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Statement</text>
+<text x="2618.2" y="560.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Generation</text>
+<svg x="2695.2" y="516" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="1053.2" x2="3452.5" y2="1053.2" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="1077.2" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 1066.2)" fill="#e6ecff" stroke="#6366f1" stroke-width="1.4"><rect x="1" y="2.5" width="18" height="9" rx="4.5"/></g>
+<text x="93.2" y="1077.2" font-size="12" font-weight="400" fill="#343d50">offered interface · 2</text>
+<g transform="translate(217.18 1066.2)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="243.18" y="1077.2" font-size="12" font-weight="400" fill="#343d50">system · 24</text>
+<text x="28" y="1099.2" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">CRITICALITY</text>
+<g transform="translate(111.3 1088.2)" fill="#b9befa" stroke="#6366f1" stroke-width="2.6"><rect x="1" y="2.5" width="18" height="9" rx="4.5"/></g>
+<text x="137.3" y="1099.2" font-size="12" font-weight="400" fill="#343d50">High · 6</text>
+<g transform="translate(195.87 1088.2)" fill="#dde3fe" stroke="#6366f1" stroke-width="1.4"><rect x="1" y="2.5" width="18" height="9" rx="4.5"/></g>
+<text x="221.87" y="1099.2" font-size="12" font-weight="400" fill="#343d50">Medium · 20</text>
+<text x="28" y="1121.2" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 1110.2)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="1121.2" font-size="12" font-weight="400" fill="#343d50">calls</text>
+<g transform="translate(143.05 1110.2)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/></g>
+<text x="169.05" y="1121.2" font-size="12" font-weight="400" fill="#343d50">offers</text>
+<text x="28" y="1155.2" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · domain-landscape--card-issuing · edit the model, not the picture</text></g>
+</svg>

@@ -1,0 +1,64 @@
+@startuml
+' Payments — Landscape
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Payments — Landscape
+
+AddElementTag("offered_interfaces", $bgColor="#e6ecff", $borderColor="#6366f1", $fontColor="#0f172a", $legendText="offered interface")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddRelTag("api-call", $legendText="API call")
+AddRelTag("event", $legendText="Event on the bus")
+AddRelTag("own-datastore", $legendText="Its own datastore")
+AddRelTag("queued-request", $legendText="Request on a queue")
+
+Boundary(b_Card_Issuing, "Card Issuing") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(OI_LEDGER_QUEUE, "Core Ledger request queue", "Postings, holds and balance requests put on the ledger's MQ request queue, answered on the reply queue in the order they arrived. Built with MQ.", $tags="offered_interfaces")
+  ' aac OI_LEDGER_QUEUE: company_domain="Card Issuing"; technology="MQ"
+}
+Boundary(b_Payments, "Payments") {
+  System(SYS_AUTH_SWITCH, "Authorization Switch", "Real-time card authorization switch connected to the scheme networks.", $tags="systems")
+  ' aac SYS_AUTH_SWITCH: company_domain="Payments"; hosting="On-prem"
+  System(OI_MERCHANT_API, "Merchant Portal API", "The domain API Merchant Portal offers its channels, its jobs and its partners. Built with HTTPS.", $tags="offered_interfaces")
+  ' aac OI_MERCHANT_API: company_domain="Payments"; technology="HTTPS"
+  System(SYS_MERCHANT_STORE, "Merchant Portal Database", "Relational database for Merchant Portal, encrypted with a customer managed key. Built with Azure SQL.", $tags="systems")
+  ' aac SYS_MERCHANT_STORE: company_domain="Payments"; hosting="Azure"; technology="Azure SQL"
+  System(SYS_MERCHANT_EVENTS, "Merchant Portal Event Publisher", "Publishes Merchant Portal domain events onto the enterprise bus. Built with Service Bus.", $tags="systems")
+  ' aac SYS_MERCHANT_EVENTS: company_domain="Payments"; hosting="Azure"; technology="Service Bus"
+  System(SYS_MERCHANT_API, "Merchant Portal Service", "Domain API for the merchant portal: applications, settlement inquiries, chargeback responses and statement downloads. Built with AKS · Merchant Portal Cache.", $tags="systems")
+  ' aac SYS_MERCHANT_API: company_domain="Payments"; hosting="Azure"; technology="AKS · Merchant Portal Cache"
+  System(SYS_MERCHANT_WEB, "Merchant Portal Web", "Customer-facing front end for Merchant Portal. Built with AKS.", $tags="systems")
+  ' aac SYS_MERCHANT_WEB: company_domain="Payments"; hosting="Azure"; technology="AKS"
+}
+Boundary(b_Risk_and_Compliance, "Risk and Compliance") {
+  System(SYS_SCREENING_GATEWAY, "NICE Actimize Screening Integration Gateway", "Our side of the NICE Actimize integration: request mapping, retry and back-off, circuit breaking when the vendor is down, and the audit trail of what we sent them. Built with EKS.", $tags="systems")
+  ' aac SYS_SCREENING_GATEWAY: company_domain="Risk and Compliance"; hosting="AWS"; technology="EKS"
+}
+System(SYS_TOKEN, "Tokenization and credential management", "Token and credential lifecycle management.", $tags="systems")
+' aac SYS_TOKEN: company_domain=""
+System(SYS_FRAUD_DETECT, "Transaction fraud detection", "Real-time transaction fraud scoring and alerting.", $tags="systems")
+' aac SYS_FRAUD_DETECT: company_domain=""
+
+Rel(SYS_AUTH_SWITCH, SYS_FRAUD_DETECT, "Authorization Switch to Transaction Fraud Detection", "ISO8583")
+' aac rel: source="SYS_AUTH_SWITCH"; target="SYS_FRAUD_DETECT"; label="Authorization Switch to Transaction Fraud Detection"; interface_id="INT-AUTH-FRAUD"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; patterns="inline-risk-decision"
+Rel(SYS_AUTH_SWITCH, SYS_TOKEN, "Authorization Switch to Tokenization Service", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_AUTH_SWITCH"; target="SYS_TOKEN"; label="Authorization Switch to Tokenization Service"; interface_id="INT-AUTH-TOKEN"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; patterns="tokenized-card-data"
+Rel(SYS_AUTH_SWITCH, OI_LEDGER_QUEUE, "Authorization Switch to Core Ledger", "MQ", $tags="queued-request")
+' aac rel: source="SYS_AUTH_SWITCH"; target="OI_LEDGER_QUEUE"; label="Authorization Switch to Core Ledger"; interface_id="INT-AUTH-LEDGER"; kind="queued-request"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-LEDGER-QUEUE"
+Rel(SYS_MERCHANT_WEB, OI_MERCHANT_API, "Merchant Portal Web to API", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_MERCHANT_WEB"; target="OI_MERCHANT_API"; label="Merchant Portal Web to API"; interface_id="INT-MERCHANT-WEB-API"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-MERCHANT-API"
+Rel(SYS_MERCHANT_API, SYS_MERCHANT_STORE, "Merchant Portal Service to Database", "TDS", $tags="own-datastore")
+' aac rel: source="SYS_MERCHANT_API"; target="SYS_MERCHANT_STORE"; label="Merchant Portal Service to Database"; interface_id="INT-MERCHANT-API-STORE"; kind="own-datastore"; integration_style="Request-response"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_MERCHANT_API, SYS_MERCHANT_EVENTS, "Merchant Portal Service to Event Publisher", "AMQP", $tags="event")
+' aac rel: source="SYS_MERCHANT_API"; target="SYS_MERCHANT_EVENTS"; label="Merchant Portal Service to Event Publisher"; interface_id="INT-MERCHANT-API-EVENTS"; kind="event"; integration_style="Event"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_AUTH_SWITCH, SYS_SCREENING_GATEWAY, "SYS-AUTH-SWITCH to NICE Actimize Screening Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_AUTH_SWITCH"; target="SYS_SCREENING_GATEWAY"; label="SYS-AUTH-SWITCH to NICE Actimize Screening Gateway"; interface_id="INT-SCREENING-CALLER-GATEWAY"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"
+Rel(OI_LEDGER_QUEUE, SYS_CORE_LEDGER, "offered by")
+' aac rel: source="OI_LEDGER_QUEUE"; target="SYS_CORE_LEDGER"; label="offered by"; field="system_id"
+Rel(OI_MERCHANT_API, SYS_MERCHANT_API, "offered by")
+' aac rel: source="OI_MERCHANT_API"; target="SYS_MERCHANT_API"; label="offered by"; field="system_id"
+
+SHOW_LEGEND()
+@enduml

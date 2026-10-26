@@ -92,7 +92,8 @@ tracking over time.
 | `governance.tier` | High criticality with no service tier |
 | `governance.classification` | Holds personal data with no classification |
 | `view.no_edges` | A view rendering nodes and no relationships. Usually a wrong `edges` clause |
-| `view.truncated` | A view hit `limits.max_nodes` |
+| `view.truncated` | A diagram, map or timeline hit `limits.max_nodes` and is drawn cut |
+| `view.past_limit` | A report lists more than `limits.max_nodes`. It is listed whole; the limit says its scope may have stopped filtering |
 | `model.load` | Something was dropped during archetype expansion. See AAC-03 |
 
 ## Relations

@@ -250,7 +250,7 @@ class TestTheMove(unittest.TestCase):
         save is made, the drawing a scope takes it off included; and Undo,
         the same save with the old value, leaves the file as it was."""
         model = model_module.load(self.root)
-        graph = resolve(model, _view(self.views, "domain-servicing"))
+        graph = resolve(model, bind(_view(self.views, "domain-landscape"), {"domain": "Servicing"}, model))
         candidates = [n.key for n in graph.nodes if n.groups == ("Servicing",)]
         chosen = None
         for system in candidates:
@@ -258,7 +258,7 @@ class TestTheMove(unittest.TestCase):
             if any(d.effect == "leaves" for d in plan.drawings):
                 chosen = plan
                 break
-        self.assertIsNotNone(chosen, "a Servicing system whose move takes it off domain-servicing")
+        self.assertIsNotNone(chosen, "a Servicing system whose move takes it off Servicing's landscape")
         record = model.get("systems", chosen.entity_id)
         path = Path(record["_source_file"])
         # Text, not bytes: the seed's importer writes the platform's line

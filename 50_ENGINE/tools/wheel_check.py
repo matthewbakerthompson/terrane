@@ -7,13 +7,15 @@ before a release.
 What it proves: the sdist carries the package's source and nothing else of
 the repository's, and a wheel built from it alone is whole; the shipped
 folders travel inside the package (the views, the library, the marks, the
-faces, ELK and Cytoscape, the examples, the landing zones, the sample's
-answers), the `terrane` command is on the path and nothing is installed as
+faces, ELK and Cytoscape, the examples, the sample estate), the `terrane`
+command is on the path, says its version, and nothing is installed as
 `aac`, a sketch and a reader's file draw, a part draws with what it
 requires, both examples on the library draw, an editable deck and a draw.io
 file are written with no repository around, `terrane init` and `terrane
-app` point an empty estate at a spreadsheet the wheel carries, and the
-wheel is named `terrane` and carries the license and its notice. Both files are copied to
+app` point an empty estate at a spreadsheet the wheel carries, `terrane
+init --sample` copies the sample out of the package and the app opens the
+copy as the sample, with the tour's view, and the wheel is named `terrane`
+and carries the license and its notice. Both files are copied to
 `dist/` at the repository's root once they pass; `tools/release.py` runs
 this and uploads the two it proved.
 """
@@ -79,6 +81,45 @@ def _inside_the_wheel(said: str, who: str) -> None:
     assert path.is_file() and "site-packages" in path.parts, "%s names %s" % (who, said)
 
 
+def _open_app(terrane_cmd: Path, root: str, cwd: Path, while_up=None):
+    """`terrane app` from the wheel on `root`, stopped once its overview has
+    answered and `while_up` has looked: the overview, and what the app
+    printed."""
+    with socket.socket() as probe:
+        probe.bind(("127.0.0.1", 0))
+        port = probe.getsockname()[1]
+    # Unbuffered, so the note the app prints on starting is there to read
+    # once it is stopped: a stopped process on Windows flushes nothing.
+    app = subprocess.Popen([str(terrane_cmd), "--root", root, "app", "--no-browser", "--port", str(port)],
+                           cwd=str(cwd), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
+                           env=dict(os.environ, PYTHONUNBUFFERED="1"))
+    try:
+        overview = None
+        for _ in range(150):
+            try:
+                with urllib.request.urlopen("http://127.0.0.1:%d/api/overview" % port, timeout=5) as r:
+                    overview = json.loads(r.read().decode("utf-8"))
+                break
+            except OSError:
+                if app.poll() is not None:
+                    break
+                time.sleep(0.2)
+        assert overview is not None, "terrane app did not answer: %s" % (app.stdout.read() if app.poll() is not None else "")
+        if while_up is not None:
+            while_up(port)
+    finally:
+        app.terminate()
+        try:
+            app.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            app.kill()
+    return overview, app.stdout.read()
+
+
+def _files(folder: Path) -> dict:
+    return {p: p.stat().st_mtime_ns for p in folder.rglob("*") if p.is_file() and "__pycache__" not in p.parts}
+
+
 def main() -> int:
     # The build used to clear `ENGINE / "dist"` first, with an rmtree and
     # `ignore_errors=True` on a path worked out from this file's own place:
@@ -99,9 +140,12 @@ def main() -> int:
         members = {name[len(top):] for name in tar.getnames() if name.startswith(top)}
     for needed in ("pyproject.toml", "LICENSE", "THIRD_PARTY_NOTICES.md", "LICENSES", "50_ENGINE/terrane/__init__.py",
                    "30_VIEWS", "80_APP/web/vendor/elk.bundled.js", "80_APP/web/index.html", "80_APP/app/server.py",
-                   "10_MODEL/model.yaml"):
+                   "10_MODEL/model.yaml", "10_MODEL/systems", "60_SOURCES/servicenow"):
         assert any(m == needed or m.startswith(needed + "/") for m in members), "the sdist has no %s" % needed
-    strays = sorted({m.split("/")[0] for m in members} & {"70_ARTIFACTS", "00_METHOD", "60_SOURCES"})
+    # The sample's sources travel since 1.1.0, for `terrane init --sample`;
+    # its CSV seed and the second estate do not.
+    strays = sorted({m.split("/")[0] for m in members} & {"70_ARTIFACTS", "00_METHOD"})
+    strays += sorted({m.split("/")[1] for m in members if m.startswith("90_EXAMPLE/")} - {"quick"})
     assert not strays and not any(m.startswith("50_ENGINE/tests") for m in members), "the sdist carries %s" % strays
     print("the sdist carries the package's source and no more (%d files)" % len(members))
     # What PyPI shows and what a copy must carry: the name the upload goes
@@ -159,49 +203,51 @@ def main() -> int:
     # The app from the wheel, on that estate: `terrane app` starts the
     # server that ships inside the package, which serves the pages beside
     # it and the estate it was pointed at.
-    with socket.socket() as probe:
-        probe.bind(("127.0.0.1", 0))
-        port = probe.getsockname()[1]
-    # Unbuffered, so the note the app prints on starting is there to read
-    # once it is stopped: a stopped process on Windows flushes nothing.
-    app = subprocess.Popen([str(terrane_cmd), "--root", "estate", "app", "--no-browser", "--port", str(port)],
-                           cwd=str(empty), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
-                           env=dict(os.environ, PYTHONUNBUFFERED="1"))
-    try:
-        overview = None
-        for _ in range(150):
-            try:
-                with urllib.request.urlopen("http://127.0.0.1:%d/api/overview" % port, timeout=2) as r:
-                    overview = json.loads(r.read().decode("utf-8"))
-                break
-            except OSError:
-                if app.poll() is not None:
-                    break
-                time.sleep(0.2)
-        assert overview is not None, "terrane app did not answer: %s" % (app.stdout.read() if app.poll() is not None else "")
-        assert overview.get("modelName") == "Wheel estate", overview.get("modelName")
-        assert len(overview.get("views") or []) == SHIPPED_VIEWS, len(overview.get("views") or [])
+    def page_and_script(port: int) -> None:
         with urllib.request.urlopen("http://127.0.0.1:%d/" % port, timeout=5) as r:
             page = r.read().decode("utf-8")
         with urllib.request.urlopen("http://127.0.0.1:%d/app.js" % port, timeout=5) as r:
             script_bytes = len(r.read())
         assert "<title>" in page and script_bytes > 100000, "terrane app served no page"
-    finally:
-        app.terminate()
-        try:
-            app.wait(timeout=10)
-        except subprocess.TimeoutExpired:
-            app.kill()
+
+    overview, said = _open_app(terrane_cmd, "estate", empty, page_and_script)
+    assert overview.get("modelName") == "Wheel estate", overview.get("modelName")
+    assert len(overview.get("views") or []) == SHIPPED_VIEWS, len(overview.get("views") or [])
     print("terrane app opens the estate from the wheel, with its %d views" % len(overview["views"]))
     # The estate is empty, so the app says how to fill it: in 1.0.0 with
     # `../90_EXAMPLE/csv`, a folder of the repository's no install has.
-    said = app.stdout.read()
     assert "90_EXAMPLE/csv" not in said and "terrane adopt" in said, said
     lines = said.splitlines()
     sample = [i for i, line in enumerate(lines) if line.lstrip().startswith("sample")]
     assert sample, "terrane app named no sample for an empty estate: %s" % said
     _inside_the_wheel(lines[sample[0] + 1].strip(), "terrane app")
     print("an empty estate is pointed at a spreadsheet the wheel carries")
+    # The version, which printed the usage until 1.1.0.
+    said = subprocess.run([str(terrane_cmd), "--version"], capture_output=True, text=True, cwd=str(empty),
+                          check=True).stdout.strip()
+    assert said == "terrane " + wheel.name.split("-")[1], said
+    # The sample from the wheel: copied out of the package into a folder of
+    # the person's own, and the app on the copy is the sample, with the
+    # view the tour opens on. The package's own copy is left as it was: the
+    # app writes where it reads, and site-packages is no place for that.
+    package = Path(subprocess.run([str(python), "-c", "import terrane.shipped as s; print(s.shipped_root())"],
+                                  capture_output=True, text=True, cwd=str(empty), check=True).stdout.strip())
+    before = _files(package / "10_MODEL")
+    copied = subprocess.run([str(terrane_cmd), "init", "--sample", "sample"], capture_output=True, text=True,
+                            cwd=str(empty))
+    assert copied.returncode == 0 and " 0 error(s)" in copied.stdout, copied.stdout + copied.stderr
+    assert "  terrane --root sample app" in copied.stdout, copied.stdout
+    config = (empty / "sample" / "10_MODEL" / "model.yaml").read_text(encoding="utf-8")
+    assert "shipped_library: package" in config and "sample_estate: true" in config, config
+    overview, _said = _open_app(terrane_cmd, "sample", empty)
+    assert overview["estate"]["sample"] is True, overview["estate"]
+    assert Path(overview["estate"]["path"]) == (empty / "sample").resolve(), overview["estate"]
+    context = [v for v in overview["views"] if v["viewId"] == "system-context"]
+    assert context and context[0]["ok"] and context[0]["nodes"], context
+    assert len(overview["views"]) == SHIPPED_VIEWS, len(overview["views"])
+    assert _files(package / "10_MODEL") == before, "the package's sample changed"
+    print("%s; terrane init --sample copies the sample out of the wheel, and the app opens it as the sample, "
+          "System Context drawn with %d boxes" % (said, context[0]["nodes"]))
     subprocess.run([str(python), "-X", "utf8", "-c", SMOKE.replace("SHIPPED_VIEWS", str(SHIPPED_VIEWS))],
                    check=True, cwd=str(empty))
     dist = REPO / "dist"

@@ -6,7 +6,8 @@ has was to arrive at a model, so this writes the sketch into a real
 repository: each record its own file under `10_MODEL`, in the folder of
 its type, with a header that says where it came from; each relation row
 into `10_MODEL/relations/adopted.yaml`; each view the sketch wrote out
-into `30_VIEWS`. Nothing already in the estate is touched: a record whose
+into `30_VIEWS`, a page read from a file as the diagram of the things
+pinned to it (`adopted_view`). Nothing already in the estate is touched: a record whose
 id is there stays as it is and is said, a row already recorded is not
 recorded twice, a view that exists keeps its file. The sketch's defaults
 are filled as they are for a drawing, and the placeholder owner a sketch
@@ -17,6 +18,7 @@ the person who adopted a sketch knows what they took on.
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 from typing import Any, Dict, List, NamedTuple, Optional, Tuple
 
@@ -62,6 +64,9 @@ class Adoption(NamedTuple):
     #: The relation rows added (or, dry, that would be), by relation: the
     #: picture of the change draws each as a line in full.
     rows_new: Dict[str, List[dict]] = {}
+    #: The ids added that the sketch gave no owner: the placeholder owns
+    #: them, or the org unit named for the job. The app asks who, by count.
+    unowned: List[str] = []
 
     @property
     def count(self) -> int:
@@ -70,6 +75,67 @@ class Adoption(NamedTuple):
 
 def _safe(entity_id: str) -> str:
     return "".join(ch if ch.isalnum() or ch in "-_." else "-" for ch in str(entity_id))
+
+
+#: What every reader calls the one page of a file it read.
+READ_VIEW = "imported"
+
+#: The layer a page of a drawing is filed under, by what most of the
+#: things on it are: a reader says nothing of layers, and every page of
+#: every drawing adopted went under Other, while the canvas it opens on
+#: offered Application as its layer.
+LAYER_OF = {"systems": "Application", "interfaces": "Application", "offered_interfaces": "Application",
+            "actors": "Application", "products": "Application", "flows": "Application",
+            "data_assets": "Data", "tech_services": "Technology",
+            "capabilities": "Business", "frameworks": "Business", "value_streams": "Business",
+            "value_stream_stages": "Business", "org_units": "Business", "processes": "Business",
+            "policies": "Governance", "controls": "Governance",
+            "roadmaps": "Change", "work_packages": "Change", "architecture_change_requests": "Change"}
+
+
+def adopted_view(item: dict, source_name: str, held: Optional[Dict[str, List[str]]] = None) -> dict:
+    """A view the sketch wrote out, as the estate keeps it.
+
+    The one page of a file, which every reader calls `imported`, is named
+    for the file: the second drawing adopted found the first one's
+    `imported` there, and its page was skipped as a view already here, so
+    the drawing someone brought became records and no diagram.
+
+    A type named bare (`- type: systems`) means the sketch's systems, since
+    a sketch is drawn over its own records alone; written as it was into an
+    estate it meant every system there, and the page of a five-box PlantUML
+    diagram adopted into the sample was the whole estate. With `held`, the
+    sketch's ids by type, it is those ids. A page that is then a list of
+    things (an `id_in` per type and nothing else) is kept as the things
+    pinned to it, which is what a diagram drawn on the canvas is: it opens
+    there to be arranged and added to, and a thing taken out of the estate
+    later is a stale pin said by validate rather than a page that no longer
+    draws. Such a page with no `category` is filed under the layer most of
+    its things belong to (`LAYER_OF`), Application on a tie."""
+    item = dict(item)
+    stem = Path(str(source_name)).stem if Path(str(source_name)).suffix else ""
+    named = re.sub(r"[^a-z0-9]+", "-", stem.lower()).strip("-")
+    if str(item.get("view_id")) == READ_VIEW and named:
+        item["view_id"] = named
+    scope = item.get("scope")
+    include = scope.get("include") if isinstance(scope, dict) and set(scope) == {"include"} else None
+    if not isinstance(include, list) or not include:
+        return item
+    if held is not None:
+        include = [{"type": step["type"], "where": {"id_in": list(held.get(str(step["type"])) or [])}}
+                   if isinstance(step, dict) and set(step) == {"type"} else step for step in include]
+        item["scope"] = dict(scope, include=include)
+    if all(isinstance(step, dict) and set(step) == {"type", "where"} and isinstance(step["where"], dict)
+           and set(step["where"]) == {"id_in"} and isinstance(step["where"]["id_in"], list) for step in include):
+        item["scope"] = {"pin": [str(i) for step in include for i in step["where"]["id_in"]]}
+        if not item.get("category"):
+            votes: Dict[str, int] = {}
+            for step in include:
+                layer = LAYER_OF.get(str(step["type"]), "Application")
+                votes[layer] = votes.get(layer, 0) + len(step["where"]["id_in"])
+            if votes:
+                item["category"] = max(votes, key=lambda layer: (votes[layer], layer == "Application"))
+    return item
 
 
 #: What a record says to be expanded, or where it came from, is not a
@@ -123,6 +189,9 @@ def join_estate(doc: dict, root: Path, *, owner: Optional[str] = None, source_na
         t: {str(r.get(ENTITY_TYPES[t].pk)): r for r in (doc.get(t) or []) if isinstance(r, dict)} for t in ENTITY_TYPES}
     changed: Dict[str, List[str]] = {}
     changes: List[str] = []
+    placeholder = {str(r.get(ENTITY_TYPES[t].pk)) for t, records in entities.items() for r in records
+                   if t != "org_units" and r.get("owner_org_id") == SKETCH_ORG}
+    unowned: List[str] = []
 
     if owner:
         if model.get("org_units", owner) is None and not any(
@@ -209,6 +278,8 @@ def join_estate(doc: dict, root: Path, *, owner: Optional[str] = None, source_na
                 skipped.setdefault(type_name, []).append(entity_id)
                 continue
             added.setdefault(type_name, []).append(entity_id)
+            if entity_id in placeholder:
+                unowned.append(entity_id)
             path = folder / ("%s.yaml" % _safe(entity_id))
             written.append(path)
             if not dry_run:
@@ -307,9 +378,11 @@ def join_estate(doc: dict, root: Path, *, owner: Optional[str] = None, source_na
     views_added: List[str] = []
     views_skipped: List[str] = []
     views_dir = root / "30_VIEWS"
+    held = {type_name: [str(r[ENTITY_TYPES[type_name].pk]) for r in records] for type_name, records in entities.items()}
     for item in doc.get("views") or []:
         if not isinstance(item, dict) or not item.get("view_id"):
             continue  # a shipped view by name is in the repository already
+        item = adopted_view(item, source_name, held)
         view_id = str(item["view_id"])
         base = view_id.split("--", 1)[0]
         if "--" in view_id and (views_dir / ("%s.view.yaml" % _safe(base))).is_file():
@@ -336,7 +409,7 @@ def join_estate(doc: dict, root: Path, *, owner: Optional[str] = None, source_na
         errors, warnings = len(after.errors), len(after.warnings)
     return Adoption(added, skipped, rows_added, rows_skipped, views_added, views_skipped, written, notes,
                     errors, warnings, len(before.errors), len(before.warnings), changed, changes, rows_corrected,
-                    new_rows)
+                    new_rows, unowned)
 
 
 #: What the picture of a change reaches out to from the new things, one hop
@@ -352,6 +425,11 @@ REACH = (
     ("process_uses_data_asset", ["processes", "data_assets"]),
     ("system_subject_to_policy", ["systems", "policies"]),
     ("system_governed_by_control", ["systems", "controls"]),
+    # The data's governance as well as a system's: a Visio drawing's policy
+    # on the card ledger was a box on its own, the line to the ledger the
+    # file drew nowhere in the picture.
+    ("data_subject_to_policy", ["data_assets", "policies"]),
+    ("data_governed_by_control", ["data_assets", "controls"]),
 )
 
 
@@ -407,7 +485,7 @@ def _these(things: int, lines: int) -> str:
 
 
 def change_picture(doc: dict, root: Path, *, owner: Optional[str] = None, source_name: str = "a sketch",
-                   date: str = "", correct: bool = False):
+                   date: str = "", correct: bool = False, sheet: bool = True):
     """What the sketch would add to the estate, as a picture: the new
     records drawn in full among the estate's own things one hop away,
     which are faded, so a reviewer sees the change against what is there
@@ -416,7 +494,9 @@ def change_picture(doc: dict, root: Path, *, owner: Optional[str] = None, source
     gives a changed one, and a corrected connection as a heavy line between
     its two ends. The estate is copied to a scratch folder and the sketch
     adopted into the copy; the repository is not touched. Nothing to show
-    is said as `AdoptError`."""
+    is said as `AdoptError`. `sheet=False` draws it without the title
+    block, legend and footer, for a page that says those itself, as the
+    app's does around a dropped drawing."""
     import tempfile
 
     from .blocks import load_components
@@ -578,7 +658,7 @@ def change_picture(doc: dict, root: Path, *, owner: Optional[str] = None, source
         runner = open_runner(web)
         try:
             drawing_mode(payload)
-            svg = render_svg(payload, icon_loader=icons.read, font_loader=_fonts(web),
+            svg = render_svg(payload, icon_loader=icons.read, font_loader=_fonts(web), sheet=sheet,
                              model_name=str(model.config.get("name") or "Architecture Model"), date=date, elk=runner)
         except Undrawable as exc:
             raise AdoptError("the change cannot be drawn: %s" % exc) from exc

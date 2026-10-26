@@ -1,0 +1,101 @@
+@startuml
+' Enterprise Platform — Landscape
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Enterprise Platform — Landscape
+
+AddElementTag("offered_interfaces", $bgColor="#e6ecff", $borderColor="#6366f1", $fontColor="#0f172a", $legendText="offered interface")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddRelTag("api-call", $legendText="API call")
+AddRelTag("event-over-https", $legendText="Event over HTTPS")
+AddRelTag("log-stream", $legendText="Log stream")
+AddRelTag("private-egress", $legendText="Private path to a vendor")
+AddRelTag("sign-on-federation", $legendText="Sign-on federation")
+
+Boundary(b_Collections, "Collections") {
+  System(SYS_COLLECT_API, "Collections Workspace Service", "The service behind the Collections Workspace API, backing the channel. Built with AKS · Collections Workspace Cache.", $tags="systems")
+  ' aac SYS_COLLECT_API: company_domain="Collections"; hosting="Azure"; technology="AKS · Collections Workspace Cache"
+}
+Boundary(b_Enterprise_Platform, "Enterprise Platform") {
+  System(OI_IDENTITY_API, "Customer Identity API", "Customer authentication and the profile behind it, for every product that signs a customer in. Built with HTTPS.", $tags="offered_interfaces")
+  ' aac OI_IDENTITY_API: company_domain="Enterprise Platform"; technology="HTTPS"
+  System(SYS_IDENTITY_SVC, "Customer Identity Service", "Shared platform service: Customer Identity Service. Built with AKS.", $tags="systems")
+  ' aac SYS_IDENTITY_SVC: company_domain="Enterprise Platform"; hosting="Azure"; technology="AKS"
+  System(SYS_IDV_EGRESS, "Identity Document Verification Private Egress", "PrivateLink endpoint and egress allow-list for Onfido. The control that keeps regulated data off the public internet, and the thing a security review asks to see first.", $tags="systems")
+  ' aac SYS_IDV_EGRESS: company_domain="Enterprise Platform"; hosting="Azure"
+  System(SYS_SCREENING_FEDERATION, "NICE Actimize Screening Identity Federation", "Single sign-on into NICE Actimize: assertions from our identity provider, so access is granted and revoked where the joiner and leaver process already runs.", $tags="systems")
+  ' aac SYS_SCREENING_FEDERATION: company_domain="Enterprise Platform"; hosting="AWS"
+  System(SYS_SCREENING_EGRESS, "NICE Actimize Screening Private Egress", "PrivateLink endpoint and egress allow-list for NICE Actimize. The control that keeps regulated data off the public internet, and the thing a security review asks to see first.", $tags="systems")
+  ' aac SYS_SCREENING_EGRESS: company_domain="Enterprise Platform"; hosting="AWS"
+  System(SYS_OBAFF_EGRESS, "Open Banking Affordability Private Egress", "PrivateLink endpoint and egress allow-list for TrueLayer. The control that keeps regulated data off the public internet, and the thing a security review asks to see first.", $tags="systems")
+  ' aac SYS_OBAFF_EGRESS: company_domain="Enterprise Platform"; hosting="GCP"
+  System_Ext(SYS_SIEM, "Security Monitoring", "Security information and event management: the audit trails of the estate and of every bought service, correlated in one place, and the console the incident response playbook runs from. Built with Microsoft Sentinel.", $tags="systems")
+  ' aac SYS_SIEM: company_domain="Enterprise Platform"; hosting="SaaS"; technology="Microsoft Sentinel"
+}
+Boundary(b_Lending, "Lending") {
+  System(SYS_LENDING_API, "Installment Lending Service", "Domain service for Installment Lending, behind the Installment Lending API. Built with EKS · Installment Lending Cache.", $tags="systems")
+  ' aac SYS_LENDING_API: company_domain="Lending"; hosting="AWS"; technology="EKS · Installment Lending Cache"
+  System_Ext(SYS_OBAFF_VENDOR, "Open Banking Affordability", "Open banking data access and affordability categorization, operated by TrueLayer in their own tenancy under the UK open banking framework; bank data is held for the assessment and deleted at the vendor once the result is returned. Built with TrueLayer.", $tags="systems")
+  ' aac SYS_OBAFF_VENDOR: company_domain="Lending"; hosting="SaaS"; technology="TrueLayer"
+  System(SYS_OBAFF_GATEWAY, "Open Banking Affordability Integration Gateway", "Our side of the TrueLayer integration: request mapping, retry and back-off, circuit breaking when the vendor is down, and the audit trail of what we sent them. Built with GKE.", $tags="systems")
+  ' aac SYS_OBAFF_GATEWAY: company_domain="Lending"; hosting="GCP"; technology="GKE"
+}
+Boundary(b_Risk_and_Compliance, "Risk and Compliance") {
+  System_Ext(SYS_IDV_VENDOR, "Identity Document Verification", "Document and liveness verification, operated by Onfido in their own tenancy. Contractually pinned to EU processing; images are deleted at the vendor once the result is returned. Built with Onfido.", $tags="systems")
+  ' aac SYS_IDV_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="Onfido"
+  System(SYS_IDV_GATEWAY, "Identity Document Verification Integration Gateway", "Our side of the Onfido integration: request mapping, retry and back-off, circuit breaking when the vendor is down, and the audit trail of what we sent them. Built with AKS.", $tags="systems")
+  ' aac SYS_IDV_GATEWAY: company_domain="Risk and Compliance"; hosting="Azure"; technology="AKS"
+  System(SYS_IDV_WEBHOOKS, "Identity Document Verification Webhook Listener", "Receives Onfido callbacks, verifies their signature, and forwards the event. Public by necessity, small by design. Built with AKS.", $tags="systems")
+  ' aac SYS_IDV_WEBHOOKS: company_domain="Risk and Compliance"; hosting="Azure"; technology="AKS"
+  System_Ext(SYS_SCREENING_VENDOR, "NICE Actimize Screening", "Financial Crime Screening, operated by NICE Actimize in their own tenancy. Contractually pinned to EU processing; the DPA restricts sub-processors and sets a 90-day retention ceiling. Built with NICE Actimize.", $tags="systems")
+  ' aac SYS_SCREENING_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="NICE Actimize"
+  System(SYS_SCREENING_GATEWAY, "NICE Actimize Screening Integration Gateway", "Our side of the NICE Actimize integration: request mapping, retry and back-off, circuit breaking when the vendor is down, and the audit trail of what we sent them. Built with EKS.", $tags="systems")
+  ' aac SYS_SCREENING_GATEWAY: company_domain="Risk and Compliance"; hosting="AWS"; technology="EKS"
+}
+Boundary(b_Servicing, "Servicing") {
+  System(SYS_CARDSVC_API, "Card Servicing Service", "The service behind the Card Servicing API, backing the channel. Built with AKS · Card Servicing Cache.", $tags="systems")
+  ' aac SYS_CARDSVC_API: company_domain="Servicing"; hosting="Azure"; technology="AKS · Card Servicing Cache"
+}
+System(SYS_IAM, "Identity and access management", "Workforce identity, authentication, and access governance.", $tags="systems")
+' aac SYS_IAM: company_domain=""
+System_Ext(SYS_ITSM, "IT service management", "Incident, change, and service management. Built with SaaS.", $tags="systems")
+' aac SYS_ITSM: company_domain=""; hosting="SaaS"; technology="SaaS"
+
+Rel(SYS_IAM, SYS_SIEM, "Identity and Access Management to Security Monitoring", "Syslog", $tags="log-stream")
+' aac rel: source="SYS_IAM"; target="SYS_SIEM"; label="Identity and Access Management to Security Monitoring"; interface_id="INT-IAM-SIEM"; kind="log-stream"; integration_style="Event"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; patterns="workforce-identity-lifecycle;observed-service"
+Rel(SYS_SIEM, SYS_ITSM, "Security Monitoring to IT Service Management", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_SIEM"; target="SYS_ITSM"; label="Security Monitoring to IT Service Management"; interface_id="INT-SIEM-ITSM"; kind="event-over-https"; integration_style="Event"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="observed-service"
+Rel(SYS_CARDSVC_API, OI_IDENTITY_API, "Card Servicing Service to Identity Service", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_CARDSVC_API"; target="OI_IDENTITY_API"; label="Card Servicing Service to Identity Service"; interface_id="INT-CARDSVC-API-IDENTITY"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-IDENTITY-API"
+Rel(SYS_COLLECT_API, OI_IDENTITY_API, "Collections Service to Identity Service", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_COLLECT_API"; target="OI_IDENTITY_API"; label="Collections Service to Identity Service"; interface_id="INT-COLLECT-API-IDENTITY"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-IDENTITY-API"
+Rel(SYS_LENDING_API, OI_IDENTITY_API, "Installment Lending Service to Identity Service", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_LENDING_API"; target="OI_IDENTITY_API"; label="Installment Lending Service to Identity Service"; interface_id="INT-LENDING-API-IDENTITY"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-IDENTITY-API"
+Rel(SYS_IDENTITY_SVC, SYS_IDV_GATEWAY, "SYS-IDENTITY-SVC to Identity Document Verification Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_IDENTITY_SVC"; target="SYS_IDV_GATEWAY"; label="SYS-IDENTITY-SVC to Identity Document Verification Gateway"; interface_id="INT-IDV-CALLER-GATEWAY"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_IDV_GATEWAY, SYS_IDV_EGRESS, "Identity Document Verification Gateway to Private Egress", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_IDV_GATEWAY"; target="SYS_IDV_EGRESS"; label="Identity Document Verification Gateway to Private Egress"; interface_id="INT-IDV-GATEWAY-EGRESS"; kind="api-call"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_IDV_EGRESS, SYS_IDV_VENDOR, "Private Egress to Onfido", "PrivateLink", $tags="private-egress")
+' aac rel: source="SYS_IDV_EGRESS"; target="SYS_IDV_VENDOR"; label="Private Egress to Onfido"; interface_id="INT-IDV-EGRESS-VENDOR"; kind="private-egress"; integration_style="Request-response"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_IDV_VENDOR, SYS_IDV_WEBHOOKS, "Onfido webhooks", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_IDV_VENDOR"; target="SYS_IDV_WEBHOOKS"; label="Onfido webhooks"; interface_id="INT-IDV-VENDOR-WEBHOOKS"; kind="event-over-https"; integration_style="Event"; auth_method="HMAC"; frequency="Realtime"; direction="Inbound"
+Rel(SYS_IDV_WEBHOOKS, SYS_IDENTITY_SVC, "Identity Document Verification Webhook Listener to SYS-IDENTITY-SVC", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_IDV_WEBHOOKS"; target="SYS_IDENTITY_SVC"; label="Identity Document Verification Webhook Listener to SYS-IDENTITY-SVC"; interface_id="INT-IDV-WEBHOOKS-CONSUMER"; kind="event-over-https"; integration_style="Event"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_OBAFF_GATEWAY, SYS_OBAFF_EGRESS, "Open Banking Affordability Gateway to Private Egress", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_OBAFF_GATEWAY"; target="SYS_OBAFF_EGRESS"; label="Open Banking Affordability Gateway to Private Egress"; interface_id="INT-OBAFF-GATEWAY-EGRESS"; kind="api-call"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_OBAFF_EGRESS, SYS_OBAFF_VENDOR, "Private Egress to TrueLayer", "PrivateLink", $tags="private-egress")
+' aac rel: source="SYS_OBAFF_EGRESS"; target="SYS_OBAFF_VENDOR"; label="Private Egress to TrueLayer"; interface_id="INT-OBAFF-EGRESS-VENDOR"; kind="private-egress"; integration_style="Request-response"; auth_method="WorkloadIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_SCREENING_FEDERATION, SYS_SCREENING_VENDOR, "Identity Federation to NICE Actimize", "SAML", $tags="sign-on-federation")
+' aac rel: source="SYS_SCREENING_FEDERATION"; target="SYS_SCREENING_VENDOR"; label="Identity Federation to NICE Actimize"; interface_id="INT-SCREENING-FEDERATION-VENDOR"; kind="sign-on-federation"; integration_style="Request-response"; auth_method="Certificate"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_SCREENING_VENDOR, SYS_SIEM, "NICE Actimize audit log to security monitoring", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_SCREENING_VENDOR"; target="SYS_SIEM"; label="NICE Actimize audit log to security monitoring"; interface_id="INT-SCREENING-VENDOR-AUDIT"; kind="event-over-https"; integration_style="Event"; auth_method="Token"; frequency="Realtime"; direction="Inbound"
+Rel(SYS_SCREENING_GATEWAY, SYS_SCREENING_EGRESS, "NICE Actimize Screening Gateway to Private Egress", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_SCREENING_GATEWAY"; target="SYS_SCREENING_EGRESS"; label="NICE Actimize Screening Gateway to Private Egress"; interface_id="INT-SCREENING-GATEWAY-EGRESS"; kind="api-call"; integration_style="Request-response"; auth_method="IAM"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_SCREENING_EGRESS, SYS_SCREENING_VENDOR, "Private Egress to NICE Actimize", "PrivateLink", $tags="private-egress")
+' aac rel: source="SYS_SCREENING_EGRESS"; target="SYS_SCREENING_VENDOR"; label="Private Egress to NICE Actimize"; interface_id="INT-SCREENING-EGRESS-VENDOR"; kind="private-egress"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"
+Rel(OI_IDENTITY_API, SYS_IDENTITY_SVC, "offered by")
+' aac rel: source="OI_IDENTITY_API"; target="SYS_IDENTITY_SVC"; label="offered by"; field="system_id"
+
+SHOW_LEGEND()
+@enduml

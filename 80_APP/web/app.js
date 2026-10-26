@@ -2281,6 +2281,146 @@
     bar.appendChild(group);
   }
 
+  /* ---- the levels -------------------------------------------------------
+   * A large estate is read landscape, domain, system, and where a system
+   * runs, and each of those is a view about one thing. From a box, the views
+   * about it, about what it sits in and about its domain; from a view about
+   * one thing, the levels above it in the crumb and the other views about
+   * the same subject beside its picker. The server works out which
+   * (terrane.levels); the app only opens them. */
+
+  // A view drawn for one subject. The subject is set after the view is
+  // named, because naming another view clears the one it had.
+  function openLevel(viewId, parameter, value) {
+    closeContextMenu();
+    if (state.panel) showPanel(false);
+    if (viewId !== state.viewId) state.labels = null;
+    state.viewId = viewId;
+    state.subject = {};
+    if (parameter && value) state.subject[parameter] = value;
+    var keep = state.selectedId;
+    return selectView(viewId).then(function () {
+      if (!keep || state.selectedId !== keep || state.focus) return;
+      // The panel was drawn for the drawing before, and says which of its
+      // diagrams is on screen; draw it again for this one.
+      showEntity(keep);
+      // A drawing opens at a size its names read at, which can leave the box
+      // it was opened from off the sheet; the box is where the eye went.
+      var n = state.cy && state.cy.getElementById(keep);
+      if (n && n.length) {
+        var ext = state.cy.extent(), bb = n.boundingBox();
+        if (bb.x1 < ext.x1 || bb.x2 > ext.x2 || bb.y1 < ext.y1 || bb.y2 > ext.y2) state.cy.center(n);
+      }
+    });
+  }
+
+  // The views about one record of a type, from the overview, so a box's
+  // menu and a double-click need not wait for the server.
+  function viewsAboutType(type) {
+    return ((state.overview && state.overview.views) || []).filter(function (v) {
+      return v.ok !== false && v.subject && v.subject.type === type;
+    });
+  }
+
+  // A double-click on a box opens the first view about it; on a boundary,
+  // the first view about the value it is. Nothing to open, nothing happens:
+  // the click before it has already said so in the panel.
+  function drillInto(id, type) {
+    var first = viewsAboutType(type)[0];
+    if (first) openLevel(first.viewId, first.subject.name, id);
+  }
+
+  function drawnValue(name) {
+    var p = ((state.lastGraph && state.lastGraph.parameters) || []).filter(function (x) { return x.name === name; })[0];
+    return p ? String(p.value || "") : "";
+  }
+
+  // One row of a list of views about a subject: its title without the
+  // subject, and how many boxes it draws. The one on screen says so; one
+  // that would draw the subject alone, or cannot be drawn, says that.
+  function levelRow(it) {
+    var here = !state.focus && state.lastGraph && state.lastGraph.viewId === it.viewId
+      && (!it.parameter || drawnValue(it.parameter) === String(it.value));
+    var alone = !it.problem && it.nodes <= 1;
+    var said = here ? "On screen" : it.problem ? "Cannot draw" : alone ? "Only itself" : String(it.nodes);
+    return el(here ? "div" : "button", {
+      class: "lv-row" + (here ? " is-here" : "") + (alone || it.problem ? " is-thin" : ""),
+      type: here ? null : "button",
+      title: it.problem || it.description || it.title,
+      "aria-current": here ? "true" : null,
+      onclick: here ? null : function () { openLevel(it.viewId, it.parameter, it.value); },
+    }, [
+      viewGlyph(it.kind, !!it.parameter),
+      el("span", { class: "lv-name", text: it.short }),
+      el("span", { class: "lv-n", text: said }),
+    ]);
+  }
+
+  function levelGroup(head, items) {
+    var list = el("div", { class: "lv-list" });
+    items.forEach(function (it) { list.appendChild(levelRow(it)); });
+    return el("div", { class: "lv-group" }, [el("p", { class: "lv-head", text: head }), list]);
+  }
+
+  /* The Diagrams section of a record's panel: the views about it, about
+   * each thing it sits in, and about each value it carries. */
+  function diagramsSection(data) {
+    var groups = data.diagrams || [];
+    if (!groups.length) {
+      return section("Diagrams", [el("p", { class: "brief-hint", text:
+        "No diagram is drawn about one " + (data.label || "thing") + " yet. Focus draws what is around it." })]);
+    }
+    var kids = groups.map(function (g) {
+      return levelGroup(g.kind === "about" ? g.head : g.head + " \u00b7 " + g.name, g.items);
+    });
+    if (groups[0].kind === "about") {
+      kids.push(el("p", { class: "lv-hint", text: "Double-click a box to open its first diagram." }));
+    }
+    return section("Diagrams", kids);
+  }
+
+  /* A boundary selected: what it is, what is in it on this drawing, and the
+   * views about the value it is, for a boundary that is one value of a
+   * field (the Servicing boundary on the landscape). */
+  function showBoundary(n) {
+    var d = n.data();
+    state.selectedId = null;
+    state.walk = null;
+    syncUrl();
+    if (state.cy) {
+      state.cy.elements().removeClass(IMPACT_CLASSES);
+      n.addClass("sel");
+    }
+    if (NARROW.matches && !state.panel) inspectorOver(true);
+    var body = $("inspBody");
+    body.textContent = "";
+    $("inspIdle").hidden = true;
+    body.hidden = false;
+    var leaves = n.descendants().filter(function (m) { return !m.data("isGroup"); });
+    var kinds = {};
+    leaves.forEach(function (m) { var t = m.data("entityType"); kinds[t] = (kinds[t] || 0) + 1; });
+    var counted = Object.keys(kinds).map(function (t) { return kinds[t] + " " + plural(kinds[t], typeWord(t)); }).join(", ");
+    var what = d.field ? capFirst(fieldWord(d.field)) : capFirst(d.kind || "boundary");
+    body.appendChild(el("div", { class: "insp-head" }, [
+      el("span", { class: "kind-tag", text: what }),
+      el("h2", { text: d.value || d.label }),
+      el("span", { class: "id", text: "A boundary on this drawing" + (counted ? " \u00b7 " + counted : "") }),
+    ]));
+    var about = d.diagrams || [];
+    body.appendChild(section("Diagrams", about.length ? [
+      levelGroup("About it", about),
+      el("p", { class: "lv-hint", text: "Double-click a boundary to open its first diagram." }),
+    ] : [el("p", { class: "brief-hint", text: "No diagram is drawn about one " + (d.field ? fieldWord(d.field) : "boundary like it") + " yet." })]));
+    var list = el("div", { class: "rel-list" });
+    leaves.sort(function (a, b) { return String(a.data("label")).localeCompare(String(b.data("label"))); }).forEach(function (m) {
+      list.appendChild(el("div", { class: "rel" }, [
+        el("span", { class: "dir", text: "\u2192" }),
+        el("div", {}, [el("button", { type: "button", text: m.data("label") || m.id(), onclick: function () { showEntity(m.id()); } })]),
+      ]));
+    });
+    body.appendChild(section("In it \u00b7 " + leaves.length, [list]));
+  }
+
   function renderSubjectBar(payload) {
     var bar = $("subjectBar");
     bar.textContent = "";
@@ -2300,9 +2440,12 @@
 
     params.forEach(function (param) {
       var picker = el("select", { "aria-label": param.description || param.name });
-      var candidates = state.index.filter(function (item) {
-        return !param.type || item.type === param.type;
-      });
+      // A subject that is a value of a field (a business domain) has no
+      // records to list; the server says which values the view is drawn for.
+      var candidates = param.choices ? param.choices.map(function (value) { return { id: value, name: value }; })
+        : state.index.filter(function (item) {
+          return !param.type || item.type === param.type;
+        });
       // A name is enough; the id only tells apart two that share one.
       var seen = {};
       candidates.forEach(function (item) { var n = item.name || item.id; seen[n] = (seen[n] || 0) + 1; });
@@ -2324,7 +2467,19 @@
       ]));
     });
 
-    if (params[0] && params[0].description) {
+    var across = payload.across || [];
+    if (across.length && params[0]) {
+      var drawn = state.subject[params[0].name] || params[0].value;
+      var tabs = el("div", { class: "subject-across", role: "group", "aria-label": "Other diagrams about it" });
+      across.forEach(function (a) {
+        tabs.appendChild(el("button", {
+          type: "button", class: "sa-tab", text: a.short, title: a.description || a.short,
+          "aria-pressed": a.current ? "true" : "false",
+          onclick: a.current ? null : function () { openLevel(a.viewId, a.parameter, drawn); },
+        }));
+      });
+      bar.appendChild(tabs);
+    } else if (params[0] && params[0].description) {
       bar.appendChild(el("span", { class: "subject-why", text: params[0].description }));
     }
   }
@@ -2463,7 +2618,7 @@
         // Before the fit, the lines and the glide from the last drawing:
         // a box let go in another boundary, settled once the glide was
         // under way, glided on to where there was room and stayed there.
-        if (cv) canvasSettle();
+        if (Canvas.cv) Canvas.settle();
       }
       fitFirst();
     }
@@ -2491,26 +2646,42 @@
       finishGraph(hierarchical && !packed);
       settle(cyNow, hierarchical ? prior : null, hierarchical ? fitFirst : null);
     }
+    // A diagram drawn on the canvas has shapes of its own, drawn over it
+    // by maxGraph wherever it is shown, read only here; the canvas attaches
+    // its own (canvas/engine.js).
+    if (!Canvas.cv && Canvas.engine && (payload.annotations || []).length) Canvas.engine.attach(cyNow, payload.annotations);
 
     function finishGraph(layeredNow) {
     $("cy").classList.remove("is-laying");
     // The direction drawn, for the lines routed again after a box is moved.
     state.cy.scratch("_dir", dir);
     state.cy.on("tap", "node", function (evt) {
-      if (cv) { canvasTap(evt.target); return; }
-      if (evt.target.data("isGroup")) return;
+      if (Canvas.cv) { Canvas.tap(evt.target); return; }
+      if (evt.target.data("isGroup")) { showBoundary(evt.target); return; }
       showEntity(evt.target.id());
     });
     state.cy.on("tap", function (evt) {
       if (evt.target !== state.cy) return;
-      if (cv) { if (cv.tool === "connect") setCanvasTool("select"); canvasSelect(null); return; }
+      if (Canvas.cv) { Canvas.select(null); return; }
       clearSelection();
     });
     // A drawing shown whole, too small to read: double-click a part of it
     // to read it there.
     state.cy.on("dbltap", function (evt) {
-      if (cv || evt.target !== state.cy || state.cy.zoom() >= READ_ZOOM - 0.01) return;
+      if (Canvas.cv || evt.target !== state.cy || state.cy.zoom() >= READ_ZOOM - 0.01) return;
       state.cy.zoom({ level: READ_ZOOM, renderedPosition: evt.renderedPosition });
+    });
+    // A double-click on a box goes down a level: the first diagram about
+    // it, or about the value a boundary is. The canvas keeps its own.
+    state.cy.on("dbltap", "node", function (evt) {
+      if (Canvas.cv || state.focus) return;
+      var n = evt.target;
+      if (n.data("isGroup")) {
+        var about = n.data("diagrams") || [];
+        if (about[0]) openLevel(about[0].viewId, about[0].parameter, about[0].value);
+        return;
+      }
+      drillInto(n.id(), n.data("entityType"));
     });
     // Drop one box on another to connect them, or into another boundary to
     // move it there. A drop that means something puts it back where it was
@@ -2557,7 +2728,7 @@
       var n = evt.target;
       // A boundary carried on the canvas takes what is in it, and where it
       // is put is kept; anywhere else it is carried and nothing is kept.
-      groupFrom = cv && n.data("isGroup") && !window.__AAC_STATIC__
+      groupFrom = Canvas.cv && n.data("isGroup") && !window.__AAC_STATIC__
         ? { id: n.id(), pos: { x: n.position().x, y: n.position().y } } : null;
       if (n.data("isGroup") || window.__AAC_STATIC__) { dragFrom = null; return; }
       dragFrom = {
@@ -2586,14 +2757,14 @@
       if (g) g.addClass("drop-into");
       // On the canvas, a box carried within its own boundary lines up with
       // the boxes beside it, and says so with a guide.
-      if (cv && !t && !g) canvasGuides(evt.target, dragFrom); else canvasGuidesOff(dragFrom);
+      if (Canvas.cv && !t && !g) Canvas.guides(evt.target, dragFrom); else Canvas.guidesOff(dragFrom);
     });
     state.cy.on("free", "node", function (evt) {
       if (groupFrom && evt.target.id() === groupFrom.id) {
         var gf = groupFrom, gp = evt.target.position();
         groupFrom = null;
-        if (cv && Math.abs(gp.x - gf.pos.x) + Math.abs(gp.y - gf.pos.y) >= 1) {
-          canvasMovedGroup(evt.target, gp.x - gf.pos.x, gp.y - gf.pos.y);
+        if (Canvas.cv && Math.abs(gp.x - gf.pos.x) + Math.abs(gp.y - gf.pos.y) >= 1) {
+          Canvas.movedGroup(evt.target, gp.x - gf.pos.x, gp.y - gf.pos.y);
         }
         return;
       }
@@ -2602,16 +2773,16 @@
       dragFrom = null;
       n.removeClass("dragging");
       clearDrop();
-      canvasGuidesOff(from);
+      Canvas.guidesOff(from);
       if (!t && !g) {
         // On the canvas a box put down in its own boundary stays where it
         // was put, and the diagram keeps it there.
-        if (cv && from.carried) canvasMovedBox(n, from);
+        if (Canvas.cv && from.carried) Canvas.movedBox(n, from);
         return;
       }
       // Where it was dropped, before it goes back: on an arranged canvas a
       // box moved into another boundary lands there once the move is made.
-      if (g && cv) canvasDropAt(from.id, g.id(), { x: n.position().x, y: n.position().y });
+      if (g && Canvas.cv) Canvas.dropAt(from.id, g.id(), { x: n.position().x, y: n.position().y });
       n.animate({ position: from.pos, duration: REDUCED.matches ? 0 : 180 });
       var box = $("cy").getBoundingClientRect(), rp = (t || n).renderedPosition();
       if (t) { openConnectChooser(from.id, t.id(), box.left + rp.x + 12, box.top + rp.y + 12); return; }
@@ -2620,7 +2791,7 @@
     state.cy.on("cxttap", "node", function (evt) {
       // Pin and hide are what the canvas's own panel does by placing and
       // taking off; the menu's versions would leave the canvas to do them.
-      if (cv || evt.target.data("isGroup")) return;
+      if (Canvas.cv || evt.target.data("isGroup")) return;
       var o = evt.originalEvent || {};
       state.selectedId = evt.target.id();
       highlight(evt.target.id());
@@ -2689,10 +2860,10 @@
 
     renderSubjectBar(payload);
     renderLegend(payload);
-    if (cv) {
-      canvasMark();
+    if (Canvas.cv) {
+      Canvas.mark();
       // After the glide from the old drawing, which the refit runs first.
-      setTimeout(canvasFocus, REDUCED.matches ? 0 : 380);
+      setTimeout(Canvas.focus, REDUCED.matches ? 0 : 380);
     } else if (state.selectedId) {
       highlight(state.selectedId);
     } else {
@@ -3008,6 +3179,7 @@
 
   function setStageHead(payload, meta) {
     $("viewTitle").textContent = payload.title;
+    if (payload.up && payload.viewId === state.viewId) renderCrumb(state.viewId, payload.up);
     var desc = $("viewDesc");
     desc.textContent = payload.description || "";
     desc.title = payload.description || "";
@@ -3088,6 +3260,7 @@
       // the same scale reads at 1 to 2 pixels.
       b.style.setProperty("--tw", (1 + Math.max(0, Math.min(1, ((d.strokeWidth || 1) - 1) / 1.6))).toFixed(2) + "px");
       b.addEventListener("click", function () { showEntity(d.id); });
+      b.addEventListener("dblclick", function () { drillInto(d.id, d.entityType); });
       b.addEventListener("contextmenu", function (e) {
         e.preventDefault();
         openContextMenu(d.id, e.clientX, e.clientY);
@@ -4742,6 +4915,15 @@
     box.appendChild(el("p", { class: "brief-meta mono", text: isTileMap(g) ? tileMeta(g)
       : g.counts.nodes + " nodes · " + g.counts.edges + " edges" +
         (groups ? " · " + groups + " boundaries" : "") }));
+    if (g.up && g.up.length && !state.focus) {
+      box.appendChild(el("h3", { class: "brief-h", text: "Up a level" }));
+      // Nearest first here, where the crumb reads outermost first.
+      box.appendChild(el("div", { class: "lv-list" }, g.up.slice().reverse().map(function (level) {
+        return levelRow({ viewId: level.viewId, parameter: level.parameter, value: level.value, kind: level.kind,
+          short: level.label, title: level.title, description: level.description, nodes: level.nodes,
+          problem: level.problem });
+      })));
+    }
 
     var legend = g.legend || {};
     if (legend.types && legend.types.length) {
@@ -4922,6 +5104,16 @@
     var node = (state.lastGraph && state.lastGraph.elements || []).filter(function (e) { return e.data.id === id; })[0];
     var name = node ? node.data.label || id : id;
     var items = [["Open details", function () { showEntity(id); }]];
+    // The diagrams about this box, one click each, the way the panel lists
+    // them; what it sits in is in the panel, where there is room to say.
+    var about = node ? viewsAboutType(node.data.entityType) : [];
+    if (about.length && !state.focus) {
+      items.push(null);
+      items.push("Diagrams about it");
+      about.forEach(function (v) {
+        items.push([v.subject.short || viewTitle(v), function () { openLevel(v.viewId, v.subject.name, id); }]);
+      });
+    }
     if (viewEditable()) {
       items.push(null);
       if (listedHere("pinned", id)) items.push(["Unpin from this view", function () { state.selectedId = id; changeMembership({ unpin: [id] }); }]);
@@ -4939,6 +5131,7 @@
     ]);
     items.forEach(function (it) {
       if (!it) { menu.appendChild(el("div", { class: "ctx-sep", role: "separator" })); return; }
+      if (typeof it === "string") { menu.appendChild(el("div", { class: "ctx-sub", text: it })); return; }
       menu.appendChild(el("button", { type: "button", role: "menuitem", text: it[0],
         onclick: function () { closeContextMenu(); it[1](); } }));
     });
@@ -5256,7 +5449,12 @@
     state.cy.elements().removeClass(IMPACT_CLASSES);
     if (!node || node.length === 0) return;
     var hood = node.closedNeighborhood();
-    state.cy.elements().difference(hood).addClass("dim");
+    // On a drawing about this very thing, everything on it is about it:
+    // dimming what is two steps away hid most of a system's governance.
+    var about = ((state.lastGraph && state.lastGraph.parameters) || []).some(function (p) {
+      return String(p.value || "") === String(id);
+    });
+    if (!about) state.cy.elements().difference(hood).addClass("dim");
     hood.addClass("hl");
     node.addClass("sel");
     announce("Selected " + (node.data("label") || id) + ", " +
@@ -5288,8 +5486,8 @@
   /* The URL is the shareable state. A hosted map nobody can link into is a map
    * nobody sends to anyone, which is most of the value of hosting it. */
   function syncUrl() {
-    if (cv) {
-      var drawing = "#draw" + (cv.id ? "=" + encodeURIComponent(cv.id) : "");
+    if (Canvas.cv) {
+      var drawing = "#draw" + (Canvas.cv.id ? "=" + encodeURIComponent(Canvas.cv.id) : "");
       if (window.location.hash !== drawing) window.history.replaceState(null, "", drawing);
       return;
     }
@@ -5304,6 +5502,10 @@
         + encodeURIComponent(ask.field) + (ask.view ? "&of=" + encodeURIComponent(ask.view) : "")
         + (ask.subject ? "&subject=" + encodeURIComponent(ask.subject) : "");
       if (window.location.hash !== page) window.history.replaceState(null, "", page);
+      return;
+    }
+    if (state.panel === "adopt") {
+      if (window.location.hash !== "#adopt") window.history.replaceState(null, "", "#adopt");
       return;
     }
     if (state.panel === "settings") {
@@ -5388,10 +5590,20 @@
 
   /* Where a drawing sits: the Diagrams page, then its layer, over the
    * title, so the way back is a word rather than the sidebar. */
-  function crumbParts(viewId) {
+  function crumbParts(viewId, up) {
     var v = (state.overview && state.overview.views || []).filter(function (x) { return x.viewId === viewId; })[0];
     var layer = state.focus ? "Focus" : (v && v.category) || "";
     var parts = [el("button", { type: "button", text: "Diagrams", onclick: function () { openDiagrams("All"); } })];
+    // A view about one thing sits under the levels above it, outermost
+    // first: the application landscape, then the domain's own.
+    if (up && up.length && !state.focus) {
+      up.forEach(function (level) {
+        parts.push(el("span", { class: "sep", text: "/" }));
+        parts.push(el("button", { type: "button", text: level.label, title: level.title,
+          onclick: function () { openLevel(level.viewId, level.parameter, level.value); } }));
+      });
+      return parts;
+    }
     if (layer) {
       parts.push(el("span", { class: "sep", text: "/" }));
       parts.push(el("button", { type: "button", text: layer, onclick: function () {
@@ -5401,15 +5613,15 @@
     return parts;
   }
 
-  function renderCrumb(viewId) {
+  function renderCrumb(viewId, up) {
     var box = $("viewCrumb");
     if (!box) return;
     box.textContent = "";
-    crumbParts(viewId).forEach(function (part) { box.appendChild(part); });
+    crumbParts(viewId, up).forEach(function (part) { box.appendChild(part); });
   }
 
   function selectView(viewId) {
-    leaveCanvas();
+    Canvas.leave();
     if (state.panel) showPanel(false);
     if (viewId !== state.viewId) { state.subject = {}; state.labels = null; }
     state.viewId = viewId;
@@ -5559,6 +5771,7 @@
       ]));
       var onView = membershipSection(id);
       if (onView) body.appendChild(onView);
+      body.appendChild(diagramsSection(data));
       if (data.type === "systems") {
         var offers = data.related.filter(function (rel) { return rel.relation === "offers"; });
         var offerList = el("div", { class: "rel-list" });
@@ -6261,10 +6474,13 @@
     if (first) first.focus();
   }
 
-  function openConnectChooser(a, b, x, y) {
+  /* `alt`, from the canvas's Line tool, is the answer that is not a
+   * connection: {head, keep, why} say it, and `chose` hears that a
+   * connection was chosen instead, so the line drawn can give way to it. */
+  function openConnectChooser(a, b, x, y, alt) {
     closeContextMenu();
     var q = "/api/connect/options?from=" + encodeURIComponent(a) + "&to=" + encodeURIComponent(b)
-      + (viewEditable() || (cv && cv.id) ? "&view=" + encodeURIComponent(state.viewId) : "");
+      + (viewEditable() || (Canvas.cv && Canvas.cv.id) ? "&view=" + encodeURIComponent(state.viewId) : "");
     api(q).then(function (d) {
       var names = {};
       names[d.from.id] = d.from.name;
@@ -6274,7 +6490,7 @@
       function place() { placeChooser(menu, x, y); }
       function list() {
         menu.textContent = "";
-        menu.appendChild(el("div", { class: "ctx-head", text: "Connect " + d.from.name + " and " + d.to.name }));
+        menu.appendChild(el("div", { class: "ctx-head", text: alt && alt.head ? alt.head : "Connect " + d.from.name + " and " + d.to.name }));
         var open = d.options.filter(function (o) { return !o.exists && o.editable !== false; });
         var done = d.options.filter(function (o) { return o.exists; });
         var blocked = d.options.filter(function (o) { return !o.exists && o.editable === false; });
@@ -6296,11 +6512,19 @@
             el("span", { class: "co-h", text: connectHint(o, names) }),
           ]));
         });
+        if (alt) {
+          menu.appendChild(el("div", { class: "ctx-sep", role: "separator" }));
+          menu.appendChild(el("button", { type: "button", class: "connect-opt is-line", onclick: closeContextMenu }, [
+            el("span", { class: "co-s", text: alt.keep }),
+            el("span", { class: "co-h", text: alt.why }),
+          ]));
+        }
         menu.appendChild(el("div", { class: "ctx-sep", role: "separator" }));
         menu.appendChild(el("button", { type: "button", class: "connect-more", text: "Every link of " + d.from.name + "…",
           onclick: function () { closeContextMenu(); openLinkEditor(a); } }));
       }
       function choose(o) {
+        if (alt && alt.chose) alt.chose(o);
         if (o.kind === "through") {
           closeContextMenu();
           proposeInterface(o.from, o.to, function () { afterConnect(o, names); }, null, o.door);
@@ -6423,14 +6647,14 @@
   function afterConnect(o, names) {
     var via = o.kind === "interface" || o.kind === "through" ? "interfaces" : o.kind === "field" ? o.field : o.relation;
     var said = connectSentence(o, names);
-    if (cv) {
-      var edges = cv.data.edges || (cv.data.edges = []);
+    if (Canvas.cv) {
+      var edges = Canvas.cv.data.edges || (Canvas.cv.data.edges = []);
       var added = o.drawn === false && !edges.some(function (e) { return e.via === via; });
       if (added) edges.push({ via: via });
       toast("ok", "Connected: " + said, added ? "The diagram draws " + edgeWord(via) + " lines now." : "");
-      cv.focus = { id: o.to, also: o.from };
+      Canvas.cv.focus = { id: o.to, also: o.from };
       loadIndex();
-      (added ? canvasSave() : Promise.resolve()).then(canvasDraw).catch(fail);
+      (added ? Canvas.save() : Promise.resolve()).then(Canvas.draw).catch(fail);
       return;
     }
     if (o.drawn === false && viewEditable()) {
@@ -6568,9 +6792,9 @@
   // The drawing again from the model, with the moved box selected so the
   // eye finds where it went.
   function redrawAfterMove(id) {
-    if (cv) {
-      cv.focus = { id: id, keep: true, zoom: state.cy ? state.cy.zoom() : null };
-      canvasDraw().then(function () { if (cv) canvasSelect({ kind: "record", id: id }); });
+    if (Canvas.cv) {
+      Canvas.cv.focus = { id: id, keep: true, zoom: state.cy ? state.cy.zoom() : null };
+      Canvas.draw().then(function () { if (Canvas.cv) Canvas.select({ kind: "record", id: id }); });
       return;
     }
     var drawn = state.viewId && !state.focus && !inSketchMode() ? selectView(state.viewId) : refresh();
@@ -6970,1397 +7194,13 @@
     }).catch(fail);
   }
 
-  /* ---- the canvas -----------------------------------------------------------
-   * New diagram opens on a sheet to draw on, with whatever is selected in the
-   * panel beside it, instead of on a form. Everything placed is something
-   * the estate keeps: a library part becomes a new record where it was
-   * dropped, with the fields of every boundary it landed in; a system already
-   * recorded is drawn as it is; a view is placed as a boundary, and stays in
-   * step with that view because the diagram's file names it rather than
-   * copying what it draws (terrane.places). The diagram is a view file written
-   * as it is drawn, and drawn by the same code as every other drawing: the
-   * accounts, the marks and the routed lines are the ones the placed view
-   * has on its own page.
-   */
-  var cv = null;
-  var cvDrag = null;
-
-  var CANVAS_HINT = "Draw it: press + or drag a part in. Whatever is selected shows its details on the right.";
-
-  //: How a boundary's field is said where something is dropped into it.
-  var PLACE_WORDS = { cloud_provider: "cloud", cloud_account: "account", region: "region",
-    availability_zone: "zone", network_zone: "network zone", company_domain: "domain" };
-
-  //: The parts a new diagram is most often drawn from, first in the list.
-  var FIRST_PARTS = ["web-app", "service-api", "batch-application", "mobile-app"];
-
-  function openCanvas(viewId, layer) {
-    if (window.__AAC_STATIC__) {
-      toast("warn", "Drawing needs the local app", "The published copy is read-only.");
-      return;
-    }
-    closeContextMenu();
-    var loading = viewId ? api("/api/view?id=" + encodeURIComponent(viewId)) : Promise.resolve(null);
-    Promise.all([loading, api("/api/canvas/parts")]).then(function (got) {
-      var d = got[0];
-      if (viewId && (!d || !d.data)) {
-        throw new Error("The file of " + viewId + " does not parse, so it opens in the view editor instead.");
-      }
-      leaveCanvas();
-      if (state.panel) showPanel(false);
-      if (state.focus) { state.focus = null; renderFocusBar(); }
-      // A layout chosen from the menu draws a diagram the automatic way;
-      // the canvas draws it as it is arranged.
-      $("layoutPicker").value = "auto";
-      var data = d ? d.data : {
-        title: "Untitled diagram", category: layer && VIEW_CATEGORIES.indexOf(layer) !== -1 ? layer : "Application",
-        kind: "diagram", edges: [{ via: "interfaces" }],
-      };
-      cv = { id: viewId || null, data: data, parts: got[1], tool: "select", from: null, made: {}, sel: null,
-        saving: Promise.resolve(), status: viewId ? "saved" : "fresh", timer: null, fieldTimers: {}, focus: null };
-      if (viewId) state.viewId = viewId;
-      state.selectedId = null;
-      document.querySelector(".shell").classList.add("canvas-mode");
-      $("cvTools").hidden = false;
-      $("cvDetails").hidden = false;
-      setCanvasTool("select");
-      syncUrl();
-      return canvasDraw();
-    }).then(function () { if (cv) canvasSelect(null); }).catch(fail);
-  }
-
-  function leaveCanvas() {
-    if (!cv) return;
-    clearTimeout(cv.timer);
-    cv = null;
-    cvDrag = null;
-    closeCanvasPicker();
-    document.querySelector(".shell").classList.remove("canvas-mode");
-    ["cvTools", "cvChips", "cvEmpty", "cvDetails", "cvFold", "cvTip", "cvLayout", "cvGuideX", "cvGuideY"]
-      .forEach(function (id) { $(id).hidden = true; });
-    $("cvDetails").textContent = "";
-  }
-
-  function placesOf() {
-    if (!Array.isArray(cv.data.places)) cv.data.places = [];
-    return cv.data.places;
-  }
-
-  function pinsOf() {
-    if (!cv.data.scope || typeof cv.data.scope !== "object") cv.data.scope = {};
-    if (!Array.isArray(cv.data.scope.pin)) cv.data.scope.pin = [];
-    return cv.data.scope.pin;
-  }
-
-  function canvasEmpty(c) {
-    var s = (c || cv).data.scope || {};
-    return !((c || cv).data.places || []).length && !(s.pin || []).length && !(s.include || []).length;
-  }
-
-  /* The diagram as its file will say it, with nothing empty left in. */
-  function canvasData(c) {
-    var data = JSON.parse(JSON.stringify(c.data));
-    data.view_id = c.id || "untitled-diagram";
-    if (data.scope) {
-      Object.keys(data.scope).forEach(function (k) {
-        if (Array.isArray(data.scope[k]) && !data.scope[k].length) delete data.scope[k];
-      });
-      if (!Object.keys(data.scope).length) delete data.scope;
-    }
-    if (data.places && !data.places.length) delete data.places;
-    // Positions are where the things on it sit; with nothing on it there is
-    // nowhere, and an empty object is not written either.
-    if (canvasEmpty(c) || (data.positions && !Object.keys(data.positions).length)) delete data.positions;
-    return data;
-  }
-
-  function viewInfo(viewId) {
-    return (cv.parts.views || []).filter(function (v) { return v.id === viewId; })[0] || null;
-  }
-
-  function placeTitle(place) {
-    var info = viewInfo(place.view);
-    return info ? info.title : place.view;
-  }
-
-  function indexOfPlace(viewId) {
-    var places = cv.data.places || [];
-    for (var i = 0; i < places.length; i++) if (places[i].view === viewId) return i;
-    return -1;
-  }
-
-  /* Saves one after another, so a name typed while a part was being placed
-   * cannot be overwritten by the older file. */
-  function canvasSave() {
-    var mine = cv;
-    clearTimeout(mine.timer);
-    setCanvasStatus("saving");
-    mine.saving = mine.saving.catch(function () {}).then(function () {
-      return api("/api/canvas/save", { id: mine.id, data: canvasData(mine) });
-    }).then(function (res) {
-      var created = !mine.id;
-      mine.id = res.id;
-      mine.data.view_id = res.id;
-      if (cv !== mine) return res;
-      state.viewId = res.id;
-      setCanvasStatus("saved");
-      syncUrl();
-      if (created) canvasRefreshList();
-      return res;
-    }, function (err) {
-      if (cv === mine) setCanvasStatus("failed", err.message);
-      throw err;
-    });
-    return mine.saving;
-  }
-
-  /* A name or a description, saved once the typing stops. Held until
-   * something is on the sheet: an empty diagram is not worth a file. */
-  function canvasSoon(delay) {
-    if (!cv) return;
-    clearTimeout(cv.timer);
-    if (!cv.id && canvasEmpty()) return;
-    var mine = cv;
-    cv.timer = setTimeout(function () {
-      if (cv === mine) canvasSave().catch(function () {});
-    }, delay === undefined ? 600 : delay);
-  }
-
-  function canvasRefreshList() {
-    api("/api/overview").then(function (o) {
-      state.overview = o;
-      renderViewList(o);
-      renderFacts(o);
-    }).catch(function () {});
-  }
-
-  var CANVAS_STATUS = {
-    fresh: "Saved once something is on it", saving: "Saving…", saved: "Saved as you draw", failed: "Not saved",
-  };
-
-  function setCanvasStatus(kind, why) {
-    if (!cv) return;
-    cv.status = kind;
-    var box = $("viewMeta");
-    box.textContent = "";
-    box.appendChild(el("span", { class: "cv-status is-" + kind, title: why || "" }, [
-      kind === "saved" ? svgIcon("i-circle-check") : kind === "failed" ? svgIcon("i-circle-alert") : null,
-      el("span", { text: CANVAS_STATUS[kind] || "" }),
-    ]));
-    if (kind === "failed" && why) toast("err", "The diagram was not saved", why);
-  }
-
-  function setCanvasHead() {
-    var d = cv.data;
-    $("viewTitle").textContent = d.title || "Untitled diagram";
-    var desc = $("viewDesc");
-    desc.textContent = CANVAS_HINT;
-    desc.title = "";
-    var tag = $("viewKind");
-    tag.textContent = "Diagram";
-    tag.hidden = false;
-    var crumb = $("viewCrumb");
-    crumb.textContent = "";
-    crumb.appendChild(el("button", { type: "button", text: "Diagrams", onclick: function () { openDiagrams("All"); } }));
-    crumb.appendChild(el("span", { class: "sep", text: "/" }));
-    crumb.appendChild(cv.id
-      ? el("button", { type: "button", text: d.category || "Application",
-          onclick: function () { openDiagrams(d.category || "All"); } })
-      : el("span", { text: "New diagram" }));
-    setCanvasStatus(cv.status);
-  }
-
-  /* The sheet: the empty state until something is placed, then the
-   * diagram drawn as every diagram is. */
-  function canvasDraw() {
-    if (!cv) return Promise.resolve();
-    var mine = cv;
-    setCanvasHead();
-    renderCanvasChips();
-    renderCanvasFold();
-    if (canvasEmpty()) {
-      if (state.cy) { state.cy.destroy(); state.cy = null; }
-      state.lastGraph = null;
-      $("legend").textContent = "";
-      $("zoomPct").textContent = "";
-      $("tiles").hidden = true;
-      $("stageEmpty").hidden = true;
-      $("cvEmpty").hidden = false;
-      renderCanvasLayout();
-      return Promise.resolve();
-    }
-    $("cvEmpty").hidden = true;
-    return api("/api/view/preview", { id: mine.id, data: canvasData(mine) }).then(function (payload) {
-      if (cv !== mine) return;
-      $("stageEmpty").hidden = true;
-      drawGraph(payload);
-      // Spent by the drawing when it is arranged; a drop on a drawing the
-      // layout placed is the layout's, and is not carried to the next one.
-      cv.dropAt = null;
-      setCanvasHead();
-      renderCanvasFold();
-      renderCanvasLayout();
-      canvasMark();
-    }).catch(function (err) {
-      if (cv === mine) setCanvasStatus("failed", err.message);
-    });
-  }
-
-  function canvasMark() {
-    if (!cv || !state.cy) return;
-    var cy = state.cy;
-    if (!cy.scratch("_cvStyled")) {
-      cy.scratch("_cvStyled", true);
-      cy.style().selector("node[?isGroup].cv-on").style({
-        "border-color": DRAW.accent, "border-width": 2.5, "border-style": "solid",
-      }).selector("node.cv-from").style({
-        "overlay-color": DRAW.accent, "overlay-opacity": 0.18, "overlay-padding": 6,
-      }).update();
-    }
-    cy.elements().removeClass(IMPACT_CLASSES + " cv-on cv-from");
-    var sel = cv.sel;
-    // The box outlined, not the rest dimmed: on a sheet being drawn on, the
-    // other boxes are where the next thing goes.
-    if (sel && sel.kind === "record") cy.getElementById(sel.id).addClass("sel");
-    if (sel && sel.kind === "place") cy.nodes("[?isGroup]").filter(function (g) { return !g.parent().length; }).addClass("cv-on");
-    if (cv.from) cy.getElementById(cv.from).addClass("cv-from");
-  }
-
-  /* The sheet moved to what was placed or changed: its boundary filling the
-   * sheet, at no more than full size and never further out than the whole
-   * drawing; or, for a change to a box already in view, the same zoom with
-   * the box in the middle. */
-  function canvasFocus() {
-    if (!cv || !state.cy || !cv.focus) return;
-    var cy = state.cy, want = cv.focus;
-    cv.focus = null;
-    var n = cy.getElementById(want.id);
-    if (!n.length) return;
-    var w = cy.width(), h = cy.height(), z;
-    var pair = want.also ? cy.getElementById(want.also) : null;
-    if (pair && pair.length) {
-      // A connection: both ends and the line between, filling the sheet.
-      var both = n.union(pair).union(n.edgesWith(pair));
-      var bb2 = both.boundingBox({ includeLabels: true });
-      z = Math.max(Math.min((w - 160) / Math.max(bb2.w, 1), (h - 220) / Math.max(bb2.h, 1), 0.8), cy.zoom());
-      var t2 = { zoom: z, pan: { x: w / 2 - (bb2.x1 + bb2.w / 2) * z, y: h / 2 + 20 - (bb2.y1 + bb2.h / 2) * z } };
-      if (REDUCED.matches) { cy.viewport(t2); updateZoomPct(); }
-      else cy.animate(t2, { duration: 320, easing: "ease-out-quart", complete: updateZoomPct });
-      return;
-    }
-    if (want.keep && want.zoom) {
-      z = want.zoom;
-    } else {
-      var around = n.parent().length ? n.parent() : n;
-      var bb = around.boundingBox({ includeLabels: true });
-      // A little under full size: the boundary around it, and the ones
-      // beside, are where the next thing goes.
-      z = Math.min((w - 140) / Math.max(bb.w, 1), (h - 200) / Math.max(bb.h, 1), 0.8);
-      z = Math.max(z, cy.zoom());
-    }
-    var p = n.parent().length && !want.keep ? n.parent().boundingBox({ includeLabels: true }) : n.boundingBox();
-    var target = { zoom: z, pan: { x: w / 2 - (p.x1 + p.w / 2) * z, y: h / 2 + 20 - (p.y1 + p.h / 2) * z } };
-    if (REDUCED.matches) { cy.viewport(target); updateZoomPct(); }
-    else cy.animate(target, { duration: 320, easing: "ease-out-quart", complete: updateZoomPct });
-  }
-
-  /* ---- arranged by hand ----
-   * Laid out until a box is moved; from the first move the diagram keeps
-   * where everything is (`positions` in its file), the layout places only
-   * what is new, and Lay out again hands it back. The arranging itself is
-   * arrangeKept(), beside the layout. */
-
-  function canvasKept() {
-    var p = cv && cv.data.positions;
-    return p && typeof p === "object" && Object.keys(p).length ? p : null;
-  }
-
-  /* A box put down in its own boundary: kept where it is, lined up with
-   * the one its guide showed. The first move keeps everything. */
-  function canvasMovedBox(n, from) {
-    var cy = state.cy;
-    if (!cv || !cy) return;
-    if (from.snap) {
-      n.position({ x: from.snap.x === null ? n.position("x") : from.snap.x,
-                   y: from.snap.y === null ? n.position("y") : from.snap.y });
-    }
-    var first = !canvasKept();
-    if (first) cv.data.positions = keepAll(cy);
-    else keepLeaf(cy, n, cv.data.positions);
-    canvasArranged(first);
-    canvasSelect({ kind: "record", id: n.id() });
-  }
-
-  /* A boundary put down somewhere else, with everything in it. */
-  function canvasMovedGroup(g, dx, dy) {
-    var cy = state.cy;
-    if (!cv || !cy) return;
-    var first = !canvasKept();
-    if (first) cv.data.positions = keepAll(cy);
-    else keepGroupMove(cy, g, dx, dy, cv.data.positions);
-    canvasArranged(first);
-  }
-
-  /* After a move: the lines routed again where the boxes are, the file
-   * saved, and on the first move a word that the diagram stays put now. */
-  function canvasArranged(first) {
-    rerouteInPlace(state.cy);
-    renderCanvasLayout();
-    if (!cv.sel) canvasSelect(null);
-    var mine = cv;
-    canvasSave().then(function (res) {
-      if (!first || cv !== mine) return;
-      toast("ok", "Kept where you put it", "This diagram is arranged by hand from now on: nothing moves on its "
-        + "own, and what you place goes where there is room. Its positions are saved in " + res.path + ".",
-        { label: "Undo", go: function () {
-          if (cv !== mine) return;
-          delete cv.data.positions;
-          canvasSave().then(canvasDraw).then(function () { if (cv) canvasSelect(cv.sel); }).catch(fail);
-        } });
-    }).catch(function () {});
-  }
-
-  /* Where something was dropped into a boundary, kept for the drawing that
-   * follows: once it sits in that boundary -- placed there, or moved there
-   * after the question -- it goes where it was put rather than where there
-   * is room. Only on an arranged diagram; a laid-out one is the layout's. */
-  function canvasDropAt(id, groupId, at) {
-    if (!cv || !canvasKept() || !groupId || !at || !state.cy) return;
-    // Against the boundary's frame, not the sheet: the next drawing puts
-    // the sheet's corner somewhere else, and the boundary where it was.
-    var o = (state.cy.scratch("_frames") || {})[groupId];
-    if (!o) return;
-    cv.dropAt = { id: id, group: groupId, dx: at.x - o.x, dy: at.y - o.y };
-  }
-
-  /* An arranged drawing being drawn, its boxes where arrangeKept put them
-   * and nothing yet routed, fitted or gliding: what is new keeps the place
-   * it was given, so the next thing placed cannot move it; a box that moved
-   * to another boundary loses the line it had in the old one; and what was
-   * dropped at a spot goes there. Saved when anything changed. */
-  function canvasSettle() {
-    var kept = canvasKept(), cy = state.cy;
-    var drop = cv ? cv.dropAt : null;
-    if (cv) cv.dropAt = null;
-    if (!kept || !cy || !cy.scratch("_frames")) return;
-    var frames = cy.scratch("_frames"), changed = false;
-    cy.nodes().forEach(function (n) {
-      if (n.data("isGroup")) return;
-      var key = positionKey(n), tail = " / " + n.id();
-      Object.keys(kept).forEach(function (k) {
-        if (k !== key && (k === n.id() || k.slice(-tail.length) === tail)) { delete kept[k]; changed = true; }
-      });
-    });
-    if (drop && frames[drop.group]) {
-      var d = cy.getElementById(drop.id);
-      if (d.length && d.parent().length && d.parent().id() === drop.group) {
-        d.position({ x: frames[drop.group].x + drop.dx, y: frames[drop.group].y + drop.dy });
-        keepLeaf(cy, d, kept);
-        changed = true;
-      }
-    }
-    cy.nodes().forEach(function (n) {
-      var key = positionKey(n);
-      if (kept[key] !== undefined) return;
-      var parent = n.parent(), o = frames[parent.length ? parent.id() : ""];
-      if (!o) return;
-      if (n.data("isGroup")) {
-        var f = frames[n.id()];
-        if (f) kept[key] = [Math.round(f.x - o.x), Math.round(f.y - o.y)];
-      } else {
-        keepLeaf(cy, n, kept);
-      }
-      changed = true;
-    });
-    if (changed) canvasSoon(0);
-  }
-
-  /* Back to the layout: the positions cleared from the file, with Undo. */
-  function canvasLayOutAgain() {
-    if (!cv || !canvasKept()) return;
-    var mine = cv, before = cv.data.positions;
-    delete cv.data.positions;
-    canvasSave().then(function (res) {
-      return canvasDraw().then(function () {
-        if (cv !== mine) return;
-        if (!cv.sel) canvasSelect(null);
-        toast("ok", "Laid out again", "Every box is where the layout puts it, and the positions are cleared from "
-          + res.path + ". Move a box to arrange it by hand again.", { label: "Undo", go: function () {
-            if (cv !== mine) return;
-            cv.data.positions = before;
-            canvasSave().then(canvasDraw).then(function () { if (cv && !cv.sel) canvasSelect(null); }).catch(fail);
-          } });
-      });
-    }).catch(fail);
-  }
-
-  /* Which of the two the diagram is, at the sheet's foot beside the zoom. */
-  function renderCanvasLayout() {
-    var box = $("cvLayout");
-    box.textContent = "";
-    if (!cv || canvasEmpty()) { box.hidden = true; return; }
-    box.hidden = false;
-    if (!canvasKept()) {
-      box.classList.remove("is-arranged");
-      box.title = "Move a box and the diagram keeps your arrangement from then on.";
-      box.appendChild(svgIcon("i-grid"));
-      box.appendChild(el("span", { text: "Laid out automatically" }));
-      return;
-    }
-    box.classList.add("is-arranged");
-    box.title = "";
-    box.appendChild(svgIcon("i-hand"));
-    box.appendChild(el("span", { class: "k", text: "Arranged by hand" }));
-    box.appendChild(el("span", { class: "sep", "aria-hidden": "true" }));
-    box.appendChild(el("button", { type: "button", class: "cv-link cv-again", onclick: canvasLayOutAgain,
-      title: "Clear the positions and let the layout place every box" },
-      [svgIcon("i-rotate-ccw"), el("span", { text: "Lay out again" })]));
-  }
-
-  /* While a box is carried in its own boundary: a guide where its middle
-   * lines up with a box beside it, within six pixels on the screen, and
-   * the box put on that line when it is let go. */
-  function canvasGuides(n, from) {
-    var cy = state.cy;
-    if (!cy || !from) return;
-    var z = cy.zoom(), pan = cy.pan(), p = n.position(), reach = 6 / z;
-    var parent = n.parent();
-    var best = { x: null, y: null, dx: reach, dy: reach, sx: null, sy: null };
-    frameKids(cy, parent.length ? parent : null).forEach(function (s) {
-      if (s === n || s.data("isGroup")) return;
-      var q = s.position();
-      if (Math.abs(q.x - p.x) <= best.dx) { best.x = q.x; best.dx = Math.abs(q.x - p.x); best.sx = q; }
-      if (Math.abs(q.y - p.y) <= best.dy) { best.y = q.y; best.dy = Math.abs(q.y - p.y); best.sy = q; }
-    });
-    from.snap = best.x === null && best.y === null ? null : { x: best.x, y: best.y };
-    var cr = $("cy").getBoundingClientRect(), sr = $("mapSheet").getBoundingClientRect();
-    var ox = cr.left - sr.left, oy = cr.top - sr.top;
-    var gx = $("cvGuideX"), gy = $("cvGuideY");
-    if (best.x !== null) {
-      var y1 = Math.min(p.y, best.sx.y) - 30, y2 = Math.max(p.y, best.sx.y) + 30;
-      gx.style.left = Math.round(ox + best.x * z + pan.x) + "px";
-      gx.style.top = Math.round(oy + y1 * z + pan.y) + "px";
-      gx.style.height = Math.round((y2 - y1) * z) + "px";
-    }
-    if (best.y !== null) {
-      var x1 = Math.min(p.x, best.sy.x) - 60, x2 = Math.max(p.x, best.sy.x) + 60;
-      gy.style.top = Math.round(oy + best.y * z + pan.y) + "px";
-      gy.style.left = Math.round(ox + x1 * z + pan.x) + "px";
-      gy.style.width = Math.round((x2 - x1) * z) + "px";
-    }
-    gx.hidden = best.x === null;
-    gy.hidden = best.y === null;
-    // What letting go does, beside the box, as the picker's drop says it:
-    // the box changes nothing in the model, only where it is drawn.
-    var home = parent.length ? parent : null;
-    var where = !home ? "on the sheet"
-      : "within " + (home.data("field") ? (PLACE_WORDS[home.data("field")] || fieldWord(home.data("field"))) + " "
-        + home.data("value") : home.data("label"));
-    var tip = $("cvTip"), rp = n.renderedPosition();
-    tip.textContent = "Moves it " + where + ". It stays where you put it.";
-    tip.hidden = false;
-    tip.style.left = Math.min(cr.left + rp.x + n.renderedWidth() / 2 + 12, window.innerWidth - tip.offsetWidth - 8) + "px";
-    tip.style.top = Math.min(cr.top + rp.y + 12, window.innerHeight - tip.offsetHeight - 8) + "px";
-  }
-
-  function canvasGuidesOff(from) {
-    if (from) from.snap = null;
-    ["cvGuideX", "cvGuideY", "cvTip"].forEach(function (id) { if ($(id)) $(id).hidden = true; });
-  }
-
-  /* ---- what is selected, in the panel beside the sheet ---- */
-
-  function canvasSelect(sel) {
-    if (!cv) return;
-    cv.sel = sel;
-    state.selectedId = sel && sel.kind === "record" ? sel.id : null;
-    canvasMark();
-    renderCanvasChips();
-    var box = $("cvDetails");
-    box.textContent = "";
-    if (!sel) canvasDiagramDetails(box);
-    else if (sel.kind === "place") {
-      canvasPlaceDetails(box, sel.index);
-      // The boundary is the whole of it: shown whole, as Fit would.
-      if (state.cy && !sel.stay) {
-        var cy = state.cy, before = { zoom: cy.zoom(), pan: cy.pan() };
-        fitSheet(cy, 24);
-        var after = { zoom: cy.zoom(), pan: cy.pan() };
-        if (!REDUCED.matches) {
-          cy.viewport(before);
-          cy.animate(after, { duration: 320, easing: "ease-out-quart", complete: updateZoomPct });
-        } else updateZoomPct();
-      }
-    }
-    else canvasRecordDetails(box, sel.id);
-  }
-
-  function canvasTap(node) {
-    if (node.data("isGroup")) {
-      // A boundary belongs to the view placed whole; with several placed,
-      // their boundaries are one set, and the first stands for them.
-      if ((cv.data.places || []).length) canvasSelect({ kind: "place", index: 0 });
-      return;
-    }
-    var id = node.id();
-    if (cv.tool === "connect") {
-      if (!cv.from) {
-        cv.from = id;
-        canvasMark();
-        canvasHint("Now the box it connects to.");
-        return;
-      }
-      if (cv.from === id) return;
-      var from = cv.from;
-      setCanvasTool("select");
-      var box = $("cy").getBoundingClientRect(), rp = node.renderedPosition();
-      openConnectChooser(from, id, box.left + rp.x + 12, box.top + rp.y + 12);
-      return;
-    }
-    canvasSelect({ kind: "record", id: id });
-  }
-
-  function setCanvasTool(tool) {
-    if (!cv) return;
-    cv.tool = tool;
-    cv.from = null;
-    $("cvSelect").setAttribute("aria-pressed", String(tool === "select"));
-    $("cvConnect").setAttribute("aria-pressed", String(tool === "connect"));
-    $("mapSheet").classList.toggle("cv-connecting", tool === "connect");
-    canvasHint(tool === "connect" ? "Click the box a connection starts from, then the one it goes to. Esc stops." : "");
-    canvasMark();
-  }
-
-  function canvasHint(text) {
-    var tip = $("cvHint");
-    tip.textContent = text || "";
-    tip.hidden = !text;
-  }
-
-  function cvField(label, input, wide) {
-    return el("label", { class: "cv-field" + (wide === false ? " is-half" : "") }, [
-      el("span", { class: "cv-label", text: label }), input,
-    ]);
-  }
-
-  function canvasDiagramDetails(box) {
-    var d = cv.data;
-    box.appendChild(el("h2", { class: "cv-h", text: "This diagram" }));
-    var name = el("input", { type: "text", class: "cv-input", "aria-label": "Name" });
-    name.value = d.title || "";
-    name.addEventListener("input", function () {
-      d.title = name.value;
-      $("viewTitle").textContent = name.value || "Untitled diagram";
-      canvasSoon();
-    });
-    box.appendChild(cvField("Name", name));
-    var what = el("textarea", { class: "cv-input", rows: "3", placeholder: "Say in a line what this diagram answers",
-      "aria-label": "What it is for" });
-    what.value = d.description || "";
-    what.addEventListener("input", function () { d.description = what.value; canvasSoon(); });
-    box.appendChild(cvField("What it is for", what));
-    var layer = el("select", { class: "cv-input", "aria-label": "Layer" });
-    (cv.parts.categories || VIEW_CATEGORIES).forEach(function (c) { layer.appendChild(el("option", { value: c, text: c })); });
-    layer.value = d.category || "Application";
-    var section = el("select", { class: "cv-input", "aria-label": "Section" });
-    function sections() {
-      section.textContent = "";
-      section.appendChild(el("option", { value: "", text: "Choose…" }));
-      var seen = {};
-      ((state.overview && state.overview.views) || []).forEach(function (v) {
-        if (v.category !== layer.value || !v.section || seen[v.section]) return;
-        seen[v.section] = 1;
-        section.appendChild(el("option", { value: v.section, text: v.section }));
-      });
-      if (d.section && !seen[d.section]) section.appendChild(el("option", { value: d.section, text: d.section }));
-      section.value = d.section || "";
-    }
-    sections();
-    layer.addEventListener("change", function () {
-      d.category = layer.value;
-      if (d.section) delete d.section;
-      sections();
-      setCanvasHead();
-      canvasSoon(0);
-    });
-    section.addEventListener("change", function () { d.section = section.value; canvasSoon(0); });
-    box.appendChild(el("div", { class: "cv-pair" }, [cvField("Layer", layer, false), cvField("Section", section, false)]));
-
-    box.appendChild(el("h3", { class: "cv-sub", text: "On it" }));
-    var on = el("ul", { class: "cv-on-list" });
-    (d.places || []).forEach(function (p, i) {
-      on.appendChild(el("li", {}, [
-        el("button", { type: "button", class: "cv-link", text: placeTitle(p),
-          onclick: function () { canvasSelect({ kind: "place", index: i }); } }),
-        el("span", { class: "cv-what", text: "a view, as a boundary" }),
-      ]));
-    });
-    ((d.scope && d.scope.pin) || []).forEach(function (id) {
-      var item = indexItem(id);
-      on.appendChild(el("li", {}, [
-        el("button", { type: "button", class: "cv-link", text: item ? item.name : id,
-          onclick: function () { canvasSelect({ kind: "record", id: id }); } }),
-        el("span", { class: "cv-what", text: item ? typeWord(item.type) : "" }),
-      ]));
-    });
-    box.appendChild(on.childNodes.length ? on : el("p", { class: "cv-none", text: "Nothing yet." }));
-    if (!canvasEmpty()) {
-      var kept = canvasKept();
-      box.appendChild(el("h3", { class: "cv-sub", text: "Layout" }));
-      box.appendChild(el("p", { class: "cv-small cv-layout-say", text: kept
-        ? "Arranged by hand: what is on it stays where you put it, and what you place next goes where there "
-          + "is room. Where each box sits is kept in this diagram's file."
-        : "Laid out automatically: the layout places every box each time the diagram is drawn. Move a box "
-          + "and the diagram keeps your arrangement from then on." }));
-      if (kept) {
-        box.appendChild(el("div", { class: "cv-acts" }, [
-          el("button", { type: "button", class: "btn small", onclick: canvasLayOutAgain },
-            [svgIcon("i-rotate-ccw"), el("span", { text: "Lay out again" })]),
-        ]));
-      }
-    }
-    box.appendChild(el("p", { class: "cv-note" }, [svgIcon("i-info"), el("span", { text:
-      "Everything you place is a record in the model, and this diagram is a view of them: a system drawn "
-      + "here shows on every diagram it belongs to." })]));
-    if (cv.id) {
-      box.appendChild(el("div", { class: "cv-acts" }, [
-        el("button", { type: "button", class: "btn small", onclick: function () { selectView(cv.id); } },
-          [svgIcon("i-grid"), el("span", { text: "Open as a diagram" })]),
-      ]));
-    }
-  }
-
-  function indexItem(id) {
-    return (state.index || []).filter(function (i) { return i.id === id; })[0] || null;
-  }
-
-  function partNameOf(componentType) {
-    var part = (cv.parts.parts || []).filter(function (p) { return p.id === componentType; })[0];
-    return part ? part.name : "";
-  }
-
-  function articled(word) {
-    return (/^[aeiou]/i.test(word) ? "an " : "a ") + word;
-  }
-
-  //: The words a missing field is asked for by.
-  var NEED_WORDS = { owner_org_id: "an owner", data_owner_org_id: "a data owner" };
-
-  function canvasRecordDetails(box, id) {
-    var mine = cv;
-    box.appendChild(el("p", { class: "cv-none", text: "Reading…" }));
-    api("/api/entity?id=" + encodeURIComponent(id)).then(function (data) {
-      if (cv !== mine || !cv.sel || cv.sel.id !== id) return;
-      box.textContent = "";
-      var r = data.record, type = data.type, spec = state.schema.entities[type];
-      var home = data.home || { kind: data.generated ? "generated" : "own" };
-      var editable = !data.generated && home.kind !== "imported" && home.kind !== "harvested";
-      var fresh = !!cv.made[id];
-      box.appendChild(el("span", { class: "cv-badge" + (fresh ? " is-new" : ""),
-        text: capFirst(spec.label) + (fresh ? " · new" : "") }));
-      box.appendChild(el("h2", { class: "cv-h", text: r.name || id }));
-      var part = partNameOf(r.component_type);
-      box.appendChild(el("p", { class: "cv-lede", text: part
-        ? "Made from the library part " + part + "."
-        : [capFirst(spec.label), r.company_domain, r.status].filter(Boolean).join(" · ") }));
-      if (!editable) {
-        box.appendChild(el("p", { class: "cv-note" }, [svgIcon("i-info"), el("span", { text: data.generated
-          ? "Made by the shape " + r.archetype_instance + "; it is changed there."
-          : (home.note || "It is brought in from elsewhere and changed there.") })]));
-      }
-
-      var shown = spec.fields.filter(function (f) { return f.name === "name" || f.required; });
-      var rank = function (f) { return f.name === "name" ? 0 : f.enum ? 2 : 1; };
-      shown = shown.map(function (f, i) { return [f, i]; }).sort(function (a, b) {
-        return rank(a[0]) - rank(b[0]) || a[1] - b[1];
-      }).map(function (p) { return p[0]; });
-      var inputs = {};
-      var grid = el("div", { class: "cv-form" });
-      shown.forEach(function (f) {
-        var input;
-        if (f.enum || f.ref) {
-          input = el("select", { class: "cv-input", "aria-label": fieldWord(f.name) });
-          var refLabel = f.ref && state.schema.entities[f.ref] ? state.schema.entities[f.ref].label : "";
-          input.appendChild(el("option", { value: "", text: f.ref ? "Choose " + articled(refLabel) : "Choose…" }));
-          var options = f.enum ? f.enum.map(function (v) { return [v, v]; })
-            : (state.index || []).filter(function (i) { return i.type === f.ref; })
-                .sort(function (a, b) { return String(a.name).localeCompare(String(b.name)); })
-                .map(function (i) { return [i.id, i.name || i.id]; });
-          options.forEach(function (o) { input.appendChild(el("option", { value: o[0], text: o[1] })); });
-          if (r[f.name] && !options.some(function (o) { return o[0] === String(r[f.name]); })) {
-            input.appendChild(el("option", { value: r[f.name], text: r[f.name] }));
-          }
-        } else {
-          input = el("input", { type: "text", class: "cv-input", "aria-label": fieldWord(f.name) });
-        }
-        input.value = r[f.name] == null ? "" : String(r[f.name]);
-        if (!editable) input.disabled = true;
-        inputs[f.name] = input;
-        var mark = function () { input.classList.toggle("is-open", f.required && !input.value); };
-        mark();
-        input.addEventListener(f.enum || f.ref ? "change" : "input", function () {
-          mark();
-          canvasSetField(type, id, f.name, input.value);
-          check();
-        });
-        grid.appendChild(cvField(capFirst(fieldWord(f.name)), input, f.enum ? false : undefined));
-      });
-      box.appendChild(grid);
-
-      var node = state.cy ? state.cy.getElementById(id) : null;
-      var where = node && node.length ? node.ancestors().filter(function (g) { return !!g.data("field"); })
-        .sort(function (a, b) { return (a.data("depth") || 0) - (b.data("depth") || 0); }) : null;
-      var levels = where ? where.filter(function (g) {
-        return g.data("field") !== "cloud_provider" || where.length === 1;
-      }) : null;
-      if (levels && levels.length) {
-        box.appendChild(el("h3", { class: "cv-sub", text: "Placed in" }));
-        var chips = el("div", { class: "cv-chips-in" });
-        levels.forEach(function (g) {
-          chips.appendChild(el("span", { class: "cv-in" }, [
-            capFirst(PLACE_WORDS[g.data("field")] || fieldWord(g.data("field"))) + ": ",
-            el("b", { text: g.data("value") }),
-          ]));
-        });
-        box.appendChild(chips);
-        var inner = levels[levels.length - 1];
-        var word = PLACE_WORDS[inner.data("field")] || fieldWord(inner.data("field"));
-        box.appendChild(el("p", { class: "cv-small", text: "Set by the " + word + " it sits in. Moved within its "
-          + word + " it is only drawn somewhere else; moved into another " + word + " you are asked first, since "
-          + "that changes the record." }));
-      }
-
-      var checkBox = el("p", { class: "cv-check" });
-      box.appendChild(checkBox);
-      function check() {
-        var missing = shown.filter(function (f) { return f.required && !inputs[f.name].value; }).map(function (f) {
-          return NEED_WORDS[f.name] || articled(fieldWord(f.name));
-        });
-        checkBox.textContent = "";
-        checkBox.className = "cv-check" + (missing.length ? " is-open" : " is-ok");
-        checkBox.appendChild(svgIcon(missing.length ? "i-circle-alert" : "i-circle-check"));
-        checkBox.appendChild(el("span", { text: missing.length
-          ? "It needs " + spoken(missing) + " to pass the checks. Everything else it has."
-          : "It has everything the checks ask of " + articled(spec.label) + "." }));
-      }
-      check();
-
-      var acts = el("div", { class: "cv-acts" });
-      var pinned = pinsOf().indexOf(id) !== -1;
-      if (pinned) {
-        acts.appendChild(el("button", { type: "button", class: "btn small", onclick: function () { unplace(id); } },
-          [svgIcon("i-x"), el("span", { text: "Take it off this diagram" })]));
-      }
-      if (editable) {
-        acts.appendChild(el("button", { type: "button", class: "btn small", onclick: function () {
-          openEntityEditor(type, id, r, function () { canvasDraw().then(function () { canvasSelect({ kind: "record", id: id }); }); },
-            null, home);
-        } }, [svgIcon("i-pencil"), el("span", { text: "Every field" })]));
-      }
-      box.appendChild(acts);
-      if (!pinned) {
-        box.appendChild(el("p", { class: "cv-small", text: "It is drawn here because "
-          + ((cv.data.places || []).length ? placeTitle(cv.data.places[0]) : "the diagram's query") + " draws it." }));
-      }
-    }).catch(fail);
-  }
-
-  function spoken(items) {
-    if (items.length <= 1) return items.join("");
-    return items.slice(0, -1).join(", ") + " and " + items[items.length - 1];
-  }
-
-  function canvasSetField(type, id, field, value) {
-    var mine = cv;
-    var values = {};
-    values[field] = value;
-    // One timer per record and field: a name still being typed on one box
-    // must not be dropped because a field of another was changed.
-    var key = id + " " + field;
-    clearTimeout(cv.fieldTimers[key]);
-    cv.fieldTimers[key] = setTimeout(function () {
-      if (cv !== mine) return;
-      setCanvasStatus("saving");
-      api("/api/save", { type: type, id: id, patch: true, values: values }).then(function () {
-        if (cv !== mine) return;
-        setCanvasStatus("saved");
-        loadIndex();
-        if (field === "name") {
-          var h = cv.sel && cv.sel.id === id ? $("cvDetails").querySelector(".cv-h") : null;
-          if (h) h.textContent = value || id;
-          cv.focus = { id: id, keep: true, zoom: state.cy ? state.cy.zoom() : null };
-          canvasDraw();
-        }
-      }).catch(function (err) { if (cv === mine) setCanvasStatus("failed", err.message); });
-    }, field === "name" ? 600 : 0);
-  }
-
-  function unplace(id) {
-    var pins = pinsOf();
-    var at = pins.indexOf(id);
-    if (at === -1) return;
-    pins.splice(at, 1);
-    var item = indexItem(id);
-    var kept = canvasKept(), lines = {}, tail = " / " + id;
-    if (kept) {
-      Object.keys(kept).forEach(function (k) {
-        if (k === id || k.slice(-tail.length) === tail) { lines[k] = kept[k]; delete kept[k]; }
-      });
-    }
-    canvasSave().then(canvasDraw).then(function () {
-      canvasSelect(null);
-      toast("ok", "Taken off this diagram", (item ? item.name : id) + " is still in the model.", { label: "Undo", go: function () {
-        if (!cv) return;
-        pinsOf().push(id);
-        if (canvasKept()) Object.keys(lines).forEach(function (k) { cv.data.positions[k] = lines[k]; });
-        canvasSave().then(canvasDraw).then(function () { canvasSelect({ kind: "record", id: id }); }).catch(fail);
-      } });
-    }).catch(fail);
-  }
-
-  /* ---- a placed view ---- */
-
-  function foldShown(place, field, value) {
-    if (place.only && place.only[field]) return place.only[field].indexOf(value) !== -1;
-    if (place.leave_out && place.leave_out[field]) return place.leave_out[field].indexOf(value) === -1;
-    return true;
-  }
-
-  function setFold(place, field, value, on, all) {
-    if (place.only && place.only[field]) {
-      var only = place.only[field].filter(function (v) { return v !== value; });
-      if (on) only.push(value);
-      if (!only.length) return false;
-      if (only.length === all.length) delete place.only[field]; else place.only[field] = only;
-      if (!Object.keys(place.only).length) delete place.only;
-      return true;
-    }
-    place.leave_out = place.leave_out || {};
-    var out = (place.leave_out[field] || []).filter(function (v) { return v !== value; });
-    if (!on) out.push(value);
-    if (out.length >= all.length) return false;
-    if (out.length) place.leave_out[field] = out; else delete place.leave_out[field];
-    if (!Object.keys(place.leave_out).length) delete place.leave_out;
-    return true;
-  }
-
-  function nodesWord(info) {
-    if (!info) return "things";
-    if (cv.parts.network === info.id) return "network parts";
-    return info.types.length === 1 ? typeWord(info.types[0], true) : "things";
-  }
-
-  function canvasPlaceDetails(box, index) {
-    var place = (cv.data.places || [])[index];
-    if (!place) { canvasDiagramDetails(box); return; }
-    var info = viewInfo(place.view);
-    box.appendChild(el("span", { class: "cv-badge is-link" }, [svgIcon("i-link"), el("span", { text: "Boundary · a view" })]));
-    box.appendChild(el("h2", { class: "cv-h", text: placeTitle(place) }));
-    box.appendChild(el("p", { class: "cv-lede", text: "Placed from the view and kept in step with it. Change the view, "
-      + "and every diagram it sits on follows; nothing here is a copy." }));
-
-    box.appendChild(el("h3", { class: "cv-sub", text: "What it shows here" }));
-    var own = place.parts !== false;
-    var sw = el("button", { type: "button", class: "cv-switch", role: "switch", "aria-checked": String(own),
-      onclick: function () {
-        if (own) place.parts = false; else delete place.parts;
-        canvasSave().then(canvasDraw).then(function () { canvasSelect({ kind: "place", index: index, stay: true }); }).catch(fail);
-      } }, [el("span", { class: "knob" })]);
-    box.appendChild(el("div", { class: "cv-toggle" }, [sw, el("span", { class: "cv-toggle-text" }, [
-      el("b", { text: "Its " + nodesWord(info) }),
-      el("span", { text: own ? "Drawn as the view draws them"
-        : "Left out: only the boundaries holding what you placed stay" }),
-    ])]));
-
-    var fold = info && info.fold;
-    if (fold && fold.values.length > 1) {
-      box.appendChild(el("p", { class: "cv-label", text: capFirst(fold.words) }));
-      var list = el("div", { class: "cv-folds" });
-      var all = fold.values.map(function (v) { return v.value; });
-      fold.values.forEach(function (v) {
-        var cb = el("input", { type: "checkbox" });
-        cb.checked = foldShown(place, fold.field, v.value);
-        cb.addEventListener("change", function () {
-          if (!setFold(place, fold.field, v.value, cb.checked, all)) {
-            cb.checked = !cb.checked;
-            toast("warn", "Something has to stay", "Leaving every one of them out leaves nothing to place; remove the boundary instead.");
-            return;
-          }
-          canvasSave().then(canvasDraw).then(function () { canvasSelect({ kind: "place", index: index, stay: true }); }).catch(fail);
-        });
-        list.appendChild(el("label", { class: "cv-fold-row" }, [cb, el("span", { text: v.label })]));
-      });
-      box.appendChild(list);
-      box.appendChild(el("p", { class: "cv-small", text: "One left out stays in the view; it is only left off here." }));
-    }
-
-    box.appendChild(el("h3", { class: "cv-sub", text: "Placed in it here" }));
-    box.appendChild(el("p", { class: "cv-small", text: placedInside() }));
-    box.appendChild(el("div", { class: "cv-acts" }, [
-      el("button", { type: "button", class: "btn small", onclick: function () { selectView(place.view); } },
-        [svgIcon("i-arrow-right"), el("span", { text: "Open the view" })]),
-      el("button", { type: "button", class: "btn small", onclick: function () { removePlace(index); } },
-        [svgIcon("i-x"), el("span", { text: "Remove" })]),
-    ]));
-  }
-
-  /* What was placed inside the boundaries, said once: the names, how many
-   * of them were made here, and where they sit. */
-  function placedInside() {
-    if (!state.cy) return "Nothing yet.";
-    var names = [], zones = [], made = 0, types = {};
-    pinsOf().forEach(function (id) {
-      var n = state.cy.getElementById(id);
-      if (!n.length || !n.parent().length) return;
-      names.push(n.data("label") || id);
-      if (cv.made[id]) made++;
-      types[n.data("entityType")] = 1;
-      var z = n.parent().data("value");
-      if (z && zones.indexOf(z) === -1) zones.push(z);
-    });
-    if (!names.length) return "Nothing yet: drag a part into one of its boundaries.";
-    var kinds = Object.keys(types);
-    var word = kinds.length === 1 ? typeWord(kinds[0], names.length > 1) : (names.length > 1 ? "things" : "thing");
-    return spoken(names) + ": " + names.length + " " + (made === names.length ? "new " : "") + word
-      + (zones.length ? ", in " + spoken(zones) : "") + ".";
-  }
-
-  function removePlace(index) {
-    var places = placesOf();
-    var gone = places.splice(index, 1)[0];
-    var before = canvasKept() ? JSON.parse(JSON.stringify(cv.data.positions)) : null;
-    canvasSave().then(canvasDraw).then(function () {
-      // What the view drew is off the sheet, and so are its lines in the
-      // file, with those of anything else not drawn now (an account folded
-      // off another placed view among them); Undo puts them all back.
-      var kept = canvasKept();
-      if (kept && state.cy) {
-        var drawn = {};
-        state.cy.nodes().forEach(function (n) { drawn[positionKey(n)] = true; });
-        Object.keys(kept).forEach(function (k) { if (!drawn[k]) delete kept[k]; });
-        canvasSoon(0);
-      }
-      canvasSelect(null);
-      toast("ok", "Removed " + placeTitle(gone), "The view is as it was; it is only off this diagram.", { label: "Undo",
-        go: function () {
-          if (!cv) return;
-          placesOf().splice(index, 0, gone);
-          if (before) cv.data.positions = before;
-          canvasSave().then(canvasDraw).then(function () { canvasSelect({ kind: "place", index: index, stay: true }); }).catch(fail);
-        } });
-    }).catch(fail);
-  }
-
-  /* One label per placed view, pinned to the sheet's corner: the view's
-   * outermost boundary is often off the screen, and its name should not be. */
-  function renderCanvasChips() {
-    var box = $("cvChips");
-    box.textContent = "";
-    var places = (cv && cv.data.places) || [];
-    box.hidden = !places.length;
-    places.forEach(function (p, i) {
-      var on = cv.sel && cv.sel.kind === "place" && cv.sel.index === i;
-      box.appendChild(el("button", { type: "button", class: "cv-chip" + (on ? " is-on" : ""),
-        onclick: function () { canvasSelect({ kind: "place", index: i }); } }, [
-        svgIcon(cv.parts.network === p.view ? "i-network" : "i-grid"),
-        el("span", { class: "n", text: placeTitle(p) }),
-        el("span", { class: "k" }, [svgIcon("i-link"), el("span", { text: "a view, kept in step" })]),
-      ]));
-    });
-  }
-
-  /* What a placed view leaves off this diagram, said where the key would be,
-   * with one click to bring it back. */
-  function renderCanvasFold() {
-    var box = $("cvFold");
-    box.textContent = "";
-    var said = [];
-    ((cv && cv.data.places) || []).forEach(function (p) {
-      var info = viewInfo(p.view);
-      if (!info || !info.fold) return;
-      var hidden = info.fold.values.filter(function (v) { return !foldShown(p, info.fold.field, v.value); });
-      if (!hidden.length) return;
-      var named = hidden.filter(function (v) { return v.value; });
-      var none = hidden.filter(function (v) { return !v.value; });
-      var words = info.fold.words;
-      var text = (named.length ? named.length + " more " + (named.length === 1 ? words.replace(/s$/, "") : words) : "")
-        + (none.length ? (named.length ? " and " : "") + none[0].label : "") + ", folded";
-      said.push(el("span", { class: "cv-fold-one" }, [el("span", { text: text }),
-        el("button", { type: "button", class: "cv-link", text: "Show", onclick: function () {
-          if (p.only) delete p.only[info.fold.field];
-          if (p.only && !Object.keys(p.only).length) delete p.only;
-          if (p.leave_out) delete p.leave_out[info.fold.field];
-          if (p.leave_out && !Object.keys(p.leave_out).length) delete p.leave_out;
-          canvasSave().then(canvasDraw).catch(fail);
-        } })]));
-    });
-    said.forEach(function (s) { box.appendChild(s); });
-    box.hidden = !said.length;
-  }
-
-  /* ---- the picker: the library and the estate, to click or drag ---- */
-
-  function closeCanvasPicker() {
-    var pick = $("cvPicker");
-    if (!pick) return;
-    pick.hidden = true;
-    pick.textContent = "";
-    $("cvAdd").setAttribute("aria-expanded", "false");
-    $("cvBoundary").setAttribute("aria-pressed", "false");
-  }
-
-  function pickerItems(tab, q, boundaries) {
-    var p = cv.parts, out = { library: [], estate: [] };
-    var hit = function (text) { return !q || String(text || "").toLowerCase().indexOf(q) !== -1; };
-    if (!boundaries && tab !== "estate") {
-      var parts = p.parts.slice().sort(function (a, b) {
-        var ra = FIRST_PARTS.indexOf(a.id), rb = FIRST_PARTS.indexOf(b.id);
-        return (ra === -1 ? 99 : ra) - (rb === -1 ? 99 : rb);
-      }).filter(function (x) { return hit(x.name + " " + x.category + " " + x.typeLabel); });
-      out.library = parts.slice(0, q ? 30 : (tab === "library" ? 14 : 4)).map(function (x) {
-        return { kind: "part", id: x.id, name: x.name, sub: "Part · " + x.typeLabel, tag: "Box", icon: "i-box",
-          typeLabel: x.typeLabel, type: x.type };
-      });
-    }
-    if (tab !== "library") {
-      var views = p.views.slice().sort(function (a, b) { return (a.id !== p.network) - (b.id !== p.network); })
-        .filter(function (v) { return hit(v.title + " " + v.category); })
-        .map(function (v) {
-          var accounts = v.fold && v.fold.field === "cloud_account"
-            ? v.fold.values.filter(function (x) { return x.value; }).length : 0;
-          return { kind: "view", id: v.id, name: v.title, tag: "Boundary", icon: v.id === p.network ? "i-network" : "i-grid",
-            sub: "View · " + v.nodes + " " + nodesWord(v) + (accounts ? ", " + accounts + " accounts" : "") };
-        });
-      var accounts = p.accounts.filter(function (a) { return hit(a.label); }).map(function (a) {
-        return { kind: "account", value: a.value, name: a.value, tag: "Boundary", icon: "i-cloud",
-          sub: a.label.split(" · ")[0] + " account · " + a.count + " network parts" };
-      });
-      var zones = p.zones.filter(function (z) { return hit(z.value + " zone"); }).map(function (z) {
-        return { kind: "zone", value: z.value, name: z.value, tag: "Boundary", icon: "i-shield",
-          sub: "Network zone · " + z.count + " network parts" };
-      });
-      var systems = boundaries ? [] : p.systems.filter(function (s) { return hit(s.name + " " + s.id + " " + s.domain); })
-        .map(function (s) {
-          return { kind: "system", id: s.id, name: s.name, tag: "Box", icon: "i-app-window",
-            sub: "System" + (s.domain ? " · " + s.domain : "") };
-        });
-      if (!q && tab === "all") {
-        out.estate = views.slice(0, 1).concat(accounts.slice(0, 1), zones.slice(0, 1), systems.slice(0, 1));
-      } else {
-        var cap = q ? 12 : (boundaries ? 40 : 8);
-        out.estate = views.slice(0, q ? 8 : 40).concat(accounts.slice(0, cap), zones.slice(0, cap), systems.slice(0, cap));
-      }
-    }
-    return out;
-  }
-
-  function openCanvasPicker(tab, boundaries) {
-    if (!cv) return;
-    var pick = $("cvPicker");
-    var state2 = { tab: tab || "all" };
-    pick.textContent = "";
-    pick.hidden = false;
-    $("cvAdd").setAttribute("aria-expanded", "true");
-    $("cvBoundary").setAttribute("aria-pressed", String(!!boundaries));
-    pick.classList.toggle("is-boundary", !!boundaries);
-    var search = el("input", { type: "search", class: "cv-search", "aria-label": "Find something to place",
-      placeholder: boundaries ? "Find a view, an account, a zone…" : "Find a part, a system, an account, a view…" });
-    var tabs = el("div", { class: "cv-tabs", role: "tablist" });
-    var list = el("div", { class: "cv-list" });
-    var c = cv.parts.counts;
-    pick.appendChild(el("div", { class: "cv-search-row" }, [svgIcon("i-search"), search]));
-    if (!boundaries) {
-      [["all", "All"], ["library", "Library"], ["estate", "This estate"]].forEach(function (t) {
-        tabs.appendChild(el("button", { type: "button", role: "tab", class: "cv-tab",
-          "aria-selected": String(state2.tab === t[0]),
-          onclick: function () {
-            state2.tab = t[0];
-            tabs.querySelectorAll(".cv-tab").forEach(function (b) { b.setAttribute("aria-selected", String(b === this)); }, this);
-            fill();
-          } }, [t[1]]));
-      });
-      pick.appendChild(tabs);
-    } else {
-      pick.appendChild(el("p", { class: "cv-pick-head", text: "A boundary: a view, or an account or zone of " + (cv.parts.networkTitle || "the network") }));
-    }
-    pick.appendChild(list);
-    pick.appendChild(el("p", { class: "cv-foot", text: c.systems + " systems, " + c.views + " views to place as boundaries and "
-      + c.parts + " parts in all: type to find one, or drag it straight onto the sheet." }));
-
-    function row(item) {
-      var r = el("div", { class: "cv-row", draggable: "true", tabindex: "0", role: "button",
-        "aria-label": "Place " + item.name + ", " + item.sub }, [
-        el("span", { class: "cv-grip" }, [svgIcon("i-grip")]),
-        el("span", { class: "cv-ico" }, [svgIcon(item.icon)]),
-        el("span", { class: "cv-row-text" }, [el("b", { text: item.name }), el("span", { text: item.sub })]),
-        el("span", { class: "cv-tag" + (item.tag === "Boundary" ? " is-boundary" : ""), text: item.tag }),
-      ]);
-      r.addEventListener("click", function () { canvasPlace(item, [], null); });
-      r.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); canvasPlace(item, [], null); }
-      });
-      r.addEventListener("dragstart", function (e) {
-        cvDrag = item;
-        e.dataTransfer.effectAllowed = "copy";
-        try { e.dataTransfer.setData("text/plain", item.name); } catch (err) { /* old engines */ }
-        r.classList.add("is-dragging");
-        setTimeout(function () { $("cvPicker").classList.add("is-carrying"); }, 0);
-        $("cvEmpty").classList.add("is-drop");
-        $("cvEmptyDrop").textContent = item.tag === "Boundary"
-          ? "Drop to place " + item.name + " as a boundary" : "Drop to place " + item.name;
-      });
-      r.addEventListener("dragend", function () {
-        r.classList.remove("is-dragging");
-        clearCanvasDrop();
-        cvDrag = null;
-      });
-      return r;
-    }
-
-    function fill() {
-      list.textContent = "";
-      var q = search.value.trim().toLowerCase();
-      var got = pickerItems(state2.tab, q, boundaries);
-      if (got.library.length) {
-        list.appendChild(el("p", { class: "cv-group", text: "From the library" }));
-        got.library.forEach(function (i) { list.appendChild(row(i)); });
-      }
-      if (got.estate.length) {
-        list.appendChild(el("p", { class: "cv-group", text: "From this estate" }));
-        got.estate.forEach(function (i) { list.appendChild(row(i)); });
-      }
-      if (!got.library.length && !got.estate.length) {
-        list.appendChild(el("p", { class: "cv-none", text: "Nothing here is called that." }));
-      }
-    }
-    search.addEventListener("input", fill);
-    search.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") { e.preventDefault(); closeCanvasPicker(); $("cvAdd").focus(); }
-      if (e.key === "Enter") {
-        var first = list.querySelector(".cv-row");
-        if (first) { e.preventDefault(); first.click(); }
-      }
-    });
-    fill();
-    search.focus();
-  }
-
-  /* Where a box dropped at this point of the screen would go: the innermost
-   * boundary holding the point that is one value of a field, and every one
-   * around it, outermost first. */
-  function canvasDropInfo(e) {
-    if (!state.cy) return { into: [], group: null };
-    var r = $("cy").getBoundingClientRect(), pan = state.cy.pan(), z = state.cy.zoom();
-    var x = (e.clientX - r.left - pan.x) / z, y = (e.clientY - r.top - pan.y) / z;
-    var hit = null;
-    state.cy.nodes("[?isGroup]").forEach(function (g) {
-      if (!g.data("field")) return;
-      var bb = g.boundingBox({ includeLabels: false });
-      if (x < bb.x1 || x > bb.x2 || y < bb.y1 || y > bb.y2) return;
-      if (!hit || (g.data("depth") || 0) > (hit.data("depth") || 0)) hit = g;
-    });
-    if (!hit) return { into: [], group: null };
-    var chain = hit.ancestors().add(hit).filter(function (g) { return !!g.data("field"); })
-      .sort(function (a, b) { return (a.data("depth") || 0) - (b.data("depth") || 0); });
-    return { group: hit, into: chain.map(function (g) {
-      return { field: g.data("field"), value: g.data("stored"),
-        label: (PLACE_WORDS[g.data("field")] || fieldWord(g.data("field"))) + " " + g.data("value") };
-    }) };
-  }
-
-  function clearCanvasDrop() {
-    $("cvPicker").classList.remove("is-carrying");
-    if (state.cy) state.cy.nodes(".drop-into").removeClass("drop-into");
-    $("cvTip").hidden = true;
-    $("cvEmpty").classList.remove("is-drop");
-  }
-
-  function canvasDragOver(e) {
-    if (!cv || !cvDrag) return;
-    e.preventDefault();
-    e.dataTransfer.dropEffect = "copy";
-    var boxy = cvDrag.kind === "part" || cvDrag.kind === "system";
-    var info = boxy ? canvasDropInfo(e) : { into: [], group: null };
-    if (state.cy) {
-      state.cy.nodes(".drop-into").forEach(function (g) { if (g !== info.group) g.removeClass("drop-into"); });
-      if (info.group) info.group.addClass("drop-into");
-    }
-    var tip = $("cvTip");
-    if (!state.cy) { tip.hidden = true; return; }
-    tip.textContent = !boxy ? "Drop to place " + cvDrag.name + " as a boundary"
-      : info.into.length ? "Drop: " + saidInto(info.into)
-      : "Drop: on the sheet, in no boundary";
-    tip.hidden = false;
-    tip.style.left = Math.min(e.clientX + 16, window.innerWidth - tip.offsetWidth - 8) + "px";
-    tip.style.top = Math.min(e.clientY + 20, window.innerHeight - tip.offsetHeight - 8) + "px";
-  }
-
-  function canvasDrop(e) {
-    if (!cv || !cvDrag) return;
-    e.preventDefault();
-    var item = cvDrag;
-    cvDrag = null;
-    var boxy = item.kind === "part" || item.kind === "system";
-    var info = boxy ? canvasDropInfo(e) : { into: [], group: null };
-    clearCanvasDrop();
-    var r = $("cy").getBoundingClientRect(), z = state.cy ? state.cy.zoom() : 1, pan = state.cy ? state.cy.pan() : { x: 0, y: 0 };
-    canvasPlace(item, info.into, { x: e.clientX, y: e.clientY, group: info.group ? info.group.id() : null,
-      mx: (e.clientX - r.left - pan.x) / z, my: (e.clientY - r.top - pan.y) / z });
-  }
-
-  /* Where something lands, said: an account names its cloud already, so the
-   * cloud is left out of the words though not out of the record. */
-  function saidInto(into) {
-    var fields = into.map(function (i) { return i.field; });
-    return into.filter(function (i) {
-      return !(i.field === "cloud_provider" && fields.indexOf("cloud_account") !== -1);
-    }).map(function (i) { return i.label; }).join(", ");
-  }
-
-  /* A new record's name, asked where it was dropped before it is made: the
-   * id is made from the name, and a name typed afterward would leave a
-   * Lending portal filed as SYS-WEB-APPLICATION. */
-  function askPartName(item, into, at) {
-    closeContextMenu();
-    var menu = el("div", { class: "ctx-menu connect-menu cv-name-menu", id: "ctxMenu", role: "dialog",
-      "aria-label": "Name the new " + item.typeLabel });
-    menu.appendChild(el("div", { class: "ctx-head", text: "A new " + item.typeLabel + ", from " + item.name }));
-    var where = saidInto(into);
-    menu.appendChild(el("p", { class: "connect-ask", text: where ? "In " + where + "." : "On the sheet, in no boundary." }));
-    var input = el("input", { type: "text", class: "connect-input", "aria-label": "Its name" });
-    input.value = item.name;
-    function go() {
-      var name = input.value.trim();
-      if (!name) { input.focus(); return; }
-      closeContextMenu();
-      var named = {};
-      Object.keys(item).forEach(function (k) { named[k] = item[k]; });
-      named.named = name;
-      canvasPlace(named, into, at);
-    }
-    input.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") { e.preventDefault(); go(); }
-      if (e.key === "Escape") { e.preventDefault(); closeContextMenu(); }
-    });
-    // A name the estate already has is a thing that may exist already: the
-    // whole point is to place it rather than make it twice.
-    var same = el("p", { class: "cv-same", hidden: "hidden" });
-    function twin() {
-      var said = input.value.trim().toLowerCase();
-      var found = said && (state.index || []).filter(function (i) {
-        return i.type === item.type && String(i.name || "").toLowerCase() === said;
-      })[0];
-      same.textContent = "";
-      same.hidden = !found;
-      if (!found) return;
-      same.appendChild(el("span", { text: "The estate has " + articled(item.typeLabel) + " called " + found.name + " already. " }));
-      same.appendChild(el("button", { type: "button", class: "cv-link", text: "Place that one", onclick: function () {
-        closeContextMenu();
-        canvasPlace({ kind: "system", id: found.id, name: found.name }, into, at);
-      } }));
-      same.appendChild(el("span", { text: " Placing a new one names it " + found.name + " 2." }));
-    }
-    input.addEventListener("input", twin);
-    menu.appendChild(el("label", { class: "cv-name-label", text: "Its name" }));
-    menu.appendChild(input);
-    menu.appendChild(same);
-    menu.appendChild(el("div", { class: "connect-acts" }, [
-      el("button", { type: "button", class: "btn small", text: "Cancel", onclick: closeContextMenu }),
-      el("button", { type: "button", class: "btn small primary", text: "Place it", onclick: go }),
-    ]));
-    twin();
-    placeChooser(menu, at ? at.x : undefined, at ? at.y : undefined);
-    input.focus();
-    input.select();
-  }
-
-  /* Placing: a part is a new record, a system is pinned, a view or an
-   * account or a zone is a place on the diagram's file. Every one saves and
-   * redraws, and selects what was placed. */
-  function canvasPlace(item, into, at) {
-    if (!cv) return;
-    closeCanvasPicker();
-    var mine = cv;
-    if (item.kind === "part" && !item.named) {
-      askPartName(item, into || [], at);
-      return;
-    }
-    if (item.kind === "part") {
-      setCanvasStatus("saving");
-      api("/api/canvas/record", { part: item.id, into: into || [], name: item.named }).then(function (res) {
-        if (cv !== mine) return null;
-        cv.made[res.id] = res.part;
-        cv.focus = { id: res.id };
-        pinsOf().push(res.id);
-        if (at && at.group) canvasDropAt(res.id, at.group, { x: at.mx, y: at.my });
-        return loadIndex().then(canvasSave).then(canvasDraw).then(function () {
-          canvasSelect({ kind: "record", id: res.id });
-          var where = saidInto(into || []);
-          toast("ok", "Placed " + res.name, (where ? "In " + where + ". " : "") + "Saved in " + res.path + ".");
-        });
-      }).catch(function (err) { if (cv === mine) setCanvasStatus("failed", err.message); });
-      return;
-    }
-    if (item.kind === "system") {
-      if (pinsOf().indexOf(item.id) !== -1 || drawnHere(item.id)) {
-        toast("ok", item.name + " is on it already");
-        canvasSelect({ kind: "record", id: item.id });
-        return;
-      }
-      pinsOf().push(item.id);
-      cv.focus = { id: item.id };
-      if (at && at.group) canvasDropAt(item.id, at.group, { x: at.mx, y: at.my });
-      canvasSave().then(canvasDraw).then(function () {
-        canvasSelect({ kind: "record", id: item.id });
-        // Dropped into a boundary it does not sit in: that is a change to
-        // the record, so it is asked, as a drag between boundaries is.
-        if (at && at.group && state.cy) {
-          var g = state.cy.getElementById(at.group), n = state.cy.getElementById(item.id);
-          if (g.length && n.length && !n.ancestors().contains(g)) {
-            canvasDropAt(item.id, at.group, { x: at.mx, y: at.my });
-            openRegroupChooser(item.id, g, at.x, at.y);
-          }
-        }
-      }).catch(fail);
-      return;
-    }
-    var places = placesOf();
-    var index;
-    if (item.kind === "view") {
-      index = indexOfPlace(item.id);
-      if (index !== -1) {
-        toast("ok", item.name + " is placed already");
-        canvasSelect({ kind: "place", index: index });
-        return;
-      }
-      places.push({ view: item.id });
-      index = places.length - 1;
-    } else {
-      var net = cv.parts.network;
-      var field = item.kind === "account" ? "cloud_account" : "network_zone";
-      index = indexOfPlace(net);
-      if (index === -1) {
-        var only = {};
-        only[field] = [item.value];
-        places.push({ view: net, only: only });
-        index = places.length - 1;
-      } else {
-        var p = places[index];
-        if (p.only && p.only[field]) {
-          if (p.only[field].indexOf(item.value) === -1) p.only[field].push(item.value);
-        } else if (p.leave_out && (p.leave_out[field] || []).indexOf(item.value) !== -1) {
-          p.leave_out[field] = p.leave_out[field].filter(function (v) { return v !== item.value; });
-          if (!p.leave_out[field].length) delete p.leave_out[field];
-          if (!Object.keys(p.leave_out).length) delete p.leave_out;
-        } else {
-          toast("ok", item.name + " is on it already", "It is part of " + placeTitle(p) + ", which is placed.");
-          canvasSelect({ kind: "place", index: index });
-          return;
-        }
-      }
-    }
-    canvasSave().then(canvasDraw).then(function () { canvasSelect({ kind: "place", index: index, stay: true }); }).catch(fail);
-  }
+  /* ---- the canvas ----------------------------------------------------------
+   * In canvas/canvas.js, loaded after this file and before boot, which fills
+   * this object with what the rest of the app calls: `Canvas.open`,
+   * `Canvas.draw` and the rest, and `Canvas.cv`, the canvas open now or null,
+   * read live, since the canvas replaces it as diagrams open and close. The
+   * canvas takes what it needs of this file from `window.TerraneApp`, below. */
+  var Canvas = {};
 
   /* ---- the view composer ---------------------------------------------------
    * A view is a query, and this is the query in parts: what it shows, what it
@@ -8388,6 +7228,7 @@
     company_domain: "business domain", data_classification_supported: "highest data classification",
     system_category: "category", node_label: "box labels", order_by: "order", group_direction: "box direction",
     render_for: "which subjects it is drawn for", parameters: "a subject to choose", lanes: "lanes",
+    up: "the level above it",
     owner_org_id: "owner", capability_tier: "tier", capability_level: "level",
   };
 
@@ -8965,6 +7806,9 @@
   function fitSheet(cy, pad) {
     if (!cy || cy.destroyed()) return;
     var bb = cy.elements().boundingBox({ includeLabels: false });
+    // A diagram's own shapes, drawn over it by maxGraph, are the drawing
+    // too: the whole drawing is the whole of both (canvas/engine.js).
+    if (Canvas.engine && Canvas.engine.live()) bb = Canvas.engine.around(bb);
     if (!(bb.w > 0) || !(bb.h > 0)) { cy.fit(undefined, pad || 24); return; }
     var clear = clearSheet(cy, pad);
     var z = Math.min(clear.w / bb.w, clear.h / bb.h, cy.maxZoom());
@@ -9321,7 +8165,8 @@
   }
 
   function showPanel(on) {
-    if (on) leaveCanvas();
+    if (on) Canvas.leave();
+    if (drw && !(on && state.panel === "adopt")) dropDrawing();
     // The panel replaces the working area rather than sharing it: a table of
     // 36 columns next to an inspector is a table nobody can read.
     $("dataPanel").hidden = !on;
@@ -10371,6 +9216,7 @@
     "types.required_part": "Products missing a part their build type requires",
     "types.included_part": "Products that dropped a part their build type includes",
     "view.truncated": "Views that hit their node budget",
+    "view.past_limit": "Reports listing more than their limit",
     "model.load": "Rows the loader had to drop",
     "library.shape_candidate": "Hand-written products a shape would reproduce",
     "library.unused_part": "Parts no product composes",
@@ -10726,7 +9572,7 @@
         el("button", { class: "btn", type: "button", disabled: readOnly ? "disabled" : null, onclick: function () { openSettings("sources"); } },
           [svgIcon("i-upload"), el("span", { text: "Import" })]),
         el("button", { class: "btn primary", type: "button", disabled: readOnly ? "disabled" : null,
-          onclick: function () { openCanvas(null); } }, [svgIcon("i-plus"), el("span", { text: "New diagram" })]),
+          onclick: function () { Canvas.open(null); } }, [svgIcon("i-plus"), el("span", { text: "New diagram" })]),
       ]),
     ]));
 
@@ -10832,7 +9678,7 @@
         el("button", { class: "btn", type: "button", id: "galleryImport", disabled: readOnly ? "disabled" : null,
           onclick: function () { openSettings("sources"); } }, [svgIcon("i-upload"), el("span", { text: "Import" })]),
         el("button", { class: "btn primary", type: "button", id: "galleryNew", disabled: readOnly ? "disabled" : null,
-          onclick: function () { openCanvas(null, state.homeLayer); } }, [svgIcon("i-plus"), el("span", { text: "New diagram" })]),
+          onclick: function () { Canvas.open(null, state.homeLayer); } }, [svgIcon("i-plus"), el("span", { text: "New diagram" })]),
       ]),
     ]));
 
@@ -13711,7 +12557,7 @@
   }
 
   function onTourDrawing() {
-    return !state.panel && !cv && state.viewId === TOUR_VIEW && !!state.cy && !state.cy.destroyed() && !tilesShown();
+    return !state.panel && !Canvas.cv && state.viewId === TOUR_VIEW && !!state.cy && !state.cy.destroyed() && !tilesShown();
   }
 
   // The box step 3 points at: the sample's Card Servicing Web, or if an
@@ -13810,7 +12656,7 @@
       },
       prepare: function () {},
       target: function () { return shownRect(newDiagramRow()) || shownRect($("btnNew")); },
-      done: function () { return readOnlyCopy() ? !$("newMenu").hidden : !!cv; },
+      done: function () { return readOnlyCopy() ? !$("newMenu").hidden : !!Canvas.cv; },
       act: function () {
         if ($("newMenu").hidden) toggleNewMenu();
         if (!readOnlyCopy()) setTimeout(function () { var row = newDiagramRow(); if (row) row.click(); }, 450);
@@ -14288,7 +13134,9 @@
    * New product on the home page) are this one menu now. */
   var NEW_ITEMS = [
     ["i-grid", "Diagram", "Draw it: place parts from the library and what the estate already has.",
-      function () { openCanvas(null); }],
+      function () { Canvas.open(null); }],
+    ["i-file-up", "Diagram from a drawing", "A Visio, draw.io or ArchiMate file you have: its boxes become records, "
+      + "each page a diagram.", function () { chooseDrawing("canvas"); }],
     ["i-app-window", "System", "An application or service, with its owner and where it runs.",
       function () { openEntityEditor("systems", null, null); }],
     ["i-arrows", "Connection", "An interface between two systems, and what crosses it.",
@@ -15200,7 +14048,7 @@
       } else if (missing.length && !readOnly) {
         acts.appendChild(el("button", { class: "btn primary", type: "button", onclick: function () { openSettings("sources"); } },
           [svgIcon("i-file-up"), el("span", { text: "Bring in an export" })]));
-        acts.appendChild(el("button", { class: "btn", type: "button", text: "Draw on a canvas", onclick: function () { openCanvas(null); } }));
+        acts.appendChild(el("button", { class: "btn", type: "button", text: "Draw on a canvas", onclick: function () { Canvas.open(null); } }));
       }
       acts.appendChild(el("button", { class: "btn", type: "button", text: "What every diagram needs", onclick: function () { openNeeds(); } }));
       host.appendChild(acts);
@@ -15735,15 +14583,16 @@
       ]));
     };
     step(1, "Bring in your inventory", "A CSV or Excel export from the portfolio tool or the CMDB: names, owners, a "
-      + "lifecycle. You see every record it would add before anything is written.", true,
-      readOnly ? [] : [dropZone(), el("button", { class: "linkish small", type: "button", text: "A folder of metamodel CSVs instead",
+      + "lifecycle. A drawing kept in Visio or draw.io comes in the same way, each page a diagram. You see every record "
+      + "it would add before anything is written.", true,
+      readOnly ? [] : [dropZone("home"), el("button", { class: "linkish small", type: "button", text: "A folder of metamodel CSVs instead",
         onclick: openImport })]);
     step(2, "See what the diagrams need", "Each diagram reads a few fields: Tiered Architecture a network zone, the "
       + "landscape a business domain. Once the records are in, the list says which and how many lack each, and sets one "
       + "on many records at once.", false, [el("button", { class: "btn small", type: "button", text: "What the diagrams need",
         onclick: function () { openNeeds(); } })]);
     step(3, "Draw", "New diagram places what the estate has, and parts from the library, on a canvas.", false,
-      readOnly ? [] : [el("button", { class: "btn small", type: "button", text: "New diagram", onclick: function () { openCanvas(null); } })]);
+      readOnly ? [] : [el("button", { class: "btn small", type: "button", text: "New diagram", onclick: function () { Canvas.open(null); } })]);
     side.appendChild(el("h2", { text: "Where it is" }));
     side.appendChild(el("p", { class: "st-lede", text: ((o.estate && o.estate.path) || "This folder")
       + ", with model.yaml, a README and an ignore file. Commit it, and push it to the repository your team keeps it in." }));
@@ -15834,7 +14683,8 @@
     main.appendChild(el("div", { class: "st-sec-head" }, [
       el("h2", { text: "Bring in an export" }),
       el("p", { class: "st-lede", text: "A CSV or Excel file from another tool: an application portfolio, an "
-        + "inventory, a CMDB extract. Nothing is written until you have seen what it would change." }),
+        + "inventory, a CMDB extract; or a drawing kept in Visio or draw.io. Nothing is written until you have seen "
+        + "what it would change." }),
     ]));
     if (readOnly) {
       main.appendChild(el("p", { class: "st-callout", text: "This is a read-only copy of the app. Bringing in an "
@@ -15891,20 +14741,24 @@
     n.textContent = state.sourcesCount ? String(state.sourcesCount) : "";
   }
 
-  function dropZone() {
-    var input = el("input", { type: "file", accept: ".csv,.xlsx", class: "sr-only", tabindex: "-1" });
-    input.addEventListener("change", function () { if (input.files && input.files[0]) readUpload(input.files[0]); });
+  /* `from` is where a drawing dropped here goes back to: Sources, or the
+   * first hour's Home. */
+  function dropZone(from) {
+    from = from || "sources";
+    var input = el("input", { type: "file", accept: READERS.exports.concat(Object.keys(READERS.drawings)).join(","),
+      class: "sr-only", tabindex: "-1" });
+    input.addEventListener("change", function () { if (input.files && input.files[0]) takeFile(input.files[0], from); });
     var drop = el("div", { class: "drop", tabindex: "0", role: "button",
-      "aria-label": "Choose a CSV or Excel file to bring in" }, [
+      "aria-label": "Choose an export or a drawing to bring in" }, [
       el("span", { class: "drop-badge" }, [svgIcon("i-file-up")]),
-      el("strong", { text: "Drop a CSV or Excel file here" }),
+      el("strong", { text: "Drop an export or a drawing here" }),
       el("span", { class: "drop-or" }, [
         el("span", { text: "or" }),
         el("button", { type: "button", class: "btn small", onclick: function (e) { e.stopPropagation(); input.click(); } },
           [svgIcon("i-folder-open"), el("span", { text: "Choose a file" })]),
       ]),
-      el("span", { class: "drop-hint", text: ".csv or .xlsx. A workbook's first sheet with a header row is read, "
-        + "and you can pick another." }),
+      el("span", { class: "drop-hint", text: "A .csv or .xlsx export comes in through its columns. A Visio, draw.io or "
+        + "ArchiMate file is read as a drawing, each page a diagram." }),
       input,
     ]);
     drop.addEventListener("click", function () { input.click(); });
@@ -15920,7 +14774,7 @@
     drop.addEventListener("drop", function (e) {
       e.preventDefault();
       var file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
-      if (file) readUpload(file);
+      if (file) takeFile(file, from);
     });
     return drop;
   }
@@ -16517,6 +15371,390 @@
     }).catch(function (err) { toast("err", "Could not bring it in", err.message); });
   }
 
+  // ---- A drawing brought in -------------------------------------------------
+  /* A Visio or draw.io file a team already has, or any drawing the engine's
+   * readers take, dropped on the canvas or on Sources and adopted as
+   * records, as `terrane adopt FILE` does (aac.join). The page shows what
+   * adopting it would add, drawn against the estate by the engine (the
+   * picture `terrane adopt --picture` writes, without its title block), asks
+   * who owns what the drawing names no owner for, offers to correct what the
+   * estate has and the drawing says differently, and writes nothing until
+   * Adopt. Each page of the drawing then opens on the canvas, its boxes the
+   * records. */
+
+  //: What the engine's readers take, by suffix, as the server says
+  //: (`/api/adopt/readers`, from `aac.quick.READERS`): a reader added there
+  //: is taken by every drop zone and file chooser here with no change to
+  //: the app. A CSV or a workbook is an export, and goes through Sources'
+  //: columns and words instead.
+  var READERS = { drawings: {}, exports: [".csv", ".xlsx"] };
+  //: The drawing on the page, or null: its file, where it was dropped, the
+  //: server's answer, and what the person chose.
+  var drw = null;
+
+  function suffixOf(name) {
+    var m = /\.[^.]+$/.exec(String(name || ""));
+    return m ? m[0].toLowerCase() : "";
+  }
+
+  function isDrawing(name) { return Object.prototype.hasOwnProperty.call(READERS.drawings, suffixOf(name)); }
+
+  function drawingAccept() { return Object.keys(READERS.drawings).join(","); }
+
+  function loadReaders() {
+    return api("/api/adopt/readers").then(function (r) {
+      READERS = r;
+      $("cvFile").setAttribute("accept", drawingAccept());
+      Array.prototype.forEach.call(document.querySelectorAll(".drop input[type=file]"), function (input) {
+        input.setAttribute("accept", READERS.exports.concat(Object.keys(READERS.drawings)).join(","));
+      });
+    }).catch(function () {});
+  }
+
+  /* A file dropped or chosen anywhere the app takes one: a drawing to its
+   * page, an export to Sources' steps. */
+  function takeFile(file, from) {
+    if (window.__AAC_STATIC__) {
+      toast("warn", "Bringing a file in needs the local app", "The published copy is read-only.");
+      return;
+    }
+    if (READERS.exports.indexOf(suffixOf(file.name)) !== -1) { readUpload(file); return; }
+    if (isDrawing(file.name)) { readDrawing(file, from); return; }
+    toast("warn", "Not a file terrane reads", file.name + " is neither a drawing nor an export. Drawings: "
+      + Object.keys(READERS.drawings).join(", ") + ". Exports: " + READERS.exports.join(", ") + ".");
+  }
+
+  function chooseDrawing(from) {
+    if (window.__AAC_STATIC__) { takeFile({ name: "" }, from); return; }
+    var input = $("cvFile");
+    input.onchange = function () {
+      var file = input.files && input.files[0];
+      input.value = "";
+      if (file) takeFile(file, from);
+    };
+    input.click();
+  }
+
+  function readDrawing(file, from) {
+    if (file.size > 25 * 1024 * 1024) {
+      toast("warn", file.name + " is too large to read here", "A drawing of more than 25 MB is read with terrane adopt.");
+      return;
+    }
+    // A file dropped on a diagram being drawn goes back to that diagram.
+    var mine = { file: file.name, from: from || "canvas", back: from === "canvas" && Canvas.cv ? Canvas.cv.id : null,
+      answer: null, owner: "", correct: false, busy: true };
+    var reader = new FileReader();
+    reader.onload = function () {
+      var data = String(reader.result || "").replace(/^data:[^,]*,/, "");
+      openDrawingPage(mine);
+      // A reader can take tens of seconds; past a few, the page says it is
+      // still at it rather than look stuck.
+      setTimeout(function () { if (drw === mine && mine.busy) { mine.slow = true; renderDrawing(); } }, 6000);
+      api("/api/adopt/read", { name: file.name, data: data }).then(function (answer) {
+        if (drw !== mine) { discardDrawing(answer.token); return; }
+        mine.answer = answer;
+        mine.busy = false;
+        renderDrawing();
+      }).catch(function (err) {
+        if (drw !== mine) return;
+        // Said where the picture would be, plainly, with the way back: a
+        // reader that wants a key it was not given says so here.
+        mine.busy = false;
+        mine.error = err.message;
+        renderDrawing();
+      });
+    };
+    reader.onerror = function () { toast("err", "Could not read " + file.name, "The browser could not open the file."); };
+    reader.readAsDataURL(file);
+  }
+
+  function openDrawingPage(d) {
+    drw = d;
+    state.panel = "adopt";
+    showPanel(true);
+    syncUrl();
+    renderDrawing();
+  }
+
+  function discardDrawing(token) {
+    if (token) api("/api/adopt/discard", { token: token }).catch(function () {});
+  }
+
+  /* The drawing let go: its upload removed from where it was staged. Any
+   * page opened over this one lets it go, so nothing is left staged. */
+  function dropDrawing() {
+    var d = drw;
+    drw = null;
+    if (!d) return;
+    if (d.answer) discardDrawing(d.answer.token);
+  }
+
+  /* Back where the drawing was dropped. */
+  function leaveDrawing() {
+    var from = drw ? drw.from : "canvas", back = drw ? drw.back : null;
+    dropDrawing();
+    if (from === "sources") openSettings("sources");
+    else if (from === "home") openStart();
+    else Canvas.open(back || null);
+  }
+
+  function rereadDrawing() {
+    var d = drw;
+    d.busy = true;
+    renderDrawing();
+    api("/api/adopt/read", { token: d.answer.token, owner: d.owner || null, correct: d.correct }).then(function (answer) {
+      if (drw !== d) return;
+      d.answer = answer;
+      d.busy = false;
+      renderDrawing();
+    }).catch(function (err) {
+      if (drw !== d) return;
+      d.busy = false;
+      renderDrawing();
+      toast("err", "Could not draw the change", err.message);
+    });
+  }
+
+  function kindsText(byType) {
+    var parts = Object.keys(byType || {}).filter(function (k) { return byType[k].length; }).map(function (k) {
+      var n = byType[k].length;
+      return n + " " + plural(n, typeWord(k));
+    });
+    return parts.length > 1 ? parts.slice(0, -1).join(", ") + " and " + parts[parts.length - 1] : parts.join("");
+  }
+
+  function countOf(byType) {
+    return Object.keys(byType || {}).reduce(function (n, k) { return n + byType[k].length; }, 0);
+  }
+
+  function listed(words) {
+    return words.length > 1 ? words.slice(0, -1).join(", ") + " and " + words[words.length - 1] : words.join("");
+  }
+
+  /* A correction as the engine says it (`ACT-MERCHANT actor_kind: Organization
+   * -> Person`), in the words of the page: the record's name and the field's. */
+  function changeText(line, names) {
+    var m = /^(\S+) ([a-z_]+): (.*) -> (.*?)(, under the overrides of \S+)?$/.exec(line);
+    if (!m) return line;
+    return (names[m[1]] || m[1]) + ": " + fieldWord(m[2]) + ", " + m[3] + " \u2192 " + m[4];
+  }
+
+  function drawingLede(a) {
+    var pages = a.views.adds.length + a.views.same.length;
+    return capFirst(a.readAs) + (pages > 1 ? " of " + pages + " pages" : "") + ", drawn against the estate: what "
+      + "adopting it adds, in full, among what is here already, faded. Nothing is written until you adopt it.";
+  }
+
+  function renderDrawing() {
+    var d = drw;
+    if (!d) return;
+    var a = d.answer;
+    var crumb = d.from === "sources" ? [
+      el("button", { type: "button", text: "Settings", onclick: function () { openSettings("sources"); } }),
+      el("span", { class: "sep", text: "/" }),
+      el("button", { type: "button", text: "Sources", onclick: leaveDrawing }),
+    ] : d.from === "home" ? [
+      el("button", { type: "button", text: "Home", onclick: leaveDrawing }),
+    ] : [
+      el("button", { type: "button", text: "Diagrams", onclick: function () { openDiagrams("All"); } }),
+      el("span", { class: "sep", text: "/" }),
+      el("button", { type: "button", text: d.back ? ((state.overview && state.overview.views || []).filter(function (v) {
+        return v.viewId === d.back; })[0] || { title: d.back }).title : "New diagram", onclick: leaveDrawing }),
+    ];
+    crumb.push(el("span", { class: "sep", text: "/" }), el("span", { text: "From a drawing" }));
+    var shell = settingsShell(d.file, a ? drawingLede(a) : d.error ? "Nothing has been written to the estate."
+      : "Reading the drawing, and drawing what it would add\u2026", crumb);
+    shell.page.classList.add("adopt");
+    if (a) {
+      var pages = a.views.adds.length + a.views.same.length;
+      // "draw.io" is the tool's own name and keeps its small letter.
+      var kind = a.readAs.replace(/^an? /, "");
+      shell.head.appendChild(el("span", { class: "adopt-chip" }, [svgIcon("i-file-up"), el("span", {
+        text: (/^draw\.io/.test(kind) ? kind : capFirst(kind)) + (pages ? " \u00b7 " + pages + " " + plural(pages, "page") : "") })]));
+    }
+    var body = el("div", { class: "st-body flow" });
+    shell.page.appendChild(body);
+    var main = el("div", { class: "st-main" }), side = el("aside", { class: "st-side" });
+    body.appendChild(main);
+    body.appendChild(side);
+    var bar = el("div", { class: "src-bar" });
+    shell.page.appendChild(bar);
+    if (!a) {
+      main.appendChild(d.error
+        ? el("figure", { class: "adopt-picture" }, [el("div", { class: "adopt-failed" }, [
+            svgIcon("i-circle-alert"),
+            el("strong", { text: "This file could not be read, and nothing was written" }),
+            el("p", { text: d.error }),
+          ])])
+        : el("figure", { class: "adopt-picture is-busy" }, [el("div", { class: "adopt-busy" }, [
+            el("strong", { text: "Reading " + d.file + "\u2026" }),
+            d.slow ? el("span", { text: "Still reading. Some files take a minute." }) : null,
+          ])]));
+      drawingBar(bar, d);
+      return;
+    }
+    main.appendChild(drawingPicture(d));
+    var names = {};
+    ["adds", "same", "differs"].forEach(function (k) {
+      Object.keys(a[k]).forEach(function (t) { a[k][t].forEach(function (r) { names[r.id] = r.name; }); });
+    });
+    if (a.views.adds.length) {
+      var row = el("div", { class: "adopt-pages" }, [el("span", { class: "say",
+        text: a.views.adds.length === 1 ? "Its page becomes a diagram:" : "Its " + a.views.adds.length + " pages become diagrams:" })]);
+      a.views.adds.forEach(function (v) {
+        row.appendChild(el("span", { class: "adopt-page" }, [svgIcon("i-grid"), el("strong", { text: v.title }),
+          v.things ? el("span", { text: v.things + " " + plural(v.things, "thing") }) : null]));
+      });
+      main.appendChild(row);
+    }
+    if (a.views.same.length) {
+      main.appendChild(el("p", { class: "st-hint", text: "A diagram of this name is here already and is left as it is: "
+        + listed(a.views.same.map(function (v) { return v.title; })) + "." }));
+    }
+    var notes = a.notes.filter(function (n, i) { return !(i === 0 && /^read /.test(n)); }).concat(a.adoptNotes || []);
+    if (notes.length) {
+      main.appendChild(el("div", { class: "src-notes" }, [el("h3", { text: "Notes from reading it" })].concat(
+        notes.map(function (n) { return el("p", { text: capFirst(n) }); }))));
+    }
+
+    var added = countOf(a.adds), same = countOf(a.same), differs = countOf(a.differs);
+    var counts = el("div", { class: "adopt-counts" });
+    var count = function (n, label, sub, accent) {
+      counts.appendChild(el("div", { class: "adopt-count" + (accent ? " accent" : "") }, [
+        el("strong", { text: String(n) }),
+        el("span", { class: "words" }, [el("span", { class: "label", text: label }), sub ? el("span", { class: "sub", text: sub }) : null]),
+      ]));
+    };
+    count(added, plural(added, "record") + " added", added ? kindsText(a.adds) : "everything it draws is here already", true);
+    if (a.rows.adds) {
+      count(a.rows.adds, plural(a.rows.adds, "relation") + " added", capFirst(listed(Object.keys(a.rows.by || {}).map(edgeWord))));
+    }
+    if (same + differs) {
+      var differing = Object.keys(a.differs).reduce(function (out, t) { return out.concat(a.differs[t].map(function (r) { return r.name; })); }, []);
+      count(same + differs, "here already", !differs ? "left as they are"
+        : differs === 1 ? differing[0] + ", which the drawing says differently"
+        : differs + " of them the drawing says differently");
+    }
+    side.appendChild(counts);
+
+    if (a.unowned) {
+      var pick = el("select", { class: "st-input", "aria-label": "Who owns them" });
+      pick.appendChild(el("option", { value: "", text: "No one yet: a placeholder" }));
+      a.owners.forEach(function (o) { pick.appendChild(el("option", { value: o.id, text: o.name })); });
+      pick.value = d.owner;
+      pick.addEventListener("change", function () { d.owner = pick.value; drawingBar(bar, d); });
+      side.appendChild(el("div", { class: "st-note-block adopt-block" }, [
+        el("h3", {}, [svgIcon("i-users"), el("span", { text: "Who owns them" })]),
+        el("p", { text: "The drawing names no owner for " + a.unowned + " " + plural(a.unowned, "record") + " it adds. "
+          + (a.owners.length ? "Until you choose one, a placeholder stands in."
+            : "The estate has no org units yet, so a placeholder owns them until it has.") }),
+        a.owners.length ? pick : null,
+      ]));
+    }
+    if (differs) {
+      var box = el("input", { type: "checkbox", id: "adoptCorrect", checked: d.correct ? "checked" : null,
+        disabled: d.busy ? "disabled" : null });
+      box.addEventListener("change", function () { d.correct = box.checked; rereadDrawing(); });
+      side.appendChild(el("div", { class: "st-note-block adopt-block" }, [
+        el("h3", {}, [svgIcon("i-compare"), el("span", { text: "Here already, said differently" })]),
+        el("ul", { class: "adopt-changes" }, a.changes.map(function (c) { return el("li", { text: changeText(c, names) }); })),
+        el("label", { class: "st-check", for: "adoptCorrect" }, [box,
+          el("strong", { text: "Correct " + (differs === 1 ? "it" : "them") + " to what the drawing says" })]),
+      ]));
+    }
+    if (a.views.adds.length) {
+      var titles = a.views.adds.map(function (v) { return v.title; });
+      side.appendChild(el("div", { class: "st-note-block adopt-block" }, [
+        el("h3", {}, [svgIcon("i-grid"), el("span", { text: titles.length === 1 ? "Its page, a diagram" : "Each page, a diagram" })]),
+        el("p", { text: listed(titles) + (titles.length === 1 ? " opens" : " open") + " on the canvas with the records as "
+          + "their boxes, to arrange and add to like any diagram drawn there." }),
+      ]));
+    }
+    drawingBar(bar, d);
+  }
+
+  function drawingPicture(d) {
+    var a = d.answer;
+    var box = el("figure", { class: "adopt-picture" + (d.busy ? " is-busy" : "") });
+    if (a.picture) {
+      // Served by the app, as the engine drew it for this owner and choice.
+      // A wide drawing is small in the column; the picture opens full size.
+      box.appendChild(el("a", { class: "adopt-drawing", href: a.picture, target: "_blank", rel: "noopener",
+        title: "Open it full size" }, [el("img", { src: a.picture, alt: a.pictureTitle || "" })]));
+      var key = el("figcaption", { class: "adopt-key" });
+      [["new", "New, drawn in full"], ["here", "Here already, faded"]].concat(
+        a.correct && countOf(a.differs) ? [["heavy", "Said differently, a heavy border"]] : []).forEach(function (k) {
+        key.appendChild(el("span", { class: "adopt-key-item" }, [el("i", { class: "sw " + k[0] }), el("span", { text: k[1] })]));
+      });
+      key.appendChild(el("span", { class: "grow" }));
+      key.appendChild(el("a", { class: "linkish", href: a.picture, target: "_blank", rel: "noopener", text: "Open it full size" }));
+      box.appendChild(key);
+    } else {
+      box.appendChild(el("p", { class: "adopt-nothing", text: capFirst(a.pictureWhy || "There is nothing to draw.") + "." }));
+    }
+    if (d.busy) box.appendChild(el("p", { class: "adopt-busy", text: "Drawing the change\u2026" }));
+    return box;
+  }
+
+  function drawingBar(bar, d) {
+    bar.textContent = "";
+    var a = d.answer;
+    var added = a ? countOf(a.adds) : 0, differs = a ? countOf(a.differs) : 0;
+    var more = a ? a.rows.adds + a.views.adds.length : 0;
+    var label = !a ? (d.error ? "Nothing to adopt" : "Adopt") : added && d.correct && differs ? "Adopt " + added + " and correct " + differs
+      : added ? "Adopt " + added + " " + plural(added, "record")
+      : d.correct && differs ? "Correct " + differs + " " + plural(differs, "record")
+      : more ? "Adopt it" : "Nothing to adopt";
+    var can = !!a && !d.busy && (added || more || (d.correct && differs));
+    bar.appendChild(el("button", { type: "button", class: "btn", onclick: leaveDrawing },
+      [svgIcon("i-arrow-left"), el("span", { text: "Back" })]));
+    bar.appendChild(el("span", { class: "grow" }));
+    bar.appendChild(el("span", { class: "st-hint", text: "Nothing is written yet" }));
+    bar.appendChild(el("button", { type: "button", class: "btn", text: "Cancel", onclick: leaveDrawing }));
+    bar.appendChild(el("button", { type: "button", class: "btn primary", id: "adoptGo", disabled: can ? null : "disabled",
+      onclick: adoptDrawing }, [el("span", { text: label }), svgIcon("i-arrow-down-to-line")]));
+  }
+
+  function adoptDrawing() {
+    var d = drw;
+    if (!d || !d.answer || d.busy) return;
+    d.busy = true;
+    renderDrawing();
+    api("/api/adopt/write", { token: d.answer.token, owner: d.owner || null, correct: d.correct }).then(function (res) {
+      // The upload is let go by the server once adopted: nothing to discard.
+      drw = null;
+      var total = Object.keys(res.added).reduce(function (n, k) { return n + res.added[k]; }, 0);
+      var fixed = Object.keys(res.corrected).reduce(function (n, k) { return n + res.corrected[k]; }, 0);
+      var pages = res.views;
+      var said = [];
+      if (pages.length) {
+        said.push((pages.length === 1 ? "Its page is a diagram now: " : "Its " + pages.length + " pages are diagrams now: ")
+          + listed(pages.map(function (v) { return v.title; })) + ".");
+      }
+      if (fixed) said.push("Corrected " + fixed + " " + plural(fixed, "record") + " already here.");
+      if (res.placeholder) said.push("A placeholder owns what the drawing named no owner for, until you set one.");
+      var newer = res.warnings - res.warningsBefore;
+      said.push(res.errors.length ? "Checks finds " + res.errors.length + " " + plural(res.errors.length, "error") + " to fix."
+        : newer > 0 ? "Nothing is wrong; " + newer + " new " + plural(newer, "warning") + " say what the records still lack."
+        : "Nothing is wrong.");
+      toast(res.errors.length ? "warn" : "ok", (total ? "Adopted " + total + " " + plural(total, "record") : "Adopted")
+        + " from " + d.file, said.join(" "),
+        pages.length > 1 ? { label: "Open " + pages[1].title, go: function () { Canvas.open(pages[1].id); } } : null);
+      // Where it goes next is the address, so the refresh that lists the
+      // new diagrams opens the first of them on the canvas, lit in the list.
+      if (pages.length) state.viewId = pages[0].id;
+      window.history.replaceState(null, "", pages.length ? "#draw=" + encodeURIComponent(pages[0].id)
+        : d.from === "sources" ? "#settings&tab=sources" : d.from === "home" ? "#home"
+        : "#draw" + (d.back ? "=" + encodeURIComponent(d.back) : ""));
+      return refresh();
+    }).catch(function (err) {
+      if (drw !== d) return;
+      d.busy = false;
+      renderDrawing();
+      toast("err", "Could not adopt " + d.file, err.message);
+    });
+  }
+
   // ---- Project, Connections, Appearance -------------------------------------
   function renderProjectTab(body) {
     var main = el("div", { class: "st-main" }), side = el("aside", { class: "st-side" });
@@ -16698,7 +15936,9 @@
       if (Object.keys(state.subject).length && wanted) state.viewId = wanted;
       renderViewList(o);
       loadIndex();
-      if (o.empty && !window.location.hash.replace(/^#(home)?$/, "")) {
+      // A tone in the address is how a capture asks for one; it named no
+      // other page, and an empty estate opened with it got the bare stage.
+      if (o.empty && !window.location.hash.replace(/&tone=[a-z]+/, "").replace(/^#(home)?$/, "")) {
         state.viewId = wanted;
         openStart();
       } else if (o.empty) {
@@ -16715,7 +15955,10 @@
         renderBrief();
       } else if (fromUrl.draw !== undefined) {
         // A refresh while drawing redraws the canvas rather than reopening it.
-        if (cv) canvasDraw(); else { state.viewId = wanted; openCanvas(fromUrl.draw || null); }
+        if (Canvas.cv) Canvas.draw(); else { state.viewId = wanted; Canvas.open(fromUrl.draw || null); }
+      } else if (fromUrl.adopt !== undefined) {
+        state.viewId = wanted;
+        if (drw) renderDrawing(); else Canvas.open(null);
       } else if (fromUrl.guide !== undefined) {
         state.viewId = wanted;
         openGuide();
@@ -16813,26 +16056,63 @@
       var listed = ((state.overview && state.overview.views) || []).filter(function (v) {
         return v.viewId === state.viewId;
       })[0];
-      if (listed && listed.canvas && !window.__AAC_STATIC__) { openCanvas(state.viewId); return; }
+      if (listed && listed.canvas && !window.__AAC_STATIC__) { Canvas.open(state.viewId); return; }
       openViewComposer(state.viewId);
     });
     $("btnFocusExit").addEventListener("click", exitFocus);
 
     // The canvas's tools, its empty state, and dropping onto the sheet.
     $("cvAdd").addEventListener("click", function () {
-      if ($("cvPicker").hidden || $("cvBoundary").getAttribute("aria-pressed") === "true") openCanvasPicker("all");
-      else closeCanvasPicker();
+      if ($("cvPicker").hidden || $("cvBoundary").getAttribute("aria-pressed") === "true") Canvas.openPicker("all");
+      else Canvas.closePicker();
     });
-    $("cvSelect").addEventListener("click", function () { setCanvasTool("select"); });
-    $("cvConnect").addEventListener("click", function () { setCanvasTool(cv && cv.tool === "connect" ? "select" : "connect"); });
+    $("cvSelect").addEventListener("click", function () { Canvas.setTool("select"); });
+    $("cvPan").addEventListener("click", function () { Canvas.setTool(Canvas.cv && Canvas.cv.tool === "pan" ? "select" : "pan"); });
     $("cvBoundary").addEventListener("click", function () {
-      if (!$("cvPicker").hidden && $("cvBoundary").getAttribute("aria-pressed") === "true") closeCanvasPicker();
-      else openCanvasPicker("estate", true);
+      if (!$("cvPicker").hidden && $("cvBoundary").getAttribute("aria-pressed") === "true") Canvas.closePicker();
+      else Canvas.openPicker("estate", true);
     });
-    $("cvFromLibrary").addEventListener("click", function () { openCanvasPicker("library"); });
-    $("cvFromEstate").addEventListener("click", function () { openCanvasPicker("estate"); });
-    $("mapSheet").addEventListener("dragover", canvasDragOver);
-    $("mapSheet").addEventListener("drop", canvasDrop);
+    // The tools that draw the diagram's own shapes (canvas/engine.js).
+    $("cvShapes").addEventListener("click", function () { Canvas.openShapes(); });
+    $("cvLine").addEventListener("click", function () { Canvas.openLines(); });
+    ["Text", "Note", "Frame"].forEach(function (name) {
+      var tool = name.toLowerCase();
+      $("cv" + name).addEventListener("click", function () {
+        Canvas.setTool(Canvas.cv && Canvas.cv.tool === tool ? "select" : tool);
+      });
+    });
+    $("cvUndo").addEventListener("click", function () { Canvas.undo(true); });
+    $("cvRedo").addEventListener("click", function () { Canvas.undo(false); });
+    $("cvFromLibrary").addEventListener("click", function () { Canvas.openPicker("library"); });
+    $("cvFromEstate").addEventListener("click", function () { Canvas.openPicker("estate"); });
+    $("cvFromDrawing").addEventListener("click", function () { chooseDrawing("canvas"); });
+    loadReaders();
+    // A file from the desktop, not a part from the picker: the picker's
+    // drag sets cvDrag, and the browser's own carries Files.
+    var carriesFile = function (e) {
+      var types = e.dataTransfer && e.dataTransfer.types;
+      return !!Canvas.cv && !Canvas.dragging && !!types && Array.prototype.indexOf.call(types, "Files") !== -1;
+    };
+    ["dragenter", "dragover"].forEach(function (name) {
+      $("mapSheet").addEventListener(name, function (e) {
+        if (!carriesFile(e)) return;
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "copy";
+        $("cvFileDrop").hidden = false;
+      });
+    });
+    $("mapSheet").addEventListener("dragleave", function (e) {
+      if (!$("mapSheet").contains(e.relatedTarget)) $("cvFileDrop").hidden = true;
+    });
+    $("mapSheet").addEventListener("drop", function (e) {
+      if (!carriesFile(e)) return;
+      e.preventDefault();
+      $("cvFileDrop").hidden = true;
+      var file = e.dataTransfer.files && e.dataTransfer.files[0];
+      if (file) takeFile(file, "canvas");
+    });
+    $("mapSheet").addEventListener("dragover", Canvas.dragOver);
+    $("mapSheet").addEventListener("drop", Canvas.drop);
     $("mapSheet").addEventListener("dragleave", function (e) {
       if (!$("mapSheet").contains(e.relatedTarget)) {
         if (state.cy) state.cy.nodes(".drop-into").removeClass("drop-into");
@@ -16843,7 +16123,7 @@
       var pick = $("cvPicker");
       if (pick.hidden || pick.contains(e.target) || $("cvAdd").contains(e.target)
           || $("cvBoundary").contains(e.target)) return;
-      closeCanvasPicker();
+      Canvas.closePicker();
     });
     $("btnHelp").addEventListener("click", openGuide);
     sketchLoad();
@@ -17067,8 +16347,7 @@
     $("scrim").addEventListener("click", closeDrawer);
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && !$("newMenu").hidden) { closeNewMenu(); $("btnNew").focus(); return; }
-      if (e.key === "Escape" && cv && !$("cvPicker").hidden) { closeCanvasPicker(); $("cvAdd").focus(); return; }
-      if (e.key === "Escape" && cv && cv.tool === "connect" && $("drawer").hidden) { setCanvasTool("select"); return; }
+      if (e.key === "Escape" && Canvas.cv && !$("cvPicker").hidden) { Canvas.closePicker(); $("cvAdd").focus(); return; }
       if (e.key === "Escape" && !$("drawer").hidden) { closeDrawer(); return; }
       if (e.key === "Escape" && document.querySelector(".shell").classList.contains("insp-over")) { inspectorOver(false); return; }
       // "/" goes to the search, as it does on GitHub and in most tools,
@@ -17108,9 +16387,10 @@
     window.addEventListener("hashchange", function () {
       var w = readUrl();
       if (w.draw !== undefined) {
-        if (!cv || (cv.id || "") !== (w.draw || "")) openCanvas(w.draw || null);
+        if (!Canvas.cv || (Canvas.cv.id || "") !== (w.draw || "")) Canvas.open(w.draw || null);
         return;
       }
+      if (w.adopt !== undefined) { if (!drw) Canvas.open(null); return; }
       if (w.home !== undefined) { openStart(); return; }
       if (isPageHash(w)) { if (pageHash() !== window.location.hash) openPageFrom(w); return; }
       if (w.diagrams !== undefined) { openDiagrams(w.layer || "All"); return; }
@@ -17140,7 +16420,7 @@
       });
       // Back to a drawing from a page over it, or from the canvas, names
       // the view already current; it is drawn all the same.
-      if (w.view && (w.view !== state.viewId || state.panel || cv)) selectView(w.view);
+      if (w.view && (w.view !== state.viewId || state.panel || Canvas.cv)) selectView(w.view);
       if (w.id && w.id !== state.selectedId) showEntity(w.id);
     });
 
@@ -17165,5 +16445,49 @@
     }).catch(fail);
   }
 
+  // What canvas/canvas.js takes from this file, read once as it loads: every
+  // one a function or an object nothing here reassigns, so its copy stays the
+  // thing itself. The split's test holds this list to what the canvas reads.
+  window.TerraneApp = {
+    $: $,
+    api: api,
+    capFirst: capFirst,
+    closeContextMenu: closeContextMenu,
+    DRAW: DRAW,
+    drawGraph: drawGraph,
+    drawnHere: drawnHere,
+    el: el,
+    fail: fail,
+    fieldWord: fieldWord,
+    fitSheet: fitSheet,
+    frameKids: frameKids,
+    IMPACT_CLASSES: IMPACT_CLASSES,
+    keepAll: keepAll,
+    keepGroupMove: keepGroupMove,
+    keepLeaf: keepLeaf,
+    loadIndex: loadIndex,
+    openConnectChooser: openConnectChooser,
+    openDiagrams: openDiagrams,
+    openEntityEditor: openEntityEditor,
+    openRegroupChooser: openRegroupChooser,
+    placeChooser: placeChooser,
+    positionKey: positionKey,
+    REDUCED: REDUCED,
+    renderFacts: renderFacts,
+    renderFocusBar: renderFocusBar,
+    renderViewList: renderViewList,
+    rerouteInPlace: rerouteInPlace,
+    selectView: selectView,
+    showPanel: showPanel,
+    state: state,
+    svgIcon: svgIcon,
+    syncUrl: syncUrl,
+    TECH_FONT: TECH_FONT,
+    toast: toast,
+    typeWord: typeWord,
+    updateZoomPct: updateZoomPct,
+    VIEW_CATEGORIES: VIEW_CATEGORIES,
+    Canvas: Canvas,
+  };
   document.addEventListener("DOMContentLoaded", boot);
 })();

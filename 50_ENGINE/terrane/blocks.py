@@ -84,6 +84,28 @@ class BuildingBlock(NamedTuple):
     replaced: str = ""
 
 
+#: A provider's answer that is one product among choices, "Amazon EKS or
+#: ECS", is split at " or "; one joined by "and", "AWS Cost Explorer and
+#: Budgets", is one answer of two products together and stays whole. A
+#: name's aside, "(formerly Agentspace)", is not part of the name.
+_ASIDE = re.compile(r"\s*\(formerly [^)]*\)")
+
+
+def offered(answer: str) -> List[str]:
+    """The products a provider's answer offers, the first the usual one:
+    `Amazon EKS or ECS` is Amazon EKS and ECS, `MinIO or a NAS` is MinIO
+    and NAS, and an answer of no choice is itself."""
+    out: List[str] = []
+    for choice in str(answer or "").split(" or "):
+        choice = _ASIDE.sub("", choice).strip()
+        for article in ("a ", "an "):
+            if choice.lower().startswith(article):
+                choice = choice[len(article):]
+        if choice and choice not in out:
+            out.append(choice)
+    return out
+
+
 def parse_component(data: dict, source: Optional[Path] = None) -> ComponentType:
     if not isinstance(data, dict) or "component_type_id" not in data:
         raise LibraryError("%s: missing component_type_id" % (source or "<component>"))

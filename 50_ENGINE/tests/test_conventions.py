@@ -151,7 +151,8 @@ class TestFlowsAcrossADiagram(unittest.TestCase):
         self.assertIn("**Card Authorization**", text)
         self.assertRegex(text, r"\n1\. .+ → .+")
         # A step off the diagram is said so, where there is one.
-        context = render_markdown(resolve(self.model, self.views["domain-servicing"]), self.palette, self.model)
+        servicing = bind(self.views["domain-landscape"], {"domain": "Servicing"}, self.model)
+        context = render_markdown(resolve(self.model, servicing), self.palette, self.model)
         if "## Flows across this diagram" in context and "not on this diagram" in context:
             self.assertIn("— not on this diagram", context)
 

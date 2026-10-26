@@ -1,0 +1,93 @@
+# Data and Analytics — Landscape
+
+One business domain and its immediate neighbors: every system in the domain plus everything one interface away. Smaller and easier to read than the full landscape, and drawn for every domain the systems name.
+
+```mermaid
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Data and Analytics — Landscape
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Card_Issuing["Card Issuing"]
+    direction LR
+    SYS_CORE_LEDGER["Core Card Ledger"]
+  end
+
+  subgraph grp_Data_and_Analytics["Data and Analytics"]
+    direction LR
+    SYS_CUST360_PIPELINE["Customer 360 Pipeline<br/>[Snowflake Data Cloud +1]"]
+    SYS_CUST360_SEMANTIC["Customer 360 Semantic<br/>Layer<br/>[Snowflake Data Cloud]"]
+    SYS_DATA_INGEST["Enterprise Data Ingestion<br/>Hub<br/>[Service Bus · Snowflake Data Cloud]"]
+  end
+
+  subgraph grp_Lending["Lending"]
+    direction LR
+    SYS_LENDING_WORKER["Installment Lending Async<br/>Worker<br/>[EKS · MSK]"]
+  end
+
+  subgraph grp_Risk_and_Compliance["Risk and Compliance"]
+    direction LR
+    SYS_SCREENING_VENDOR["NICE Actimize Screening<br/>[NICE Actimize]"]
+    SYS_REG_REPORTING["Regulatory Reporting<br/>Engine<br/>[AKS · Snowflake Data Cloud]"]
+  end
+
+  subgraph grp_Servicing["Servicing"]
+    direction LR
+    SYS_CARDSVC_EVENTS["Card Servicing Event<br/>Publisher<br/>[Service Bus]"]
+    SYS_DISPUTES_SAAS["Pega Smart Dispute<br/>[Pegasystems]"]
+  end
+
+  SYS_CREDIT_DATA["Credit data and<br/>decisioning environment<br/>[Snowflake Data Cloud]"]
+  SYS_CATALOG["Governance catalog<br/>[Collibra Data Intelligence]"]
+  SYS_MODEL["Model platform"]
+
+  SYS_DATA_INGEST -->|"SQL"| SYS_MODEL
+  SYS_DATA_INGEST -->|"HTTPS"| SYS_CATALOG
+  SYS_DATA_INGEST -->|"SQL"| SYS_CREDIT_DATA
+  SYS_CARDSVC_EVENTS -->|"AMQP"| SYS_DATA_INGEST
+  SYS_CUST360_SEMANTIC -->|"SQL"| SYS_REG_REPORTING
+  SYS_CORE_LEDGER -->|"FileTransfer"| SYS_DATA_INGEST
+  SYS_LENDING_WORKER -->|"S3"| SYS_DATA_INGEST
+  SYS_DATA_INGEST -->|"Snowpipe"| SYS_CUST360_PIPELINE
+  SYS_CUST360_PIPELINE -->|"SQL"| SYS_CUST360_SEMANTIC
+  SYS_DISPUTES_SAAS -->|"SFTP"| SYS_DATA_INGEST
+  SYS_SCREENING_VENDOR -->|"SFTP"| SYS_DATA_INGEST
+
+  classDef s_systems__high fill:#9aa0ed,stroke:#4338ca,color:#0f172a,stroke-width:2.6px;
+  classDef s_systems__medium fill:#becbfb,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  class SYS_CORE_LEDGER,SYS_REG_REPORTING,SYS_SCREENING_VENDOR s_systems__high;
+  class SYS_CARDSVC_EVENTS,SYS_CATALOG,SYS_CREDIT_DATA,SYS_CUST360_PIPELINE,SYS_CUST360_SEMANTIC,SYS_DATA_INGEST,SYS_DISPUTES_SAAS,SYS_LENDING_WORKER,SYS_MODEL s_systems__medium;
+  classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_Card_Issuing,grp_Data_and_Analytics,grp_Lending,grp_Risk_and_Compliance,grp_Servicing boundary1;
+```
+
+The same view as the app draws it, written beside the Mermaid by `terrane render`:
+
+![Data and Analytics — Landscape](../svg/domain-landscape--data-and-analytics.svg)
+
+**criticality** is drawn as border weight and tint, strongest first.
+
+| Border | Value |
+|---|---|
+| 2.6px | High |
+| 1.4px | Medium |
+
+## Flows across this diagram
+
+Each flow is a recorded sequence of interfaces. The steps drawn on this diagram are numbered; a step whose interface is not on it is marked.
+
+**Regulatory Return**: The monthly supervisory return. Entirely batch, and the only flow whose deadline is external and non-negotiable.
+
+1. Core Card Ledger → Enterprise Data Ingestion Hub (FileTransfer)
+2. Enterprise Data Ingestion Hub → Customer 360 Pipeline (Snowpipe)
+3. Customer 360 Pipeline → Customer 360 Semantic Layer (SQL)
+4. Customer 360 Semantic Layer → Regulatory Reporting Engine (SQL)
+
+**Dispute and Chargeback**: A cardholder disputes a transaction. Raised in the contact center, handled in the vendor platform, settled back through the ledger.
+
+1. Dynamics 365 Customer Service → Core Card Ledger (HTTPS) — not on this diagram
+2. Core Card Ledger → Dispute Management Platform Integration Gateway (HTTPS) — not on this diagram
+3. Dispute Management Platform Integration Gateway → Pega Smart Dispute (HTTPS) — not on this diagram
+4. Pega Smart Dispute → Enterprise Data Ingestion Hub (SFTP)
+
+12 entities, 11 relationships. Generated from the model; edit the model, not this file.

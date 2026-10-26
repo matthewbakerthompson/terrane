@@ -1,0 +1,67 @@
+@startuml
+' Collections — Landscape
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Collections — Landscape
+
+AddElementTag("offered_interfaces", $bgColor="#e6ecff", $borderColor="#6366f1", $fontColor="#0f172a", $legendText="offered interface")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddRelTag("api-call", $legendText="API call")
+AddRelTag("event", $legendText="Event on the bus")
+AddRelTag("own-datastore", $legendText="Its own datastore")
+AddRelTag("queued-request", $legendText="Request on a queue")
+AddRelTag("scheduled-file", $legendText="Scheduled file")
+
+Boundary(b_Card_Issuing, "Card Issuing") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(OI_LEDGER_QUEUE, "Core Ledger request queue", "Postings, holds and balance requests put on the ledger's MQ request queue, answered on the reply queue in the order they arrived. Built with MQ.", $tags="offered_interfaces")
+  ' aac OI_LEDGER_QUEUE: company_domain="Card Issuing"; technology="MQ"
+}
+Boundary(b_Collections, "Collections") {
+  System(OI_COLLECT_API, "Collections Workspace API", "The domain API Collections Workspace offers its channels, its jobs and its partners. Built with HTTPS.", $tags="offered_interfaces")
+  ' aac OI_COLLECT_API: company_domain="Collections"; technology="HTTPS"
+  System(SYS_COLLECT_STORE, "Collections Workspace Datastore", "Operational datastore owned by Collections Workspace. Built with Azure SQL.", $tags="systems")
+  ' aac SYS_COLLECT_STORE: company_domain="Collections"; hosting="Azure"; technology="Azure SQL"
+  System(SYS_COLLECT_API, "Collections Workspace Service", "The service behind the Collections Workspace API, backing the channel. Built with AKS · Collections Workspace Cache.", $tags="systems")
+  ' aac SYS_COLLECT_API: company_domain="Collections"; hosting="Azure"; technology="AKS · Collections Workspace Cache"
+  System(SYS_COLLECT_WEB, "Collections Workspace Web", "Browser front end for Collections Workspace. Built with AKS.", $tags="systems")
+  ' aac SYS_COLLECT_WEB: company_domain="Collections"; hosting="Azure"; technology="AKS"
+}
+Boundary(b_Enterprise_Platform, "Enterprise Platform") {
+  System(OI_IDENTITY_API, "Customer Identity API", "Customer authentication and the profile behind it, for every product that signs a customer in. Built with HTTPS.", $tags="offered_interfaces")
+  ' aac OI_IDENTITY_API: company_domain="Enterprise Platform"; technology="HTTPS"
+  System(SYS_IDENTITY_SVC, "Customer Identity Service", "Shared platform service: Customer Identity Service. Built with AKS.", $tags="systems")
+  ' aac SYS_IDENTITY_SVC: company_domain="Enterprise Platform"; hosting="Azure"; technology="AKS"
+}
+System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+' aac SYS_DOC: company_domain=""
+System(SYS_DIALER, "Outbound contact platform", "Outbound dialer and contact campaign execution.", $tags="systems")
+' aac SYS_DIALER: company_domain=""
+
+Rel(SYS_COLLECT_API, SYS_DIALER, "Collections Platform to Outbound Contact Platform", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_COLLECT_API"; target="SYS_DIALER"; label="Collections Platform to Outbound Contact Platform"; interface_id="INT-COLLECT-DIALER"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="contact-center-integration"
+Rel(SYS_DIALER, SYS_COLLECT_API, "Outbound Contact Platform to Collections Platform", "AMQP", $tags="event")
+' aac rel: source="SYS_DIALER"; target="SYS_COLLECT_API"; label="Outbound Contact Platform to Collections Platform"; interface_id="INT-DIALER-COLLECT"; kind="event"; integration_style="Event"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="contact-center-integration;event-fanout"
+Rel(SYS_COLLECT_API, SYS_DOC, "Collections Platform to Document Management", "AMQP", $tags="event")
+' aac rel: source="SYS_COLLECT_API"; target="SYS_DOC"; label="Collections Platform to Document Management"; interface_id="INT-COLLECT-DOC"; kind="event"; integration_style="Event"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="customer-communication-archive"
+Rel(SYS_CORE_LEDGER, SYS_DOC, "Core Card Ledger to Document Management", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_DOC"; label="Core Card Ledger to Document Management"; interface_id="INT-LEDGER-DOC"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="customer-communication-archive"
+Rel(SYS_COLLECT_API, OI_IDENTITY_API, "Collections Service to Identity Service", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_COLLECT_API"; target="OI_IDENTITY_API"; label="Collections Service to Identity Service"; interface_id="INT-COLLECT-API-IDENTITY"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-IDENTITY-API"
+Rel(SYS_COLLECT_API, OI_LEDGER_QUEUE, "Collections Service to Core Ledger", "MQ", $tags="queued-request")
+' aac rel: source="SYS_COLLECT_API"; target="OI_LEDGER_QUEUE"; label="Collections Service to Core Ledger"; interface_id="INT-COLLECT-API-LEDGER"; kind="queued-request"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-LEDGER-QUEUE"
+Rel(SYS_COLLECT_WEB, OI_COLLECT_API, "Collections Workspace Web to API", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_COLLECT_WEB"; target="OI_COLLECT_API"; label="Collections Workspace Web to API"; interface_id="INT-COLLECT-WEB-API"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-COLLECT-API"
+Rel(SYS_COLLECT_API, SYS_COLLECT_STORE, "Collections Workspace Service to Datastore", "TDS", $tags="own-datastore")
+' aac rel: source="SYS_COLLECT_API"; target="SYS_COLLECT_STORE"; label="Collections Workspace Service to Datastore"; interface_id="INT-COLLECT-API-STORE"; kind="own-datastore"; integration_style="Request-response"; auth_method="ManagedIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(OI_COLLECT_API, SYS_COLLECT_API, "offered by")
+' aac rel: source="OI_COLLECT_API"; target="SYS_COLLECT_API"; label="offered by"; field="system_id"
+Rel(OI_IDENTITY_API, SYS_IDENTITY_SVC, "offered by")
+' aac rel: source="OI_IDENTITY_API"; target="SYS_IDENTITY_SVC"; label="offered by"; field="system_id"
+Rel(OI_LEDGER_QUEUE, SYS_CORE_LEDGER, "offered by")
+' aac rel: source="OI_LEDGER_QUEUE"; target="SYS_CORE_LEDGER"; label="offered by"; field="system_id"
+
+SHOW_LEGEND()
+@enduml

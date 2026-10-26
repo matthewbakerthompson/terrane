@@ -361,6 +361,14 @@ class TestStaticSiteExport(unittest.TestCase):
                         (out / "api" / "graph" / view["viewId"] / ("system--%s.json" % item["id"])).exists(),
                         "%s was not baked for %s" % (view["viewId"], item["id"]),
                     )
+            # A subject that is a word has no list of records: a domain's
+            # landscape is baked once per domain its picker offers.
+            domain = json.loads((out / "api" / "graph" / "domain-landscape.json").read_text(encoding="utf-8"))
+            choices = domain["parameters"][0]["choices"]
+            self.assertTrue(choices)
+            for value in choices:
+                self.assertTrue((out / "api" / "graph" / "domain-landscape" / ("domain--%s.json" % value)).exists(),
+                                "the landscape of %s was not baked" % value)
             listing = json.loads((out / "api" / "list.json").read_text(encoding="utf-8"))
             self.assertGreater(len(listing["items"]), 10)
             self.assertLess(len(listing["items"]), 200, "seed the subset, not the model")
@@ -460,10 +468,9 @@ class TestStaticSiteExport(unittest.TestCase):
             export_site = self._export(root)
             out = root / "site"
             export_site.copy_assets(out)
-            self.assertEqual(
-                (out / "app.js").read_bytes(),
-                (REPO / "80_APP" / "web" / "app.js").read_bytes(),
-            )
+            for name in ("app.js", "canvas/canvas.js"):
+                with self.subTest(name=name):
+                    self.assertEqual((out / name).read_bytes(), (REPO / "80_APP" / "web" / name).read_bytes())
 
     def test_every_entity_type_has_a_hue_and_a_shape(self) -> None:
         """Hue and shape carry the entity type, so a type the palette or the
@@ -504,7 +511,7 @@ class TestStaticSiteExport(unittest.TestCase):
             export_site = self._export(root)
             out = root / "site"
             export_site.copy_assets(out)
-            for name in ("index.html", "styles.css", "app.js", "static-shim.js"):
+            for name in ("index.html", "styles.css", "app.js", "canvas/canvas.js", "static-shim.js"):
                 text = (out / name).read_text(encoding="utf-8")
                 for scheme in ("http://", "https://"):
                     for line in text.splitlines():
@@ -532,6 +539,59 @@ class TestRecentChanges(unittest.TestCase):
             self.assertEqual(sorted(commit), ["date", "sha", "subject"])
             self.assertRegex(commit["date"], r"^\d{4}-\d{2}-\d{2}$")
             self.assertTrue(commit["subject"])
+
+
+class TestTheCanvasScript(unittest.TestCase):
+    """The canvas is a script of its own beside app.js (2026-10-24), joined to
+    it by two lists nothing checks as the page loads: what the canvas takes
+    from `window.TerraneApp`, and what app.js calls on `Canvas`. A name on one
+    side alone is a page that breaks at the first click on the canvas, so both
+    are read off the files here, as the shapes are above."""
+
+    WEB = REPO / "80_APP" / "web"
+
+    def _files(self) -> tuple:
+        return ((self.WEB / "app.js").read_text(encoding="utf-8"),
+                (self.WEB / "canvas" / "canvas.js").read_text(encoding="utf-8"),
+                (self.WEB / "canvas" / "engine.js").read_text(encoding="utf-8"))
+
+    def test_the_page_loads_the_canvas_after_the_app(self) -> None:
+        html = (self.WEB / "index.html").read_text(encoding="utf-8")
+        for script in ("canvas/canvas.js", "canvas/engine.js"):
+            with self.subTest(script=script):
+                self.assertLess(html.index('src="app.js"'), html.index('src="%s"' % script),
+                                "the canvas reads window.TerraneApp as it loads, and app.js sets it")
+        # The bundle is the canvas's to load when it first draws, not the page's.
+        self.assertNotIn("maxgraph", html)
+
+    def test_what_the_canvas_takes_is_what_the_app_hands_over(self) -> None:
+        app_js, canvas_js, engine_js = self._files()
+        table = app_js.split("window.TerraneApp = {", 1)[1].split("};", 1)[0]
+        handed = re.findall(r"^\s+([\w$]+): ([\w$]+),$", table, re.M)
+        self.assertTrue(handed)
+        self.assertFalse([pair for pair in handed if pair[0] != pair[1]], "a name handed over as another")
+        head = canvas_js.split('"use strict";', 1)[1].split(";", 1)[0]
+        taken = re.findall(r"([\w$]+) = app\.([\w$]+)", head)
+        self.assertFalse([pair for pair in taken if pair[0] != pair[1]], "a name taken as another")
+        by_engine = set(re.findall(r"\bapp\.([\w$]+)", engine_js))
+        self.assertEqual({name for name, _ in taken} | by_engine | {"Canvas"}, {name for name, _ in handed})
+
+    def test_every_call_into_the_canvas_is_one_it_makes(self) -> None:
+        app_js, canvas_js, engine_js = self._files()
+        called = set(re.findall(r"\bCanvas\.(\w+)", app_js))
+        made = set(re.findall(r"^\s+Canvas\.(\w+) = ", canvas_js, re.M))
+        made |= set(re.findall(r'defineProperty\(Canvas, "(\w+)"', canvas_js))
+        # The engine is the one name engine.js puts there itself.
+        made |= set(re.findall(r"^\s+Canvas\.(\w+) = ", engine_js, re.M))
+        self.assertIn("open", called)
+        self.assertEqual(called - made, set())
+        # And what the canvas and the app ask of the engine -- the app draws
+        # a diagram's own shapes on a drawing the canvas is not open on, and
+        # fits the sheet to them -- is what the engine gives.
+        asked = set(re.findall(r"\bCanvas\.engine\.(\w+)", canvas_js + app_js))
+        given = set(re.findall(r"(\w+): \w+", engine_js.split("Canvas.engine = {", 1)[1].split("};", 1)[0]))
+        self.assertIn("attach", asked)
+        self.assertEqual(asked - given, set())
 
 
 class TestEveryPageKeepsItsPlace(unittest.TestCase):

@@ -24,4 +24,7 @@ style:
   color_by: criticality
 
 limits:
-  max_nodes: 50
+  # Raised from 50 at 88 systems. Cut by id, the map lost five products'
+  # planned systems, the arrivals it is there to show, and two active
+  # ones; a map is scanned, and all 88 pack into three bands.
+  max_nodes: 120

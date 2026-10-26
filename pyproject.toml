@@ -32,7 +32,7 @@ requires-python = ">=3.10"
 # (OFL-1.1), Simple Icons (CC0-1.0), and the AWS, Azure and Google Cloud
 # icons under their owners' published terms, each text in `LICENSES/` and
 # the whole list in THIRD_PARTY_NOTICES.md.
-license = "LicenseRef-PolyForm-Shield-1.0.0 AND MIT AND EPL-2.0 AND OFL-1.1 AND CC0-1.0 AND LicenseRef-AWS-Architecture-Icons AND LicenseRef-Azure-Public-Service-Icons AND LicenseRef-Google-Cloud-Icons"
+license = "LicenseRef-PolyForm-Shield-1.0.0 AND MIT AND EPL-2.0 AND Apache-2.0 AND OFL-1.1 AND CC0-1.0 AND LicenseRef-AWS-Architecture-Icons AND LicenseRef-Azure-Public-Service-Icons AND LicenseRef-Google-Cloud-Icons"
 license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md", "LICENSES/*"]
 authors = [{ name = "Matthew Baker Thompson" }]
 keywords = ["architecture", "diagrams", "enterprise-architecture", "svg", "c4", "model-driven"]
@@ -93,8 +93,11 @@ packages = ["50_ENGINE/terrane"]
 "80_APP/web" = "terrane/shipped/web"
 "80_APP/app/server.py" = "terrane/shipped/app/server.py"
 "90_EXAMPLE/quick" = "terrane/shipped/90_EXAMPLE/quick"
-"10_MODEL/tech_services" = "terrane/shipped/10_MODEL/tech_services"
-"10_MODEL/model.yaml" = "terrane/shipped/10_MODEL/model.yaml"
+# The sample estate whole, which `terrane init --sample` copies out: its
+# landing zones and its answers are what a sketch borrows, and until 1.1.0
+# they were all the wheel had of it.
+"10_MODEL" = "terrane/shipped/10_MODEL"
+"60_SOURCES" = "terrane/shipped/60_SOURCES"
 
 # What a wheel is built from and nothing else of the repository's: the sdist
 # is the package's source, not the repository's. The tests stay out, since
@@ -119,6 +122,6 @@ only-include = [
   "80_APP/web",
   "80_APP/app/server.py",
   "90_EXAMPLE/quick",
-  "10_MODEL/tech_services",
-  "10_MODEL/model.yaml",
+  "10_MODEL",
+  "60_SOURCES",
 ]

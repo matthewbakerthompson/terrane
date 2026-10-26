@@ -18,6 +18,10 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Optional
 
+#: Where the method, the app's guide and the issues are. A pip user has
+#: none of the repository's folders, so a hint names the page, not a path.
+HOME = "https://github.com/matthewbakerthompson/terrane"
+
 _ENGINE = Path(__file__).resolve().parent
 _REPO = _ENGINE.parents[1]
 _INSIDE = _ENGINE / "shipped"

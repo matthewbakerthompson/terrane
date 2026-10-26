@@ -10,6 +10,7 @@ count, which is the number worth putting on a governance dashboard.
 from __future__ import annotations
 
 import re
+from pathlib import Path
 from typing import Dict, List, NamedTuple, Optional, Sequence, Set, Tuple
 
 from .adoption import candidates as shape_candidates
@@ -452,6 +453,18 @@ def _nothing_of_its_kind(model: Model, view: View) -> List[str]:
     return list(dict.fromkeys(kinds))
 
 
+def _held_by(model: Model, view: View) -> bool:
+    """Whether a view's file is in the estate's own folder, rather than
+    shipped with terrane or read from elsewhere for one drawing."""
+    if view.source_file is None or model.root is None:
+        return False
+    try:
+        Path(view.source_file).resolve().relative_to(Path(model.root).resolve())
+    except ValueError:
+        return False
+    return not from_the_package(model.root, view)
+
+
 def _check_views(model: Model, views: Sequence[View]) -> List[Finding]:
     findings: List[Finding] = []
     # An empty model is a starting point, not a defect. A view that matches
@@ -459,6 +472,21 @@ def _check_views(model: Model, views: Sequence[View]) -> List[Finding]:
     empty_model = not any(model.entities.values())
     by_id = {(view.own or view).view_id: (view.own or view) for view in views}
     for view in views:
+        # The level above a view about one thing is the crumb over it; one
+        # naming no view here leaves the crumb a level short, and nobody
+        # reading the drawing would know a level was meant to be there.
+        # Only a view the estate holds is held to it: a sketch drawn from
+        # the quick door validates against the few views it draws, and a
+        # shipped view's level is the shipped set's to keep.
+        if view.up and view.up not in by_id and _held_by(model, view):
+            findings.append(
+                Finding(
+                    "error",
+                    "view.up",
+                    "view %s goes up to %s, which is not a view here" % (view.view_id, view.up),
+                    str(view.source_file or ""),
+                )
+            )
         # A place naming a view that is not here draws the diagram without
         # it, which nobody looking at the picture would know to miss.
         for problem in place_problems(view, by_id):
@@ -552,7 +580,20 @@ def _check_views(model: Model, views: Sequence[View]) -> List[Finding]:
         # An offered interface drawn on its owner is not one of the limit's
         # boxes: the integration diagram's six APIs read as six truncations.
         counted = sum(1 for node in graph.nodes if node.entity_type != "offered_interfaces")
-        if limit and counted >= limit:
+        # A report is never cut (`query.resolve`), so it does not hit its
+        # limit; it can pass it, which says its scope may have stopped
+        # filtering, and the table is whole all the same.
+        if limit and view.kind == "report" and counted > limit:
+            findings.append(
+                Finding(
+                    "warning",
+                    "view.past_limit",
+                    "view %s lists %d, past its max_nodes of %d; a report is listed whole"
+                    % (view.view_id, counted, limit),
+                    str(view.source_file or ""),
+                )
+            )
+        elif limit and view.kind != "report" and counted >= limit:
             findings.append(
                 Finding(
                     "warning",

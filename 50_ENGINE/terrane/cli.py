@@ -2,6 +2,8 @@
 
     terrane connect [URL]            clone an estate and fetch the governance it pins
     terrane init [FOLDER]            start an estate in a repository of its own, on the installed terrane
+    terrane init --sample [FOLDER]   copy the sample estate out of the package, to open and change
+    terrane --version
     terrane validate                 quality gates, exit 1 on any error
     terrane render                   Mermaid, SVG and Structurizr output for every view
     terrane export csv|backstage|json
@@ -50,7 +52,7 @@ from .library import summary as library_summary
 from .loader import PARSER, ModelFileError, read_data_file
 from .model import ModelError, load
 from .palette import Palette
-from .query import View, ViewError, bind, load_views, render_targets, resolve
+from .query import View, ViewError, bind, load_views, render_targets, resolve, subject_slug
 from .render_mermaid import render as render_mermaid
 from .render_mermaid import render_table, render_timeline, render_timeline_markdown
 from .render_mermaid import render_markdown
@@ -59,8 +61,8 @@ from .render_sequence import render as render_sequence
 from .render_sequence import render_markdown as render_flow_markdown
 from .render_structurizr import render_workspace
 from .schema import ENTITY_TYPES
-from .shipped import default_root, sample_inventory, shipped_app
-from .estate import InitError, init_estate, pins as estate_pins, problems as estate_problems, views_of
+from .shipped import HOME, default_root, sample_inventory, shipped_app
+from .estate import InitError, init_estate, init_sample, pins as estate_pins, problems as estate_problems, views_of
 
 
 def _root(args: argparse.Namespace) -> Path:
@@ -176,7 +178,7 @@ def cmd_render(args: argparse.Namespace) -> int:
         bound_ids = set()
         for parameter, value in targets:
             bound = bind(view, {parameter: value}, model)
-            bound_id = "%s--%s" % (view.view_id, str(value).lower())
+            bound_id = "%s--%s" % (view.view_id, subject_slug(value))
             bound_ids.add(bound_id)
             expanded.append(bound._replace(view_id=bound_id, parameters=()))
         # A subject that no longer qualifies leaves a diagram behind that
@@ -955,9 +957,10 @@ def cmd_needs(args: argparse.Namespace) -> int:
                 print("error: %s" % exc, file=sys.stderr)
                 return 2
         result = needs_module.needs_of(model, view, subject=subject)
-        print("%s: %s, %d drawn%s" % (result.title, result.state, result.drawn,
-                                       ", %d left off for want of a field" % len(result.kept_off)
-                                       if result.kept_off else ""))
+        print("%s: %s, %d drawn%s%s" % (result.title, result.state, result.drawn,
+                                         ", %d more past limits.max_nodes" % result.cut if result.cut else "",
+                                         ", %d left off for want of a field" % len(result.kept_off)
+                                         if result.kept_off else ""))
         if result.problem:
             print("  " + result.problem)
         for need in result.needs:
@@ -1319,25 +1322,48 @@ def cmd_init(args: argparse.Namespace) -> int:
     """Start an estate in a repository of its own: the settings that read the
     shipped library and views from the installed terrane and pin its release,
     a README, a .gitignore that keeps generated pictures out, and nothing of
-    terrane's own. A folder holding an estate is refused, not mixed into."""
+    terrane's own. A folder holding an estate is refused, not mixed into.
+    With `--sample`, the sample estate instead, copied out of the package."""
     from . import __version__
 
     folder = Path(args.folder).resolve()
+    if args.sample and (args.name or args.governance or args.governance_ref):
+        # The sample is a card issuer's, named and governed as it ships.
+        print("terrane init: --sample copies the sample estate as it is; --name and --governance "
+              "are for an estate of your own", file=sys.stderr)
+        return 2
     try:
-        written, kept = init_estate(folder, args.name or folder.name, __version__,
-                                    repository=args.governance or "", ref=args.governance_ref or "",
-                                    requirement=args.requires or "")
+        if args.sample:
+            written, kept = init_sample(folder, __version__, requirement=args.requires or "")
+        else:
+            written, kept = init_estate(folder, args.name or folder.name, __version__,
+                                        repository=args.governance or "", ref=args.governance_ref or "",
+                                        requirement=args.requires or "")
     except InitError as exc:
         print("terrane init: %s" % exc, file=sys.stderr)
         return 2
     for path in written:
-        print("wrote  %s" % path.relative_to(folder).as_posix())
+        if path.is_dir():
+            print("wrote  %s/ (%d files)" % (path.relative_to(folder).as_posix(),
+                                            sum(1 for p in path.rglob("*") if p.is_file())))
+        else:
+            print("wrote  %s" % path.relative_to(folder).as_posix())
     for path in kept:
         print("kept   %s (already there)" % path.relative_to(folder).as_posix())
     model = load(folder)
     report = validate.run(model, views_of(folder))
     errors = sum(1 for f in report.findings if f.severity == "error")
     print("")
+    if args.sample:
+        print("%s: the sample estate on terrane %s, %d records, %d views, %d error(s)"
+              % (folder.name, __version__, sum(len(v) for v in model.entities.values()), len(views_of(folder)),
+                 errors))
+        # Typed as given, so the line runs from where the person is; the
+        # option goes before the command, which is where argparse reads it.
+        print("Open it in the browser, where a first visit offers a two-minute tour:")
+        print("  terrane%s app" % ("" if folder == Path.cwd().resolve() else " --root %s" % _shell_word(args.folder)))
+        print("An estate of your own starts empty, with terrane init.")
+        return 1 if errors else 0
     print("%s: an empty estate on terrane %s, %d views, %d error(s)"
           % (folder.name, __version__, len(views_of(folder)), errors))
     print("Next: add records (terrane new system SYS-..., terrane import csv, terrane adopt FILE),")
@@ -1345,6 +1371,10 @@ def cmd_init(args: argparse.Namespace) -> int:
     print("terrane app opens it in the browser. A spreadsheet to try terrane adopt on:")
     print("  %s" % sample_inventory())
     return 1 if errors else 0
+
+
+def _shell_word(text: str) -> str:
+    return '"%s"' % text if any(c.isspace() for c in text) else text
 
 
 def cmd_stats(args: argparse.Namespace) -> int:
@@ -1394,11 +1424,6 @@ def cmd_stats(args: argparse.Namespace) -> int:
     return 0
 
 
-#: Where the method, the app's guide and the issues are. A pip user has
-#: none of the repository's folders, so a hint names the page, not a path.
-HOME = "https://github.com/matthewbakerthompson/terrane"
-
-
 def cmd_app(args: argparse.Namespace) -> int:
     """The app on an estate, in the browser: the repository's server in a
     clone, the copy inside the package once installed. It reads and writes
@@ -1417,8 +1442,8 @@ def cmd_app(args: argparse.Namespace) -> int:
         return 1
     root = _root(args)
     if not (root / "10_MODEL").is_dir():
-        print("error: %s holds no estate (no 10_MODEL folder). Start one here with `terrane init`, "
-              "or name one with --root." % root, file=sys.stderr)
+        print("error: %s holds no estate (no 10_MODEL folder). Start one here with `terrane init`, copy "
+              "the sample here with `terrane init --sample`, or name one with --root." % root, file=sys.stderr)
         return 1
     spec = importlib.util.spec_from_file_location("terrane_app_server", server_file)
     server = importlib.util.module_from_spec(spec)
@@ -1440,12 +1465,18 @@ def cmd_app(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
+    from . import __version__
+
     # `terrane` however it was started: run as `python -m terrane`, the
     # usage line would otherwise name `__main__.py`.
     parser = argparse.ArgumentParser(
         prog="terrane", description="Architecture as code: model in, diagrams out."
     )
     parser.add_argument("--root", help="the estate to work on (default: the current folder; in a clone of the repository, the sample estate)")
+    # Until 1.1.0 `terrane --version` printed the usage: it was no option,
+    # and argparse said the command was missing.
+    parser.add_argument("--version", action="version", version="terrane %s" % __version__,
+                        help="print the version and stop")
     sub = parser.add_subparsers(dest="command", required=True)
 
     p_validate = sub.add_parser("validate", help="run the model quality gates")
@@ -1490,6 +1521,9 @@ def build_parser() -> argparse.ArgumentParser:
     p_init.add_argument("--governance-ref", metavar="REF", help="the revision of it the estate is checked against")
     p_init.add_argument("--requires", metavar="RANGE",
                         help="the terrane versions the estate is checked with (default: this minor release)")
+    p_init.add_argument("--sample", action="store_true",
+                        help="copy the sample estate, a card issuer, out of the package into the folder, "
+                             "to open in the app and change")
     p_init.set_defaults(func=cmd_init)
 
     p_app = sub.add_parser("app", help="open the app on an estate: its diagrams, its records and the library, "

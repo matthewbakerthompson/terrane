@@ -206,8 +206,15 @@ and called unresolvable.
 
 ## Limits, and why Mermaid has them
 
-`limits.max_nodes` truncates deterministically by id and says so, both in the render
-output and as a note in the generated Markdown.
+`limits.max_nodes` cuts a diagram, a map or a timeline deterministically and says so,
+both in the render output and as a note in the generated Markdown: pins first, then
+what the scope names, then the rest by id.
+
+A report is never cut. It is a table and has no page to fit, and a table cut at its
+limit lies: the capability realization report, cut at sixty, listed five of its 67 rows.
+Past its limit a report is listed whole and says so, in the same note and as the
+`view.past_limit` warning, because a table that has grown that far may have a scope
+that stopped filtering.
 
 Mermaid's layout degrades noticeably past roughly forty nodes: edges cross, subgraphs
 stretch, and the result is correct but hard to read. There are two responses, used
@@ -291,7 +298,7 @@ file as anything made by hand; the sketch only fills in what it knows.
 | `target-state-change` | What is planned, what it connects to today, and the work package delivering it |
 | `onboarding` | One product on a shape, drawn as what its onboarding creates: account, region, network tier; for a bought one, the boundary and the controls on it. Takes a subject, one per product on a shape |
 | `hosting-estate` | The estate cut by where it runs |
-| `domain-servicing` | One domain plus one hop, the shape to copy when the landscape gets dense |
+| `domain-landscape` | One business domain plus one hop, drawn for every domain the systems name: the level between the landscape and a system |
 | `vendor-exposure` | Third-party systems by tag, and what they are wired into |
 | `network-topology` | The fabric: VPCs, subnets, gateways, and both paths back to the data center |
 | `tiered-architecture` | The estate as tiers — the classic layered picture, with the tiers read off a field |
@@ -392,6 +399,66 @@ the app.
 Resolving a parameterized view unbound is refused rather than returning
 nothing: an unreplaced `{system}` would match no entities and look like an
 empty model instead of a missing argument.
+
+A subject need not be a record. A business domain is a word on the systems,
+`Servicing` on eight of them, with no record of its own, so the domain's
+landscape takes a value of the field instead of an id:
+
+```yaml
+parameters:
+  - name: domain
+    field: company_domain
+
+render_for:
+  parameter: domain
+  type: systems
+  field: company_domain
+  where:
+    status: [Active, Planned]
+```
+
+It is drawn once for each value the selected systems carry, so a ninth domain
+gets its landscape the day a system names it, and an estate whose domains are
+Claims and Underwriting gets theirs rather than a Servicing view it cannot
+draw. A value no record carries is refused. Each subject's committed file is
+named by a slug of it: `domain-landscape--risk-and-compliance`.
+
+## From one level to the next
+
+A large estate is read at levels: the application landscape, a domain, a
+system, and where the system runs. Each is a view about one thing, and a view
+says the level above it:
+
+```yaml
+view_id: system-architecture
+up: domain-landscape
+```
+
+`up` names a view; what that view is drawn for is read off the subject. A
+system's architecture goes up to the landscape of the domain the system
+carries in `company_domain`, and `domain-landscape` says `up:
+application-landscape`. A level the subject has no value for (a system no
+domain names) is passed over and the chain goes on above it. In the app the
+chain is the crumb over the title: *Diagrams / Application Landscape /
+Servicing*, each level a click.
+
+Down goes the other way and needs no key. Every box lists, under
+**Diagrams**, the views about it (each view with a parameter of its type),
+about what contains it (the product whose `product_includes_system` names
+it, a capability's parent, a data asset's source of truth), and about a value
+it carries that a view is drawn for (its domain's landscape). Each is bound
+and counted, so a view that would draw the box alone says *Only itself*
+rather than opening empty. A double-click on a box opens the first view
+about it, and a right-click lists them. A boundary that is one value of a
+field (Servicing on the landscape) lists the views about that value and
+opens the first on a double-click. Beside a subject's picker, the other views
+about the same subject sit as tabs: a system's Architecture, Hub and Spokes,
+Processes and Capabilities and Governance. Where a system runs, its account,
+region and network zone, is its product's Onboarding drawing.
+
+An `up` naming no view is `view.up`, an error in a view the estate holds. A
+shipped view's level is the shipped set's to keep, and a sketch drawn from the
+quick door, which copies only the views it draws, is not held to it.
 
 ## Four kinds, and why it matters
 
@@ -549,8 +616,11 @@ drawing's summary with a button to undo it, rather than only in the file.
 `terrane validate` reports a pin or a hide on something the model no longer
 holds as `view.stale_pin`.
 
-Where a box sits is still not saved. Position is the layout's to decide, from
-the model, every time.
+On a view written as a query, where a box sits is not saved. Position is the
+layout's to decide, from the model, every time. A diagram drawn on the canvas
+is the exception: once a box is moved by hand, every box's place is kept in
+the view's `positions`, the layout places only what is new, and **Lay out
+again** hands the whole drawing back to it.
 
 ## Moving a box into another boundary
 
@@ -567,7 +637,8 @@ it has and the one it will get, and every other view grouped by that field
 the box moves on, a subject view once per subject it is drawn for. A view
 whose scope selects by the same field may take the box off or bring it on,
 and the chooser says which: moving a system out of the servicing domain takes
-it off `domain-servicing`, whose scope is the servicing domain. **Move it** is
+it off the Servicing landscape, `domain-landscape` drawn for Servicing, whose
+scope is that domain, and puts it on the landscape of the domain it goes to. **Move it** is
 the same one-field save the inspector's form makes, written where the record
 lives, and the toast's Undo is that save with the old value.
 

@@ -266,4 +266,9 @@ def graph_payload(model, view: View, palette: Palette, icons, components: Dict[s
     kept = getattr(view, "positions", None) or {}
     if kept:
         out["positions"] = {key: list(at) for key, at in sorted(kept.items())}
+    # What the diagram draws of its own, as its file lists it: drawn over the
+    # estate by the app's engine and by terrane.draw.annotations.
+    own = getattr(view, "annotations", None) or ()
+    if own:
+        out["annotations"] = [dict(item) for item in own]
     return out

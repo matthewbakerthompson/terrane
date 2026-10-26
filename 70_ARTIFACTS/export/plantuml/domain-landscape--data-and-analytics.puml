@@ -1,0 +1,74 @@
+@startuml
+' Data and Analytics — Landscape
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Data and Analytics — Landscape
+
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+AddRelTag("event", $legendText="Event on the bus")
+AddRelTag("event-over-https", $legendText="Event over HTTPS")
+AddRelTag("partner-file", $legendText="Partner file")
+AddRelTag("pipeline-load", $legendText="Pipeline load")
+AddRelTag("scheduled-file", $legendText="Scheduled file")
+
+Boundary(b_Card_Issuing, "Card Issuing") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+}
+Boundary(b_Data_and_Analytics, "Data and Analytics") {
+  System(SYS_CUST360_PIPELINE, "Customer 360 Pipeline", "Ingestion and curation jobs building Customer 360. Built with Snowflake Data Cloud +1.", $tags="systems")
+  ' aac SYS_CUST360_PIPELINE: company_domain="Data and Analytics"; hosting="Azure"; technology="Snowflake Data Cloud +1"
+  System_Ext(SYS_CUST360_SEMANTIC, "Customer 360 Semantic Layer", "Governed models and metrics exposed to analysts for Customer 360. Built with Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_CUST360_SEMANTIC: company_domain="Data and Analytics"; hosting="SaaS"; technology="Snowflake Data Cloud"
+  System(SYS_DATA_INGEST, "Enterprise Data Ingestion Hub", "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse. Built with Service Bus · Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_DATA_INGEST: company_domain="Data and Analytics"; hosting="Azure"; technology="Service Bus · Snowflake Data Cloud"
+}
+Boundary(b_Lending, "Lending") {
+  System(SYS_LENDING_WORKER, "Installment Lending Async Worker", "Consumes Installment Lending domain events and drives long-running work. Built with EKS · MSK.", $tags="systems")
+  ' aac SYS_LENDING_WORKER: company_domain="Lending"; hosting="AWS"; technology="EKS · MSK"
+}
+Boundary(b_Risk_and_Compliance, "Risk and Compliance") {
+  System_Ext(SYS_SCREENING_VENDOR, "NICE Actimize Screening", "Financial Crime Screening, operated by NICE Actimize in their own tenancy. Contractually pinned to EU processing; the DPA restricts sub-processors and sets a 90-day retention ceiling. Built with NICE Actimize.", $tags="systems")
+  ' aac SYS_SCREENING_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="NICE Actimize"
+  System(SYS_REG_REPORTING, "Regulatory Reporting Engine", "Planned replacement for the spreadsheet-based regulatory reporting process, sourcing from the warehouse rather than from the ledger directly. Built with AKS · Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_REG_REPORTING: company_domain="Risk and Compliance"; hosting="Azure"; technology="AKS · Snowflake Data Cloud"
+}
+Boundary(b_Servicing, "Servicing") {
+  System(SYS_CARDSVC_EVENTS, "Card Servicing Event Publisher", "Publishes Card Servicing domain events onto the enterprise bus. Built with Service Bus.", $tags="systems")
+  ' aac SYS_CARDSVC_EVENTS: company_domain="Servicing"; hosting="Azure"; technology="Service Bus"
+  System_Ext(SYS_DISPUTES_SAAS, "Pega Smart Dispute", "Dispute Management Platform, provided by Pegasystems and running in the vendor tenancy. Built with Pegasystems.", $tags="systems")
+  ' aac SYS_DISPUTES_SAAS: company_domain="Servicing"; hosting="SaaS"; technology="Pegasystems"
+}
+System(SYS_CREDIT_DATA, "Credit data and decisioning environment", "Credit data, analytics, and decisioning environment. Built with Snowflake Data Cloud.", $tags="systems")
+' aac SYS_CREDIT_DATA: company_domain=""; technology="Snowflake Data Cloud"
+System(SYS_CATALOG, "Governance catalog", "Governance catalog and metadata system of record. Built with Collibra Data Intelligence.", $tags="systems")
+' aac SYS_CATALOG: company_domain=""; technology="Collibra Data Intelligence"
+System(SYS_MODEL, "Model platform", "Model development, deployment, and monitoring.", $tags="systems")
+' aac SYS_MODEL: company_domain=""
+
+Rel(SYS_DATA_INGEST, SYS_MODEL, "Enterprise Data Platform to Model Platform", "SQL", $tags="pipeline-load")
+' aac rel: source="SYS_DATA_INGEST"; target="SYS_MODEL"; label="Enterprise Data Platform to Model Platform"; interface_id="INT-INGEST-MODEL"; kind="pipeline-load"; integration_style="Batch"; auth_method="ManagedIdentity"; frequency="Daily"; direction="Outbound"; patterns="analytics-landing-zone;governed-model-lifecycle"
+Rel(SYS_DATA_INGEST, SYS_CATALOG, "Enterprise Data Platform to Governance Catalog", "HTTPS", $tags="event-over-https")
+' aac rel: source="SYS_DATA_INGEST"; target="SYS_CATALOG"; label="Enterprise Data Platform to Governance Catalog"; interface_id="INT-INGEST-CATALOG"; kind="event-over-https"; integration_style="Event"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="analytics-landing-zone"
+Rel(SYS_DATA_INGEST, SYS_CREDIT_DATA, "Enterprise Data Platform to Credit Data Environment", "SQL", $tags="pipeline-load")
+' aac rel: source="SYS_DATA_INGEST"; target="SYS_CREDIT_DATA"; label="Enterprise Data Platform to Credit Data Environment"; interface_id="INT-INGEST-CREDIT-DATA"; kind="pipeline-load"; integration_style="Batch"; auth_method="ManagedIdentity"; frequency="Daily"; direction="Outbound"; patterns="analytics-landing-zone"
+Rel(SYS_CARDSVC_EVENTS, SYS_DATA_INGEST, "Card Servicing Events to Data Ingestion Hub", "AMQP", $tags="event")
+' aac rel: source="SYS_CARDSVC_EVENTS"; target="SYS_DATA_INGEST"; label="Card Servicing Events to Data Ingestion Hub"; interface_id="INT-CARDSVC-EVENTS-INGEST"; kind="event"; integration_style="Event"; auth_method="ManagedIdentity"; frequency="Realtime"; direction="Outbound"
+Rel(SYS_CUST360_SEMANTIC, SYS_REG_REPORTING, "Customer 360 Semantic Layer to Regulatory Reporting Engine", "SQL", $tags="pipeline-load")
+' aac rel: source="SYS_CUST360_SEMANTIC"; target="SYS_REG_REPORTING"; label="Customer 360 Semantic Layer to Regulatory Reporting Engine"; interface_id="INT-CUST360-REGREPORTING"; kind="pipeline-load"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Outbound"
+Rel(SYS_CORE_LEDGER, SYS_DATA_INGEST, "Core Ledger to Data Ingestion Hub", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_CORE_LEDGER"; target="SYS_DATA_INGEST"; label="Core Ledger to Data Ingestion Hub"; interface_id="INT-LEDGER-INGEST"; kind="scheduled-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Outbound"
+Rel(SYS_LENDING_WORKER, SYS_DATA_INGEST, "Installment Lending Worker to Data Ingestion Hub", "S3", $tags="pipeline-load")
+' aac rel: source="SYS_LENDING_WORKER"; target="SYS_DATA_INGEST"; label="Installment Lending Worker to Data Ingestion Hub"; interface_id="INT-LENDING-WORKER-INGEST"; kind="pipeline-load"; integration_style="Batch"; auth_method="IAM"; frequency="Daily"; direction="Outbound"
+Rel(SYS_DATA_INGEST, SYS_CUST360_PIPELINE, "Ingest to Customer 360 Pipeline", "Snowpipe", $tags="pipeline-load")
+' aac rel: source="SYS_DATA_INGEST"; target="SYS_CUST360_PIPELINE"; label="Ingest to Customer 360 Pipeline"; interface_id="INT-CUST360-INGEST"; kind="pipeline-load"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Inbound"
+Rel(SYS_CUST360_PIPELINE, SYS_CUST360_SEMANTIC, "Customer 360 Pipeline to Semantic Layer", "SQL", $tags="pipeline-load")
+' aac rel: source="SYS_CUST360_PIPELINE"; target="SYS_CUST360_SEMANTIC"; label="Customer 360 Pipeline to Semantic Layer"; interface_id="INT-CUST360-PIPE-SEMANTIC"; kind="pipeline-load"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Outbound"
+Rel(SYS_DISPUTES_SAAS, SYS_DATA_INGEST, "Pegasystems return feed", "SFTP", $tags="partner-file")
+' aac rel: source="SYS_DISPUTES_SAAS"; target="SYS_DATA_INGEST"; label="Pegasystems return feed"; interface_id="INT-DISPUTES-SAAS-FEED"; kind="partner-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Inbound"
+Rel(SYS_SCREENING_VENDOR, SYS_DATA_INGEST, "NICE Actimize return feed", "SFTP", $tags="partner-file")
+' aac rel: source="SYS_SCREENING_VENDOR"; target="SYS_DATA_INGEST"; label="NICE Actimize return feed"; interface_id="INT-SCREENING-VENDOR-RETURN"; kind="partner-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Inbound"
+
+SHOW_LEGEND()
+@enduml

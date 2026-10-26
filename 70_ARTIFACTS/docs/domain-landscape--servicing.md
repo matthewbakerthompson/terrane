@@ -1,11 +1,11 @@
-# Servicing Domain
+# Servicing — Landscape
 
-The Servicing domain and its immediate neighbors: every system in the domain plus everything one interface away. Smaller and easier to read than the full landscape, and it updates as the model changes.
+One business domain and its immediate neighbors: every system in the domain plus everything one interface away. Smaller and easier to read than the full landscape, and drawn for every domain the systems name.
 
 ```mermaid
 %%{init: {'flowchart': {'curve': 'basis'}} }%%
 flowchart LR
-  %% Servicing Domain
+  %% Servicing — Landscape
   %% Generated from the model by `terrane render`. Do not edit by hand.
 
   subgraph grp_Card_Issuing["Card Issuing"]
@@ -95,7 +95,7 @@ flowchart LR
 
 The same view as the app draws it, written beside the Mermaid by `terrane render`:
 
-![Servicing Domain](../svg/domain-servicing.svg)
+![Servicing — Landscape](../svg/domain-landscape--servicing.svg)
 
 **Hue is the entity type.**
 

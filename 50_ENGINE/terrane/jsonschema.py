@@ -148,6 +148,50 @@ def relations_schema() -> dict:
     }
 
 
+def _annotations_schema() -> dict:
+    """What a diagram draws of its own, as `terrane.annotations.read` takes
+    it; that reader is the authority, and says which frame a key misses."""
+    from .annotations import ENDS, FILLS, OUTLINES, ROLES, ROUTES, SHAPES, TEXT_SIZES
+
+    pair = {"type": "array", "items": {"type": "number"}, "minItems": 2, "maxItems": 2}
+    end = {"oneOf": [{"type": "string", "description": "A record on the drawing by id, or a key of this list."},
+                     dict(pair, description="A point on the sheet.")]}
+    return {
+        "type": "array",
+        "description": "Shapes, text, notes, frames and free lines the diagram draws of its own, none of them "
+                       "records. Each has a key that never changes; a box its corner `at` in the innermost "
+                       "frame of `in`, or on the sheet, and its `size`; a line its two ends.",
+        "items": {
+            "type": "object",
+            "additionalProperties": False,
+            "required": ["key", "role"],
+            "properties": {
+                "key": {"type": "string"},
+                "role": {"enum": list(ROLES)},
+                "label": {"type": "string", "description": "Its words."},
+                "shape": {"enum": list(SHAPES)},
+                "in": {"type": "array", "items": {"type": "string"},
+                       "description": "The keys of the frames it sits in, outermost first."},
+                "at": dict(pair, description="Its top-left corner in the frame around it, or on the sheet."),
+                "size": dict(pair, description="[width, height]."),
+                "from": end,
+                "to": end,
+                "ends": {"enum": list(ENDS)},
+                "route": {"enum": list(ROUTES)},
+                "look": {
+                    "type": "object",
+                    "additionalProperties": False,
+                    "properties": {
+                        "fill": {"enum": sorted(FILLS)},
+                        "line": {"enum": list(OUTLINES)},
+                        "text": {"enum": sorted(TEXT_SIZES)},
+                    },
+                },
+            },
+        },
+    }
+
+
 def view_schema() -> dict:
     where = {
         "type": "object",
@@ -175,8 +219,9 @@ def view_schema() -> dict:
         "additionalProperties": False,
         "required": ["view_id"],
         # What it draws: a query, things pinned to it, or views placed on it
-        # as boundaries (a diagram drawn on the canvas may be only those).
-        "anyOf": [{"required": ["scope"]}, {"required": ["places"]}],
+        # as boundaries (a diagram drawn on the canvas may be only those, or
+        # only shapes of its own).
+        "anyOf": [{"required": ["scope"]}, {"required": ["places"]}, {"required": ["annotations"]}],
         "properties": {
             "view_id": {"type": "string"},
             "replaces": {
@@ -218,6 +263,7 @@ def view_schema() -> dict:
                     ],
                 },
             },
+            "annotations": _annotations_schema(),
             "positions": {
                 "type": "object",
                 "description": "Where each thing was put by hand on the canvas: a box keyed by the boundaries it "
@@ -250,6 +296,12 @@ def view_schema() -> dict:
                             "properties": {
                                 "name": {"type": "string"},
                                 "type": {"enum": sorted(ENTITY_TYPES)},
+                                "field": {
+                                    "type": "string",
+                                    "description": "For a subject that is a value on the records rather than a "
+                                                   "record: the field it is a value of (a business domain is a "
+                                                   "value of company_domain). Instead of type.",
+                                },
                                 "required": {"type": "boolean"},
                                 "default": {"type": "string"},
                                 "description": {"type": "string"},
@@ -261,8 +313,23 @@ def view_schema() -> dict:
             "render_for": {
                 "type": "object",
                 "description": "Which subjects the view is drawn for when every view is rendered.",
-                "properties": {"type": {"enum": sorted(ENTITY_TYPES)}, "where": where},
+                "properties": {
+                    "type": {"enum": sorted(ENTITY_TYPES)},
+                    "where": where,
+                    "parameter": {"type": "string", "description": "The parameter each subject binds."},
+                    "field": {
+                        "type": "string",
+                        "description": "Drawn once for each value this field takes on the selected records, "
+                                       "rather than once per record.",
+                    },
+                    "limit": {"type": "integer"},
+                },
                 "required": ["type"],
+            },
+            "up": {
+                "type": "string",
+                "description": "For a view about one thing: the view one level above it, drawn for what the "
+                               "subject sits in. A system's architecture goes up to its domain's landscape.",
             },
             "order_by": {"type": "string"},
             "group_direction": {"enum": ["LR", "RL", "TB", "BT", "lr", "rl", "tb", "bt"]},
@@ -386,7 +453,14 @@ def view_schema() -> dict:
             "limits": {
                 "type": "object",
                 "additionalProperties": False,
-                "properties": {"max_nodes": {"type": "integer", "minimum": 1}},
+                "properties": {"max_nodes": {
+                    "type": "integer", "minimum": 1,
+                    "description": (
+                        "How many things a diagram, map or timeline draws before it is cut, "
+                        "pins and what the scope names kept first. A report is a table and "
+                        "is never cut: past its limit it is listed whole and says so."
+                    ),
+                }},
             },
         },
     }

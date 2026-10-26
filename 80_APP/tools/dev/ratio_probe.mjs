@@ -12,7 +12,7 @@ import { launch, openView, settled } from "../capture.mjs";
 const DEFAULT = [
   "network-topology", "onboarding&p_product=PRD-INSTALLMENT-LENDING", "product-architecture&p_product=PRD-CARD-SERVICING",
   "product-architecture&p_product=PRD-IDV", "integration-architecture", "system-context", "dr-topology",
-  "hosting-estate", "application-landscape", "system-governance&p_system=SYS-AUTH-SWITCH", "domain-servicing",
+  "hosting-estate", "application-landscape", "system-governance&p_system=SYS-AUTH-SWITCH", "domain-landscape&p_domain=Servicing",
   "tiered-architecture", "technology-stack", "framework-landscape&p_framework=FW-BIAN", "capability-map",
 ];
 let url = "http://127.0.0.1:8020";

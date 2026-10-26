@@ -111,7 +111,7 @@ capability-realization             report    60 nodes    1 edges   <- was 60 / 5
 integration-architecture           diagram   47 nodes   51 edges   <- was 46 / 52
 parts-in-use                       map       46 nodes   36 edges   <- was 42 / 33
 lifecycle-portfolio                map       50 nodes   62 edges   <- was 50 / 64
-domain-servicing                   diagram   28 nodes   34 edges   <- was 23 / 30
+domain-landscape--servicing        diagram   28 nodes   34 edges   <- was 23 / 30
 product-architecture--prd-insights diagram   17 nodes   19 edges   <- new
 product-parts--prd-insights        diagram   17 nodes   19 edges   <- new
 data-landscape                     map       24 nodes    0 edges   <- was 23 / 0

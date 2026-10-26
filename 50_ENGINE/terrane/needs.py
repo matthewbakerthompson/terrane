@@ -130,6 +130,9 @@ class ViewNeeds(NamedTuple):
     #: Why the view could not be read, for a view that is broken rather than
     #: empty; "" otherwise.
     problem: str = ""
+    #: Records the view's limit leaves off the drawing although the scope
+    #: matched them. Their needs are counted all the same.
+    cut: int = 0
 
 
 def _blank(value: Any) -> bool:
@@ -506,20 +509,26 @@ def needs_of(model: Model, view: View, subject: str = "", graph=None) -> ViewNee
     problem = ""
     if graph is None:
         try:
-            # Counted over everything the view selects, not the first sixty
-            # it shows: a landscape cut at its limit is still about them all.
-            graph = resolve(model, view._replace(limits=dict(view.limits or {}, max_nodes=0)))
+            graph = resolve(model, view)
         except ViewError as exc:
             if "selected no entities" not in str(exc):
                 problem = str(exc)
             graph = None
-    nodes = graph.nodes if graph is not None else []
-    edges = graph.edges if graph is not None else []
+    # Counted over everything the view selects, not the first sixty it
+    # shows: a landscape cut at its limit is still about them all. What it
+    # draws is said as the render draws it; this said "109 drawn" of a table
+    # the render cut to sixty.
+    whole = graph
+    if graph is not None and graph.cut:
+        whole = resolve(model, view._replace(limits=dict(view.limits or {}, max_nodes=0)))
+    nodes = whole.nodes if whole is not None else []
+    edges = whole.edges if whole is not None else []
     pinned = sorted({kind for kind, _id in located(model, view.scope.get("pin"))})
     tally = _Tally(declared(view, pinned))
     drawn = {node.key for node in nodes}
     kept_off = _count_scope(model, view, drawn, tally)
     _count_drawing(model, view, nodes, edges, tally)
+    shown = len(graph.nodes) if graph is not None else 0
 
     needs: List[Need] = []
     for key in tally.order:
@@ -543,9 +552,9 @@ def needs_of(model: Model, view: View, subject: str = "", graph=None) -> ViewNee
             by_role=tuple((r, len(roles[r])) for r in ROLES if r in roles),
             asked_ids=tuple(sorted(tally.asked[key])),
         ))
-    return ViewNeeds(drawn=len(drawn), kept_off=tuple(sorted(kept_off)), needs=needs,
+    return ViewNeeds(drawn=shown, kept_off=tuple(sorted(kept_off)), needs=needs,
                      state="empty" if problem else _state(view, len(drawn), len(kept_off), needs, len(edges)),
-                     problem=problem, **base)
+                     problem=problem, cut=len(drawn) - shown, **base)
 
 
 class FieldNeed(NamedTuple):

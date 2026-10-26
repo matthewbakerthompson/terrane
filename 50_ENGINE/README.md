@@ -59,11 +59,18 @@ back as YAML files that read as if a person wrote them. An empty estate's
 first page says how to bring in an inventory, and `terrane init` names a
 sample spreadsheet inside the package to try it with.
 
-The sample estate, a card issuer, shows what a full estate draws. It is on
-[the demo](https://matthewbakerthompson.github.io/terrane/), read-only and
-with nothing to install, where a first visit offers a two-minute tour. To
-edit it, clone the repository and run `terrane app` in the clone's root
-folder.
+The sample estate, a card issuer, shows what a full estate draws.
+`terrane init --sample` copies it out of the package into a folder of your
+own, to open in the app and change; a first visit offers a two-minute tour.
+
+```bash
+terrane init --sample sample
+cd sample
+terrane app
+```
+
+It is also on [the demo](https://matthewbakerthompson.github.io/terrane/),
+read-only and with nothing to install.
 
 `terrane init` pins the Terrane releases the estate is checked with, so
 everyone on it draws the same thing, and can name the organization's

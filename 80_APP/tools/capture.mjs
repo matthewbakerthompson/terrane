@@ -37,13 +37,16 @@ export async function launch() {
 
 // A page on the app with the rail folded before its own script runs, so the
 // first layout is the wide one rather than a narrow one refitted.
+// The canvas is maxGraph's (canvas/engine.js); TERRANE_CANVAS_ENGINE=cytoscape
+// opens it as it was before, for a probe's output on the old canvas.
 export async function openView(browser, url, hash) {
   const page = await browser.newPage();
-  await page.evaluateOnNewDocument(() => {
+  await page.evaluateOnNewDocument((engine) => {
     localStorage.setItem("aac.rail.shut", "1");
     localStorage.setItem("aac.insp.shut", "0");
     localStorage.setItem("aac.tour", "taken");
-  });
+    if (engine) localStorage.setItem("aac.canvas.engine", engine);
+  }, process.env.TERRANE_CANVAS_ENGINE || "");
   await page.goto(url + "/#" + hash, { waitUntil: "networkidle0", timeout: 60000 });
   return page;
 }

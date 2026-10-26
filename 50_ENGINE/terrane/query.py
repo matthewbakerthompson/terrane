@@ -75,6 +75,9 @@ class ViewGraph(NamedTuple):
     #: always appears before its children.
     groups: List[Tuple[str, ...]]
     notes: List[str]
+    #: How many of the things the scope matched the view's limit left off;
+    #: 0 when nothing was cut.
+    cut: int = 0
 
 
 
@@ -161,6 +164,10 @@ class Parameter(NamedTuple):
     required: bool = True
     default: Optional[str] = None
     description: str = ""
+    #: A field the value is one value of, for a subject that is a word on the
+    #: records rather than a record: a business domain is `Servicing` on
+    #: eight systems, and no record of its own. Set instead of `type`.
+    field: Optional[str] = None
 
 
 class View(NamedTuple):
@@ -214,6 +221,17 @@ class View(NamedTuple):
     #: its top-left corner `(x, y)` in the boundary around it. Empty for a
     #: drawing the layout places, which is every view written as a query.
     positions: Dict[str, Tuple[int, int]] = {}
+    #: What the diagram draws of its own on the canvas -- shapes, text,
+    #: notes, frames and free lines, none of them records -- as its file
+    #: lists them (`terrane.annotations`). Empty for every view not drawn on
+    #: the canvas.
+    annotations: Sequence[dict] = ()
+    #: The view one level above this one, for a view about one thing: a
+    #: system's architecture goes up to its domain's landscape, and that to
+    #: the application landscape. What the level above is drawn for is read
+    #: off the subject (`terrane.levels`). None for a view with no level
+    #: above it, which is every view about the whole estate.
+    up: Optional[str] = None
 
 
 def _enum_of(field: str) -> Sequence[str]:
@@ -282,14 +300,47 @@ def _parameters_of(data: dict) -> List[Parameter]:
                 "view parameter %r names an unknown entity type %r"
                 % (raw["name"], raw["type"])
             )
+        field = str(raw.get("field") or "").strip() or None
+        if field and raw.get("type"):
+            # One or the other: a record's id, or a word on the records.
+            # Both would leave the picker not knowing which list to offer.
+            raise ViewError(
+                "view parameter %r takes a %s or a value of %s, not both"
+                % (raw["name"], raw["type"], field)
+            )
+        if field and not any(spec.name == field for t in ENTITY_TYPES.values() for spec in t.fields):
+            raise ViewError("view parameter %r names a field no record has: %r" % (raw["name"], field))
         out.append(Parameter(
             name=str(raw["name"]),
             type=raw.get("type"),
             required=bool(raw.get("required", True)),
             default=raw.get("default"),
             description=str(raw.get("description") or ""),
+            field=field,
         ))
     return out
+
+
+def subject_slug(value: Any) -> str:
+    """How one subject's copy of a view is named after it:
+    `system-architecture--sys-auth-switch`, and for a subject that is words
+    rather than an id, `domain-landscape--risk-and-compliance`. An id is
+    already its own slug once lowered."""
+    return re.sub(r"[^a-z0-9]+", "-", str(value).lower()).strip("-")
+
+
+def field_values(model: Model, field: str, type_name: Optional[str] = None) -> List[str]:
+    """The values a field takes on the model's records, or on one type's,
+    sorted: the subjects a view about one value of the field can be drawn
+    for."""
+    kinds = [type_name] if type_name else list(ENTITY_TYPES)
+    found = set()
+    for kind in kinds:
+        for record in model.all_of(kind):
+            value = record.get(field)
+            if value not in (None, "") and not isinstance(value, (list, dict)):
+                found.add(str(value))
+    return sorted(found)
 
 
 def _keys_bound(value: Any, ids: Dict[str, Any]) -> Any:
@@ -342,6 +393,13 @@ def bind(
                     "view %s: %r is not a %s" % (view.view_id, value, param.type)
                 )
             readable = record.get("name") or value
+        if model is not None and param.field and value and str(value) not in field_values(model, param.field):
+            # A domain nobody's records name draws an empty landscape that
+            # looks like a domain with nothing in it.
+            raise ViewError(
+                "view %s: no record has %s %r"
+                % (view.view_id, param.field.replace("_", " "), value)
+            )
         names[param.name] = readable
 
     try:
@@ -374,10 +432,19 @@ def render_targets(model: Model, view: View) -> List[Tuple[str, str]]:
             % (view.view_id, type_name)
         )
     pk = ENTITY_TYPES[type_name].pk
+    # A view about one value of a field is drawn once for each value the
+    # selected records take: a landscape per business domain the systems
+    # name, so a ninth domain gets its drawing without anyone listing it.
+    field = spec.get("field")
     out = []
+    seen = set()
     for record in model.all_of(type_name):
         if matches(model, record, spec.get("where")):
-            out.append((parameter, str(record[pk])))
+            value = record.get(field) if field else record[pk]
+            if value in (None, "") or str(value) in seen:
+                continue
+            seen.add(str(value))
+            out.append((parameter, str(value)))
     out.sort(key=lambda pair: pair[1])
     limit = int(spec.get("limit", 60) or 0)
     if limit and len(out) > limit:
@@ -429,6 +496,8 @@ def parse_view(data: dict, source: Optional[Path] = None) -> View:
         section=str(data.get("section") or "").strip(),
         places=_places_of(data),
         positions=_positions_of(data),
+        annotations=_annotations_of(data),
+        up=str(data.get("up") or "").strip() or None,
     )
 
 
@@ -462,6 +531,16 @@ def _positions_of(data: dict) -> Dict[str, Tuple[int, int]]:
             raise ViewError("%s: %s should be [x, y], two numbers" % (where, name or "a key"))
         out[name] = (int(round(value[0])), int(round(value[1])))
     return out
+
+
+def _annotations_of(data: dict) -> List[dict]:
+    """The diagram's own shapes, checked as `terrane.annotations` reads them."""
+    from .annotations import AnnotationError, read
+
+    try:
+        return read(data.get("annotations"), "view %s: annotations" % data.get("view_id"))
+    except AnnotationError as exc:
+        raise ViewError(str(exc)) from None
 
 
 def _places_of(data: dict) -> List[dict]:
@@ -850,6 +929,10 @@ def resolve(model: Model, view: View) -> ViewGraph:
     notes: List[str] = []
     include = view.scope.get("include")
     pinned = located(model, view.scope.get("pin"))
+    # A diagram drawn on the canvas with nothing from the estate on it yet,
+    # only shapes of its own, draws those and nothing of the model.
+    if not include and not view.scope.get("pin") and view.annotations:
+        return ViewGraph(view, [], [], [], notes)
     if not include and not pinned:
         raise ViewError("view %s has no scope.include" % view.view_id)
 
@@ -878,19 +961,39 @@ def resolve(model: Model, view: View) -> ViewGraph:
     # thing dropped.
     max_nodes = int(view.limits.get("max_nodes", 0) or 0)
     ordered = sorted(selected, key=lambda item: (item[0], item[1]))
-    if max_nodes and len(ordered) > max_nodes:
+    cut = 0
+    if max_nodes and len(ordered) > max_nodes and view.kind == "report":
+        # A report is a table and has no page to fit, so it is listed whole
+        # and its limit only says the scope may have stopped filtering. Cut
+        # at its sixty, the capability realization table kept the estate's
+        # 55 systems and the first five capabilities by id, and so listed
+        # five rows of the realizations; a product with four more systems
+        # would have left it one.
+        notes.append(
+            "%d entities matched, past limits.max_nodes of %d; a report is listed whole. "
+            "Check the scope still filters, or raise the limit." % (len(ordered), max_nodes)
+        )
+    elif max_nodes and len(ordered) > max_nodes:
         # Pins before everything else the scope names: a pin is a person
         # saying this one stays, and a view that matched every system would
         # otherwise drop it by id like any of them.
         preferred = sorted(
             selected, key=lambda item: (item not in pinned, item not in named, item[0], item[1])
         )
-        kept_named = min(len(named & selected), max_nodes)
+        named_count = len(named & selected)
+        # A scope that names more than the limit loses some of what it named:
+        # the integration diagram matched 55 systems and kept 40, and said it
+        # showed "the 40 the scope names and the first 0 of the rest".
+        if named_count >= max_nodes:
+            shown = "the first %d of the %d the scope names, by id" % (max_nodes, named_count)
+        else:
+            shown = "the %d the scope names and the first %d of the rest by id" % (
+                named_count, max_nodes - named_count)
         notes.append(
-            "%d entities matched; showing the %d the scope names and the first %d of "
-            "the rest by id. Narrow the scope or raise limits.max_nodes."
-            % (len(ordered), kept_named, max_nodes - kept_named)
+            "%d entities matched; showing %s. Narrow the scope or raise limits.max_nodes."
+            % (len(ordered), shown)
         )
+        cut = len(ordered) - max_nodes
         ordered = sorted(preferred[:max_nodes], key=lambda item: (item[0], item[1]))
 
     keep: Set[str] = {entity_id for _type, entity_id in ordered}
@@ -943,7 +1046,7 @@ def resolve(model: Model, view: View) -> ViewGraph:
             % (counted, DIAGRAM_MAX_NODES)
         )
     return ViewGraph(
-        view=view, nodes=nodes, edges=edges, groups=group_paths(nodes, view.lanes), notes=notes
+        view=view, nodes=nodes, edges=edges, groups=group_paths(nodes, view.lanes), notes=notes, cut=cut
     )
 
 

@@ -86,11 +86,13 @@ class TestShipped(unittest.TestCase):
                   "80_APP/web": "terrane/shipped/web",
                   "80_APP/app/server.py": "terrane/shipped/app/server.py",
                   "90_EXAMPLE/quick": "terrane/shipped/90_EXAMPLE/quick",
-                  # The landing zones a product on a shipped shape binds to.
-                  "10_MODEL/tech_services": "terrane/shipped/10_MODEL/tech_services",
-                  # And what the sample answers for the roles the library asks an
-                  # estate to fill, which a sketch with no estate borrows.
-                  "10_MODEL/model.yaml": "terrane/shipped/10_MODEL/model.yaml"}
+                  # The sample estate, which `terrane init --sample` copies
+                  # out: among its records the landing zones a product on a
+                  # shipped shape binds to, and in its settings what it
+                  # answers for the roles the library asks an estate to fill,
+                  # both of which a sketch with no estate borrows.
+                  "10_MODEL": "terrane/shipped/10_MODEL",
+                  "60_SOURCES": "terrane/shipped/60_SOURCES"}
         for folder in quick.LIBRARY_FOLDERS:
             wanted[folder] = "terrane/shipped/" + folder
         for source, target in wanted.items():
@@ -190,6 +192,20 @@ class TestShipped(unittest.TestCase):
         # empty namespace package and hides an import nobody renamed.
         self.assertFalse((ENGINE / "aac").exists())
 
+    def test_version_prints_the_version(self) -> None:
+        # It printed the usage until 1.1.0: --version was no option.
+        import io
+        from contextlib import redirect_stdout
+
+        import terrane
+        from terrane.cli import main
+
+        out = io.StringIO()
+        with redirect_stdout(out), self.assertRaises(SystemExit) as caught:
+            main(["--version"])
+        self.assertEqual(caught.exception.code, 0)
+        self.assertEqual(out.getvalue().strip(), "terrane %s" % terrane.__version__)
+
     def test_terrane_is_the_door_and_the_command(self) -> None:
         import terrane
         from terrane.cli import build_parser
@@ -255,6 +271,20 @@ class TestThePackagesCopiesAlone(unittest.TestCase):
             drawings = quick.render_sketch(doc, date="2026-10-22", shipped=self.inside)
             self.assertTrue(len(drawings), name)
             self.assertFalse([n for n in drawings.notes if n.startswith("ERROR")], (name, drawings.notes))
+
+    def test_the_sample_copies_out_of_the_packages_copies(self) -> None:
+        # `terrane init --sample` from what the wheel carries: a folder of
+        # the sample's left out of the bundle list would copy a sample that
+        # does not load, or loads with less than the repository's.
+        from terrane import __version__, estate, validate
+        from terrane.model import load
+
+        copy = self.tmp / "sample"
+        estate.init_sample(copy, __version__, source=self.inside)
+        model = load(copy)
+        self.assertEqual(model.counts(), load(REPO).counts())
+        report = validate.run(model, estate.views_of(copy))
+        self.assertEqual([f.format() for f in report.findings if f.severity == "error"], [])
 
     def test_the_spreadsheet_an_empty_estate_is_offered_travels(self) -> None:
         # `terrane init` and the app's note for an empty model name it. The

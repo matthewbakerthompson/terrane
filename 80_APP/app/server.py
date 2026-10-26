@@ -25,7 +25,7 @@ from collections import Counter
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple
-from urllib.parse import parse_qs, unquote, urlparse
+from urllib.parse import parse_qs, unquote, urlencode, urlparse
 
 APP_DIR = Path(__file__).resolve().parent
 REPO_ROOT = APP_DIR.parents[1]
@@ -39,10 +39,11 @@ from terrane import sources as sources_module  # noqa: E402
 from terrane import records as records_module  # noqa: E402
 from terrane import regroup as regroup_module  # noqa: E402
 from terrane import places as places_module  # noqa: E402
+from terrane import levels as levels_module  # noqa: E402
 from terrane import needs as needs_module  # noqa: E402
 from terrane.connections import kind_of, load_connections, sorted_by_kind  # noqa: E402
 from terrane.archetype import ArchetypeError, expand, parse_archetype  # noqa: E402
-from terrane.blocks import LibraryError, load_blocks, load_components  # noqa: E402
+from terrane.blocks import LibraryError, load_blocks, load_components, offered  # noqa: E402
 from terrane.blocks import expand as block_expand  # noqa: E402
 from terrane.loader import ModelFileError, parse_data_text, read_data_file  # noqa: E402
 from terrane.model import ModelError, load  # noqa: E402
@@ -50,7 +51,7 @@ from terrane.palette import TONES, Palette  # noqa: E402
 from terrane.estate import is_shipped_view, views_of  # noqa: E402
 from terrane.shipped import sample_inventory  # noqa: E402
 from terrane.query import VIEW_CATEGORIES, ViewError, bind, load_views, parse_view  # noqa: E402
-from terrane.query import render_targets, resolve  # noqa: E402
+from terrane.query import render_targets, resolve, subject_slug  # noqa: E402
 from terrane.render_mermaid import render as render_mermaid  # noqa: E402
 from terrane.render_mermaid import render_markdown, render_timeline  # noqa: E402
 from terrane.render_sequence import all_flows, steps_for  # noqa: E402
@@ -370,6 +371,8 @@ def api_overview(query, _body) -> dict:
                     "kind": view.kind,
                     "canvas": _on_canvas(view),
                     "parameters": [p.name for p in view.parameters],
+                    "subject": _subject_of(view),
+                    "up": view.up,
                     "description": view.description,
                     "nodes": len(graph.nodes),
                     "edges": len(graph.edges),
@@ -389,6 +392,8 @@ def api_overview(query, _body) -> dict:
                     "kind": view.kind,
                     "canvas": _on_canvas(view),
                     "parameters": [p.name for p in view.parameters],
+                    "subject": _subject_of(view),
+                    "up": view.up,
                     "description": view.description,
                     "nodes": 0,
                     "edges": 0,
@@ -435,6 +440,16 @@ def api_overview(query, _body) -> dict:
             for a in sorted(model.archetypes.values(), key=lambda x: x.archetype_id)
         ],
     }
+
+
+def _subject_of(view):
+    """What a view is about, for the views about one thing: the parameter's
+    name and the type of record or the field whose value it takes."""
+    param = levels_module.subject_parameter(view)
+    if param is None:
+        return None
+    return {"name": param.name, "type": param.type, "field": param.field,
+            "short": levels_module.short_title(view, param)}
 
 
 def api_schema(_query, _body) -> dict:
@@ -490,7 +505,17 @@ def _find_view(views, view_id: str):
     for view in views:
         if view.view_id != base or not view.parameters:
             continue
-        return view, {view.parameters[0].name: tail.upper()}
+        param = view.parameters[0]
+        if param.field:
+            # A subject that is words is named by its slug, and the slug
+            # does not give the words back: `risk-and-compliance` is found
+            # among the values the view is drawn for.
+            model, _views = _load_all()
+            for value in levels_module.subject_choices(model, view, param):
+                if subject_slug(value) == tail:
+                    return view, {param.name: value}
+            return view, {param.name: tail}
+        return view, {param.name: tail.upper()}
     return None, {}
 
 
@@ -532,13 +557,35 @@ def api_graph(query, _body) -> dict:
         {
             "name": p.name,
             "type": p.type,
+            "field": p.field,
             "description": p.description,
             "value": supplied.get(p.name, ""),
+            # A field's values have no list of records to pick from; the
+            # picker offers the values the view is drawn for.
+            "choices": levels_module.subject_choices(model, declared, p) if p.field else None,
         }
         for p in declared.parameters
     ]
     payload["membership"] = _membership(model, declared)
+    # The levels above a view about one thing, for the crumb, and the other
+    # views about the same subject, for the tabs beside its picker.
+    payload["up"] = levels_module.way_up(model, views, declared, supplied)
+    payload["across"] = levels_module.across(views, declared)
+    _boundary_diagrams(model, views, payload)
     return payload
+
+
+def _boundary_diagrams(model, views, payload) -> None:
+    """A boundary that is one value of a field some view is drawn for opens
+    that view: the Servicing boundary on the landscape leads to Servicing's
+    own landscape. Written on the boundary's element, so a baked page has it
+    without another request."""
+    for element in payload.get("elements") or []:
+        data = element.get("data") or {}
+        if data.get("isGroup") and data.get("field") and data.get("stored"):
+            found = levels_module.boundary_diagrams(model, views, data["field"], str(data["stored"]))
+            if found:
+                data["diagrams"] = found
 
 
 def _listed(value) -> List[str]:
@@ -837,6 +884,9 @@ def api_entity(query, _body) -> dict:
         "generated": bool(record.get("archetype_instance")),
         "home": _home_payload(type_name, record),
         "related": related,
+        # The drawings a person can open from this box: about it, about
+        # what it sits in, about the domain it carries.
+        "diagrams": levels_module.diagrams_of(model, _views, entity_id),
     }
 
 
@@ -4052,11 +4102,16 @@ def _stage(name: str, data: bytes, sheet: Optional[str] = None, token: Optional[
 
 def _unstage(token: str) -> None:
     import shutil
+    import tempfile
 
     staged = _STAGED.pop(token, None)
     if staged is not None:
-        # Exactly the folder mkdtemp made for this upload, and nothing above it.
-        shutil.rmtree(staged["dir"])
+        # Exactly the folder mkdtemp made for this upload, and nothing above
+        # it: one of the two prefixes, directly in the temporary folder.
+        folder = Path(staged["dir"])
+        if (folder.parent.resolve() == Path(tempfile.gettempdir()).resolve()
+                and folder.name.startswith(("terrane-source-", "terrane-drawing-"))):
+            shutil.rmtree(folder)
 
 
 def _table_answer(staged: Dict[str, Any], model, kind: Optional[str] = None) -> dict:
@@ -4264,6 +4319,273 @@ def api_project_guard(_query, _body) -> dict:
 
 def api_sources_discard(_query, body) -> dict:
     """An upload let go without bringing it in: its staging folder removed."""
+    if body.get("token"):
+        _unstage(str(body["token"]))
+    return {"ok": True}
+
+
+# ---- a drawing brought in ---------------------------------------------------
+# A drawing a team already has, a Visio file or a draw.io one or any other
+# the readers take, dropped into the app and adopted as records as `terrane
+# adopt FILE` does (`terrane.join`). Staged as an inventory upload is, outside
+# the repository, read with the estate's own connection kinds, and written
+# only when the person adopts it.
+
+#: What the app calls a file each reader reads, where it says what it read;
+#: a reader added to the engine and missing here is "a drawing".
+_READ_AS = {"visio": "a Visio drawing", "drawio": "a draw.io file", "archimate": "an ArchiMate model",
+            "structurizr": "a Structurizr workspace", "plantuml": "a C4-PlantUML diagram",
+            "mermaid": "a Mermaid diagram", "inventory": "a spreadsheet of systems", "excel": "an Excel workbook",
+            "sketch": "a sketch"}
+
+#: The exports Sources' columns and words read; every other file a reader
+#: takes is a drawing, and the app sends it to the page that adopts it.
+_EXPORT_SUFFIXES = (".csv", ".xlsx")
+#: A sketch is read as itself.
+_SKETCH_SUFFIXES = (".yaml", ".yml")
+
+
+def _drawing_suffixes() -> Dict[str, str]:
+    """Every suffix the app takes as a drawing, with what it calls the file:
+    the engine's readers, so a reader added there is taken here and by the
+    app's drop zones and file choosers with no change to either."""
+    from terrane.quick import READERS
+
+    out = {suffix: _READ_AS.get(kind, "a drawing") for suffix, kind in sorted(READERS.items())
+           if suffix not in _EXPORT_SUFFIXES}
+    out.update({suffix: _READ_AS["sketch"] for suffix in _SKETCH_SUFFIXES})
+    return out
+
+
+def api_adopt_readers(_query, _body) -> dict:
+    """What the app's drop zones take: drawings to adopt, by suffix, and the
+    exports that go through Sources' steps instead."""
+    return {"drawings": _drawing_suffixes(), "exports": list(_EXPORT_SUFFIXES)}
+
+
+def _read_drawing(staged: Dict[str, Any]) -> None:
+    """The staged file read for the estate open now: an estate switched
+    since the drop reads it again, since the connection kinds it is read
+    with are that estate's."""
+    from terrane.quick import read_any
+
+    if staged.get("root") == REPO_ROOT and staged.get("doc") is not None:
+        return
+    try:
+        doc, notes = read_any(staged["dir"] / staged["name"], REPO_ROOT)
+    except Exception as exc:  # noqa: BLE001 -- a file that does not read says why, whatever the reader raised
+        raise ApiError("%s could not be read: %s" % (staged["name"], exc), 422)
+    staged.update({"doc": doc, "notes": notes, "root": REPO_ROOT, "pictures": {}})
+
+
+def _stage_drawing(name: str, data: bytes) -> Dict[str, Any]:
+    import secrets
+    import shutil
+    import tempfile
+
+    from terrane.quick import READERS
+
+    name = Path(str(name or "")).name
+    suffix = Path(name).suffix.lower()
+    if suffix not in READERS and suffix not in _SKETCH_SUFFIXES:
+        raise ApiError("%s is not a drawing terrane reads; it reads %s" % (
+            name or "the file", ", ".join(sorted(_drawing_suffixes()))), 422)
+    folder = Path(tempfile.mkdtemp(prefix="terrane-drawing-"))
+    (folder / name).write_bytes(data)
+    staged = {"dir": folder, "name": name, "kind": READERS.get(suffix, "sketch")}
+    # A reader can take a while (one that reads a picture, tens of seconds)
+    # and can fail for want of what it needs; either is said on the page.
+    try:
+        _read_drawing(staged)
+    except ApiError:
+        # Exactly the folder mkdtemp made for this upload, and nothing above it.
+        shutil.rmtree(folder)
+        raise
+    staged["token"] = secrets.token_hex(8)
+    _STAGED[staged["token"]] = staged
+    return staged
+
+
+def _staged_drawing(token: str) -> Dict[str, Any]:
+    staged = _staged(token)
+    if "kind" not in staged:
+        raise ApiError("that upload is an inventory, not a drawing", 422)
+    _read_drawing(staged)
+    return staged
+
+
+def _owner_asked(body: dict) -> Optional[str]:
+    owner = str(body.get("owner") or "").strip()
+    return owner or None
+
+
+def _adopt_names(staged: Dict[str, Any]) -> Dict[str, str]:
+    """Every id the file names, with the name it gives it."""
+    names: Dict[str, str] = {}
+    for type_name, entity_type in ENTITY_TYPES.items():
+        for record in staged["doc"].get(type_name) or []:
+            if isinstance(record, dict) and record.get(entity_type.pk):
+                names[str(record[entity_type.pk])] = str(record.get("name") or record[entity_type.pk])
+    # A connection the drawing left unnamed is said by its ends, as the
+    # record will be named: an arrow's id is no name to read in a list.
+    for record in staged["doc"].get("interfaces") or []:
+        if isinstance(record, dict) and record.get("interface_id") and not record.get("name"):
+            ends = [names.get(str(record.get(k) or ""), str(record.get(k) or "")) for k in
+                    ("source_system_id", "target_system_id")]
+            names[str(record["interface_id"])] = "%s to %s" % tuple(ends)
+    return names
+
+
+def api_adopt_read(_query, body) -> dict:
+    """A drawing dropped, or one staged read again for another owner or
+    with its corrections: what it holds, what adopting it would write and
+    what it would leave as it is, the reader's notes, and the change drawn
+    against the estate (`terrane.join.change_picture`), the picture `terrane
+    adopt FILE --dry-run --picture` writes without the title block the page
+    says itself. Nothing is written."""
+    import base64
+
+    from terrane.join import AdoptError, adopted_view, change_picture, join_estate
+    from terrane.quick import SKETCH_ORG, QuickError
+
+    if body.get("token") and not body.get("data"):
+        staged = _staged_drawing(body["token"])
+    else:
+        try:
+            data = base64.b64decode(str(body.get("data") or ""), validate=False)
+        except ValueError:
+            raise ApiError("the file did not arrive whole; choose it again", 400)
+        if not data:
+            raise ApiError("the file is empty", 422)
+        if len(data) > _UPLOAD_LIMIT:
+            raise ApiError("the file is %d MB; a drawing of more than %d MB is not read here"
+                           % (len(data) // (1024 * 1024), _UPLOAD_LIMIT // (1024 * 1024)), 413)
+        staged = _stage_drawing(str(body.get("name") or ""), data)
+    owner, correct = _owner_asked(body), bool(body.get("correct"))
+    model, _views = _load_all()
+    # Dry, with the corrections asked for whether or not they are wanted:
+    # what the file says differently is shown either way, and taken only
+    # when the person ticks it.
+    try:
+        dry = join_estate(staged["doc"], REPO_ROOT, owner=owner, source_name=staged["name"], dry_run=True,
+                          correct=True)
+    except (AdoptError, QuickError) as exc:
+        raise ApiError(str(exc), 422)
+    names = _adopt_names(staged)
+
+    def listed(by_type: Dict[str, List[str]], here: bool) -> Dict[str, List[dict]]:
+        out: Dict[str, List[dict]] = {}
+        for type_name in ENTITY_TYPES:
+            ids = [i for i in by_type.get(type_name, []) if i != SKETCH_ORG]
+            if ids:
+                out[type_name] = [{"id": i, "name": str((model.get(type_name, i) or {}).get("name") or names.get(i, i))
+                                   if here else names.get(i, i)} for i in ids]
+        return out
+
+    titles, things = {}, {}
+    held = {t: [str(r[ENTITY_TYPES[t].pk]) for r in staged["doc"].get(t) or [] if isinstance(r, dict)
+                and r.get(ENTITY_TYPES[t].pk)] for t in ENTITY_TYPES}
+    for item in staged["doc"].get("views") or []:
+        if isinstance(item, dict) and item.get("view_id"):
+            kept = adopted_view(item, staged["name"], held)
+            titles[str(kept["view_id"])] = str(kept.get("title") or kept["view_id"])
+            pinned = (kept.get("scope") or {}).get("pin")
+            things[str(kept["view_id"])] = len(pinned) if isinstance(pinned, list) else None
+    # The picture is the slow part, a second or more: drawn once for each
+    # owner and choice against this state of the estate.
+    key = (owner or "", correct, hash(_CACHE.get("fingerprint")), hash(_CACHE.get("views_mark")))
+    pictures = staged.setdefault("pictures", {})
+    if key not in pictures:
+        try:
+            drawn = change_picture(staged["doc"], REPO_ROOT, owner=owner, source_name=staged["name"], correct=correct,
+                                   sheet=False)
+            pictures[key] = {"svg": drawn.svg, "title": drawn.title, "why": None}
+        except (AdoptError, QuickError) as exc:
+            pictures[key] = {"svg": None, "title": None, "why": str(exc)}
+    picture = pictures[key]
+    # The page shows it as an image from here, which the page's policy
+    # allows where a blob it made itself is not; the newest of each choice.
+    drawn = staged.setdefault("drawn", {})
+    if picture["svg"]:
+        drawn[(owner or "", correct)] = picture["svg"]
+    staged["version"] = staged.get("version", 0) + 1
+    picture_url = "/api/adopt/picture?%s" % urlencode(
+        {"token": staged["token"], "owner": owner or "", "correct": "1" if correct else "", "v": staged["version"]})
+    owners = sorted(({"id": str(r.get("org_unit_id")), "name": str(r.get("name") or r.get("org_unit_id"))}
+                     for r in model.all_of("org_units") if r.get("org_unit_id") != SKETCH_ORG),
+                    key=lambda u: u["name"].lower())
+    found: Dict[str, int] = {}
+    for type_name in ENTITY_TYPES:
+        records = staged["doc"].get(type_name) or []
+        if records and type_name != "org_units":
+            found[type_name] = len(records)
+    return {
+        "token": staged["token"], "file": staged["name"], "readAs": _READ_AS.get(staged["kind"], "a drawing"),
+        "notes": list(staged["notes"]),
+        # Who owns what is the picker's to say, so the placeholder's notes go.
+        "adoptNotes": [n for n in dry.notes if SKETCH_ORG not in n and "owns what the sketch" not in n],
+        "found": found,
+        "adds": listed(dry.added, False), "same": listed(dry.skipped, True), "differs": listed(dry.changed, True),
+        "changes": list(dry.changes),
+        "rows": {"adds": dry.rows_added, "same": dry.rows_skipped, "differs": dry.rows_corrected,
+                 "by": {relation: len(rows) for relation, rows in dry.rows_new.items()}},
+        "views": {"adds": [{"id": v, "title": titles.get(v, v), "things": things.get(v)} for v in dry.views_added],
+                  "same": [{"id": v, "title": titles.get(v, v), "things": things.get(v)} for v in dry.views_skipped]},
+        "unowned": len(dry.unowned), "placeholder": SKETCH_ORG, "owner": owner, "owners": owners,
+        "correct": correct,
+        "picture": picture_url if picture["svg"] else None, "pictureTitle": picture["title"],
+        "pictureWhy": picture["why"],
+    }
+
+
+def api_adopt_picture(query) -> str:
+    """The change picture last drawn for a staged drawing, its owner and
+    its choice of corrections: what the page's image shows."""
+    staged = _staged_drawing((query.get("token") or [""])[0])
+    owner = (query.get("owner") or [""])[0]
+    correct = (query.get("correct") or [""])[0] == "1"
+    svg = staged.get("drawn", {}).get((owner, correct))
+    if svg is None:
+        raise ApiError("that picture has not been drawn; read the drawing again", 404)
+    return svg
+
+
+def api_adopt_write(_query, body) -> dict:
+    """The staged drawing adopted: its records written into the estate as
+    `terrane adopt FILE` writes them, with the owner named and, when asked,
+    the corrections; the staging folder let go."""
+    from terrane.join import AdoptError, describe, join_estate
+    from terrane.quick import SKETCH_ORG, QuickError
+
+    staged = _staged_drawing(body.get("token"))
+    owner, correct = _owner_asked(body), bool(body.get("correct"))
+    with _LOCK:
+        try:
+            result = join_estate(staged["doc"], REPO_ROOT, owner=owner, source_name=staged["name"], correct=correct)
+        except (AdoptError, QuickError) as exc:
+            raise ApiError(str(exc), 422)
+        _unstage(staged["token"])
+        model, views = _load_all()
+        report = _report(model, views)
+    titles = {(v.own or v).view_id: (v.own or v).title for v in views}
+    # The placeholder owner is said apart from the records: the page counted
+    # what the drawing adds, and the toast after it counted one more.
+    added = {t: [i for i in ids if i != SKETCH_ORG] for t, ids in result.added.items()}
+    return {
+        "added": {t: len(ids) for t, ids in added.items() if ids},
+        "placeholder": SKETCH_ORG in result.added.get("org_units", []),
+        "corrected": {t: len(ids) for t, ids in result.changed.items()},
+        "rows": result.rows_added, "rowsCorrected": result.rows_corrected,
+        "views": [{"id": v, "title": titles.get(v, v)} for v in result.views_added],
+        "viewsHere": [{"id": v, "title": titles.get(v, v)} for v in result.views_skipped],
+        "written": len(result.written), "lines": describe(result),
+        "errors": [f.format() for f in report.errors], "warnings": len(report.warnings),
+        "warningsBefore": result.warnings_before,
+    }
+
+
+def api_adopt_discard(_query, body) -> dict:
+    """A drawing let go without adopting it: its staging folder removed."""
     if body.get("token"):
         _unstage(str(body["token"]))
     return {"ok": True}
@@ -5438,6 +5760,13 @@ def api_canvas_parts(_query, _body) -> dict:
             "id": component.component_type_id, "name": component.name, "category": component.category,
             "type": component.applies_to, "typeLabel": ENTITY_TYPES[component.applies_to].label,
             "description": component.description,
+            # What each provider calls it, the choices it offers first-usual,
+            # for the picker to find "EC2" by and a part dropped into an
+            # account of that cloud to be named for.
+            "products": {provider: offered(answer) for provider, answer in sorted(component.providers.items())
+                         if offered(answer)},
+            # And each answer whole, so a product's former name finds it.
+            "providers": dict(sorted(component.providers.items())),
         })
     # Systems first: a diagram is mostly what runs, and the platform parts
     # it runs on are a search away.
@@ -5485,11 +5814,15 @@ _CANVAS_ORDER = ("view_id", "title", "description", "category", "section", "kind
 def _canvas_ordered(data: dict) -> dict:
     out = {k: data[k] for k in _CANVAS_ORDER if k in data and data[k] not in (None, "", [], {})}
     for key, value in data.items():
-        if key not in out and key != "positions" and value not in (None, "", [], {}):
+        if key not in out and key not in ("annotations", "positions") and value not in (None, "", [], {}):
             out[key] = value
-    # Positions last, after anything the file had of its own: the longest
-    # part, and the one a reader of the file looks at least. In key order,
-    # so the lines of one boundary sit together and a save moves none.
+    # What the diagram draws of its own, and then positions, after anything
+    # the file had of its own: the longest parts, and the ones a reader of
+    # the file looks at least. Positions in key order, so the lines of one
+    # boundary sit together and a save moves none; the drawing's own in the
+    # order it is drawn, under to over.
+    if data.get("annotations"):
+        out["annotations"] = data["annotations"]
     if data.get("positions"):
         out["positions"] = {k: data["positions"][k] for k in sorted(data["positions"])}
     return out
@@ -5570,6 +5903,7 @@ def api_canvas_record(_query, body) -> dict:
     is asked rather than told a default they never chose."""
     part = str(body.get("part") or "").strip()
     into = body.get("into") or []
+    asked = str(body.get("product") or "").strip()
     components = load_components(REPO_ROOT)
     component = components.get(part)
     if component is None:
@@ -5593,13 +5927,22 @@ def api_canvas_record(_query, body) -> dict:
         field, value = str(step.get("field") or ""), step.get("value")
         if field in fields and value not in (None, ""):
             values[field] = value
+    # Dropped into an account of a cloud, it is that cloud's product, as a
+    # block built for a provider says (`terrane.blocks.build`): the one the
+    # person chose of those the cloud offers, else the usual one. Its name
+    # is the product's unless they gave it one.
+    product = ""
+    choices = offered(component.providers.get(str(values.get("cloud_provider") or ""), ""))
+    if choices and "product" in fields:
+        product = asked if asked in choices else choices[0]
+        values["product"] = product
     from terrane.inventory import slug as id_slug
     from terrane.sources import id_prefix
 
     with _LOCK:
         model, _views = _load_all()
         names = {str(r.get("name") or "").lower() for r in model.all_of(type_name)}
-        name = str(body.get("name") or "").strip() or component.name
+        name = str(body.get("name") or "").strip() or product or component.name
         stem, n = name, 2
         while name.lower() in names:
             name, n = "%s %d" % (stem, n), n + 1
@@ -5621,6 +5964,7 @@ def api_canvas_record(_query, body) -> dict:
         "type": type_name,
         "name": name,
         "part": component.name,
+        "product": product,
         "path": path.relative_to(REPO_ROOT).as_posix(),
         "missing": missing,
         "errors": [f.format() for f in report.errors if entity_id in f.message],
@@ -6015,6 +6359,10 @@ ROUTES: Dict[Tuple[str, str], Callable] = {
     ("POST", "/api/sources/preview"): api_sources_preview,
     ("POST", "/api/sources/bring-in"): api_sources_bring_in,
     ("POST", "/api/sources/discard"): api_sources_discard,
+    ("GET", "/api/adopt/readers"): api_adopt_readers,
+    ("POST", "/api/adopt/read"): api_adopt_read,
+    ("POST", "/api/adopt/write"): api_adopt_write,
+    ("POST", "/api/adopt/discard"): api_adopt_discard,
     ("GET", "/api/schema"): api_schema,
     ("GET", "/api/graph"): api_graph,
     ("GET", "/api/entity"): api_entity,
@@ -6088,10 +6436,10 @@ class Handler(BaseHTTPRequestHandler):
 
     def _handle(self, method: str) -> None:
         parsed = urlparse(self.path)
-        # The one answer that is not JSON: a picture.
-        if method == "GET" and parsed.path == "/api/svg":
+        # The answers that are not JSON: a picture.
+        if method == "GET" and parsed.path in ("/api/svg", "/api/adopt/picture"):
             try:
-                svg = api_svg(parse_qs(parsed.query))
+                svg = (api_svg if parsed.path == "/api/svg" else api_adopt_picture)(parse_qs(parsed.query))
             except ApiError as exc:
                 self._json(exc.status, {"error": exc.message})
                 return
@@ -6205,6 +6553,10 @@ def main(argv: Optional[List[str]] = None) -> int:
         print("\nstopped")
     finally:
         server.server_close()
+        # An upload staged and never brought in or adopted, its tab closed
+        # mid-review, was left in the temporary folder for good.
+        for token in list(_STAGED):
+            _unstage(token)
     return 0
 
 

@@ -245,6 +245,7 @@ def drawings_moved(
             located = model.find(subject) if subject else None
             out.append(Drawing(
                 view.view_id, view.title, subject,
-                str(located[1].get("name") or subject) if located else "", effect,
+                # A subject that is a field's value (a domain) is its own name.
+                str(located[1].get("name") or subject) if located else subject, effect,
             ))
     return out

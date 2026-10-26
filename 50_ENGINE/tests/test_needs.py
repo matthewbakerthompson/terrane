@@ -8,14 +8,15 @@ account); a grouped field counts the drawn records outside the boxes, and a
 cloud placement is not asked of a record on no cloud; a line along a
 reference field counts the records without one, and a hierarchy's top is not
 a gap; a view over a type the estate has none of still says what it reads;
-a view is empty, thin or full by what it draws; a subject view is counted
-once it is bound and not before; the one list merges the views and counts a
-missing relation from the model; the values offered are the lanes, the
-field's list or the records a reference names; and setting a field on many
-records changes each where it lives, a shared file once with its other lines
-as they were, a harvested record moved into a file of its own, and a record
-a shape made or an import rewrites refused with the reason -- all planned,
-nothing written.
+a view is empty, thin or full by what it draws; a view cut at its limit
+says what it draws and how many more, and counts them all; a subject view
+is counted once it is bound and not before; the one list merges the views
+and counts a missing relation from the model; the values offered are the
+lanes, the field's list or the records a reference names; and setting a
+field on many records changes each where it lives, a shared file once with
+its other lines as they were, a harvested record moved into a file of its
+own, and a record a shape made or an import rewrites refused with the
+reason -- all planned, nothing written.
 """
 
 from __future__ import annotations
@@ -74,6 +75,22 @@ edges:
   - via: interfaces
 style:
   color_by: criticality
+"""
+
+
+#: The same systems by zone, two to a drawing.
+ZONES = """\
+view_id: zones
+title: Zones
+kind: map
+group_by: network_zone
+scope:
+  include:
+    - type: systems
+      where:
+        status: [Active, Planned]
+limits:
+  max_nodes: 2
 """
 
 
@@ -200,6 +217,26 @@ edges:
         self.assertIn(("tags", "tag", ("selects",), 0), said)
         self.assertIn(("availability_zone", "field", ("groups",), 0), said)
         self.assertEqual(self.need(result, "tech_services", "tags").values, (("network-fabric", "network-fabric"),))
+
+    def test_a_cut_view_says_what_it_draws_and_still_counts_what_it_cut(self) -> None:
+        """`terrane needs` said "109 drawn" of a report the render cut to
+        sixty. What is drawn is said as the render draws it, and what the
+        limit cut beside it; a landscape cut at its limit is still about
+        everything it matched, so the cut records are counted."""
+        from terrane.query import resolve
+
+        model = self.model()
+        cut = view(ZONES)
+        result = needs.needs_of(model, cut)
+        # The four live systems by id: the CRM and the gateway drawn, the
+        # ledger and the portal past the limit.
+        self.assertEqual((result.drawn, result.cut), (2, 2))
+        self.assertEqual(result.drawn, len(resolve(model, cut).nodes))
+        zone = self.need(result, "systems", "network_zone")
+        self.assertEqual((zone.asked, zone.lacking), (4, ("SYS-CRM", "SYS-PORTAL")))
+        # A report is not cut, and says so here too.
+        listed = needs.needs_of(model, view(ZONES.replace("kind: map", "kind: report")))
+        self.assertEqual((listed.drawn, listed.cut), (4, 0))
 
 
 class TestStates(_Estate):
@@ -358,6 +395,20 @@ class TestTheCommand(_Estate):
             cli.main(["--root", str(self.root), "needs"])
         self.assertIn("Kinds of record the estate has none of", out.getvalue())
         self.assertIn("tech_services", out.getvalue())
+
+    def test_terrane_needs_says_what_a_limit_cut(self) -> None:
+        import contextlib
+        import io
+
+        from terrane import cli
+
+        (self.root / "30_VIEWS").mkdir(exist_ok=True)
+        (self.root / "30_VIEWS" / "zones.view.yaml").write_text(ZONES, encoding="utf-8")
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            code = cli.main(["--root", str(self.root), "needs", "zones"])
+        self.assertEqual(code, 0)
+        self.assertIn("Zones: thin, 2 drawn, 2 more past limits.max_nodes", out.getvalue())
 
 
 

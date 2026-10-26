@@ -28,7 +28,7 @@ from typing import Dict, List, Optional, Sequence, Tuple
 
 from .draw.shapes import edge_word
 from .palette import Palette, boundary_label
-from .query import View, ViewError, ViewGraph, bind, group_kinds, render_targets, resolve
+from .query import View, ViewError, ViewGraph, bind, group_kinds, render_targets, resolve, subject_slug
 from .render_mermaid import technology_lines
 from .schema import ENTITY_TYPES, RELATION_TYPES
 
@@ -266,8 +266,11 @@ def export_plantuml(model, views: Sequence[View], out_dir: Path, palette: Option
         bound_views: List[Tuple[View, str]] = []
         if view.parameters:
             for parameter, value in render_targets(model, view):
+                # An id names its file as it is; a subject that is words (a
+                # business domain) by its slug, so no file name has a space.
+                named = subject_slug(value) if view.parameters[0].field else value
                 try:
-                    bound_views.append((bind(view, {parameter: value}, model), "%s--%s" % (view.view_id, value)))
+                    bound_views.append((bind(view, {parameter: value}, model), "%s--%s" % (view.view_id, named)))
                 except ViewError as exc:
                     notes.append("%s: %s" % (view.view_id, exc))
         else:

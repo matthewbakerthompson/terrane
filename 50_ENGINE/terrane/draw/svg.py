@@ -32,6 +32,7 @@ import math
 from typing import Callable, Dict, List, NamedTuple, Optional, Sequence, Tuple
 from xml.sax.saxutils import escape
 
+from . import annotations as own_module
 from . import labels as labels_module
 from .arranged import arrange
 from .elk import ElkLayout, ElkRoute, layout_elk
@@ -534,6 +535,17 @@ def render_svg(payload: dict, layout: Optional[object] = None, *, sheet_width: f
         return _frame(payload, m, paint_tiles(lay, m), extent, "tiles", tile_meta(payload), sheet=sheet,
                       pad=28 if sheet else 0, font_loader=font_loader, font_url_prefix=font_url_prefix,
                       model_name=model_name, date=date)
+    own = list(payload.get("annotations") or [])
+    if own and not any(not (e.get("data") or {}).get("source") for e in payload.get("elements") or []):
+        # A diagram with nothing from the estate on it yet, only shapes of
+        # its own: those, on the sheet, and nothing laid out.
+        under_svg, under_boxes = own_module.paint(own, (0.0, 0.0), {}, m, "under")
+        over_svg, over_boxes = own_module.paint(own, (0.0, 0.0), {}, m, "over")
+        taken = under_boxes + over_boxes or [(0.0, 0.0, 200.0, 80.0)]
+        extent = (min(b[0] for b in taken), min(b[1] for b in taken), max(b[2] for b in taken), max(b[3] for b in taken))
+        return frame_sheet(payload, m, "\n".join(s for s in (under_svg, over_svg) if s), extent, "own", "", sheet=sheet,
+                           pad=28, font_loader=font_loader, font_url_prefix=font_url_prefix, model_name=model_name,
+                           date=date)
     prep = prepare(payload)
     mode: Mode = drawing_mode(payload, prep)
     organic = False
@@ -621,8 +633,29 @@ def render_svg(payload: dict, layout: Optional[object] = None, *, sheet_width: f
             [leaf_bb(leaf) for leaf in prep.leaves],
             [(body[g.id], str(g.data.get("label") or "")) for g in prep.groups], show=labels)
 
+    # What the diagram draws of its own on the canvas, measured from where
+    # its positions start, and its lines joined to the boxes they end on.
+    own_under, own_over, own_boxes = "", "", []
+    own_on: Dict[int, str] = {}
+    if own:
+        origin = own_module.sheet_origin(arranged, {leaf.id: lay.leaves[leaf.id] for leaf in prep.leaves})
+        records = {}
+        for leaf in prep.leaves:
+            x, y, w, h = lay.leaves[leaf.id]
+            records[leaf.id] = (x - w / 2, y - h / 2, x + w / 2, y + h / 2)
+        bounds = [body[g.id] for g in prep.groups]
+        own_under, taken = own_module.paint(own, origin, records, m, "under", bounds)
+        own_boxes += taken
+        own_over, taken = own_module.paint(own, origin, records, m, "over", bounds)
+        own_boxes += taken
+        for i in range(len(bounds)):
+            svg_on, taken = own_module.paint(own, origin, records, m, i, bounds)
+            own_boxes += taken
+            if svg_on:
+                own_on[i] = svg_on
+
     # ---- the drawing's own extent ---------------------------------------
-    boxes: List[Box] = [leaf_bb(leaf) for leaf in prep.leaves]
+    boxes: List[Box] = [leaf_bb(leaf) for leaf in prep.leaves] + own_boxes
     for group in prep.groups:
         b = body[group.id]
         grow = (group_border(group) + 2) / 2
@@ -645,8 +678,14 @@ def render_svg(payload: dict, layout: Optional[object] = None, *, sheet_width: f
 
     text = text_el
 
-    # Boundaries, parents before children: the payload's order.
-    for group in prep.groups:
+    # The diagram's own frames on the bare sheet, and what is drawn in
+    # them, under everything of the estate's, as the canvas stacks them.
+    if own_under:
+        out.append(own_under)
+
+    # Boundaries, parents before children: the payload's order, each with
+    # the diagram's own frames it holds drawn on it, before its children.
+    for index, group in enumerate(prep.groups):
         d = group.data
         x1, y1, x2, y2 = body[group.id]
         fill = d.get("bfill") or BOUNDARY_FILL[min(group.depth - 1, len(BOUNDARY_FILL) - 1)]
@@ -671,6 +710,8 @@ def render_svg(payload: dict, layout: Optional[object] = None, *, sheet_width: f
             if data:
                 out.append(image(data, x2 - 20 - 7, y1 + 6, 20, 20))
         out.append("</g>")
+        if index in own_on:
+            out.append(own_on[index])
 
     # Edges under the nodes, each with its label card, the way Cytoscape
     # draws a label with its edge. On a packed map the lines are context
@@ -758,6 +799,10 @@ def render_svg(payload: dict, layout: Optional[object] = None, *, sheet_width: f
                        'stroke="%s" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">%s</svg>' % (
                            fmt(gx), fmt(gy), d.get("stroke") or "#8f9bb5", body_svg))
         out.append("</g>")
+
+    # And the rest of its own, over the boxes.
+    if own_over:
+        out.append(own_over)
 
     drawing = "\n".join(out)
     # The sheet says which path drew it: arranged by hand, packed,

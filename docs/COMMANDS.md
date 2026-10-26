@@ -9,6 +9,7 @@ opens the same estate in the browser.
 | Option | What it is |
 |---|---|
 | `--root ROOT` | the estate to work on (default: the current folder; in a clone of the repository, the sample estate) |
+| `--version` | print the version and stop |
 
 ## terrane validate
 
@@ -73,6 +74,7 @@ Start an estate in a repository of its own, read with the installed terrane.
 | `--governance URL` | the organization's governance repository |
 | `--governance-ref REF` | the revision of it the estate is checked against |
 | `--requires RANGE` | the terrane versions the estate is checked with (default: this minor release) |
+| `--sample` | copy the sample estate, a card issuer, out of the package into the folder, to open in the app and change |
 
 ## terrane app
 

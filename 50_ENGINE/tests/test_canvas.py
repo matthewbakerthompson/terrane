@@ -2,7 +2,9 @@
 
 What is checked: the picker is offered the library's parts for the boxes a
 diagram draws, the views that box what they draw, Network Topology's
-accounts and zones and the systems; a part placed is a record with the
+accounts and zones and the systems; a part is found by what each cloud
+calls it, and one dropped into an account of a cloud is that cloud's
+product, the person's choice of its products kept; a part placed is a record with the
 part's defaults and the fields of every boundary it was dropped into, its
 id made from the name it was given, a name already taken numbered rather
 than reused, and what the kind of record needs and the drop did not say
@@ -22,6 +24,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from terrane.blocks import offered  # noqa: E402
 from terrane.loader import read_data_file  # noqa: E402
 
 from _fixture import REPO, Sandbox  # noqa: E402
@@ -73,6 +76,35 @@ class TestCanvas(unittest.TestCase):
         # A view that tables what it shows, or is about one subject, is not
         # a boundary to place.
         self.assertTrue(all(not v["id"].startswith("product-") or v["nodes"] for v in got["views"]))
+
+    def test_a_part_is_found_by_what_each_cloud_calls_it(self) -> None:
+        parts = {p["id"]: p for p in self.server.api_canvas_parts({}, {})["parts"]}
+        self.assertEqual({c: parts["vm"]["products"][c] for c in ("AWS", "Azure", "GCP")},
+                         {"AWS": ["Amazon EC2"], "Azure": ["Azure Virtual Machines"], "GCP": ["Compute Engine"]})
+        # A choice is split at "or"; a pair joined by "and" is one answer;
+        # an aside is no part of a name, though the whole answer is sent too.
+        self.assertEqual(parts["container-platform"]["products"]["AWS"], ["Amazon EKS", "ECS"])
+        self.assertEqual(offered("AWS Cost Explorer and Budgets"), ["AWS Cost Explorer and Budgets"])
+        self.assertEqual(offered("Gemini Enterprise (formerly Agentspace)"), ["Gemini Enterprise"])
+        self.assertEqual(offered("MinIO or a NAS"), ["MinIO", "NAS"])
+        self.assertIn("formerly", " ".join(parts["ai-assistant"]["providers"].values()))
+
+    def test_a_part_dropped_into_an_account_is_that_clouds_product(self) -> None:
+        made = self.server.api_canvas_record({}, {"part": "vm", "into": INTO})
+        self.assertEqual((made["name"], made["product"]), ("Amazon EC2", "Amazon EC2"))
+        record = read_data_file(self.root / made["path"])
+        self.assertEqual((record.get("product"), record.get("cloud_provider")), ("Amazon EC2", "AWS"))
+        # The person's choice of the cloud's products is kept, and a name of
+        # their own with it; one that is not this cloud's is the usual one.
+        chosen = self.server.api_canvas_record({}, {"part": "container-platform", "into": INTO, "product": "ECS",
+                                                    "name": "Lending batch cluster"})
+        self.assertEqual((chosen["name"], chosen["product"]), ("Lending batch cluster", "ECS"))
+        wrong = self.server.api_canvas_record({}, {"part": "container-platform", "into": INTO, "product": "Cloud Run"})
+        self.assertEqual(wrong["product"], "Amazon EKS")
+        # In no cloud's account it is the part, and no product is claimed.
+        loose = self.server.api_canvas_record({}, {"part": "vm", "into": []})
+        self.assertEqual((loose["name"], loose["product"]), ("Virtual machine", ""))
+        self.assertIsNone(read_data_file(self.root / loose["path"]).get("product"))
 
     def test_a_part_is_a_record_named_and_placed_where_it_was_dropped(self) -> None:
         made = self.server.api_canvas_record({}, {"part": "web-app", "into": INTO, "name": "Lending portal"})

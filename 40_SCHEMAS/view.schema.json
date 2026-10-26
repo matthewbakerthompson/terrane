@@ -17,6 +17,11 @@
       "required": [
         "places"
       ]
+    },
+    {
+      "required": [
+        "annotations"
+      ]
     }
   ],
   "properties": {
@@ -61,6 +66,153 @@
             }
           }
         ]
+      }
+    },
+    "annotations": {
+      "type": "array",
+      "description": "Shapes, text, notes, frames and free lines the diagram draws of its own, none of them records. Each has a key that never changes; a box its corner `at` in the innermost frame of `in`, or on the sheet, and its `size`; a line its two ends.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "key",
+          "role"
+        ],
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "shape",
+              "text",
+              "note",
+              "frame",
+              "line"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "description": "Its words."
+          },
+          "shape": {
+            "enum": [
+              "rectangle",
+              "rounded",
+              "ellipse",
+              "diamond",
+              "hexagon",
+              "cylinder",
+              "cloud",
+              "document",
+              "person",
+              "callout"
+            ]
+          },
+          "in": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The keys of the frames it sits in, outermost first."
+          },
+          "at": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "Its top-left corner in the frame around it, or on the sheet."
+          },
+          "size": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "[width, height]."
+          },
+          "from": {
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "A record on the drawing by id, or a key of this list."
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "maxItems": 2,
+                "description": "A point on the sheet."
+              }
+            ]
+          },
+          "to": {
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "A record on the drawing by id, or a key of this list."
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "maxItems": 2,
+                "description": "A point on the sheet."
+              }
+            ]
+          },
+          "ends": {
+            "enum": [
+              "end",
+              "both",
+              "none"
+            ]
+          },
+          "route": {
+            "enum": [
+              "straight",
+              "square",
+              "curved"
+            ]
+          },
+          "look": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "fill": {
+                "enum": [
+                  "lavender",
+                  "mint",
+                  "rose",
+                  "stone",
+                  "white",
+                  "yellow"
+                ]
+              },
+              "line": {
+                "enum": [
+                  "solid",
+                  "dashed",
+                  "none"
+                ]
+              },
+              "text": {
+                "enum": [
+                  "l",
+                  "m",
+                  "s"
+                ]
+              }
+            }
+          }
+        }
       }
     },
     "positions": {
@@ -138,6 +290,10 @@
                   "work_packages"
                 ]
               },
+              "field": {
+                "type": "string",
+                "description": "For a subject that is a value on the records rather than a record: the field it is a value of (a business domain is a value of company_domain). Instead of type."
+              },
               "required": {
                 "type": "boolean"
               },
@@ -182,11 +338,26 @@
         "where": {
           "type": "object",
           "description": "Field to value or list of values. Also tags_any, tags_all, tags_none, has_any, has_all, has_none (relation names, testing whether the relation exists at all), id_in, id_prefix, and the {not: [...]} / {exists: true} forms."
+        },
+        "parameter": {
+          "type": "string",
+          "description": "The parameter each subject binds."
+        },
+        "field": {
+          "type": "string",
+          "description": "Drawn once for each value this field takes on the selected records, rather than once per record."
+        },
+        "limit": {
+          "type": "integer"
         }
       },
       "required": [
         "type"
       ]
+    },
+    "up": {
+      "type": "string",
+      "description": "For a view about one thing: the view one level above it, drawn for what the subject sits in. A system's architecture goes up to its domain's landscape."
     },
     "order_by": {
       "type": "string"
@@ -635,7 +806,8 @@
       "properties": {
         "max_nodes": {
           "type": "integer",
-          "minimum": 1
+          "minimum": 1,
+          "description": "How many things a diagram, map or timeline draws before it is cut, pins and what the scope names kept first. A report is a table and is never cut: past its limit it is listed whole and says so."
         }
       }
     }

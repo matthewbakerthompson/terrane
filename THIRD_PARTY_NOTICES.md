@@ -10,6 +10,7 @@ these, unmodified, each under its own terms, with the full text in
 | dagre | 0.8.5 | `80_APP/web/vendor/dagre.min.js` | MIT | `LICENSES/MIT-dagre.txt` |
 | cytoscape-dagre | 3.0.0 | `80_APP/web/vendor/cytoscape-dagre.js` | MIT | `LICENSES/MIT-cytoscape-dagre.txt` |
 | elkjs (the Eclipse Layout Kernel) | 0.12.0 | `80_APP/web/vendor/elk.bundled.js` | EPL-2.0 | `LICENSES/EPL-2.0-elkjs.md` |
+| maxGraph (`@maxgraph/core`) | 0.25.0 | `80_APP/web/vendor/maxgraph.min.js`, `80_APP/web/vendor/maxgraph.css` | Apache-2.0 | `LICENSES/Apache-2.0-maxGraph.txt` |
 | Geist | Fontsource 5 | `80_APP/web/fonts/geist-*` | OFL-1.1 | `LICENSES/OFL-1.1-Geist.txt` |
 | Geist Mono | Fontsource 5 | `80_APP/web/fonts/geist-mono-*` | OFL-1.1 | `LICENSES/OFL-1.1-Geist-Mono.txt` |
 | Libre Franklin | Fontsource 5 | `80_APP/web/fonts/libre-franklin-*` | OFL-1.1 | `LICENSES/OFL-1.1-Libre-Franklin.txt` |
