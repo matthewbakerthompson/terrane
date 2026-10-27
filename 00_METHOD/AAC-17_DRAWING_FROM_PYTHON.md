@@ -170,7 +170,20 @@ the product's overrides, where the method keeps what reality says
 differently from the shape. What was already there is said, the estate is
 validated after and the change in the count reported. `--owner ORG-X`
 names who owns what the sketch left without an owner; `--dry-run` says
-what would be written;
+what would be written, and what is probably already here under another id:
+a thing whose id the estate does not hold, whose name reads like one of
+the estate's of the same type, the three likeliest at 0.7 or more, each
+with its score and the words the two names share. The score is the name
+matcher's, the one the CMDB's last pass uses: the words two names share,
+each weighed by how few of the estate's names use it, with a misspelling
+or an abbreviation allowed for, and nothing at all where two names carry
+different numbers. "Probably" is a suggestion and nothing is taken on
+its own: `--same SYS-LEDGER=SYS-CORE-LEDGER` says the sketch's ledger is
+the estate's, and it is renamed throughout the sketch before it joins, so
+its connections reach the estate's ledger and no second ledger is written.
+`--same` is refused for an id the sketch does not have, one the estate
+does not have, one of another type, and one the sketch holds as well,
+which would make two of its things one;
 `--picture change.svg` draws the change first: what the file adds, in full,
 and what a new product's shape or parts make, new too, and with `--correct`
 what it corrects, with a heavy border, a corrected
@@ -194,7 +207,8 @@ block, what it would add, who owns what it names no owner for, and what the
 estate has and the drawing says differently, with a box to correct it; and
 Adopt writes what `terrane adopt FILE --owner ORG-X`, with `--correct` when
 ticked, writes. The first page then opens on the canvas, its boxes the
-records.
+records. The page does not yet list what is probably already here; until
+it does, `terrane adopt FILE --dry-run` is where that list is read.
 
 A diagram drawn on the canvas may also hold things of its own: shapes,
 text, notes, frames and free lines, drawn with the canvas's tools, none of
@@ -202,8 +216,47 @@ them records. Its file lists them under `annotations:`, each with a key that
 never changes, the frames it sits in by key, its corner in the innermost of
 them or on the sheet, and its size, or a line's two ends, each a record by
 id, a key of the list or a point, and its route, straight, square or
-curved; `terrane.annotations` reads the list and
-says what is wrong with it. Every picture of the diagram draws them as the
+curved. A straight line may bend on its way at points of the sheet,
+`via`, in order; a square or a curved one turns by itself, around the
+boxes in its way, the estate's and the diagram's own, when its plain
+turns would run through one. An end on a box may be held at a point of
+its outline, `from_at` or `to_at`, shares of the box from its top left
+corner. A shape, a note
+or text may be turned about its middle, `rotate` degrees clockwise; a
+frame is not, since what sits in it would turn too.
+They are drawn Illustrated, in the app's own picture language, the one
+its Diagrams page draws in: a paper or tinted fill edged in ink, a hard ink
+shadow under a shape or a note, a frame unfilled with its name on an ink
+tab across its top edge, and lines in the pictures' line color with their
+words on paper tags. A shape's first line of words is its name, set in
+the display face, and every line after it a caption two sizes down, so
+`label: |-` over two lines, "Payments API" and "REST, three regions",
+names the box and says what it is. The fills are yellow, mint, lavender,
+rose, white (the pictures' paper), stone and accent, the one strong color
+for the thing the drawing is about, its words in paper.
+A diagram may say `look: tiles` instead, and its own are drawn as Icon
+tiles, the way the clouds draw their reference architectures: each shape a
+tile in the middle of its box, light at the top and deep at the foot, with
+an icon, its name and caption under it; a frame a pale panel; lines gray
+and under the tiles. A shape carries its kind's icon unless `look: {icon:
+...}` names another: one of the plain icons (`server`, `shield`), or a
+provider's or vendor's mark as its folder and name (`aws/lambda`,
+`azure/key-vault`, `gcp/bigquery`, `brands/snowflake`), any of the marks
+the app ships for records, which stands in the tile's place as its owner
+publishes it. A mark the app does not ship is refused. The deck and the
+draw.io page draw the tile and its words, not the icon, as they carry no
+record's mark either.
+A look says more than its fill, outline and words' size when the Style
+tab sets it: `opacity`, how much of the fill shows, a whole percent from
+10 to 100; `weight`, how heavy the edge is, `s`, `m` or `l`; `corners`,
+the radius its corners are rounded by, up to 32, where it has corners to
+round (a box, a note, a frame, and as tiles every shape); and
+`shadow: none`, for a shape or a note that should not stand on the hard
+ink shadow Illustrated gives it. A see-through fill casts no shadow
+either, since the ink would show through it. Each is left out of the file
+when it says what the kind does anyway.
+`terrane.annotations` reads the list and says what is wrong with it.
+Every picture of the diagram draws them as the
 canvas does, from the same paths, fills and sizes: the frames, and what sits
 in them, under the boundaries, and the rest over the boxes. A diagram of
 them alone, nothing of the estate on it yet, draws them and nothing of the
@@ -397,8 +450,11 @@ alone is whole.
   only as one of its presets.
 - A nominal field a view colors by changes nothing, by the palette's own
   rule, so the product on the Parts in Use view is read off the names.
-- A diagram's own shapes are in its SVG and the PNG made from it; the deck
-  and the draw.io export leave them out for now.
+- A diagram's own shapes are in its SVG, the PNG made from it, the editable
+  deck and the draw.io export. On a slide a line of its own is a path
+  through its turns, not a connector, so it does not follow a box moved in
+  PowerPoint. On a draw.io page each rides on an object marked `aac_own`,
+  which the reader leaves out, so a note read back is not a system.
 - The draw.io and C4-PlantUML exports carry a tile map as boxes in bands
   and a system's technology line as a tooltip or a sentence; the ArchiMate
   export leaves roadmaps out, which have no counterpart.

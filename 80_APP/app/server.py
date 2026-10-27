@@ -41,6 +41,7 @@ from terrane import regroup as regroup_module  # noqa: E402
 from terrane import places as places_module  # noqa: E402
 from terrane import levels as levels_module  # noqa: E402
 from terrane import needs as needs_module  # noqa: E402
+from terrane import search as search_module  # noqa: E402
 from terrane.connections import kind_of, load_connections, sorted_by_kind  # noqa: E402
 from terrane.archetype import ArchetypeError, expand, parse_archetype  # noqa: E402
 from terrane.blocks import LibraryError, load_blocks, load_components, offered  # noqa: E402
@@ -3632,6 +3633,21 @@ def api_list(query, _body) -> dict:
     return {"type": type_name or "all", "items": items}
 
 
+def api_icons(_query, _body) -> dict:
+    """The providers' and vendors' marks a shape of a diagram's own can
+    carry as a tile, set by set, with the words that find each
+    (`IconMap.listing`). A GET, so the hosted copy bakes it."""
+    return {"marks": _icon_map().listing()}
+
+
+def api_search_index(_query, _body) -> dict:
+    """The estate's search index (`terrane.search`). The page scores a
+    query against it with `search.js` as `terrane search` does in Python, so
+    the hosted copy, which has no server to ask, searches as the app does."""
+    model, _views = _load_all()
+    return search_module.build(model, load_components(REPO_ROOT))
+
+
 def _append_extra(path: Path, type_name: str, record: dict) -> str:
     """Add one record under `extra.<type>` in an instance file, by text.
 
@@ -5807,7 +5823,7 @@ def api_canvas_parts(_query, _body) -> dict:
 
 
 #: A new diagram's file, in the order a person would write it.
-_CANVAS_ORDER = ("view_id", "title", "description", "category", "section", "kind", "places", "layout",
+_CANVAS_ORDER = ("view_id", "title", "description", "category", "section", "kind", "look", "places", "layout",
                  "node_label", "group_by", "scope", "edges", "style", "limits")
 
 
@@ -6396,6 +6412,8 @@ ROUTES: Dict[Tuple[str, str], Callable] = {
     ("POST", "/api/relate"): api_relate,
     ("POST", "/api/unrelate"): api_unrelate,
     ("GET", "/api/list"): api_list,
+    ("GET", "/api/search/index"): api_search_index,
+    ("GET", "/api/icons"): api_icons,
     ("GET", "/api/validate"): api_validate,
     ("POST", "/api/save"): api_save,
     ("POST", "/api/delete"): api_delete,

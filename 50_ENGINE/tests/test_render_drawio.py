@@ -20,6 +20,20 @@ from _fixture import REPO, Sandbox
 
 VISIO = REPO / "90_EXAMPLE" / "quick" / "sample.vsdx"
 
+#: Two systems and what their diagram draws of its own: a frame, a note in
+#: it, a diamond, and a square line from a record to the note.
+OWN = [{"key": "f", "role": "frame", "label": "Payments zone", "at": [0, 0], "size": [420, 260]},
+       {"key": "n", "role": "note", "in": ["f"], "label": "Goes live in March", "at": [20, 40], "size": [160, 70]},
+       {"key": "s", "role": "shape", "shape": "diamond", "label": "Review", "at": [700, 20], "size": [110, 70]},
+       {"key": "l", "role": "line", "from": "SYS-A", "to": "n", "route": "square", "label": "feeds"}]
+OWN_SKETCH = {"model": {"name": "Two"},
+              "systems": [{"system_id": "SYS-A", "name": "A"}, {"system_id": "SYS-B", "name": "B"}],
+              "interfaces": [{"interface_id": "INT-AB", "source_system_id": "SYS-A", "target_system_id": "SYS-B",
+                              "protocol": "HTTPS"}],
+              "views": [{"view_id": "two", "title": "Two", "kind": "diagram", "layout": "LR",
+                         "scope": {"include": [{"type": "systems"}]}, "edges": [{"via": "interfaces"}],
+                         "annotations": OWN}]}
+
 
 def _node(node_id: str, type_name: str, shape: str, x: float, y: float, parent=None, **extra) -> SceneNode:
     fields = dict(id=node_id, shape=shape, x=x, y=y, w=120, h=40, fill="#c7d6ff", stroke="#4338ca", width=1.4,
@@ -198,6 +212,45 @@ class TestRoundTrip(unittest.TestCase):
             self.assertEqual(result.changed, {"systems": ["SYS-CRM"]}, result.changes)
             self.assertEqual(result.added, {"interfaces": ["INT-CRM-STATEMENTS"]})
             self.assertEqual(result.rows_added, 0)
+
+    def test_a_repositorys_diagrams_write_a_drawio_file_from_python(self) -> None:
+        # `terrane.diagrams(root).drawio(...)` read the estate's relation
+        # rows through a name quick.py never imported, and failed whenever
+        # the diagrams were a repository's rather than a sketch's.
+        out = Path(tempfile.mkdtemp(prefix="aac-drawio-")) / "context.drawio"
+        terrane.diagrams(REPO, views=["system-context"], date="2026-10-17").drawio(out)
+        self.assertEqual([name for name, _ in pages(out.read_text(encoding="utf-8"))], ["System Context"])
+
+    def test_the_diagrams_own_ride_marked_and_are_not_read_back(self) -> None:
+        drawings = terrane.diagrams(OWN_SKETCH, date="2026-10-17")
+        out = Path(tempfile.mkdtemp(prefix="aac-drawio-")) / "own.drawio"
+        drawings.drawio(out)
+        text = out.read_text(encoding="utf-8")
+        root = ET.fromstring(text)
+        own = {o.get("id"): o.find("mxCell") for o in root.iter("UserObject") if o.get("aac_own")}
+        self.assertEqual(sorted(own), ["own-f", "own-l", "own-n", "own-s"])
+        # Stacked as the canvas stacks them: the frame and the note in it
+        # under the records, the diamond and the line over them.
+        order = [o.get("id") for o in root.iter() if o.get("id")]
+        self.assertLess(order.index("own-f"), order.index("SYS-A"))
+        self.assertLess(order.index("own-n"), order.index("SYS-A"))
+        self.assertGreater(order.index("own-s"), order.index("SYS-B"))
+        # The frame holds the note, in the frame's own coordinates.
+        self.assertIn("container=1;", own["own-f"].get("style"))
+        self.assertEqual(own["own-n"].get("parent"), "own-f")
+        self.assertEqual((own["own-n"].find("mxGeometry").get("x"), own["own-n"].find("mxGeometry").get("y")),
+                         ("20", "40"))
+        self.assertIn("rhombus;", own["own-s"].get("style"))
+        self.assertIn("fillColor=#fbefc6;", own["own-n"].get("style"))
+        self.assertIn("shadow=1;", own["own-n"].get("style"))
+        line = own["own-l"]
+        self.assertEqual((line.get("source"), line.get("target")), ("SYS-A", "own-n"))
+        self.assertIn("edgeStyle=orthogonalEdgeStyle;", line.get("style"))
+        # Read back, a note is not a system and a frame not a domain.
+        doc, notes = sketch_from_drawio(text, name="back")
+        self.assertEqual(sorted(s["system_id"] for s in doc["systems"]), ["SYS-A", "SYS-B"])
+        self.assertFalse(any(s.get("company_domain") for s in doc["systems"]))
+        self.assertTrue(any("4 of the diagram's own" in n for n in notes), notes)
 
     def test_the_estate_exports_named_views_a_tile_map_among_them(self) -> None:
         out = Path(tempfile.mkdtemp(prefix="aac-drawio-")) / "estate.drawio"

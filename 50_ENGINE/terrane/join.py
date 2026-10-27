@@ -25,15 +25,24 @@ from typing import Any, Dict, List, NamedTuple, Optional, Tuple
 from . import validate as validate_module
 from .correct import CorrectError, revise, revise_override, revise_row, text_of, typed_like
 from .loader import read_data_file
+from .match import Candidate, Matcher
 from .model import load
 from .estate import views_of
 from .query import load_views
 from .quick import SKETCH_ORG, QuickError, _own_zone, answer_parameters, fill_defaults
+from .rename import rename_deep
 from .schema import ENTITY_TYPES, RELATION_TYPES
 from .shipped import shipped_root
 from .sketch import yaml_text
 
 RELATIONS_FILE = "adopted.yaml"
+
+#: The matcher's score a new record needs to be said to be probably one the
+#: estate has. On the sample drawings, every record that is one scored 0.718
+#: or more against it but "Transactions" (0.596); the sample estate's
+#: distinct systems score up to 0.825 against each other, so a sibling can
+#: be listed beside the record it is, and a person picks.
+PROBABLY = 0.7
 
 
 class AdoptError(ValueError):
@@ -67,6 +76,10 @@ class Adoption(NamedTuple):
     #: The ids added that the sketch gave no owner: the placeholder owns
     #: them, or the org unit named for the job. The app asks who, by count.
     unowned: List[str] = []
+    #: Each id added to the records of its type the estate has under
+    #: another id that it probably is, best first, with why
+    #: (`terrane.match`); `same` takes one.
+    probable: Dict[str, List[Candidate]] = {}
 
     @property
     def count(self) -> int:
@@ -163,8 +176,35 @@ def corrections(existing: dict, given: dict, pk: str) -> Dict[str, Tuple[Any, An
     return out
 
 
+def _take_same(doc: dict, same: Dict[str, str], model) -> Tuple[dict, List[str]]:
+    """The sketch with each id `same` names renamed to the estate's,
+    throughout, and a note of each. Refused when the sketch has no such id,
+    when the estate has no such record of the same type, or when the sketch
+    holds the estate's id too, which would make two records one."""
+    held: Dict[str, str] = {}
+    for type_name, entity_type in ENTITY_TYPES.items():
+        for record in doc.get(type_name) or []:
+            if isinstance(record, dict) and record.get(entity_type.pk) is not None:
+                held[str(record[entity_type.pk])] = type_name
+    said = []
+    for new, old in same.items():
+        type_name = held.get(new)
+        if type_name is None:
+            raise AdoptError("--same %s=%s: the sketch has no %s" % (new, old, new))
+        if model.get(type_name, old) is None:
+            found = model.find(old)
+            raise AdoptError("--same %s=%s: %s" % (new, old, "%s is one of the estate's %s, and %s one of the sketch's %s"
+                                                   % (old, found[0], new, type_name) if found
+                                                   else "the estate has no %s" % old))
+        if old in held and old != new:
+            raise AdoptError("--same %s=%s: the sketch has %s too, and the two would be one" % (new, old, old))
+        said.append("%s is %s here: renamed throughout the sketch" % (new, old))
+    return rename_deep(doc, dict(same)), said
+
+
 def join_estate(doc: dict, root: Path, *, owner: Optional[str] = None, source_name: str = "a sketch",
-                dry_run: bool = False, shipped: Optional[Path] = None, correct: bool = False) -> Adoption:
+                dry_run: bool = False, shipped: Optional[Path] = None, correct: bool = False,
+                same: Optional[Dict[str, str]] = None) -> Adoption:
     """Write the sketch `doc` into the repository at `root`; what was
     added, what was already there, and the estate's validation after.
     With `dry_run` nothing is written and the counts say what would be.
@@ -172,7 +212,10 @@ def join_estate(doc: dict, root: Path, *, owner: Optional[str] = None, source_na
     cells (`corrections`), written into its own file with the file
     otherwise left as it is (`terrane.correct`), so a reviewer's workbook
     comes back as corrections; a correction to what a shape made goes
-    under the product's overrides (`revise_override`)."""
+    under the product's overrides (`revise_override`). With `same`, the
+    sketch's id to the estate's: each record named is the estate's, renamed
+    throughout the sketch before it joins (`_take_same`). Each record added
+    is said with the records of its type it probably is (`probable`)."""
     root = Path(root)
     model_dir = root / "10_MODEL"
     if not model_dir.is_dir():
@@ -180,7 +223,11 @@ def join_estate(doc: dict, root: Path, *, owner: Optional[str] = None, source_na
     model = load(root)
     views = views_of(root)
     before = validate_module.run(model, views)
+    taken: List[str] = []
+    if same:
+        doc, taken = _take_same(dict(doc), same, model)
     doc, notes = _own_zone(dict(doc), shipped or shipped_root())
+    notes = taken + notes
     entities, filled_notes = fill_defaults(doc)
     notes = list(filled_notes) + notes
     # The sketch's records as written, before the defaults: a correction is
@@ -213,6 +260,28 @@ def join_estate(doc: dict, root: Path, *, owner: Optional[str] = None, source_na
     # `terrane adopt from-parts.yaml` wrote the product and then failed on it.
     _touched, answered = answer_parameters(entities, root, owner or SKETCH_ORG)
     notes.extend(answered)
+
+    # What each record the estate lacks by id probably is, among the
+    # records of its type: a drawing that calls the ledger SYS-LEDGER would
+    # otherwise add a second one beside SYS-CORE-LEDGER, unsaid.
+    probable: Dict[str, List[Candidate]] = {}
+    for type_name, records in entities.items():
+        entity_type = ENTITY_TYPES[type_name]
+        theirs = model.all_of(type_name)
+        if type_name == "org_units" or not theirs:
+            continue
+        mine = {str(r[entity_type.pk]) for r in records}
+        matcher = None
+        for record in records:
+            entity_id = str(record[entity_type.pk])
+            if model.get(type_name, entity_id) is not None:
+                continue
+            if matcher is None:
+                matcher = Matcher((str(r.get(entity_type.pk)), str(r.get("name") or "")) for r in theirs)
+            near = [c for c in matcher.rank(str(record.get("name") or entity_id), limit=3)
+                    if c.score >= PROBABLY and c.id not in mine]
+            if near:
+                probable[entity_id] = near
 
     header = ["Adopted from %s by `terrane adopt`." % source_name]
     added: Dict[str, List[str]] = {}
@@ -409,7 +478,7 @@ def join_estate(doc: dict, root: Path, *, owner: Optional[str] = None, source_na
         errors, warnings = len(after.errors), len(after.warnings)
     return Adoption(added, skipped, rows_added, rows_skipped, views_added, views_skipped, written, notes,
                     errors, warnings, len(before.errors), len(before.warnings), changed, changes, rows_corrected,
-                    new_rows, unowned)
+                    new_rows, unowned, probable)
 
 
 #: What the picture of a change reaches out to from the new things, one hop
@@ -485,7 +554,7 @@ def _these(things: int, lines: int) -> str:
 
 
 def change_picture(doc: dict, root: Path, *, owner: Optional[str] = None, source_name: str = "a sketch",
-                   date: str = "", correct: bool = False, sheet: bool = True):
+                   date: str = "", correct: bool = False, sheet: bool = True, same: Optional[Dict[str, str]] = None):
     """What the sketch would add to the estate, as a picture: the new
     records drawn in full among the estate's own things one hop away,
     which are faded, so a reviewer sees the change against what is there
@@ -511,7 +580,7 @@ def change_picture(doc: dict, root: Path, *, owner: Optional[str] = None, source
     root = Path(root)
     with tempfile.TemporaryDirectory(prefix="aac-change-") as tmp:
         scratch = estate_copy(root, Path(tmp))
-        result = join_estate(doc, scratch, owner=owner, source_name=source_name, shipped=shipped_root(),
+        result = join_estate(doc, scratch, owner=owner, source_name=source_name, same=same, shipped=shipped_root(),
                              correct=correct)
         # The new things, less the placeholder owner, and less the
         # interfaces, which are lines on the picture and not boxes; with
@@ -688,6 +757,11 @@ def describe(result: Adoption, dry_run: bool = False) -> List[str]:
         lines.append(line)
     for change in result.changes:
         lines.append("  %s" % change)
+    if result.probable:
+        lines.append("probably already here, under another id (--same NEW=OLD takes one):")
+        for entity_id, near in result.probable.items():
+            lines.append("  %s may be %s" % (entity_id, "; or ".join(
+                "%s %s (%.2f: %s)" % (c.id, c.name, c.score, ", ".join(c.reasons)) for c in near)))
     if result.rows_added or result.rows_skipped or result.rows_corrected:
         lines.append("%-30s %s %d row(s)%s%s" % (
             "relations", verb, result.rows_added,

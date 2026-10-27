@@ -168,6 +168,9 @@ class TestShipped(unittest.TestCase):
             self.assertIn("`80_APP/web/fonts/%s-*`" % face, notices, face)
         for marks in sorted(p.name for p in (web / "icons").iterdir() if p.is_dir()):
             self.assertIn("`80_APP/web/icons/%s/`" % marks, notices, marks)
+        # The tiles' plain icons are Lucide's, a file of their own.
+        self.assertIn("`80_APP/web/canvas/own-icons.js`", notices)
+        self.assertIn(" AND ISC", _toml_text())
         texts = sorted(p.name for p in (REPO / "LICENSES").iterdir())
         self.assertTrue(texts)
         for name in texts:

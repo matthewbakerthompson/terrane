@@ -25,9 +25,10 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 TARGET = REPO / "50_ENGINE" / "terrane" / "draw" / "fonts" / "metrics.json"
 
-#: The faces the painter sets type in. Weight 700 is the title block's.
+#: The faces the painter sets type in. Weight 700 is the title block's;
+#: Libre Franklin 700 the name of a shape of the diagram's own.
 FACES = [("Geist", 400), ("Geist", 500), ("Geist", 600), ("Geist", 700),
-         ("Geist Mono", 400), ("Geist Mono", 500)]
+         ("Geist Mono", 400), ("Geist Mono", 500), ("Libre Franklin", 700)]
 
 MEASURE = r"""
 (async function (faces) {

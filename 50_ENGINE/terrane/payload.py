@@ -271,4 +271,5 @@ def graph_payload(model, view: View, palette: Palette, icons, components: Dict[s
     own = getattr(view, "annotations", None) or ()
     if own:
         out["annotations"] = [dict(item) for item in own]
+        out["look"] = getattr(view, "look", None) or "illustrated"
     return out

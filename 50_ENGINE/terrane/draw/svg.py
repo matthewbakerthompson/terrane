@@ -64,6 +64,12 @@ FONT_FILES = {
     ("Geist Mono", 400): "geist-mono-latin-400-normal.woff2",
     ("Geist Mono", 500): "geist-mono-latin-500-normal.woff2",
 }
+#: Faces a picture carries only when it sets type in them: the display face
+#: names a shape of the diagram's own, and a drawing with none should not
+#: grow by a font it never uses.
+DISPLAY_FONT_FILES = {
+    ("Libre Franklin", 700): "libre-franklin-latin-700-normal.woff2",
+}
 #: Where a line box puts the baseline, as a share of the font size, for a
 #: face whose ascent is 1.01em and descent 0.30em set at line-height 1.
 BASELINE = 0.855
@@ -147,6 +153,9 @@ class Scene(NamedTuple):
     nodes: List[SceneNode]
     layered: bool
     drawn_by: str
+    #: The diagram's own shapes, notes, text, frames and lines
+    #: (`annotations.Own`), a layer's index naming one of `boundaries`.
+    own: Tuple = ()
 
 #: The unit circle at ten-degree steps through the first half quadrant, as
 #: the cosine and sine of 0, 10, 20, 30 and 40 degrees written out; the
@@ -536,13 +545,17 @@ def render_svg(payload: dict, layout: Optional[object] = None, *, sheet_width: f
                       pad=28 if sheet else 0, font_loader=font_loader, font_url_prefix=font_url_prefix,
                       model_name=model_name, date=date)
     own = list(payload.get("annotations") or [])
+    own_look = str(payload.get("look") or "illustrated")
     if own and not any(not (e.get("data") or {}).get("source") for e in payload.get("elements") or []):
         # A diagram with nothing from the estate on it yet, only shapes of
         # its own: those, on the sheet, and nothing laid out.
-        under_svg, under_boxes = own_module.paint(own, (0.0, 0.0), {}, m, "under")
-        over_svg, over_boxes = own_module.paint(own, (0.0, 0.0), {}, m, "over")
+        under_svg, under_boxes = own_module.paint(own, (0.0, 0.0), {}, m, "under", look=own_look)
+        over_svg, over_boxes = own_module.paint(own, (0.0, 0.0), {}, m, "over", look=own_look)
         taken = under_boxes + over_boxes or [(0.0, 0.0, 200.0, 80.0)]
         extent = (min(b[0] for b in taken), min(b[1] for b in taken), max(b[2] for b in taken), max(b[3] for b in taken))
+        if scene_out is not None:
+            scene_out.append(Scene(extent, [], [], [], True, "own",
+                                   tuple(own_module.scene(own, (0.0, 0.0), {}, look=own_look))))
         return frame_sheet(payload, m, "\n".join(s for s in (under_svg, over_svg) if s), extent, "own", "", sheet=sheet,
                            pad=28, font_loader=font_loader, font_url_prefix=font_url_prefix, model_name=model_name,
                            date=date)
@@ -637,6 +650,7 @@ def render_svg(payload: dict, layout: Optional[object] = None, *, sheet_width: f
     # its positions start, and its lines joined to the boxes they end on.
     own_under, own_over, own_boxes = "", "", []
     own_on: Dict[int, str] = {}
+    own_scene: Tuple = ()
     if own:
         origin = own_module.sheet_origin(arranged, {leaf.id: lay.leaves[leaf.id] for leaf in prep.leaves})
         records = {}
@@ -644,15 +658,17 @@ def render_svg(payload: dict, layout: Optional[object] = None, *, sheet_width: f
             x, y, w, h = lay.leaves[leaf.id]
             records[leaf.id] = (x - w / 2, y - h / 2, x + w / 2, y + h / 2)
         bounds = [body[g.id] for g in prep.groups]
-        own_under, taken = own_module.paint(own, origin, records, m, "under", bounds)
+        own_under, taken = own_module.paint(own, origin, records, m, "under", bounds, own_look)
         own_boxes += taken
-        own_over, taken = own_module.paint(own, origin, records, m, "over", bounds)
+        own_over, taken = own_module.paint(own, origin, records, m, "over", bounds, own_look)
         own_boxes += taken
         for i in range(len(bounds)):
-            svg_on, taken = own_module.paint(own, origin, records, m, i, bounds)
+            svg_on, taken = own_module.paint(own, origin, records, m, i, bounds, own_look)
             own_boxes += taken
             if svg_on:
                 own_on[i] = svg_on
+        if scene_out is not None:
+            own_scene = tuple(own_module.scene(own, origin, records, bounds, own_look))
 
     # ---- the drawing's own extent ---------------------------------------
     boxes: List[Box] = [leaf_bb(leaf) for leaf in prep.leaves] + own_boxes
@@ -815,7 +831,8 @@ def render_svg(payload: dict, layout: Optional[object] = None, *, sheet_width: f
     counts = payload.get("counts") or {}
     facts = "%d nodes · %d edges" % (counts.get("nodes", 0), counts.get("edges", 0)) if counts else ""
     if scene_out is not None:
-        scene_out.append(_scene(prep, lay, body, edges, placed, (dx1, dy1, dx2, dy2), layered, drawn_by, m))
+        scene_out.append(_scene(prep, lay, body, edges, placed, (dx1, dy1, dx2, dy2), layered, drawn_by, m)._replace(
+            own=own_scene))
     return frame_sheet(payload, m, drawing, (dx1, dy1, dx2, dy2), drawn_by, facts, sheet=sheet, pad=28,
                        font_loader=font_loader, font_url_prefix=font_url_prefix, model_name=model_name, date=date)
 
@@ -987,7 +1004,8 @@ def frame_sheet(payload: dict, m: Metrics, drawing: str, extent: Box, drawn_by: 
         foot = "\n".join(parts)
         offset = ((width - draw_w) / 2 - dx1, head_h - dy1)
 
-    style = font_face_css(font_loader) if font_loader else font_face_urls(font_url_prefix) if font_url_prefix else ""
+    style = (font_face_css(font_loader, drawing) if font_loader
+             else font_face_urls(font_url_prefix, drawing) if font_url_prefix else "")
     doc = [
         '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="%s" height="%s" '
         'viewBox="0 0 %s %s" font-family="%s" data-layout="%s">' % (
@@ -1094,9 +1112,19 @@ def image(data: bytes, x: float, y: float, w: float, h: float) -> str:
         fmt(x), fmt(y), fmt(w), fmt(h), mime, base64.b64encode(data).decode("ascii"))
 
 
-def font_face_css(loader: IconLoader) -> str:
+def _faces(drawing: str) -> Dict[Tuple[str, int], str]:
+    """The faces a picture embeds: the sheet's own, and a display face
+    only where the drawing sets type in it."""
+    out = dict(FONT_FILES)
+    for (family, weight), name in DISPLAY_FONT_FILES.items():
+        if 'font-family="%s' % family in drawing:
+            out[(family, weight)] = name
+    return out
+
+
+def font_face_css(loader: IconLoader, drawing: str = "") -> str:
     rules = []
-    for (family, weight), name in FONT_FILES.items():
+    for (family, weight), name in _faces(drawing).items():
         data = loader(name)
         if not data:
             continue
@@ -1105,9 +1133,9 @@ def font_face_css(loader: IconLoader) -> str:
     return "".join(rules)
 
 
-def font_face_urls(prefix: str) -> str:
+def font_face_urls(prefix: str, drawing: str = "") -> str:
     return "".join('@font-face{font-family:"%s";font-weight:%d;src:url(%s%s) format("woff2")}'
-                   % (family, weight, prefix, name) for (family, weight), name in FONT_FILES.items())
+                   % (family, weight, prefix, name) for (family, weight), name in _faces(drawing).items())
 
 
 def legend_rows(payload: dict) -> List[dict]:

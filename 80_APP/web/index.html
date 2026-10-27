@@ -35,6 +35,11 @@
   <symbol id="i-image" viewBox="0 0 24 24"><path d="M10.3 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10l-3.1-3.1a2 2 0 0 0-2.814.014L6 21"/><path d="m14 19 3 3v-5.5"/><path d="m17 22 3-3"/><circle cx="9" cy="9" r="2"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="i-paintbrush" viewBox="0 0 24 24"><path d="m14.622 17.897-10.68-2.913"/><path d="M18.376 2.622a1 1 0 1 1 3.002 3.002L17.36 9.643a.5.5 0 0 0 0 .707l.944.944a2.41 2.41 0 0 1 0 3.408l-.944.944a.5.5 0 0 1-.707 0L8.354 7.348a.5.5 0 0 1 0-.707l.944-.944a2.41 2.41 0 0 1 3.408 0l.944.944a.5.5 0 0 0 .707 0z"/><path d="M9 8c-1.804 2.71-3.97 3.46-6.583 3.948a.507.507 0 0 0-.302.819l7.32 8.883a1 1 0 0 0 1.185.204C12.735 20.405 16 16.792 16 15"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-lock-open" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></symbol>
+  <symbol id="i-keyboard" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 8h.001"/><path d="M10 8h.001"/><path d="M14 8h.001"/><path d="M18 8h.001"/><path d="M8 12h.001"/><path d="M12 12h.001"/><path d="M16 12h.001"/><path d="M7 16h10"/></symbol>
+  <symbol id="i-jump" viewBox="0 0 24 24"><path d="M3 15h5a4 4 0 0 1 8 0h5"/><path d="M12 4v16"/></symbol>
   <symbol id="i-grid" viewBox="0 0 24 24"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></symbol>
   <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></symbol>
   <symbol id="i-list-checks" viewBox="0 0 24 24"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></symbol>
@@ -222,19 +227,18 @@
       <!-- The canvas: New diagram draws here. Its tools float over the
            sheet; what is selected shows in the details column. -->
       <div class="cv-tools" id="cvTools" hidden role="toolbar" aria-label="Drawing tools">
-        <button class="btn small primary cv-add" id="cvAdd" type="button" aria-haspopup="dialog" aria-expanded="false" title="Place a library part, or something the estate already has"><svg class="i"><use href="#i-plus"/></svg><span>Add</span></button>
+        <button class="btn small primary cv-add" id="cvAdd" type="button" aria-haspopup="dialog" aria-expanded="false" title="Place a library part, something the estate already has, or a view, an account or a zone as a boundary (A; B for boundaries)"><svg class="i"><use href="#i-plus"/></svg><span>Add</span></button>
         <span class="sep" aria-hidden="true"></span>
         <button class="cv-tool" id="cvSelect" type="button" aria-pressed="true" title="Click a box to see and change it, drag it into a boundary to move it there, or drag across the sheet to pick several (V)"><svg class="i"><use href="#i-pointer"/></svg><span>Select</span></button>
         <button class="cv-tool cv-own is-icon" id="cvPan" type="button" aria-pressed="false" aria-label="Hand" title="Move around the sheet (H, or hold Space)"><svg class="i"><use href="#i-hand"/></svg></button>
-        <button class="cv-tool" id="cvBoundary" type="button" aria-pressed="false" title="Place a view, an account or a zone as a boundary"><svg class="i"><use href="#i-square-dashed"/></svg><span>Boundary</span></button>
         <!-- What the diagram draws of its own, kept in its file and nowhere
              else; the old canvas (?canvas=cytoscape) has none of these. -->
         <span class="sep cv-own" aria-hidden="true"></span>
-        <button class="cv-tool cv-own" id="cvShapes" type="button" aria-pressed="false" aria-haspopup="menu" aria-expanded="false" title="Draw a shape of this diagram's own"><svg class="i"><use href="#i-shapes"/></svg><span>Shapes</span><svg class="i cv-caret"><use href="#i-chevron-down"/></svg></button>
-        <button class="cv-tool cv-own" id="cvText" type="button" aria-pressed="false" title="Words on the sheet, of this diagram's own"><svg class="i"><use href="#i-type"/></svg><span>Text</span></button>
-        <button class="cv-tool cv-own" id="cvNote" type="button" aria-pressed="false" title="A note, of this diagram's own"><svg class="i"><use href="#i-sticky-note"/></svg><span>Note</span></button>
-        <button class="cv-tool cv-own" id="cvFrame" type="button" aria-pressed="false" title="A frame: what is drawn inside it moves with it"><svg class="i"><use href="#i-frame"/></svg><span>Frame</span></button>
-        <button class="cv-tool cv-own" id="cvLine" type="button" aria-pressed="false" aria-haspopup="menu" aria-expanded="false" title="A line between shapes, boxes or points, straight, square or curved; drawn between two records it asks whether it is a connection"><svg class="i"><use href="#i-move-up-right"/></svg><span>Line</span><svg class="i cv-caret"><use href="#i-chevron-down"/></svg></button>
+        <button class="cv-tool cv-own" id="cvShapes" type="button" aria-pressed="false" aria-haspopup="menu" aria-expanded="false" title="Draw a shape of this diagram's own (R, the last one chosen)"><svg class="i"><use href="#i-shapes"/></svg><span>Shapes</span><svg class="i cv-caret"><use href="#i-chevron-down"/></svg></button>
+        <button class="cv-tool cv-own" id="cvText" type="button" aria-pressed="false" title="Words on the sheet, of this diagram's own (T)"><svg class="i"><use href="#i-type"/></svg><span>Text</span></button>
+        <button class="cv-tool cv-own" id="cvNote" type="button" aria-pressed="false" title="A note, of this diagram's own (N)"><svg class="i"><use href="#i-sticky-note"/></svg><span>Note</span></button>
+        <button class="cv-tool cv-own" id="cvFrame" type="button" aria-pressed="false" title="A frame: what is drawn inside it moves with it (F)"><svg class="i"><use href="#i-frame"/></svg><span>Frame</span></button>
+        <button class="cv-tool cv-own" id="cvLine" type="button" aria-pressed="false" aria-haspopup="menu" aria-expanded="false" title="A line between shapes, boxes or points, straight, square or curved; drawn between two records it asks whether it is a connection (L)"><svg class="i"><use href="#i-move-up-right"/></svg><span>Line</span><svg class="i cv-caret"><use href="#i-chevron-down"/></svg></button>
         <span class="sep cv-own" aria-hidden="true"></span>
         <button class="cv-tool cv-own is-icon" id="cvUndo" type="button" disabled aria-label="Undo" title="Undo what was drawn or moved (Ctrl+Z)"><svg class="i"><use href="#i-undo"/></svg></button>
         <button class="cv-tool cv-own is-icon" id="cvRedo" type="button" disabled aria-label="Redo" title="Redo (Ctrl+Shift+Z)"><svg class="i"><use href="#i-redo"/></svg></button>
@@ -293,9 +297,6 @@
       <div class="sheet-foot">
         <div class="cv-fold" id="cvFold" hidden></div>
         <div class="legend" id="legend"></div>
-        <!-- On the canvas: laid out automatically, or arranged by hand with
-             the way back to the layout. -->
-        <div class="cv-layout" id="cvLayout" hidden></div>
 
         <div class="controls">
           <button class="btn small icon" id="btnZoomOut" type="button" aria-label="Zoom out">&minus;</button>
@@ -347,6 +348,23 @@
         <div class="se-needs" id="emptyNeeds" hidden></div>
       </div>
     </div>
+    <!-- Under the canvas's sheet, V14's status bar: laid out automatically,
+         or arranged by hand with the way back to the layout; what is on the
+         diagram; and the drawing's settings. -->
+    <div class="cv-status" id="cvStatus" hidden>
+      <div class="cv-layout" id="cvLayout" hidden></div>
+      <span class="cv-count num" id="cvCount"></span>
+      <span class="cv-status-gap" aria-hidden="true"></span>
+      <button class="cv-toggle" id="cvSnap" type="button" aria-pressed="false"
+        title="Boxes and the diagram's own go to a ten-unit grid when they are put down or drawn">
+        <svg class="i"><use href="#i-grid"/></svg><span>Snap to grid</span></button>
+      <button class="cv-toggle" id="cvJumps" type="button" aria-pressed="true"
+        title="Where two lines cross, the one drawn over the other hops it">
+        <svg class="i"><use href="#i-jump"/></svg><span>Line jumps</span></button>
+      <button class="cv-toggle" id="cvKeysBtn" type="button" aria-expanded="false" aria-controls="cvKeys"
+        title="Every key the canvas takes (?)"><svg class="i"><use href="#i-keyboard"/></svg><span><kbd>?</kbd> for keys</span></button>
+      <div class="cv-keys" id="cvKeys" hidden role="dialog" aria-label="Keys"></div>
+    </div>
   </main>
 
   <aside class="inspector" id="inspector" aria-label="Inspector">
@@ -396,7 +414,9 @@
 <script src="vendor/dagre.min.js"></script>
 <script src="vendor/cytoscape-dagre.js"></script>
 <script src="vendor/elk.bundled.js"></script>
+<script src="search.js"></script>
 <script src="app.js"></script>
+<script src="canvas/own-icons.js"></script>
 <script src="canvas/canvas.js"></script>
 <script src="canvas/engine.js"></script>
 </body>

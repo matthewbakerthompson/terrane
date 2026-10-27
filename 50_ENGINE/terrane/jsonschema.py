@@ -151,7 +151,7 @@ def relations_schema() -> dict:
 def _annotations_schema() -> dict:
     """What a diagram draws of its own, as `terrane.annotations.read` takes
     it; that reader is the authority, and says which frame a key misses."""
-    from .annotations import ENDS, FILLS, OUTLINES, ROLES, ROUTES, SHAPES, TEXT_SIZES
+    from .annotations import ENDS, FILLS, MOST_CORNERS, OUTLINES, ROLES, ROUTES, SHAPES, TEXT_SIZES, WEIGHTS
 
     pair = {"type": "array", "items": {"type": "number"}, "minItems": 2, "maxItems": 2}
     end = {"oneOf": [{"type": "string", "description": "A record on the drawing by id, or a key of this list."},
@@ -174,8 +174,20 @@ def _annotations_schema() -> dict:
                        "description": "The keys of the frames it sits in, outermost first."},
                 "at": dict(pair, description="Its top-left corner in the frame around it, or on the sheet."),
                 "size": dict(pair, description="[width, height]."),
+                "rotate": {"type": "number", "exclusiveMinimum": -360, "exclusiveMaximum": 360,
+                           "description": "Degrees clockwise about its middle: a shape, a note or text, not a "
+                                          "frame."},
                 "from": end,
                 "to": end,
+                "from_at": {"type": "array", "items": {"type": "number", "minimum": 0, "maximum": 1},
+                            "minItems": 2, "maxItems": 2,
+                            "description": "Where on its box the line's start is held: [across, down], shares of "
+                                           "the box from its top left corner."},
+                "to_at": {"type": "array", "items": {"type": "number", "minimum": 0, "maximum": 1},
+                          "minItems": 2, "maxItems": 2,
+                          "description": "Where on its box the line's end is held, as from_at."},
+                "via": {"type": "array", "minItems": 1, "items": pair,
+                        "description": "The points of the sheet a straight line bends at, in order."},
                 "ends": {"enum": list(ENDS)},
                 "route": {"enum": list(ROUTES)},
                 "look": {
@@ -185,6 +197,17 @@ def _annotations_schema() -> dict:
                         "fill": {"enum": sorted(FILLS)},
                         "line": {"enum": list(OUTLINES)},
                         "text": {"enum": sorted(TEXT_SIZES)},
+                        "icon": {"type": "string", "pattern": "^((aws|azure|gcp|brands)/)?[a-z0-9-]+$",
+                                 "description": "The icon a shape carries as a tile, by name, or a provider's "
+                                                "or vendor's mark as aws/lambda; its kind's when left out."},
+                        "opacity": {"type": "integer", "minimum": 10, "maximum": 100,
+                                    "description": "How much of its fill shows, in percent; all of it when left out."},
+                        "weight": {"enum": list(WEIGHTS),
+                                   "description": "How heavy its edge is drawn; m when left out."},
+                        "corners": {"type": "number", "minimum": 0, "maximum": MOST_CORNERS,
+                                    "description": "The radius its corners are rounded by; its kind's when left out."},
+                        "shadow": {"enum": ["none"],
+                                   "description": "none drops the hard shadow a shape or a note casts."},
                     },
                 },
             },
@@ -277,6 +300,14 @@ def view_schema() -> dict:
                     "maxItems": 2,
                 },
             },
+            "locked": {
+                "type": "array",
+                "description": "What is kept where it is on this diagram, records by id and the diagram's own by "
+                               "key: not carried, nudged, lined up or taken along by a frame until it is "
+                               "unlocked. It changes nothing of the record.",
+                "items": {"type": "string"},
+                "uniqueItems": True,
+            },
             "title": {"type": "string"},
             "description": {"type": "string"},
             "category": {"type": "string", "description": "The layer the view is listed under: Business, "
@@ -330,6 +361,11 @@ def view_schema() -> dict:
                 "type": "string",
                 "description": "For a view about one thing: the view one level above it, drawn for what the "
                                "subject sits in. A system's architecture goes up to its domain's landscape.",
+            },
+            "look": {
+                "enum": ["illustrated", "tiles"],
+                "description": "How a diagram draws its own shapes: illustrated, the app's own picture language, "
+                               "or tiles, each shape a tile of its color with an icon. Illustrated when left out.",
             },
             "order_by": {"type": "string"},
             "group_direction": {"enum": ["LR", "RL", "TB", "BT", "lr", "rl", "tb", "bt"]},
@@ -653,6 +689,11 @@ def component_type_schema() -> dict:
             "component_type_id": {"type": "string"},
             "replaces": _REPLACES,
             "name": {"type": "string"},
+            "aliases": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "What else people call it, in generic words; a product goes under providers.",
+            },
             "category": {"type": "string"},
             "applies_to": {"enum": sorted(ENTITY_TYPES)},
             "shape": {"enum": sorted(SHAPES)},

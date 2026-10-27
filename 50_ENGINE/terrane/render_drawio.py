@@ -20,6 +20,11 @@ the app's icon file), the legend and the title block (a page has a name),
 and a map with nothing connected (a tile map is the app's HTML and has no
 scene). The technology line under a name rides as the box's tooltip, so
 the name reads back as the name.
+
+What a diagram draws of its own on the canvas (frames, notes, text, shapes
+and lines) is on its page too, stacked as the canvas stacks it and in its
+fills, each frame a container of what sits in it. Each rides on an object
+marked `aac_own`, which the reader leaves out: it is not a record.
 """
 
 from __future__ import annotations
@@ -27,8 +32,9 @@ from __future__ import annotations
 import math
 from pathlib import Path
 from typing import Dict, List, Optional, Sequence, Tuple
-from xml.sax.saxutils import quoteattr
+from xml.sax.saxutils import escape, quoteattr
 
+from .draw.annotations import TILE_GAP, Own, tile_box
 from .draw.shapes import HEADLESS
 from .draw.svg import EDGE, Scene, SceneBoundary, SceneEdge, SceneNode
 from .schema import ENTITY_TYPES, RELATION_TYPES
@@ -75,6 +81,23 @@ def _f(value: float) -> str:
     return text[:-2] if text.endswith(".0") else text
 
 
+def _html(text: str) -> str:
+    """Words as an HTML label holds them, a line break a `<br>`."""
+    return escape(text).replace("\n", "<br>")
+
+
+def _own_label(o: Own) -> str:
+    """A shape's words as the canvas sets them: its first line the name,
+    bold, and the rest a caption two sizes down; anything else's as they
+    are."""
+    lines = [p for p in o.label.split("\n") if p.strip()]
+    if o.role != "shape" or len(lines) < 2:
+        return _html(o.label)
+    return "<b>%s</b>" % escape(lines[0]) + "".join(
+        '<br><span style="font-size:%spx;color:%s">%s</span>' % (_f(o.size - 2), "#6e655a" if o.words == OWN_INK else o.words,
+                                                                escape(p)) for p in lines[1:])
+
+
 def _color(value: str, fallback: str) -> str:
     text = str(value or "").strip()
     return text if text.startswith("#") and len(text) in (4, 7) else fallback
@@ -115,6 +138,89 @@ def edge_style(e: SceneEdge, layered: bool) -> str:
     return "".join([route, "html=1;strokeColor=%s;strokeWidth=%s;%s" % (
         EDGE, "1.6" if layered else "1.3", head), _dash(e.style), "" if layered else "opacity=45;",
         "fontColor=%s;fontSize=10;labelBackgroundColor=#ffffff;" % LABEL_INK])
+
+
+#: The diagram's own shapes as draw.io's nearest: the outlines are draw.io's,
+#: the fills, edges and words the canvas's.
+OWN_SHAPES: Dict[str, str] = {
+    "rectangle": "rounded=0;",
+    "rounded": "rounded=1;absoluteArcSize=1;arcSize=12;",
+    "ellipse": "ellipse;",
+    "diamond": "rhombus;",
+    "hexagon": "shape=hexagon;perimeter=hexagonPerimeter2;size=0.25;",
+    "cylinder": "shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=8;",
+    "cloud": "ellipse;shape=cloud;",
+    "document": "shape=document;boundedLbl=1;",
+    "person": "shape=actor;",
+    "callout": "shape=callout;perimeter=calloutPerimeter;",
+}
+OWN_INK = "#2e2a25"
+
+
+def own_style(o: Own) -> str:
+    """A shape, note, text or frame of the diagram's own as the canvas draws
+    it: a frame a rounded container with its name in its corner, a note a
+    box with its words at the top, text words alone, a shape its outline
+    with its words in the middle."""
+    paint = "fillColor=%s;strokeColor=%s;strokeWidth=%s;fontSize=%s;fontColor=%s;%s%s" % (
+        o.fill, o.edge, _f(o.weight), _f(o.size), o.words, "shadow=1;" if o.shadow else "",
+        "fillOpacity=%d;" % round(o.opacity * 100) if o.opacity < 1 else "")
+    # Its corners, where it has any to round: later in the style than its
+    # kind's, so they win.
+    corners = ("rounded=1;absoluteArcSize=1;arcSize=%s;" % _f(2 * o.corners) if o.corners
+               else "rounded=0;" if o.corners == 0 else "")
+    if o.role == "frame":
+        look = ("rounded=1;absoluteArcSize=1;arcSize=12;container=1;collapsible=0;align=left;verticalAlign=top;"
+                "spacing=0;spacingLeft=12;spacingTop=8;spacingRight=12;fontStyle=1;")
+    elif o.role == "note":
+        look = "rounded=0;align=left;verticalAlign=top;spacing=10;"
+    elif o.role == "text":
+        look = "text;align=left;verticalAlign=top;spacing=2;"
+    else:
+        look = OWN_SHAPES.get(o.shape, "rounded=0;") + "align=center;verticalAlign=middle;spacing=8;"
+    turn = "rotation=%s;" % _f(o.rotate % 360) if o.rotate else ""
+    if o.look == "tiles" and o.role == "shape" and o.tint:
+        # As tiles: the tile itself, light at the top and deep at the foot,
+        # its words under it; the cell is the tile, as the canvas's line
+        # ends on it.
+        return ("rounded=1;absoluteArcSize=1;arcSize=%s;fillColor=%s;gradientColor=%s;gradientDirection=south;"
+                "strokeColor=none;verticalLabelPosition=bottom;verticalAlign=top;labelPosition=center;align=center;"
+                "spacingTop=%s;whiteSpace=wrap;html=1;fontSize=%s;fontColor=%s;%s%s"
+                % (_f(2 * (o.corners if o.corners is not None else 12)), o.tint[0], o.tint[1], _f(TILE_GAP),
+                   _f(o.size), o.words, "fillOpacity=%d;" % round(o.opacity * 100) if o.opacity < 1 else "", turn))
+    return (look + "whiteSpace=wrap;html=1;" + paint + ("dashed=1;dashPattern=6 4;" if o.dashed else "") + corners
+            + turn)
+
+
+def own_line_style(o: Own) -> str:
+    """A line of the diagram's own: straight, square through its turns, or
+    curved through them, with its heads."""
+    route = {"square": "edgeStyle=orthogonalEdgeStyle;rounded=0;", "curved": "curved=1;"}.get(o.route, "")
+    end = "endArrow=none;" if o.ends == "none" else "endArrow=block;endFill=1;"
+    start = "startArrow=block;startFill=1;" if o.ends == "both" else "startArrow=none;"
+    # An end held at a point of its box, as draw.io holds a joined end: a
+    # share to the hundredth, which _f's tenth would have made 0.25 into 0.2.
+    held = "".join("%sX=%s;%sY=%s;%sPerimeter=0;" % (k, format(round(v[0], 2), "g"), k, format(round(v[1], 2), "g"), k)
+                   for k, v in (("exit", o.from_at), ("entry", o.to_at)) if v)
+    return "".join([route, held, "html=1;strokeColor=%s;strokeWidth=1.5;" % o.edge, end, start,
+                    "dashed=1;dashPattern=6 4;" if o.dashed else "",
+                    "fontSize=%s;fontColor=%s;labelBackgroundColor=#fffdf8;labelBorderColor=#2e2a25;" % (
+                        _f(o.size), OWN_INK)])
+
+
+def _own_order(items: Sequence[Own]) -> List[Own]:
+    """A layer's own in the list's order, each frame before what sits in
+    it: draw.io reads a cell's parent from the cells before it."""
+    left, out, done = list(items), [], set()
+    while left:
+        ready = [o for o in left if not o.within or o.within in done or all(p.key != o.within for p in left)]
+        if not ready:
+            ready = left[:1]
+        for o in ready:
+            out.append(o)
+            done.add(o.key)
+        left = [o for o in left if o.key not in done]
+    return out
 
 
 def _along(points: Sequence[Tuple[float, float]], at: Tuple[float, float]) -> Tuple[float, Tuple[float, float]]:
@@ -265,7 +371,58 @@ def diagram_xml(scene: Scene, kinds: Optional[Dict[str, str]] = None,
     out: List[str] = ['<mxGraphModel dx="0" dy="0" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" '
                       'arrows="1" fold="1" page="1" pageScale="1" pageWidth="%d" pageHeight="%d" math="0" shadow="0">'
                       % (width, height), "  <root>", '    <mxCell id="0"/>', '    <mxCell id="1" parent="0"/>']
-    for b in scene.boundaries:
+    ids = {n.id for n in scene.nodes}
+    # The diagram's own, stacked as the canvas stacks them: a frame on the
+    # bare sheet first, under the estate; one inside a boundary as that
+    # boundary's first child, over its fill and under what is in it; the
+    # rest last, over everything. Each rides on an object marked `aac_own`,
+    # so the reader leaves it out: a note read back is not a system.
+    own_cell_id = {o.key: "own-" + o.key for o in scene.own}
+    own_box = {o.key: o.box for o in scene.own if o.role != "line"}
+
+    def own_cells(layer: object, parent: str) -> None:
+        for o in _own_order([o for o in scene.own if o.role != "line" and o.layer == layer]):
+            if o.within in own_box:
+                parent_id, (px, py) = own_cell_id[o.within], (ox + own_box[o.within][0], oy + own_box[o.within][1])
+            else:
+                parent_id, (px, py) = parent_of(parent), origin(parent)
+            x1, y1, x2, y2 = tile_box(o.box) if o.look == "tiles" and o.role == "shape" else o.box
+            out.append('    <UserObject id=%s label=%s aac_own=%s>' % (
+                quoteattr(own_cell_id[o.key]), quoteattr(_own_label(o)), quoteattr(o.role)))
+            out.append('      <mxCell style=%s vertex="1" parent=%s>' % (quoteattr(own_style(o)), quoteattr(parent_id)))
+            out.append('        <mxGeometry x="%s" y="%s" width="%s" height="%s" as="geometry"/>' % (
+                _f(ox + x1 - px), _f(oy + y1 - py), _f(x2 - x1), _f(y2 - y1)))
+            out.append("      </mxCell>")
+            out.append("    </UserObject>")
+
+    def own_lines() -> None:
+        for o in scene.own:
+            if o.role != "line" or len(o.points) < 2:
+                continue
+            ends = []
+            for name, key in (("source", o.source), ("target", o.target)):
+                cell = own_cell_id.get(key) if key in own_box else key if key in ids else ""
+                ends.append(" %s=%s" % (name, quoteattr(cell)) if cell else "")
+            out.append('    <UserObject id=%s label=%s aac_own="line">' % (quoteattr(own_cell_id[o.key]),
+                                                                           quoteattr(_html(o.label))))
+            out.append('      <mxCell style=%s edge="1" parent="1"%s%s>' % (quoteattr(own_line_style(o)), ends[0], ends[1]))
+            out.append('        <mxGeometry relative="1" as="geometry">')
+            # An end on a point of the sheet is that point; an end on a box
+            # is where draw.io puts it, on the box's outline.
+            for name, (x, y), joined in (("sourcePoint", o.points[0], ends[0]), ("targetPoint", o.points[-1], ends[1])):
+                if not joined:
+                    out.append('          <mxPoint x="%s" y="%s" as="%s"/>' % (_f(ox + x), _f(oy + y), name))
+            if len(o.points) > 2:
+                out.append('          <Array as="points">')
+                for x, y in o.points[1:-1]:
+                    out.append('            <mxPoint x="%s" y="%s"/>' % (_f(ox + x), _f(oy + y)))
+                out.append("          </Array>")
+            out.append("        </mxGeometry>")
+            out.append("      </mxCell>")
+            out.append("    </UserObject>")
+
+    own_cells("under", "1")
+    for index, b in enumerate(scene.boundaries):
         px, py = origin(b.parent)
         x1, y1, x2, y2 = b.box
         out.append('    <mxCell id=%s value=%s style=%s vertex="1" parent=%s>' % (
@@ -273,6 +430,7 @@ def diagram_xml(scene: Scene, kinds: Optional[Dict[str, str]] = None,
         out.append('      <mxGeometry x="%s" y="%s" width="%s" height="%s" as="geometry"/>' % (
             _f(ox + x1 - px), _f(oy + y1 - py), _f(x2 - x1), _f(y2 - y1)))
         out.append("    </mxCell>")
+        own_cells(index, b.id)
     for n in scene.nodes:
         px, py = origin(n.parent)
         geometry = '      <mxGeometry x="%s" y="%s" width="%s" height="%s" as="geometry"/>' % (
@@ -297,7 +455,6 @@ def diagram_xml(scene: Scene, kinds: Optional[Dict[str, str]] = None,
                 quoteattr(n.id), quoteattr(n.label), quoteattr(node_style(n)), quoteattr(parent_of(n.parent))))
             out.append(geometry)
             out.append("    </mxCell>")
-    ids = {n.id for n in scene.nodes}
     for e in scene.edges:
         if e.source not in ids or e.target not in ids:
             continue
@@ -341,6 +498,8 @@ def diagram_xml(scene: Scene, kinds: Optional[Dict[str, str]] = None,
         out.append("    </mxCell>")
         if kind or mark:
             out.append("    </UserObject>")
+    own_cells("over", "1")
+    own_lines()
     out.append("  </root>")
     out.append("</mxGraphModel>")
     return "\n".join(out)

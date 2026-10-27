@@ -15,7 +15,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Dict, List
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 __all__ = ["__version__", "adopt", "change", "diagrams", "example", "examples", "export_archimate", "export_drawio",
            "connect", "export_changes", "export_excel", "export_plantuml", "from_parts", "made_by", "on_shape",
            "part", "presets", "since", "views"]
@@ -417,7 +417,8 @@ def _sketch_and_name(source: Any, root: Any = None):
     raise TypeError("takes a sketch as a dict, the YAML text of one, or a path; got %s" % type(source).__name__)
 
 
-def adopt(source: Any, root: Any, *, owner: str = None, dry_run: bool = False, correct: bool = False):
+def adopt(source: Any, root: Any, *, owner: str = None, dry_run: bool = False, correct: bool = False,
+          same: dict = None):
     """Write a sketch into the repository at `root` as its own records
     (`terrane.join.Adoption` says what was added, what was already there and
     what validate says after). `source` is what `diagrams` takes: a sketch
@@ -459,6 +460,7 @@ def adopt(source: Any, root: Any, *, owner: str = None, dry_run: bool = False, c
     else:
         raise TypeError("terrane.adopt takes a sketch as a dict, the YAML text of one, or a path; got %s"
                         % type(source).__name__)
-    result = join_estate(doc, _Path(root), owner=owner, source_name=name, dry_run=dry_run, correct=correct)
+    result = join_estate(doc, _Path(root), owner=owner, source_name=name, dry_run=dry_run, correct=correct,
+                         same=same)
     result.notes[:0] = notes
     return result

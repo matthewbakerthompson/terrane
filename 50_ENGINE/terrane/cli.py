@@ -930,6 +930,65 @@ def cmd_diff(args: argparse.Namespace) -> int:
     return 0
 
 
+#: The kinds of record a `component_type` is set on.
+TYPED = (("systems", "systems"), ("tech_services", "technology services"))
+
+
+def _needs_types(root: Path, model, name: str) -> int:
+    """What each record with no `component_type` probably is, by the
+    library's own words (`terrane.match.suggest_types`), grouped by the
+    likeliest kind, the next two beside each; nothing is written."""
+    from .match import TypeRanker
+
+    library = load_components(root)
+    total = sum(len([r for r in model.all_of(t) if not r.get("component_type")]) for t, _w in TYPED)
+    print("%s: %d records have no component_type. What each probably is, by the library's own words; "
+          "nothing is set." % (name, total))
+    for type_name, words in TYPED:
+        bare = [r for r in model.all_of(type_name) if not r.get("component_type")]
+        if not bare:
+            continue
+        ranker = TypeRanker(library, type_name)
+        pk = "system_id" if type_name == "systems" else "tech_service_id"
+        groups: Dict[str, List[tuple]] = {}
+        for record in bare:
+            got = ranker.rank(record)
+            key = got[0].component_type_id if got else ""
+            groups.setdefault(key, []).append((record, got))
+        print("")
+        print("%s, %d" % (words.capitalize(), len(bare)))
+        for key in sorted(groups, key=lambda k: (k == "", -len(groups[k]), k)):
+            rows = groups[key]
+            kind = library.get(key)
+            print("  %s: %d" % ("%s (%s)" % (kind.name, key) if kind else "nothing in the library says", len(rows)))
+            for record, got in sorted(rows, key=lambda rg: str(rg[0].get(pk) or "")):
+                also = ", ".join(s.component_type_id for s in got[1:])
+                print("    %-26s %-34s %s%s" % (record.get(pk), str(record.get("name") or "")[:34],
+                                              ", ".join(got[0].words) if got else "",
+                                              "  (or %s)" % also if also else ""))
+    return 0
+
+
+def cmd_search(args: argparse.Namespace) -> int:
+    """The records a query finds, best first, and by which words
+    (terrane/search.py, the index the app's search box scores)."""
+    from . import search as search_module
+
+    root = _root(args)
+    query = " ".join(args.query)
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except (AttributeError, ValueError):
+        pass
+    hits = search_module.search(search_module.index_of(root), query, limit=args.limit, type_name=args.type)
+    if not hits:
+        print("nothing found for %r" % query)
+        return 0
+    for line in search_module.describe(hits):
+        print(line)
+    return 0
+
+
 def cmd_needs(args: argparse.Namespace) -> int:
     """What each diagram needs from the records, and how many records lack
     it: the fields its query, boxes, lines and shade read (terrane/needs.py)."""
@@ -941,6 +1000,8 @@ def cmd_needs(args: argparse.Namespace) -> int:
         sys.stdout.reconfigure(encoding="utf-8")
     except (AttributeError, ValueError):
         pass
+    if getattr(args, "types", False):
+        return _needs_types(root, model, name)
     if args.view:
         known = {v.view_id: v for v in views}
         view = known.get(args.view)
@@ -1181,13 +1242,21 @@ def cmd_adopt(args: argparse.Namespace) -> int:
 
     root = _root(args)
     path = Path(args.file)
+    same: Dict[str, str] = {}
+    for pair in args.same or []:
+        new, _sep, old = str(pair).partition("=")
+        if not new.strip() or not old.strip():
+            print("terrane adopt: --same takes NEW=OLD, the sketch's id and the estate's; got %r" % pair)
+            return 2
+        same[new.strip()] = old.strip()
     try:
         doc, notes = read_any(path, root)
         picture = None
         if args.picture:
             # The change against what is there, before anything is written.
-            picture = change_picture(doc, root, owner=args.owner, source_name=path.name, correct=args.correct)
-        result = join_estate(doc, root, owner=args.owner, source_name=path.name, dry_run=args.dry_run,
+            picture = change_picture(doc, root, owner=args.owner, source_name=path.name, correct=args.correct,
+                                     same=same)
+        result = join_estate(doc, root, owner=args.owner, source_name=path.name, dry_run=args.dry_run, same=same,
                              correct=args.correct)
     except (ReadError, QuickError, AdoptError) as exc:
         print("terrane adopt: %s" % exc)
@@ -1578,7 +1647,16 @@ def build_parser() -> argparse.ArgumentParser:
     p_needs = sub.add_parser("needs", help="what each diagram needs from the records, and how many lack it")
     p_needs.add_argument("view", nargs="?", help="one view; every view when left out")
     p_needs.add_argument("--subject", help="the system, product or other subject a subject view is drawn for")
+    p_needs.add_argument("--types", action="store_true",
+                         help="what each record with no component_type probably is, by the library's words; "
+                              "writes nothing")
     p_needs.set_defaults(func=cmd_needs)
+
+    p_search = sub.add_parser("search", help="the records a query finds, best first, and by which words")
+    p_search.add_argument("query", nargs="+", help="words of a name, an id, a description or a tag")
+    p_search.add_argument("--type", choices=sorted(ENTITY_TYPES), help="only records of this type")
+    p_search.add_argument("--limit", type=int, default=10, help="how many to list (default 10; 0 for all)")
+    p_search.set_defaults(func=cmd_search)
 
     p_impact = sub.add_parser("impact", help="what is affected if this changes")
     p_impact.add_argument("id", help="entity id, e.g. SYS-CORE-LEDGER")
@@ -1666,6 +1744,8 @@ def build_parser() -> argparse.ArgumentParser:
     p_adopt.add_argument("--owner", help="the org unit of this estate that owns what the sketch left without an "
                                          "owner; else the sketch's placeholder is adopted too, and said")
     p_adopt.add_argument("--dry-run", action="store_true", help="say what would be written and write nothing")
+    p_adopt.add_argument("--same", action="append", metavar="NEW=OLD",
+                         help="the sketch's NEW is the estate's OLD: renamed throughout before it joins, repeatable")
     p_adopt.add_argument("--correct", action="store_true",
                          help="a record already here takes the file's differing cells, written into its own file "
                               "with the file otherwise left as it is: a reviewer's workbook back in; a blank cell "

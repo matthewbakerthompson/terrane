@@ -18,6 +18,7 @@ these, unmodified, each under its own terms, with the full text in
 | AWS Architecture Icons | 07312026 | `80_APP/web/icons/aws/` | AWS's published terms | `LICENSES/LicenseRef-AWS-Architecture-Icons.txt` |
 | Azure Public Service Icons | V24 | `80_APP/web/icons/azure/` | Microsoft's published terms | `LICENSES/LicenseRef-Azure-Public-Service-Icons.txt` |
 | Google Cloud icons | core products and categories | `80_APP/web/icons/gcp/` | Google's published terms | `LICENSES/LicenseRef-Google-Cloud-Icons.txt` |
+| Lucide, the icons the chrome and Icon tiles draw | the paths as copied, 2026 | `80_APP/web/canvas/own-icons.js`, inline in `80_APP/web/index.html`, `80_APP/web/app.js` and `50_ENGINE/terrane/draw/shapes.py` | ISC | `LICENSES/ISC-Lucide.txt` |
 
 In the installed package the same files sit under `terrane/shipped/web/`.
 A provider's or vendor's mark names its product on a diagram and nothing

@@ -135,6 +135,17 @@ What each diagram needs from the records, and how many lack it.
 |---|---|
 | `[view]` | one view; every view when left out |
 | `--subject SUBJECT` | the system, product or other subject a subject view is drawn for |
+| `--types` | what each record with no component_type probably is, by the library's words; writes nothing |
+
+## terrane search
+
+The records a query finds, best first, and by which words.
+
+| Argument | What it is |
+|---|---|
+| `query` | words of a name, an id, a description or a tag |
+| `--type TYPE` | only records of this type; one of: actors, architecture_change_requests, capabilities, controls, data_assets, flows, frameworks, interfaces, offered_interfaces, org_units, policies, processes, products, roadmaps, systems, tech_services, value_stream_stages, value_streams, work_packages |
+| `--limit LIMIT` | how many to list (default 10; 0 for all) |
 
 ## terrane impact
 
@@ -204,6 +215,7 @@ Write a sketch, or a diagram a reader reads, into this repository as its own rec
 | `file` | a sketch, or an ArchiMate, Structurizr, C4-PlantUML, draw.io, Visio, spreadsheet, Mermaid or Markdown file, read by its suffix |
 | `--owner OWNER` | the org unit of this estate that owns what the sketch left without an owner; else the sketch's placeholder is adopted too, and said |
 | `--dry-run` | say what would be written and write nothing |
+| `--same NEW=OLD` | the sketch's NEW is the estate's OLD: renamed throughout before it joins, repeatable |
 | `--correct` | a record already here takes the file's differing cells, written into its own file with the file otherwise left as it is: a reviewer's workbook back in; a blank cell is left alone, and a correction to what a shape made goes under the product's overrides |
 | `--picture PATH` | draw the change first: what the file adds, in full, and with --correct what it corrects, with a heavy border or, for a connection, a heavy line, among what is there one hop away, faded; an SVG, or a PNG by its suffix |
 

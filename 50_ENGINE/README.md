@@ -92,6 +92,7 @@ Terrane holds no password or token.
 | `terrane export` | the estate as ArchiMate, draw.io, C4-PlantUML, Excel, CSV, JSON or Backstage |
 | `terrane diff` | what changed between two revisions, drawn |
 | `terrane needs` | what each diagram needs from the records, and how many lack it |
+| `terrane search` | the records a query finds, best first, and by which words |
 
 [The command reference](https://github.com/matthewbakerthompson/terrane/blob/main/docs/COMMANDS.md) lists
 every command and argument.

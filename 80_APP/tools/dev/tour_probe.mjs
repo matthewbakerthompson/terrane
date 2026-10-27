@@ -86,12 +86,9 @@ try {
       s.away ? "AWAY" : "", "|", how, s.hash);
     if (how === "press") await page.click(sel);
     else if (how === "press-box") {
-      await page.evaluate(() => {
-        const r = document.querySelector(".tour-ring").getBoundingClientRect();
-        const el = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
-        el.dispatchEvent(new MouseEvent("mousedown", { bubbles: true, clientX: r.left + r.width / 2, clientY: r.top + r.height / 2 }));
-        el.dispatchEvent(new MouseEvent("mouseup", { bubbles: true, clientX: r.left + r.width / 2, clientY: r.top + r.height / 2 }));
-      });
+      // One real press. A pair of made-up mouse events went first, which
+      // picked the box, and the real click after them took it off again: a
+      // box pressed while picked is let go, and the tour waited for ever.
       await page.mouse.click(...(await page.evaluate(() => { const r = document.querySelector(".tour-ring").getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; })));
     } else if (how === "showme" || how === "next") {
       const label = how === "showme" ? "Show me" : "Next";

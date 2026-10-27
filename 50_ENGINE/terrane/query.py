@@ -232,6 +232,8 @@ class View(NamedTuple):
     #: off the subject (`terrane.levels`). None for a view with no level
     #: above it, which is every view about the whole estate.
     up: Optional[str] = None
+    #: How it draws its own (`terrane.annotations.LOOKS`): Illustrated unless it says tiles.
+    look: str = "illustrated"
 
 
 def _enum_of(field: str) -> Sequence[str]:
@@ -498,7 +500,20 @@ def parse_view(data: dict, source: Optional[Path] = None) -> View:
         positions=_positions_of(data),
         annotations=_annotations_of(data),
         up=str(data.get("up") or "").strip() or None,
+        look=_look_of(data),
     )
+
+
+def _look_of(data: dict) -> str:
+    """How the diagram draws its own: Illustrated unless it says Icon tiles."""
+    from .annotations import DEFAULT_LOOK, LOOKS
+
+    raw = data.get("look")
+    if raw in (None, ""):
+        return DEFAULT_LOOK
+    if raw not in LOOKS:
+        raise ViewError("view %s: look is one of %s" % (data.get("view_id"), ", ".join(LOOKS)))
+    return str(raw)
 
 
 #: Between the boundaries a thing sits in, and between them and its id, in

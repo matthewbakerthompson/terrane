@@ -17,12 +17,12 @@ candidate for a human rather than applied.
 from __future__ import annotations
 
 import csv
-import difflib
-import re
 from pathlib import Path
 from typing import Dict, List, NamedTuple, Optional, Sequence
 
 from .loader import read_data_file
+from .match import Matcher
+from .match import normalize as normalize_name  # noqa: F401  (the name this module has always had)
 from .model import Model
 
 #: Columns this adapter reads from a `cmdb_ci` export. Extra columns are kept
@@ -60,6 +60,10 @@ VALUE_MAP = {
     },
 }
 
+#: The matcher's score a CI's name needs to be offered as a system's. The
+#: estate's distinct systems score at most 0.825 against one another
+#: (Point-of-Sale Finance Web against Point-of-Sale Finance Service), and a
+#: name one letter short scores 0.923 against its own.
 FUZZY_THRESHOLD = 0.86
 
 
@@ -81,14 +85,6 @@ class DriftResult(NamedTuple):
     counts: Dict[str, int]
     field_sot: Dict[str, str]
     export_path: str
-
-
-def normalize_name(value: str) -> str:
-    text = re.sub(r"[^a-z0-9]+", " ", str(value or "").lower())
-    for noise in (" system", " service", " application", " app", " platform", " prod"):
-        if text.endswith(noise):
-            text = text[: -len(noise)]
-    return " ".join(text.split())
 
 
 def _map_value(field: str, value: str) -> str:
@@ -131,6 +127,13 @@ def reconcile(
     by_name: Dict[str, list] = {}
     for system in systems:
         by_name.setdefault(normalize_name(system.get("name") or ""), []).append(system)
+    by_id = {str(s["system_id"]): s for s in systems}
+    # The weakest pass offers only a system with no CMDB record yet: its
+    # advice is to set the system's cmdb_ci_sys_id, and a system that has
+    # one is not short of it ("Test Copy of Core Card Ledger" is not the
+    # ledger's record).
+    unlinked = {str(s["system_id"]) for s in systems if not s.get("cmdb_ci_sys_id")}
+    matcher = Matcher((str(s["system_id"]), str(s.get("name") or "")) for s in systems)
 
     matched_systems = set()
     unmatched_ci: List[dict] = []
@@ -164,11 +167,9 @@ def reconcile(
                 continue
 
         if system is None:
-            close = difflib.get_close_matches(
-                normalize_name(ci_name), list(by_name), n=1, cutoff=FUZZY_THRESHOLD
-            )
+            close = [c for c in matcher.rank(ci_name, limit=1, among=unlinked) if c.score >= FUZZY_THRESHOLD]
             if close:
-                candidate = by_name[close[0]][0]
+                candidate = by_id[close[0].id]
                 rows.append(
                     DriftRow(
                         "CANDIDATE_MATCH",
@@ -179,10 +180,7 @@ def reconcile(
                         "",
                         "",
                         "",
-                        "fuzzy-%.2f"
-                        % difflib.SequenceMatcher(
-                            None, normalize_name(ci_name), close[0]
-                        ).ratio(),
+                        "fuzzy-%.2f" % close[0].score,
                         "Not applied. Confirm, then set cmdb_ci_sys_id on the system.",
                     )
                 )

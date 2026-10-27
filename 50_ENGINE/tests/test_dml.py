@@ -109,6 +109,40 @@ class TestDeck(unittest.TestCase):
         self.assertEqual(slides, 3)
         self.assertTrue(any("what changed since HEAD" in s and "left out" in s for s in said), said)
 
+    def test_the_diagrams_own_are_shapes_stacked_as_the_canvas_stacks_them(self) -> None:
+        from test_render_drawio import OWN_SKETCH
+
+        drawings = terrane.diagrams(OWN_SKETCH, date="2026-10-17")
+        out = Path(tempfile.mkdtemp(prefix="aac-dml-")) / "own.pptx"
+        drawings.pack(out, title="Own", editable=True)
+        with zipfile.ZipFile(out) as archive:
+            slide = ET.fromstring(archive.read("ppt/slides/slide3.xml"))
+        tree = [e for e in slide.iter() if e.tag in (P + "sp", P + "cxnSp")]
+        names = [e.find(".//" + P + "cNvPr").get("name") for e in tree]
+        ids = [int(e.get("id")) for e in slide.iter(P + "cNvPr")]
+        self.assertEqual(len(ids), len(set(ids)))
+        for name in ("Frame f", "Note n", "Shape s", "Line l", "Label l"):
+            self.assertIn(name, names)
+        # The frame and its note under the records (named for their names),
+        # the diamond and the line over them.
+        self.assertLess(names.index("Frame f"), names.index("Note n"))
+        self.assertLess(names.index("Note n"), names.index("A"))
+        self.assertGreater(names.index("Shape s"), names.index("B"))
+        self.assertGreater(names.index("Line l"), names.index("Shape s"))
+        frame = tree[names.index("Frame f")]
+        self.assertEqual(frame.find(".//" + A + "prstGeom").get("prst"), "roundRect")
+        note = tree[names.index("Note n")]
+        self.assertEqual(note.find(".//" + P + "spPr/" + A + "solidFill/" + A + "srgbClr").get("val"), "FBEFC6")
+        # Illustrated's hard shadow: ink, unblurred, down and right.
+        shadow = note.find(".//" + A + "outerShdw")
+        self.assertEqual((shadow.get("blurRad"), shadow.get("dir")), ("0", "2700000"))
+        self.assertTrue(any("Goes live in March" in (t.text or "") for t in note.iter(A + "t")))
+        diamond = tree[names.index("Shape s")]
+        self.assertIsNotNone(diamond.find(".//" + A + "custGeom"))
+        line = tree[names.index("Line l")]
+        self.assertEqual(line.find(".//" + A + "path").get("fill"), "none")
+        self.assertIsNotNone(line.find(".//" + A + "tailEnd"))
+
     def test_the_review_pack_takes_editable(self) -> None:
         out = Path(tempfile.mkdtemp(prefix="aac-dml-")) / "pack.pptx"
         path, slides = build_pack(REPO, out, ["system-context"], date="2026-10-17", log=lambda t: None, editable=True)

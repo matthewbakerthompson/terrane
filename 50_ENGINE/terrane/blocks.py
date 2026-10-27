@@ -20,7 +20,7 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from typing import Dict, List, NamedTuple, Optional, Sequence
+from typing import Dict, List, NamedTuple, Optional, Sequence, Tuple
 
 from .library import LibraryError, load_layer
 from .schema import ENTITY_TYPES
@@ -61,6 +61,10 @@ class ComponentType(NamedTuple):
     #: stands in for when it says `replaces` (`library.load_layer`).
     library: str = ""
     replaced: str = ""
+    #: What else people call the kind, in generic words ("message broker",
+    #: "RDBMS"); a product is a provider's, under `providers`. Read by the
+    #: type suggestions (`terrane.match.suggest_types`).
+    aliases: Tuple[str, ...] = ()
 
 
 class Provided(NamedTuple):
@@ -110,6 +114,10 @@ def parse_component(data: dict, source: Optional[Path] = None) -> ComponentType:
     if not isinstance(data, dict) or "component_type_id" not in data:
         raise LibraryError("%s: missing component_type_id" % (source or "<component>"))
     applies_to = str(data.get("applies_to") or "tech_services")
+    aliases = data.get("aliases") or []
+    if not isinstance(aliases, list) or not all(isinstance(a, str) and a.strip() for a in aliases):
+        raise LibraryError("component %s: aliases is a list of words it is also called"
+                           % data["component_type_id"])
     if applies_to not in ENTITY_TYPES:
         raise LibraryError(
             "component %s: applies_to names an unknown entity type %r"
@@ -125,6 +133,7 @@ def parse_component(data: dict, source: Optional[Path] = None) -> ComponentType:
         providers=dict(data.get("providers") or {}),
         defaults=dict(data.get("defaults") or {}),
         source_file=source,
+        aliases=tuple(a.strip() for a in aliases),
     )
 
 

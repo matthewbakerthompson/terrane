@@ -55,7 +55,8 @@ from terrane.schema import ENTITY_TYPES  # noqa: E402
 # The marks travel with the site: without the icons folder every corner of
 # the hosted demo asked for a file that was not there. `canvas/` is the
 # canvas's own script, which index.html loads after app.js.
-ASSETS =("app.js", "canvas", "styles.css", "favicon.svg", "vendor", "fonts", "icons")
+# `search.js` scores the search box's queries, which index.html loads before app.js.
+ASSETS =("app.js", "search.js", "canvas", "styles.css", "favicon.svg", "vendor", "fonts", "icons")
 
 #: The estates published beside the checkout's own model: the folder of the
 #: site each is baked into, its root, and the line the other estates' home
@@ -132,6 +133,11 @@ def _bake(api: Path, written: int) -> int:
 
     everything = _call(server.api_list)
     _write(api / "list.json", everything)
+    written += 1
+    # The search box's index: the page scores against it, with no server.
+    _write(api / "search" / "index.json", _call(server.api_search_index))
+    # The marks a tile can carry, for the canvas's Icon field.
+    _write(api / "icons.json", _call(server.api_icons))
     written += 1
     for type_name in ENTITY_TYPES:
         _write(api / "list" / ("%s.json" % type_name), _call(server.api_list, {"type": [type_name]}))

@@ -201,6 +201,31 @@ patterns went, and so did twenty-three landing-zone gaps -- twenty-two
 because a provider with no landing zone at all now has a wait and no gaps,
 and one because its identity platform is tagged as the landing zone's.
 
+## What was added next: the words a kind is also called
+
+None of the card issuer's 88 systems carried a `component_type`, and no
+reader or panel offered one. A kind now lists what else people call it under
+`aliases`, in generic words: a relational database is also an RDBMS, an SQL
+database, OLTP; a message queue a message broker, MQ. A product is not an
+alias. What each provider sells is under `providers` already, and an alias
+that named a vendor would make the library's choice of words a choice of
+vendor.
+
+`terrane.match.suggest_types` reads a record against every kind, through
+each kind's name, id, category, description, providers and aliases, every
+word weighed by how few kinds use it, a word a kind is called by (its name,
+id or an alias) and a word of the record's own name counted double, and
+gives the three likeliest with the words that matched. Every kind, not only
+those that apply to the record's type: a system is often a database or an
+integration engine, and Thurman Health's systems are typed so; a kind that
+applies goes first on a tie. Nothing is learned and nothing is stored: a
+kind added to the library, or an alias added to a kind, is in the next
+suggestion. Hiding each typed technology service's kind and asking for it
+back, the card issuer's 106 come back first 84% of the time and in the
+first three 92%, Thurman Health's 22 at 91% and 91%. `terrane needs --types` prints them for the records that
+have no `component_type`, grouped by the likeliest kind, and writes
+nothing; a person sets the field.
+
 ## The order to extend it in
 
 1. **A library of your own, beside the shipped one.** Built; the section

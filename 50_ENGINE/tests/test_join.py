@@ -496,5 +496,67 @@ class TestJoin(unittest.TestCase):
                                            "ORG-NOBODY"]), 1)
 
 
+class TestProbablyHere(unittest.TestCase):
+    """A sketch that names a record the estate has under another id: the
+    payments sketch calls the ledger SYS-LEDGER, "Card ledger", and the
+    estate has SYS-CORE-LEDGER, "Core Card Ledger"."""
+
+    def test_a_record_added_says_what_it_probably_is(self) -> None:
+        with Sandbox(seed=True) as root:
+            doc, _ = read_any(QUICK / "payments.yaml")
+            result = join_estate(doc, root, source_name="payments.yaml", dry_run=True)
+            near = result.probable["SYS-LEDGER"]
+            self.assertEqual(near[0].id, "SYS-CORE-LEDGER")
+            self.assertIn("ledger", near[0].reasons)
+            self.assertEqual(result.probable["SYS-AUTH"][0].id, "SYS-AUTH-SWITCH")
+            said = "\n".join(describe(result, True))
+            self.assertIn("probably already here", said)
+            self.assertIn("SYS-LEDGER may be SYS-CORE-LEDGER Core Card Ledger", said)
+
+    def test_same_joins_it_as_the_estates_and_rewires_its_lines(self) -> None:
+        with Sandbox(seed=True) as root:
+            doc, _ = read_any(QUICK / "payments.yaml")
+            result = join_estate(doc, root, source_name="payments.yaml", same={"SYS-LEDGER": "SYS-CORE-LEDGER"})
+            self.assertNotIn("SYS-LEDGER", result.added.get("systems", []))
+            self.assertIn("SYS-CORE-LEDGER", result.skipped["systems"])
+            self.assertFalse((root / "10_MODEL" / "systems" / "SYS-LEDGER.yaml").exists())
+            self.assertTrue(any("SYS-LEDGER is SYS-CORE-LEDGER here" in n for n in result.notes), result.notes)
+            model = load(root)
+            self.assertIsNone(model.get("systems", "SYS-LEDGER"))
+            # Renamed throughout: no file the adoption wrote names the
+            # sketch's id; its lines to the ledger are the estate's own.
+            self.assertTrue(result.written)
+            for path in result.written:
+                self.assertNotIn("SYS-LEDGER", path.read_text(encoding="utf-8"), path)
+            self.assertIn("INT-AUTH-LEDGER", result.skipped["interfaces"])
+            self.assertEqual(result.errors, 0)
+
+    def test_same_is_refused_where_it_would_be_wrong(self) -> None:
+        with Sandbox(seed=True) as root:
+            doc, _ = read_any(QUICK / "payments.yaml")
+            for same, said in (({"SYS-NOPE": "SYS-CORE-LEDGER"}, "the sketch has no SYS-NOPE"),
+                               ({"SYS-LEDGER": "SYS-NONE"}, "the estate has no SYS-NONE"),
+                               ({"SYS-LEDGER": "DA-TRANSACTION"}, "one of the estate's data_assets"),
+                               ({"SYS-LEDGER": "SYS-MOBILE"}, "the sketch has SYS-MOBILE too")):
+                with self.subTest(same=same), self.assertRaises(AdoptError) as caught:
+                    join_estate(doc, root, source_name="payments.yaml", dry_run=True, same=same)
+                self.assertIn(said, str(caught.exception))
+
+    def test_the_command_takes_same_and_says_what_is_probable(self) -> None:
+        with Sandbox(seed=True) as root:
+            out = io.StringIO()
+            with redirect_stdout(out):
+                code = cli.main(["--root", str(root), "adopt", str(QUICK / "payments.yaml"), "--dry-run"])
+            self.assertEqual(code, 0)
+            self.assertIn("SYS-LEDGER may be SYS-CORE-LEDGER", out.getvalue())
+            out = io.StringIO()
+            with redirect_stdout(out):
+                code = cli.main(["--root", str(root), "adopt", str(QUICK / "payments.yaml"), "--dry-run",
+                                 "--same", "SYS-LEDGER=SYS-CORE-LEDGER"])
+            self.assertEqual(code, 0)
+            self.assertNotIn("SYS-LEDGER may be", out.getvalue())
+            self.assertIn("SYS-LEDGER is SYS-CORE-LEDGER here", out.getvalue())
+
+
 if __name__ == "__main__":
     unittest.main()

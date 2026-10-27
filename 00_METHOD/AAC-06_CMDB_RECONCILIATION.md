@@ -45,7 +45,13 @@ Three passes, weakest last:
 2. **Normalized name, exact.** Case, punctuation and noise words (`system`, `service`,
    `application`, `app`, `platform`) removed. Reported as `UNLINKED_MATCH` so somebody
    records the sys_id and makes it durable.
-3. **Normalized name, fuzzy**, above 0.86 similarity. Reported as `CANDIDATE_MATCH`
+3. **Name, scored**, 0.86 or more by the engine's matcher (`terrane.match`), and
+   only against a system with no sys_id yet. The matcher reads a name as words,
+   weighs each by how rare it is among the systems, counts an abbreviation (`gen`,
+   `general`) as most of a shared word, adds Jaro-Winkler and the cosine of
+   three-letter pieces, and holds two names with different numbers apart
+   (`prd-lon-web-01` is not `prd-lon-web-02`). Distinct systems of the sample
+   estate score at most 0.825 against each other. Reported as `CANDIDATE_MATCH`
    and **never applied**. A human confirms and records the sys_id.
 
 If two systems normalize to the same name, that is `AMBIGUOUS` and no match is made.

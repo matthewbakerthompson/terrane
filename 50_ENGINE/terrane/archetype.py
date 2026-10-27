@@ -25,6 +25,7 @@ from .blocks import BuildingBlock, ComponentType
 from .blocks import entity_id as block_entity_id
 from .library import load_layer
 from .modules import Module, ModuleError, _listed, module_entries
+from .rename import rename_deep as _rename_deep
 from .schema import ENTITY_TYPES, RELATION_TYPES
 
 _TOKEN = re.compile(r"\{([a-zA-Z_][a-zA-Z0-9_]*)((?:\|[a-z_]+)*)\}")
@@ -1484,23 +1485,6 @@ def _renames(instance: dict, instance_id: str) -> Dict[str, str]:
     if len(set(out.values())) != len(out):
         raise ArchetypeError("%s: `ids` renames two ids onto one" % instance_id)
     return out
-
-
-def _rename_deep(value, renames: Dict[str, str]):
-    """Every string equal to a renamed id, wherever it sits: a record's own
-    id, the systems an interface joins, a data asset's system of record, a
-    relation row's columns."""
-    if isinstance(value, str):
-        return renames.get(value, value)
-    if isinstance(value, dict):
-        return {k: _rename_deep(v, renames) for k, v in value.items()}
-    if isinstance(value, list):
-        return [_rename_deep(v, renames) for v in value]
-    if isinstance(value, tuple):
-        return tuple(_rename_deep(v, renames) for v in value)
-    if isinstance(value, set):
-        return {_rename_deep(v, renames) for v in value}
-    return value
 
 
 #: Keys consumed by expansion rather than carried onto the resulting entity.

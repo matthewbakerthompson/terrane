@@ -178,6 +178,14 @@ def _read_page(name: str, cells: List[Cell], kinds: Dict[str, str]) -> _Read:
     read.title = name
     read.source = "a draw.io diagram: a box per thing, an arrow per connection"
     read.group_word = "a container per domain"
+    # What the export wrote of the diagram's own (`aac_own`), a note or a
+    # frame drawn on the canvas, is not a record: read as one, a note came
+    # back a system and a frame a domain.
+    own = [c for c in cells if c.marks.get("own")]
+    if own:
+        cells = [c for c in cells if not c.marks.get("own")]
+        read.notes.append("page %r: %d of the diagram's own shapes, notes and lines, drawn on it and not records, "
+                          "are not read" % (name, len(own)))
     by_id = {c.id: c for c in cells}
     containers = {c.id: c.label for c in cells if c.vertex and CONTAINER.search(c.style) and c.label}
 

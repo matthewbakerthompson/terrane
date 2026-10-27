@@ -122,7 +122,7 @@
     // The canvas's own model goes with it; a view drawn next is Cytoscape's.
     if (Canvas.engine) Canvas.engine.detach();
     document.querySelector(".shell").classList.remove("canvas-mode");
-    ["cvTools", "cvChips", "cvEmpty", "cvDetails", "cvFold", "cvTip", "cvLayout", "cvGuideX", "cvGuideY", "cvFileDrop", "cvHint", "cvBar"]
+    ["cvTools", "cvChips", "cvEmpty", "cvDetails", "cvFold", "cvTip", "cvLayout", "cvStatus", "cvKeys", "cvGuideX", "cvGuideY", "cvFileDrop", "cvHint", "cvBar"]
       .forEach(function (id) { $(id).hidden = true; });
     $("cvDetails").textContent = "";
   }
@@ -414,9 +414,12 @@
     var cy = state.cy;
     if (!cv || !cy) return;
     remember();
-    if (from.snap) {
-      n.position({ x: from.snap.x === null ? n.position("x") : from.snap.x,
-                   y: from.snap.y === null ? n.position("y") : from.snap.y });
+    // A guide's line or an equal gap first, axis by axis; else, with Snap
+    // to grid on, the grid.
+    var grid = snapOn() ? onGrid(n) : null, snap = from.snap || {};
+    if (from.snap || grid) {
+      n.position({ x: snap.x != null ? snap.x : grid ? grid.x : n.position("x"),
+                   y: snap.y != null ? snap.y : grid ? grid.y : n.position("y") });
     }
     var first = !canvasKept();
     if (first) { cv.data.positions = keepAll(cy); rebaseOwn(); }
@@ -485,7 +488,8 @@
   var UNDO_DEPTH = 200;
 
   function snapshot() {
-    return JSON.stringify({ annotations: cv.data.annotations || [], positions: cv.data.positions || null });
+    return JSON.stringify({ annotations: cv.data.annotations || [], positions: cv.data.positions || null,
+      locked: cv.data.locked || [] });
   }
 
   function remember() {
@@ -505,6 +509,8 @@
     var moved = JSON.stringify(cv.data.positions || null) !== JSON.stringify(then.positions);
     if (then.annotations.length) cv.data.annotations = then.annotations; else delete cv.data.annotations;
     if (then.positions) cv.data.positions = then.positions; else delete cv.data.positions;
+    if ((then.locked || []).length) cv.data.locked = then.locked; else delete cv.data.locked;
+    applyLocks();
     renderUndo();
     canvasSelect(null);
     $("cvEmpty").hidden = !canvasEmpty();
@@ -595,8 +601,150 @@
     }).catch(fail);
   }
 
-  /* Which of the two the diagram is, at the sheet's foot beside the zoom. */
+  /* ---- the status bar, under the sheet ----
+   * Which of the two the diagram is, laid out or arranged by hand; what is
+   * on it, records and its own; and Snap to grid, kept in this browser. */
+  //: The grid, in the drawing's units, that Snap to grid puts things on.
+  var GRID = 10;
+  var SNAP_KEY = "aac.canvas.snap";
+  var snapping = null;
+
+  function snapOn() {
+    if (snapping === null) {
+      try { snapping = localStorage.getItem(SNAP_KEY) === "1"; } catch (e) { snapping = false; }
+    }
+    return snapping;
+  }
+
+  // Line jumps, on unless turned off: V14 draws the canvas with them.
+  var JUMPS_KEY = "aac.canvas.jumps";
+  var jumping = null;
+
+  function jumpsOn() {
+    if (jumping === null) {
+      try { jumping = localStorage.getItem(JUMPS_KEY) !== "0"; } catch (e) { jumping = true; }
+    }
+    return jumping;
+  }
+
+  function toggleJumps() {
+    jumping = !jumpsOn();
+    try {
+      if (jumping) localStorage.removeItem(JUMPS_KEY); else localStorage.setItem(JUMPS_KEY, "0");
+    } catch (e) { /* private mode: for this page only */ }
+    renderCanvasStatus();
+  }
+
+  function toggleSnap() {
+    snapping = !snapOn();
+    try {
+      if (snapping) localStorage.setItem(SNAP_KEY, "1"); else localStorage.removeItem(SNAP_KEY);
+    } catch (e) { /* private mode: on for this page only */ }
+    renderCanvasStatus();
+  }
+
+  // On the grid: a box's corner on a line of it, as a drawing tool puts a
+  // shape's.
+  function onGrid(n) {
+    var p = n.position(), w = n.width(), h = n.height();
+    return { x: Math.round((p.x - w / 2) / GRID) * GRID + w / 2, y: Math.round((p.y - h / 2) / GRID) * GRID + h / 2 };
+  }
+
+  function renderCanvasStatus() {
+    var bar = $("cvStatus");
+    if (!bar) return;
+    bar.hidden = !cv;
+    if (!cv) return;
+    var records = state.cy ? state.cy.nodes().filter(function (n) { return !n.isParent() && !n.data("isGroup"); }).length : 0;
+    var own = (cv.data.annotations || []).length;
+    var words = [];
+    if (records) words.push(records === 1 ? "1 record" : records + " records");
+    if (own) words.push(own + " of its own");
+    var count = $("cvCount");
+    count.textContent = "";
+    if (words.length) {
+      count.appendChild(svgIcon("i-blocks"));
+      count.appendChild(el("span", { text: words.join(" \u00b7 ") }));
+    }
+    $("cvSnap").setAttribute("aria-pressed", snapOn() ? "true" : "false");
+    $("cvJumps").setAttribute("aria-pressed", jumpsOn() ? "true" : "false");
+    if (Canvas.engine && Canvas.engine.live()) {
+      Canvas.engine.grid(snapOn() ? GRID : 0);
+      Canvas.engine.jumps(jumpsOn());
+    }
+    applyLocks();
+  }
+
+  /* ---- locked on this diagram ----
+   * A record or a shape of the diagram's own kept where it is here: not
+   * carried, nudged, lined up or taken along by a frame until it is
+   * unlocked. The diagram's file lists them under `locked:`, records by id
+   * and its own by key; it changes nothing of the record. */
+  function lockedHere() {
+    return cv && Array.isArray(cv.data.locked) ? cv.data.locked : [];
+  }
+
+  function isLocked(name) {
+    return lockedHere().indexOf(name) !== -1;
+  }
+
+  // Cytoscape will not carry what is not grabbable, and the engine's
+  // pointer asks it; only what this made ungrabbable is made grabbable.
+  function applyLocks() {
+    var cy = state.cy, set = lockedHere();
+    if (cy && cv) {
+      cy.nodes().forEach(function (n) {
+        if (set.indexOf(n.id()) !== -1) { n.ungrabify(); n.scratch("_locked", true); }
+        else if (n.scratch("_locked")) { n.grabify(); n.removeScratch("_locked"); }
+      });
+    }
+    if (Canvas.engine && Canvas.engine.live()) Canvas.engine.lock(set);
+  }
+
+  function setLocked(list, on) {
+    if (!cv || !list.length) return;
+    remember();
+    var now = lockedHere().slice();
+    list.forEach(function (x) {
+      var at = now.indexOf(x);
+      if (on && at === -1) now.push(x);
+      if (!on && at !== -1) now.splice(at, 1);
+    });
+    if (now.length) cv.data.locked = now.sort(); else delete cv.data.locked;
+    applyLocks();
+    canvasSoon(0);
+    if (cv.sel) canvasSelect(cv.sel, true);
+  }
+
+  function pickedNames() {
+    var keys = Canvas.engine && Canvas.engine.live() ? Canvas.engine.selected() : [];
+    return pickedIds(cv && cv.sel).concat(keys);
+  }
+
+  function toggleLockPicked() {
+    var all = cv ? pickedNames() : [];
+    if (!all.length) return false;
+    setLocked(all, !all.every(isLocked));
+    return true;
+  }
+
+  // Lock it here, or Unlock, for the panel of what is picked.
+  function lockButton(list) {
+    var on = list.length > 0 && list.every(isLocked);
+    return el("button", { type: "button", class: "btn small", "aria-pressed": String(on),
+      title: on ? "Let it move again on this diagram" : "Keep it where it is on this diagram (Ctrl+Shift+L)",
+      onclick: function () { setLocked(list, !on); } },
+      [svgIcon(on ? "i-lock-open" : "i-lock"), el("span", { text: on ? "Unlock" : "Lock it here" })]);
+  }
+
+  function lockedNote(list) {
+    return list.length && list.every(isLocked) ? el("p", { class: "cv-small cv-locked" }, [svgIcon("i-lock"),
+      el("span", { text: (list.length === 1 ? "Locked" : "All locked") + " on this diagram: it stays where it is until "
+        + "it is unlocked." })]) : null;
+  }
+
   function renderCanvasLayout() {
+    renderCanvasStatus();
     var box = $("cvLayout");
     box.textContent = "";
     if (!cv || noRecords()) { box.hidden = true; return; }
@@ -633,24 +781,43 @@
       if (Math.abs(q.x - p.x) <= best.dx) { best.x = q.x; best.dx = Math.abs(q.x - p.x); best.sx = q; }
       if (Math.abs(q.y - p.y) <= best.dy) { best.y = q.y; best.dy = Math.abs(q.y - p.y); best.sy = q; }
     });
+    // Or where its gap to a box in line with it is the next gap along, or
+    // the same both sides: the nearer of the two wins an axis, and the
+    // gaps are measured on the sheet as V14 draws them.
+    // Bodies, not bounding boxes: a box carried or picked is drawn with a
+    // wider outline, and measured by it the gap came out units off.
+    var body = function (s) {
+      var q = s.position(), w = s.width(), h = s.height();
+      return { x1: q.x - w / 2, x2: q.x + w / 2, y1: q.y - h / 2, y2: q.y + h / 2, w: w, h: h };
+    };
+    var nb = body(n);
+    var boxes = frameKids(cy, parent.length ? parent : null).filter(function (s) {
+      return s !== n && !s.data("isGroup");
+    }).map(body);
+    var even = { x: evenGap(boxes, nb, "x", reach), y: evenGap(boxes, nb, "y", reach) };
+    if (even.x && (best.x === null || even.x.d < best.dx)) { best.x = even.x.start + nb.w / 2; best.dx = even.x.d; best.sx = null; }
+    else even.x = null;
+    if (even.y && (best.y === null || even.y.d < best.dy)) { best.y = even.y.start + nb.h / 2; best.dy = even.y.d; best.sy = null; }
+    else even.y = null;
     from.snap = best.x === null && best.y === null ? null : { x: best.x, y: best.y };
     var cr = $("cy").getBoundingClientRect(), sr = $("mapSheet").getBoundingClientRect();
     var ox = cr.left - sr.left, oy = cr.top - sr.top;
+    measureGaps([even.x, even.y], z, pan, ox, oy);
     var gx = $("cvGuideX"), gy = $("cvGuideY");
-    if (best.x !== null) {
+    if (best.sx) {
       var y1 = Math.min(p.y, best.sx.y) - 30, y2 = Math.max(p.y, best.sx.y) + 30;
       gx.style.left = Math.round(ox + best.x * z + pan.x) + "px";
       gx.style.top = Math.round(oy + y1 * z + pan.y) + "px";
       gx.style.height = Math.round((y2 - y1) * z) + "px";
     }
-    if (best.y !== null) {
+    if (best.sy) {
       var x1 = Math.min(p.x, best.sy.x) - 60, x2 = Math.max(p.x, best.sy.x) + 60;
       gy.style.top = Math.round(oy + best.y * z + pan.y) + "px";
       gy.style.left = Math.round(ox + x1 * z + pan.x) + "px";
       gy.style.width = Math.round((x2 - x1) * z) + "px";
     }
-    gx.hidden = best.x === null;
-    gy.hidden = best.y === null;
+    gx.hidden = !best.sx;
+    gy.hidden = !best.sy;
     // What letting go does, beside the box, as the picker's drop says it:
     // the box changes nothing in the model, only where it is drawn.
     var home = parent.length ? parent : null;
@@ -667,6 +834,75 @@
   function canvasGuidesOff(from) {
     if (from) from.snap = null;
     ["cvGuideX", "cvGuideY", "cvTip"].forEach(function (id) { if ($(id)) $(id).hidden = true; });
+    measureGaps([]);
+  }
+
+  /* Along one axis ("y", a column; "x", a row), where the box `nb` would
+   * start for its gap to the nearest box in line with it to be the gap
+   * that box has to the next, before it or after it, or for it to sit
+   * midway between the two nearest: the nearest of those within `reach`,
+   * with the two gaps it makes, each from and to along the axis and where
+   * across it the measure goes. Boxes in line overlap it across the axis. */
+  function evenGap(boxes, nb, a, reach) {
+    var o = a === "y" ? "x" : "y", lo = a + "1", hi = a + "2", olo = o + "1", ohi = o + "2";
+    var size = nb[hi] - nb[lo];
+    var line = boxes.filter(function (b) { return b[ohi] > nb[olo] && b[olo] < nb[ohi]; });
+    var before = line.filter(function (b) { return b[hi] <= nb[lo] + reach; })
+      .sort(function (p, q) { return q[hi] - p[hi]; });
+    var after = line.filter(function (b) { return b[lo] >= nb[hi] - reach; })
+      .sort(function (p, q) { return p[lo] - q[lo]; });
+    var ways = [];
+    function side(boxes2) {
+      return Math.max.apply(null, [nb[ohi]].concat(boxes2.map(function (b) { return b[ohi]; })));
+    }
+    if (before.length > 1) {
+      var g1 = before[0][lo] - before[1][hi];
+      if (g1 > 0) ways.push({ start: before[0][hi] + g1, gap: g1, across: side([before[0], before[1]]),
+        marks: [[before[1][hi], before[0][lo]], [before[0][hi], before[0][hi] + g1]] });
+    }
+    if (after.length > 1) {
+      var g2 = after[1][lo] - after[0][hi];
+      if (g2 > 0) ways.push({ start: after[0][lo] - g2 - size, gap: g2, across: side([after[0], after[1]]),
+        marks: [[after[0][lo] - g2, after[0][lo]], [after[0][hi], after[1][lo]]] });
+    }
+    if (before.length && after.length) {
+      var g3 = (after[0][lo] - before[0][hi] - size) / 2;
+      if (g3 > 0) ways.push({ start: before[0][hi] + g3, gap: g3, across: side([before[0], after[0]]),
+        marks: [[before[0][hi], before[0][hi] + g3], [after[0][lo] - g3, after[0][lo]]] });
+    }
+    var best = null;
+    ways.forEach(function (w) {
+      var d = Math.abs(w.start - nb[lo]);
+      if (d <= reach && (!best || d < best.d)) { best = w; best.d = d; }
+    });
+    if (best) best.axis = a;
+    return best;
+  }
+
+  /* The red measures of equal gaps, each with its size in units, beside
+   * the boxes they space; none when the list is empty. */
+  function measureGaps(evens, z, pan, ox, oy) {
+    var sheet = $("mapSheet");
+    if (!sheet) return;
+    Array.prototype.slice.call(sheet.querySelectorAll(".cv-gap")).forEach(function (m) { m.remove(); });
+    evens.forEach(function (e) {
+      if (!e) return;
+      e.marks.forEach(function (span) {
+        var down = e.axis === "y", at = e.across + 10 / z;
+        var m = el("div", { class: "cv-gap " + (down ? "is-y" : "is-x"), "aria-hidden": "true" },
+          [el("span", { class: "cv-gap-n num", text: String(Math.round(e.gap)) })]);
+        if (down) {
+          m.style.left = Math.round(ox + at * z + pan.x) + "px";
+          m.style.top = Math.round(oy + span[0] * z + pan.y) + "px";
+          m.style.height = Math.max(1, Math.round((span[1] - span[0]) * z)) + "px";
+        } else {
+          m.style.top = Math.round(oy + at * z + pan.y) + "px";
+          m.style.left = Math.round(ox + span[0] * z + pan.x) + "px";
+          m.style.width = Math.max(1, Math.round((span[1] - span[0]) * z)) + "px";
+        }
+        sheet.appendChild(m);
+      });
+    });
   }
 
   /* ---- what is selected, in the panel beside the sheet ---- */
@@ -747,13 +983,28 @@
 
   /* Something of its own drawn, moved, resized, typed in or restyled: the
    * file's list as the engine has it now, one step for Undo, and saved. */
+  // A value as JSON with every mapping's keys in order: the engine writes
+  // an item's fields in another order than the file holds them, and the
+  // same list compared as text was a change.
+  function canonical(value) {
+    return JSON.stringify(value, function (k, v) {
+      if (!v || typeof v !== "object" || Array.isArray(v)) return v;
+      return Object.keys(v).sort().reduce(function (o, key) { o[key] = v[key]; return o; }, {});
+    });
+  }
+
   function canvasOwnChanged(list) {
     if (!cv) return;
+    // A change that changes nothing is no step for Undo and nothing to
+    // save: maxGraph says one for a press on a shape locked here, and one
+    // Undo after it undid nothing.
+    if (canonical(list) === canonical(cv.data.annotations || [])) return;
     // Lining several up says itself as one step, before it moves them.
     if (!cv.holdUndo) remember();
     if (list.length) cv.data.annotations = list; else delete cv.data.annotations;
     if (list.length) arrangeForOwn();
     $("cvEmpty").hidden = !canvasEmpty();
+    renderCanvasStatus();
     canvasSoon(0);
     // The panel follows the change, unless the change is being typed in it.
     var typing = document.activeElement && /^(TEXTAREA|INPUT)$/.test(document.activeElement.tagName)
@@ -764,6 +1015,12 @@
 
   function canvasOwnSelected(keys, additive) {
     if (!cv || cv.picking) return;
+    // Painting a look copied (Copy the look): one of its own clicked takes
+    // it. Only a click comes this way; a band dragged round several, or a
+    // pick made by code, goes to canvasPicked and paints nothing.
+    if (Canvas.painting && keys.length === 1 && !additive && keys[0] !== Canvas.painting.from) {
+      paintOnto(keys, Canvas.painting.look);
+    }
     if (!additive && !keys.length && (!cv.sel || (cv.sel.kind !== "own" && cv.sel.kind !== "several"))) return;
     canvasPick(additive ? pickedIds(cv.sel) : [], keys);
   }
@@ -921,24 +1178,53 @@
 
   function movePicked(moves) {
     var cy = state.cy;
-    moves = moves.filter(function (m) { return Math.abs(m.dx) >= 0.5 || Math.abs(m.dy) >= 0.5; });
+    moves = moves.filter(function (m) {
+      return (Math.abs(m.dx) >= 0.5 || Math.abs(m.dy) >= 0.5) && !isLocked(m.item.id || m.item.key);
+    });
     if (!moves.length) return;
     remember();
     cv.holdUndo = true;
     try {
-      var records = moves.filter(function (m) { return m.item.id; });
-      if (records.length) {
-        records.forEach(function (m) {
-          var n = cy.getElementById(m.item.id), p = n.position();
-          n.position({ x: p.x + m.dx, y: p.y + m.dy });
-        });
-        if (!canvasKept()) { cv.data.positions = keepAll(cy); rebaseOwn(); }
-        else records.forEach(function (m) { keepLeaf(cy, cy.getElementById(m.item.id), cv.data.positions); });
-        rerouteInPlace(cy);
-        renderCanvasLayout();
-      }
+      moveRecords(moves.filter(function (m) { return m.item.id; }).map(function (m) {
+        return { id: m.item.id, dx: m.dx, dy: m.dy };
+      }));
       var own = moves.filter(function (m) { return m.item.key; });
       if (own.length) Canvas.engine.moveEach(own.map(function (m) { return { key: m.item.key, dx: m.dx, dy: m.dy }; }));
+    } finally {
+      cv.holdUndo = false;
+    }
+    canvasSoon(0);
+    renderBar();
+  }
+
+  // Records moved where they are kept, the lines routed again around them.
+  function moveRecords(records) {
+    var cy = state.cy;
+    if (!records.length || !cy) return;
+    records.forEach(function (m) {
+      var n = cy.getElementById(m.id), p = n.position();
+      n.position({ x: p.x + m.dx, y: p.y + m.dy });
+    });
+    if (!canvasKept()) { cv.data.positions = keepAll(cy); rebaseOwn(); }
+    else records.forEach(function (m) { keepLeaf(cy, cy.getElementById(m.id), cv.data.positions); });
+    rerouteInPlace(cy);
+    renderCanvasLayout();
+  }
+
+  // The records picked now, which a drag moves itself (engine.js).
+  function canvasPickedIds() {
+    return cv ? pickedIds(cv.sel) : [];
+  }
+
+  /* The records a frame was drawn round, moved with it (engine.js): in the
+   * step its own move made for Undo, which already holds where they were. */
+  function canvasRecordsMoved(ids, dx, dy) {
+    if (!cv || !state.cy) return;
+    var here = ids.filter(function (id) { return state.cy.getElementById(id).length && !isLocked(id); });
+    if (!here.length) return;
+    cv.holdUndo = true;
+    try {
+      moveRecords(here.map(function (id) { return { id: id, dx: dx, dy: dy }; }));
     } finally {
       cv.holdUndo = false;
     }
@@ -981,22 +1267,22 @@
       if (!a) return;
       list.appendChild(el("button", { type: "button", class: "cv-pick is-own", onclick: function () { canvasPick([], [key]); } }, [
         el("span", { class: "cv-pick-dot", "aria-hidden": "true" }),
-        el("span", { class: "cv-pick-n", text: a.label || (a.role === "shape" ? shapeName(a.shape) : ROLE_WORDS[a.role]) }),
+        el("span", { class: "cv-pick-n", text: firstLine(a.label) || (a.role === "shape" ? shapeName(a.shape) : ROLE_WORDS[a.role]) }),
         el("span", { class: "cv-pick-id", text: "its own " + a.role }),
       ]));
     });
     box.appendChild(list);
     var acts = [el("button", { type: "button", class: "btn small", onclick: frameThem },
-      [svgIcon("i-frame"), el("span", { text: "Put a frame around them" })])];
+      [svgIcon("i-frame"), el("span", { text: "Put a frame around them" })]), lockButton(sel.ids.concat(sel.keys))];
     if (sel.keys.length) {
       acts.push(el("button", { type: "button", class: "btn small", onclick: function () { if (eng) eng.remove(sel.keys); } },
         [svgIcon("i-x"), el("span", { text: sel.ids.length ? "Delete its own" : "Delete them" })]));
     }
     box.appendChild(el("div", { class: "cv-acts" }, acts));
     box.appendChild(el("p", { class: "cv-small", text: "A frame is this diagram's own, drawn under what it is around. "
-      + "What of its own is in it moves with it; the records keep their places, and a frame sets no field the way "
+      + "What is inside it moves with it, its own and the records, and a frame sets no field the way "
       + "dropping a box into a boundary does." }));
-    box.appendChild(el("p", { class: "cv-small cv-keys", text: "Drag across the sheet to pick several \u00b7 Shift-click "
+    box.appendChild(el("p", { class: "cv-small cv-keyline", text: "Drag across the sheet to pick several \u00b7 Shift-click "
       + "adds or takes one \u00b7 the arrows nudge them, Shift by ten \u00b7 Ctrl+G frames them \u00b7 Space and drag, "
       + "or H, moves the sheet" }));
   }
@@ -1103,9 +1389,17 @@
   }
 
   var ROLE_WORDS = { note: "Note", text: "Text", frame: "Frame", line: "Line" };
-  var FILL_WORDS = { yellow: "Yellow", mint: "Mint", lavender: "Lavender", rose: "Rose", white: "White", stone: "Stone" };
-  //: A fill each kind of thing starts with, as the engine draws it.
-  var ROLE_FILL = { note: "yellow", shape: "white", frame: "white" };
+  // What a thing of the diagram's own is called in a list: a shape's first
+  // line of words, its name, without the caption under it.
+  function firstLine(label) {
+    return String(label || "").split("\n").filter(function (p) { return p.trim(); })[0] || "";
+  }
+
+  var FILL_WORDS = { yellow: "Yellow", mint: "Mint", lavender: "Lavender", rose: "Rose", white: "Paper", stone: "Stone",
+    accent: "Accent, for what the drawing is about", none: "No fill" };
+  //: A fill each kind of thing starts with, as the engine draws it; a frame
+  //: starts with none.
+  var ROLE_FILL = { note: "yellow", shape: "white" };
 
   // An end of a line, said: a record by its name, a shape by its words.
   function endWords(end) {
@@ -1125,6 +1419,93 @@
     return row;
   }
 
+  // The providers' and vendors' marks a tile can carry, the ones a record
+  // carries (GET /api/icons), asked for once.
+  var markList = null;
+  function marks() {
+    if (!markList) {
+      markList = api("/api/icons").then(function (r) { return r.marks || []; },
+        function (err) { markList = null; throw err; });
+    }
+    return markList;
+  }
+
+  // A shape's Icon field as a tile: the plain icons or a provider's marks,
+  // a box that finds one in every set by a word ("kubernetes" finds EKS, AKS
+  // and GKE), and the icons, the one it carries ticked.
+  function iconField(a, change) {
+    var eng = Canvas.engine, kind = eng.KIND_ICONS[a.shape || "rectangle"] || "box";
+    var mine = (a.look || {}).icon || kind, slash = mine.indexOf("/");
+    var grid = el("div", { class: "cv-icons", role: "radiogroup", "aria-label": "Icon" });
+    var sets = el("select", { class: "cv-input", "aria-label": "Icon set" });
+    [["plain", "Plain icons"]].concat(eng.MARK_SETS).forEach(function (s) {
+      sets.appendChild(el("option", { value: s[0], text: s[1] }));
+    });
+    sets.value = slash > 0 ? mine.slice(0, slash) : "plain";
+    var find = el("input", { type: "search", class: "cv-input cv-icon-find", placeholder: "Find an icon",
+      "aria-label": "Find an icon" });
+    function button(name, title, pic) {
+      return el("button", { type: "button", role: "radio", class: "cv-icon-b", title: title, "aria-label": title,
+        "aria-checked": String(name === mine),
+        onclick: function () { change({ look: { icon: name === kind ? null : name } }); } }, [pic]);
+    }
+    function plain(name) {
+      var pic = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      ["viewBox:0 0 24 24", "width:16", "height:16", "fill:none", "stroke:currentColor", "stroke-width:2",
+        "stroke-linecap:round", "stroke-linejoin:round"].forEach(function (pair) {
+        var at = pair.indexOf(":");
+        pic.setAttribute(pair.slice(0, at), pair.slice(at + 1));
+      });
+      pic.innerHTML = window.TerraneOwnIcons[name];
+      return button(name, name, pic);
+    }
+    function fill() {
+      var q = find.value.trim().toLowerCase(), shelf = sets.value;
+      grid.textContent = "";
+      // A word looks in every set; without one, the set picked.
+      if (q || shelf === "plain") {
+        Object.keys(window.TerraneOwnIcons || {}).forEach(function (name) {
+          if (!q || name.replace(/-/g, " ").indexOf(q) !== -1) grid.appendChild(plain(name));
+        });
+      }
+      if (!q && shelf === "plain") return;
+      marks().then(function (list) {
+        if (find.value.trim().toLowerCase() !== q || sets.value !== shelf) return;
+        list.forEach(function (m) {
+          if (q ? (m.set + " " + m.words).toLowerCase().indexOf(q) === -1 : m.icon.indexOf(shelf + "/") !== 0) return;
+          grid.appendChild(button(m.icon, m.set + ": " + m.icon.slice(m.icon.indexOf("/") + 1).replace(/-/g, " "),
+            el("img", { src: "icons/" + m.icon + ".svg", width: "20", height: "20", alt: "" })));
+        });
+        if (!grid.children.length) grid.appendChild(el("p", { class: "cv-icons-none", text: "No icon matches that." }));
+      }, function () {
+        grid.appendChild(el("p", { class: "cv-icons-none", text: "The providers' marks did not load." }));
+      });
+    }
+    sets.addEventListener("change", fill);
+    find.addEventListener("input", fill);
+    fill();
+    return el("div", { class: "cv-field" }, [el("span", { class: "cv-label", text: "Icon" }), sets, find, grid]);
+  }
+
+  // How the diagram draws its own shapes (V16): Illustrated, the app's own
+  // picture language, or Icon tiles. Kept in its file as `look: tiles`;
+  // Illustrated is the file saying nothing. Offered in the diagram's own
+  // panel, and in the Style tab of anything of its own picked.
+  function lookChoice(after) {
+    var d = cv.data;
+    var looks = segmented("Look", [["illustrated", "Illustrated"], ["tiles", "Icon tiles"]],
+      d.look === "tiles" ? "tiles" : "illustrated", function (v) {
+        if (v === "tiles") d.look = "tiles"; else delete d.look;
+        Array.prototype.forEach.call(looks.children, function (b, i) {
+          b.setAttribute("aria-checked", String((i === 1) === (v === "tiles")));
+        });
+        if (Canvas.engine) Canvas.engine.setLook(v);
+        canvasSoon(0);
+        if (after) after();
+      });
+    return looks;
+  }
+
   function canvasOwnDetails(box, keys) {
     var eng = Canvas.engine;
     var items = eng && eng.live() ? keys.map(function (k) { return eng.item(k); }).filter(Boolean) : [];
@@ -1141,9 +1522,52 @@
         + "in the estate, and no other diagram shows it."
       : "Kept where it is put, in this diagram's own file. It is not a record, and no other diagram shows it." }));
 
+    // A line keeps the one panel it had; the rest are styled and arranged
+    // in two tabs (V16), the one last opened kept as the pick moves on.
+    if (a.role === "line") { lineDetails(box, a, key, look, change, keysLine); return; }
+    var tab = Canvas.ownTab === "arrange" ? "arrange" : "style";
+    var tabs = segmented("Style or arrange", [["style", "Style"], ["arrange", "Arrange"]], tab, function (v) {
+      Canvas.ownTab = v;
+      redo();
+    });
+    tabs.classList.add("cv-tabs");
+    box.appendChild(tabs);
+    if (tab === "arrange") arrangeTab(box, a, key, change);
+    else styleTab(box, a, key, look, change, redo);
+    box.appendChild(el("div", { class: "cv-acts" }, [
+      el("button", { type: "button", class: "btn small" + (Canvas.painting ? " is-on" : ""),
+        "aria-pressed": String(!!Canvas.painting), onclick: function () {
+          if (Canvas.painting) stopPainting(); else startPainting(a);
+          redo();
+        } }, [svgIcon("i-paintbrush"), el("span", { text: Canvas.painting ? "Stop painting" : "Copy the look" })]),
+      lockButton([key]),
+      el("button", { type: "button", class: "btn small", onclick: function () { eng.remove([key]); } },
+        [svgIcon("i-x"), el("span", { text: "Delete" })]),
+    ]));
+    var held = lockedNote([key]);
+    if (held) box.appendChild(held);
+    box.appendChild(el("p", { class: "cv-small cv-keyline", text: tab === "arrange"
+      ? "Ctrl+] brings it forward \u00b7 Ctrl+[ sends it back \u00b7 the arrows nudge it, Shift by ten \u00b7 drag a "
+        + "corner to size it" + (a.role === "frame" ? "" : ", or the dot above it to turn it")
+      : "Copy the look, then click shapes to paint it onto them; Esc stops. Ctrl+Alt+C and Ctrl+Alt+V do it by "
+        + "keys \u00b7 Double-click it to type in it \u00b7 Delete removes it \u00b7 Ctrl+D copies it" }));
+  }
+
+  // A heading, with what goes at its right, over what it heads.
+  function section(title, right, kids) {
+    return el("div", { class: "cv-sec" }, [el("div", { class: "cv-sec-h" },
+      [el("span", { class: "cv-label", text: title }), right || null])].concat(kids || []));
+  }
+
+  function hint(text) { return el("span", { class: "cv-aside", text: text }); }
+
+  // What it says, typed: kept a moment after the last key, and on leaving.
+  function wordsBox(a, key) {
+    var eng = Canvas.engine;
     var words = el("textarea", { class: "cv-input", rows: a.role === "line" || a.role === "frame" ? "2" : "3",
       "aria-label": a.role === "frame" ? "Title" : "Words",
-      placeholder: a.role === "line" ? "What the line says, if anything" : a.role === "frame" ? "What it holds" : "What it says" });
+      placeholder: a.role === "line" ? "What the line says, if anything" : a.role === "frame" ? "What it holds"
+        : a.role === "shape" ? "Its name, and on the next line what it is" : "What it says" });
     words.value = a.label || "";
     var typed = null;
     words.addEventListener("input", function () {
@@ -1151,56 +1575,207 @@
       typed = setTimeout(function () { eng.update(key, { label: words.value }); }, 400);
     });
     words.addEventListener("change", function () { clearTimeout(typed); eng.update(key, { label: words.value }); });
-    box.appendChild(cvField(a.role === "frame" ? "Title" : "Words", words));
+    return words;
+  }
 
+  // A line of the diagram's own: its words, outline, size, route and ends.
+  function lineDetails(box, a, key, look, change, keysLine) {
+    var eng = Canvas.engine;
+    box.appendChild(cvField("Words", wordsBox(a, key)));
+    box.appendChild(el("p", { class: "cv-label", text: "Look" }));
+    var looks = el("div", { class: "cv-look-row" });
+    looks.appendChild(segmented("Outline", [["solid", "Solid"], ["dashed", "Dashed"]], look.line || "solid", function (v) {
+      change({ look: { line: v === "solid" ? null : v } });
+    }));
+    looks.appendChild(segmented("Size of the words", [["s", "S"], ["m", "M"], ["l", "L"]], look.text || "s", function (v) {
+      change({ look: { text: v === "s" ? null : v } });
+    }));
+    box.appendChild(looks);
+    box.appendChild(el("p", { class: "cv-label", text: "Route" }));
+    box.appendChild(segmented("Route", eng.ROUTES, a.route || "straight", function (v) { change({ route: v }); }));
+    box.appendChild(el("p", { class: "cv-label", text: "Ends" }));
+    box.appendChild(segmented("Ends", [["end", "One arrow"], ["both", "Both"], ["none", "None"]], a.ends || "end",
+      function (v) { change({ ends: v }); }));
+    if (Array.isArray(a.via) && a.via.length) {
+      box.appendChild(el("div", { class: "cv-acts" }, [el("button", { type: "button", class: "btn small",
+        onclick: function () { change({ via: null }); } },
+        [el("span", { text: a.via.length === 1 ? "Remove the bend" : "Remove the " + a.via.length + " bends" })])]));
+    }
+    box.appendChild(el("div", { class: "cv-acts" }, [
+      lockButton([key]),
+      el("button", { type: "button", class: "btn small", onclick: function () { eng.remove([key]); } },
+        [svgIcon("i-x"), el("span", { text: "Delete" })]),
+    ]));
+    var held = lockedNote([key]);
+    if (held) box.appendChild(held);
+    var straight = !a.route || a.route === "straight";
+    box.appendChild(el("p", { class: "cv-small cv-keyline", text: (straight
+      ? "Drag the dot halfway along it to bend it; Shift and a click on a bend take it out \u00b7 " : "") + keysLine }));
+  }
+
+  // The Style tab (V16): the diagram's look, the words and their size, the
+  // shape and as tiles its icon, the fill and how much of it shows, the
+  // edge, how heavy, and the corners, and Illustrated's hard shadow.
+  function styleTab(box, a, key, look, change, redo) {
+    var eng = Canvas.engine, tiles = eng.look() === "tiles";
+    box.appendChild(section("Look of this diagram", hint("all its shapes"), [lookChoice(redo)]));
+    var sizes = segmented("Size of the words", [["s", "S"], ["m", "M"], ["l", "L"]], look.text || "m", function (v) {
+      change({ look: { text: v === "m" ? null : v } });
+    });
+    box.appendChild(section(a.role === "frame" ? "Title" : "Words", el("span", { class: "cv-sec-r" }, [hint("Size"), sizes]),
+      [wordsBox(a, key)]));
     if (a.role === "shape") {
+      // Illustrated sets a shape's first line as its name and the rest as
+      // a caption under it; the panel says so where the words are typed.
+      box.appendChild(el("p", { class: "cv-small", text: "The first line is its name; the lines after it, a caption." }));
       var shapes = el("div", { class: "cv-shape-row", role: "radiogroup", "aria-label": "Shape" });
       eng.SHAPES.forEach(function (s) {
         shapes.appendChild(el("button", { type: "button", role: "radio", class: "cv-shape-b", title: s[1], "aria-label": s[1],
           "aria-checked": String(s[0] === a.shape), onclick: function () { change({ shape: s[0] }); } }, [shapePicture(s[0])]));
       });
-      box.appendChild(el("div", { class: "cv-field" }, [el("span", { class: "cv-label", text: "Shape" }), shapes]));
+      box.appendChild(section("Shape", null, [shapes]));
+      // As Icon tiles a shape carries an icon: its kind's, or one picked here.
+      if (tiles) box.appendChild(iconField(a, change));
     }
+    if (a.role === "text") return;
 
-    box.appendChild(el("p", { class: "cv-label", text: "Look" }));
-    if (a.role !== "line" && a.role !== "text") {
-      var fill = look.fill || ROLE_FILL[a.role] || "white";
-      var swatches = el("div", { class: "cv-swatches", role: "radiogroup", "aria-label": "Fill" });
-      eng.FILL_ORDER.forEach(function (f) {
-        swatches.appendChild(el("button", { type: "button", role: "radio", class: "cv-swatch", title: FILL_WORDS[f],
-          "aria-label": FILL_WORDS[f], "aria-checked": String(f === fill),
-          style: "--sw:" + eng.FILLS[f][0] + ";--sw-edge:" + eng.FILLS[f][1],
-          onclick: function () { change({ look: { fill: f === ROLE_FILL[a.role] ? null : f } }); } }));
+    var fill = look.fill || ROLE_FILL[a.role] || "none";
+    var swatches = el("div", { class: "cv-swatches", role: "radiogroup", "aria-label": "Fill" });
+    // A frame starts with no fill, and can go back to none.
+    (a.role === "frame" ? ["none"] : []).concat(eng.FILL_ORDER).forEach(function (f) {
+      swatches.appendChild(el("button", { type: "button", role: "radio", class: "cv-swatch" + (f === "none" ? " is-none" : ""),
+        title: FILL_WORDS[f], "aria-label": FILL_WORDS[f], "aria-checked": String(f === fill),
+        style: "--sw:" + (tiles && eng.TILE_FILLS[f] ? eng.TILE_FILLS[f][1] : eng.FILLS[f] || "transparent") +
+          ";--sw-edge:" + eng.INK,
+        onclick: function () { change({ look: { fill: f === "none" || f === ROLE_FILL[a.role] ? null : f } }); } }));
+    });
+    var opacity = el("input", { type: "number", class: "cv-input cv-opacity", min: "10", max: "100", step: "10",
+      "aria-label": "Opacity, in percent" });
+    opacity.value = String(look.opacity || 100);
+    opacity.addEventListener("change", function () {
+      var v = Math.max(10, Math.min(100, Math.round(Number(opacity.value) || 100)));
+      change({ look: { opacity: v === 100 ? null : v } });
+    });
+    box.appendChild(section("Fill", hint("Opacity"), [el("div", { class: "cv-fill-row" },
+      [swatches, el("span", { class: "cv-opacity-box" }, [opacity, el("span", { class: "cv-unit", text: "%" })])])]));
+
+    var edge = segmented("Edge", [["solid", "Solid"], ["dashed", "Dashed"], ["none", "None"]], look.line || "solid",
+      function (v) { change({ look: { line: v === "solid" ? null : v } }); });
+    var weight = segmented("How heavy the edge is", [["s", "S"], ["m", "M"], ["l", "L"]], look.weight || "m",
+      function (v) { change({ look: { weight: v === "m" ? null : v } }); });
+    var parts = [el("div", { class: "cv-look-row" }, [edge, weight])];
+    var round = eng.cornersOf(a);
+    if (round !== null) {
+      // Its kind's radius, so dragged back to it the file says nothing.
+      var kinds = eng.cornersOf(Object.assign({}, a, { look: Object.assign({}, a.look, { corners: null }) }));
+      var corners = el("input", { type: "range", class: "cv-range", min: "0", max: "32", step: "1",
+        "aria-label": "Corners, the radius they are rounded by" });
+      corners.value = String(round);
+      var said = el("span", { class: "cv-range-v", text: String(round) });
+      corners.addEventListener("input", function () { said.textContent = corners.value; });
+      corners.addEventListener("change", function () {
+        var v = Number(corners.value);
+        change({ look: { corners: v === kinds ? null : v } });
       });
-      box.appendChild(swatches);
+      parts.push(el("div", { class: "cv-corners" }, [hint("Corners"), corners, said]));
     }
-    var looks = el("div", { class: "cv-look-row" });
-    if (a.role !== "text") {
-      var lines = a.role === "line" ? [["solid", "Solid"], ["dashed", "Dashed"]] : [["solid", "Solid"], ["dashed", "Dashed"], ["none", "None"]];
-      looks.appendChild(segmented("Outline", lines, look.line || "solid", function (v) {
-        change({ look: { line: v === "solid" ? null : v } });
-      }));
+    box.appendChild(section(round !== null ? "Edge and corners" : "Edge", null, parts));
+    // The hard ink shadow a shape or a note casts, drawn Illustrated.
+    if (!tiles && (a.role === "shape" || a.role === "note")) {
+      box.appendChild(section("Shadow", look.opacity ? hint("none under a see-through fill") : null,
+        [segmented("Shadow", [["none", "None"], ["hard", "Hard"]],
+        look.shadow === "none" ? "none" : "hard", function (v) { change({ look: { shadow: v === "none" ? "none" : null } }); })]));
     }
-    var sizeNow = look.text || (a.role === "line" ? "s" : "m");
-    looks.appendChild(segmented("Size of the words", [["s", "S"], ["m", "M"], ["l", "L"]], sizeNow, function (v) {
-      change({ look: { text: v === (a.role === "line" ? "s" : "m") ? null : v } });
-    }));
-    box.appendChild(looks);
-    if (a.role === "line") {
-      box.appendChild(el("p", { class: "cv-label", text: "Route" }));
-      box.appendChild(segmented("Route", eng.ROUTES, a.route || "straight", function (v) { change({ route: v }); }));
-      box.appendChild(el("p", { class: "cv-label", text: "Ends" }));
-      box.appendChild(segmented("Ends", [["end", "One arrow"], ["both", "Both"], ["none", "None"]], a.ends || "end",
-        function (v) { change({ ends: v }); }));
-    }
+  }
 
-    box.appendChild(el("div", { class: "cv-acts" }, [
-      a.role === "line" ? null : el("button", { type: "button", class: "btn small", onclick: function () { eng.edit(key); } },
-        [svgIcon("i-pencil"), el("span", { text: "Type in it" })]),
-      el("button", { type: "button", class: "btn small", onclick: function () { eng.remove([key]); } },
-        [svgIcon("i-x"), el("span", { text: "Delete" })]),
-    ].filter(Boolean)));
-    box.appendChild(el("p", { class: "cv-small cv-keys", text: (a.role === "line" ? "" : "Double-click it to type in it \u00b7 ") + keysLine }));
+  // The Arrange tab (V16): its size, how far it is turned, and its order
+  // among what shares its frame.
+  function arrangeTab(box, a, key, change) {
+    var eng = Canvas.engine, locked = isLocked(key), size = a.size || [0, 0];
+    var w = el("input", { type: "number", class: "cv-input cv-width", min: "8", max: "4000", step: "1", "aria-label": "Width" });
+    var h = el("input", { type: "number", class: "cv-input cv-height", min: "8", max: "4000", step: "1",
+      "aria-label": "Height" });
+    w.value = String(Math.round(size[0]));
+    h.value = String(Math.round(size[1]));
+    w.disabled = h.disabled = locked;
+    var sized = function () { change({ size: [Number(w.value), Number(h.value)] }); };
+    w.addEventListener("change", sized);
+    h.addEventListener("change", sized);
+    box.appendChild(section("Size", hint("in the drawing's units"),
+      [el("div", { class: "cv-pair" }, [cvField("Width", w), cvField("Height", h)])]));
+    if (a.role === "shape" || a.role === "note" || a.role === "text") {
+      // Turned about its middle, as maxGraph's handle above it turns it.
+      var turn = el("input", { type: "number", class: "cv-input cv-turn", min: "-180", max: "180", step: "15",
+        "aria-label": "Turned, in degrees" });
+      turn.value = String(a.rotate || 0);
+      turn.disabled = locked;
+      turn.addEventListener("change", function () {
+        var v = Math.round(Number(turn.value) || 0) % 360;
+        if (v > 180) v -= 360;
+        if (v <= -180) v += 360;
+        change({ rotate: v });
+      });
+      box.appendChild(section("Turned", hint("about its middle"), [cvField("Degrees clockwise", turn)]));
+    }
+    box.appendChild(section("Order", hint("among what shares its frame"), [el("div", { class: "cv-acts" }, [
+      el("button", { type: "button", class: "btn small", onclick: function () { eng.order([key], false); } },
+        [el("span", { text: "Bring forward" })]),
+      el("button", { type: "button", class: "btn small", onclick: function () { eng.order([key], true); } },
+        [el("span", { text: "Send back" })]),
+    ])]));
+  }
+
+  /* Copy the look (V16), the format painter: what the picked one looks
+   * like, painted onto each of its own clicked next until Esc, or by
+   * Ctrl+Alt+C and Ctrl+Alt+V. What a kind has no use for is left alone:
+   * a line takes only its outline and the size of its words, text only the
+   * size; an icon says what a shape is, not how it looks, and stays. */
+  var PAINTS = {
+    shape: ["fill", "line", "text", "opacity", "weight", "corners", "shadow"],
+    note: ["fill", "line", "text", "opacity", "weight", "corners", "shadow"],
+    frame: ["fill", "line", "text", "opacity", "weight", "corners"],
+    text: ["text"], line: ["line", "text"],
+  };
+
+  // A look as it shows: a shape's paper and a note's yellow said outright,
+  // so painted onto the other they come along.
+  function lookOf(a) {
+    var l = Object.assign({}, (a && a.look) || {});
+    if (a && !l.fill && ROLE_FILL[a.role]) l.fill = ROLE_FILL[a.role];
+    delete l.icon;
+    return l;
+  }
+
+  function paintOnto(keys, l) {
+    var eng = Canvas.engine;
+    if (!eng || !eng.live() || !l) return 0;
+    var painted = 0;
+    eng.together(function () {
+      keys.forEach(function (k) {
+        var b = eng.item(k);
+        if (!b || isLocked(k)) return;
+        var patch = {};
+        (PAINTS[b.role] || []).forEach(function (name) {
+          var v = l[name];
+          if (name === "line" && b.role === "line" && v === "none") return;
+          if (name === "fill" && v && v === ROLE_FILL[b.role]) v = null;
+          patch[name] = v === undefined ? null : v;
+        });
+        eng.update(k, { look: patch });
+        painted += 1;
+      });
+    });
+    return painted;
+  }
+
+  function startPainting(a) {
+    Canvas.painting = { look: lookOf(a), from: a.key };
+    document.body.classList.add("cv-painting");
+  }
+
+  function stopPainting() {
+    Canvas.painting = null;
+    document.body.classList.remove("cv-painting");
   }
 
   /* The keys of the canvas, before the app's own: Undo and Redo always, and
@@ -1215,12 +1790,30 @@
     var eng = Canvas.engine && Canvas.engine.live() ? Canvas.engine : null;
     var keys = eng ? eng.selected() : [];
     var step = e.shiftKey ? 10 : 1;
-    if (mod && !e.altKey && (k === "z" || k === "Z")) canvasUndo(!e.shiftKey);
+    if (k === "Escape" && Canvas.painting) {
+      stopPainting();
+      if (cv.sel) canvasSelect(cv.sel, true);
+    }
+    else if (mod && !e.altKey && (k === "z" || k === "Z")) canvasUndo(!e.shiftKey);
     else if (mod && (k === "y" || k === "Y")) canvasUndo(false);
+    // By the key's place, not its letter: with Alt held a layout may type
+    // another character.
+    else if (mod && e.altKey && e.code === "KeyC" && keys.length) Canvas.copiedLook = lookOf(eng.item(keys[0]));
+    else if (mod && e.altKey && e.code === "KeyV" && keys.length && Canvas.copiedLook) {
+      paintOnto(keys, Canvas.copiedLook);
+      if (cv.sel) canvasSelect(cv.sel, true);
+    }
     else if (k === "Escape" && (DRAWING_TOOLS[cv.tool] || cv.tool === "pan")) setCanvasTool("select");
     else if (!mod && !e.altKey && (k === "v" || k === "V")) setCanvasTool("select");
     else if (!mod && !e.altKey && (k === "h" || k === "H")) setCanvasTool("pan");
+    else if (!mod && !e.altKey && TOOL_KEYS[k.toLowerCase()] && ownTools()) setCanvasTool(TOOL_KEYS[k.toLowerCase()]);
+    else if (!mod && !e.altKey && (k === "a" || k === "A")) $("cvAdd").click();
+    else if (!mod && !e.altKey && (k === "b" || k === "B")) openCanvasPicker("boundaries");
+    else if (!mod && k === "?") toggleKeys();
     else if (mod && (k === "g" || k === "G") && pickedBoxes(cv.sel).length) frameThem();
+    else if (mod && e.shiftKey && (k === "l" || k === "L") && toggleLockPicked()) { /* said in the panel */ }
+    else if (mod && !e.shiftKey && (k === "c" || k === "C") && canvasCopy()) { /* kept */ }
+    else if (mod && !e.shiftKey && (k === "v" || k === "V") && canvasPaste()) { /* drawn */ }
     else if (cv.sel && cv.sel.kind === "several" && /^Arrow/.test(k)) {
       var dx = k === "ArrowLeft" ? -step : k === "ArrowRight" ? step : 0, dy = k === "ArrowUp" ? -step : k === "ArrowDown" ? step : 0;
       movePicked(pickedBoxes(cv.sel).map(function (it) { return { item: it, dx: dx, dy: dy }; }));
@@ -1231,10 +1824,11 @@
     else if (mod && (k === "d" || k === "D")) eng.copy(keys);
     else if (mod && k === "]") eng.order(keys, false);
     else if (mod && k === "[") eng.order(keys, true);
-    else if (k === "ArrowLeft") eng.nudge(keys, -step, 0);
-    else if (k === "ArrowRight") eng.nudge(keys, step, 0);
-    else if (k === "ArrowUp") eng.nudge(keys, 0, -step);
-    else if (k === "ArrowDown") eng.nudge(keys, 0, step);
+    else if (/^Arrow/.test(k)) {
+      var free = keys.filter(function (key) { return !isLocked(key); });
+      if (free.length) eng.nudge(free, k === "ArrowLeft" ? -step : k === "ArrowRight" ? step : 0,
+        k === "ArrowUp" ? -step : k === "ArrowDown" ? step : 0);
+    }
     else if (k === "Enter" && keys.length === 1) eng.edit(keys[0]);
     else done = false;
     if (done) { e.preventDefault(); e.stopPropagation(); }
@@ -1244,6 +1838,172 @@
     var menu = $("cvShapeMenu");
     if (menu && !menu.hidden && !menu.contains(e.target) && !(menuFor && $(menuFor).contains(e.target))) closeShapeMenu();
   });
+
+  /* ---- copy and paste, across diagrams ----
+   * What is picked, kept in this browser: the diagram's own as shapes and
+   * lines at their places on the sheet, the records by id. Pasted on any
+   * canvas diagram, the records it does not draw are placed on it, where
+   * there is room as Add places them, and the shapes drawn with new keys:
+   * on the diagram they came from, a step down and across from where they
+   * were; on another, in the middle of what the sheet shows. */
+  var CLIP_KEY = "aac.canvas.clip";
+  var clipHeld = null;
+
+  function canvasCopy() {
+    if (!cv) return false;
+    var eng = Canvas.engine && Canvas.engine.live() ? Canvas.engine : null;
+    var ids = pickedIds(cv.sel), keys = eng ? eng.selected() : [];
+    if (!ids.length && !keys.length) return false;
+    var clip = { from: cv.id || "", model: (state.overview && state.overview.modelName) || "",
+      own: keys.length ? eng.clip(keys) : [], records: ids.slice(), pasted: 0 };
+    clipHeld = clip;
+    try { localStorage.setItem(CLIP_KEY, JSON.stringify(clip)); } catch (e) { /* private mode: this page only */ }
+    var words = [];
+    if (ids.length) words.push(ids.length === 1 ? "1 record" : ids.length + " records");
+    if (clip.own.length) words.push(clip.own.length + " of its own");
+    toast("ok", "Copied " + words.join(" and "), "Ctrl+V puts it on this diagram or another.");
+    return true;
+  }
+
+  function heldClip() {
+    try {
+      var kept = localStorage.getItem(CLIP_KEY);
+      if (kept) return JSON.parse(kept);
+    } catch (e) { /* private mode */ }
+    return clipHeld;
+  }
+
+  function canvasPaste() {
+    var clip = heldClip();
+    if (!cv || !clip || (!(clip.own || []).length && !(clip.records || []).length)) return false;
+    var mine = cv, cy = state.cy;
+    // The records this estate has and this diagram does not draw yet.
+    var known = {};
+    (state.index || []).forEach(function (it) { known[it.id] = true; });
+    var adding = (clip.records || []).filter(function (id) {
+      return known[id] && pinsOf().indexOf(id) === -1 && !drawnHere(id);
+    });
+    var strange = (clip.records || []).filter(function (id) { return !known[id]; });
+    var own = clip.own || [];
+    // Where the shapes go: a step on from where they were on their own
+    // diagram, a step more each time; else the middle of the sheet.
+    var dx = 0, dy = 0;
+    if (own.length) {
+      var boxes = own.filter(function (a) { return a.box; });
+      var x1 = Math.min.apply(null, boxes.map(function (a) { return a.box.x; }).concat([Infinity]));
+      var y1 = Math.min.apply(null, boxes.map(function (a) { return a.box.y; }).concat([Infinity]));
+      var x2 = Math.max.apply(null, boxes.map(function (a) { return a.box.x + a.box.w; }).concat([-Infinity]));
+      var y2 = Math.max.apply(null, boxes.map(function (a) { return a.box.y + a.box.h; }).concat([-Infinity]));
+      if (clip.from && clip.from === cv.id) {
+        clip.pasted = (clip.pasted || 0) + 1;
+        dx = dy = 24 * clip.pasted;
+      } else if (cy && isFinite(x1)) {
+        var ext = cy.extent();
+        dx = Math.round((ext.x1 + ext.x2) / 2 - (x1 + x2) / 2);
+        dy = Math.round((ext.y1 + ext.y2) / 2 - (y1 + y2) / 2);
+      }
+      clipHeld = clip;
+      try { localStorage.setItem(CLIP_KEY, JSON.stringify(clip)); } catch (e) { /* private mode */ }
+    }
+    function drawOwn() {
+      if (cv !== mine || !own.length || !Canvas.engine || !Canvas.engine.live()) return [];
+      return Canvas.engine.paste(own, dx, dy);
+    }
+    function said(made) {
+      var words = [];
+      if (adding.length) words.push(adding.length === 1 ? "1 record" : adding.length + " records");
+      if (made.length) words.push(made.length + " of its own");
+      var more = strange.length ? " " + strange.length + " of the records copied are not in this estate, and are left out." : "";
+      if (!words.length) {
+        toast("ok", "Nothing to paste here", "What was copied is on this diagram already." + more);
+        return;
+      }
+      toast("ok", "Pasted " + words.join(" and "), (adding.length ? "The records go where the diagram has room. " : "") + more);
+    }
+    if (!adding.length) {
+      said(drawOwn());
+      return true;
+    }
+    adding.forEach(function (id) { pinsOf().push(id); });
+    canvasSave().then(canvasDraw).then(function () {
+      if (cv !== mine) return;
+      var made = drawOwn();
+      said(made);
+      // What was pasted is picked, the records with the shapes.
+      canvasPick(adding.slice(), made);
+    }).catch(fail);
+    return true;
+  }
+
+  /* ---- a key for every tool ----
+   * The drawing tools by their first letter, a shape by R as most tools
+   * have it; Select and the Hand are V and H, above. The sheet behind "?
+   * for keys" and the command palette say the same keys from this list. */
+  var TOOL_KEYS = { r: "shape", t: "text", n: "note", f: "frame", l: "line" };
+  var KEY_SHEET = [
+    ["Tools", [["V", "Select"], ["H", "Hand, or hold Space"], ["R", "Shape, the last one chosen"], ["T", "Text"],
+      ["N", "Note"], ["F", "Frame"], ["L", "Line, the last route chosen"], ["A", "Add from the library or the estate"],
+      ["B", "Add a boundary"]]],
+    ["Editing", [["Ctrl+Z", "Undo"], ["Ctrl+Shift+Z", "Redo"], ["Delete", "Delete its own"], ["Ctrl+D", "Duplicate"], ["Ctrl+C", "Copy, for this diagram or another"], ["Ctrl+V", "Paste"],
+      ["Ctrl+Alt+C", "Copy the look"], ["Ctrl+Alt+V", "Paint the look copied"],
+      ["Ctrl+] [", "Forward, back"], ["Arrows", "Nudge, Shift by ten"], ["Enter", "Type in it"],
+      ["Ctrl+G", "Frame what is picked"], ["Ctrl+Shift+L", "Lock or unlock it here"], ["Esc", "Let go"]]],
+    ["Around", [["Ctrl+K", "Commands and search"], ["/", "Search"], ["Shift+click", "Pick one more, or one fewer"],
+      ["?", "These keys"]]],
+  ];
+
+  // The diagram's own tools, which a view written as a query does not take.
+  function ownTools() {
+    return !$("cvTools").classList.contains("no-own");
+  }
+
+  function toggleKeys(open) {
+    var sheet = $("cvKeys"), btn = $("cvKeysBtn");
+    if (!sheet) return;
+    var show = open === undefined ? sheet.hidden : !!open;
+    if (show && !sheet.firstChild) {
+      KEY_SHEET.forEach(function (group) {
+        var dl = el("dl");
+        group[1].forEach(function (row) {
+          dl.appendChild(el("dt", null, row[0].split(" ").map(function (k) { return el("kbd", { text: k }); })));
+          dl.appendChild(el("dd", { text: row[1] }));
+        });
+        sheet.appendChild(el("section", null, [el("h3", { text: group[0] }), dl]));
+      });
+    }
+    sheet.hidden = !show;
+    btn.setAttribute("aria-expanded", String(show));
+  }
+
+  /* The canvas's tools and actions in the command palette, first while it
+   * is open, each with its key. */
+  function canvasPaletteActions() {
+    if (!cv) return [];
+    var out = [{ kind: "action", name: "Select", hint: "Tool \u00b7 V", go: function () { setCanvasTool("select"); } },
+      { kind: "action", name: "Hand", hint: "Tool \u00b7 H", go: function () { setCanvasTool("pan"); } }];
+    if (ownTools()) {
+      [["Shape", "shape", "R"], ["Text", "text", "T"], ["Note", "note", "N"], ["Frame", "frame", "F"],
+        ["Line", "line", "L"]].forEach(function (t) {
+        out.push({ kind: "action", name: t[0], hint: "Tool \u00b7 " + t[2], go: function () { setCanvasTool(t[1]); } });
+      });
+    }
+    out.push({ kind: "action", name: "Add from the library or the estate", hint: "A", go: function () { $("cvAdd").click(); } });
+    if (cv.undo.length) out.push({ kind: "action", name: "Undo", hint: "Ctrl+Z", go: function () { canvasUndo(true); } });
+    if (cv.redo.length) out.push({ kind: "action", name: "Redo", hint: "Ctrl+Shift+Z", go: function () { canvasUndo(false); } });
+    if (pickedBoxes(cv.sel).length) out.push({ kind: "action", name: "Frame what is picked", hint: "Ctrl+G", go: frameThem });
+    if (pickedBoxes(cv.sel).length) out.push({ kind: "action", name: "Copy what is picked", hint: "Ctrl+C", go: canvasCopy });
+    if (pickedNames().length) out.push({ kind: "action", name: pickedNames().every(isLocked) ? "Unlock what is picked"
+      : "Lock what is picked", hint: "Ctrl+Shift+L", go: toggleLockPicked });
+    if (heldClip()) out.push({ kind: "action", name: "Paste", hint: "Ctrl+V", go: canvasPaste });
+    out.push({ kind: "action", name: snapOn() ? "Snap to grid off" : "Snap to grid on", hint: "The ten-unit grid",
+      go: toggleSnap });
+    out.push({ kind: "action", name: jumpsOn() ? "Line jumps off" : "Line jumps on",
+      hint: "Where lines cross, one hops the other", go: toggleJumps });
+    if (canvasKept()) out.push({ kind: "action", name: "Lay out again", hint: "Hand every box back to the layout",
+      go: canvasLayOutAgain });
+    out.push({ kind: "action", name: "Keys", hint: "?", go: function () { toggleKeys(true); } });
+    return out;
+  }
 
   function canvasHint(text) {
     var tip = $("cvHint");
@@ -1300,6 +2060,8 @@
     section.addEventListener("change", function () { d.section = section.value; canvasSoon(0); });
     box.appendChild(el("div", { class: "cv-pair" }, [cvField("Layer", layer, false), cvField("Section", section, false)]));
 
+    box.appendChild(el("div", { class: "cv-field" }, [el("span", { class: "cv-label", text: "Look" }), lookChoice()]));
+
     box.appendChild(el("h3", { class: "cv-sub", text: "On it" }));
     var on = el("ul", { class: "cv-on-list" });
     (d.places || []).forEach(function (p, i) {
@@ -1328,7 +2090,7 @@
         return;
       }
       on.appendChild(el("li", {}, [
-        el("button", { type: "button", class: "cv-link", text: a.label, onclick: function () { pick([a.key]); } }),
+        el("button", { type: "button", class: "cv-link", text: firstLine(a.label), onclick: function () { pick([a.key]); } }),
         el("span", { class: "cv-what", text: "its own " + a.role }),
       ]));
     });
@@ -1495,7 +2257,10 @@
             null, home);
         } }, [svgIcon("i-pencil"), el("span", { text: "Every field" })]));
       }
+      acts.appendChild(lockButton([id]));
       box.appendChild(acts);
+      var held = lockedNote([id]);
+      if (held) box.appendChild(held);
       if (!pinned) {
         box.appendChild(el("p", { class: "cv-small", text: "It is drawn here because "
           + ((cv.data.places || []).length ? placeTitle(cv.data.places[0]) : "the diagram's query") + " draws it." }));
@@ -1740,11 +2505,11 @@
 
   function closeCanvasPicker() {
     var pick = $("cvPicker");
+    if (cv) cv.connect = null;
     if (!pick) return;
     pick.hidden = true;
     pick.textContent = "";
     $("cvAdd").setAttribute("aria-expanded", "false");
-    $("cvBoundary").setAttribute("aria-pressed", "false");
   }
 
   //: The words a product's name starts with that say whose it is: "EC2"
@@ -1834,35 +2599,43 @@
     return out;
   }
 
-  function openCanvasPicker(tab, boundaries) {
+  /* Add's picker: the library's parts, the estate's records and its
+   * boundaries, a tab each beside All. Boundary had a button of its own
+   * beside Add; it is Add's Boundaries tab now, as V13 has it (B). */
+  function openCanvasPicker(tab, boundaries, link) {
     if (!cv) return;
     var pick = $("cvPicker");
-    var state2 = { tab: tab || "all" };
+    var state2 = { tab: boundaries ? "boundaries" : tab || "all" };
+    closeCanvasPicker();
+    // Opened by quick connect: what is chosen is joined to that record, so
+    // only parts and records are offered, and no boundary.
+    if (link) cv.connect = link;
     pick.textContent = "";
     pick.hidden = false;
     $("cvAdd").setAttribute("aria-expanded", "true");
-    $("cvBoundary").setAttribute("aria-pressed", String(!!boundaries));
-    pick.classList.toggle("is-boundary", !!boundaries);
-    var search = el("input", { type: "search", class: "cv-search", "aria-label": "Find something to place",
-      placeholder: boundaries ? "Find a view, an account, a zone…" : "Find a part, a system, an account, a view…" });
+    var search = el("input", { type: "search", class: "cv-search", "aria-label": "Find something to place" });
     var tabs = el("div", { class: "cv-tabs", role: "tablist" });
+    var head = el("p", { class: "cv-pick-head" });
     var list = el("div", { class: "cv-list" });
     var c = cv.parts.counts;
     pick.appendChild(el("div", { class: "cv-search-row" }, [svgIcon("i-search"), search]));
-    if (!boundaries) {
-      [["all", "All"], ["library", "Library"], ["estate", "This estate"]].forEach(function (t) {
-        tabs.appendChild(el("button", { type: "button", role: "tab", class: "cv-tab",
-          "aria-selected": String(state2.tab === t[0]),
-          onclick: function () {
-            state2.tab = t[0];
-            tabs.querySelectorAll(".cv-tab").forEach(function (b) { b.setAttribute("aria-selected", String(b === this)); }, this);
-            fill();
-          } }, [t[1]]));
-      });
-      pick.appendChild(tabs);
-    } else {
-      pick.appendChild(el("p", { class: "cv-pick-head", text: "A boundary: a view, or an account or zone of " + (cv.parts.networkTitle || "the network") }));
+    [["all", "All"], ["library", "Library"], ["estate", "This estate"], ["boundaries", "Boundaries"]].filter(function (t) {
+      return !link || t[0] !== "boundaries";
+    }).forEach(function (t) {
+      tabs.appendChild(el("button", { type: "button", role: "tab", class: "cv-tab",
+        "aria-selected": String(state2.tab === t[0]),
+        onclick: function () {
+          state2.tab = t[0];
+          tabs.querySelectorAll(".cv-tab").forEach(function (b) { b.setAttribute("aria-selected", String(b === this)); }, this);
+          fill();
+        } }, [t[1]]));
+    });
+    if (link) {
+      pick.appendChild(el("p", { class: "cv-pick-link" }, [svgIcon("i-link"), el("span", {
+        text: "What comes next to " + ((indexItem(link.from) || {}).name || link.from) + "? A line will join them." })]));
     }
+    pick.appendChild(tabs);
+    pick.appendChild(head);
     pick.appendChild(list);
     pick.appendChild(el("p", { class: "cv-foot", text: c.systems + " systems, " + c.views + " views to place as boundaries and "
       + c.parts + " parts in all: type to find one, or drag it straight onto the sheet." }));
@@ -1899,8 +2672,17 @@
 
     function fill() {
       list.textContent = "";
+      var bounds = state2.tab === "boundaries";
+      pick.classList.toggle("is-boundary", bounds);
+      search.placeholder = bounds ? "Find a view, an account, a zone…" : "Find a part, a system, an account, a view…";
+      head.textContent = bounds ? "A boundary: a view, or an account or zone of " + (cv.parts.networkTitle || "the network") : "";
+      head.hidden = !bounds;
       var q = search.value.trim().toLowerCase();
-      var got = pickerItems(state2.tab, q, boundaries);
+      var got = pickerItems(bounds ? "estate" : state2.tab, q, bounds);
+      if (link) {
+        var boxy = function (i) { return i.kind === "part" || i.kind === "system"; };
+        got = { library: got.library.filter(boxy), estate: got.estate.filter(boxy) };
+      }
       if (got.library.length) {
         list.appendChild(el("p", { class: "cv-group", text: "From the library" }));
         got.library.forEach(function (i) { list.appendChild(row(i)); });
@@ -1942,10 +2724,57 @@
     if (!hit) return { into: [], group: null };
     var chain = hit.ancestors().add(hit).filter(function (g) { return !!g.data("field"); })
       .sort(function (a, b) { return (a.data("depth") || 0) - (b.data("depth") || 0); });
-    return { group: hit, into: chain.map(function (g) {
-      return { field: g.data("field"), value: g.data("stored"),
-        label: (PLACE_WORDS[g.data("field")] || fieldWord(g.data("field"))) + " " + g.data("value") };
-    }) };
+    return { group: hit, into: chain.map(intoOf) };
+  }
+
+  // A boundary that is one value of a field, as what is placed in it takes it.
+  function intoOf(g) {
+    return { field: g.data("field"), value: g.data("stored"),
+      label: (PLACE_WORDS[g.data("field")] || fieldWord(g.data("field"))) + " " + g.data("value") };
+  }
+
+  /* ---- quick connect, from a record ----
+   * An arrow on a record's box asks in Add which record comes next. A part
+   * made new goes a step that way in the same boundaries, or where the
+   * arrow was carried to; a record of the estate goes where it belongs,
+   * since putting it in another boundary would change it. A line joins the
+   * two either way and asks whether it is a connection, as a line drawn
+   * between two records does. */
+  var QUICK_GAP = 60;
+
+  function canvasQuickConnect(from, dir, at) {
+    if (!cv || !state.cy) return;
+    var n = state.cy.getElementById(from);
+    if (!n.length) return;
+    var r = $("cy").getBoundingClientRect(), z = state.cy.zoom(), pan = state.cy.pan(), info, m;
+    if (at) {
+      info = canvasDropInfo({ clientX: at.x, clientY: at.y });
+      m = { x: (at.x - r.left - pan.x) / z, y: (at.y - r.top - pan.y) / z };
+    } else {
+      var p = n.position(), w = n.width(), h = n.height();
+      m = { x: p.x + (dir === "e" ? w + QUICK_GAP : dir === "w" ? -(w + QUICK_GAP) : 0),
+        y: p.y + (dir === "s" ? h + QUICK_GAP : dir === "n" ? -(h + QUICK_GAP) : 0) };
+      var chain = n.ancestors().filter(function (g) { return !!g.data("field"); })
+        .sort(function (a, b) { return (a.data("depth") || 0) - (b.data("depth") || 0); });
+      info = { group: chain.length ? chain[chain.length - 1] : null, into: chain.map(intoOf) };
+    }
+    openCanvasPicker("all", false, { from: from, into: info.into, at: { x: r.left + m.x * z + pan.x,
+      y: r.top + m.y * z + pan.y, group: info.group ? info.group.id() : null, mx: m.x, my: m.y } });
+  }
+
+  // The line quick connect draws, asking whether it is a connection. A
+  // record just placed is drawn on the canvas a moment after Cytoscape lays
+  // it out, and a line to a box not yet drawn had no end to hold.
+  function joinQuick(from, to, tries, mine) {
+    mine = mine || cv;
+    if (!cv || cv !== mine || from === to || !Canvas.engine || !Canvas.engine.live()) return;
+    var drawn = Canvas.engine.boxes() || {};
+    if (!drawn[from] || !drawn[to]) {
+      if ((tries || 0) < 60) setTimeout(function () { joinQuick(from, to, (tries || 0) + 1, mine); }, 50);
+      return;
+    }
+    var key = Canvas.engine.add({ role: "line", from: from, to: to });
+    if (key) canvasOwnDrawn(key, "line");
   }
 
   function clearCanvasDrop() {
@@ -2067,7 +2896,7 @@
       same.appendChild(el("span", { text: "The estate has " + articled(item.typeLabel) + " called " + found.name + " already. " }));
       same.appendChild(el("button", { type: "button", class: "cv-link", text: "Place that one", onclick: function () {
         closeContextMenu();
-        canvasPlace({ kind: "system", id: found.id, name: found.name }, into, at);
+        canvasPlace({ kind: "system", id: found.id, name: found.name, link: item.link }, into, at);
       } }));
       same.appendChild(el("span", { text: " Placing a new one names it " + found.name + " 2." }));
     }
@@ -2094,8 +2923,17 @@
    * redraws, and selects what was placed. */
   function canvasPlace(item, into, at) {
     if (!cv) return;
+    // Chosen after a quick connect arrow: joined to the record it was on.
+    var link = item.link || ((item.kind === "part" || item.kind === "system") && cv.connect) || null;
     closeCanvasPicker();
     var mine = cv;
+    if (link && !item.link) {
+      item = Object.assign({}, item, { link: link });
+      if (!(into && into.length) && !at) {
+        into = link.into;
+        at = item.kind === "part" ? link.at : null;
+      }
+    }
     if (item.kind === "part" && !item.named) {
       askPartName(item, into || [], at);
       return;
@@ -2110,6 +2948,7 @@
         if (at && at.group) canvasDropAt(res.id, at.group, { x: at.mx, y: at.my });
         return loadIndex().then(canvasSave).then(canvasDraw).then(function () {
           canvasSelect({ kind: "record", id: res.id });
+          if (link) joinQuick(link.from, res.id);
           var where = saidInto(into || []);
           toast("ok", "Placed " + res.name, (where ? "In " + where + ". " : "") + "Saved in " + res.path + ".");
         });
@@ -2118,8 +2957,9 @@
     }
     if (item.kind === "system") {
       if (pinsOf().indexOf(item.id) !== -1 || drawnHere(item.id)) {
-        toast("ok", item.name + " is on it already");
+        if (!link) toast("ok", item.name + " is on it already");
         canvasSelect({ kind: "record", id: item.id });
+        if (link) joinQuick(link.from, item.id);
         return;
       }
       pinsOf().push(item.id);
@@ -2127,6 +2967,7 @@
       if (at && at.group) canvasDropAt(item.id, at.group, { x: at.mx, y: at.my });
       canvasSave().then(canvasDraw).then(function () {
         canvasSelect({ kind: "record", id: item.id });
+        if (link) joinQuick(link.from, item.id);
         // Dropped into a boundary it does not sit in: that is a change to
         // the record, so it is asked, as a drag between boundaries is.
         if (at && at.group && state.cy) {
@@ -2188,6 +3029,10 @@
   Canvas.focus = canvasFocus;
   Canvas.guides = canvasGuides;
   Canvas.guidesOff = canvasGuidesOff;
+  // The engine measures the diagram's own as the canvas measures records.
+  Canvas.evenGap = evenGap;
+  Canvas.measureGaps = measureGaps;
+  Canvas.quickConnect = canvasQuickConnect;
   Canvas.leave = leaveCanvas;
   Canvas.mark = canvasMark;
   Canvas.movedBox = canvasMovedBox;
@@ -2199,6 +3044,14 @@
   Canvas.ownChanged = canvasOwnChanged;
   Canvas.ownDrawn = canvasOwnDrawn;
   Canvas.ownSelected = canvasOwnSelected;
+  Canvas.toggleSnap = toggleSnap;
+  Canvas.toggleJumps = toggleJumps;
+  Canvas.toggleKeys = toggleKeys;
+  Canvas.copy = canvasCopy;
+  Canvas.paste = canvasPaste;
+  Canvas.paletteActions = canvasPaletteActions;
+  Canvas.pickedIds = canvasPickedIds;
+  Canvas.recordsMoved = canvasRecordsMoved;
   Canvas.pickAlso = canvasPickAlso;
   Canvas.picked = canvasPicked;
   Canvas.undo = canvasUndo;

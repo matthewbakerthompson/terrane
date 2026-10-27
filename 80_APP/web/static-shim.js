@@ -44,6 +44,8 @@
     if (p === "api/log") return "api/log.json";
     if (p === "api/sources") return "api/sources.json";
     if (p === "api/project") return "api/project.json";
+    if (p === "api/search/index") return "api/search/index.json";
+    if (p === "api/icons") return "api/icons.json";
     if (p === "api/list") {
       var type = params.get("type");
       return type ? "api/list/" + type + ".json" : "api/list.json";

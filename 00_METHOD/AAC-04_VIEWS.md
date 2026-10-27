@@ -620,7 +620,11 @@ On a view written as a query, where a box sits is not saved. Position is the
 layout's to decide, from the model, every time. A diagram drawn on the canvas
 is the exception: once a box is moved by hand, every box's place is kept in
 the view's `positions`, the layout places only what is new, and **Lay out
-again** hands the whole drawing back to it.
+again** hands the whole drawing back to it. A box, or a shape of the
+diagram's own, can also be locked on such a diagram: it is listed under the
+view's `locked`, by id or by key, and is not carried, nudged or lined up
+there until it is unlocked. A lock is the drawing's, not the record's; the
+same box on another diagram moves freely.
 
 ## Moving a box into another boundary
 

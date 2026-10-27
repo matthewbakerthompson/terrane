@@ -91,6 +91,20 @@ class TestReading(unittest.TestCase):
         self.assertTrue(list(check.iter_errors(dict(DIAGRAM, positions={API: [1, 2, 3]}))))
         self.assertTrue(list(check.iter_errors(dict(DIAGRAM, positions={API: "here"}))))
 
+    def test_the_schema_admits_what_is_locked_and_refuses_a_bad_list(self) -> None:
+        try:
+            import jsonschema as validator  # the third-party package, not aac's
+        except ImportError:
+            self.skipTest("no JSON Schema validator installed")
+        if not hasattr(validator, "Draft202012Validator"):
+            self.skipTest("the installed validator predates draft 2020-12")
+        check = validator.Draft202012Validator(jsonschema.view_schema())
+        self.assertEqual([e.message for e in check.iter_errors(dict(DIAGRAM, locked=[API, "note-1"]))], [])
+        self.assertTrue(list(check.iter_errors(dict(DIAGRAM, locked=API))))
+        self.assertTrue(list(check.iter_errors(dict(DIAGRAM, locked=[API, API]))))
+        # The engine draws a locked diagram as any other: it is the canvas's.
+        self.assertEqual(parse_view(dict(DIAGRAM, locked=[API])).view_id, DIAGRAM["view_id"])
+
 
 class TestTheDiagramsOwn(unittest.TestCase):
     def setUp(self) -> None:

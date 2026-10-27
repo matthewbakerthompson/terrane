@@ -122,7 +122,10 @@ def dump_yaml(value: Any, indent: int = 0) -> List[str]:
                     lines.append("%s%s:" % (pad, _key(key)))
                     lines.extend(dump_yaml(item, indent + 1))
             elif isinstance(item, str) and "\n" in item:
-                lines.append("%s%s: >" % (pad, _key(key)))
+                # Literal, its last break stripped: the words come back as
+                # they were written. Folded (`>`) joined a shape's name and
+                # its caption into one line on the way back in.
+                lines.append("%s%s: |-" % (pad, _key(key)))
                 for part in item.rstrip("\n").split("\n"):
                     lines.append("%s  %s" % (pad, part) if part else "")
             else:

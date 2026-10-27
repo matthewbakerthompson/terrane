@@ -4,7 +4,9 @@
 // the note to the diamond. Then the note restyled from its panel, moved,
 // undone and redone, deleted and brought back; the page opened again on
 // the diagram, the diagram opened as a diagram (read only), and the engine's
-// own picture of it (/api/svg), each holding the same shapes.
+// own picture of it (/api/svg), each holding the same shapes. On
+// lending-onboarding, records framed with Ctrl+G and the frame carried by
+// its name: the records go with it as far, and one Undo puts both back.
 //
 //   node 80_APP/tools/dev/annotate_probe.mjs out/ URL
 //
@@ -147,7 +149,7 @@ await pause(300);
 check("a press on the note selects it, and its panel says so",
   /Note/.test(await page.$eval("#cvDetails .cv-h", (h) => h.textContent)));
 await page.click('#cvDetails .cv-swatch[aria-label="Mint"]');
-await page.click('#cvDetails .cv-seg-b:nth-child(2)');
+await page.click('#cvDetails [aria-label="Edge"] .cv-seg-b:nth-child(2)');
 await pause(300);
 list = await own(page);
 let look = (list.find((a) => a.key === note.key) || {}).look || {};
@@ -328,6 +330,40 @@ if ((await fetch(URL + "/api/view?id=" + BESIDE)).ok) {
   const framesAfter = (await own(p3)).filter((a) => a.role === "frame").length;
   check("Ctrl+G frames what is picked", framesAfter === framesBefore + 1);
   await p3.screenshot({ path: `${OUT}/annotate-framed.png` });
+  // The frame carried by its name: the records it was drawn round go with
+  // it, as far as it went, and one Undo puts the frame and them back.
+  const framed = (await own(p3)).filter((a) => a.role === "frame").pop();
+  const fb = (await drawn(p3))[framed.key];
+  const sv = await p3.evaluate(() => { const b = document.querySelector(".mg-surface").getBoundingClientRect(); return { x: b.left, y: b.top }; });
+  const placed = (ids) => p3.evaluate((list) => {
+    const cy = document.getElementById("cy")._cyreg.cy;
+    return list.map((id) => cy.getElementById(id).position()).map((p) => ({ x: p.x, y: p.y }));
+  }, ids);
+  const before = await placed(picked.ids);
+  const keptFramed = await p3.evaluate(() => JSON.stringify(window.TerraneApp.Canvas.cv.data.positions));
+  await p3.keyboard.press("Escape");
+  await drag(p3, { x: sv.x + fb.x + 40, y: sv.y + fb.y + 9 }, { x: sv.x + fb.x + 130, y: sv.y + fb.y + 49 });
+  await pause(900);
+  const went = (await own(p3)).find((a) => a.key === framed.key);
+  const fdx = went.at[0] - framed.at[0], fdy = went.at[1] - framed.at[1];
+  const after = await placed(picked.ids);
+  const moved = after.map((p, i) => [p.x - before[i].x, p.y - before[i].y]);
+  check("carried by its name, the frame moves", Math.abs(fdx) > 20 && Math.abs(fdy) > 10, fdx + ", " + fdy);
+  check("and the records it was drawn round go with it, as far",
+    moved.every(([dx, dy]) => Math.abs(dx - fdx) < 1 && Math.abs(dy - fdy) < 1),
+    JSON.stringify(moved.map(([dx, dy]) => [Math.round(dx), Math.round(dy)])));
+  await saved(p3);
+  check("kept where they went", (await p3.evaluate(() => JSON.stringify(window.TerraneApp.Canvas.cv.data.positions))) !== keptFramed);
+  await p3.screenshot({ path: `${OUT}/annotate-frame-carried.png` });
+  await p3.keyboard.down("Control");
+  await p3.keyboard.press("z");
+  await p3.keyboard.up("Control");
+  await pause(1500);
+  const back = await placed(picked.ids);
+  check("one Undo puts the frame and the records back",
+    JSON.stringify((await own(p3)).find((a) => a.key === framed.key).at) === JSON.stringify(framed.at)
+    && back.every((p, i) => Math.abs(p.x - before[i].x) < 0.5 && Math.abs(p.y - before[i].y) < 0.5),
+    JSON.stringify(back.map((p, i) => [Math.round(p.x - before[i].x), Math.round(p.y - before[i].y)])));
   await p3.keyboard.press("Escape");
   await p3.keyboard.down("Control");
   await p3.keyboard.press("z");

@@ -4813,7 +4813,46 @@ button.mx-count:hover { box-shadow: 0 0 0 2px var(--cap-fill); }
   font-size: var(--t-base); color: var(--ink-2); white-space: nowrap;
 }
 .cv-layout[hidden] { display: none; }
-.cv-layout:not([hidden]) + .controls { margin-left: 0; }
+/* Under the sheet, V14's status bar: a strip, not a card, the sheet's
+   margin above it given to it. */
+.cv-status {
+  display: flex; align-items: center; gap: 16px; min-height: 40px; margin: 0 20px; padding: 0 2px;
+  font-size: var(--t-small); color: var(--ink-2); white-space: nowrap;
+}
+.cv-status[hidden], .shell:not(.canvas-mode) .cv-status { display: none; }
+.shell.canvas-mode .sheet:has(+ .cv-status:not([hidden])) { margin-bottom: 0; }
+.cv-status .cv-layout { margin: 0; align-self: auto; padding: 0; background: none; border: 0; box-shadow: none;
+  font-size: var(--t-small); }
+.cv-status .cv-layout .sep { height: 14px; }
+.cv-status-gap { flex: 1; }
+.cv-toggle {
+  display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px; border: 0; border-radius: 6px;
+  background: transparent; color: var(--ink-2); font: inherit; cursor: pointer;
+}
+.cv-toggle:hover { background: var(--sunk); color: var(--ink); }
+.cv-toggle[aria-pressed="true"] { background: var(--accent-wash); color: var(--accent-2); }
+.cv-toggle .i { width: 14px; height: 14px; }
+.cv-count { display: inline-flex; align-items: center; gap: 6px; }
+.cv-locked { display: flex; align-items: center; gap: 6px; }
+.cv-locked .i { width: 13px; height: 13px; flex: none; }
+.cv-status { position: relative; }
+.cv-toggle kbd, .cv-keys kbd {
+  display: inline-block; min-width: 16px; padding: 0 4px; border: 1px solid var(--rule-2); border-bottom-width: 2px;
+  border-radius: 4px; background: var(--sheet); font: 600 11px/15px var(--sans); color: var(--ink); text-align: center;
+}
+/* Every key the canvas takes, over the status bar's corner. */
+.cv-keys {
+  position: absolute; right: 0; bottom: calc(100% + 6px); z-index: var(--z-overlay); width: 660px; max-width: calc(100vw - 48px);
+  padding: 14px 16px; display: grid; grid-template-columns: 1fr 1.3fr 1fr; gap: 14px 22px;
+  background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; box-shadow: var(--shadow-float);
+  white-space: normal; color: var(--ink-2);
+}
+.cv-keys[hidden] { display: none; }
+.cv-keys h3 { margin: 0 0 6px; font-size: var(--t-small); font-weight: 600; color: var(--ink); }
+.cv-keys dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 5px 10px; align-items: center; }
+.cv-keys dt { margin: 0; white-space: nowrap; }
+.cv-keys dd { margin: 0; }
+.cv-count .i { width: 14px; height: 14px; color: var(--ink-3); }
 .cv-layout > .i { width: 14px; height: 14px; }
 .cv-layout .k { color: var(--ink); font-weight: 600; }
 .cv-layout .sep { width: 1px; height: 18px; background: var(--rule); }
@@ -4823,6 +4862,18 @@ button.mx-count:hover { box-shadow: 0 0 0 2px var(--cap-fill); }
 .cv-guide.is-x { width: 1px; }
 .cv-guide.is-y { height: 1px; }
 .cv-guide[hidden] { display: none; }
+/* An equal gap measured, V14's red: a run with a tick at each end and its
+   size in units beside it. */
+.cv-gap { position: absolute; z-index: var(--z-overlay); pointer-events: none; color: var(--high); }
+.cv-gap.is-y { width: 7px; border-top: 1px solid currentColor; border-bottom: 1px solid currentColor; }
+.cv-gap.is-x { height: 7px; border-left: 1px solid currentColor; border-right: 1px solid currentColor; }
+.cv-gap::before { content: ""; position: absolute; background: currentColor; }
+.cv-gap.is-y::before { left: 3px; top: 0; bottom: 0; width: 1px; }
+.cv-gap.is-x::before { top: 3px; left: 0; right: 0; height: 1px; }
+.cv-gap-n { position: absolute; background: var(--high); color: #ffffff; font: 600 10px/14px var(--sans);
+  padding: 0 4px; border-radius: 4px; white-space: nowrap; }
+.cv-gap.is-y .cv-gap-n { left: 11px; top: 50%; transform: translateY(-50%); }
+.cv-gap.is-x .cv-gap-n { top: 11px; left: 50%; transform: translateX(-50%); }
 .cv-fold-one { display: inline-flex; gap: 8px; align-items: baseline; }
 .cv-link { background: none; border: 0; padding: 0; font: inherit; color: var(--accent-2); font-weight: 600; cursor: pointer; text-align: left; }
 .cv-link:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -5369,6 +5420,15 @@ button.lv-row:hover, button.lv-row:focus-visible { background: var(--accent-wash
  * under the tools, guides and overview that float above it. */
 .mg-surface { position: absolute; z-index: var(--z-canvas); pointer-events: none; overflow: hidden; }
 .mg-surface.takes-pointer { pointer-events: auto; touch-action: none; }
+/* Icon tiles are drawn on white, as the clouds draw theirs. */
+.mg-surface.look-tiles { background: #ffffff; }
+.cv-icons { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; max-height: 214px; overflow-y: auto; }
+.cv-icons img { display: block; }
+.cv-icons-none { grid-column: 1 / -1; margin: 4px 0; font-size: var(--t-small); color: var(--ink-3); }
+.cv-icon-find { margin: 6px 0; }
+.cv-icon-b { display: inline-flex; align-items: center; justify-content: center; padding: 5px; border: 1px solid var(--rule);
+  border-radius: 7px; background: var(--sheet); color: var(--ink-2); cursor: pointer; }
+.cv-icon-b[aria-checked="true"] { border-color: var(--accent); background: var(--accent-wash); color: var(--accent); }
 .mg-surface svg { overflow: visible; }
 
 /* ---- the diagram's own shapes, drawn with the tools (canvas/engine.js) */
@@ -5404,7 +5464,28 @@ button.lv-row:hover, button.lv-row:focus-visible { background: var(--accent-wash
 .cv-swatches { display: flex; gap: 8px; }
 .cv-swatch { width: 26px; height: 26px; padding: 0; border-radius: 13px; border: 1.5px solid var(--sw-edge); background: var(--sw); cursor: pointer; }
 .cv-swatch[aria-checked="true"] { box-shadow: 0 0 0 2px var(--sheet), 0 0 0 4px var(--accent); }
+/* No fill: the sheet showing through, struck across. */
+.cv-swatch.is-none { background: linear-gradient(135deg, transparent 46%, var(--sw-edge) 46%, var(--sw-edge) 54%, transparent 54%); }
 .cv-look-row { display: flex; flex-wrap: wrap; gap: 10px; }
+/* The Style and Arrange tabs (V16): a section a heading over what it
+   heads, a hint or a control at the heading's right. */
+.cv-tabs { display: flex; width: 100%; box-sizing: border-box; margin: 0; }
+.cv-tabs .cv-seg-b { flex: 1; }
+.cv-sec { display: flex; flex-direction: column; gap: 7px; }
+.cv-sec-h { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 22px; }
+.cv-sec-r { display: inline-flex; align-items: center; gap: 8px; }
+.cv-aside { font-size: var(--t-small); color: var(--ink-3); }
+.cv-fill-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.cv-fill-row .cv-swatches { gap: 6px; }
+.cv-opacity-box { display: inline-flex; align-items: center; gap: 3px; flex: none; }
+.cv-opacity { width: 50px; padding-left: 6px; padding-right: 4px; text-align: right; }
+.cv-unit { font-size: var(--t-small); color: var(--ink-3); }
+.cv-corners { display: flex; align-items: center; gap: 10px; }
+.cv-range { flex: 1; accent-color: var(--accent); }
+.cv-range-v { min-width: 2ch; text-align: right; font-size: var(--t-small); color: var(--ink); }
+.btn.is-on { border-color: var(--accent); background: var(--accent-wash); color: var(--accent); }
+/* While a look is being painted, the sheet says so under the pointer. */
+body.cv-painting .mg-surface, body.cv-painting .mg-surface * { cursor: copy !important; }
 .cv-seg { display: inline-flex; gap: 2px; padding: 2px; border-radius: 8px; background: var(--ground); border: 1px solid var(--rule); }
 .cv-seg-b { padding: 4px 10px; border: 0; border-radius: 6px; background: none; font: inherit; font-size: var(--t-small); color: var(--ink-2); cursor: pointer; }
 .cv-seg-b[aria-checked="true"] { background: var(--sheet); color: var(--ink); font-weight: 600; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08); }
@@ -5418,6 +5499,21 @@ button.lv-row:hover, button.lv-row:focus-visible { background: var(--accent-wash
 .connect-opt.is-line .co-s { color: var(--ink-2); }
 
 /* ---- several picked, and the hand (canvas/engine.js) */
+/* Quick connect's arrows about a hovered box (V14). */
+.mg-qc-set { position: absolute; inset: 0; pointer-events: none; }
+.mg-qc-set[hidden] { display: none; }
+.mg-qc { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; padding: 0; border-radius: 50%;
+  border: 1.5px solid var(--accent); background: var(--accent-wash); color: var(--accent-2); cursor: crosshair;
+  pointer-events: auto; display: grid; place-items: center; }
+.mg-qc svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round;
+  stroke-linejoin: round; }
+.mg-qc.is-e svg { transform: rotate(90deg); }
+.mg-qc.is-s svg { transform: rotate(180deg); }
+.mg-qc.is-w svg { transform: rotate(270deg); }
+.mg-qc:hover { background: var(--accent); color: #fff; }
+.cv-pick-link { display: flex; align-items: center; gap: 6px; margin: 0; padding: 6px 12px 0; font-size: 12px;
+  color: var(--ink-2); }
+.cv-pick-link .i { width: 13px; height: 13px; flex: none; color: var(--accent-2); }
 .mg-ghost.is-marquee { border-style: solid; border-width: 1px; border-radius: 2px; background: color-mix(in srgb, var(--accent) 8%, transparent); }
 .mg-surface.is-panning { cursor: grab; }
 .mg-surface.is-grabbing { cursor: grabbing; }

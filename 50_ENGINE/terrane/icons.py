@@ -22,10 +22,34 @@ from __future__ import annotations
 import json
 import re
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 
 #: A key matches as whole words: "s3" in "Amazon S3", not in "s3x".
 _WORD = r"(?<![a-z0-9])%s(?![a-z0-9])"
+
+#: The marks a shape of a diagram's own can carry as a tile (V16), by the
+#: folder they sit in and the name the panel lists them under. A shape names
+#: one as `aws/lambda`; the plain icons have no folder.
+MARK_SETS = (("aws", "AWS"), ("azure", "Azure"), ("gcp", "Google Cloud"), ("brands", "Vendors"))
+_MARK = re.compile(r"(?:%s)/[a-z0-9-]+" % "|".join(folder for folder, _title in MARK_SETS))
+
+
+def is_mark(name: object) -> bool:
+    """Whether a shape's icon names a provider's or vendor's mark rather
+    than one of the plain icons."""
+    return isinstance(name, str) and _MARK.fullmatch(name) is not None
+
+
+def mark_file(name: object) -> Optional[Path]:
+    """The file of the mark a shape names (`aws/lambda`), where the app
+    ships it; None for a plain icon's name or a mark that is not shipped."""
+    if not is_mark(name):
+        return None
+    from .shipped import shipped_web
+
+    web = shipped_web()
+    path = web / "icons" / (str(name) + ".svg") if web else None
+    return path if path is not None and path.is_file() else None
 
 #: The app's `web/` folder, under the repository root.
 WEB = Path("80_APP") / "web"
@@ -91,6 +115,32 @@ class IconMap:
     def _served(self, file: str) -> str:
         """The path the app loads, or nothing when the file is not shipped."""
         return "icons/" + file if file and (self.root / file).exists() else ""
+
+    def listing(self) -> List[Dict[str, str]]:
+        """Every mark a shape of a diagram's own can carry, set by set, each
+        with the words that find it: its file's name, and every word
+        `map.json` points at it with, so "kubernetes" finds EKS, AKS and
+        GKE and "kafka" both MSK and Kafka's own."""
+        words: Dict[str, set] = {}
+
+        def note(table: Optional[dict]) -> None:
+            for key, file in (table or {}).items():
+                words.setdefault(str(file)[:-len(".svg")], set()).add(re.sub(r"[-_]+", " ", str(key).lower()))
+
+        for provider in self.providers.values():
+            note(provider.get("names"))
+            note(provider.get("kinds"))
+        note(self.vendors)
+        note(self.groups)
+        out = []
+        for folder, title in MARK_SETS:
+            where = self.root / folder
+            files = sorted((p for p in where.glob("*.svg") if p.is_file()), key=lambda p: p.name) if where.is_dir() else []
+            for path in files:
+                name = folder + "/" + path.stem
+                found = {path.stem.replace("-", " ")} | words.get(name, set())
+                out.append({"icon": name, "set": title, "words": " ".join(sorted(found))})
+        return out
 
     def read(self, served: str) -> Optional[bytes]:
         """The bytes of a served path (`icons/aws/eks.svg`), for a painter

@@ -14,7 +14,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from terrane.blocks import load_components  # noqa: E402
-from terrane.icons import IconMap, web_dir  # noqa: E402
+from terrane.icons import MARK_SETS, IconMap, mark_file, web_dir  # noqa: E402
 from terrane.techline import TechnologyLines  # noqa: E402
 
 from _fixture import REPO, remove_scratch, seeded_model, seeded_root  # noqa: E402
@@ -187,6 +187,37 @@ class TestIcons(unittest.TestCase):
         self.assertEqual(groups["AWS region"]["icon"], "icons/aws/group-region.svg")
         self.assertEqual(groups["GCP project"]["icon"], "")
 
+
+
+class TestTheMarksATileCarries(unittest.TestCase):
+    """A shape of a diagram's own, as Icon tiles, carries any shipped mark
+    (V16): the panel lists them set by set, with the words that find each."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.marks = IconMap(WEB).listing()
+
+    def test_every_shipped_mark_is_listed_once_set_by_set(self) -> None:
+        shipped = sorted("%s/%s" % (folder, p.stem) for folder, _ in MARK_SETS
+                         for p in (WEB / "icons" / folder).glob("*.svg"))
+        self.assertEqual(sorted(m["icon"] for m in self.marks), shipped)
+        self.assertEqual(len(shipped), 168)
+        order = [title for _, title in MARK_SETS]
+        sets = [order.index(m["set"]) for m in self.marks]
+        self.assertEqual(sets, sorted(sets))
+        for m in self.marks:
+            with self.subTest(mark=m["icon"]):
+                self.assertIsNotNone(mark_file(m["icon"]))
+
+    def test_a_word_map_json_points_with_finds_the_mark(self) -> None:
+        """"kubernetes" finds the three clouds' clusters, though no file is
+        named so; a kind's hyphens read as spaces."""
+        found = {m["icon"] for m in self.marks if "kubernetes" in m["words"].split()}
+        self.assertTrue({"aws/eks", "azure/aks", "gcp/gke"} <= found, found)
+        eks = next(m for m in self.marks if m["icon"] == "aws/eks")
+        self.assertIn("container platform", eks["words"])
+        self.assertIsNone(mark_file("server"))
+        self.assertIsNone(mark_file("aws/no-such-mark"))
 
 
 class TestTheCurationClearsOnlyWhatItWrote(unittest.TestCase):

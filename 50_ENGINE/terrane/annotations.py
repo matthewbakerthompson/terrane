@@ -20,12 +20,21 @@ Each item is a mapping:
 in the innermost of them, or on the sheet when it is in none. The sheet's
 corner is where the drawing's positions start (`terrane.draw.arranged`), so
 a note drawn beside a box stays beside it. A line's ends are each a record
-on the drawing by id, a key of this list, or a point `[x, y]` on the sheet.
+on the drawing by id, a key of this list, or a point `[x, y]` on the sheet;
+a straight line may bend at points of the sheet on its way, `via: [[x, y],
+...]`, while a square or a curved one turns by itself. An end on a box may
+be held at a point of its outline, `from_at` or `to_at: [across, down]`,
+shares of the box from its top left corner.
+A shape, a note or text may be turned about its middle, `rotate` degrees
+clockwise; a frame is not, since what sits in it would turn too.
 """
 
 from __future__ import annotations
 
+import re
 from typing import Any, Dict, List, Sequence
+
+from .icons import is_mark, mark_file
 
 #: What an item of the diagram's own is.
 ROLES = ("shape", "text", "note", "frame", "line")
@@ -34,11 +43,39 @@ ROLES = ("shape", "text", "note", "frame", "line")
 SHAPES = ("rectangle", "rounded", "ellipse", "diamond", "hexagon", "cylinder", "cloud", "document", "person",
           "callout")
 
-#: The six fills a person picks from, each with the edge it is drawn with.
+#: The fills a person picks from, in Illustrated, the look of the diagram's
+#: own: the app's own picture language (the Diagrams page's pictures), every
+#: one edged in ink. White is the pictures' paper, stone their mute, mint
+#: their wash and accent their one strong color, which carries its words in
+#: paper; a drawing has one thing it is about, and accent is for that.
 FILLS = {
-    "yellow": ("#fdf0b8", "#d9bd4f"), "mint": ("#d9efe5", "#6fae92"), "lavender": ("#e7e3f7", "#9289c9"),
-    "rose": ("#f9e1dc", "#d48f84"), "white": ("#ffffff", "#a39c8d"), "stone": ("#ece7dd", "#a39c8d"),
+    "yellow": "#fbefc6", "mint": "#b7dad3", "lavender": "#dcd7f0", "rose": "#f2d2cb", "white": "#fffdf8",
+    "stone": "#e1dacd", "accent": "#0f766e",
 }
+#: The words on a fill that is not light enough for ink.
+WORDS_ON = {"accent": "#fffdf8"}
+#: How heavy an edge is drawn, by a look's `weight`, in pixels: M when it
+#: says nothing.
+WEIGHTS = {"s": 1.0, "m": 1.25, "l": 2.0}
+#: The most a look's own corners are rounded by, a radius in pixels.
+MOST_CORNERS = 32
+#: What a look says, in the order the file writes it (V16's Style tab).
+LOOK_KEYS = ("fill", "line", "text", "icon", "opacity", "weight", "corners", "shadow")
+#: What only a box with a fill and an edge has: a line and text have none.
+BOX_LOOKS = ("opacity", "weight", "corners")
+
+#: How a diagram draws its own (V16): Illustrated, the app's own picture
+#: language, or Icon tiles, every shape a tile of its color with an icon and
+#: its words under it, as the clouds draw their reference architectures. A
+#: diagram says which under `look:` in its file, and is Illustrated when it
+#: says nothing.
+LOOKS = ("illustrated", "tiles")
+DEFAULT_LOOK = "illustrated"
+#: The icon a shape carries as a tile when it names none of its own:
+#: `canvas/own-icons.js` has them all.
+KIND_ICONS = {"rectangle": "box", "rounded": "box", "ellipse": "circle", "diamond": "diamond",
+              "hexagon": "hexagon", "cylinder": "database", "cloud": "cloud", "document": "file-text",
+              "person": "user", "callout": "message-square"}
 
 #: An outline drawn solid, dashed or not at all; the words small, middling
 #: or large, in pixels.
@@ -54,9 +91,11 @@ ENDS = ("end", "both", "none")
 ROUTES = ("straight", "square", "curved")
 
 _KEYS = {
-    "line": {"key", "role", "label", "from", "to", "ends", "route", "look"},
-    "box": {"key", "role", "label", "in", "at", "size", "shape", "look"},
+    "line": {"key", "role", "label", "from", "to", "ends", "route", "look", "via", "from_at", "to_at"},
+    "box": {"key", "role", "label", "in", "at", "size", "shape", "look", "rotate"},
 }
+#: What may be turned: a frame is not, since what sits in it would turn too.
+TURNS = ("shape", "note", "text")
 
 
 class AnnotationError(ValueError):
@@ -108,6 +147,22 @@ def read(raw: Any, where: str) -> List[Dict[str, Any]]:
                 raise AnnotationError("%s: ends is one of %s" % (at, ", ".join(ENDS)))
             if item.get("route", "straight") not in ROUTES:
                 raise AnnotationError("%s: route is one of %s" % (at, ", ".join(ROUTES)))
+            for end, held in (("from", "from_at"), ("to", "to_at")):
+                if held not in item:
+                    continue
+                v = item[held]
+                if not _pair(v) or not all(0 <= x <= 1 for x in v):
+                    raise AnnotationError("%s: %s is where on its box the end is held, [across, down], each from "
+                                          "0 to 1" % (at, held))
+                if not isinstance(item.get(end), str):
+                    raise AnnotationError("%s: %s holds an end on a box, and %s is a point" % (at, held, end))
+            if "via" in item:
+                via = item["via"]
+                if not isinstance(via, list) or not via or not all(_pair(p) for p in via):
+                    raise AnnotationError("%s: via is the points it bends at, [[x, y], ...]" % at)
+                if item.get("route", "straight") != "straight":
+                    raise AnnotationError("%s: a %s line turns by itself; via is for a straight one" % (
+                        at, item.get("route")))
         else:
             if not _pair(item.get("at")):
                 raise AnnotationError("%s: at is its corner, [x, y]" % at)
@@ -119,12 +174,42 @@ def read(raw: Any, where: str) -> List[Dict[str, Any]]:
             inside = item.get("in", [])
             if not isinstance(inside, list) or not all(isinstance(k, str) for k in inside):
                 raise AnnotationError("%s: in is the keys of the frames it sits in, outermost first" % at)
+            if "rotate" in item:
+                turn = item["rotate"]
+                if role not in TURNS:
+                    raise AnnotationError("%s: a %s is not turned, since what sits in it would turn too" % (at, role))
+                if isinstance(turn, bool) or not isinstance(turn, (int, float)) or not -360 < turn < 360:
+                    raise AnnotationError("%s: rotate is degrees clockwise about its middle, more than -360 "
+                                          "and less than 360" % at)
         look = item.get("look", {})
         if not isinstance(look, dict):
-            raise AnnotationError("%s: look is a mapping of fill, line and text" % at)
-        wrong = sorted(set(look) - {"fill", "line", "text"})
+            raise AnnotationError("%s: look is a mapping of %s" % (at, ", ".join(LOOK_KEYS)))
+        wrong = sorted(set(look) - set(LOOK_KEYS))
         if wrong:
-            raise AnnotationError("%s: look has %s; it has fill, line and text" % (at, ", ".join(wrong)))
+            raise AnnotationError("%s: look has %s; it has %s" % (at, ", ".join(wrong), ", ".join(LOOK_KEYS)))
+        if role in ("line", "text"):
+            boxed = [k for k in BOX_LOOKS + ("shadow",) if k in look]
+            if boxed:
+                raise AnnotationError("%s: look has %s, which a %s does not have" % (at, ", ".join(boxed), role))
+        if "shadow" in look and role not in ("shape", "note"):
+            raise AnnotationError("%s: look has shadow, which a %s does not cast" % (at, role))
+        if "opacity" in look and (isinstance(look["opacity"], bool) or not isinstance(look["opacity"], int)
+                                  or not 10 <= look["opacity"] <= 100):
+            raise AnnotationError("%s: look.opacity is how much of its fill shows, a whole percent from 10 to 100" % at)
+        if "weight" in look and look["weight"] not in WEIGHTS:
+            raise AnnotationError("%s: look.weight is how heavy its edge is, one of %s" % (at, ", ".join(WEIGHTS)))
+        if "corners" in look and (isinstance(look["corners"], bool) or not isinstance(look["corners"], (int, float))
+                                  or not 0 <= look["corners"] <= MOST_CORNERS):
+            raise AnnotationError("%s: look.corners is the radius its corners are rounded by, from 0 to %d"
+                                  % (at, MOST_CORNERS))
+        if "shadow" in look and look["shadow"] != "none":
+            raise AnnotationError("%s: look.shadow is none, or left out for the shadow its kind casts" % at)
+        if "icon" in look and not (isinstance(look["icon"], str) and (re.fullmatch(r"[a-z0-9-]+", look["icon"])
+                                                                       or is_mark(look["icon"]))):
+            raise AnnotationError("%s: look.icon is the name of an icon, or a provider's mark as aws/lambda, as the "
+                                  "canvas's picker names one" % at)
+        if is_mark(look.get("icon")) and mark_file(look["icon"]) is None:
+            raise AnnotationError("%s: look.icon names %s, which is no mark the app ships" % (at, look["icon"]))
         if "fill" in look and look["fill"] not in FILLS:
             raise AnnotationError("%s: look.fill is one of %s" % (at, ", ".join(FILLS)))
         if "line" in look and look["line"] not in OUTLINES:

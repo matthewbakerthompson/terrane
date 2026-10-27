@@ -659,7 +659,10 @@ class TestTheTour(unittest.TestCase):
         for where in ("openGuide", "openStart"):
             with self.subTest(where=where):
                 self.assertIn("startTour(", self._function(app_js, where))
-        actions = app_js.split("return here.concat(", 1)[1].split(");", 1)[0]
+        # The palette's actions, by the function that makes them: read by the
+        # line they were returned on, the test broke when the canvas's own
+        # actions went first.
+        actions = self._function(app_js, "paletteActions")
         self.assertIn('name: "Take the tour"', actions)
         self.assertIn("startTour(", actions)
 

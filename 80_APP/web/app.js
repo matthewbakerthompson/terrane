@@ -324,12 +324,38 @@
   // ---- search -----------------------------------------------------------
 
   function loadIndex() {
+    // The search index rides beside the list, not in its way: until it
+    // comes, or where it never does, the palette matches names as it did.
+    api("/api/search/index").then(function (index) {
+      state.search = index && window.TerraneSearch && index.version === TerraneSearch.VERSION ? index : null;
+    }).catch(function () { state.search = null; });
     return api("/api/list").then(function (data) {
-      state.index = data.items.map(function (item) {
-        item.hay = ((item.name || "") + " " + item.id + " " + (item.type || "")).toLowerCase();
-        return item;
-      });
+      state.index = data.items;
     });
+  }
+
+  /* The records a query finds, best first, each {item, s, m}: s its place,
+   * m how many of the query's words it has. Scored by the engine's index
+   * (search.js, terrane/search.py) when the page has it, which reads
+   * descriptions, tags and the library's aliases and forgives a typo; by
+   * the start of a name or an id when it does not, as the palette always
+   * did. `score` is the palette's own, for the second. */
+  function findThings(q, score) {
+    var out = [];
+    if (state.search && window.TerraneSearch) {
+      var byKey = {};
+      (state.index || []).forEach(function (item) { byKey[item.type + " " + item.id] = item; });
+      TerraneSearch.search(state.search, q, { limit: 0 }).forEach(function (h, i) {
+        var item = byKey[h.type + " " + h.id];
+        if (item) out.push({ s: i, m: h.matched, item: item });
+      });
+      return out;
+    }
+    (state.index || []).forEach(function (item) {
+      var s = score(item.name || item.id, item.id);
+      if (s >= 0) out.push({ s: s, m: 0, item: item });
+    });
+    return out;
   }
 
   /* Where a found thing goes: selected on the drawing when it is on it, and
@@ -2649,7 +2675,9 @@
     // A diagram drawn on the canvas has shapes of its own, drawn over it
     // by maxGraph wherever it is shown, read only here; the canvas attaches
     // its own (canvas/engine.js).
-    if (!Canvas.cv && Canvas.engine && (payload.annotations || []).length) Canvas.engine.attach(cyNow, payload.annotations);
+    if (!Canvas.cv && Canvas.engine && (payload.annotations || []).length) {
+      Canvas.engine.attach(cyNow, payload.annotations, payload.look);
+    }
 
     function finishGraph(layeredNow) {
     $("cy").classList.remove("is-laying");
@@ -2773,7 +2801,10 @@
       dragFrom = null;
       n.removeClass("dragging");
       clearDrop();
-      Canvas.guidesOff(from);
+      // The guides go and what they snapped to stays, for the move to put
+      // the box there: cleared here, it was never put on the line its
+      // guide showed, nor at the gap its measures said.
+      Canvas.guidesOff();
       if (!t && !g) {
         // On the canvas a box put down in its own boundary stays where it
         // was put, and the diagram keeps it there.
@@ -3439,7 +3470,11 @@
 
   function currentDrawingPng(scale) {
     if (tilesShown()) return tilesPng(scale);
-    return state.cy ? drawingPng(state.cy, scale) : Promise.reject(new Error("no drawing on the page"));
+    if (!state.cy) return Promise.reject(new Error("no drawing on the page"));
+    // Where maxGraph draws the sheet, the picture is its drawing: Cytoscape's
+    // beneath has none of the diagram's own frames, notes and lines.
+    if (Canvas.engine && Canvas.engine.draws(state.cy)) return Canvas.engine.picture(state.cy, scale);
+    return drawingPng(state.cy, scale);
   }
 
   /* ---- routing -----------------------------------------------------------
@@ -7954,6 +7989,14 @@
     scheduleOverview(cy);
   }
 
+  // The diagram's own changed on maxGraph's sheet, which Cytoscape never
+  // hears of: the overview is drawn again from what is drawn now. A new
+  // diagram has no records to fit, and its overview was never hooked to
+  // the sheet; the first shape drawn hooks it.
+  function overviewStale() {
+    if (state.cy && !state.cy.destroyed()) syncOverview(state.cy);
+  }
+
   function scheduleOverview(cy) {
     if (overview.queued) return;
     overview.queued = true;
@@ -7985,7 +8028,11 @@
     prompt.hidden = true;
     if (!cy || cy.destroyed() || cy !== state.cy || tilesShown()) return;
     var bb = cy.elements().boundingBox({ includeLabels: false });
-    if (!(bb.w > 0) || !(bb.h > 0)) return;
+    // On maxGraph's sheet the drawing is the estate and the diagram's own,
+    // and the overview is drawn from what it draws.
+    var mirror = Canvas.engine && Canvas.engine.draws(cy) ? Canvas.engine : null;
+    if (mirror) bb = mirror.around(bb);
+    if (!bb || !(bb.w > 0) || !(bb.h > 0)) return;
     var ext = cy.extent();
     var slack = 4 / cy.zoom();
     var whole = ext.x1 <= bb.x1 + slack && ext.x2 >= bb.x2 - slack && ext.y1 <= bb.y1 + slack && ext.y2 >= bb.y2 - slack;
@@ -8018,27 +8065,37 @@
       base.height = canvas.height;
       var g = base.getContext("2d");
       g.setTransform(dpr * s, 0, 0, dpr * s, -bb.x1 * s * dpr, -bb.y1 * s * dpr);
-      // Boundaries outermost first, then the boxes, each in its own colors.
-      var groups = cy.nodes().filter(function (n) { return n.isParent(); }).sort(function (a, b) {
-        return a.ancestors().length - b.ancestors().length;
-      });
-      groups.forEach(function (n) {
-        var b = n.boundingBox({ includeLabels: false });
-        g.fillStyle = n.style("background-color");
-        g.strokeStyle = n.style("border-color");
-        g.lineWidth = 1 / s;
-        g.fillRect(b.x1, b.y1, b.w, b.h);
-        g.strokeRect(b.x1, b.y1, b.w, b.h);
-      });
-      cy.nodes().forEach(function (n) {
-        if (n.isParent()) return;
-        var b = n.boundingBox({ includeLabels: false });
-        g.fillStyle = n.style("background-color");
-        g.strokeStyle = n.style("border-color");
-        g.lineWidth = 1.5 / s;
-        g.fillRect(b.x1, b.y1, b.w, b.h);
-        g.strokeRect(b.x1, b.y1, b.w, b.h);
-      });
+      if (mirror) {
+        // Every box in the order the sheet paints it, so a frame round
+        // boundaries is under them and a note over the box it is by.
+        g.lineWidth = 1.25 / s;
+        (mirror.sheet() || []).forEach(function (it) {
+          if (it.fill) { g.fillStyle = it.fill; g.fillRect(it.x, it.y, it.w, it.h); }
+          if (it.stroke) { g.strokeStyle = it.stroke; g.strokeRect(it.x, it.y, it.w, it.h); }
+        });
+      } else {
+        // Boundaries outermost first, then the boxes, each in its own colors.
+        var groups = cy.nodes().filter(function (n) { return n.isParent(); }).sort(function (a, b) {
+          return a.ancestors().length - b.ancestors().length;
+        });
+        groups.forEach(function (n) {
+          var b = n.boundingBox({ includeLabels: false });
+          g.fillStyle = n.style("background-color");
+          g.strokeStyle = n.style("border-color");
+          g.lineWidth = 1 / s;
+          g.fillRect(b.x1, b.y1, b.w, b.h);
+          g.strokeRect(b.x1, b.y1, b.w, b.h);
+        });
+        cy.nodes().forEach(function (n) {
+          if (n.isParent()) return;
+          var b = n.boundingBox({ includeLabels: false });
+          g.fillStyle = n.style("background-color");
+          g.strokeStyle = n.style("border-color");
+          g.lineWidth = 1.5 / s;
+          g.fillRect(b.x1, b.y1, b.w, b.h);
+          g.strokeRect(b.x1, b.y1, b.w, b.h);
+        });
+      }
       overview.base = base;
     }
     var ctx = canvas.getContext("2d");
@@ -8840,10 +8897,12 @@
   var pal = { open: false, hits: [], at: 0, from: null, pick: null };
 
   function paletteActions() {
+    // On the canvas, its own tools and actions come first.
+    var canvas = Canvas.cv ? Canvas.paletteActions() : [];
     var here = viewEditable() ? [
       { kind: "action", name: "Add to this view…", hint: "Pin anything in the model to this drawing", go: function () { setTimeout(addToView, 0); } },
     ] : [];
-    return here.concat(tourPossible() ? [
+    return canvas.concat(here, tourPossible() ? [
       { kind: "action", name: "Take the tour", hint: "Seven steps through the sample estate, with a pointer", go: function () { startTour(null); } },
     ] : [], [
       { kind: "action", name: "Assemble a project", hint: "Pick parts, see the drawing, save one file", go: function () { openAssemble(null); } },
@@ -8889,13 +8948,13 @@
       ((state.lastGraph && state.lastGraph.elements) || []).forEach(function (e) {
         if (e.data.entityType) shown[e.data.entityType] = true;
       });
-      (state.index || []).forEach(function (item) {
-        if (pal.mode.skip && pal.mode.skip(item.id)) return;
-        var s = score(item.name || item.id, item.id);
-        if (s >= 0) picks.push({ s: s, k: shown[item.type] ? 0 : 1, item: item });
+      findThings(q, score).forEach(function (x) {
+        if (pal.mode.skip && pal.mode.skip(x.item.id)) return;
+        picks.push({ s: x.s, m: x.m, k: shown[x.item.type] ? 0 : 1, item: x.item });
       });
+      // As many of the words first, then the kinds on the drawing.
       picks.sort(function (a, b) {
-        return a.s - b.s || a.k - b.k
+        return b.m - a.m || a.k - b.k || a.s - b.s
           || String(a.item.name || a.item.id).localeCompare(String(b.item.name || b.item.id));
       });
       var mode = pal.mode;
@@ -8929,11 +8988,7 @@
       }) });
     }
     if (q) {
-      var things = [];
-      (state.index || []).forEach(function (item) {
-        var s = score(item.name || item.id, item.id);
-        if (s >= 0) things.push({ s: s, item: item });
-      });
+      var things = findThings(q, score);
       things.sort(function (a, b) {
         return a.s - b.s || String(a.item.name || a.item.id).localeCompare(String(b.item.name || b.item.id));
       });
@@ -8948,7 +9003,13 @@
     var acts = paletteActions().map(function (a) { a.s = score(a.name, a.hint); return a; })
       .filter(function (a) { return a.s >= 0; });
     acts.sort(function (a, b) { return a.s - b.s; });
-    if (acts.length) groups.push({ name: "Actions", items: q ? acts : acts.slice(0, 6) });
+    if (acts.length) {
+      var named = { name: "Actions", items: q ? acts : acts.slice(0, 6) };
+      // Typing the start of a command's name means the command: "note" is
+      // the Note tool, though the search finds records whose descriptions
+      // say note, and Enter takes the first row.
+      if (q && acts[0].s === 0) groups.unshift(named); else groups.push(named);
+    }
     return groups;
   }
 
@@ -16063,15 +16124,11 @@
 
     // The canvas's tools, its empty state, and dropping onto the sheet.
     $("cvAdd").addEventListener("click", function () {
-      if ($("cvPicker").hidden || $("cvBoundary").getAttribute("aria-pressed") === "true") Canvas.openPicker("all");
+      if ($("cvPicker").hidden) Canvas.openPicker("all");
       else Canvas.closePicker();
     });
     $("cvSelect").addEventListener("click", function () { Canvas.setTool("select"); });
     $("cvPan").addEventListener("click", function () { Canvas.setTool(Canvas.cv && Canvas.cv.tool === "pan" ? "select" : "pan"); });
-    $("cvBoundary").addEventListener("click", function () {
-      if (!$("cvPicker").hidden && $("cvBoundary").getAttribute("aria-pressed") === "true") Canvas.closePicker();
-      else Canvas.openPicker("estate", true);
-    });
     // The tools that draw the diagram's own shapes (canvas/engine.js).
     $("cvShapes").addEventListener("click", function () { Canvas.openShapes(); });
     $("cvLine").addEventListener("click", function () { Canvas.openLines(); });
@@ -16082,6 +16139,9 @@
       });
     });
     $("cvUndo").addEventListener("click", function () { Canvas.undo(true); });
+    $("cvSnap").addEventListener("click", function () { Canvas.toggleSnap(); });
+    $("cvJumps").addEventListener("click", function () { Canvas.toggleJumps(); });
+    $("cvKeysBtn").addEventListener("click", function () { Canvas.toggleKeys(); });
     $("cvRedo").addEventListener("click", function () { Canvas.undo(false); });
     $("cvFromLibrary").addEventListener("click", function () { Canvas.openPicker("library"); });
     $("cvFromEstate").addEventListener("click", function () { Canvas.openPicker("estate"); });
@@ -16121,8 +16181,7 @@
     });
     document.addEventListener("mousedown", function (e) {
       var pick = $("cvPicker");
-      if (pick.hidden || pick.contains(e.target) || $("cvAdd").contains(e.target)
-          || $("cvBoundary").contains(e.target)) return;
+      if (pick.hidden || pick.contains(e.target) || $("cvAdd").contains(e.target)) return;
       Canvas.closePicker();
     });
     $("btnHelp").addEventListener("click", openGuide);
@@ -16349,6 +16408,7 @@
       if (e.key === "Escape" && !$("newMenu").hidden) { closeNewMenu(); $("btnNew").focus(); return; }
       if (e.key === "Escape" && Canvas.cv && !$("cvPicker").hidden) { Canvas.closePicker(); $("cvAdd").focus(); return; }
       if (e.key === "Escape" && !$("drawer").hidden) { closeDrawer(); return; }
+      if (e.key === "Escape" && $("cvKeys") && !$("cvKeys").hidden) { Canvas.toggleKeys(false); return; }
       if (e.key === "Escape" && document.querySelector(".shell").classList.contains("insp-over")) { inspectorOver(false); return; }
       // "/" goes to the search, as it does on GitHub and in most tools,
       // unless the keyboard is already in a field.
@@ -16470,6 +16530,7 @@
     openDiagrams: openDiagrams,
     openEntityEditor: openEntityEditor,
     openRegroupChooser: openRegroupChooser,
+    overviewStale: overviewStale,
     placeChooser: placeChooser,
     positionKey: positionKey,
     REDUCED: REDUCED,

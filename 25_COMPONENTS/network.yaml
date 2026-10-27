@@ -5,6 +5,12 @@
 
 - component_type_id: vpc
   name: Virtual network
+  aliases:
+    - VPC
+    - virtual private cloud
+    - VNet
+    - private network
+    - cloud network
   category: Network
   applies_to: tech_services
   shape: rectangle
@@ -19,6 +25,11 @@
 
 - component_type_id: subnet
   name: Subnet
+  aliases:
+    - subnetwork
+    - network segment
+    - VLAN
+    - address range
   category: Network
   applies_to: tech_services
   shape: rectangle
@@ -33,6 +44,11 @@
 
 - component_type_id: load-balancer
   name: Load balancer
+  aliases:
+    - load balancing
+    - reverse proxy
+    - ingress
+    - traffic distribution
   category: Network
   applies_to: tech_services
   shape: hexagon
@@ -48,6 +64,10 @@
 
 - component_type_id: cdn
   name: Content delivery network
+  aliases:
+    - CDN
+    - content delivery
+    - edge cache
   category: Network
   applies_to: tech_services
   shape: hexagon
@@ -63,6 +83,10 @@
 
 - component_type_id: api-gateway
   name: API gateway
+  aliases:
+    - API management
+    - API proxy
+    - API front door
   category: Network
   applies_to: tech_services
   shape: hexagon
@@ -78,6 +102,11 @@
 
 - component_type_id: private-egress
   name: Private egress
+  aliases:
+    - private endpoint
+    - private connectivity
+    - service endpoint
+    - private access to services
   category: Network
   applies_to: tech_services
   shape: hexagon
@@ -93,6 +122,13 @@
 
 - component_type_id: hybrid-link
   name: Hybrid link
+  aliases:
+    - dedicated connection
+    - private circuit
+    - site-to-site VPN
+    - interconnect
+    - MPLS
+    - leased line
   category: Network
   applies_to: tech_services
   shape: hexagon
@@ -108,6 +144,11 @@
 
 - component_type_id: transit-gateway
   name: Transit hub
+  aliases:
+    - network hub
+    - hub and spoke
+    - transit network
+    - routing hub
   category: Network
   applies_to: tech_services
   shape: hexagon
@@ -123,6 +164,10 @@
 
 - component_type_id: dns
   name: DNS
+  aliases:
+    - domain name system
+    - name resolution
+    - DNS zone
   category: Network
   applies_to: tech_services
   shape: hexagon
@@ -138,6 +183,10 @@
 
 - component_type_id: firewall
   name: Network firewall
+  aliases:
+    - NGFW
+    - network security
+    - perimeter firewall
   category: Network
   applies_to: tech_services
   shape: rhomboid
@@ -154,6 +203,11 @@
 
 - component_type_id: nat-gateway
   name: NAT gateway
+  aliases:
+    - NAT
+    - network address translation
+    - outbound gateway
+    - egress gateway
   category: Network
   applies_to: tech_services
   shape: rhomboid
@@ -169,6 +223,10 @@
 
 - component_type_id: remote-access
   name: Remote access
+  aliases:
+    - VPN
+    - client VPN
+    - remote access VPN
   category: Network
   applies_to: tech_services
   shape: rhomboid
@@ -185,6 +243,10 @@
 
 - component_type_id: service-mesh
   name: Service mesh
+  aliases:
+    - mesh
+    - sidecar proxy
+    - service-to-service traffic
   category: Network
   applies_to: tech_services
   shape: rhomboid

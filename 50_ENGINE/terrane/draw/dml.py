@@ -11,7 +11,10 @@ connector glued to the sites it left from and arrived at, one of
 PowerPoint's own presets set to the route the router laid down, with its
 arrow head and its label card. The sheet's inches come from the drawing's
 pixels at the scale that fits the slide's picture box, so the shapes
-stand where the picture would.
+stand where the picture would. What the diagram draws of its own on the
+canvas is there too, stacked as the canvas stacks it: a frame, note, text
+or shape of the same outline and fill as the picture's, and a line a path
+through its turns with its heads.
 
 What stays on the picture: the provider marks and type glyphs in a node's
 corner (a mark is an SVG file, which a slide cannot hold), the legend and
@@ -33,9 +36,11 @@ clockwise.
 from __future__ import annotations
 
 import math
-from typing import List, Sequence, Tuple
+from typing import Callable, List, Sequence, Tuple
 from xml.sax.saxutils import escape
 
+from . import annotations as own_module
+from .annotations import Own
 from .shapes import HEADLESS, PILL_RADIUS
 from .svg import (EDGE, INK_SOFT, Box, Point, Scene, SceneEdge, SceneNode, polygon_points, round_polygon_radius,
                   round_rect_radius)
@@ -194,9 +199,18 @@ class _Sheet:
         return max(100, int(round(px * self.scale * 72 * 100)))
 
 
-def _run(text: str, size: int, color: str, bold: bool) -> str:
+def _run(text: str, size: int, color: str, bold: bool, face: str = FONT) -> str:
     return ('<a:r><a:rPr lang="en-US" sz="%d"%s dirty="0">%s<a:latin typeface="%s"/></a:rPr><a:t>%s</a:t></a:r>'
-            % (size, ' b="1"' if bold else "", _color(color, "0F172A"), FONT, escape(text)))
+            % (size, ' b="1"' if bold else "", _color(color, "0F172A"), face, escape(text)))
+
+
+#: A hard shadow, as the app's pictures cast one under a shape or a note:
+#: ink, unblurred, down and right, so its distance is the diagonal of the
+#: offset (a square root, the one call the painter's rule allows).
+def _hard_shadow(sheet: "_Sheet") -> str:
+    return ('<a:effectLst><a:outerShdw blurRad="0" dist="%d" dir="2700000" algn="tl" rotWithShape="0">'
+            '<a:srgbClr val="%s"/></a:outerShdw></a:effectLst>'
+            % (sheet.size(math.sqrt(2 * own_module.SHADOW * own_module.SHADOW)), _hex(own_module.INK, "2E2A25")))
 
 
 def _paragraph(runs: str, align: str) -> str:
@@ -345,6 +359,152 @@ def _label_xml(shape_id: int, e: SceneEdge, sheet: _Sheet) -> str:
                _paragraph(_run(e.label, sheet.font(10), LABEL_INK, False), "ctr")))
 
 
+def _fill(color: str, opacity: float = 1.0) -> str:
+    return "<a:noFill/>" if not color or color == "none" else _color(color, "FFFFFF", opacity)
+
+
+def own_path(shape: str, w: float, h: float) -> str:
+    """A shape of the diagram's own as a DrawingML path, from the same
+    fractions of its box the picture draws it by (`annotations.PATHS`)."""
+    parts = []
+    for op in own_module.PATHS.get(shape) or own_module.PATHS["rectangle"]:
+        if op[0] == "Z":
+            parts.append("<a:close/>")
+            continue
+        pts = [(op[i] * w * K, op[i + 1] * h * K) for i in range(1, len(op), 2)]
+        if op[0] == "M":
+            parts.append(_move(*pts[0]))
+        elif op[0] == "L":
+            parts.append(_line(*pts[0]))
+        elif op[0] == "Q":
+            parts.append(_quad(pts[0][0], pts[0][1], pts[1][0], pts[1][1]))
+        else:
+            parts.append("<a:cubicBezTo>%s%s%s</a:cubicBezTo>" % (_pt(*pts[0]), _pt(*pts[1]), _pt(*pts[2])))
+    return '<a:path w="%d" h="%d">%s</a:path>' % (int(round(w * K)), int(round(h * K)), "".join(parts))
+
+
+def _own_xml(shape_id: int, o: Own, sheet: _Sheet) -> str:
+    """A frame, note, text or shape of the diagram's own: its outline, its
+    fill and edge, and its words where the canvas sets them, a frame's name
+    in its corner, a note's at its top, a shape's in its middle."""
+    if o.look == "tiles" and o.role == "shape" and o.tint:
+        return _tile_xml(shape_id, o, sheet)
+    x1, y1, x2, y2 = o.box
+    w, h = x2 - x1, y2 - y1
+    if o.corners:
+        # roundRect's adjustment is the radius over the shorter side, at most
+        # a half.
+        geometry = ('<a:prstGeom prst="roundRect"><a:avLst><a:gd name="adj" fmla="val %d"/></a:avLst></a:prstGeom>'
+                    % min(50000, int(round(o.corners / max(min(w, h), 1) * 100000))))
+    elif o.role == "shape" and o.shape != "rounded":
+        geometry = ('<a:custGeom><a:avLst/><a:gdLst/><a:ahLst/><a:cxnLst/><a:rect l="0" t="0" r="w" b="h"/>'
+                    '<a:pathLst>%s</a:pathLst></a:custGeom>' % own_path(o.shape, w, h))
+    else:
+        geometry = '<a:prstGeom prst="rect"><a:avLst/></a:prstGeom>'
+    edge = ("<a:ln><a:noFill/></a:ln>" if o.edge == "none" else '<a:ln w="%d">%s%s</a:ln>' % (
+        sheet.line(o.weight), _color(o.edge, "A39C8D"), _dash("dashed" if o.dashed else "")))
+    px, py = own_module.PADDING.get(o.role, (8, 8))
+    middle = o.role == "shape"
+    ink = own_module.TEXT_INK if o.role == "text" else o.words
+    lines = o.label.split("\n") if o.label else [""]
+    if middle:
+        # The name in the display face, bold; the rest a caption under it.
+        caption = own_module.CAPTION_INK if o.words == own_module.INK else o.words
+        kept = [p for p in lines if p.strip()] or [""]
+        paragraphs = _paragraph(_run(kept[0], sheet.font(o.size), ink, True, "Libre Franklin"), "ctr") + "".join(
+            _paragraph(_run(p, sheet.font(o.size - own_module.CAPTION_STEP), caption, False), "ctr") for p in kept[1:])
+    else:
+        paragraphs = "".join(_paragraph(_run(line, sheet.font(o.size), ink, o.role == "frame"), "l") for line in lines)
+    return ('<p:sp><p:nvSpPr><p:cNvPr id="%d" name="%s"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>'
+            '<p:spPr><a:xfrm%s><a:off x="%d" y="%d"/><a:ext cx="%d" cy="%d"/></a:xfrm>%s%s%s</p:spPr>'
+            '<p:txBody><a:bodyPr wrap="square" lIns="%d" tIns="%d" rIns="%d" bIns="%d" anchor="%s"/><a:lstStyle/>%s'
+            '</p:txBody></p:sp>'
+            % (shape_id, escape("%s %s" % (o.role.capitalize(), o.key)),
+               # Clockwise, in sixty-thousandths of a degree, about its middle.
+               ' rot="%d"' % int(round((o.rotate % 360) * 60000)) if o.rotate else "", sheet.x(x1), sheet.y(y1),
+               sheet.size(w),
+               sheet.size(h), geometry, _fill(o.fill, o.opacity), edge + (_hard_shadow(sheet) if o.shadow else ""),
+               sheet.size(px), sheet.size(py), sheet.size(px),
+               sheet.size(py), "ctr" if middle else "t", paragraphs))
+
+
+def _tile_xml(shape_id: int, o: Own, sheet: _Sheet) -> str:
+    """A shape as Icon tiles draw it: the tile, light at the top and deep
+    at the foot, and its words under it, set past the tile's foot and left to
+    run either side of it."""
+    x1, y1, x2, y2 = own_module.tile_box(o.box)
+    side = x2 - x1
+    corners = own_module.TILE_ROUND if o.corners is None else o.corners
+    radius = min(50000, int(round(corners / max(side, 1) * 100000)))
+    def stop(color: str, fallback: str) -> str:
+        if o.opacity >= 1:
+            return '<a:srgbClr val="%s"/>' % _hex(color, fallback)
+        return '<a:srgbClr val="%s"><a:alpha val="%d"/></a:srgbClr>' % (_hex(color, fallback),
+                                                                        int(round(o.opacity * 100000)))
+
+    fill = ('<a:gradFill rotWithShape="1"><a:gsLst><a:gs pos="0">%s</a:gs><a:gs pos="100000">%s</a:gs></a:gsLst>'
+            '<a:lin ang="5400000" scaled="0"/></a:gradFill>' % (stop(o.tint[0], "6E7683"), stop(o.tint[1], "3B4049")))
+    kept = [p for p in o.label.split("\n") if p.strip()] or [""]
+    paragraphs = _paragraph(_run(kept[0], sheet.font(o.size), own_module.TILE_INK, True), "ctr") + "".join(
+        _paragraph(_run(p, sheet.font(o.size - own_module.CAPTION_STEP), own_module.TILE_CAPTION, False), "ctr")
+        for p in kept[1:])
+    return ('<p:sp><p:nvSpPr><p:cNvPr id="%d" name="%s"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>'
+            '<p:spPr><a:xfrm%s><a:off x="%d" y="%d"/><a:ext cx="%d" cy="%d"/></a:xfrm>'
+            '<a:prstGeom prst="roundRect"><a:avLst><a:gd name="adj" fmla="val %d"/></a:avLst></a:prstGeom>%s'
+            '<a:ln><a:noFill/></a:ln></p:spPr>'
+            '<p:txBody><a:bodyPr wrap="none" lIns="0" tIns="%d" rIns="0" bIns="0" anchor="t"/><a:lstStyle/>%s'
+            '</p:txBody></p:sp>'
+            % (shape_id, escape("Shape %s" % o.key),
+               ' rot="%d"' % int(round((o.rotate % 360) * 60000)) if o.rotate else "", sheet.x(x1), sheet.y(y1),
+               sheet.size(side), sheet.size(side), radius, fill,
+               sheet.size(side + (o.box[3] - y2) + own_module.TILE_GAP), paragraphs))
+
+
+def _own_line_xml(take: Callable[[], int], o: Own, sheet: _Sheet) -> List[str]:
+    """A line of the diagram's own as a path of its own, through the turns
+    the picture draws it by, with its heads; and its words on a card at its
+    middle. A line is a path here, not a connector: PowerPoint refuses a
+    connector with a geometry of its own, and the canvas's line follows no
+    preset."""
+    pts = list(o.points)
+    bx1, by1 = min(p[0] for p in pts), min(p[1] for p in pts)
+    w, h = max(max(p[0] for p in pts) - bx1, EPS), max(max(p[1] for p in pts) - by1, EPS)
+    rel = [((x - bx1) * K, (y - by1) * K) for x, y in pts]
+    parts = [_move(*rel[0])]
+    if o.route == "curved" and len(rel) > 2:
+        # A quadratic through each turn to the middle of the next piece, as
+        # the picture draws maxGraph's curve.
+        for i in range(1, len(rel) - 2):
+            parts.append(_quad(rel[i][0], rel[i][1], (rel[i][0] + rel[i + 1][0]) / 2, (rel[i][1] + rel[i + 1][1]) / 2))
+        parts.append(_quad(rel[-2][0], rel[-2][1], rel[-1][0], rel[-1][1]))
+    else:
+        parts.extend(_line(x, y) for x, y in rel[1:])
+    heads = ('<a:headEnd type="triangle" w="sm" len="sm"/>' if o.ends == "both" else "") + (
+        "" if o.ends == "none" else '<a:tailEnd type="triangle" w="sm" len="sm"/>')
+    out = [('<p:sp><p:nvSpPr><p:cNvPr id="%d" name="%s"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>'
+            '<p:spPr><a:xfrm><a:off x="%d" y="%d"/><a:ext cx="%d" cy="%d"/></a:xfrm>'
+            '<a:custGeom><a:avLst/><a:gdLst/><a:ahLst/><a:cxnLst/><a:rect l="0" t="0" r="w" b="h"/>'
+            '<a:pathLst><a:path w="%d" h="%d" fill="none">%s</a:path></a:pathLst></a:custGeom><a:noFill/>'
+            '<a:ln w="%d" cap="rnd">%s%s<a:round/>%s</a:ln></p:spPr></p:sp>'
+            % (take(), escape("Line %s" % o.key), sheet.x(bx1), sheet.y(by1), sheet.extent(w), sheet.extent(h),
+               int(round(w * K)), int(round(h * K)), "".join(parts), sheet.line(1.5), _color(o.edge, "5B6577"),
+               _dash("dashed" if o.dashed else ""), heads))]
+    if o.label:
+        cx, cy = own_module._halfway(pts)
+        # The card's width from the words at Geist's average width, as the
+        # slide has no measure of its own; a little room either way.
+        lw, lh = len(o.label) * o.size * 0.56 + 8, o.size + 6
+        out.append('<p:sp><p:nvSpPr><p:cNvPr id="%d" name="%s"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>'
+                   '<p:spPr><a:xfrm><a:off x="%d" y="%d"/><a:ext cx="%d" cy="%d"/></a:xfrm>'
+                   '<a:prstGeom prst="rect"><a:avLst/></a:prstGeom>%s<a:ln w="%d">%s</a:ln></p:spPr>'
+                   '<p:txBody><a:bodyPr wrap="none" lIns="0" tIns="0" rIns="0" bIns="0" anchor="ctr"/><a:lstStyle/>%s'
+                   '</p:txBody></p:sp>'
+                   % (take(), escape("Label %s" % o.key), sheet.x(cx - lw / 2), sheet.y(cy - lh / 2),
+                      sheet.size(lw), sheet.size(lh), _color("FFFDF8", "FFFDF8"), HAIRLINE, _color("2E2A25", "2E2A25"),
+                      _paragraph(_run(o.label, sheet.font(o.size), own_module.INK, False), "ctr")))
+    return out
+
+
 def slide_shapes(scene: Scene, box: Box, first_id: int) -> List[str]:
     """The scene as slide shapes, one XML element each, in drawing order:
     boundaries, then edges with their labels, then nodes; `box` is where
@@ -358,8 +518,17 @@ def slide_shapes(scene: Scene, box: Box, first_id: int) -> List[str]:
         next_id += 1
         return next_id - 1
 
-    for b in scene.boundaries:
+    # The diagram's own goes where the canvas stacks it: a frame on the bare
+    # sheet under everything, one in a boundary on it, the rest over all.
+    def own_layer(layer: object) -> None:
+        for o in scene.own:
+            if o.role != "line" and o.layer == layer and not (o.look == "tiles" and o.role == "shape"):
+                out.append(_own_xml(take(), o, sheet))
+
+    own_layer("under")
+    for index, b in enumerate(scene.boundaries):
         out.append(_boundary_xml(take(), b, sheet))
+        own_layer(index)
     node_ids = {n.id: take() for n in scene.nodes}
     by_id = {n.id: n for n in scene.nodes}
     node_xml = {n.id: _node_xml(node_ids[n.id], n, sheet) for n in scene.nodes}
@@ -372,4 +541,12 @@ def slide_shapes(scene: Scene, box: Box, first_id: int) -> List[str]:
             out.append(_label_xml(take(), e, sheet))
     for n in scene.nodes:
         out.append(node_xml[n.id])
+    own_layer("over")
+    for o in scene.own:
+        if o.role == "line" and len(o.points) >= 2:
+            out.extend(_own_line_xml(take, o, sheet))
+    # As tiles, every tile over the lines, its words under it unbroken.
+    for o in scene.own:
+        if o.look == "tiles" and o.role == "shape":
+            out.append(_own_xml(take(), o, sheet))
     return out

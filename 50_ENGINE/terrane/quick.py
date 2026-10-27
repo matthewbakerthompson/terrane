@@ -55,7 +55,7 @@ from .render_mermaid import render as render_mermaid
 from .render_mermaid import render_timeline
 from .render_sequence import all_flows
 from .render_sequence import render as render_sequence_mermaid
-from .schema import ENTITY_TYPES
+from .schema import ENTITY_TYPES, RELATION_TYPES
 from .shipped import example_path, landing_zones_dir
 from .shipped import shipped_root as _shipped_root
 from .sketch import yaml_text
