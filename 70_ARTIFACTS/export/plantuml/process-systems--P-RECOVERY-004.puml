@@ -12,6 +12,8 @@ AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor=
 Boundary(b_Capability, "Capability") {
   System(CAP_COLL_06, "Bankruptcy, Deceased & Legal Account Handling", "Handle accounts under legal protection or in estate.", $tags="capabilities")
   ' aac CAP_COLL_06: company_domain="Collections"
+  System(CAP_COLL_06_02, "Deceased Account Handling", "Close the accounts of deceased borrowers and work with the estate.", $tags="capabilities")
+  ' aac CAP_COLL_06_02: company_domain="Collections"
 }
 Boundary(b_Process, "Process") {
   System(P_RECOVERY_004, "Handle deceased cardholder and estate", "Verify a deceased notification and manage the account through estate resolution. Estate handling balances recovery with conduct: verified notification stops collection contact, and the claim proceeds through the estate at the estate's pace.", $tags="processes")
@@ -34,6 +36,8 @@ Rel(P_RECOVERY_004, SYS_DOC, "Supporting")
 ' aac rel: source="P_RECOVERY_004"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
 Rel(P_RECOVERY_004, CAP_COLL_06, "supports")
 ' aac rel: source="P_RECOVERY_004"; target="CAP_COLL_06"; label="supports"; relation="process_supports_capability"
+Rel(P_RECOVERY_004, CAP_COLL_06_02, "supports")
+' aac rel: source="P_RECOVERY_004"; target="CAP_COLL_06_02"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

@@ -10,6 +10,7 @@ flowchart LR
 
   subgraph grp_Capability["Capability"]
     direction LR
+    CAP_PAY_01_02{{"Authorization Fraud<br/>Screening"}}
     CAP_FRAUD_01{{"Transaction Fraud<br/>Detection & Strategy"}}
   end
 
@@ -47,13 +48,14 @@ flowchart LR
   P_FRAUD_001 -->|"Writes"| DA_DISPUTE_CASE
   P_FRAUD_001 -->|"governed by"| CTL_FRAUD_SLA
   P_FRAUD_001 -->|"supports"| CAP_FRAUD_01
+  P_FRAUD_001 -->|"supports"| CAP_PAY_01_02
 
   classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
   classDef s_controls__controls fill:#fca5a5,stroke:#b91c1c,color:#0f172a,stroke-width:1.4px;
   classDef s_data_assets__data_assets fill:#a7f3d0,stroke:#047857,color:#0f172a,stroke-width:1.4px;
   classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
-  class CAP_FRAUD_01 s_capabilities__capabilities;
+  class CAP_FRAUD_01,CAP_PAY_01_02 s_capabilities__capabilities;
   class CTL_FRAUD_SLA s_controls__controls;
   class DA_CUSTOMER_PROFILE,DA_DISPUTE_CASE,DA_MODEL_FEAT,DA_TRANSACTION s_data_assets__data_assets;
   class P_FRAUD_001 s_processes__processes;
@@ -76,4 +78,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#0369a1` | processes |
 | `#4338ca` | systems |
 
-10 entities, 9 relationships. Generated from the model; edit the model, not this file.
+11 entities, 10 relationships. Generated from the model; edit the model, not this file.

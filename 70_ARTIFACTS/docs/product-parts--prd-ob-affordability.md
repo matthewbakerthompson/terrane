@@ -30,6 +30,8 @@ flowchart LR
 
   TS_GCP_APIGEE[/"Apigee<br/>[API gateway]"/]
   TS_GCP_GKE[/"Google Kubernetes Engine<br/>[Container platform]"/]
+  TS_GCPNET_SUB_LEND_APP[/"Lending App Subnetwork<br/>[Subnet]"/]
+  TS_GCPNET_PROXY_SUB_LEND[/"Lending Proxy-only<br/>Subnetwork<br/>[Subnet]"/]
   TS_GCP_NCC[/"Network Connectivity<br/>Center<br/>[Transit hub]"/]
   TS_GCP_PSC[/"Private Service Connect<br/>[Private egress]"/]
   TS_GCP_SECRET_MANAGER[/"Secret Manager<br/>[Secrets manager]"/]
@@ -44,11 +46,13 @@ flowchart LR
   SYS_OBAFF_WEBHOOKS -.->|"runs on"| TS_GCP_APIGEE
   SYS_OBAFF_WEBHOOKS -.->|"runs on"| TS_GCP_GKE
   SYS_OBAFF_GATEWAY -.->|"runs on"| TS_GCP_SECRET_MANAGER
+  SYS_OBAFF_GATEWAY -.->|"runs on"| TS_GCPNET_SUB_LEND_APP
+  SYS_OBAFF_WEBHOOKS -.->|"runs on"| TS_GCPNET_PROXY_SUB_LEND
 
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   classDef s_tech_services__tech_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
   class SYS_OBAFF_EGRESS,SYS_OBAFF_GATEWAY,SYS_OBAFF_VENDOR,SYS_OBAFF_WEBHOOKS s_systems__systems;
-  class TS_GCP_APIGEE,TS_GCP_GKE,TS_GCP_NCC,TS_GCP_PSC,TS_GCP_SECRET_MANAGER s_tech_services__tech_services;
+  class TS_GCP_APIGEE,TS_GCP_GKE,TS_GCP_NCC,TS_GCP_PSC,TS_GCP_SECRET_MANAGER,TS_GCPNET_PROXY_SUB_LEND,TS_GCPNET_SUB_LEND_APP s_tech_services__tech_services;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_api_outbound,grp_private_egress,grp_vendor_tenancy,grp_webhook_inbound boundary1;
 ```
@@ -64,4 +68,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#4338ca` | systems |
 | `#c2410c` | tech services |
 
-9 entities, 10 relationships. Generated from the model; edit the model, not this file.
+11 entities, 12 relationships. Generated from the model; edit the model, not this file.

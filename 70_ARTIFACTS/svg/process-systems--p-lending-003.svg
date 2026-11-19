@@ -1,0 +1,198 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="1045.4" viewBox="0 0 1100 1045.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Receive and validate dealer-submitted application — Systems, Data and Controls</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Receive and validate dealer-submitted application — Systems, Data and Controls</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   11 nodes · 10 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(125.66 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="359.72" y="653.3" width="212.57" height="175.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="401.72" y="670.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Control">
+<rect x="360.3" y="417.3" width="211.4" height="207.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="393.15" y="434.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Control</text>
+</g>
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="617.3" y="372.3" width="221.4" height="175.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="659.3" y="389.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.98" y="238.06" width="212.03" height="135.45" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.83" y="255.47" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="617.3" y="24.3" width="221.4" height="319.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="647.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-LENDING-003::SYS-LOS">
+<title>Primary</title>
+<path d="M196 271.45 L201.27 271.45 A4.73 4.73 0 0 0 206 266.73 L206 266.73 A4.73 4.73 0 0 1 210.73 262 L275 262 L283 262 A8 8 0 0 0 291 254 L291 86 A10 10 0 0 1 301 76 L614 76 L639.48 76" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M643 76 L633.43 80.78 L633.43 71.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-LENDING-003::SYS-LOS">
+<rect x="442.32" y="82.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="463.5" y="94.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-LENDING-003::SYS-DEALER-PORTAL">
+<title>Supporting</title>
+<path d="M196 279.09 L212.45 279.09 A3.55 3.55 0 0 0 216 275.55 L216 275.55 A3.55 3.55 0 0 1 219.55 272 L275 272 L291 272 A10 10 0 0 0 301 262 L301 158 A10 10 0 0 1 311 148 L614 148 L639.48 148" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M643 148 L633.43 152.78 L633.43 143.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-LENDING-003::SYS-DEALER-PORTAL">
+<rect x="434.46" y="154.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="463.5" y="166.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-LENDING-003::SYS-KYC">
+<title>Supporting</title>
+<path d="M196 286.73 L223.64 286.73 A2.36 2.36 0 0 0 226 284.36 L226 284.36 A2.36 2.36 0 0 1 228.36 282 L275 282 L301 282 A10 10 0 0 0 311 272 L311 230 A10 10 0 0 1 321 220 L614 220 L639.48 220" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M643 220 L633.43 224.78 L633.43 215.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-LENDING-003::SYS-KYC">
+<rect x="434.46" y="226.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="463.5" y="238.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e3::P-LENDING-003::SYS-APPFRAUD">
+<title>Supporting</title>
+<path d="M196 294.36 L204.82 294.36 A1.18 1.18 0 0 0 206 293.18 L206 293.18 A1.18 1.18 0 0 1 207.18 292 L275 292 L614 292 L639.48 292" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M643 292 L633.43 296.79 L633.43 287.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::P-LENDING-003::SYS-APPFRAUD">
+<rect x="434.46" y="298.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="463.5" y="310.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e4::P-LENDING-003::DA-APPLICATION">
+<title>Write</title>
+<path d="M196 302 L275 302 L331 302 A10 10 0 0 1 341 312 L341 341 A10 10 0 0 0 351 351 L586 351 A10 10 0 0 1 596 361 L596 415 A9 9 0 0 0 605 424 L614 424 L639.48 424" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M643 424 L633.43 428.79 L633.43 419.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::P-LENDING-003::DA-APPLICATION">
+<rect x="448.05" y="328.5" width="30.91" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="463.5" y="340.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Write</text>
+</g>
+<g class="edge" data-id="e5::P-LENDING-003::DA-DEALER">
+<title>Read</title>
+<path d="M196 309.64 L204.82 309.64 A1.18 1.18 0 0 1 206 310.82 L206 310.82 A1.18 1.18 0 0 0 207.18 312 L275 312 L321 312 A10 10 0 0 1 331 322 L331 352 A10 10 0 0 0 341 362 L576 362 A10 10 0 0 1 586 372 L586 486 A10 10 0 0 0 596 496 L614 496 L639.48 496" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M643 496 L633.43 500.79 L633.43 491.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e5::P-LENDING-003::DA-DEALER">
+<rect x="448.45" y="368.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="463.5" y="380.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e6::P-LENDING-003::CTL-APP-INTAKE">
+<title>governed by</title>
+<path d="M196 317.27 L233.64 317.27 A2.36 2.36 0 0 1 236 319.64 L236 319.64 A2.36 2.36 0 0 0 238.36 322 L275 322 L311 322 A10 10 0 0 1 321 332 L321 467 A10 10 0 0 0 331 477 L357 477 L382.48 477" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M386 477 L376.43 481.79 L376.43 472.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e7::P-LENDING-003::CTL-SANCTIONS">
+<title>governed by</title>
+<path d="M196 324.91 L222.45 324.91 A3.55 3.55 0 0 1 226 328.45 L226 328.45 A3.55 3.55 0 0 0 229.55 332 L275 332 L301 332 A10 10 0 0 1 311 342 L311 555 A10 10 0 0 0 321 565 L357 565 L382.48 565" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M386 565 L376.43 569.78 L376.43 560.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e8::P-LENDING-003::CAP-LEND-02-01">
+<title>supports</title>
+<path d="M196 332.55 L211.27 332.55 A4.73 4.73 0 0 1 216 337.27 L216 337.27 A4.73 4.73 0 0 0 220.73 342 L275 342 L291 342 A10 10 0 0 1 301 352 L301 695 A10 10 0 0 0 311 705 L357 705 L382.48 705" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M386 705 L376.43 709.78 L376.43 700.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e9::P-LENDING-003::CAP-LEND-02">
+<title>supports</title>
+<path d="M196 340.18 L201 340.18 A5 5 0 0 1 206 345.18 L206 346.09 A5.91 5.91 0 0 0 211.91 352 L275 352 L283 352 A8 8 0 0 1 291 360 L291 767 A10 10 0 0 0 301 777 L357 777 L382.48 777" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M386 777 L376.43 781.78 L376.43 772.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-LEND-02" data-type="capabilities">
+<title>Indirect Application &amp; Underwriting</title>
+<path d="M426 751 L386 777 L426 803 L506 803 L546 777 L506 751 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="466" y="775.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Indirect Application &amp;</text>
+<text x="466" y="787.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Underwriting</text>
+</g>
+<g class="node" data-id="CAP-LEND-02-01" data-type="capabilities">
+<title>Dealer Application Intake</title>
+<path d="M426 679 L386 705 L426 731 L506 731 L546 705 L506 679 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="466" y="703.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dealer Application</text>
+<text x="466" y="715.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Intake</text>
+</g>
+<g class="node" data-id="CTL-APP-INTAKE" data-type="controls">
+<title>Application completeness and disclosure</title>
+<path d="M432.86 443 L386 462.92 L386 491.08 L432.86 511 L499.14 511 L546 491.08 L546 462.92 L499.14 443 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="466" y="469.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Application</text>
+<text x="466" y="481.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">completeness and</text>
+<text x="466" y="493.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">disclosure</text>
+</g>
+<g class="node" data-id="CTL-SANCTIONS" data-type="controls">
+<title>Sanctions and watchlist screening</title>
+<path d="M432.86 531 L386 550.92 L386 579.08 L432.86 599 L499.14 599 L546 579.08 L546 550.92 L499.14 531 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="466" y="563.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Sanctions and</text>
+<text x="466" y="575.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">watchlist screening</text>
+</g>
+<g class="node" data-id="DA-APPLICATION" data-type="data_assets">
+<title>Credit application record</title>
+<path d="M643 400.6 Q651.5 398 685.5 398 L770.5 398 Q804.5 398 813 400.6 L813 447.4 Q804.5 450 770.5 450 L685.5 450 Q651.5 450 643 447.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="724" y="422.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit application</text>
+<text x="724" y="434.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">record</text>
+<svg x="795" y="403" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-DEALER" data-type="data_assets">
+<title>Dealer master and agreement</title>
+<path d="M643 472.6 Q651.5 470 685.5 470 L770.5 470 Q804.5 470 813 472.6 L813 519.4 Q804.5 522 770.5 522 L685.5 522 Q651.5 522 643 519.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="724" y="494.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dealer master and</text>
+<text x="724" y="506.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">agreement</text>
+<svg x="795" y="475" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-LENDING-003" data-type="processes">
+<title>Receive and validate dealer-submitted application</title>
+<path d="M116 263.82 L36 295.9 L66.56 347.82 L165.44 347.82 L196 295.9 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="298.08" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Receive and validate</text>
+<text x="116" y="310.08" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">dealer-submitted</text>
+<text x="116" y="322.08" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">application</text>
+</g>
+<g class="node" data-id="SYS-APPFRAUD" data-type="systems">
+<title>Application fraud screening</title>
+<rect x="643" y="266" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="724" y="290.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Application fraud</text>
+<text x="724" y="302.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">screening</text>
+<svg x="795" y="271" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-DEALER-PORTAL" data-type="systems">
+<title>Dealer portal</title>
+<rect x="643" y="122" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="724" y="146.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dealer portal</text>
+<text x="728" y="168.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">SaaS</text>
+<svg x="795" y="127" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-KYC" data-type="systems">
+<title>Identity verification</title>
+<rect x="643" y="194" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="724" y="224.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Identity verification</text>
+<svg x="795" y="199" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-LOS" data-type="systems">
+<title>Indirect loan origination system</title>
+<rect x="643" y="50" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="724" y="74.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Indirect loan</text>
+<text x="724" y="86.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">origination system</text>
+<svg x="795" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="943.4" x2="1072" y2="943.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="967.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 956.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="967.4" font-size="12" font-weight="400" fill="#343d50">capability · 2</text>
+<g transform="translate(180.32 956.4)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="206.32" y="967.4" font-size="12" font-weight="400" fill="#343d50">control · 2</text>
+<g transform="translate(278.69 956.4)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="304.69" y="967.4" font-size="12" font-weight="400" fill="#343d50">data asset · 2</text>
+<g transform="translate(395.62 956.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="421.62" y="967.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(495.88 956.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="521.88" y="967.4" font-size="12" font-weight="400" fill="#343d50">system · 4</text>
+<text x="28" y="989.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 978.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="989.4" font-size="12" font-weight="400" fill="#343d50">governed by</text>
+<g transform="translate(184.75 978.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="210.75" y="989.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(277.26 978.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="303.26" y="989.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="1023.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-lending-003 · edit the model, not the picture</text></g>
+</svg>

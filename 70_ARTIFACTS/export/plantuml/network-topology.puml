@@ -81,6 +81,99 @@ Boundary(b_AWS, "AWS") {
     }
   }
 }
+Boundary(b_Azure, "Azure") {
+  Boundary(b_Azure__azure_cards_prod, "subscription azure-cards-prod") {
+    Boundary(b_Azure__azure_cards_prod__uksouth, "region uksouth") {
+      Deployment_Node(TS_NET_VNET_AZ_CARDS, "Cards Virtual Network", "Virtual network", "The cards subscription's network, which card servicing, rewards and the merchant portal land in.", $tags="tech_services") {
+        ' aac TS_NET_VNET_AZ_CARDS: company_domain="Enterprise Platform"; technology="Virtual network"
+      }
+      Boundary(b_Azure__azure_cards_prod__uksouth__zone_redundant, "zone zone-redundant") {
+        Deployment_Node(TS_NET_SUB_AZ_CARDS_APP, "Cards App Subnet", "Subnet", $tags="tech_services") {
+          ' aac TS_NET_SUB_AZ_CARDS_APP: company_domain=""; technology="Subnet"
+        }
+        Deployment_Node(TS_NET_SUB_AZ_CARDS_DATA, "Cards Data Subnet", "Subnet", $tags="tech_services") {
+          ' aac TS_NET_SUB_AZ_CARDS_DATA: company_domain=""; technology="Subnet"
+        }
+        Deployment_Node(TS_NET_NAT_AZ_CARDS_NAT, "Cards NAT Gateway", "NAT gateway", $tags="tech_services") {
+          ' aac TS_NET_NAT_AZ_CARDS_NAT: company_domain=""; technology="NAT gateway"
+        }
+      }
+    }
+  }
+  Boundary(b_Azure__azure_connectivity_prod, "subscription azure-connectivity-prod") {
+    Boundary(b_Azure__azure_connectivity_prod__uksouth, "region uksouth") {
+      Deployment_Node(TS_AZURE_PRIVATE_DNS, "Azure Private DNS Resolver", "DNS", "The resolver every virtual network takes its names from, and the forwarding back to the data center.", $tags="tech_services") {
+        ' aac TS_AZURE_PRIVATE_DNS: company_domain="Enterprise Platform"; technology="DNS"
+      }
+      Deployment_Node(TS_AZURE_VWAN, "Azure Virtual WAN hub", "Transit hub", "The hub every virtual network attaches to, and the route back to the data center.", $tags="tech_services") {
+        ' aac TS_AZURE_VWAN: company_domain="Enterprise Platform"; technology="Transit hub"
+      }
+    }
+  }
+  Boundary(b_Azure__azure_data_prod, "subscription azure-data-prod") {
+    Boundary(b_Azure__azure_data_prod__uksouth, "region uksouth") {
+      Deployment_Node(TS_NET_VNET_AZ_DATA, "Data Virtual Network", "Virtual network", "The data subscription's network, private data tier only.", $tags="tech_services") {
+        ' aac TS_NET_VNET_AZ_DATA: company_domain="Enterprise Platform"; technology="Virtual network"
+      }
+      Boundary(b_Azure__azure_data_prod__uksouth__zone_redundant, "zone zone-redundant") {
+        Deployment_Node(TS_NET_SUB_AZ_DATA_DATA, "Data Data Subnet", "Subnet", $tags="tech_services") {
+          ' aac TS_NET_SUB_AZ_DATA_DATA: company_domain=""; technology="Subnet"
+        }
+      }
+    }
+  }
+  Boundary(b_Azure__azure_payments_prod, "subscription azure-payments-prod") {
+    Boundary(b_Azure__azure_payments_prod__uksouth, "region uksouth") {
+      Deployment_Node(TS_NET_VNET_AZ_PAYMENTS, "Payments Virtual Network", "Virtual network", "The payments subscription's network.", $tags="tech_services") {
+        ' aac TS_NET_VNET_AZ_PAYMENTS: company_domain="Enterprise Platform"; technology="Virtual network"
+      }
+      Boundary(b_Azure__azure_payments_prod__uksouth__zone_redundant, "zone zone-redundant") {
+        Deployment_Node(TS_NET_SUB_AZ_PAYMENTS_APP, "Payments App Subnet", "Subnet", $tags="tech_services") {
+          ' aac TS_NET_SUB_AZ_PAYMENTS_APP: company_domain=""; technology="Subnet"
+        }
+        Deployment_Node(TS_NET_SUB_AZ_PAYMENTS_DATA, "Payments Data Subnet", "Subnet", $tags="tech_services") {
+          ' aac TS_NET_SUB_AZ_PAYMENTS_DATA: company_domain=""; technology="Subnet"
+        }
+        Deployment_Node(TS_NET_NAT_AZ_PAYMENTS_NAT, "Payments NAT Gateway", "NAT gateway", $tags="tech_services") {
+          ' aac TS_NET_NAT_AZ_PAYMENTS_NAT: company_domain=""; technology="NAT gateway"
+        }
+      }
+    }
+  }
+  Boundary(b_Azure__azure_platform_prod, "subscription azure-platform-prod") {
+    Boundary(b_Azure__azure_platform_prod__uksouth, "region uksouth") {
+      Deployment_Node(TS_NET_VNET_AZ_PLATFORM, "Platform Virtual Network", "Virtual network", "The platform subscription's network, for shared services.", $tags="tech_services") {
+        ' aac TS_NET_VNET_AZ_PLATFORM: company_domain="Enterprise Platform"; technology="Virtual network"
+      }
+      Boundary(b_Azure__azure_platform_prod__uksouth__zone_redundant, "zone zone-redundant") {
+        Deployment_Node(TS_NET_SUB_AZ_PLATFORM_SHARED, "Platform Shared Services Subnet", "Subnet", $tags="tech_services") {
+          ' aac TS_NET_SUB_AZ_PLATFORM_SHARED: company_domain=""; technology="Subnet"
+        }
+      }
+    }
+  }
+  Boundary(b_Azure__azure_risk_prod, "subscription azure-risk-prod") {
+    Boundary(b_Azure__azure_risk_prod__uksouth, "region uksouth") {
+      Deployment_Node(TS_NET_VNET_AZ_RISK, "Risk Virtual Network", "Virtual network", "The risk subscription's network, which decisioning and collections land in.", $tags="tech_services") {
+        ' aac TS_NET_VNET_AZ_RISK: company_domain="Enterprise Platform"; technology="Virtual network"
+      }
+      Boundary(b_Azure__azure_risk_prod__uksouth__zone_redundant, "zone zone-redundant") {
+        Deployment_Node(TS_NET_SUB_AZ_RISK_APP, "Risk App Subnet", "Subnet", $tags="tech_services") {
+          ' aac TS_NET_SUB_AZ_RISK_APP: company_domain=""; technology="Subnet"
+        }
+        Deployment_Node(TS_NET_NAT_AZ_RISK_NAT, "Risk NAT Gateway", "NAT gateway", $tags="tech_services") {
+          ' aac TS_NET_NAT_AZ_RISK_NAT: company_domain=""; technology="NAT gateway"
+        }
+        Deployment_Node(TS_NET_SUB_AZ_RISK_PUB, "Risk Public Subnet", "Subnet", $tags="tech_services") {
+          ' aac TS_NET_SUB_AZ_RISK_PUB: company_domain=""; technology="Subnet"
+        }
+        Deployment_Node(TS_NET_SUB_AZ_RISK_SHARED, "Risk Shared Services Subnet", "Subnet", $tags="tech_services") {
+          ' aac TS_NET_SUB_AZ_RISK_SHARED: company_domain=""; technology="Subnet"
+        }
+      }
+    }
+  }
+}
 Boundary(b_GCP, "GCP") {
   Boundary(b_GCP__gcp_analytics_prod, "project gcp-analytics-prod") {
     Boundary(b_GCP__gcp_analytics_prod__europe_west1, "region europe-west1") {
@@ -147,6 +240,50 @@ Boundary(b_On_prem, "On-prem") {
   }
 }
 
+Rel(TS_AZURE_VWAN, TS_NET_VNET_AZ_CARDS, "network attachment")
+' aac rel: source="TS_AZURE_VWAN"; target="TS_NET_VNET_AZ_CARDS"; label="network attachment"; relation="tech_service_connects_to"; connection="network attachment"
+Rel(TS_NET_VNET_AZ_CARDS, TS_AZURE_PRIVATE_DNS, "resolver")
+' aac rel: source="TS_NET_VNET_AZ_CARDS"; target="TS_AZURE_PRIVATE_DNS"; label="resolver"; relation="tech_service_connects_to"; connection="resolver"
+Rel(TS_NET_VNET_AZ_CARDS, TS_NET_SUB_AZ_CARDS_APP, "subnet")
+' aac rel: source="TS_NET_VNET_AZ_CARDS"; target="TS_NET_SUB_AZ_CARDS_APP"; label="subnet"; relation="tech_service_connects_to"; connection="subnet"
+Rel(TS_NET_VNET_AZ_CARDS, TS_NET_SUB_AZ_CARDS_DATA, "subnet")
+' aac rel: source="TS_NET_VNET_AZ_CARDS"; target="TS_NET_SUB_AZ_CARDS_DATA"; label="subnet"; relation="tech_service_connects_to"; connection="subnet"
+Rel(TS_NET_VNET_AZ_CARDS, TS_NET_NAT_AZ_CARDS_NAT, "egress route")
+' aac rel: source="TS_NET_VNET_AZ_CARDS"; target="TS_NET_NAT_AZ_CARDS_NAT"; label="egress route"; relation="tech_service_connects_to"; connection="egress route"
+Rel(TS_AZURE_VWAN, TS_NET_VNET_AZ_RISK, "network attachment")
+' aac rel: source="TS_AZURE_VWAN"; target="TS_NET_VNET_AZ_RISK"; label="network attachment"; relation="tech_service_connects_to"; connection="network attachment"
+Rel(TS_NET_VNET_AZ_RISK, TS_AZURE_PRIVATE_DNS, "resolver")
+' aac rel: source="TS_NET_VNET_AZ_RISK"; target="TS_AZURE_PRIVATE_DNS"; label="resolver"; relation="tech_service_connects_to"; connection="resolver"
+Rel(TS_NET_VNET_AZ_RISK, TS_NET_SUB_AZ_RISK_PUB, "subnet")
+' aac rel: source="TS_NET_VNET_AZ_RISK"; target="TS_NET_SUB_AZ_RISK_PUB"; label="subnet"; relation="tech_service_connects_to"; connection="subnet"
+Rel(TS_NET_VNET_AZ_RISK, TS_NET_SUB_AZ_RISK_APP, "subnet")
+' aac rel: source="TS_NET_VNET_AZ_RISK"; target="TS_NET_SUB_AZ_RISK_APP"; label="subnet"; relation="tech_service_connects_to"; connection="subnet"
+Rel(TS_NET_VNET_AZ_RISK, TS_NET_SUB_AZ_RISK_SHARED, "subnet")
+' aac rel: source="TS_NET_VNET_AZ_RISK"; target="TS_NET_SUB_AZ_RISK_SHARED"; label="subnet"; relation="tech_service_connects_to"; connection="subnet"
+Rel(TS_NET_VNET_AZ_RISK, TS_NET_NAT_AZ_RISK_NAT, "egress route")
+' aac rel: source="TS_NET_VNET_AZ_RISK"; target="TS_NET_NAT_AZ_RISK_NAT"; label="egress route"; relation="tech_service_connects_to"; connection="egress route"
+Rel(TS_AZURE_VWAN, TS_NET_VNET_AZ_PAYMENTS, "network attachment")
+' aac rel: source="TS_AZURE_VWAN"; target="TS_NET_VNET_AZ_PAYMENTS"; label="network attachment"; relation="tech_service_connects_to"; connection="network attachment"
+Rel(TS_NET_VNET_AZ_PAYMENTS, TS_AZURE_PRIVATE_DNS, "resolver")
+' aac rel: source="TS_NET_VNET_AZ_PAYMENTS"; target="TS_AZURE_PRIVATE_DNS"; label="resolver"; relation="tech_service_connects_to"; connection="resolver"
+Rel(TS_NET_VNET_AZ_PAYMENTS, TS_NET_SUB_AZ_PAYMENTS_APP, "subnet")
+' aac rel: source="TS_NET_VNET_AZ_PAYMENTS"; target="TS_NET_SUB_AZ_PAYMENTS_APP"; label="subnet"; relation="tech_service_connects_to"; connection="subnet"
+Rel(TS_NET_VNET_AZ_PAYMENTS, TS_NET_SUB_AZ_PAYMENTS_DATA, "subnet")
+' aac rel: source="TS_NET_VNET_AZ_PAYMENTS"; target="TS_NET_SUB_AZ_PAYMENTS_DATA"; label="subnet"; relation="tech_service_connects_to"; connection="subnet"
+Rel(TS_NET_VNET_AZ_PAYMENTS, TS_NET_NAT_AZ_PAYMENTS_NAT, "egress route")
+' aac rel: source="TS_NET_VNET_AZ_PAYMENTS"; target="TS_NET_NAT_AZ_PAYMENTS_NAT"; label="egress route"; relation="tech_service_connects_to"; connection="egress route"
+Rel(TS_AZURE_VWAN, TS_NET_VNET_AZ_DATA, "network attachment")
+' aac rel: source="TS_AZURE_VWAN"; target="TS_NET_VNET_AZ_DATA"; label="network attachment"; relation="tech_service_connects_to"; connection="network attachment"
+Rel(TS_NET_VNET_AZ_DATA, TS_AZURE_PRIVATE_DNS, "resolver")
+' aac rel: source="TS_NET_VNET_AZ_DATA"; target="TS_AZURE_PRIVATE_DNS"; label="resolver"; relation="tech_service_connects_to"; connection="resolver"
+Rel(TS_NET_VNET_AZ_DATA, TS_NET_SUB_AZ_DATA_DATA, "subnet")
+' aac rel: source="TS_NET_VNET_AZ_DATA"; target="TS_NET_SUB_AZ_DATA_DATA"; label="subnet"; relation="tech_service_connects_to"; connection="subnet"
+Rel(TS_AZURE_VWAN, TS_NET_VNET_AZ_PLATFORM, "network attachment")
+' aac rel: source="TS_AZURE_VWAN"; target="TS_NET_VNET_AZ_PLATFORM"; label="network attachment"; relation="tech_service_connects_to"; connection="network attachment"
+Rel(TS_NET_VNET_AZ_PLATFORM, TS_AZURE_PRIVATE_DNS, "resolver")
+' aac rel: source="TS_NET_VNET_AZ_PLATFORM"; target="TS_AZURE_PRIVATE_DNS"; label="resolver"; relation="tech_service_connects_to"; connection="resolver"
+Rel(TS_NET_VNET_AZ_PLATFORM, TS_NET_SUB_AZ_PLATFORM_SHARED, "subnet")
+' aac rel: source="TS_NET_VNET_AZ_PLATFORM"; target="TS_NET_SUB_AZ_PLATFORM_SHARED"; label="subnet"; relation="tech_service_connects_to"; connection="subnet"
 Rel(TS_NET_DX, TS_ONPREM_DC, "Direct Connect")
 ' aac rel: source="TS_NET_DX"; target="TS_ONPREM_DC"; label="Direct Connect"; relation="tech_service_connects_to"; connection="Direct Connect"
 Rel(TS_NET_VPN, TS_ONPREM_DC, "IPsec backup")

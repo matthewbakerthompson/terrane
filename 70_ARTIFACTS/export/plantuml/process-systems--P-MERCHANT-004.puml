@@ -1,0 +1,61 @@
+@startuml
+' Screen merchant against sanctions and network lists — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Screen merchant against sanctions and network lists — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_MERCH_02_02, "Merchant Screening & Brand Risk", "Screen merchants and their owners against sanctions and the networks' terminated-merchant file, and review prohibited business types.", $tags="capabilities")
+  ' aac CAP_MERCH_02_02: company_domain="Merchant Services"
+  System(CAP_MERCH_02, "Merchant Underwriting & Risk Vetting", "Underwrite merchants against credit and brand risk appetite — the specialty-vertical appetite is the differentiator.", $tags="capabilities")
+  ' aac CAP_MERCH_02: company_domain="Merchant Services"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_MERCH_SCREEN, "Merchant screening before boarding", "No merchant is boarded before the business and its owners clear sanctions and the networks' terminated-merchant file.", $tags="controls")
+  ' aac CTL_MERCH_SCREEN: company_domain=""
+  System(CTL_SANCTIONS, "Sanctions and watchlist screening", "Parties are screened at onboarding and on list updates; hits are dispositioned before processing continues.", $tags="controls")
+  ' aac CTL_SANCTIONS: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_MERCHANT, "Merchant master and underwriting file", "Merchant identity, beneficial owners, underwriting decision, limits, pricing and screening results.", $tags="data_assets")
+  ' aac DA_MERCHANT: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_MERCHANT_004, "Screen merchant against sanctions and network lists", "Screen the business and its owners against sanctions lists and the networks' terminated-merchant file, and review prohibited and brand-damaging business types before boarding. A merchant on the terminated file, or in a prohibited category, boarded under the bank's sponsorship draws network fines on the bank.", $tags="processes")
+  ' aac P_MERCHANT_004: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_AML, "Financial crimes platform", "Sanctions screening, transaction monitoring, and case management.", $tags="systems")
+  ' aac SYS_AML: company_domain=""
+  System(SYS_MERCH_RISK, "Merchant risk monitoring", "Monitors merchant volume, chargeback ratios and exposure, and checks merchants against the networks' terminated-merchant file.", $tags="systems")
+  ' aac SYS_MERCH_RISK: company_domain=""
+  System_Ext(SYS_SCREENING_VENDOR, "NICE Actimize Screening", "Financial Crime Screening, operated by NICE Actimize in their own tenancy. Contractually pinned to EU processing; the DPA restricts sub-processors and sets a 90-day retention ceiling. Built with NICE Actimize.", $tags="systems")
+  ' aac SYS_SCREENING_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="NICE Actimize"
+}
+
+Rel(P_MERCHANT_004, SYS_SCREENING_VENDOR, "Primary")
+' aac rel: source="P_MERCHANT_004"; target="SYS_SCREENING_VENDOR"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_MERCHANT_004, SYS_MERCH_RISK, "Supporting")
+' aac rel: source="P_MERCHANT_004"; target="SYS_MERCH_RISK"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_MERCHANT_004, SYS_AML, "Supporting")
+' aac rel: source="P_MERCHANT_004"; target="SYS_AML"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_MERCHANT_004, DA_MERCHANT, "Read")
+' aac rel: source="P_MERCHANT_004"; target="DA_MERCHANT"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_MERCHANT_004, CTL_MERCH_SCREEN, "governed by")
+' aac rel: source="P_MERCHANT_004"; target="CTL_MERCH_SCREEN"; label="governed by"; relation="process_governed_by_control"
+Rel(P_MERCHANT_004, CTL_SANCTIONS, "governed by")
+' aac rel: source="P_MERCHANT_004"; target="CTL_SANCTIONS"; label="governed by"; relation="process_governed_by_control"
+Rel(P_MERCHANT_004, CAP_MERCH_02_02, "supports")
+' aac rel: source="P_MERCHANT_004"; target="CAP_MERCH_02_02"; label="supports"; relation="process_supports_capability"
+Rel(P_MERCHANT_004, CAP_MERCH_02, "supports")
+' aac rel: source="P_MERCHANT_004"; target="CAP_MERCH_02"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

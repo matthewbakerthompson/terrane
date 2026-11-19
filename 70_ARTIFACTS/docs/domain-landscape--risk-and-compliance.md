@@ -48,8 +48,12 @@ flowchart LR
   end
 
   SYS_BUREAU_GW["Credit bureau gateway"]
+  SYS_DEPOSIT["Deposit platform"]
+  SYS_MERCH_RISK["Merchant risk monitoring"]
 
   SYS_BUREAU_GW -->|"FileTransfer"| SYS_CREDIT_BUREAU
+  SYS_MERCH_RISK -->|"HTTPS"| SYS_SCREENING_GATEWAY
+  SYS_DEPOSIT -->|"HTTPS"| SYS_SCREENING_GATEWAY
   SYS_CUST360_SEMANTIC -->|"SQL"| SYS_REG_REPORTING
   SYS_LENDING_API --> OI_IDENTITY_API
   SYS_LENDING_API -->|"HTTPS"| SYS_CREDIT_BUREAU
@@ -73,7 +77,7 @@ flowchart LR
   classDef s_systems__medium fill:#becbfb,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   class OI_IDENTITY_API s_offered_interfaces__high;
   class SYS_AUTH_SWITCH,SYS_CREDIT_BUREAU,SYS_IDENTITY_SVC,SYS_IDV_EGRESS,SYS_IDV_GATEWAY,SYS_IDV_VENDOR,SYS_IDV_WEBHOOKS,SYS_LENDING_API,SYS_LENDING_HUB,SYS_REG_REPORTING,SYS_SCREENING_EGRESS,SYS_SCREENING_GATEWAY,SYS_SCREENING_VENDOR,SYS_SIEM s_systems__high;
-  class SYS_BUREAU_GW,SYS_CUST360_SEMANTIC,SYS_DATA_INGEST,SYS_LENDPERF_SEMANTIC,SYS_SCREENING_FEDERATION s_systems__medium;
+  class SYS_BUREAU_GW,SYS_CUST360_SEMANTIC,SYS_DATA_INGEST,SYS_DEPOSIT,SYS_LENDPERF_SEMANTIC,SYS_MERCH_RISK,SYS_SCREENING_FEDERATION s_systems__medium;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Data_and_Analytics,grp_Enterprise_Platform,grp_Lending,grp_Payments,grp_Risk_and_Compliance boundary1;
 ```
@@ -125,4 +129,4 @@ Each flow is a recorded sequence of interfaces. The steps drawn on this diagram 
 3. Customer 360 Pipeline → Customer 360 Semantic Layer (SQL) — not on this diagram
 4. Customer 360 Semantic Layer → Regulatory Reporting Engine (SQL)
 
-20 entities, 18 relationships. Generated from the model; edit the model, not this file.
+22 entities, 20 relationships. Generated from the model; edit the model, not this file.

@@ -231,6 +231,13 @@ which writes anything:
 2. **Words.** Each of the export's words for a field with a fixed list, with
    how many rows say it: `In Production` is Active. A word that is already
    the model's needs nothing, and one left unmatched holds its rows back.
+   A column that names records, an owner most often, has its names here
+   too: each with its rows, the record it already is, or a choice of the
+   kind's records. Where a record's name reads like it at 0.7 or more, the
+   adopt page's floor, and no second as near, that one is offered with the
+   words the two share: `Finance operations` reads like Finance. Nothing
+   is chosen for you; a choice goes into the mapping's `values` as a
+   word's does.
 3. **Review.** Every record it would add, what is already in the model and
    left alone, the rows that wait and why, and what the checks would newly
    say once it is in, worked out on a copy of the model held in memory.

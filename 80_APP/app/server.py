@@ -42,6 +42,7 @@ from terrane import places as places_module  # noqa: E402
 from terrane import levels as levels_module  # noqa: E402
 from terrane import needs as needs_module  # noqa: E402
 from terrane import search as search_module  # noqa: E402
+from terrane import match as match_module  # noqa: E402
 from terrane.connections import kind_of, load_connections, sorted_by_kind  # noqa: E402
 from terrane.archetype import ArchetypeError, expand, parse_archetype  # noqa: E402
 from terrane.blocks import LibraryError, load_blocks, load_components, offered  # noqa: E402
@@ -92,6 +93,7 @@ from terrane.compose import (  # noqa: E402
     VOCABULARY, ComposeError, archetype_text_from_parts, assembled_text, blocks_needed, inline_shape,
 )
 from terrane.sketch import dump_yaml, yaml_text  # noqa: E402
+from terrane.annotations import AnnotationError, estate_styles  # noqa: E402
 from terrane.draw import Undrawable, drawing_mode, render_svg  # noqa: E402
 from terrane.icons import IconMap  # noqa: E402
 from terrane.payload import GOVERNANCE_EDGES, PLATFORM_EDGES, graph_payload  # noqa: E402,F401
@@ -354,6 +356,9 @@ def api_overview(query, _body) -> dict:
     view_summaries = []
     palette = Palette(model.config.get("palette"))
     for view in views:
+        # A diagram is listed once: its pages after the first are in it.
+        if view.page_of:
+            continue
         try:
             # A parameterized view has no single graph. Summarize the one
             # `render_for` would draw first, so the rail shows a real count
@@ -1782,7 +1787,8 @@ def api_connect_options(query, _body) -> dict:
     return {
         "from": {"id": a, "type": ta, "name": ra.get("name") or a},
         "to": {"id": b, "type": tb, "name": rb.get("name") or b},
-        "options": options,
+        # Ordered by what the estate does, each with its reason (V15).
+        "options": match_module.rank_connections(model, options, _connection_kinds()),
     }
 
 
@@ -3371,7 +3377,7 @@ def _kind_payload(kind) -> dict:
         "style": kind.integration_style, "protocols": list(kind.protocols),
         "authMethods": list(kind.auth_methods), "frequency": kind.frequency,
         "direction": kind.direction, "patterns": list(kind.patterns), "defaults": kind.defaults(),
-        "library": kind.library, "replaced": kind.replaced,
+        "datastore": kind.datastore, "library": kind.library, "replaced": kind.replaced,
     }
 
 
@@ -3974,6 +3980,17 @@ def api_validate(_query, _body) -> dict:
     }
 
 
+def api_checks_alike(_query, _body) -> dict:
+    """Names that read alike (V15): records of one type the name matcher
+    scores 0.85 or more against each other, grouped by why each pair is
+    probably two things. Beside the rules and counted in neither box: as a
+    warning (round F) it flagged only pairs that are two things. Nothing is
+    changed."""
+    model, _views = _load_all()
+    groups = match_module.alike_groups(model)
+    return {"floor": match_module.ALIKE, "pairs": sum(len(g["pairs"]) for g in groups), "groups": groups}
+
+
 def _rel(where: str) -> str:
     if not where:
         return ""
@@ -4452,16 +4469,31 @@ def _adopt_names(staged: Dict[str, Any]) -> Dict[str, str]:
     return names
 
 
+def _same_asked(asked: Any, likely: Dict[str, str]) -> Dict[str, str]:
+    """The drawing's records a person took as the estate's (`same`): the
+    likely ones when asked for, as the page does on its first read, those
+    named, or none, which is what `terrane adopt` takes."""
+    if asked == "likely":
+        return dict(likely)
+    if asked in (None, ""):
+        return {}
+    if not isinstance(asked, dict):
+        raise ApiError("same is the drawing's id to the estate's, {new: old}", 422)
+    return {str(k): str(v) for k, v in asked.items() if str(k).strip() and str(v).strip()}
+
+
 def api_adopt_read(_query, body) -> dict:
     """A drawing dropped, or one staged read again for another owner or
     with its corrections: what it holds, what adopting it would write and
     what it would leave as it is, the reader's notes, and the change drawn
     against the estate (`terrane.join.change_picture`), the picture `terrane
     adopt FILE --dry-run --picture` writes without the title block the page
-    says itself. Nothing is written."""
+    says itself. What it adds that probably is a record the estate has is
+    listed with its candidates (V15), and `same` reads it again with those
+    a person took as the estate's. Nothing is written."""
     import base64
 
-    from terrane.join import AdoptError, adopted_view, change_picture, join_estate
+    from terrane.join import AdoptError, adopted_view, change_picture, join_estate, likely_same
     from terrane.quick import SKETCH_ORG, QuickError
 
     if body.get("token") and not body.get("data"):
@@ -4487,7 +4519,20 @@ def api_adopt_read(_query, body) -> dict:
                           correct=True)
     except (AdoptError, QuickError) as exc:
         raise ApiError(str(exc), 422)
+    # What is probable is read before anything is taken as the estate's: a
+    # record taken is renamed, and would be listed no more.
+    probable = dry.probable
+    likely = likely_same(staged["doc"], probable)
+    same = _same_asked(body.get("same"), likely)
+    if same:
+        try:
+            dry = join_estate(staged["doc"], REPO_ROOT, owner=owner, source_name=staged["name"], dry_run=True,
+                              correct=True, same=same)
+        except (AdoptError, QuickError) as exc:
+            raise ApiError(str(exc), 422)
     names = _adopt_names(staged)
+    type_of = {str(r.get(ENTITY_TYPES[t].pk)): t for t in ENTITY_TYPES for r in staged["doc"].get(t) or []
+               if isinstance(r, dict)}
 
     def listed(by_type: Dict[str, List[str]], here: bool) -> Dict[str, List[dict]]:
         out: Dict[str, List[dict]] = {}
@@ -4509,12 +4554,13 @@ def api_adopt_read(_query, body) -> dict:
             things[str(kept["view_id"])] = len(pinned) if isinstance(pinned, list) else None
     # The picture is the slow part, a second or more: drawn once for each
     # owner and choice against this state of the estate.
-    key = (owner or "", correct, hash(_CACHE.get("fingerprint")), hash(_CACHE.get("views_mark")))
+    key = (owner or "", correct, tuple(sorted(same.items())), hash(_CACHE.get("fingerprint")),
+           hash(_CACHE.get("views_mark")))
     pictures = staged.setdefault("pictures", {})
     if key not in pictures:
         try:
             drawn = change_picture(staged["doc"], REPO_ROOT, owner=owner, source_name=staged["name"], correct=correct,
-                                   sheet=False)
+                                   sheet=False, same=same or None)
             pictures[key] = {"svg": drawn.svg, "title": drawn.title, "why": None}
         except (AdoptError, QuickError) as exc:
             pictures[key] = {"svg": None, "title": None, "why": str(exc)}
@@ -4551,6 +4597,10 @@ def api_adopt_read(_query, body) -> dict:
         "correct": correct,
         "picture": picture_url if picture["svg"] else None, "pictureTitle": picture["title"],
         "pictureWhy": picture["why"],
+        "probable": [{"id": i, "type": type_of.get(i, ""), "name": names.get(i, i), "likely": likely.get(i),
+                      "candidates": [{"id": c.id, "name": c.name, "score": c.score, "reasons": list(c.reasons)}
+                                     for c in near]} for i, near in probable.items()],
+        "taken": same,
     }
 
 
@@ -4575,9 +4625,11 @@ def api_adopt_write(_query, body) -> dict:
 
     staged = _staged_drawing(body.get("token"))
     owner, correct = _owner_asked(body), bool(body.get("correct"))
+    same = _same_asked(body.get("same"), {})
     with _LOCK:
         try:
-            result = join_estate(staged["doc"], REPO_ROOT, owner=owner, source_name=staged["name"], correct=correct)
+            result = join_estate(staged["doc"], REPO_ROOT, owner=owner, source_name=staged["name"], correct=correct,
+                                 same=same or None)
         except (AdoptError, QuickError) as exc:
             raise ApiError(str(exc), 422)
         _unstage(staged["token"])
@@ -5761,13 +5813,175 @@ def _canvas_views(model, views) -> List[dict]:
     return out
 
 
+#: Add's shelves for the library's kinds (V18), in the order it lists them.
+_SHELVES = ("parts", "business", "cloud")
+
+
+def _shelf_of(component) -> str:
+    """Which of Add's shelves a kind is on: one for systems in the
+    Application category is a part of an application we build, any other
+    for systems a business system an organization runs, and one for
+    technology services what the systems run on."""
+    if component.applies_to == "systems":
+        return "parts" if component.category == "Application" else "business"
+    return "cloud"
+
+
+def _shelved(parts: List[dict], at: Dict[str, int]) -> List[dict]:
+    """The kinds in the order Add lists them: shelf by shelf, each shelf's
+    headings where the library first names them, and a heading's kinds in
+    the library's order. A heading is placed by the category most of its
+    kinds are in: the one assistant under Work and collaboration is
+    written with the AI kinds, whose file is read first, and put that
+    heading ahead of Finance."""
+    members: Dict[Tuple[str, str], List[dict]] = {}
+    for part in parts:
+        members.setdefault((part["shelf"], part["group"]), []).append(part)
+    rank: Dict[Tuple[str, str], int] = {}
+    for key, kinds in members.items():
+        counted = Counter(k["category"] for k in kinds)
+        first = {c: min(at[k["id"]] for k in kinds if k["category"] == c) for c in counted}
+        most = max(counted, key=lambda c: (counted[c], -first[c]))
+        rank[key] = first[most]
+    return sorted(parts, key=lambda p: (_SHELVES.index(p["shelf"]), rank[(p["shelf"], p["group"])], at[p["id"]]))
+
+
+def _kits_holding(kits: List[dict]) -> Dict[str, List[dict]]:
+    """For each kind, the kits that make a system of it and the part of
+    each that does: the background worker is the event-driven service's
+    async worker, which Add says beside the kind."""
+    out: Dict[str, List[dict]] = {}
+    for kit in kits:
+        for system in kit["systems"]:
+            if not system.get("type"):
+                continue
+            entry = {"id": kit["id"], "name": kit["name"], "as": system["part"]}
+            held = out.setdefault(system["type"], [])
+            if entry not in held:
+                held.append(entry)
+    return out
+
+
+def _canvas_estate_records(model) -> Dict[str, List[dict]]:
+    """The estate's data, actors and teams as Add's shelves list them (V19),
+    each in the order it is listed and with what a line on the diagram
+    would join it to: the systems that write and read a data asset and the
+    one that keeps its master, the systems an actor uses, and what a team
+    owns. Placed, each is pinned, and the diagram draws those lines."""
+    names = {str(r["system_id"]): str(r.get("name") or r["system_id"]) for r in model.all_of("systems")}
+    writes: Dict[str, List[str]] = {}
+    reads: Dict[str, List[str]] = {}
+    for row in model.relation_rows("system_reads_writes"):
+        asset, system = str(row.get("data_asset_id") or ""), str(row.get("system_id") or "")
+        said = writes if "write" in str(row.get("operation") or "").lower() else reads
+        said.setdefault(asset, []).append(names.get(system, system))
+    # Most sensitive first, as the schema lists them least sensitive first.
+    field = next((f for f in ENTITY_TYPES["data_assets"].fields if f.name == "classification"), None)
+    ranked = list(reversed(field.enum)) if field is not None and field.enum else []
+
+    def rank(value: str) -> int:
+        return ranked.index(value) if value in ranked else len(ranked) + (0 if value else 1)
+
+    data = [{
+        "id": str(r["data_asset_id"]), "name": str(r.get("name") or r["data_asset_id"]),
+        "classification": str(r.get("classification") or ""), "domain": str(r.get("company_domain") or ""),
+        "description": str(r.get("description") or ""),
+        "master": names.get(str(r.get("source_of_truth") or ""), str(r.get("source_of_truth") or "")),
+        "writers": sorted(set(writes.get(str(r["data_asset_id"]), [])), key=str.lower),
+        "readers": len(set(reads.get(str(r["data_asset_id"]), [])) - set(writes.get(str(r["data_asset_id"]), []))),
+    } for r in model.all_of("data_assets")]
+    data.sort(key=lambda d: (rank(d["classification"]), d["name"].lower()))
+
+    uses: Dict[str, List[str]] = {}
+    for row in model.relation_rows("actor_uses_system"):
+        uses.setdefault(str(row.get("actor_id") or ""), []).append(
+            names.get(str(row.get("system_id") or ""), str(row.get("system_id") or "")))
+    actors = [{
+        "id": str(r["actor_id"]), "name": str(r.get("name") or r["actor_id"]),
+        "kind": str(r.get("actor_kind") or ""), "description": str(r.get("description") or ""),
+        # Outside the company first: the cardholder before the agent.
+        "internal": str(r.get("internal") or "").strip().lower() in ("yes", "true", "1"),
+        "uses": sorted(set(uses.get(str(r["actor_id"]), [])), key=str.lower),
+    } for r in model.all_of("actors")]
+    actors.sort(key=lambda a: (a["internal"], a["name"].lower()))
+
+    owned: Dict[str, Counter] = {}
+    for type_name, entity_type in ENTITY_TYPES.items():
+        for r in model.all_of(type_name):
+            owner = str(r.get("owner_org_id") or "")
+            if owner:
+                owned.setdefault(owner, Counter())[entity_type.label] += 1
+    units = {str(r["org_unit_id"]): str(r.get("name") or r["org_unit_id"]) for r in model.all_of("org_units")}
+    teams = [{
+        "id": str(r["org_unit_id"]), "name": str(r.get("name") or r["org_unit_id"]),
+        "parent": units.get(str(r.get("parent_org_unit_id") or ""), ""), "description": str(r.get("description") or ""),
+        "owns": sorted(owned.get(str(r["org_unit_id"]), Counter()).items(), key=lambda kv: (-kv[1], kv[0])),
+    } for r in model.all_of("org_units")]
+    # The units at the top first, then each unit's under it.
+    teams.sort(key=lambda t: (bool(t["parent"]), t["parent"].lower(), t["name"].lower()))
+    return {"data": data, "actors": actors, "teams": teams}
+
+
+def _block_order(block) -> List[str]:
+    """A block's components in the order its lines run, the one no line
+    runs into first: a public web tier is DNS, the CDN, the firewall and
+    the load balancer, the order a request meets them. Those no line
+    orders keep the block's own order."""
+    provided = [p.component for p in block.provides]
+    into = {c: 0 for c in provided}
+    after: Dict[str, List[str]] = {c: [] for c in provided}
+    for source, target in block.relations:
+        if source in after and target in into:
+            after[source].append(target)
+            into[target] += 1
+    out: List[str] = []
+    ready = [c for c in provided if not into[c]]
+    while ready:
+        here = ready.pop(0)
+        out.append(here)
+        for target in after[here]:
+            into[target] -= 1
+            if not into[target]:
+                ready.append(target)
+        ready.sort(key=provided.index)
+    return out + [c for c in provided if c not in out]
+
+
+def _canvas_blocks(components, blocks) -> List[dict]:
+    """The library's blocks as Add lists them: each with the cloud services
+    it makes, in the order their lines run, and the lines."""
+    out = []
+    for block in blocks.values():
+        order = _block_order(block)
+        out.append({
+            "id": block.building_block_id, "name": block.name, "category": block.category,
+            "description": block.description,
+            "services": [{"type": c, "name": components[c].name} for c in order],
+            "lines": [[components[a].name, components[b].name] for a, b in block.relations],
+        })
+    return out
+
+
 def api_canvas_parts(_query, _body) -> dict:
     """What the canvas's picker offers: the library's parts, each placed as a
     new record, and what the estate already has: views placed as boundaries,
     an account or a network zone as Network Topology kept to it, a system
-    placed as it is."""
+    placed as it is. The parts come shelf by shelf, each with the heading
+    it is listed under (V18)."""
     model, views = _load_all()
     components = load_components(REPO_ROOT)
+    # A kit beside the part of the same name: "AI assistant" placed was one
+    # box, and an assistant built is six systems with their lines.
+    try:
+        kits = _canvas_kits(load_modules(REPO_ROOT))
+    except ModuleError:
+        kits = []
+    held = _kits_holding(kits)
+    try:
+        blocks = _canvas_blocks(components, load_blocks(REPO_ROOT, components))
+    except LibraryError:
+        blocks = []
+    at = {cid: i for i, cid in enumerate(components)}
     parts = []
     for component in components.values():
         if component.applies_to not in _CANVAS_KINDS or component.replaced:
@@ -5776,6 +5990,11 @@ def api_canvas_parts(_query, _body) -> dict:
             "id": component.component_type_id, "name": component.name, "category": component.category,
             "type": component.applies_to, "typeLabel": ENTITY_TYPES[component.applies_to].label,
             "description": component.description,
+            # The shelf it is on and the heading it is listed under there:
+            # its group, or its category where it has none.
+            "shelf": _shelf_of(component), "group": component.group or component.category,
+            "aliases": list(component.aliases),
+            "kits": held.get(component.component_type_id, []),
             # What each provider calls it, the choices it offers first-usual,
             # for the picker to find "EC2" by and a part dropped into an
             # account of that cloud to be named for.
@@ -5784,9 +6003,7 @@ def api_canvas_parts(_query, _body) -> dict:
             # And each answer whole, so a product's former name finds it.
             "providers": dict(sorted(component.providers.items())),
         })
-    # Systems first: a diagram is mostly what runs, and the platform parts
-    # it runs on are a search away.
-    parts.sort(key=lambda p: (p["type"] != "systems", p["category"].lower(), p["name"].lower()))
+    parts = _shelved(parts, at)
     placeable = _canvas_views(model, views)
     network = _canvas_network(views)
     accounts: List[dict] = []
@@ -5806,31 +6023,93 @@ def api_canvas_parts(_query, _body) -> dict:
         zones = [{"value": z, "count": n} for z, n in sorted(counted.items(), key=lambda kv: (-kv[1], kv[0]))]
     systems = [
         {"id": str(r["system_id"]), "name": str(r.get("name") or r["system_id"]),
-         "domain": str(r.get("company_domain") or ""), "status": str(r.get("status") or "")}
+         "domain": str(r.get("company_domain") or ""), "status": str(r.get("status") or ""),
+         "description": str(r.get("description") or "")}
         for r in sorted(model.all_of("systems"), key=lambda r: str(r.get("name") or "").lower())
     ]
+    # The looks every diagram offers by name, kept in model.yaml.
+    try:
+        styles = list(estate_styles(model.config))
+    except AnnotationError:
+        styles = []
+    estate = _canvas_estate_records(model)
     return {
         "parts": parts,
+        "blocks": blocks,
+        "data": estate["data"],
+        "actors": estate["actors"],
+        "teams": estate["teams"],
+        "styles": styles,
         "views": placeable,
         "network": network.view_id if network is not None else None,
         "networkTitle": network.title if network is not None else None,
         "accounts": accounts,
         "zones": zones,
         "systems": systems,
-        "counts": {"systems": len(systems), "views": len(placeable), "parts": len(parts)},
+        "kits": kits,
+        "counts": {"systems": len(systems), "views": len(placeable), "parts": len(parts), "kits": len(kits),
+                   "blocks": len(blocks), "data": len(estate["data"]), "actors": len(estate["actors"]),
+                   "teams": len(estate["teams"])},
         "categories": [c for c in VIEW_CATEGORIES if c != "Other"],
     }
 
 
+#: What model.yaml says over the estate's saved styles, written with them.
+_STYLES_NOTE = ("# Looks every diagram on the canvas offers by name (V16's saved styles),\n"
+                "# saved from a shape's Style tab for every diagram; a diagram's own are in\n"
+                "# its file.\n")
+
+
+def api_canvas_styles(_query, body) -> dict:
+    """The estate's saved styles, all of them, written over what model.yaml
+    had: checked first, and the rest of the file left as it was, comments
+    and all, since the file is the estate's and mostly a person's."""
+    styles = (body or {}).get("styles")
+    try:
+        kept = list(estate_styles({"saved_styles": styles}))
+    except AnnotationError as error:
+        raise ApiError(str(error), 422)
+    with _LOCK:
+        path = REPO_ROOT / "10_MODEL" / "model.yaml"
+        _write_text(path, _with_styles(path.read_text(encoding="utf-8"), kept))
+    return {"styles": kept}
+
+
+def _with_styles(text: str, styles: List[dict]) -> str:
+    """model.yaml with its `saved_styles` block, note and all, put in the
+    place of the old one, or at its end, or taken out when there are none."""
+    lines = text.splitlines(keepends=True)
+    note = _STYLES_NOTE.splitlines(keepends=True)
+    block = (_STYLES_NOTE + yaml_text({"saved_styles": styles})).splitlines(keepends=True) if styles else []
+    start = next((i for i, line in enumerate(lines) if re.match(r"saved_styles\s*:", line)), None)
+    if start is None:
+        if not block:
+            return text
+        body = text if text.endswith("\n") else text + "\n"
+        return body + "\n" + "".join(block)
+    end = start + 1
+    while end < len(lines) and (lines[end][:1] in (" ", "\t", "-") or not lines[end].strip()):
+        end += 1
+    while end > start + 1 and not lines[end - 1].strip():
+        end -= 1
+    head = start - len(note) if lines[max(0, start - len(note)):start] == note else start
+    if not block and head > 0 and not lines[head - 1].strip() and (end == len(lines) or not lines[end].strip()):
+        head -= 1
+    return "".join(lines[:head] + block + lines[end:])
+
+
 #: A new diagram's file, in the order a person would write it.
-_CANVAS_ORDER = ("view_id", "title", "description", "category", "section", "kind", "look", "places", "layout",
+_CANVAS_ORDER = ("view_id", "title", "page", "description", "category", "section", "kind", "look", "saved_styles", "layers",
+                 "groups",
+                 "places",
+                 "layout",
                  "node_label", "group_by", "scope", "edges", "style", "limits")
 
 
 def _canvas_ordered(data: dict) -> dict:
     out = {k: data[k] for k in _CANVAS_ORDER if k in data and data[k] not in (None, "", [], {})}
     for key, value in data.items():
-        if key not in out and key not in ("annotations", "positions") and value not in (None, "", [], {}):
+        if key not in out and key not in ("annotations", "positions", "pages") and value not in (None, "", [], {}):
             out[key] = value
     # What the diagram draws of its own, and then positions, after anything
     # the file had of its own: the longest parts, and the ones a reader of
@@ -5841,6 +6120,21 @@ def _canvas_ordered(data: dict) -> dict:
         out["annotations"] = data["annotations"]
     if data.get("positions"):
         out["positions"] = {k: data["positions"][k] for k in sorted(data["positions"])}
+    # Its pages after the first, last of all, each as the first is written.
+    if data.get("pages"):
+        out["pages"] = [_page_ordered(page) for page in data["pages"]]
+    return out
+
+
+def _page_ordered(page: dict) -> dict:
+    """A page after a diagram's first, written as the first is: its key
+    and name, what it places, then what it draws, then where things sit."""
+    out = {k: page[k] for k in ("key", "name", "places", "scope", "groups", "locked")
+           if k in page and page[k] not in (None, "", [], {})}
+    if page.get("annotations"):
+        out["annotations"] = page["annotations"]
+    if page.get("positions"):
+        out["positions"] = {k: page["positions"][k] for k in sorted(page["positions"])}
     return out
 
 
@@ -5879,7 +6173,8 @@ def api_canvas_save(_query, body) -> dict:
         except ViewError as exc:
             raise ApiError(str(exc), 422)
         by_id = {(v.own or v).view_id: (v.own or v) for v in views}
-        wrong = places_module.problems(view, by_id)
+        # Each page places views of its own, and each is checked.
+        wrong = [w for v in (view,) + tuple(view.pages) for w in places_module.problems(v, by_id)]
         if wrong:
             raise ApiError("this diagram %s" % "; ".join(wrong), 422)
         if created:
@@ -5985,6 +6280,416 @@ def api_canvas_record(_query, body) -> dict:
         "missing": missing,
         "errors": [f.format() for f in report.errors if entity_id in f.message],
     }
+
+
+# ---- a kit on the canvas (V17) ------------------------------------------------
+# The owner placed "AI assistant" and got one box: Add offered component
+# types alone, and a kit only Assemble assembled. A kit is offered beside
+# the part of the same name now, and dropped into an account it makes one
+# product there, through the same assembly Assemble writes.
+
+
+def _kit_part_name(template: dict, module, kit) -> str:
+    """What a kit's part is called on its own: the system's name without the
+    product's, in sentence case, a token left in it said by what it is
+    asked as ("{partner} Adapter" is the partner adapter)."""
+    name = str(template.get("name") or "").replace("{product_name}", " ")
+    asks = {p.name: (p.ask or p.name.replace("_", " ")) for p in kit.parameters}
+    name = re.sub(r"\{([a-z_]+)[^}]*\}", lambda m: asks.get(m.group(1), m.group(1).replace("_", " ")), name)
+    return _sentence(name) or module.name
+
+
+def _sentence(text: str) -> str:
+    """Title Case as a sentence: Conversation History is the conversation
+    history, and an abbreviation stays one."""
+    words = text.split()
+    if not words:
+        return ""
+    said = [words[0][:1].upper() + words[0][1:]]
+    said += [w if (w.isupper() and len(w) > 1) else w.lower() for w in words[1:]]
+    return " ".join(said)
+
+
+def _kit_systems(kit, modules) -> List[dict]:
+    """The systems a kit makes, as its parts' templates name them, in the
+    order it composes them. One a part makes for each item of a list is the
+    product's line to that item, not a part of it, and is left out."""
+    out = []
+    for member_id in members_of(kit, modules):
+        member = modules[member_id]
+        for template in member.provides.get("systems") or []:
+            if template.get("each"):
+                continue
+            out.append({"name": _kit_part_name(template, member, kit), "part": member.name,
+                        "zone": str(template.get("network_zone") or ""),
+                        "type": str(template.get("component_type") or "")})
+    return out
+
+
+def _kit_asks(kit) -> List[dict]:
+    """What a kit asks the person who places it: its own parameters, each
+    with how it is asked and what kind of record it names."""
+    return [{
+        "name": p.name, "ask": p.ask or p.name.replace("_", " ").capitalize(), "hint": p.description,
+        "names": p.names, "list": isinstance(p.default, list), "required": p.required,
+        "default": p.default,
+    } for p in kit.parameters]
+
+
+def _canvas_kits(modules) -> List[dict]:
+    """The kits the canvas offers: every kit of the library that makes a
+    product, in the library's order, with the systems it places."""
+    kits = []
+    for module in modules.values():
+        if not module.is_kit:
+            continue
+        systems = _kit_systems(module, modules)
+        if not systems:
+            continue
+        kits.append({"id": module.module_id, "name": module.name, "category": module.category,
+                     "description": module.description, "systems": systems, "asks": _kit_asks(module)})
+    return kits
+
+
+def _kit_lands(model) -> List[dict]:
+    """Where a product can land: every cloud account with a network, in
+    each region it has subnets in, since that is where its systems land.
+    Every account a record names, where an estate has drawn no subnet at
+    all; any record's region offered prod-lending in "global" and in its
+    recovery region."""
+    def pairs(records):
+        return {(str(r.get("cloud_provider") or ""), str(r.get("cloud_account") or ""), str(r.get("region") or ""))
+                for r in records}
+    seen = pairs(r for r in model.all_of("tech_services") if r.get("component_type") == "subnet")
+    if not {key for key in seen if all(key)}:
+        seen = pairs(r for t in ("tech_services", "systems") for r in model.all_of(t))
+    return [{"value": "|".join(key), "provider": key[0], "account": key[1], "region": key[2],
+             "label": " · ".join(key)} for key in sorted(k for k in seen if all(k))]
+
+
+def _zone_words(zone: str) -> str:
+    """A network zone as a person says its subnets: Private-App is the app
+    subnets, Shared-Services the shared services ones."""
+    return re.sub(r"^private-", "", zone.lower()).replace("-", " ")
+
+
+#: The parameters every shape asks, which a product answers.
+_VOCABULARY_NAMES = {p["name"] for p in VOCABULARY}
+
+
+def _kit_ids(name: str, model, n: int = 1) -> Tuple[str, str, int]:
+    """A product's id and slug from its name, as Assemble makes an id: its
+    first three words, numbered from n when the estate has the id. A slug
+    of one word made SYS-LENDING-API for a Lending assistant, which
+    Installment Lending has."""
+    words = re.sub(r"[^a-z0-9]+", " ", name.lower()).split()[:3] or ["product"]
+    while True:
+        slug = "-".join(words) + ("-%d" % n if n > 1 else "")
+        if model.find("PRD-" + slug.upper()) is None:
+            return "PRD-" + slug.upper(), slug, n
+        n += 1
+
+
+def _dropped_land(lands: List[dict], body: dict) -> Tuple[str, bool, Optional[dict]]:
+    """Where a kit or a block lands: the account it was dropped in, while
+    the person keeps it, or the one they chose; whether it is the one it was
+    dropped in; and that account, or None. An account in two regions,
+    dropped into neither, is the person's to say."""
+    by_value = {l["value"]: l for l in lands}
+    into = {str(s.get("field") or ""): str(s.get("value") or "") for s in (body.get("into") or [])
+            if isinstance(s, dict)}
+    fits = [l for l in lands if into.get("cloud_account") and l["account"] == into["cloud_account"]
+            and (not into.get("region") or l["region"] == into["region"])
+            and (not into.get("cloud_provider") or l["provider"] == into["cloud_provider"])]
+    fit = fits[0]["value"] if len(fits) == 1 else ""
+    chosen = str(body.get("lands") or "") or fit
+    land = by_value.get(chosen)
+    if chosen and land is None:
+        raise ApiError("%s is not an account of this estate" % chosen.replace("|", " · "), 422)
+    return chosen, bool(fit) and chosen == fit, land
+
+
+def api_canvas_block(_query, body) -> dict:
+    """A building block dropped on the canvas (V19), before anything is
+    written: where it lands (the account it was dropped in), who owns it
+    (the owner most of the account's services have, said with how many),
+    and what it makes there, each service with the cloud's usual product,
+    in the order its lines run. With `place`, its services are written as
+    the Library's Add a block writes them, given the account's fields and
+    the owner, and their lines with them."""
+    components, blocks, _patterns = _library()
+    block = blocks.get(str(body.get("block") or ""))
+    if block is None:
+        raise ApiError("unknown building block %r" % body.get("block"), 404)
+    model, _views = _load_all()
+    lands = _kit_lands(model)
+    chosen, dropped, land = _dropped_land(lands, body)
+    name = str(body.get("name") or "").strip() or block.name
+    owners = sorted(
+        ({"id": str(r[ENTITY_TYPES["org_units"].pk]), "name": str(r.get("name") or "")}
+         for r in model.all_of("org_units")), key=lambda o: o["name"].lower())
+    suggested, owner_why = "", ""
+    if land is not None:
+        here = [r for r in model.all_of("tech_services") if str(r.get("cloud_account") or "") == land["account"]]
+        counted = Counter(str(r.get("owner_org_id") or "") for r in here if r.get("owner_org_id"))
+        ranked = sorted(counted.items(), key=lambda kv: (-kv[1], kv[0]))
+        # Most of them, where one owner has more than any other; a tie is
+        # the person's to break.
+        if ranked and (len(ranked) == 1 or ranked[0][1] > ranked[1][1]):
+            suggested, n = ranked[0]
+            owner_why = ("As every service already in %s is." % land["account"] if n == len(here)
+                         else "As %d of the %d services already in %s are." % (n, len(here), land["account"]))
+    owner = str(body.get("owner") or "") if "owner" in body else suggested
+    if owner and (model.find(owner) or ("",))[0] != "org_units":
+        raise ApiError("%s is not an org unit of this estate" % owner, 422)
+
+    out = block_expand(block, name, components, provider=land["provider"] if land else None)
+    order = _block_order(block)
+    made: List[Tuple[str, dict]] = []
+    for type_name, records in out["entities"].items():
+        for record in records:
+            if land is not None:
+                record.update({"cloud_provider": land["provider"], "cloud_account": land["account"],
+                               "region": land["region"]})
+            if owner:
+                record["owner_org_id"] = owner
+            made.append((type_name, record))
+    made.sort(key=lambda m: order.index(m[1]["component_type"]) if m[1]["component_type"] in order else len(order))
+    clashes = [str(r[ENTITY_TYPES[t].pk]) for t, r in made if model.find(str(r[ENTITY_TYPES[t].pk])) is not None]
+    missing = (["where it lands"] if land is None else []) + ([] if owner else ["who owns it"])
+    pairs = list(block.relations)
+    result = {
+        "block": block.building_block_id, "blockName": block.name, "name": name,
+        "lands": chosen, "landsOptions": lands, "dropped": dropped,
+        "owner": owner, "suggested": suggested, "ownerWhy": owner_why, "owners": owners,
+        "makes": [{"id": str(r[ENTITY_TYPES[t].pk]), "name": str(r.get("name") or ""),
+                   "kind": components[r["component_type"]].name, "component": r["component_type"],
+                   "product": str(r.get("product") or "")} for t, r in made],
+        "lines": [[components[a].name, components[b].name] for a, b in pairs],
+        # The lines run once through the services in the order listed.
+        "chain": bool(pairs) and pairs == list(zip(order, order[1:])),
+        "missing": missing, "clashes": clashes, "placed": [],
+    }
+    if not body.get("place"):
+        return result
+    if missing or clashes:
+        raise ApiError("not placed: " + ("; ".join(
+            (["it waits for " + " and ".join(missing)] if missing else [])
+            + (["the estate has %s already" % ", ".join(clashes)] if clashes else []))), 409)
+    with _LOCK:
+        paths = []
+        for type_name, record in made:
+            pk = ENTITY_TYPES[type_name].pk
+            values = {k: v for k, v in record.items() if k != pk}
+            paths.append(_write_entity(type_name, str(record[pk]), values).relative_to(REPO_ROOT).as_posix())
+        if out["relations"]:
+            data = _load_app_relations(BLOCK_ADDITIONS)
+            for relation, rows in out["relations"].items():
+                data.setdefault(relation, []).extend(rows)
+            _write_app_relations(data, BLOCK_ADDITIONS)
+        try:
+            _load_all()
+        except (ModelError, ArchetypeError, ViewError, ModelFileError) as exc:
+            raise ApiError("placing that broke the model: %s" % exc, 409)
+    result["placed"] = [m["id"] for m in result["makes"]]
+    result["paths"] = paths
+    return result
+
+
+def api_canvas_kit(_query, body) -> dict:
+    """A kit dropped on the canvas, before anything is written: where it
+    lands (the account it was dropped in), who owns it, what it asks, and
+    what each of its systems runs on there, from the real expansion over a
+    scratch copy of the model as Assemble's preview has it. The assembly
+    it returns is what Place sends to `/api/assemble/create`, so the canvas
+    writes a product the one way the Assemble panel does. Nothing is
+    guessed: an owner is offered only when every system already in the
+    account that names one names the same, and the panel says so."""
+    from terrane.model import PLACED, place_by_zone
+
+    modules = load_modules(REPO_ROOT)
+    kit = modules.get(str(body.get("kit") or ""))
+    if kit is None or not kit.is_kit:
+        raise ApiError("unknown kit %r" % body.get("kit"), 404)
+    model, _views = _load_all()
+    lands = _kit_lands(model)
+    chosen, dropped, land = _dropped_land(lands, body)
+
+    name = str(body.get("name") or "").strip() or kit.name
+    owners = sorted(
+        ({"id": str(r[ENTITY_TYPES["org_units"].pk]), "name": str(r.get("name") or "")}
+         for r in model.all_of("org_units")), key=lambda o: o["name"].lower())
+    owner = str(body.get("owner") or "")
+    suggested, owner_why, domain = "", "", ""
+    if land is not None:
+        # The owner every system already there names, where they agree; one
+        # that names none says nothing either way, and the hint says so.
+        here = [r for r in model.all_of("systems") if str(r.get("cloud_account") or "") == land["account"]]
+        held = {str(r.get("owner_org_id") or "") for r in here}
+        named = held - {""}
+        if len(named) == 1:
+            suggested = named.pop()
+            owner_why = "As every system already in %s%s." % (
+                land["account"], " that has an owner" if "" in held else "")
+        # The account's domain, where its records that name one agree.
+        domains = {str(r.get("company_domain") or "") for t in ("systems", "tech_services")
+                   for r in model.all_of(t) if str(r.get("cloud_account") or "") == land["account"]} - {""}
+        if len(domains) == 1:
+            domain = domains.pop()
+    if not owner and "owner" not in body:
+        owner = suggested
+    if owner and (model.find(owner) or ("",))[0] != "org_units":
+        raise ApiError("%s is not an org unit of this estate" % owner, 422)
+
+    asks = _kit_asks(kit)
+    given = body.get("with") or {}
+    values: Dict[str, Any] = {}
+    missing: List[str] = []
+    for ask in asks:
+        value = given.get(ask["name"], ask["default"])
+        if ask["names"]:
+            listed = value if isinstance(value, list) else [value] if value else []
+            unknown = [v for v in listed if (model.find(str(v)) or ("",))[0] != ask["names"]]
+            if unknown:
+                raise ApiError("%s: %s is not in the estate" % (ask["ask"], ", ".join(map(str, unknown))), 422)
+        ask["value"] = value
+        if value in (None, "", []):
+            if ask["required"]:
+                missing.append(ask["ask"])
+            continue
+        values[ask["name"]] = value
+    if land is None:
+        missing.insert(0, "where it lands")
+    if not owner:
+        missing.insert(1 if land is None else 0, "who owns it")
+
+    kit_types = [t.build_type_id for t in load_build_types(REPO_ROOT).values() if list(t.requires) == [kit.module_id]]
+    product_id, slug, number = _kit_ids(name, model)
+    # The id the name makes, when the estate has it and this one is numbered.
+    first = product_id[:-len("-%d" % number)] if number > 1 else ""
+    out = {
+        "kit": kit.module_id, "kitName": kit.name, "name": name, "id": product_id,
+        "lands": chosen, "landsOptions": lands, "dropped": dropped,
+        "owner": owner, "suggested": suggested, "ownerWhy": owner_why, "owners": owners,
+        "domain": domain, "asks": asks, "missing": missing, "systems": _kit_systems(kit, modules),
+        "makes": [], "lines": 0, "assembly": None, "taken": first,
+    }
+    if land is None:
+        return out
+
+    # A kit's parameter the shapes' vocabulary has (the vendor kit's vendor
+    # and caller) is the product's to answer; the rest the kit is told.
+    told = {k: v for k, v in values.items() if k not in _VOCABULARY_NAMES}
+    answered = {k: v for k, v in values.items() if k in _VOCABULARY_NAMES}
+
+    def assembly(pid, slug_, owner_, told_=None, answered_=None):
+        told_ = told if told_ is None else told_
+        parameters = dict(answered if answered_ is None else answered_)
+        parameters.update({"slug": slug_, "product_name": name, "owner_org": owner_,
+                           "account": land["account"], "region": land["region"]})
+        record_values = {"name": name, "status": "Planned", "owner_org_id": owner_}
+        if domain:
+            parameters["domain"] = domain
+            record_values["company_domain"] = domain
+        made = {"id": pid, "values": record_values, "parameters": parameters,
+                "compose": {"provider": land["provider"],
+                            "modules": [{"module": kit.module_id, "with": told_} if told_
+                                        else {"module": kit.module_id}]}}
+        if len(kit_types) == 1:
+            made["buildType"] = kit_types[0]
+        return made
+
+    # What it makes is the same whoever owns it: the expansion is asked
+    # with a stand-in owner and stand-ins for what is not answered yet, and
+    # only the assembly that Place sends waits for the real answers.
+    stand_in = dict(values)
+    for ask in asks:
+        if ask["name"] not in stand_in and ask["required"]:
+            stand_in[ask["name"]] = "SYS-" + ask["name"].upper().replace("_", "-") if ask["names"] else ask["ask"]
+    trial = assembly(product_id, slug, owner or "ORG-OWNER",
+                     {k: v for k, v in stand_in.items() if k not in _VOCABULARY_NAMES},
+                     {k: v for k, v in stand_in.items() if k in _VOCABULARY_NAMES})
+    taken = out["taken"]
+    for _attempt in range(20):
+        instance_id, record = _assembly(trial)
+        shape, expansion = _expand_assembly(model, instance_id, record)
+        clash = [str(r.get(ENTITY_TYPES[t].pk) or "") for t, rows in expansion.entities.items() for r in rows
+                 if model.find(str(r.get(ENTITY_TYPES[t].pk) or "")) is not None]
+        if not clash:
+            break
+        taken = taken or clash[0]
+        product_id, slug, number = _kit_ids(name, model, number + 1)
+        trial = dict(trial, id=product_id, parameters=dict(trial["parameters"], slug=slug))
+    out["id"], out["taken"] = product_id, taken
+
+    scratch = _scratch_model(model)
+    source = Path("10_MODEL/products/%s.yaml" % product_id)
+    for type_name, records in expansion.entities.items():
+        for produced in records:
+            scratch._add_entity(ENTITY_TYPES[type_name], dict(produced), source)
+    for relation_name, rows in expansion.relations.items():
+        for row in rows:
+            try:
+                scratch._add_relation(relation_name, dict(row), str(source))
+            except ModelError:
+                pass
+    place_by_zone(scratch, load_components(REPO_ROOT))
+    own = {str(r["tech_service_id"]) for r in expansion.entities.get("tech_services", [])}
+    made_systems = expansion.entities.get("systems", [])
+    mine = {str(s["system_id"]) for s in made_systems}
+    uses: Dict[str, List[dict]] = {sid: [] for sid in mine}
+    subnets: Dict[str, List[str]] = {sid: [] for sid in mine}
+    for row in scratch.relation_rows("system_uses_tech_service"):
+        sid, tid = str(row.get("system_id")), str(row.get("tech_service_id"))
+        if sid not in mine:
+            continue
+        found = scratch.find(tid)
+        service = found[1] if found else {}
+        if row.get("_source") == PLACED or service.get("component_type") == "subnet":
+            subnets[sid].append(str(service.get("name") or tid))
+        else:
+            # A service the product makes for itself is said by what it
+            # is, "its own Amazon ElastiCache", not by the product's name.
+            said = str((service.get("product") if tid in own else "") or service.get("name") or tid)
+            uses[sid].append({"id": tid, "name": said, "own": tid in own})
+    # The zones the account has subnets for in the region: a system of a
+    # zone it has none for is said so, not shown as outside the subnets.
+    zoned = {str(r.get("network_zone") or "") for r in model.all_of("tech_services")
+             if r.get("component_type") == "subnet" and str(r.get("cloud_account") or "") == land["account"]
+             and str(r.get("region") or land["region"]) == land["region"]}
+    by_zone: Dict[str, dict] = {}
+    for system in made_systems:
+        sid = str(system["system_id"])
+        zone = str(system.get("network_zone") or "")
+        placed = bool(subnets[sid])
+        key = zone if placed else ("" if not zone else "unplaced:" + zone)
+        group = by_zone.setdefault(key, {"zone": zone, "words": _zone_words(zone) if zone else "",
+                                         "placed": placed, "none": bool(zone) and zone not in zoned,
+                                         "subnets": [], "systems": []})
+        for s in subnets[sid]:
+            if s not in group["subnets"]:
+                group["subnets"].append(s)
+        part = str(system.get("name") or sid)
+        if part.lower().startswith(name.lower()):
+            part = part[len(name):].strip() or part
+        group["systems"].append({"id": sid, "name": str(system.get("name") or sid),
+                                 "part": _sentence(part), "uses": uses[sid]})
+    makes = []
+    for group in by_zone.values():
+        # What every system in the group uses is said once, for the group.
+        common = None
+        for s in group["systems"]:
+            names = [u["name"] for u in s["uses"] if not u["own"]]
+            common = names if common is None else [n for n in common if n in names]
+        group["shared"] = common if len(group["systems"]) > 1 else []
+        for s in group["systems"]:
+            s["adds"] = [u for u in s["uses"] if u["own"] or u["name"] not in group["shared"]]
+        makes.append(group)
+    out["makes"] = makes
+    out["lines"] = len(expansion.entities.get("interfaces", []))
+    if not missing:
+        out["assembly"] = assembly(product_id, slug, owner)
+    return out
 
 
 # ---- what the diagrams need ---------------------------------------------------
@@ -6161,6 +6866,45 @@ def api_needs_records(query, _body) -> dict:
         "free": bool(spec is not None and not spec.enum and not spec.ref and need.kind == "field"),
         "context": context, "records": rows, "asked": need.asked, "reading": reading,
     }
+
+
+def api_needs_kinds(_query, _body) -> dict:
+    """What kind each record with no component_type probably is, by the
+    library's own words, grouped by the likeliest (`terrane needs --types`):
+    each with the words that matched and the next kinds, ticked where the
+    match is sure and the record is a person's to change. Nothing is set
+    until a person sets it, through /api/records/set and its Undo."""
+    model, _views = _load_all()
+    library = load_components(REPO_ROOT)
+    types, groups, nothing = [], [], []
+    for type_name, by_kind in match_module.kind_groups(model, library):
+        pk = ENTITY_TYPES[type_name].pk
+        types.append({"type": type_name, "lacking": sum(len(rows) for rows in by_kind.values())})
+        for kind, rows in by_kind.items():
+            listed = []
+            for record, got in sorted(rows, key=lambda rg: str(rg[0].get(pk) or "")):
+                home = records_module.home_of(type_name, record)
+                fixed = home.kind in ("generated", "imported")
+                entry = {"id": str(record.get(pk)), "name": str(record.get("name") or record.get(pk)),
+                         "editable": not fixed, "why": home.note if fixed else ""}
+                if got:
+                    entry.update(words=list(got[0].words), score=got[0].score,
+                                 sure=match_module.sure(got[0]) and not fixed,
+                                 also=[{"kind": s.component_type_id, "name": s.name} for s in got[1:]])
+                listed.append(entry)
+            if not kind:
+                nothing.extend(dict(e, type=type_name) for e in listed)
+                continue
+            # The words the group shares most, and whether every one of it
+            # was matched on a single word: a group read on "domain" alone.
+            said = Counter(w for _r, got in rows for w in got[0].words)
+            top = sorted(said, key=lambda w: (-said[w], w))
+            single = all(len(got[0].words) == 1 for _r, got in rows)
+            groups.append({"type": type_name, "kind": kind, "name": library[kind].name, "records": listed,
+                           "words": sorted(top[:3]), "more": len(top) > 3,
+                           "oneWord": (top[0] if len(top) == 1 else "") if single else None})
+    groups.sort(key=lambda g: (-len(g["records"]), -sum(1 for r in g["records"] if r.get("sure")), g["name"], g["type"]))
+    return {"kinds": len(library), "types": types, "groups": groups, "nothing": nothing}
 
 
 #: The last batch of records set on many at once, so it can be put back:
@@ -6348,7 +7092,10 @@ ROUTES: Dict[Tuple[str, str], Callable] = {
     ("POST", "/api/archetype/compose"): api_archetype_compose,
     ("GET", "/api/canvas/parts"): api_canvas_parts,
     ("POST", "/api/canvas/save"): api_canvas_save,
+    ("POST", "/api/canvas/styles"): api_canvas_styles,
     ("POST", "/api/canvas/record"): api_canvas_record,
+    ("POST", "/api/canvas/kit"): api_canvas_kit,
+    ("POST", "/api/canvas/block"): api_canvas_block,
     ("GET", "/api/compose/options"): api_compose_options,
     ("GET", "/api/chunks"): api_chunks,
     ("POST", "/api/assemble/preview"): api_assemble_preview,
@@ -6361,6 +7108,7 @@ ROUTES: Dict[Tuple[str, str], Callable] = {
     ("GET", "/api/needs"): api_needs,
     ("GET", "/api/needs/view"): api_needs_view,
     ("GET", "/api/needs/records"): api_needs_records,
+    ("GET", "/api/needs/kinds"): api_needs_kinds,
     ("POST", "/api/records/set"): api_records_set,
     ("POST", "/api/records/undo"): api_records_undo,
     ("GET", "/api/estates"): api_estates,
@@ -6415,6 +7163,7 @@ ROUTES: Dict[Tuple[str, str], Callable] = {
     ("GET", "/api/search/index"): api_search_index,
     ("GET", "/api/icons"): api_icons,
     ("GET", "/api/validate"): api_validate,
+    ("GET", "/api/checks/alike"): api_checks_alike,
     ("POST", "/api/save"): api_save,
     ("POST", "/api/delete"): api_delete,
     ("POST", "/api/instantiate"): api_instantiate,

@@ -6,7 +6,10 @@
 title Merchant Acquiring & Sponsorship — Frameworks, Controls, Systems
 
 AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
 AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
 
 Boundary(b_Capability, "Capability") {
   System(CAP_MERCH_05, "Acquiring Chargeback Processing", "Work chargebacks from the acquiring side: represent on behalf of merchants and pass losses to the right party.", $tags="capabilities")
@@ -19,16 +22,66 @@ Boundary(b_Capability, "Capability") {
   ' aac CAP_MERCH_03: company_domain="Merchant Services"
   System(CAP_MERCH_06, "Merchant Monitoring & Exposure Management", "Monitor merchant transaction behavior, credit exposure, and collusion or bust-out patterns across the portfolio.", $tags="capabilities")
   ' aac CAP_MERCH_06: company_domain="Merchant Services"
+  System(CAP_MERCH_07, "Merchant Servicing & Billing", "Bill merchant fees, deliver statements, pay ISO residuals and answer merchant and ISO questions.", $tags="capabilities")
+  ' aac CAP_MERCH_07: company_domain="Merchant Services"
   System(CAP_MERCH_04, "Merchant Settlement & Funding", "Clear and settle merchant card volume and fund merchant accounts daily, with reserves where risk requires them.", $tags="capabilities")
   ' aac CAP_MERCH_04: company_domain="Merchant Services"
   System(CAP_MERCH_02, "Merchant Underwriting & Risk Vetting", "Underwrite merchants against credit and brand risk appetite — the specialty-vertical appetite is the differentiator.", $tags="capabilities")
   ' aac CAP_MERCH_02: company_domain="Merchant Services"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_DAILY_RECON, "Daily settlement and clearing reconciliation", "Network settlement, clearing files, and interchange postings reconcile to network totals daily; unreconciled variances stop downstream posting.", $tags="controls")
+  ' aac CTL_DAILY_RECON: company_domain=""
+  System(CTL_MERCH_EXPOSURE, "Merchant exposure limit monitoring", "Merchant volume, chargeback ratios and future delivery exposure are checked daily against approved limits, with breaches actioned.", $tags="controls")
+  ' aac CTL_MERCH_EXPOSURE: company_domain=""
+  System(CTL_MERCH_SCREEN, "Merchant screening before boarding", "No merchant is boarded before the business and its owners clear sanctions and the networks' terminated-merchant file.", $tags="controls")
+  ' aac CTL_MERCH_SCREEN: company_domain=""
+  System(CTL_SANCTIONS, "Sanctions and watchlist screening", "Parties are screened at onboarding and on list updates; hits are dispositioned before processing continues.", $tags="controls")
+  ' aac CTL_SANCTIONS: company_domain=""
+  System(CTL_FUNDING_CONF, "Settlement funding confirmation", "The daily funding position is confirmed funded by the network deadline with dual verification and same-day escalation on a miss.", $tags="controls")
+  ' aac CTL_FUNDING_CONF: company_domain=""
+  System(CTL_TPRM_DD, "Third-party due diligence before onboarding", "No supplier processes cardholder data before risk-tiered due diligence is complete and accepted.", $tags="controls")
+  ' aac CTL_TPRM_DD: company_domain=""
 }
 Boundary(b_Framework, "Framework") {
   System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
   ' aac FW_BIAN: company_domain=""
   System(FW_PCI_DSS, "PCI DSS", "The card industry's data security standard. Not a framework anybody chose: it is a condition of processing card transactions, which is why it governs the payment and merchant domains whatever anyone thinks of it.", $tags="frameworks")
   ' aac FW_PCI_DSS: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_MERCHANT_011, "Bill merchant fees and serve statements", "Calculate the month's processing, network and service fees, deliver the merchant statement, pay ISO residuals, and answer merchant and ISO questions about funding and fees. Statements are what a merchant checks its funding against, so a pricing error found here is a refund to many merchants at once.", $tags="processes")
+  ' aac P_MERCHANT_011: company_domain=""
+  System(P_MERCHANT_005, "Board merchant and register with networks", "Set the approved merchant up on the acquiring platform with its pricing, limits and reserve, assign merchant and terminal ids, and register it with the card networks under the bank's sponsorship. Boarding is where approved terms become system parameters, and a limit keyed wrong is exposure nobody approved.", $tags="processes")
+  ' aac P_MERCHANT_005: company_domain=""
+  System(P_MERCHANT_002, "Capture merchant application", "Take a merchant's application, sent by an ISO or made directly in the merchant portal, with its owners, processing history, business model and bank account, and check it is complete before underwriting. Beneficial ownership is collected here because sanctions screening and the network's terminated-merchant check both read it.", $tags="processes")
+  ' aac P_MERCHANT_002: company_domain=""
+  System(P_MERCHANT_009, "Monitor merchant exposure and activity", "Watch merchant volume, ticket size, refund and chargeback ratios and future delivery exposure against approved limits, and investigate spikes, collusion and bust-out patterns. Excessive chargeback ratios put the merchant and the bank into network monitoring programs, with fines.", $tags="processes")
+  ' aac P_MERCHANT_009: company_domain=""
+  System(P_MERCHANT_001, "Onboard and oversee ISO or agent", "Diligence and contract an independent sales organization or agent, register it with the networks, and review its portfolio quality, complaints and residuals each month. The bank sponsors the ISO's merchants into the networks and carries their liability, so an ISO's underwriting shortcuts become the bank's chargeback losses.", $tags="processes")
+  ' aac P_MERCHANT_001: company_domain=""
+  System(P_MERCHANT_008, "Process acquiring chargeback", "Receive chargebacks from the networks against merchants, debit the merchant or its reserve, collect the merchant's evidence and represent within the reason code's window, and absorb the loss when the merchant cannot pay. Chargebacks a merchant cannot cover fall on the bank as its sponsor.", $tags="processes")
+  ' aac P_MERCHANT_008: company_domain=""
+  System(P_MERCHANT_004, "Screen merchant against sanctions and network lists", "Screen the business and its owners against sanctions lists and the networks' terminated-merchant file, and review prohibited and brand-damaging business types before boarding. A merchant on the terminated file, or in a prohibited category, boarded under the bank's sponsorship draws network fines on the bank.", $tags="processes")
+  ' aac P_MERCHANT_004: company_domain=""
+  System(P_MERCHANT_007, "Set and adjust merchant reserve", "Set the reserve or delayed funding a merchant must carry, raise it when chargebacks, refunds or delivery risk grow, and release it when exposure ends after the merchant leaves. Reserves are held merchant money, so each change is evidenced against the merchant agreement.", $tags="processes")
+  ' aac P_MERCHANT_007: company_domain=""
+  System(P_MERCHANT_006, "Settle and fund merchants", "Clear the day's card volume, net out fees, chargebacks and reserve holds, and fund each merchant's bank account by ACH, reconciling network settlement to merchant funding. Funding a merchant that should have been held is exactly the loss the reserve was meant to cover.", $tags="processes")
+  ' aac P_MERCHANT_006: company_domain=""
+  System(P_MERCHANT_010, "Terminate merchant and report to network list", "Close a merchant for risk, fraud or breach, hold funds to cover the chargeback tail, and add it to the networks' terminated-merchant file where the rules require. A termination that is not reported lets the merchant board elsewhere, and is itself a rule breach.", $tags="processes")
+  ' aac P_MERCHANT_010: company_domain=""
+  System(P_MERCHANT_003, "Underwrite merchant", "Assess the merchant's credit, processing history, delivery timeframes and chargeback exposure against the appetite for its business type, and approve with limits and reserve terms, or decline. Specialty and higher-risk business types are the point of the program, so underwriting sets the exposure every later step monitors.", $tags="processes")
+  ' aac P_MERCHANT_003: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_MERCH_ACQ, "Merchant acquiring platform", "Processor platform for merchant boarding, clearing, settlement, reserves, fees and statements. Built with external.", $tags="systems")
+  ' aac SYS_MERCH_ACQ: company_domain=""; hosting="External"; technology="external"
+  System(SYS_MERCHANT_WEB, "Merchant Portal Web", "Customer-facing front end for Merchant Portal. Built with AKS.", $tags="systems")
+  ' aac SYS_MERCHANT_WEB: company_domain="Payments"; hosting="Azure"; technology="AKS"
+  System(SYS_MERCH_RISK, "Merchant risk monitoring", "Monitors merchant volume, chargeback ratios and exposure, and checks merchants against the networks' terminated-merchant file.", $tags="systems")
+  ' aac SYS_MERCH_RISK: company_domain=""
+  System_Ext(SYS_SCREENING_VENDOR, "NICE Actimize Screening", "Financial Crime Screening, operated by NICE Actimize in their own tenancy. Contractually pinned to EU processing; the DPA restricts sub-processors and sets a 90-day retention ceiling. Built with NICE Actimize.", $tags="systems")
+  ' aac SYS_SCREENING_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="NICE Actimize"
 }
 
 Rel(CAP_MERCH_01, CAP_MERCH, "part of")
@@ -37,14 +90,15 @@ Rel(CAP_MERCH_03, CAP_MERCH, "part of")
 Rel(CAP_MERCH_04, CAP_MERCH, "part of")
 Rel(CAP_MERCH_05, CAP_MERCH, "part of")
 Rel(CAP_MERCH_06, CAP_MERCH, "part of")
+Rel(CAP_MERCH_07, CAP_MERCH, "part of")
 Rel(CAP_MERCH, FW_BIAN, "Aligned to")
 ' aac rel: source="CAP_MERCH"; target="FW_BIAN"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
 Rel(CAP_MERCH, FW_PCI_DSS, "Governed by")
 ' aac rel: source="CAP_MERCH"; target="FW_PCI_DSS"; label="Governed by"; relation="capability_aligns_to_framework"; alignment="Governed by"
 Rel(CAP_MERCH_01, FW_BIAN, "Reference Data > External Agency > Partner Administration")
 ' aac rel: source="CAP_MERCH_01"; target="FW_BIAN"; label="Reference Data > External Agency > Partner Administration"; relation="capability_references_framework"; ref="Reference Data > External Agency > Partner Administration"
-Rel(CAP_MERCH_02, FW_BIAN, "Sales and Service > Sales > Merchant Relations")
-' aac rel: source="CAP_MERCH_02"; target="FW_BIAN"; label="Sales and Service > Sales > Merchant Relations"; relation="capability_references_framework"; ref="Sales and Service > Sales > Merchant Relations"
+Rel(CAP_MERCH_02, FW_BIAN, "Operations and Execution > Cards > Merchant Relations")
+' aac rel: source="CAP_MERCH_02"; target="FW_BIAN"; label="Operations and Execution > Cards > Merchant Relations"; relation="capability_references_framework"; ref="Operations and Execution > Cards > Merchant Relations"
 Rel(CAP_MERCH_03, FW_BIAN, "Operations and Execution > Cards > Merchant Acquiring Facility")
 ' aac rel: source="CAP_MERCH_03"; target="FW_BIAN"; label="Operations and Execution > Cards > Merchant Acquiring Facility"; relation="capability_references_framework"; ref="Operations and Execution > Cards > Merchant Acquiring Facility"
 Rel(CAP_MERCH_04, FW_BIAN, "Operations and Execution > Account Management > Account Reconciliation")
@@ -53,6 +107,80 @@ Rel(CAP_MERCH_05, FW_BIAN, "Sales and Service > Servicing > Card Case")
 ' aac rel: source="CAP_MERCH_05"; target="FW_BIAN"; label="Sales and Service > Servicing > Card Case"; relation="capability_references_framework"; ref="Sales and Service > Servicing > Card Case"
 Rel(CAP_MERCH_06, FW_BIAN, "Operations and Execution > Account Management > Fraud Evaluation")
 ' aac rel: source="CAP_MERCH_06"; target="FW_BIAN"; label="Operations and Execution > Account Management > Fraud Evaluation"; relation="capability_references_framework"; ref="Operations and Execution > Account Management > Fraud Evaluation"
+Rel(CAP_MERCH_07, FW_BIAN, "Operations and Execution > Cards > Merchant Acquiring Facility / Charge")
+' aac rel: source="CAP_MERCH_07"; target="FW_BIAN"; label="Operations and Execution > Cards > Merchant Acquiring Facility / Charge"; relation="capability_references_framework"; ref="Operations and Execution > Cards > Merchant Acquiring Facility / Charge"
+Rel(P_MERCHANT_001, CAP_MERCH_01, "supported by")
+' aac rel: source="P_MERCHANT_001"; target="CAP_MERCH_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_MERCHANT_005, CAP_MERCH_03, "supported by")
+' aac rel: source="P_MERCHANT_005"; target="CAP_MERCH_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_MERCHANT_008, CAP_MERCH_05, "supported by")
+' aac rel: source="P_MERCHANT_008"; target="CAP_MERCH_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_MERCHANT_009, CAP_MERCH_06, "supported by")
+' aac rel: source="P_MERCHANT_009"; target="CAP_MERCH_06"; label="supported by"; relation="process_supports_capability"
+Rel(P_MERCHANT_010, CAP_MERCH_06, "supported by")
+' aac rel: source="P_MERCHANT_010"; target="CAP_MERCH_06"; label="supported by"; relation="process_supports_capability"
+Rel(P_MERCHANT_011, CAP_MERCH_07, "supported by")
+' aac rel: source="P_MERCHANT_011"; target="CAP_MERCH_07"; label="supported by"; relation="process_supports_capability"
+Rel(P_MERCHANT_002, CAP_MERCH_02, "supported by")
+' aac rel: source="P_MERCHANT_002"; target="CAP_MERCH_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_MERCHANT_003, CAP_MERCH_02, "supported by")
+' aac rel: source="P_MERCHANT_003"; target="CAP_MERCH_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_MERCHANT_004, CAP_MERCH_02, "supported by")
+' aac rel: source="P_MERCHANT_004"; target="CAP_MERCH_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_MERCHANT_006, CAP_MERCH_04, "supported by")
+' aac rel: source="P_MERCHANT_006"; target="CAP_MERCH_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_MERCHANT_007, CAP_MERCH_04, "supported by")
+' aac rel: source="P_MERCHANT_007"; target="CAP_MERCH_04"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_MERCH, CTL_DAILY_RECON, "governed by")
+' aac rel: source="CAP_MERCH"; target="CTL_DAILY_RECON"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_MERCH, CTL_FUNDING_CONF, "governed by")
+' aac rel: source="CAP_MERCH"; target="CTL_FUNDING_CONF"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_MERCH, CTL_MERCH_EXPOSURE, "governed by")
+' aac rel: source="CAP_MERCH"; target="CTL_MERCH_EXPOSURE"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_MERCH, CTL_MERCH_SCREEN, "governed by")
+' aac rel: source="CAP_MERCH"; target="CTL_MERCH_SCREEN"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_MERCH, CTL_SANCTIONS, "governed by")
+' aac rel: source="CAP_MERCH"; target="CTL_SANCTIONS"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_MERCH, CTL_TPRM_DD, "governed by")
+' aac rel: source="CAP_MERCH"; target="CTL_TPRM_DD"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_MERCH_01, CTL_TPRM_DD, "governed by")
+' aac rel: source="CAP_MERCH_01"; target="CTL_TPRM_DD"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_MERCH_02, CTL_MERCH_EXPOSURE, "governed by")
+' aac rel: source="CAP_MERCH_02"; target="CTL_MERCH_EXPOSURE"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_MERCH_02, CTL_MERCH_SCREEN, "governed by")
+' aac rel: source="CAP_MERCH_02"; target="CTL_MERCH_SCREEN"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_MERCH_02, CTL_SANCTIONS, "governed by")
+' aac rel: source="CAP_MERCH_02"; target="CTL_SANCTIONS"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_MERCH_03, CTL_MERCH_SCREEN, "governed by")
+' aac rel: source="CAP_MERCH_03"; target="CTL_MERCH_SCREEN"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_MERCH_04, CTL_DAILY_RECON, "governed by")
+' aac rel: source="CAP_MERCH_04"; target="CTL_DAILY_RECON"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_MERCH_04, CTL_FUNDING_CONF, "governed by")
+' aac rel: source="CAP_MERCH_04"; target="CTL_FUNDING_CONF"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_MERCH_04, CTL_MERCH_EXPOSURE, "governed by")
+' aac rel: source="CAP_MERCH_04"; target="CTL_MERCH_EXPOSURE"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_MERCH_06, CTL_MERCH_EXPOSURE, "governed by")
+' aac rel: source="CAP_MERCH_06"; target="CTL_MERCH_EXPOSURE"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(SYS_MERCH_ACQ, CAP_MERCH_01, "realizes")
+' aac rel: source="SYS_MERCH_ACQ"; target="CAP_MERCH_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_MERCH_ACQ, CAP_MERCH_03, "realizes")
+' aac rel: source="SYS_MERCH_ACQ"; target="CAP_MERCH_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_MERCH_ACQ, CAP_MERCH_04, "realizes")
+' aac rel: source="SYS_MERCH_ACQ"; target="CAP_MERCH_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_MERCH_ACQ, CAP_MERCH_05, "realizes")
+' aac rel: source="SYS_MERCH_ACQ"; target="CAP_MERCH_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_MERCH_RISK, CAP_MERCH_02, "realizes")
+' aac rel: source="SYS_MERCH_RISK"; target="CAP_MERCH_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_MERCH_RISK, CAP_MERCH_04, "realizes")
+' aac rel: source="SYS_MERCH_RISK"; target="CAP_MERCH_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_MERCH_RISK, CAP_MERCH_06, "realizes")
+' aac rel: source="SYS_MERCH_RISK"; target="CAP_MERCH_06"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_MERCHANT_WEB, CAP_MERCH_02, "realizes")
+' aac rel: source="SYS_MERCHANT_WEB"; target="CAP_MERCH_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_MERCHANT_WEB, CAP_MERCH_07, "realizes")
+' aac rel: source="SYS_MERCHANT_WEB"; target="CAP_MERCH_07"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_SCREENING_VENDOR, CAP_MERCH_02, "realizes")
+' aac rel: source="SYS_SCREENING_VENDOR"; target="CAP_MERCH_02"; label="realizes"; relation="system_realizes_capability"
 
 SHOW_LEGEND()
 @enduml

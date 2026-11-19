@@ -78,6 +78,7 @@ provides:
   systems:
     - system_id: "SYS-{slug|upper}-PIPELINE"
       name: "{product_name} Pipeline"
+      component_type: etl
       description: "Ingestion and curation jobs building {product_name}."
       hosting: Azure
       system_category: Pipeline
@@ -86,6 +87,7 @@ provides:
 
     - system_id: "SYS-{slug|upper}-SEMANTIC"
       name: "{product_name} Semantic Layer"
+      component_type: bi
       description: "Governed models and metrics exposed to analysts for {product_name}."
       hosting: SaaS
       provider: Snowflake

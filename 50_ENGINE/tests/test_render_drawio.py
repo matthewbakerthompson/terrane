@@ -16,7 +16,7 @@ from terrane.join import join_estate
 from terrane.quick import check_sketch, read_any
 from terrane.render_drawio import _along, boundary_style, diagram_xml, edge_style, node_style, render_drawio
 
-from _fixture import REPO, Sandbox
+from _fixture import REPO, Sandbox, remove_scratch
 
 VISIO = REPO / "90_EXAMPLE" / "quick" / "sample.vsdx"
 
@@ -129,7 +129,9 @@ class TestRoundTrip(unittest.TestCase):
                              "scope": {"include": [{"type": "systems"}]},
                              "edges": [{"via": "interfaces", "label": "protocol"}]}]}
         drawings = terrane.diagrams(sketch, date="2026-10-17")
-        out = Path(tempfile.mkdtemp(prefix="aac-drawio-")) / "two.drawio"
+        folder = Path(tempfile.mkdtemp(prefix="aac-drawio-"))
+        self.addCleanup(remove_scratch, folder, "aac-drawio-")
+        out = folder / "two.drawio"
         drawings.drawio(out)
         text = out.read_text(encoding="utf-8")
         self.assertIn('kind="queued-request"', text)
@@ -145,7 +147,9 @@ class TestRoundTrip(unittest.TestCase):
         from terrane.quick import read_any
 
         thurman = REPO / "90_EXAMPLE" / "thurman-health"
-        out = Path(tempfile.mkdtemp(prefix="aac-drawio-")) / "thurman.drawio"
+        folder = Path(tempfile.mkdtemp(prefix="aac-drawio-"))
+        self.addCleanup(remove_scratch, folder, "aac-drawio-")
+        out = folder / "thurman.drawio"
         path, _notes = terrane.export_drawio(thurman, out, views=["application-landscape"])
         text = Path(path).read_text(encoding="utf-8")
         self.assertGreater(text.count('kind="hl7v2-feed"'), 10)
@@ -155,7 +159,9 @@ class TestRoundTrip(unittest.TestCase):
 
     def test_a_sketch_exported_and_read_again_is_the_sketch(self) -> None:
         drawings = terrane.diagrams(str(VISIO), date="2026-10-17")
-        out = Path(tempfile.mkdtemp(prefix="aac-drawio-")) / "visio.drawio"
+        folder = Path(tempfile.mkdtemp(prefix="aac-drawio-"))
+        self.addCleanup(remove_scratch, folder, "aac-drawio-")
+        out = folder / "visio.drawio"
         drawings.drawio(out)
         text = out.read_text(encoding="utf-8")
         self.assertEqual([name for name, _ in pages(text)], ["Applications", "Data"])
@@ -181,7 +187,9 @@ class TestRoundTrip(unittest.TestCase):
         # domain to "Data Asset": ids off the labels, types off the shapes,
         # domains off the bands. The boxes and lines carry the records now.
         with Sandbox(seed=True) as root:
-            out = Path(tempfile.mkdtemp(prefix="aac-drawio-")) / "estate.drawio"
+            folder = Path(tempfile.mkdtemp(prefix="aac-drawio-"))
+            self.addCleanup(remove_scratch, folder, "aac-drawio-")
+            out = folder / "estate.drawio"
             path, _notes = terrane.export_drawio(str(root), out, views=["system-context", "application-landscape",
                                                                     "capability-map", "data-landscape",
                                                                     "framework-landscape"])
@@ -217,13 +225,17 @@ class TestRoundTrip(unittest.TestCase):
         # `terrane.diagrams(root).drawio(...)` read the estate's relation
         # rows through a name quick.py never imported, and failed whenever
         # the diagrams were a repository's rather than a sketch's.
-        out = Path(tempfile.mkdtemp(prefix="aac-drawio-")) / "context.drawio"
+        folder = Path(tempfile.mkdtemp(prefix="aac-drawio-"))
+        self.addCleanup(remove_scratch, folder, "aac-drawio-")
+        out = folder / "context.drawio"
         terrane.diagrams(REPO, views=["system-context"], date="2026-10-17").drawio(out)
         self.assertEqual([name for name, _ in pages(out.read_text(encoding="utf-8"))], ["System Context"])
 
     def test_the_diagrams_own_ride_marked_and_are_not_read_back(self) -> None:
         drawings = terrane.diagrams(OWN_SKETCH, date="2026-10-17")
-        out = Path(tempfile.mkdtemp(prefix="aac-drawio-")) / "own.drawio"
+        folder = Path(tempfile.mkdtemp(prefix="aac-drawio-"))
+        self.addCleanup(remove_scratch, folder, "aac-drawio-")
+        out = folder / "own.drawio"
         drawings.drawio(out)
         text = out.read_text(encoding="utf-8")
         root = ET.fromstring(text)
@@ -253,7 +265,9 @@ class TestRoundTrip(unittest.TestCase):
         self.assertTrue(any("4 of the diagram's own" in n for n in notes), notes)
 
     def test_the_estate_exports_named_views_a_tile_map_among_them(self) -> None:
-        out = Path(tempfile.mkdtemp(prefix="aac-drawio-")) / "estate.drawio"
+        folder = Path(tempfile.mkdtemp(prefix="aac-drawio-"))
+        self.addCleanup(remove_scratch, folder, "aac-drawio-")
+        out = folder / "estate.drawio"
         path, notes = terrane.export_drawio(REPO, out, views=["system-context", "capability-map"])
         text = path.read_text(encoding="utf-8")
         # Pages come in the order the views are loaded, by id.

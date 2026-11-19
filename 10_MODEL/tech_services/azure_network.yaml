@@ -1,0 +1,93 @@
+# The Azure card issuer's networks: one for each subscription its systems sit in,
+# each made from the azure-workload-network shape, so its subnets, its NAT
+# gateway, its attachment to the Virtual WAN hub and its resolver link are
+# the shape's and not written here. Every system in the subscription lands in
+# the subnet for its network zone. A subscription gets the tiers its systems
+# use; a new one is a record here, made once.
+
+- tech_service_id: TS-NET-VNET-AZ-CARDS
+  name: Cards Virtual Network
+  description: The cards subscription's network, which card servicing, rewards and the merchant portal land in.
+  status: Active
+  cidr: 10.80.0.0/16
+  company_domain: Enterprise Platform
+  archetype: azure-workload-network
+  parameters:
+    slug: az-cards
+    network_name: Cards
+    account: azure-cards-prod
+    region: uksouth
+    subnets:
+      - {id: APP, name: App Subnet, zone: Private-App, az: zone-redundant}
+      - {id: DATA, name: Data Subnet, zone: Private-Data, az: zone-redundant}
+    nat_gateways:
+      - {id: NAT, name: NAT Gateway, az: zone-redundant}
+
+- tech_service_id: TS-NET-VNET-AZ-RISK
+  name: Risk Virtual Network
+  description: The risk subscription's network, which decisioning and collections land in.
+  status: Active
+  cidr: 10.81.0.0/16
+  company_domain: Enterprise Platform
+  archetype: azure-workload-network
+  parameters:
+    slug: az-risk
+    network_name: Risk
+    account: azure-risk-prod
+    region: uksouth
+    subnets:
+      - {id: PUB, name: Public Subnet, zone: Public, az: zone-redundant}
+      - {id: APP, name: App Subnet, zone: Private-App, az: zone-redundant}
+      - {id: SHARED, name: Shared Services Subnet, zone: Shared-Services, az: zone-redundant}
+    nat_gateways:
+      - {id: NAT, name: NAT Gateway, az: zone-redundant}
+
+- tech_service_id: TS-NET-VNET-AZ-PAYMENTS
+  name: Payments Virtual Network
+  description: The payments subscription's network.
+  status: Active
+  cidr: 10.82.0.0/16
+  company_domain: Enterprise Platform
+  archetype: azure-workload-network
+  parameters:
+    slug: az-payments
+    network_name: Payments
+    account: azure-payments-prod
+    region: uksouth
+    subnets:
+      - {id: APP, name: App Subnet, zone: Private-App, az: zone-redundant}
+      - {id: DATA, name: Data Subnet, zone: Private-Data, az: zone-redundant}
+    nat_gateways:
+      - {id: NAT, name: NAT Gateway, az: zone-redundant}
+
+- tech_service_id: TS-NET-VNET-AZ-DATA
+  name: Data Virtual Network
+  description: The data subscription's network, private data tier only.
+  status: Active
+  cidr: 10.83.0.0/16
+  company_domain: Enterprise Platform
+  archetype: azure-workload-network
+  parameters:
+    slug: az-data
+    network_name: Data
+    account: azure-data-prod
+    region: uksouth
+    subnets:
+      - {id: DATA, name: Data Subnet, zone: Private-Data, az: zone-redundant}
+    nat_gateways: []
+
+- tech_service_id: TS-NET-VNET-AZ-PLATFORM
+  name: Platform Virtual Network
+  description: The platform subscription's network, for shared services.
+  status: Active
+  cidr: 10.84.0.0/16
+  company_domain: Enterprise Platform
+  archetype: azure-workload-network
+  parameters:
+    slug: az-platform
+    network_name: Platform
+    account: azure-platform-prod
+    region: uksouth
+    subnets:
+      - {id: SHARED, name: Shared Services Subnet, zone: Shared-Services, az: zone-redundant}
+    nat_gateways: []

@@ -15,8 +15,19 @@ flowchart LR
     CAP_MERCH{{"Merchant Acquiring &<br/>Sponsorship"}}
     CAP_MERCH_03{{"Merchant Boarding &<br/>Network Sponsorship"}}
     CAP_MERCH_06{{"Merchant Monitoring &<br/>Exposure Management"}}
+    CAP_MERCH_07{{"Merchant Servicing &<br/>Billing"}}
     CAP_MERCH_04{{"Merchant Settlement &<br/>Funding"}}
     CAP_MERCH_02{{"Merchant Underwriting &<br/>Risk Vetting"}}
+  end
+
+  subgraph grp_Control["Control"]
+    direction LR
+    CTL_DAILY_RECON[["Daily settlement and<br/>clearing reconciliation"]]
+    CTL_MERCH_EXPOSURE[["Merchant exposure limit<br/>monitoring"]]
+    CTL_MERCH_SCREEN[["Merchant screening before<br/>boarding"]]
+    CTL_SANCTIONS[["Sanctions and watchlist<br/>screening"]]
+    CTL_FUNDING_CONF[["Settlement funding<br/>confirmation"]]
+    CTL_TPRM_DD[["Third-party due diligence<br/>before onboarding"]]
   end
 
   subgraph grp_Framework["Framework"]
@@ -25,27 +36,94 @@ flowchart LR
     FW_PCI_DSS["PCI DSS"]
   end
 
+  subgraph grp_Process["Process"]
+    direction LR
+    P_MERCHANT_011[\"Bill merchant fees and<br/>serve statements"/]
+    P_MERCHANT_005[\"Board merchant and<br/>register with networks"/]
+    P_MERCHANT_002[\"Capture merchant<br/>application"/]
+    P_MERCHANT_009[\"Monitor merchant exposure<br/>and activity"/]
+    P_MERCHANT_001[\"Onboard and oversee ISO or<br/>agent"/]
+    P_MERCHANT_008[\"Process acquiring<br/>chargeback"/]
+    P_MERCHANT_004[\"Screen merchant against<br/>sanctions and network<br/>lists"/]
+    P_MERCHANT_007[\"Set and adjust merchant<br/>reserve"/]
+    P_MERCHANT_006[\"Settle and fund merchants"/]
+    P_MERCHANT_010[\"Terminate merchant and<br/>report to network list"/]
+    P_MERCHANT_003[\"Underwrite merchant"/]
+  end
+
+  subgraph grp_System["System"]
+    direction LR
+    SYS_MERCH_ACQ["Merchant acquiring<br/>platform<br/>[external]"]
+    SYS_MERCHANT_WEB["Merchant Portal Web<br/>[AKS]"]
+    SYS_MERCH_RISK["Merchant risk monitoring"]
+    SYS_SCREENING_VENDOR["NICE Actimize Screening<br/>[NICE Actimize]"]
+  end
+
   CAP_MERCH_01 -->|"part of"| CAP_MERCH
   CAP_MERCH_02 -->|"part of"| CAP_MERCH
   CAP_MERCH_03 -->|"part of"| CAP_MERCH
   CAP_MERCH_04 -->|"part of"| CAP_MERCH
   CAP_MERCH_05 -->|"part of"| CAP_MERCH
   CAP_MERCH_06 -->|"part of"| CAP_MERCH
+  CAP_MERCH_07 -->|"part of"| CAP_MERCH
   CAP_MERCH -->|"Aligned to"| FW_BIAN
   CAP_MERCH -->|"Governed by"| FW_PCI_DSS
   CAP_MERCH_01 -->|"Reference Data #gt; Ext…"| FW_BIAN
-  CAP_MERCH_02 -->|"Sales and Service #gt;…"| FW_BIAN
+  CAP_MERCH_02 -->|"Operations and Executio…"| FW_BIAN
   CAP_MERCH_03 -->|"Operations and Executio…"| FW_BIAN
   CAP_MERCH_04 -->|"Operations and Executio…"| FW_BIAN
   CAP_MERCH_05 -->|"Sales and Service #gt;…"| FW_BIAN
   CAP_MERCH_06 -->|"Operations and Executio…"| FW_BIAN
+  CAP_MERCH_07 -->|"Operations and Executio…"| FW_BIAN
+  P_MERCHANT_001 -->|"supported by"| CAP_MERCH_01
+  P_MERCHANT_005 -->|"supported by"| CAP_MERCH_03
+  P_MERCHANT_008 -->|"supported by"| CAP_MERCH_05
+  P_MERCHANT_009 -->|"supported by"| CAP_MERCH_06
+  P_MERCHANT_010 -->|"supported by"| CAP_MERCH_06
+  P_MERCHANT_011 -->|"supported by"| CAP_MERCH_07
+  P_MERCHANT_002 -->|"supported by"| CAP_MERCH_02
+  P_MERCHANT_003 -->|"supported by"| CAP_MERCH_02
+  P_MERCHANT_004 -->|"supported by"| CAP_MERCH_02
+  P_MERCHANT_006 -->|"supported by"| CAP_MERCH_04
+  P_MERCHANT_007 -->|"supported by"| CAP_MERCH_04
+  CAP_MERCH -->|"governed by"| CTL_DAILY_RECON
+  CAP_MERCH -->|"governed by"| CTL_FUNDING_CONF
+  CAP_MERCH -->|"governed by"| CTL_MERCH_EXPOSURE
+  CAP_MERCH -->|"governed by"| CTL_MERCH_SCREEN
+  CAP_MERCH -->|"governed by"| CTL_SANCTIONS
+  CAP_MERCH -->|"governed by"| CTL_TPRM_DD
+  CAP_MERCH_01 -->|"governed by"| CTL_TPRM_DD
+  CAP_MERCH_02 -->|"governed by"| CTL_MERCH_EXPOSURE
+  CAP_MERCH_02 -->|"governed by"| CTL_MERCH_SCREEN
+  CAP_MERCH_02 -->|"governed by"| CTL_SANCTIONS
+  CAP_MERCH_03 -->|"governed by"| CTL_MERCH_SCREEN
+  CAP_MERCH_04 -->|"governed by"| CTL_DAILY_RECON
+  CAP_MERCH_04 -->|"governed by"| CTL_FUNDING_CONF
+  CAP_MERCH_04 -->|"governed by"| CTL_MERCH_EXPOSURE
+  CAP_MERCH_06 -->|"governed by"| CTL_MERCH_EXPOSURE
+  SYS_MERCH_ACQ -->|"realizes"| CAP_MERCH_01
+  SYS_MERCH_ACQ -->|"realizes"| CAP_MERCH_03
+  SYS_MERCH_ACQ -->|"realizes"| CAP_MERCH_04
+  SYS_MERCH_ACQ -->|"realizes"| CAP_MERCH_05
+  SYS_MERCH_RISK -->|"realizes"| CAP_MERCH_02
+  SYS_MERCH_RISK -->|"realizes"| CAP_MERCH_04
+  SYS_MERCH_RISK -->|"realizes"| CAP_MERCH_06
+  SYS_MERCHANT_WEB -->|"realizes"| CAP_MERCH_02
+  SYS_MERCHANT_WEB -->|"realizes"| CAP_MERCH_07
+  SYS_SCREENING_VENDOR -->|"realizes"| CAP_MERCH_02
 
   classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
+  classDef s_controls__controls fill:#fca5a5,stroke:#b91c1c,color:#0f172a,stroke-width:1.4px;
   classDef s_frameworks__frameworks fill:#d9f99d,stroke:#4d7c0f,color:#0f172a,stroke-width:1.4px;
-  class CAP_MERCH,CAP_MERCH_01,CAP_MERCH_02,CAP_MERCH_03,CAP_MERCH_04,CAP_MERCH_05,CAP_MERCH_06 s_capabilities__capabilities;
+  classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  class CAP_MERCH,CAP_MERCH_01,CAP_MERCH_02,CAP_MERCH_03,CAP_MERCH_04,CAP_MERCH_05,CAP_MERCH_06,CAP_MERCH_07 s_capabilities__capabilities;
+  class CTL_DAILY_RECON,CTL_FUNDING_CONF,CTL_MERCH_EXPOSURE,CTL_MERCH_SCREEN,CTL_SANCTIONS,CTL_TPRM_DD s_controls__controls;
   class FW_BIAN,FW_PCI_DSS s_frameworks__frameworks;
+  class P_MERCHANT_001,P_MERCHANT_002,P_MERCHANT_003,P_MERCHANT_004,P_MERCHANT_005,P_MERCHANT_006,P_MERCHANT_007,P_MERCHANT_008,P_MERCHANT_009,P_MERCHANT_010,P_MERCHANT_011 s_processes__processes;
+  class SYS_MERCH_ACQ,SYS_MERCH_RISK,SYS_MERCHANT_WEB,SYS_SCREENING_VENDOR s_systems__systems;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
-  class grp_Capability,grp_Framework boundary1;
+  class grp_Capability,grp_Control,grp_Framework,grp_Process,grp_System boundary1;
 ```
 
 The same view as the app draws it, written beside the Mermaid by `terrane render`:
@@ -57,6 +135,9 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | | Entity type |
 |---|---|
 | `#6d28d9` | capabilities |
+| `#b91c1c` | controls |
 | `#4d7c0f` | frameworks |
+| `#0369a1` | processes |
+| `#4338ca` | systems |
 
-9 entities, 14 relationships. Generated from the model; edit the model, not this file.
+31 entities, 52 relationships. Generated from the model; edit the model, not this file.

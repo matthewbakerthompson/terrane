@@ -499,6 +499,15 @@ def render_modules(
     return "\n".join(lines).rstrip("\n") + "\n"
 
 
+def _default_said(value) -> str:
+    """A parameter's default inside a sentence: a list of named things by
+    their names (a network's standard subnets), anything else as it is
+    written. The subnets came out as a Python list of dictionaries."""
+    if isinstance(value, list) and value and all(isinstance(v, dict) and v.get("name") for v in value):
+        return " (default: %s)" % ", ".join(str(v["name"]) for v in value)
+    return " (default `%s`)" % value
+
+
 def render_shapes(
     archetypes: Iterable[Archetype],
     modules: Dict[str, Module],
@@ -512,11 +521,14 @@ def render_shapes(
     landing = landing_zone_index(model.all_of("tech_services")) if model is not None else {}
 
     def instances_of(archetype: Archetype) -> List[dict]:
+        # The records that ask for the shape, not the ones it made: a network
+        # shape makes technology services as its instance is one, and listed
+        # its every subnet as a product.
         if model is None:
             return []
         return sorted(
             (r for r in model.all_of(archetype.applies_to)
-             if str(r.get("archetype") or "") == archetype.archetype_id),
+             if str(r.get("archetype") or "") == archetype.archetype_id and not r.get("archetype_instance")),
             key=lambda r: str(r.get("name") or ""),
         )
 
@@ -622,20 +634,21 @@ def render_shapes(
                 "**Asks for.** "
                 + ", ".join(
                     "`%s`%s" % (p.name, _asked(p) if p.estate
-                                else "" if p.required else " (default `%s`)" % p.default)
+                                else "" if p.required else _default_said(p.default))
                     for p in asked
                 )
                 + "."
             )
         products = instances_of(archetype)
+        said = "Products" if archetype.applies_to == "products" else "On it"
         if products:
             pk = ENTITY_TYPES[archetype.applies_to].pk
             lines.append(
-                "**Products.** %s."
-                % ", ".join("%s (`%s`)" % (r.get("name") or r[pk], r[pk]) for r in products)
+                "**%s.** %s."
+                % (said, ", ".join("%s (`%s`)" % (r.get("name") or r[pk], r[pk]) for r in products))
             )
         else:
-            lines.append("**Products.** None yet.")
+            lines.append("**%s.** None yet." % said)
         lines.append("")
     return "\n".join(lines).rstrip("\n") + "\n"
 
@@ -1038,6 +1051,12 @@ def render_connections(kinds, patterns=None, model=None) -> str:
                 pattern = (patterns or {}).get(pattern_id)
                 named.append("`%s`%s" % (pattern_id, " (%s, %s)" % (pattern.name, pattern.status) if pattern else ""))
             lines.append("**Pattern.** %s." % ", ".join(named))
+        if kind.datastore:
+            lines.append("**Where.** %s." % {
+                "target": "Into a data store, offered first where the target is one",
+                "source": "Out of a data store, offered first where the source is one",
+                "both": "From one data store to another, offered first where both ends are",
+            }[kind.datastore])
         found = by_kind.get(kind.connection_id, [])
         if found:
             lines.append("**Interfaces.** %d in the estate:" % len(found))

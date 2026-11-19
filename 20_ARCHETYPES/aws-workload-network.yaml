@@ -1,0 +1,80 @@
+archetype_id: aws-workload-network
+title: AWS workload network
+version: 1.0.0
+applies_to: tech_services
+description: >
+  An account's network on AWS, made once and landed on by every product
+  in the account. The instance is the VPC itself, a technology service in
+  the account; what it makes is the subnets for each tier in each availability zone, the NAT
+  gateways, its attachment to the landing zone's transit hub and its link
+  to the landing zone's resolver. Products do not make networks: their
+  systems are placed in these subnets by account and network zone.
+
+parameters:
+  - name: slug
+    required: true
+    description: Short token for the network's ids, e.g. cards
+  - name: network_name
+    required: true
+    description: What the network is called before its parts' names, e.g. Cards
+  - name: account
+    required: true
+    description: The account the network belongs to, e.g. prod-cards
+  - name: region
+    default: eu-west-2
+  - name: platform_org
+    estate: true
+    description: The org unit that runs the estate's network
+  # The standard layout, three tiers across two availability zones: a network made with
+  # nothing said about its subnets has these, and one that needs fewer or
+  # more says so.
+  - name: subnets
+    description: The subnets, as `workload-network` asks for them
+    default:
+      - {id: PUB-A, name: Public Subnet A, zone: Public, az: a}
+      - {id: PUB-B, name: Public Subnet B, zone: Public, az: b}
+      - {id: APP-A, name: App Subnet A, zone: Private-App, az: a}
+      - {id: APP-B, name: App Subnet B, zone: Private-App, az: b}
+      - {id: DATA-A, name: Data Subnet A, zone: Private-Data, az: a}
+      - {id: DATA-B, name: Data Subnet B, zone: Private-Data, az: b}
+  - name: nat_gateways
+    default:
+      - {id: A, name: NAT Gateway A, az: a}
+      - {id: B, name: NAT Gateway B, az: b}
+
+# The instance: the VPC itself, in the account it was made for.
+defaults:
+  component_type: vpc
+  cloud_account: "{account}"
+  region: "{region}"
+  owner_org_id: "{platform_org}"
+  service_name: VPC
+  network_zone: Private-App
+  provider: AWS
+  cloud_provider: AWS
+  service_category: Network
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+
+provider: AWS
+
+entity_defaults:
+  all:
+    status: "{status}"
+  tech_services:
+    tags: [network-fabric]
+    owner_org_id: "{platform_org}"
+    provider: AWS
+    cloud_provider: AWS
+    cloud_account: "{account}"
+    region: "{region}"
+    service_category: Network
+    togaf_layer: Technology
+    architecture_domain: Technology
+
+modules:
+  - module: workload-network
+    with:
+      # A zone on AWS is the region and a letter.
+      az_prefix: "{region}"

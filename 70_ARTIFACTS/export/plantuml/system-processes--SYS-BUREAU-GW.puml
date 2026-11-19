@@ -14,12 +14,34 @@ Boundary(b_Capability, "Capability") {
   ' aac CAP_COLL_08: company_domain="Collections"
   System(CAP_FRAUD_03, "Dispute Intake & Provisional Credit", "Take dispute claims and apply provisional credit within regulatory timers.", $tags="capabilities")
   ' aac CAP_FRAUD_03: company_domain="Servicing"
+  System(CAP_LEND_02, "Indirect Application & Underwriting", "Receive applications through dealers, decision them against credit policy, and return terms while the buyer is at the point of sale.", $tags="capabilities")
+  ' aac CAP_LEND_02: company_domain="Lending"
+  System(CAP_LEND_02_02, "Indirect Credit Decision & Counteroffer", "Decide the application against credit policy and the collateral's value, and return terms or a counteroffer to the dealer.", $tags="capabilities")
+  ' aac CAP_LEND_02_02: company_domain="Lending"
+  System(CAP_COLL_02, "Outbound Contact Operations", "Execute dialer, digital, and letter treatment.", $tags="capabilities")
+  ' aac CAP_COLL_02: company_domain="Collections"
+  System(CAP_COLL_02_01, "Owned-Portfolio Collections Contact", "Contact delinquent borrowers on the bank's own card and loan portfolios.", $tags="capabilities")
+  ' aac CAP_COLL_02_01: company_domain="Collections"
+  System(CAP_COLL_03, "Payment Arrangement & Settlement Offers", "Negotiate and administer arrangements and settlements.", $tags="capabilities")
+  ' aac CAP_COLL_03: company_domain="Collections"
+  System(CAP_SERV_09, "Retention, Product Change & Account Closure", "Keep customers who ask to leave, move accounts between products, and close accounts with balances, rewards and notices settled.", $tags="capabilities")
+  ' aac CAP_SERV_09: company_domain="Servicing"
+  System(CAP_COLL_03_02, "Settlement Offers", "Structure and execute settlements within the approved matrix.", $tags="capabilities")
+  ' aac CAP_COLL_03_02: company_domain="Collections"
 }
 Boundary(b_Process, "Process") {
+  System(P_SERVICING_015, "Close account and settle final balance", "Close the account at the cardholder's or the bank's request, stop new charges while recurring payments and pending items clear, forfeit or pay out rewards per the terms, report the closure to the bureaus correctly, and confirm it in writing. A closed account still has a balance to bill and a bureau line to keep accurate.", $tags="processes")
+  ' aac P_SERVICING_015: company_domain=""
+  System(P_LENDING_004, "Decide indirect loan and return terms", "Score the application against the recreation lending credit policy, price it, and return an approval, a counteroffer with conditions, or a decline to the dealer while the buyer waits. Counteroffers and declines carry adverse action obligations, and the collateral's value sets the advance, so the decision reads the asset's value guide as well as the bureau.", $tags="processes")
+  ' aac P_LENDING_004: company_domain=""
   System(P_COLLECTIONS_005, "Furnish credit bureau data", "Compile and furnish account data to the consumer reporting agencies. Monthly Metro 2 furnishing to the bureaus; accuracy is an FCRA obligation, and the file must reconcile to the system of record before transmission.", $tags="processes")
   ' aac P_COLLECTIONS_005: company_domain=""
   System(P_COLLECTIONS_006, "Handle credit reporting dispute", "Investigate and respond to a consumer credit reporting dispute within the required period. Direct and bureau-routed disputes both land here; FCRA sets the investigation window, and the outcome must correct both the bureau file and the account when the consumer is right.", $tags="processes")
   ' aac P_COLLECTIONS_006: company_domain=""
+  System(P_COLLECTIONS_009, "Locate unreachable borrower", "When contact details fail, search consumer reporting and public data for new phone numbers and addresses, verify them, and return the account to treatment. Location data is consumer report information used under a permissible purpose, and a wrong-party contact discloses the debt to someone else.", $tags="processes")
+  ' aac P_COLLECTIONS_009: company_domain=""
+  System(P_COLLECTIONS_008, "Negotiate settlement offer", "Offer a reduced lump-sum or short-term settlement within the approved matrix, put the terms in writing before payment, and on completion close the account and update the bureaus as settled. A settlement outside the matrix, or without written terms, is the account a regulator samples first.", $tags="processes")
+  ' aac P_COLLECTIONS_008: company_domain=""
   System(P_DISPUTE_001, "Process cardholder dispute claim", "Take a cardholder dispute claim, apply provisional credit, investigate, determine, and notify within regulatory timers.", $tags="processes")
   ' aac P_DISPUTE_001: company_domain=""
 }
@@ -34,12 +56,34 @@ Rel(P_COLLECTIONS_005, SYS_BUREAU_GW, "Primary")
 ' aac rel: source="P_COLLECTIONS_005"; target="SYS_BUREAU_GW"; label="Primary"; relation="process_uses_system"; role="Primary"
 Rel(P_COLLECTIONS_006, SYS_BUREAU_GW, "Primary")
 ' aac rel: source="P_COLLECTIONS_006"; target="SYS_BUREAU_GW"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_LENDING_004, SYS_BUREAU_GW, "Supporting")
+' aac rel: source="P_LENDING_004"; target="SYS_BUREAU_GW"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_015, SYS_BUREAU_GW, "Supporting")
+' aac rel: source="P_SERVICING_015"; target="SYS_BUREAU_GW"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COLLECTIONS_008, SYS_BUREAU_GW, "Supporting")
+' aac rel: source="P_COLLECTIONS_008"; target="SYS_BUREAU_GW"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COLLECTIONS_009, SYS_BUREAU_GW, "Supporting")
+' aac rel: source="P_COLLECTIONS_009"; target="SYS_BUREAU_GW"; label="Supporting"; relation="process_uses_system"; role="Supporting"
 Rel(P_DISPUTE_001, CAP_FRAUD_03, "supports")
 ' aac rel: source="P_DISPUTE_001"; target="CAP_FRAUD_03"; label="supports"; relation="process_supports_capability"
 Rel(P_COLLECTIONS_005, CAP_COLL_08, "supports")
 ' aac rel: source="P_COLLECTIONS_005"; target="CAP_COLL_08"; label="supports"; relation="process_supports_capability"
 Rel(P_COLLECTIONS_006, CAP_COLL_08, "supports")
 ' aac rel: source="P_COLLECTIONS_006"; target="CAP_COLL_08"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_004, CAP_LEND_02_02, "supports")
+' aac rel: source="P_LENDING_004"; target="CAP_LEND_02_02"; label="supports"; relation="process_supports_capability"
+Rel(P_SERVICING_015, CAP_SERV_09, "supports")
+' aac rel: source="P_SERVICING_015"; target="CAP_SERV_09"; label="supports"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_008, CAP_COLL_03_02, "supports")
+' aac rel: source="P_COLLECTIONS_008"; target="CAP_COLL_03_02"; label="supports"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_009, CAP_COLL_02_01, "supports")
+' aac rel: source="P_COLLECTIONS_009"; target="CAP_COLL_02_01"; label="supports"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_008, CAP_COLL_03, "supports")
+' aac rel: source="P_COLLECTIONS_008"; target="CAP_COLL_03"; label="supports"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_009, CAP_COLL_02, "supports")
+' aac rel: source="P_COLLECTIONS_009"; target="CAP_COLL_02"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_004, CAP_LEND_02, "supports")
+' aac rel: source="P_LENDING_004"; target="CAP_LEND_02"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

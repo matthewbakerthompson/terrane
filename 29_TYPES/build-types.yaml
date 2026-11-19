@@ -28,7 +28,8 @@
   includes: [web-channel, relational-datastore]
   offers: [event-publisher, public-web-entry, async-worker, object-store, operator-role, operator-access,
            mobile-channel, admin-console, scheduled-job, event-consumer, notification-service, search-index,
-           partner-adapter, report-service, ml-inference-service]
+           partner-adapter, report-service, ml-inference-service, customer-sign-in, analytics-feed,
+           partner-api, document-intake]
   shapes:
     AWS: aws-product-onboarding
     Azure: azure-digital-product
@@ -42,7 +43,8 @@
   requires: []
   includes: []
   offers: [api-service, relational-datastore, event-publisher, async-worker, operator-role,
-           admin-console, scheduled-job, event-consumer, notification-service, partner-adapter, ml-inference-service]
+           admin-console, scheduled-job, event-consumer, notification-service, partner-adapter, ml-inference-service,
+           partner-api, analytics-feed]
   shapes:
     Azure: core-platform-service
 

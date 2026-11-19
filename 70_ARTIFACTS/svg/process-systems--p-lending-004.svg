@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="969.4" viewBox="0 0 1100 969.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Decide indirect loan and return terms — Systems, Data and Controls</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Decide indirect loan and return terms — Systems, Data and Controls</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   9 nodes · 8 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(144.66 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="309.92" y="545.3" width="212.16" height="207.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="351.92" y="562.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Control">
+<rect x="310.3" y="413.3" width="211.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="343.15" y="430.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Control</text>
+</g>
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="567.3" y="480.3" width="221.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="609.3" y="497.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.98" y="258.25" width="212.03" height="135.45" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.83" y="275.65" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="567.3" y="24.3" width="233.4" height="427.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="597.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-LENDING-004::SYS-LOS">
+<title>Primary</title>
+<path d="M196 293.33 L244.97 293 A10 10 0 0 1 245.03 293 L253 293 A8 8 0 0 0 261 285 L261 99.98 A10 10 0 0 1 270.98 89.98 L563.99 89.5 A10 10 0 0 1 564.01 89.5 L589.48 89.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M593 89.5 L583.43 94.28 L583.43 84.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-LENDING-004::SYS-LOS">
+<rect x="392.32" y="96.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="413.5" y="108.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-LENDING-004::SYS-CREDIT-DATA">
+<title>Supporting</title>
+<path d="M196 302.67 L205.67 302.67 A0.33 0.33 0 0 1 206 303 L206 303 A0.33 0.33 0 0 0 206.33 303.33 L244.96 303 A10 10 0 0 1 245.04 303 L261 303 A10 10 0 0 0 271 293 L271 198.98 A10 10 0 0 1 280.98 188.98 L563.99 188.5 A10 10 0 0 1 564.01 188.5 L589.48 188.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M593 188.5 L583.43 193.28 L583.43 183.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-LENDING-004::SYS-CREDIT-DATA">
+<rect x="384.46" y="195.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="413.5" y="207.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-LENDING-004::SYS-BUREAU-GW">
+<title>Supporting</title>
+<path d="M196 312 L205.33 312 A0.67 0.67 0 0 1 206 312.67 L206 312.67 A0.66 0.66 0 0 0 206.67 313.33 L244.96 313 A10 10 0 0 1 245.04 313 L271 313 A10 10 0 0 0 281 303 L281 297.98 A10 10 0 0 1 290.98 287.98 L563.99 287.5 A10 10 0 0 1 564.01 287.5 L589.48 287.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M593 287.5 L583.43 292.29 L583.43 282.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-LENDING-004::SYS-BUREAU-GW">
+<rect x="384.46" y="294.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="413.5" y="306.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e3::P-LENDING-004::SYS-MODEL">
+<title>Supporting</title>
+<path d="M196 321.33 L205 321.33 A1 1 0 0 1 206 322.33 L206 322.33 A0.99 0.99 0 0 0 207 323.32 L244.96 323 A10 10 0 0 1 245.04 323 L536 323 A10 10 0 0 1 546 333 L546 378 A8.76 8.76 0 0 0 555 386.75 L563.86 386.5 A10 10 0 0 1 564.14 386.5 L589.48 386.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M593 386.5 L583.43 391.29 L583.43 381.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::P-LENDING-004::SYS-MODEL">
+<rect x="384.46" y="329.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="413.5" y="341.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e4::P-LENDING-004::DA-APPLICATION">
+<title>Both</title>
+<path d="M196 330.67 L204.67 330.67 A1.33 1.33 0 0 1 206 332 L206 332 A1.32 1.32 0 0 0 207.33 333.32 L244.96 333 A10 10 0 0 1 245.04 333 L281 333 A10 10 0 0 1 291 343 L291 348 A10 10 0 0 0 301 358 L526 358 A10 10 0 0 1 536 368 L536 522 A10 10 0 0 0 546 532 L564 532 L589.48 532" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M593 532 L583.43 536.78 L583.43 527.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::P-LENDING-004::DA-APPLICATION">
+<rect x="399.35" y="364.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="413.5" y="376.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e5::P-LENDING-004::CTL-ADVERSE-ACT">
+<title>governed by</title>
+<path d="M196 340 L204.33 340 A1.67 1.67 0 0 1 206 341.67 L206 341.67 A1.65 1.65 0 0 0 207.67 343.32 L244.96 343 A10 10 0 0 1 245.04 343 L271 343 A10 10 0 0 1 281 353 L281 455 A10 10 0 0 0 291 465 L307 465 L332.48 465" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M336 465 L326.43 469.79 L326.43 460.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e6::P-LENDING-004::CAP-LEND-02-02">
+<title>supports</title>
+<path d="M196 349.33 L204 349.33 A2 2 0 0 1 206 351.33 L206 351.33 A1.98 1.98 0 0 0 208 353.32 L244.96 353 A10 10 0 0 1 245.04 353 L261 353 A10 10 0 0 1 271 363 L271 595 A10 10 0 0 0 281 605 L307 605 L332.48 605" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M336 605 L326.43 609.78 L326.43 600.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e7::P-LENDING-004::CAP-LEND-02">
+<title>supports</title>
+<path d="M196 358.67 L203.67 358.67 A2.33 2.33 0 0 1 206 361 L206 361 A2.31 2.31 0 0 0 208.33 363.31 L244.96 363 A10 10 0 0 1 245.04 363 L253 363 A8 8 0 0 1 261 371 L261 683 A10 10 0 0 0 271 693 L307 693 L332.48 693" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M336 693 L326.43 697.78 L326.43 688.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-LEND-02" data-type="capabilities">
+<title>Indirect Application &amp; Underwriting</title>
+<path d="M376 659 L336 693 L376 727 L456 727 L496 693 L456 659 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="416" y="691.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Indirect Application &amp;</text>
+<text x="416" y="703.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Underwriting</text>
+</g>
+<g class="node" data-id="CAP-LEND-02-02" data-type="capabilities">
+<title>Indirect Credit Decision &amp; Counteroffer</title>
+<path d="M376 571 L336 605 L376 639 L456 639 L496 605 L456 571 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="416" y="597.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Indirect Credit</text>
+<text x="416" y="609.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Decision &amp;</text>
+<text x="416" y="621.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Counteroffer</text>
+</g>
+<g class="node" data-id="CTL-ADVERSE-ACT" data-type="controls">
+<title>Adverse action notice completeness</title>
+<path d="M382.86 439 L336 454.23 L336 475.77 L382.86 491 L449.14 491 L496 475.77 L496 454.23 L449.14 439 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="416" y="463.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Adverse action notice</text>
+<text x="416" y="475.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">completeness</text>
+</g>
+<g class="node" data-id="DA-APPLICATION" data-type="data_assets">
+<title>Credit application record</title>
+<path d="M593 508.6 Q601.5 506 635.5 506 L720.5 506 Q754.5 506 763 508.6 L763 555.4 Q754.5 558 720.5 558 L635.5 558 Q601.5 558 593 555.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="674" y="530.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit application</text>
+<text x="674" y="542.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">record</text>
+<svg x="745" y="511" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-LENDING-004" data-type="processes">
+<title>Decide indirect loan and return terms</title>
+<path d="M116 284 L36 316.09 L66.56 368 L165.44 368 L196 316.09 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="324.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Decide indirect loan</text>
+<text x="116" y="336.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and return terms</text>
+</g>
+<g class="node" data-id="SYS-BUREAU-GW" data-type="systems">
+<title>Credit bureau gateway</title>
+<rect x="593" y="248" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="680" y="285.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit bureau</text>
+<text x="680" y="297.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">gateway</text>
+<svg x="757" y="253" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-CREDIT-DATA" data-type="systems">
+<title>Credit data and decisioning environment</title>
+<rect x="593" y="149" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="674" y="175.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit data and</text>
+<text x="674" y="187.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">decisioning</text>
+<text x="674" y="199.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">environment</text>
+<text x="684" y="222.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Snowflake Data Cloud</text>
+<image x="753" y="153" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMjlCNUU4IiByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+U25vd2ZsYWtlPC90aXRsZT48cGF0aCBkPSJNMjQgMy40NTljMCAuNjQ2LS40MTggMS4xOC0xLjE0MSAxLjE4LS43MjMgMC0xLjE0Mi0uNTM0LTEuMTQyLTEuMTggMC0uNjQ3LjQxOS0xLjE4IDEuMTQyLTEuMTguNzIzIDAgMS4xNDEuNTMzIDEuMTQxIDEuMTh6bS0uMjI4IDBjMC0uNTMzLS4zOC0uOTUxLS45MTMtLjk1MXMtLjkxMy4zOC0uOTEzLjk1YzAgLjUzMy4zOC45NTIuOTEzLjk1Mi41NyAwIC45MTMtLjQxOS45MTMtLjk1MXptLTEuMzctLjUzM2guNDk1Yy4yNjYgMCAuNDU2LjE1Mi40NTYuMzggMCAuMTUzLS4wNzYuMjI5LS4xOS4zMDVsLjE5LjI2NnYuMDM4aC0uMjY2bC0uMTktLjI2NmgtLjIyOXYuMjY2aC0uMjY2em0uNDk1LjIyOGgtLjIyOXYuMjY3aC4yMjljLjExNCAwIC4xNTItLjAzOC4xNTItLjExNC4wMzgtLjA3Ny0uMDM4LS4xNTMtLjE1Mi0uMTUzek03LjYwMiAxMi40Yy4wMzgtLjE1MS4wNzYtLjMwNC4wNzYtLjQ1NiAwLS4xMTQtLjAzOC0uMjI4LS4wMzgtLjM0Mi0uMTE0LS4zNDMtLjMwNC0uNjQ3LS42NDYtLjgzOGwtNC44Ny0yLjc3N2MtLjY4NS0uMzgtMS41Ni0uMTUyLTEuOTQuNTMzLS4zODEuNjg1LS4xNTMgMS41Ni41MzIgMS45NGwyLjcwMSAxLjU2LTIuNzAxIDEuNTZjLS42ODUuMzgtLjkxMyAxLjI1Ni0uNTMzIDEuOTQuMzguNjg1IDEuMjU2LjkxNCAxLjk0LjUzM2w0LjgzMi0yLjc3N2MuMzQzLS4yNjcuNTcxLS41MzMuNjQ3LS44NzZ6bTEuMzMyIDIuNjI2Yy0uMjY2LS4wMzgtLjU3LjAzOC0uODM3LjE5bC00LjgzMiAyLjc3N2MtLjY4NS4zOC0uOTEzIDEuMjU2LS41MzIgMS45NC4zOC42ODYgMS4yNTUuOTE0IDEuOTQuNTMzbDIuNzAxLTEuNTZ2My4xMmMwIC44LjY0NyAxLjQwOCAxLjQ0NiAxLjQwOC43OTkgMCAxLjQwNy0uNjQ3IDEuNDA3LTEuNDA4di01LjU5MmMwLS43NjEtLjU3LTEuMzctMS4yOTMtMS40MDh6bTQuOTQ2LTYuMDg4Yy4yNjYuMDM4LjU3LS4wMzguODM3LS4xOWw0LjgzMi0yLjc3N2MuNjg1LS4zOC45MTMtMS4yNTYuNTMyLTEuOTQtLjM4LS42ODYtMS4yNTUtLjkxNC0xLjk0LS41MzNsLTIuNzAxIDEuNTZWMS45NzVjMC0uNzk5LS42NDctMS40MDgtMS40NDYtMS40MDgtLjc5OSAwLTEuNDQ2LjYwOS0xLjQ0NiAxLjQwOFY3LjUzYzAgLjc2LjYwOSAxLjM3IDEuMzMyIDEuNDA3ek0zLjI2NSA1Ljk3bDQuODMyIDIuNzc3Yy4yNjYuMTUyLjUzMy4xOS44MzcuMTkuNzIzLS4wMzggMS4zMzEtLjY4NCAxLjMzMS0xLjQwN1YxLjk3NWMwLS43OTktLjY0Ni0xLjQwOC0xLjQwNy0xLjQwOC0uNzk5IDAtMS40NDYuNjQ3LTEuNDQ2IDEuNDA4djMuMTJsLTIuNzAxLTEuNTZjLS42ODUtLjM4LTEuNTYtLjE1Mi0xLjk0LjUzMy0uNDE5LjY0Ni0uMTkgMS41MjEuNDk0IDEuOTAyem05LjA5MyA2LjAxMWEuNDEyLjQxMiAwIDAwLS4xMTQtLjI2NmwtLjU3LS41NzFhLjM0Ni4zNDYgMCAwMC0uMjY3LS4xMTQuNDEyLjQxMiAwIDAwLS4yNjYuMTE0bC0uNTcxLjU3YS40MTEuNDExIDAgMDAtLjExNC4yNjdjMCAuMDc2LjAzOC4xOS4xMTQuMjY3bC41Ny41N2EuMzQ1LjM0NSAwIDAwLjI2Ny4xMTRjLjA3NiAwIC4xOS0uMDM4LjI2Ni0uMTE0bC41NzEtLjU3YS40MTIuNDEyIDAgMDAuMTE0LS4yNjd6bTEuNTk4LjUzM0wxMS45NCAxNC41M2MtLjAzOS4wMzgtLjE1My4xMTQtLjIyOS4xMTRoLS42MDhhLjQxMS40MTEgMCAwMS0uMjY3LS4xMTRMOC44MiAxMi41MTRhLjQwOC40MDggMCAwMS0uMDc2LS4yMjl2LS42MDhjMC0uMDc2LjAzOC0uMTkuMTE0LS4yNjdsMi4wMTYtMi4wMTZhLjQxLjQxIDAgMDEuMjY3LS4xMTRoLjYwOGEuNDEuNDEgMCAwMS4yNjcuMTE0bDIuMDE2IDIuMDE2YS4zNDcuMzQ3IDAgMDEuMTE0LjI2N3YuNjA4Yy0uMDc2LjA3Ny0uMTE0LjE5LS4xOS4yMjl6bTUuNTkzIDUuNDRsLTQuODMyLTIuNzc3Yy0uMjY2LS4xNTItLjU3LS4xOS0uODM3LS4xNTItLjcyMy4wMzgtMS4zMzIuNjg0LTEuMzMyIDEuNDA4djUuNTU0YzAgLjguNjQ3IDEuNDA4IDEuNDA4IDEuNDA4Ljc5OSAwIDEuNDQ2LS42NDcgMS40NDYtMS40MDh2LTMuMTJsMi43IDEuNTZjLjY4Ni4zOCAxLjU2MS4xNTIgMS45NDEtLjUzMy40MTktLjY0Ni4xOS0xLjUyMS0uNDk0LTEuOTR6bTIuNTQ5LTcuNTMzbC0yLjcwMSAxLjU2IDIuNyAxLjU2Yy42ODYuMzguOTE0IDEuMjU2LjUzMyAxLjk0LS4zOC42ODUtMS4yNTUuOTEzLTEuOTQuNTMzbC00LjgzMi0yLjc3OGExLjY0NCAxLjY0NCAwIDAxLS42NDctLjc5OGMtLjAzNy0uMTUzLS4wNzYtLjMwNS0uMDc2LS40NTcgMC0uMTE0LjAzOS0uMjI4LjAzOS0uMzQyLjExNC0uMzQzLjM0Mi0uNjQ3LjY0Ni0uODM3bDQuODMyLTIuNzc4Yy42ODUtLjM4IDEuNTYtLjE1MiAxLjk0LjUzMy40NTcuNjA5LjE5IDEuNDg0LS40OTQgMS44NjQiLz48L3N2Zz4="/>
+</g>
+<g class="node" data-id="SYS-LOS" data-type="systems">
+<title>Indirect loan origination system</title>
+<rect x="593" y="50" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="680" y="87.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Indirect loan</text>
+<text x="680" y="99.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">origination system</text>
+<svg x="757" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-MODEL" data-type="systems">
+<title>Model platform</title>
+<rect x="593" y="347" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="680" y="390.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Model platform</text>
+<svg x="757" y="352" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="867.4" x2="1072" y2="867.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="891.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 880.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="891.4" font-size="12" font-weight="400" fill="#343d50">capability · 2</text>
+<g transform="translate(180.32 880.4)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="206.32" y="891.4" font-size="12" font-weight="400" fill="#343d50">control · 1</text>
+<g transform="translate(275.87 880.4)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="301.87" y="891.4" font-size="12" font-weight="400" fill="#343d50">data asset · 1</text>
+<g transform="translate(389.98 880.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="415.98" y="891.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(490.24 880.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="516.24" y="891.4" font-size="12" font-weight="400" fill="#343d50">system · 4</text>
+<text x="28" y="913.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 902.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="913.4" font-size="12" font-weight="400" fill="#343d50">governed by</text>
+<g transform="translate(184.75 902.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="210.75" y="913.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(277.26 902.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="303.26" y="913.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="947.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-lending-004 · edit the model, not the picture</text></g>
+</svg>

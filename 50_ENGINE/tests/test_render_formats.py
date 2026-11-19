@@ -15,13 +15,15 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from terrane import cli  # noqa: E402
 
-from _fixture import Sandbox  # noqa: E402
+from _fixture import Sandbox, remove_scratch  # noqa: E402
 
 
 class TestFormats(unittest.TestCase):
     def test_one_format_writes_that_format_alone(self) -> None:
         with Sandbox(seed=True) as root:
-            out = Path(tempfile.mkdtemp(prefix="aac-render-")) / "out"
+            folder = Path(tempfile.mkdtemp(prefix="aac-render-"))
+            self.addCleanup(remove_scratch, folder, "aac-render-")
+            out = folder / "out"
             text = io.StringIO()
             with redirect_stdout(text):
                 code = cli.main(["--root", str(root), "render", "--format", "structurizr", "--out", str(out)])

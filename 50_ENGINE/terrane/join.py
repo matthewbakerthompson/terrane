@@ -43,6 +43,10 @@ RELATIONS_FILE = "adopted.yaml"
 #: distinct systems score up to 0.825 against each other, so a sibling can
 #: be listed beside the record it is, and a person picks.
 PROBABLY = 0.7
+#: How near a second candidate may come before the first is no longer the
+#: one a person would take without looking: "Merchant portal" is the
+#: merchant API at 0.865 and the merchant web at 0.863.
+ALONE = 0.05
 
 
 class AdoptError(ValueError):
@@ -202,6 +206,27 @@ def _take_same(doc: dict, same: Dict[str, str], model) -> Tuple[dict, List[str]]
     return rename_deep(doc, dict(same)), said
 
 
+def likely_same(doc: dict, probable: Dict[str, List[Candidate]]) -> Dict[str, str]:
+    """The probable matches a person would take without looking, as
+    `same={new: old}` (V15's Same record, ticked before the person looks):
+    where the record's type has no levels and one candidate stands alone,
+    none within `ALONE` of it. A capability's name repeats at every level
+    of a map, so whether the drawing's is the estate's broader one is the
+    person's to say, as is the choice between two as likely. Nothing is
+    taken by this: the adopt page shows them ticked, and `terrane adopt`
+    takes only what `--same` names."""
+    levels = {name for name, t in ENTITY_TYPES.items() if any(getattr(f, "ref", None) == name for f in t.fields)}
+    type_of = {str(r.get(ENTITY_TYPES[t].pk)): t for t in ENTITY_TYPES for r in (doc.get(t) or []) if isinstance(r, dict)}
+    out: Dict[str, str] = {}
+    for new, near in probable.items():
+        if not near or type_of.get(new) in levels:
+            continue
+        if len(near) > 1 and near[1].score >= near[0].score - ALONE:
+            continue
+        out[new] = near[0].id
+    return out
+
+
 def join_estate(doc: dict, root: Path, *, owner: Optional[str] = None, source_name: str = "a sketch",
                 dry_run: bool = False, shipped: Optional[Path] = None, correct: bool = False,
                 same: Optional[Dict[str, str]] = None) -> Adoption:
@@ -214,7 +239,8 @@ def join_estate(doc: dict, root: Path, *, owner: Optional[str] = None, source_na
     comes back as corrections; a correction to what a shape made goes
     under the product's overrides (`revise_override`). With `same`, the
     sketch's id to the estate's: each record named is the estate's, renamed
-    throughout the sketch before it joins (`_take_same`). Each record added
+    throughout the sketch before it joins (`_take_same`), and joined as it
+    is, never corrected. Each record added
     is said with the records of its type it probably is (`probable`)."""
     root = Path(root)
     model_dir = root / "10_MODEL"
@@ -226,6 +252,7 @@ def join_estate(doc: dict, root: Path, *, owner: Optional[str] = None, source_na
     taken: List[str] = []
     if same:
         doc, taken = _take_same(dict(doc), same, model)
+    joined = set((same or {}).values())
     doc, notes = _own_zone(dict(doc), shipped or shipped_root())
     notes = taken + notes
     entities, filled_notes = fill_defaults(doc)
@@ -297,7 +324,11 @@ def join_estate(doc: dict, root: Path, *, owner: Optional[str] = None, source_na
             entity_id = str(record[entity_type.pk])
             existing = model.get(type_name, entity_id)
             if existing is not None:
-                if correct:
+                # A record taken as the estate's is joined, not corrected:
+                # the drawing calls it by another name, and that is no
+                # reason to rename the estate's (the ledger would have been
+                # "Card ledger", its domain the drawing's default).
+                if correct and entity_id not in joined:
                     diffs = corrections(existing, given_by_type.get(type_name, {}).get(entity_id) or {}, entity_type.pk)
                     if diffs and existing.get("archetype_instance"):
                         # Made by a shape: the record has no file of its

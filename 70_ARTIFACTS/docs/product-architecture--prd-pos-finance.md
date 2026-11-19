@@ -38,6 +38,7 @@ flowchart LR
       end
       subgraph grp_GCP__gcp_lending_prod__Private_App["Private-App"]
         direction LR
+        TS_GCPNET_SUB_LEND_APP[/"Lending App Subnetwork<br/>[Subnet]"/]
         SYS_OBAFF_GATEWAY["Open Banking Affordability<br/>Integration Gateway<br/>[GKE]"]
         OI_POSFIN_API("Point-of-Sale Finance API<br/>[HTTPS]")
         TS_POSFIN_CACHE[/"Point-of-Sale Finance<br/>Cache<br/>[Memorystore]"/]
@@ -46,6 +47,7 @@ flowchart LR
       end
       subgraph grp_GCP__gcp_lending_prod__Private_Data["Private-Data"]
         direction LR
+        TS_GCPNET_SUB_LEND_DATA[/"Lending Data Subnetwork<br/>[Subnet]"/]
         TS_POSFIN_BACKUP[/"Point-of-Sale Finance<br/>Backup and recovery<br/>[Backup and DR Service]"/]
         SYS_POSFIN_DB["Point-of-Sale Finance<br/>Database<br/>[Cloud SQL]"]
       end
@@ -80,6 +82,10 @@ flowchart LR
   SYS_POSFIN_DB -.->|"runs on"| TS_POSFIN_BACKUP
   SYS_POSFIN_DB -.->|"runs on"| TS_GCP_KMS
   SYS_POSFIN_EVENTS -.->|"runs on"| TS_GCP_PUBSUB
+  SYS_OBAFF_GATEWAY -.->|"runs on"| TS_GCPNET_SUB_LEND_APP
+  SYS_POSFIN_API -.->|"runs on"| TS_GCPNET_SUB_LEND_APP
+  SYS_POSFIN_WEB -.->|"runs on"| TS_GCPNET_SUB_LEND_APP
+  SYS_POSFIN_DB -.->|"runs on"| TS_GCPNET_SUB_LEND_DATA
   SYS_POSFIN_API -->|"ReadWrite"| DA_POSFIN_OPERATIONAL
   SYS_POSFIN_DB -->|"ReadWrite"| DA_POSFIN_OPERATIONAL
   OI_POSFIN_API --- SYS_POSFIN_API
@@ -91,7 +97,7 @@ flowchart LR
   class DA_POSFIN_OPERATIONAL s_data_assets__data_assets;
   class OI_POSFIN_API s_offered_interfaces__offered_interfaces;
   class SYS_LENDPERF_PIPELINE,SYS_OBAFF_GATEWAY,SYS_OBAFF_WEBHOOKS,SYS_POSFIN_API,SYS_POSFIN_DB,SYS_POSFIN_EVENTS,SYS_POSFIN_WEB s_systems__systems;
-  class TS_ENTRA_ID,TS_GCP_APIGEE,TS_GCP_CLOUD_SQL,TS_GCP_GKE,TS_GCP_KMS,TS_GCP_MONITORING,TS_GCP_PUBSUB,TS_GCP_SECRET_MANAGER,TS_POSFIN_BACKUP,TS_POSFIN_CACHE,TS_POSFIN_DNS,TS_POSFIN_WAF s_tech_services__tech_services;
+  class TS_ENTRA_ID,TS_GCP_APIGEE,TS_GCP_CLOUD_SQL,TS_GCP_GKE,TS_GCP_KMS,TS_GCP_MONITORING,TS_GCP_PUBSUB,TS_GCP_SECRET_MANAGER,TS_GCPNET_SUB_LEND_APP,TS_GCPNET_SUB_LEND_DATA,TS_POSFIN_BACKUP,TS_POSFIN_CACHE,TS_POSFIN_DNS,TS_POSFIN_WAF s_tech_services__tech_services;
   classDef boundary1 fill:#f1f6ff,stroke:#4285f4,color:#1a4f9e;
   class grp_GCP__gcp_analytics_prod__Private_Data,grp_GCP__gcp_lending_prod__Edge,grp_GCP__gcp_lending_prod__Public,grp_GCP__gcp_lending_prod__Private_App,grp_GCP__gcp_lending_prod__Private_Data boundary1;
   classDef boundary2 fill:#f8fbff,stroke:#4285f4,color:#1a4f9e,stroke-dasharray:6 3;
@@ -121,4 +127,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | dashed `#4285f4` | GCP project |
 | solid `#4285f4` | GCP subnet |
 
-21 entities, 28 relationships. Generated from the model; edit the model, not this file.
+23 entities, 32 relationships. Generated from the model; edit the model, not this file.

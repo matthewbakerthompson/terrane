@@ -155,17 +155,19 @@ flowchart LR
   SYS_LENDING_DB -.->|"runs on"| TS_AWS_KMS
   SYS_LENDING_BUCKET -.->|"runs on"| TS_AWS_S3
   SYS_LENDING_BUCKET -.->|"runs on"| TS_AWS_KMS
-  SYS_LENDING_ALB -.->|"runs on"| TS_NET_SUB_LEND_PUB_A
-  SYS_LENDING_ALB -.->|"runs on"| TS_NET_SUB_LEND_PUB_B
-  SYS_LENDING_WEB -.->|"runs on"| TS_NET_SUB_LEND_APP_A
-  SYS_LENDING_WEB -.->|"runs on"| TS_NET_SUB_LEND_APP_B
+  SYS_LENDING_BUCKET -.->|"runs on"| TS_NET_SUB_LEND_DATA_A
   SYS_LENDING_API -.->|"runs on"| TS_NET_SUB_LEND_APP_A
   SYS_LENDING_API -.->|"runs on"| TS_NET_SUB_LEND_APP_B
+  SYS_LENDING_WEB -.->|"runs on"| TS_NET_SUB_LEND_APP_A
+  SYS_LENDING_WEB -.->|"runs on"| TS_NET_SUB_LEND_APP_B
+  SYS_LENDING_ALB -.->|"runs on"| TS_NET_SUB_LEND_PUB_A
+  SYS_LENDING_ALB -.->|"runs on"| TS_NET_SUB_LEND_PUB_B
   SYS_LENDING_WORKER -.->|"runs on"| TS_NET_SUB_LEND_APP_A
   SYS_LENDING_WORKER -.->|"runs on"| TS_NET_SUB_LEND_APP_B
   SYS_LENDING_DB -.->|"runs on"| TS_NET_SUB_LEND_DATA_A
   SYS_LENDING_DB -.->|"runs on"| TS_NET_SUB_LEND_DATA_B
-  SYS_LENDING_BUCKET -.->|"runs on"| TS_NET_SUB_LEND_DATA_A
+  SYS_LENDING_HUB -.->|"runs on"| TS_NET_SUB_LEND_APP_A
+  SYS_LENDING_HUB -.->|"runs on"| TS_NET_SUB_LEND_APP_B
   SYS_LENDING_API -->|"ReadWrite"| DA_LENDING_OPERATIONAL
   SYS_LENDING_WORKER -->|"Read"| DA_LENDING_OPERATIONAL
   ACT_APPLICANT -->|"Applies"| SYS_LENDING_WEB
@@ -265,4 +267,4 @@ Each flow is a recorded sequence of interfaces. The steps drawn on this diagram 
 3. Customer 360 Pipeline → Customer 360 Semantic Layer (SQL) — not on this diagram
 4. Customer 360 Semantic Layer → Regulatory Reporting Engine (SQL) — not on this diagram
 
-39 entities, 52 relationships. Generated from the model; edit the model, not this file.
+39 entities, 54 relationships. Generated from the model; edit the model, not this file.

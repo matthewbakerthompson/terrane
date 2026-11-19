@@ -5,13 +5,29 @@
 
 title Build installment lending on AWS — Footprint
 
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
 AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
 AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
 AddElementTag("work_packages", $bgColor="#ccfbf1", $borderColor="#0d9488", $fontColor="#0f172a", $legendText="work package")
 
+Boundary(b_Capability, "Capability") {
+  System(CAP_LEND_05, "Installment Loan Servicing", "Bill, post, and service fixed-term installment loans: payments, payoffs, extensions, and customer contact.", $tags="capabilities")
+  ' aac CAP_LEND_05: company_domain="Lending"
+}
 Boundary(b_Data_Asset, "Data Asset") {
   SystemDb(DA_LENDING_OPERATIONAL, "Installment Lending operational data", "Operational records held by Installment Lending.", $tags="data_assets")
   ' aac DA_LENDING_OPERATIONAL: company_domain="Lending"
+}
+Boundary(b_Process, "Process") {
+  System(P_LENDING_009, "Bill installment loan and post payments", "Send the monthly bill, take payments by ACH, debit card, check and automatic payment, and post them to interest, principal and fees in the order the contract says. Posting drives the delinquency that collections and bureau reporting read, so a misposted payment shows up as a wrong late fee, a wrong call and a wrong bureau line.", $tags="processes")
+  ' aac P_LENDING_009: company_domain=""
+  System(P_LENDING_011, "Collect delinquent installment loan", "Work past-due installment loans through calls, letters and digital contact, take promises and arrangements, and decide when a loan goes to repossession. Recreation loans are secured and seasonal, so treatment weighs the collateral and the season as well as the days past due; the contact limits that apply to cards apply here too.", $tags="processes")
+  ' aac P_LENDING_011: company_domain=""
+  System(P_LENDING_010, "Service installment loan account requests", "Handle borrower requests on a loan: due-date changes, payment deferrals and extensions, insurance and address updates, and statements of account. A deferral changes the payment schedule and the interest earned, so it is approved to policy and recorded where collections and finance will see it.", $tags="processes")
+  ' aac P_LENDING_010: company_domain=""
+  System(P_LENDING_017, "Service point-of-sale installment loan", "Collect the scheduled installments on point-of-sale loans, handle early settlement and missed payments, and keep the shopper informed by message and statement. These loans repay over months rather than years and are serviced on the installment lending platform, not on the recreation loan system.", $tags="processes")
+  ' aac P_LENDING_017: company_domain=""
 }
 Boundary(b_System, "System") {
   System(SYS_LENDING_WORKER, "Installment Lending Async Worker", "Consumes Installment Lending domain events and drives long-running work. Built with EKS · MSK.", $tags="systems")
@@ -56,6 +72,16 @@ Rel(SYS_LENDING_API, DA_LENDING_OPERATIONAL, "ReadWrite")
 ' aac rel: source="SYS_LENDING_API"; target="DA_LENDING_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
 Rel(SYS_LENDING_WORKER, DA_LENDING_OPERATIONAL, "Read")
 ' aac rel: source="SYS_LENDING_WORKER"; target="DA_LENDING_OPERATIONAL"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_LENDING_API, CAP_LEND_05, "realizes")
+' aac rel: source="SYS_LENDING_API"; target="CAP_LEND_05"; label="realizes"; relation="system_realizes_capability"
+Rel(P_LENDING_009, CAP_LEND_05, "supports")
+' aac rel: source="P_LENDING_009"; target="CAP_LEND_05"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_010, CAP_LEND_05, "supports")
+' aac rel: source="P_LENDING_010"; target="CAP_LEND_05"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_011, CAP_LEND_05, "supports")
+' aac rel: source="P_LENDING_011"; target="CAP_LEND_05"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_017, CAP_LEND_05, "supports")
+' aac rel: source="P_LENDING_017"; target="CAP_LEND_05"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

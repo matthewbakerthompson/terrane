@@ -96,3 +96,122 @@
   company_domain: Risk and Compliance
   togaf_layer: Business
   architecture_domain: Governance
+
+- actor_id: ACT-DEALER
+  name: Dealer
+  description: >
+    A dealership selling RVs, boats and powersports vehicles that takes the
+    buyer's loan application and submits it. The bank's point of sale, and a
+    third party it vets, monitors and pays a reserve to.
+  status: Active
+  actor_kind: Organization
+  internal: "No"
+  company_domain: Lending
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-BORROWER
+  name: Borrower
+  description: >
+    A customer repaying an installment loan: pays, asks for payoffs and
+    deferrals, and gets the title back at the end.
+  status: Active
+  actor_kind: Person
+  internal: "No"
+  company_domain: Lending
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-FUNDING-ANALYST
+  name: Funding Analyst
+  description: >
+    Reviews contract packages, clears stipulations and releases dealer funding.
+  status: Active
+  actor_kind: Role
+  internal: "Yes"
+  owner_org_id: ORG-LOAN-OPS
+  company_domain: Lending
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-ISO
+  name: Independent Sales Organization
+  description: >
+    Brings merchants to the bank and submits their applications. The bank
+    sponsors those merchants into the networks and carries their liability.
+  status: Active
+  actor_kind: Organization
+  internal: "No"
+  company_domain: Payments
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-DEPOSITOR
+  name: Depositor
+  description: >
+    A saver holding a CD or savings account opened directly with the bank.
+  status: Active
+  actor_kind: Person
+  internal: "No"
+  company_domain: Deposits
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-DEPOSIT-BROKER
+  name: Deposit Broker
+  description: >
+    A broker-dealer that sells the bank's brokered CDs to its own customers and
+    settles them through the depository.
+  status: Active
+  actor_kind: Organization
+  internal: "No"
+  company_domain: Deposits
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-SERVICING-CLIENT
+  name: Servicing Client
+  description: >
+    A lender whose card portfolio the bank services under contract. Sets the
+    strategies, receives the reports and audits the work.
+  status: Active
+  actor_kind: Organization
+  internal: "No"
+  company_domain: Servicing
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-COBRAND-PARTNER
+  name: Co-Brand Partner
+  description: >
+    A retailer, travel brand or affinity group whose name is on the card. Shares
+    the program's revenue and funds part of its rewards.
+  status: Active
+  actor_kind: Organization
+  internal: "No"
+  company_domain: Card Issuing
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-COLLECTION-AGENCY
+  name: Collection Agency
+  description: >
+    Works charged-off accounts placed with it under the bank's conduct
+    requirements, and remits what it collects.
+  status: Active
+  actor_kind: Organization
+  internal: "No"
+  company_domain: Collections
+  togaf_layer: Business
+  architecture_domain: Business
+
+- actor_id: ACT-DEBT-BUYER
+  name: Debt Buyer
+  description: >
+    Buys charged-off accounts in portfolio sales and takes over collecting them.
+  status: Active
+  actor_kind: Organization
+  internal: "No"
+  company_domain: Collections
+  togaf_layer: Business
+  architecture_domain: Business

@@ -36,6 +36,8 @@ Boundary(b_Risk_and_Compliance, "Risk and Compliance") {
   System(SYS_SCREENING_GATEWAY, "NICE Actimize Screening Integration Gateway", "Our side of the NICE Actimize integration: request mapping, retry and back-off, circuit breaking when the vendor is down, and the audit trail of what we sent them. Built with EKS.", $tags="systems")
   ' aac SYS_SCREENING_GATEWAY: company_domain="Risk and Compliance"; hosting="AWS"; technology="EKS"
 }
+System_Ext(SYS_MERCH_ACQ, "Merchant acquiring platform", "Processor platform for merchant boarding, clearing, settlement, reserves, fees and statements. Built with external.", $tags="systems")
+' aac SYS_MERCH_ACQ: company_domain=""; hosting="External"; technology="external"
 System(SYS_TOKEN, "Tokenization and credential management", "Token and credential lifecycle management.", $tags="systems")
 ' aac SYS_TOKEN: company_domain=""
 System(SYS_FRAUD_DETECT, "Transaction fraud detection", "Real-time transaction fraud scoring and alerting.", $tags="systems")
@@ -45,6 +47,8 @@ Rel(SYS_AUTH_SWITCH, SYS_FRAUD_DETECT, "Authorization Switch to Transaction Frau
 ' aac rel: source="SYS_AUTH_SWITCH"; target="SYS_FRAUD_DETECT"; label="Authorization Switch to Transaction Fraud Detection"; interface_id="INT-AUTH-FRAUD"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; patterns="inline-risk-decision"
 Rel(SYS_AUTH_SWITCH, SYS_TOKEN, "Authorization Switch to Tokenization Service", "HTTPS", $tags="api-call")
 ' aac rel: source="SYS_AUTH_SWITCH"; target="SYS_TOKEN"; label="Authorization Switch to Tokenization Service"; interface_id="INT-AUTH-TOKEN"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; patterns="tokenized-card-data"
+Rel(SYS_MERCHANT_API, SYS_MERCH_ACQ, "Merchant Portal Service to Merchant Acquiring Platform", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_MERCHANT_API"; target="SYS_MERCH_ACQ"; label="Merchant Portal Service to Merchant Acquiring Platform"; interface_id="INT-MERCHANT-API-ACQ"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="api-front-door"
 Rel(SYS_AUTH_SWITCH, OI_LEDGER_QUEUE, "Authorization Switch to Core Ledger", "MQ", $tags="queued-request")
 ' aac rel: source="SYS_AUTH_SWITCH"; target="OI_LEDGER_QUEUE"; label="Authorization Switch to Core Ledger"; interface_id="INT-AUTH-LEDGER"; kind="queued-request"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-LEDGER-QUEUE"
 Rel(SYS_MERCHANT_WEB, OI_MERCHANT_API, "Merchant Portal Web to API", "HTTPS", $tags="api-call")

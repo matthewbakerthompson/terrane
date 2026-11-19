@@ -5,10 +5,13 @@ A shape is a provider, the parts it always has, the slots where it varies, and a
 | Shape | Version | Provider | Parts | Slots | Products |
 |---|---|---|---|---|---|
 | [AWS product onboarding](#aws-product-onboarding) | 3.1.0 | AWS | 6 | 0 | 1 |
+| [AWS workload network](#aws-workload-network) | 1.0.0 | AWS | 1 | 0 | 0 |
 | [Azure digital product](#azure-digital-product) | 3.2.0 | Azure | 4 | 0 | 3 |
+| [Azure workload network](#azure-workload-network) | 1.0.0 | Azure | 1 | 0 | 5 |
 | [Batch data product](#batch-data-product) | 3.0.0 | — | 0 | 0 | 1 |
 | [Batch data product on Google Cloud](#batch-data-product-gcp) | 2.0.0 | GCP | 0 | 0 | 1 |
 | [Core platform service](#core-platform-service) | 2.2.0 | Azure | 0 | 0 | 1 |
+| [GCP workload network](#gcp-workload-network) | 1.0.0 | GCP | 1 | 0 | 0 |
 | [Google Cloud digital product](#gcp-digital-product) | 1.1.0 | GCP | 4 | 0 | 1 |
 | [SaaS onboarding](#saas-onboarding) | 3.0.0 | AWS | 6 | 2 | 1 |
 | [Vendor SaaS service](#vendor-saas-service) | 3.1.0 | Azure | 3 | 2 | 2 |
@@ -32,6 +35,21 @@ What onboarding a product onto the AWS landing zone actually creates. A workload
 **Asks for.** `slug`, `product_name`, `owner_org`, `domain`, `account`, `region` (default `eu-west-2`), `criticality` (default `High`), `classification` (default `Restricted`), `resilience` (default `Multi-AZ`).
 **Products.** Installment Lending (`PRD-INSTALLMENT-LENDING`).
 
+<a id="aws-workload-network"></a>
+## AWS workload network
+
+`aws-workload-network` · version 1.0.0 · on AWS · applies to tech services
+
+An account's network on AWS, made once and landed on by every product in the account. The instance is the VPC itself, a technology service in the account; what it makes is the subnets for each tier in each availability zone, the NAT gateways, its attachment to the landing zone's transit hub and its link to the landing zone's resolver. Products do not make networks: their systems are placed in these subnets by account and network zone.
+
+![AWS workload network, as the shape makes it](svg/shape--aws-workload-network.svg)
+
+*A sample product on the shape, drawn by the product architecture view; the names are placeholders.*
+
+**Parts.** `workload-network`.
+**Asks for.** `slug`, `network_name`, `account`, `region` (default `eu-west-2`), `platform_org` (the estate's answer), `subnets` (default: Public Subnet A, Public Subnet B, App Subnet A, App Subnet B, Data Subnet A, Data Subnet B), `nat_gateways` (default: NAT Gateway A, NAT Gateway B).
+**On it.** None yet.
+
 <a id="azure-digital-product"></a>
 ## Azure digital product
 
@@ -49,6 +67,21 @@ A customer-facing digital product built in-house on Azure. Every one of these we
 **Applies.** `api-front-door`.
 **Asks for.** `slug`, `product_name`, `owner_org`, `domain`, `account`, `region` (default `uksouth`), `criticality` (default `Medium`), `classification` (default `Confidential`).
 **Products.** Card Servicing (`PRD-CARD-SERVICING`), Collections Workspace (`PRD-COLLECTIONS-WORKSPACE`), Rewards Redemption (`PRD-REWARDS`).
+
+<a id="azure-workload-network"></a>
+## Azure workload network
+
+`azure-workload-network` · version 1.0.0 · on Azure · applies to tech services
+
+An account's network on Azure, made once and landed on by every product in the account. The instance is the virtual network itself, a technology service in the account; what it makes is the subnets for each tier, which span the region's zones, the NAT gateways, its attachment to the landing zone's transit hub and its link to the landing zone's resolver. Products do not make networks: their systems are placed in these subnets by account and network zone.
+
+![Azure workload network, as the shape makes it](svg/shape--azure-workload-network.svg)
+
+*A sample product on the shape, drawn by the product architecture view; the names are placeholders.*
+
+**Parts.** `workload-network`.
+**Asks for.** `slug`, `network_name`, `account`, `region` (default `uksouth`), `platform_org` (the estate's answer), `subnets` (default: Public Subnet, App Subnet, Data Subnet), `nat_gateways` (default: NAT Gateway).
+**On it.** Cards Virtual Network (`TS-NET-VNET-AZ-CARDS`), Data Virtual Network (`TS-NET-VNET-AZ-DATA`), Payments Virtual Network (`TS-NET-VNET-AZ-PAYMENTS`), Platform Virtual Network (`TS-NET-VNET-AZ-PLATFORM`), Risk Virtual Network (`TS-NET-VNET-AZ-RISK`).
 
 <a id="batch-data-product"></a>
 ## Batch data product
@@ -96,6 +129,21 @@ An internally built shared service consumed by several products through the API 
 **Applies.** `api-front-door`.
 **Asks for.** `slug`, `product_name`, `owner_org`, `domain` (default `Enterprise Platform`), `criticality` (default `High`), `classification` (default `Confidential`), `account`, `region` (default `uksouth`).
 **Products.** Customer Identity Service (`PRD-IDENTITY`).
+
+<a id="gcp-workload-network"></a>
+## GCP workload network
+
+`gcp-workload-network` · version 1.0.0 · on GCP · applies to tech services
+
+An account's network on GCP, made once and landed on by every product in the account. The instance is the VPC network itself, a technology service in the account; what it makes is the subnets for each tier, regional subnetworks, the NAT gateways, its attachment to the landing zone's transit hub and its link to the landing zone's resolver. Products do not make networks: their systems are placed in these subnets by account and network zone.
+
+![GCP workload network, as the shape makes it](svg/shape--gcp-workload-network.svg)
+
+*A sample product on the shape, drawn by the product architecture view; the names are placeholders.*
+
+**Parts.** `workload-network`.
+**Asks for.** `slug`, `network_name`, `account`, `region` (default `europe-west2`), `platform_org` (the estate's answer), `subnets` (default: Public Subnet, App Subnet, Data Subnet), `nat_gateways` (default: Cloud NAT).
+**On it.** None yet.
 
 <a id="gcp-digital-product"></a>
 ## Google Cloud digital product

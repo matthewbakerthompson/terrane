@@ -11,11 +11,13 @@ flowchart LR
   subgraph grp_Capability["Capability"]
     direction LR
     CAP_ORIG_07{{"Card Production &<br/>Fulfillment"}}
+    CAP_SERV_09{{"Retention, Product Change<br/>& Account Closure"}}
   end
 
   subgraph grp_Process["Process"]
     direction LR
     P_ORIG_007[\"Manage card production and<br/>fulfillment"/]
+    P_SERVICING_013[\"Process product change or<br/>upgrade"/]
   end
 
   subgraph grp_System["System"]
@@ -24,13 +26,15 @@ flowchart LR
   end
 
   P_ORIG_007 -->|"Primary"| SYS_CARD_FULFILL
+  P_SERVICING_013 -->|"Supporting"| SYS_CARD_FULFILL
   P_ORIG_007 -->|"supports"| CAP_ORIG_07
+  P_SERVICING_013 -->|"supports"| CAP_SERV_09
 
   classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
   classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
-  class CAP_ORIG_07 s_capabilities__capabilities;
-  class P_ORIG_007 s_processes__processes;
+  class CAP_ORIG_07,CAP_SERV_09 s_capabilities__capabilities;
+  class P_ORIG_007,P_SERVICING_013 s_processes__processes;
   class SYS_CARD_FULFILL s_systems__systems;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Capability,grp_Process,grp_System boundary1;
@@ -48,4 +52,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#0369a1` | processes |
 | `#4338ca` | systems |
 
-3 entities, 2 relationships. Generated from the model; edit the model, not this file.
+5 entities, 4 relationships. Generated from the model; edit the model, not this file.

@@ -11,6 +11,7 @@ flowchart LR
   subgraph grp_Capability["Capability"]
     direction LR
     CAP_PAY_03{{"Payment Capture &<br/>Application"}}
+    CAP_PAY_03_01{{"Payment Channel Capture"}}
   end
 
   subgraph grp_Control["Control"]
@@ -45,13 +46,14 @@ flowchart LR
   P_CARD_PMT_001 -->|"Both"| DA_PAYMENT_INSTR
   P_CARD_PMT_001 -->|"governed by"| CTL_PMT_POSTING
   P_CARD_PMT_001 -->|"supports"| CAP_PAY_03
+  P_CARD_PMT_001 -->|"supports"| CAP_PAY_03_01
 
   classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
   classDef s_controls__controls fill:#fca5a5,stroke:#b91c1c,color:#0f172a,stroke-width:1.4px;
   classDef s_data_assets__data_assets fill:#a7f3d0,stroke:#047857,color:#0f172a,stroke-width:1.4px;
   classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
-  class CAP_PAY_03 s_capabilities__capabilities;
+  class CAP_PAY_03,CAP_PAY_03_01 s_capabilities__capabilities;
   class CTL_PMT_POSTING s_controls__controls;
   class DA_PAYMENT_INSTR s_data_assets__data_assets;
   class P_CARD_PMT_001 s_processes__processes;
@@ -74,4 +76,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#0369a1` | processes |
 | `#4338ca` | systems |
 
-9 entities, 8 relationships. Generated from the model; edit the model, not this file.
+10 entities, 9 relationships. Generated from the model; edit the model, not this file.

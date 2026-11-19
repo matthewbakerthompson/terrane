@@ -1,128 +1,239 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="678.7" viewBox="0 0 1100 678.7" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="1295.5" viewBox="0 0 1100 1295.5" font-family="Geist, system-ui, sans-serif" data-layout="elk">
 <title>Identity verification — Processes and Capabilities</title>
 <rect width="100%" height="100%" fill="#ffffff"/>
 <g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Identity verification — Processes and Capabilities</text>
-<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   7 nodes · 7 edges</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   16 nodes · 16 edges</text>
 <text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One system, every process that uses it and in what role, and the capabilities those processes support. This shows the business impact of changing the system. A</text>
 <text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">long list against a low criticality rating is worth a second look.</text>
 <line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
-<g class="drawing" transform="translate(150.72 99.2)">
+<g class="drawing" transform="translate(131.72 110)">
 <g class="boundary" data-id="grp::Capability">
-<rect x="309.92" y="129.3" width="212.16" height="295.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
-<text x="351.92" y="146.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+<rect x="339.92" y="172.3" width="212.16" height="823.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="381.92" y="189.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
 </g>
 <g class="boundary" data-id="grp::Process">
-<rect x="9.87" y="42.26" width="212.27" height="295.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
-<text x="42.72" y="59.67" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+<rect x="9.87" y="249.26" width="212.27" height="559.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.72" y="266.67" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
 </g>
 <g class="boundary" data-id="grp::System">
-<rect x="567.3" y="24.3" width="221.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
-<text x="597.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+<rect x="605.3" y="25.3" width="221.4" height="123.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="635.1" y="42.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
 </g>
 <g class="edge" data-id="e0::P-ORIG-002::SYS-KYC">
 <title>Primary</title>
-<path d="M196 295 L245 295 L253 295 A8 8 0 0 1 261 303 L261 431 A10 10 0 0 0 271 441 L526 441 A10 10 0 0 0 536 431 L536 99 A10 10 0 0 1 546 89 L564 89 L589.48 89" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M593 89 L583.43 93.78 L583.43 84.22 Z" fill="#7b8798"/>
+<path d="M196 766 L225 766 L233 766 A8 8 0 0 1 241 774 L241 1037 A10 10 0 0 0 251 1047 L576 1047 A10 10 0 0 0 586 1037 L586 121 A8.15 8.15 0 0 1 594 112.86 L601.91 112.72 A10 10 0 0 1 602.09 112.71 L627.48 112.71" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M631 112.71 L621.43 117.5 L621.43 107.93 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e0::P-ORIG-002::SYS-KYC">
-<rect x="392.32" y="447.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="413.5" y="459.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+<rect x="412.32" y="1053.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="1065.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
 </g>
 <g class="edge" data-id="e1::P-COMPLIANCE-003::SYS-KYC">
 <title>Supporting</title>
-<path d="M196 178.67 L244.97 179 A10 10 0 0 0 245.03 179 L261 179 A10 10 0 0 0 271 169 L271 84 A10 10 0 0 1 281 74 L535 74 A1 1 0 0 1 536 75 L536 75 A1 1 0 0 0 537 76 L564 76 L589.48 76" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M593 76 L583.43 80.78 L583.43 71.22 Z" fill="#7b8798"/>
+<path d="M196 678 L225 678 L261 678 A10 10 0 0 1 271 688 L271 1026 A10 10 0 0 0 281 1036 L566 1036 A10 10 0 0 0 576 1026 L576 112.17 A10 10 0 0 1 586.16 102.17 L601.92 102.43 A10 10 0 0 0 602.08 102.43 L627.48 102.43" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M631 102.43 L621.43 107.21 L621.43 97.64 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e1::P-COMPLIANCE-003::SYS-KYC">
-<rect x="384.46" y="80.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="413.5" y="92.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+<rect x="404.46" y="1013.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="1025.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
 </g>
 <g class="edge" data-id="e2::P-SERVICING-012::SYS-KYC">
 <title>Supporting</title>
-<path d="M196 90.67 L244.97 91 A10 10 0 0 0 245.03 91 L253 91 A8 8 0 0 0 261 83 L261 73 A10 10 0 0 1 271 63 L564 63 L589.48 63" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M593 63 L583.43 67.78 L583.43 58.22 Z" fill="#7b8798"/>
+<path d="M196 556 L225 556 L261 556 A10 10 0 0 0 271 546 L271 127 A10 10 0 0 1 281 117 L556 117 A10 10 0 0 0 566 107 L566 102.04 A10 10 0 0 1 576.04 92.04 L601.98 92.14 A10 10 0 0 0 602.02 92.14 L627.48 92.14" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M631 92.14 L621.43 96.93 L621.43 87.36 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e2::P-SERVICING-012::SYS-KYC">
-<rect x="384.46" y="40.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="413.5" y="52.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+<rect x="404.46" y="123.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="135.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
 </g>
-<g class="edge" data-id="e3::P-ORIG-002::CAP-ORIG-02">
-<title>supports</title>
-<path d="M196 278 L245 278 L261 278 A10 10 0 0 1 271 288 L271 355 A10 10 0 0 0 281 365 L307 365 L332.48 365" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M336 365 L326.43 369.79 L326.43 360.21 Z" fill="#7b8798"/>
+<g class="edge" data-id="e3::P-LENDING-003::SYS-KYC">
+<title>Supporting</title>
+<path d="M196 292 L225 292 L233 292 A8 8 0 0 0 241 284 L241 22 A10 10 0 0 1 251 12 L566 12 A10 10 0 0 1 576 22 L576 51.11 A10 10 0 0 0 585.89 61.11 L601.95 61.29 A10 10 0 0 0 602.05 61.29 L627.48 61.29" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M631 61.29 L621.43 66.07 L621.43 56.5 Z" fill="#7b8798"/>
 </g>
-<g class="edge" data-id="e4::P-ORIG-002::CAP-RGOV-07">
-<title>supports</title>
-<path d="M196 261 L245 261 L271 261 A10 10 0 0 1 281 271 L281 278.13 A10 10 0 0 0 290.87 288.13 L306.94 288.33 A10 10 0 0 0 307.06 288.33 L332.48 288.33" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M336 288.33 L326.43 293.12 L326.43 283.55 Z" fill="#7b8798"/>
+<g class="edge-label" data-edge="e3::P-LENDING-003::SYS-KYC">
+<rect x="404.46" y="18.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="30.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
 </g>
-<g class="edge" data-id="e5::P-COMPLIANCE-003::CAP-RGOV-07">
-<title>supports</title>
-<path d="M196 201.33 L244.97 201 A10 10 0 0 1 245.03 201 L281 201 A10 10 0 0 1 291 211 L291 258 A7.84 7.84 0 0 0 299 265.83 L306.9 265.67 A10 10 0 0 1 307.1 265.67 L332.48 265.67" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M336 265.67 L326.43 270.45 L326.43 260.88 Z" fill="#7b8798"/>
+<g class="edge" data-id="e4::P-DEPOSITS-002::SYS-KYC">
+<title>Supporting</title>
+<path d="M196 473.67 L224.94 474 A10 10 0 0 0 225.06 474 L251 474 A10 10 0 0 0 261 464 L261 92 A10 10 0 0 1 271 82 L602 81.86 A10 10 0 0 1 602 81.86 L627.48 81.86" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M631 81.86 L621.43 86.64 L621.43 77.07 Z" fill="#7b8798"/>
 </g>
-<g class="edge" data-id="e6::P-SERVICING-012::CAP-SERV-02">
+<g class="edge-label" data-edge="e4::P-DEPOSITS-002::SYS-KYC">
+<rect x="404.46" y="88.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="100.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e5::P-FRAUD-008::SYS-KYC">
+<title>Supporting</title>
+<path d="M196 385.67 L224.94 386 A10 10 0 0 0 225.06 386 L241 386 A10 10 0 0 0 251 376 L251 57 A10 10 0 0 1 261 47 L556 47 A10 10 0 0 1 566 57 L566 61.88 A10 10 0 0 0 576.12 71.88 L601.94 71.57 A10 10 0 0 1 602.06 71.57 L627.48 71.57" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M631 71.57 L621.43 76.36 L621.43 66.79 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e5::P-FRAUD-008::SYS-KYC">
+<rect x="404.46" y="53.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="65.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e6::P-ORIG-002::CAP-ORIG-02">
 <title>supports</title>
-<path d="M196 113.33 L201 113.33 A5 5 0 0 1 206 118.33 L206 178.75 A10 10 0 0 0 215.91 188.75 L244.96 189 A10 10 0 0 0 245.04 189 L307 189 L332.48 189" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M336 189 L326.43 193.78 L326.43 184.22 Z" fill="#7b8798"/>
+<path d="M196 749 L225 749 L241 749 A10 10 0 0 1 251 759 L251 926 A10 10 0 0 0 261 936 L317 936 L362.48 936" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M366 936 L356.43 940.78 L356.43 931.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e7::P-ORIG-002::CAP-RGOV-07">
+<title>supports</title>
+<path d="M196 732 L225 732 L251 732 A10 10 0 0 1 261 742 L261 849.06 A10 10 0 0 0 270.94 859.06 L316.97 859.33 A10 10 0 0 0 317.03 859.33 L362.48 859.33" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M366 859.33 L356.43 864.12 L356.43 854.55 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e8::P-COMPLIANCE-003::CAP-RGOV-07">
+<title>supports</title>
+<path d="M196 644 L225 644 L281 644 A10 10 0 0 1 291 654 L291 740 A10 10 0 0 0 301 750 L317 750 L346 750 A10 10 0 0 1 356 760 L356 833.43 A3.24 3.24 0 0 0 359.24 836.67 L362.48 836.67" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M366 836.67 L356.43 841.45 L356.43 831.88 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e9::P-SERVICING-012::CAP-SERV-02">
+<title>supports</title>
+<path d="M196 590 L225 590 L291 590 A10 10 0 0 1 301 600 L301 664 A8 8 0 0 0 309 672 L317 672 L362.48 672" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M366 672 L356.43 676.78 L356.43 667.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e10::P-LENDING-003::CAP-LEND-02-01">
+<title>supports</title>
+<path d="M196 326 L225 326 L278 326 A3 3 0 0 0 281 323 L281 323 A3 3 0 0 1 284 320 L317 320 L362.48 320" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M366 320 L356.43 324.79 L356.43 315.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e11::P-DEPOSITS-002::CAP-DEP-02">
+<title>supports</title>
+<path d="M196 496.33 L224.94 496 A10 10 0 0 1 225.06 496 L317 496 L362.48 496" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M366 496 L356.43 500.79 L356.43 491.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e12::P-FRAUD-008::CAP-FRAUD-08">
+<title>supports</title>
+<path d="M196 408.33 L224.94 408 A10 10 0 0 1 225.06 408 L317 408 L362.48 408" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M366 408 L356.43 412.79 L356.43 403.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e13::P-COMPLIANCE-003::CAP-RGOV-07-01">
+<title>supports</title>
+<path d="M196 661 L225 661 L271 661 A10 10 0 0 1 281 671 L281 750 A10 10 0 0 0 291 760 L317 760 L362.48 760" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M366 760 L356.43 764.78 L356.43 755.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e14::P-SERVICING-012::CAP-SERV-02-02">
+<title>supports</title>
+<path d="M196 573 L225 573 L235.5 573 A5.5 5.5 0 0 1 241 578.5 L241 578.5 A5.5 5.5 0 0 0 246.5 584 L317 584 L362.48 584" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M366 584 L356.43 588.78 L356.43 579.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e15::P-LENDING-003::CAP-LEND-02">
+<title>supports</title>
+<path d="M196 309 L225 309 L271 309 A10 10 0 0 0 281 299 L281 242 A10 10 0 0 1 291 232 L317 232 L362.48 232" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M366 232 L356.43 236.78 L356.43 227.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-DEP-02" data-type="capabilities">
+<title>Deposit Account Opening</title>
+<path d="M406 462 L366 496 L406 530 L486 530 L526 496 L486 462 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="446" y="494.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Deposit Account</text>
+<text x="446" y="506.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Opening</text>
+</g>
+<g class="node" data-id="CAP-FRAUD-08" data-type="capabilities">
+<title>First-Party Fraud &amp; Bust-Out Management</title>
+<path d="M406 374 L366 408 L406 442 L486 442 L526 408 L486 374 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="446" y="406.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">First-Party Fraud &amp;</text>
+<text x="446" y="418.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Bust-Out Management</text>
+</g>
+<g class="node" data-id="CAP-LEND-02" data-type="capabilities">
+<title>Indirect Application &amp; Underwriting</title>
+<path d="M406 198 L366 232 L406 266 L486 266 L526 232 L486 198 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="446" y="230.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Indirect Application &amp;</text>
+<text x="446" y="242.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Underwriting</text>
+</g>
+<g class="node" data-id="CAP-LEND-02-01" data-type="capabilities">
+<title>Dealer Application Intake</title>
+<path d="M406 286 L366 320 L406 354 L486 354 L526 320 L486 286 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="446" y="318.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dealer Application</text>
+<text x="446" y="330.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Intake</text>
 </g>
 <g class="node" data-id="CAP-ORIG-02" data-type="capabilities">
 <title>Identity Verification &amp; KYC/CIP</title>
-<path d="M376 331 L336 365 L376 399 L456 399 L496 365 L456 331 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
-<text x="416" y="363.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Identity Verification &amp;</text>
-<text x="416" y="375.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">KYC/CIP</text>
+<path d="M406 902 L366 936 L406 970 L486 970 L526 936 L486 902 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="446" y="934.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Identity Verification &amp;</text>
+<text x="446" y="946.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">KYC/CIP</text>
 </g>
 <g class="node" data-id="CAP-RGOV-07" data-type="capabilities">
 <title>Financial Crimes &amp; BSA/AML Compliance</title>
-<path d="M376 243 L336 277 L376 311 L456 311 L496 277 L456 243 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
-<text x="416" y="275.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Financial Crimes &amp;</text>
-<text x="416" y="287.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">BSA/AML Compliance</text>
+<path d="M406 814 L366 848 L406 882 L486 882 L526 848 L486 814 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="446" y="846.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Financial Crimes &amp;</text>
+<text x="446" y="858.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">BSA/AML Compliance</text>
+</g>
+<g class="node" data-id="CAP-RGOV-07-01" data-type="capabilities">
+<title>Sanctions Screening</title>
+<path d="M406 726 L366 760 L406 794 L486 794 L526 760 L486 726 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="446" y="764.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Sanctions Screening</text>
 </g>
 <g class="node" data-id="CAP-SERV-02" data-type="capabilities">
 <title>Account Maintenance &amp; Servicing Requests</title>
-<path d="M376 155 L336 189 L376 223 L456 223 L496 189 L456 155 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
-<text x="416" y="187.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Account Maintenance</text>
-<text x="416" y="199.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">&amp; Servicing Requests</text>
+<path d="M406 638 L366 672 L406 706 L486 706 L526 672 L486 638 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="446" y="670.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Account Maintenance</text>
+<text x="446" y="682.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">&amp; Servicing Requests</text>
+</g>
+<g class="node" data-id="CAP-SERV-02-02" data-type="capabilities">
+<title>Servicemember Protections</title>
+<path d="M406 550 L366 584 L406 618 L486 618 L526 584 L486 550 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="446" y="582.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Servicemember</text>
+<text x="446" y="594.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Protections</text>
 </g>
 <g class="node" data-id="P-COMPLIANCE-003" data-type="processes">
 <title>Screen for sanctions and watchlists</title>
-<path d="M116 156 L36 181.97 L66.56 224 L165.44 224 L196 181.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
-<text x="116" y="188.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Screen for sanctions</text>
-<text x="116" y="200.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and watchlists</text>
+<path d="M116 627 L36 652.97 L66.56 695 L165.44 695 L196 652.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="659.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Screen for sanctions</text>
+<text x="116" y="671.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and watchlists</text>
+</g>
+<g class="node" data-id="P-DEPOSITS-002" data-type="processes">
+<title>Open and fund direct deposit account</title>
+<path d="M116 451 L36 476.97 L66.56 519 L165.44 519 L196 476.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="483.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Open and fund direct</text>
+<text x="116" y="495.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">deposit account</text>
+</g>
+<g class="node" data-id="P-FRAUD-008" data-type="processes">
+<title>Investigate synthetic identity</title>
+<path d="M116 363 L36 388.97 L66.56 431 L165.44 431 L196 388.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="395.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Investigate synthetic</text>
+<text x="116" y="407.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">identity</text>
+</g>
+<g class="node" data-id="P-LENDING-003" data-type="processes">
+<title>Receive and validate dealer-submitted application</title>
+<path d="M116 275 L36 300.97 L66.56 343 L165.44 343 L196 300.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="301.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Receive and validate</text>
+<text x="116" y="313.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">dealer-submitted</text>
+<text x="116" y="325.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">application</text>
 </g>
 <g class="node" data-id="P-ORIG-002" data-type="processes">
 <title>Verify applicant identity and satisfy CIP</title>
-<path d="M116 244 L36 269.97 L66.56 312 L165.44 312 L196 269.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
-<text x="116" y="270.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Verify applicant</text>
-<text x="116" y="282.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">identity and satisfy</text>
-<text x="116" y="294.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">CIP</text>
+<path d="M116 715 L36 740.97 L66.56 783 L165.44 783 L196 740.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="741.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Verify applicant</text>
+<text x="116" y="753.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">identity and satisfy</text>
+<text x="116" y="765.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">CIP</text>
 </g>
 <g class="node" data-id="P-SERVICING-012" data-type="processes">
 <title>Apply servicemember and military lending protections</title>
-<path d="M116 68 L36 93.97 L66.56 136 L165.44 136 L196 93.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
-<text x="116" y="94.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Apply servicemember</text>
-<text x="116" y="106.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and military lending</text>
-<text x="116" y="118.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">protections</text>
+<path d="M116 539 L36 564.97 L66.56 607 L165.44 607 L196 564.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="565.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Apply servicemember</text>
+<text x="116" y="577.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and military lending</text>
+<text x="116" y="589.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">protections</text>
 </g>
 <g class="node" data-id="SYS-KYC" data-type="systems">
 <title>Identity verification</title>
-<rect x="593" y="50" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
-<text x="674" y="80.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Identity verification</text>
-<svg x="745" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+<rect x="631" y="51" width="170" height="72" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="712" y="91.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Identity verification</text>
+<svg x="783" y="56" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
 </g>
 </g>
-<g class="foot"><line x1="28" y1="576.7" x2="1072" y2="576.7" stroke="#d2dae5" stroke-width="1"/>
-<text x="28" y="600.7" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
-<g transform="translate(67.2 589.7)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
-<text x="93.2" y="600.7" font-size="12" font-weight="400" fill="#343d50">capability · 3</text>
-<g transform="translate(180.25 589.7)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
-<text x="206.25" y="600.7" font-size="12" font-weight="400" fill="#343d50">process · 3</text>
-<g transform="translate(283.26 589.7)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
-<text x="309.26" y="600.7" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
-<text x="28" y="622.7" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
-<g transform="translate(73.5 611.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
-<text x="99.5" y="622.7" font-size="12" font-weight="400" fill="#343d50">supports</text>
-<g transform="translate(166.02 611.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
-<text x="192.02" y="622.7" font-size="12" font-weight="400" fill="#343d50">uses</text>
-<text x="28" y="656.7" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-processes--sys-kyc · edit the model, not the picture</text></g>
+<g class="foot"><line x1="28" y1="1193.5" x2="1072" y2="1193.5" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="1217.5" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 1206.5)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="1217.5" font-size="12" font-weight="400" fill="#343d50">capability · 9</text>
+<g transform="translate(180.01 1206.5)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="206.01" y="1217.5" font-size="12" font-weight="400" fill="#343d50">process · 6</text>
+<g transform="translate(282.78 1206.5)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="308.78" y="1217.5" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
+<text x="28" y="1239.5" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 1228.5)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="1239.5" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 1228.5)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="1239.5" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="1273.5" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-processes--sys-kyc · edit the model, not the picture</text></g>
 </svg>

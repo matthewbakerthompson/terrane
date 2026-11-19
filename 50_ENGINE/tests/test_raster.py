@@ -25,6 +25,7 @@ import terrane  # noqa: E402
 from terrane import cli  # noqa: E402
 from terrane.draw.raster import NoRasterizer, open_rasterizer  # noqa: E402
 from terrane.quick import EXAMPLE  # noqa: E402
+from _fixture import remove_scratch  # noqa: E402
 
 PNG_HEAD = b"\x89PNG\r\n\x1a\n"
 
@@ -57,6 +58,7 @@ class TestRaster(unittest.TestCase):
 
     def test_a_picture_saves_itself_as_png_by_its_suffix(self) -> None:
         folder = Path(tempfile.mkdtemp(prefix="aac-png-"))
+        self.addCleanup(remove_scratch, folder, "aac-png-")
         path = self.picture.save(folder / "hosting.png")
         self.assertTrue(path.read_bytes().startswith(PNG_HEAD))
         svg = self.picture.save(folder / "hosting.svg")
@@ -64,6 +66,7 @@ class TestRaster(unittest.TestCase):
 
     def test_the_command_writes_a_png_beside_each_svg_and_says_how(self) -> None:
         out = Path(tempfile.mkdtemp(prefix="aac-png-"))
+        self.addCleanup(remove_scratch, out, "aac-png-")
         text = io.StringIO()
         with redirect_stdout(text):
             code = cli.main(["draw", str(EXAMPLE), "--out", str(out), "--png"])

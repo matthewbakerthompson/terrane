@@ -61,6 +61,14 @@
             "type": "string"
           },
           "description": "From 27_PATTERNS: how this kind of connection is built here."
+        },
+        "datastore": {
+          "enum": [
+            "target",
+            "source",
+            "both"
+          ],
+          "description": "Which end is a data store, a component type drawn as a cylinder, where the kind is a way into one (target), out of one (source) or between two (both): the chooser offers it first there."
         }
       }
     },
@@ -123,6 +131,14 @@
               "type": "string"
             },
             "description": "From 27_PATTERNS: how this kind of connection is built here."
+          },
+          "datastore": {
+            "enum": [
+              "target",
+              "source",
+              "both"
+            ],
+            "description": "Which end is a data store, a component type drawn as a cylinder, where the kind is a way into one (target), out of one (source) or between two (both): the chooser offers it first there."
           }
         }
       }

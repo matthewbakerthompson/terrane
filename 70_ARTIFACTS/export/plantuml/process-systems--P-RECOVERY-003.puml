@@ -11,6 +11,8 @@ AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColo
 AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
 
 Boundary(b_Capability, "Capability") {
+  System(CAP_COLL_06_01, "Bankruptcy Processing", "Stop collection on notice of bankruptcy, file claims, and follow the case to discharge or dismissal.", $tags="capabilities")
+  ' aac CAP_COLL_06_01: company_domain="Collections"
   System(CAP_COLL_06, "Bankruptcy, Deceased & Legal Account Handling", "Handle accounts under legal protection or in estate.", $tags="capabilities")
   ' aac CAP_COLL_06: company_domain="Collections"
 }
@@ -41,6 +43,8 @@ Rel(P_RECOVERY_003, CTL_FDCPA_NOTICE, "governed by")
 ' aac rel: source="P_RECOVERY_003"; target="CTL_FDCPA_NOTICE"; label="governed by"; relation="process_governed_by_control"
 Rel(P_RECOVERY_003, CAP_COLL_06, "supports")
 ' aac rel: source="P_RECOVERY_003"; target="CAP_COLL_06"; label="supports"; relation="process_supports_capability"
+Rel(P_RECOVERY_003, CAP_COLL_06_01, "supports")
+' aac rel: source="P_RECOVERY_003"; target="CAP_COLL_06_01"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from terrane import cli, diff as diff_module  # noqa: E402
 from terrane.diff import Snapshot, as_dict, diff, format_markdown  # noqa: E402
 
-from _fixture import REPO  # noqa: E402
+from _fixture import REPO, remove_scratch  # noqa: E402
 
 
 def _snapshot(entities=None, relations=None, views=None, shapes=None, parts=None, kinds=None) -> Snapshot:
@@ -119,7 +119,9 @@ class TestTheDiffItself(unittest.TestCase):
         import terrane
         from terrane.excel_import import sheets
 
-        out = Path(tempfile.mkdtemp(prefix="aac-diff-")) / "change.xlsx"
+        folder = Path(tempfile.mkdtemp(prefix="aac-diff-"))
+        self.addCleanup(remove_scratch, folder, "aac-diff-")
+        out = folder / "change.xlsx"
         # HEAD, not HEAD~1: the public repository starts as one commit, and
         # CI checks out one commit deep, so neither has a parent to compare.
         path = terrane.export_changes(REPO, "HEAD", out)
@@ -156,22 +158,24 @@ class TestAgainstGit(unittest.TestCase):
     which is the one thing this can assert without depending on history."""
 
     def test_a_revision_exports_and_loads(self) -> None:
-        root = diff_module.export_revision(REPO, "HEAD")
-        self.assertTrue((root / "10_MODEL" / "model.yaml").exists())
-        snap = diff_module.snapshot(root)
+        with diff_module.exported(REPO, "HEAD") as root:
+            self.assertTrue((root / "10_MODEL" / "model.yaml").exists())
+            snap = diff_module.snapshot(root)
         self.assertTrue(any(t == "systems" for t, _i in snap.entities))
         self.assertIn("system-context", snap.views)
+        # Gone with the block: every diff once left its export behind.
+        self.assertFalse(root.exists())
 
     def test_an_estate_in_a_subfolder_exports_with_the_library_it_names(self) -> None:
         # The second estate names the repository's library two folders up
         # and its own beside it; the export of its own folders alone did
         # not load, and HEAD against the working tree was an error.
         second = REPO / "90_EXAMPLE" / "thurman-health"
-        root = diff_module.export_revision(second, "HEAD")
-        self.assertEqual(root.name, "thurman-health")
-        self.assertTrue((root / "10_MODEL" / "model.yaml").is_file())
-        self.assertTrue((root.parent.parent / "24_CONNECTIONS").is_dir())
-        snap = diff_module.snapshot(root)
+        with diff_module.exported(second, "HEAD") as root:
+            self.assertEqual(root.name, "thurman-health")
+            self.assertTrue((root / "10_MODEL" / "model.yaml").is_file())
+            self.assertTrue((root.parent.parent / "24_CONNECTIONS").is_dir())
+            snap = diff_module.snapshot(root)
         lines = {i for t, i in snap.entities if t == "interfaces"}
         self.assertTrue(lines)
         # Every interface of a kind, by the repository's kinds and Thurman's own.
@@ -184,7 +188,8 @@ class TestAgainstGit(unittest.TestCase):
 
     def test_an_unknown_revision_is_an_error_not_a_guess(self) -> None:
         with self.assertRaises(diff_module.DiffError):
-            diff_module.export_revision(REPO, "no-such-revision-anywhere")
+            with diff_module.exported(REPO, "no-such-revision-anywhere"):
+                pass
 
     def test_the_command_prints_the_page(self) -> None:
         out = io.StringIO()

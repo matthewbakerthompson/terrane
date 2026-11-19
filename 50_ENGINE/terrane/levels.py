@@ -166,6 +166,13 @@ def diagrams_of(model: Model, views: Sequence[View], entity_id: str) -> List[dic
         if items:
             groups.append({"kind": "field", "head": "Its %s" % field_words(field), "name": str(value),
                            "subject": str(value), "items": items})
+    # The diagrams with a swimlane lane that stands for it (V16).
+    lanes = [drawn(model, view, None) for view in views
+             if any(a.get("role") == "lane" and a.get("stands_for") == entity_id
+                    for a in (getattr(view, "annotations", None) or ()))]
+    if lanes:
+        groups.append({"kind": "lanes", "head": "A lane of its own on", "name": "", "subject": entity_id,
+                       "items": lanes})
     return groups
 
 

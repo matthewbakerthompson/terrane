@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="658.4" viewBox="0 0 1100 658.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Service installment loan account requests — Systems, Data and Controls</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Service installment loan account requests — Systems, Data and Controls</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   6 nodes · 5 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(169.72 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="271.72" y="338.3" width="212.57" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="313.72" y="355.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="529.3" y="333.3" width="221.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="571.3" y="350.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.87" y="188.26" width="212.27" height="119.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.72" y="205.67" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="529.3" y="24.3" width="221.4" height="280.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="559.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-LENDING-010::SYS-LOAN-SVC">
+<title>Primary</title>
+<path d="M196 225.33 L224.94 225 A10 10 0 0 1 225.06 225 L233 225 A8 8 0 0 0 241 217 L241 91.98 A10 10 0 0 1 250.98 81.98 L525.99 81.5 A10 10 0 0 1 526.01 81.5 L551.48 81.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 81.5 L545.43 86.28 L545.43 76.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-LENDING-010::SYS-LOAN-SVC">
+<rect x="354.32" y="88.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="100.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-LENDING-010::SYS-CONTACT">
+<title>Supporting</title>
+<path d="M196 236.67 L224.94 237 A10 10 0 0 0 225.06 237 L241 237 A10 10 0 0 0 251 227 L251 174.98 A10 10 0 0 1 260.98 164.98 L525.99 164.5 A10 10 0 0 1 526.01 164.5 L551.48 164.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 164.5 L545.43 169.28 L545.43 159.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-LENDING-010::SYS-CONTACT">
+<rect x="346.46" y="171.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="183.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-LENDING-010::SYS-CRM">
+<title>Supporting</title>
+<path d="M196 248 L224.99 248 A10 10 0 0 0 225.01 248 L525.99 247.5 A10 10 0 0 1 526.01 247.5 L551.48 247.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 247.5 L545.43 252.28 L545.43 242.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-LENDING-010::SYS-CRM">
+<rect x="346.46" y="254.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="266.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e3::P-LENDING-010::DA-LOAN-ACCOUNT">
+<title>Both</title>
+<path d="M196 259.33 L224.94 259 A10 10 0 0 1 225.06 259 L241 259 A10 10 0 0 1 251 269 L251 273 A10 10 0 0 0 261 283 L488 283 A10 10 0 0 1 498 293 L498 375 A10 10 0 0 0 508 385 L526 385 L551.48 385" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 385 L545.43 389.79 L545.43 380.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::P-LENDING-010::DA-LOAN-ACCOUNT">
+<rect x="361.35" y="289.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="301.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e4::P-LENDING-010::CAP-LEND-05">
+<title>supports</title>
+<path d="M196 270.67 L224.94 271 A10 10 0 0 0 225.06 271 L233 271 A8 8 0 0 1 241 279 L241 380 A10 10 0 0 0 251 390 L269 390 L294.48 390" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M298 390 L288.43 394.79 L288.43 385.21 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-LEND-05" data-type="capabilities">
+<title>Installment Loan Servicing</title>
+<path d="M338 364 L298 390 L338 416 L418 416 L458 390 L418 364 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="378" y="388.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment Loan</text>
+<text x="378" y="400.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Servicing</text>
+</g>
+<g class="node" data-id="DA-LOAN-ACCOUNT" data-type="data_assets">
+<title>Installment loan account</title>
+<path d="M555 361.6 Q563.5 359 597.5 359 L682.5 359 Q716.5 359 725 361.6 L725 408.4 Q716.5 411 682.5 411 L597.5 411 Q563.5 411 555 408.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="636" y="383.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment loan</text>
+<text x="636" y="395.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">account</text>
+<svg x="707" y="364" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-LENDING-010" data-type="processes">
+<title>Service installment loan account requests</title>
+<path d="M116 214 L36 239.97 L66.56 282 L165.44 282 L196 239.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="246.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Service installment</text>
+<text x="116" y="258.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">loan account requests</text>
+</g>
+<g class="node" data-id="SYS-CONTACT" data-type="systems">
+<title>Contact center platform</title>
+<rect x="555" y="133" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="636" y="162.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Contact center</text>
+<text x="636" y="174.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">platform</text>
+<svg x="707" y="138" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-CRM" data-type="systems">
+<title>Dynamics 365 Customer Service</title>
+<rect x="555" y="216" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="636" y="240.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dynamics 365</text>
+<text x="636" y="252.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer Service</text>
+<text x="640" y="273.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Microsoft</text>
+<svg x="707" y="221" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-LOAN-SVC" data-type="systems">
+<title>Installment loan servicing platform</title>
+<rect x="555" y="50" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="636" y="79.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment loan</text>
+<text x="636" y="91.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">servicing platform</text>
+<svg x="707" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="556.4" x2="1072" y2="556.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="580.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 569.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="580.4" font-size="12" font-weight="400" fill="#343d50">capability · 1</text>
+<g transform="translate(177.5 569.4)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="203.5" y="580.4" font-size="12" font-weight="400" fill="#343d50">data asset · 1</text>
+<g transform="translate(291.6 569.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="317.6" y="580.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(391.87 569.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="417.87" y="580.4" font-size="12" font-weight="400" fill="#343d50">system · 3</text>
+<text x="28" y="602.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 591.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="602.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 591.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="602.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="636.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-lending-010 · edit the model, not the picture</text></g>
+</svg>

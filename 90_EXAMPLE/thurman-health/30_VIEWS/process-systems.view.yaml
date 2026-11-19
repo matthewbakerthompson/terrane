@@ -56,9 +56,13 @@ limits:
   max_nodes: 60
 
 # One committed diagram per critical process that sits in a value stream.
+# All of them: at the default sixty the first by id were drawn and the rest
+# dropped, and when the lending, merchant and deposit processes arrived
+# (2026-11-18) they pushed authorization and originations off the end.
 render_for:
   parameter: process
   type: processes
+  limit: 160
   where:
     criticality: [High]
     value_stream_id: {exists: true}

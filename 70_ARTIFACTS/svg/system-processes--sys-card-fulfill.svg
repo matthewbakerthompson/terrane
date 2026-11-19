@@ -1,19 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="433.4" viewBox="0 0 1100 433.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="563.7" viewBox="0 0 1100 563.7" font-family="Geist, system-ui, sans-serif" data-layout="elk">
 <title>Card production and fulfillment — Processes and Capabilities</title>
 <rect width="100%" height="100%" fill="#ffffff"/>
 <g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Card production and fulfillment — Processes and Capabilities</text>
-<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   3 nodes · 2 edges</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   5 nodes · 4 edges</text>
 <text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One system, every process that uses it and in what role, and the capabilities those processes support. This shows the business impact of changing the system. A</text>
 <text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">long list against a low criticality rating is worth a second look.</text>
 <line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
 <g class="drawing" transform="translate(169.82 99.2)">
 <g class="boundary" data-id="grp::Capability">
-<rect x="271.72" y="113.3" width="212.57" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
-<text x="313.72" y="130.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+<rect x="271.92" y="102.3" width="212.16" height="207.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="313.92" y="119.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
 </g>
 <g class="boundary" data-id="grp::Process">
-<rect x="9.66" y="39.28" width="212.67" height="103.42" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
-<text x="42.51" y="56.68" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+<rect x="9.66" y="101.28" width="212.67" height="175.42" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.51" y="118.68" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
 </g>
 <g class="boundary" data-id="grp::System">
 <rect x="529.3" y="24.3" width="221.4" height="114.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
@@ -21,30 +21,57 @@
 </g>
 <g class="edge" data-id="e0::P-ORIG-007::SYS-CARD-FULFILL">
 <title>Primary</title>
-<path d="M196 82.33 L224.95 82 A10 10 0 0 1 225.05 82 L525.99 81.5 A10 10 0 0 1 526.01 81.5 L551.48 81.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M555 81.5 L545.43 86.28 L545.43 76.72 Z" fill="#7b8798"/>
+<path d="M196 144.33 L224.94 144 A10 10 0 0 1 225.06 144 L233 144 A8 8 0 0 0 241 136 L241 81 A10 10 0 0 1 251 71 L526 71 L551.48 71" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 71 L545.43 75.78 L545.43 66.22 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e0::P-ORIG-007::SYS-CARD-FULFILL">
-<rect x="354.32" y="59.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="375.5" y="71.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+<rect x="354.32" y="48.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="60.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
 </g>
-<g class="edge" data-id="e1::P-ORIG-007::CAP-ORIG-07">
+<g class="edge" data-id="e1::P-SERVICING-013::SYS-CARD-FULFILL">
+<title>Supporting</title>
+<path d="M196 233.67 L224.94 234 A10 10 0 0 0 225.06 234 L233 234 A8 8 0 0 1 241 242 L241 316 A10 10 0 0 0 251 326 L488 326 A10 10 0 0 0 498 316 L498 102 A10 10 0 0 1 508 92 L526 92 L551.48 92" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 92 L545.43 96.78 L545.43 87.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-SERVICING-013::SYS-CARD-FULFILL">
+<rect x="346.46" y="332.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="344.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-ORIG-007::CAP-ORIG-07">
 <title>supports</title>
-<path d="M196 99.67 L224.94 100 A10 10 0 0 0 225.06 100 L233 100 A8 8 0 0 1 241 108 L241 155 A10 10 0 0 0 251 165 L269 165 L294.48 165" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M298 165 L288.43 169.78 L288.43 160.22 Z" fill="#7b8798"/>
+<path d="M196 161.67 L224.94 162 A10 10 0 0 0 225.06 162 L269 162 L294.48 162" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M298 162 L288.43 166.78 L288.43 157.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e3::P-SERVICING-013::CAP-SERV-09">
+<title>supports</title>
+<path d="M196 216.33 L224.94 216 A10 10 0 0 1 225.06 216 L241 216 A10 10 0 0 1 251 226 L251 241 A9 9 0 0 0 260 250 L269 250 L294.48 250" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M298 250 L288.43 254.78 L288.43 245.22 Z" fill="#7b8798"/>
 </g>
 <g class="node" data-id="CAP-ORIG-07" data-type="capabilities">
 <title>Card Production &amp; Fulfillment</title>
-<path d="M338 139 L298 165 L338 191 L418 191 L458 165 L418 139 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
-<text x="378" y="163.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Card Production &amp;</text>
-<text x="378" y="175.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Fulfillment</text>
+<path d="M338 128 L298 162 L338 196 L418 196 L458 162 L418 128 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="378" y="160.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Card Production &amp;</text>
+<text x="378" y="172.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Fulfillment</text>
+</g>
+<g class="node" data-id="CAP-SERV-09" data-type="capabilities">
+<title>Retention, Product Change &amp; Account Closure</title>
+<path d="M338 216 L298 250 L338 284 L418 284 L458 250 L418 216 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="378" y="242.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Retention, Product</text>
+<text x="378" y="254.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Change &amp; Account</text>
+<text x="378" y="266.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Closure</text>
 </g>
 <g class="node" data-id="P-ORIG-007" data-type="processes">
 <title>Manage card production and fulfillment</title>
-<path d="M116 65 L36 84.86 L66.56 117 L165.44 117 L196 84.86 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
-<text x="116" y="83.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Manage card</text>
-<text x="116" y="95.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">production and</text>
-<text x="116" y="107.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">fulfillment</text>
+<path d="M116 127 L36 146.86 L66.56 179 L165.44 179 L196 146.86 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="145.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Manage card</text>
+<text x="116" y="157.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">production and</text>
+<text x="116" y="169.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">fulfillment</text>
+</g>
+<g class="node" data-id="P-SERVICING-013" data-type="processes">
+<title>Process product change or upgrade</title>
+<path d="M116 199 L36 218.86 L66.56 251 L165.44 251 L196 218.86 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="223.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Process product</text>
+<text x="116" y="235.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">change or upgrade</text>
 </g>
 <g class="node" data-id="SYS-CARD-FULFILL" data-type="systems">
 <title>Card production and fulfillment</title>
@@ -55,18 +82,18 @@
 <svg x="707" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
 </g>
 </g>
-<g class="foot"><line x1="28" y1="331.4" x2="1072" y2="331.4" stroke="#d2dae5" stroke-width="1"/>
-<text x="28" y="355.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
-<g transform="translate(67.2 344.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
-<text x="93.2" y="355.4" font-size="12" font-weight="400" fill="#343d50">capability · 1</text>
-<g transform="translate(177.5 344.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
-<text x="203.5" y="355.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
-<g transform="translate(277.77 344.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
-<text x="303.77" y="355.4" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
-<text x="28" y="377.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
-<g transform="translate(73.5 366.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
-<text x="99.5" y="377.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
-<g transform="translate(166.02 366.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
-<text x="192.02" y="377.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
-<text x="28" y="411.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-processes--sys-card-fulfill · edit the model, not the picture</text></g>
+<g class="foot"><line x1="28" y1="461.7" x2="1072" y2="461.7" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="485.7" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 474.7)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="485.7" font-size="12" font-weight="400" fill="#343d50">capability · 2</text>
+<g transform="translate(180.32 474.7)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="206.32" y="485.7" font-size="12" font-weight="400" fill="#343d50">process · 2</text>
+<g transform="translate(283.41 474.7)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="309.41" y="485.7" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
+<text x="28" y="507.7" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 496.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="507.7" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 496.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="507.7" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="541.7" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-processes--sys-card-fulfill · edit the model, not the picture</text></g>
 </svg>

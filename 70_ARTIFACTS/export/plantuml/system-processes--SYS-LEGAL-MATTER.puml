@@ -1,0 +1,35 @@
+@startuml
+' Legal matter management — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Legal matter management — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_COLL_06, "Bankruptcy, Deceased & Legal Account Handling", "Handle accounts under legal protection or in estate.", $tags="capabilities")
+  ' aac CAP_COLL_06: company_domain="Collections"
+  System(CAP_COLL_06_03, "Legal Placement & Litigation", "Sue on selected accounts through outside counsel, and manage judgments.", $tags="capabilities")
+  ' aac CAP_COLL_06_03: company_domain="Collections"
+}
+Boundary(b_Process, "Process") {
+  System(P_RECOVERY_006, "Refer account to legal and manage litigation", "Choose accounts for suit under the legal placement strategy, place them with outside counsel, track filings, judgments and garnishments, and post the recoveries. Every account sued needs the documents to prove the debt, and a suit on a time-barred or disputed account is a conduct finding.", $tags="processes")
+  ' aac P_RECOVERY_006: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_LEGAL_MATTER, "Legal matter management", "Tracks litigation, outside counsel, filings, judgments and legal placements. Built with SaaS.", $tags="systems")
+  ' aac SYS_LEGAL_MATTER: company_domain=""; hosting="SaaS"; technology="SaaS"
+}
+
+Rel(P_RECOVERY_006, SYS_LEGAL_MATTER, "Primary")
+' aac rel: source="P_RECOVERY_006"; target="SYS_LEGAL_MATTER"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_RECOVERY_006, CAP_COLL_06_03, "supports")
+' aac rel: source="P_RECOVERY_006"; target="CAP_COLL_06_03"; label="supports"; relation="process_supports_capability"
+Rel(P_RECOVERY_006, CAP_COLL_06, "supports")
+' aac rel: source="P_RECOVERY_006"; target="CAP_COLL_06"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

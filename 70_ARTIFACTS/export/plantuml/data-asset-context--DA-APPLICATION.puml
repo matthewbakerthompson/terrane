@@ -16,12 +16,24 @@ Boundary(b_Data_Asset, "Data Asset") {
 Boundary(b_Process, "Process") {
   System(P_ORIG_001, "Capture card application", "Accept and validate a complete card application from any origination channel. Capture is complete when the application has every field decisioning needs and the applicant has the required disclosures; incomplete applications route to cure, not decline.", $tags="processes")
   ' aac P_ORIG_001: company_domain=""
+  System(P_LENDING_004, "Decide indirect loan and return terms", "Score the application against the recreation lending credit policy, price it, and return an approval, a counteroffer with conditions, or a decline to the dealer while the buyer waits. Counteroffers and declines carry adverse action obligations, and the collateral's value sets the advance, so the decision reads the asset's value guide as well as the bureau.", $tags="processes")
+  ' aac P_LENDING_004: company_domain=""
   System(P_ORIG_004, "Execute credit decision", "Apply the approved credit strategy to render an approve, decline, or counter-offer decision with a line assignment.", $tags="processes")
   ' aac P_ORIG_004: company_domain=""
+  System(P_FRAUD_008, "Investigate synthetic identity", "Investigate identities built from real and invented data, often seasoned for months before they bust out, by linking shared phones, addresses and devices across applications and accounts; close the linked accounts and feed the pattern back to application screening. A synthetic identity has no victim to complain, so it is found only by looking.", $tags="processes")
+  ' aac P_FRAUD_008: company_domain=""
   System(P_ORIG_005, "Issue adverse action notice", "Generate and deliver a compliant adverse action or counter-offer notice within the required period. ECOA and FCRA set the notice content and the clock; the principal reasons must match the actual decision factors, which is exactly what fair-lending testing checks.", $tags="processes")
   ' aac P_ORIG_005: company_domain=""
+  System(P_LENDING_016, "Originate point-of-sale installment loan", "Take a financing application started in a retailer's checkout, check affordability from the shopper's bank data with consent, decide it, and book the installment loan with disbursement through the card ledger. The point-of-sale products run on platforms of their own, apart from the dealer channel, and share its credit policy and adverse action rules.", $tags="processes")
+  ' aac P_LENDING_016: company_domain=""
+  System(P_LENDING_003, "Receive and validate dealer-submitted application", "Accept a credit application keyed by the dealer's finance office, check it is complete, verify the applicant's identity and screen it for application fraud before it reaches the decision. The buyer is at the dealership, so intake runs against a point-of-sale clock; an incomplete or unverified application that slips through becomes a funding exception later.", $tags="processes")
+  ' aac P_LENDING_003: company_domain=""
+  System(P_LENDING_005, "Review contract package and clear stipulations", "Check the signed retail installment contract, the title application and the proofs of income, insurance and identity the approval was conditioned on, and send back what is missing or wrong. A contract funded with an open stipulation is a loan the bank may not be able to enforce or perfect, which is why funding waits on this review.", $tags="processes")
+  ' aac P_LENDING_005: company_domain=""
   System(P_ORIG_003, "Screen application for fraud", "Score and adjudicate the application for synthetic, stolen, and first-party fraud risk. Fraud screening runs before credit decisioning so stolen and synthetic identities never consume a bureau pull; referred applications go to manual review with an SLA.", $tags="processes")
   ' aac P_ORIG_003: company_domain=""
+  System(P_COMPLIANCE_006, "Test credit decisions and pricing for fair lending", "Test approvals, lines, pricing, dealer markup and collections treatment for disparities across protected classes, using proxy methods where the data is not collected, and investigate and remediate what the testing finds. Fair lending findings lead to restitution and consent orders, and discretionary dealer markup is the classic exposure.", $tags="processes")
+  ' aac P_COMPLIANCE_006: company_domain=""
   System(P_ORIG_002, "Verify applicant identity and satisfy CIP", "Verify the applicant's identity and record evidence satisfying customer identification obligations. CIP evidence is retained per BSA requirements; verification failures route to document request rather than automatic decline, and synthetic identity signals feed fraud screening.", $tags="processes")
   ' aac P_ORIG_002: company_domain=""
 }
@@ -30,10 +42,14 @@ Boundary(b_System, "System") {
   ' aac SYS_APPFRAUD: company_domain=""
   System(SYS_CREDIT_DATA, "Credit data and decisioning environment", "Credit data, analytics, and decisioning environment. Built with Snowflake Data Cloud.", $tags="systems")
   ' aac SYS_CREDIT_DATA: company_domain=""; technology="Snowflake Data Cloud"
+  System_Ext(SYS_DEALER_PORTAL, "Dealer portal", "Where dealers submit applications, see decisions and stipulations, upload contracts, and track funding and reserve. Built with SaaS.", $tags="systems")
+  ' aac SYS_DEALER_PORTAL: company_domain=""; hosting="SaaS"; technology="SaaS"
   System(SYS_AML, "Financial crimes platform", "Sanctions screening, transaction monitoring, and case management.", $tags="systems")
   ' aac SYS_AML: company_domain=""
   System(SYS_KYC, "Identity verification", "Identity verification and customer identification program checks.", $tags="systems")
   ' aac SYS_KYC: company_domain=""
+  System(SYS_LOS, "Indirect loan origination system", "Takes dealer applications, runs the credit decision and counteroffers, and carries the contract package to funding.", $tags="systems")
+  ' aac SYS_LOS: company_domain=""
   System(SYS_ORIG_DECISION, "Originations decision engine", "Application processing and credit decision execution.", $tags="systems")
   ' aac SYS_ORIG_DECISION: company_domain=""
 }
@@ -50,6 +66,10 @@ Rel(SYS_CREDIT_DATA, DA_APPLICATION, "Read")
 ' aac rel: source="SYS_CREDIT_DATA"; target="DA_APPLICATION"; label="Read"; relation="system_reads_writes"; operation="Read"
 Rel(SYS_AML, DA_APPLICATION, "Read")
 ' aac rel: source="SYS_AML"; target="DA_APPLICATION"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_LOS, DA_APPLICATION, "ReadWrite")
+' aac rel: source="SYS_LOS"; target="DA_APPLICATION"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_DEALER_PORTAL, DA_APPLICATION, "Write")
+' aac rel: source="SYS_DEALER_PORTAL"; target="DA_APPLICATION"; label="Write"; relation="system_reads_writes"; operation="Write"
 Rel(P_ORIG_001, DA_APPLICATION, "Writes")
 ' aac rel: source="P_ORIG_001"; target="DA_APPLICATION"; label="Writes"; relation="process_uses_data_asset"; access="Writes"
 Rel(P_ORIG_002, DA_APPLICATION, "Both")
@@ -60,6 +80,18 @@ Rel(P_ORIG_004, DA_APPLICATION, "Both")
 ' aac rel: source="P_ORIG_004"; target="DA_APPLICATION"; label="Both"; relation="process_uses_data_asset"; access="Both"
 Rel(P_ORIG_005, DA_APPLICATION, "Reads")
 ' aac rel: source="P_ORIG_005"; target="DA_APPLICATION"; label="Reads"; relation="process_uses_data_asset"; access="Reads"
+Rel(P_LENDING_003, DA_APPLICATION, "Write")
+' aac rel: source="P_LENDING_003"; target="DA_APPLICATION"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_LENDING_004, DA_APPLICATION, "Both")
+' aac rel: source="P_LENDING_004"; target="DA_APPLICATION"; label="Both"; relation="process_uses_data_asset"; access="Both"
+Rel(P_LENDING_005, DA_APPLICATION, "Read")
+' aac rel: source="P_LENDING_005"; target="DA_APPLICATION"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_LENDING_016, DA_APPLICATION, "Write")
+' aac rel: source="P_LENDING_016"; target="DA_APPLICATION"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_FRAUD_008, DA_APPLICATION, "Read")
+' aac rel: source="P_FRAUD_008"; target="DA_APPLICATION"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_COMPLIANCE_006, DA_APPLICATION, "Read")
+' aac rel: source="P_COMPLIANCE_006"; target="DA_APPLICATION"; label="Read"; relation="process_uses_data_asset"; access="Read"
 
 SHOW_LEGEND()
 @enduml

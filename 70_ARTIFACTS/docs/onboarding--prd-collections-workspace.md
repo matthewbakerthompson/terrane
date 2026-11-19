@@ -46,12 +46,16 @@ flowchart TB
   end
 
   SYS_DOC["Document management and<br/>archive"]
+  SYS_LOAN_SVC["Installment loan servicing<br/>platform"]
+  SYS_LEGAL_MATTER["Legal matter management<br/>[SaaS]"]
   SYS_DIALER["Outbound contact platform"]
 
   SYS_COLLECT_API -->|"FileTransfer"| SYS_DIALER
   SYS_DIALER -->|"AMQP"| SYS_COLLECT_API
   SYS_COLLECT_API -->|"AMQP"| SYS_DOC
   SYS_CORE_LEDGER -->|"FileTransfer"| SYS_DOC
+  SYS_LOAN_SVC -->|"FileTransfer"| SYS_COLLECT_API
+  SYS_COLLECT_API -->|"FileTransfer"| SYS_LEGAL_MATTER
   SYS_COLLECT_API --> OI_IDENTITY_API
   SYS_COLLECT_API --> OI_LEDGER_QUEUE
   SYS_COLLECT_WEB --> OI_COLLECT_API
@@ -71,7 +75,7 @@ flowchart TB
   class OI_LEDGER_QUEUE s_offered_interfaces__on_prem;
   class OI_COLLECT_API s_offered_interfaces__private_app;
   class OI_IDENTITY_API s_offered_interfaces__shared_services;
-  class SYS_DIALER,SYS_DOC s_systems__default;
+  class SYS_DIALER,SYS_DOC,SYS_LEGAL_MATTER,SYS_LOAN_SVC s_systems__default;
   class SYS_CORE_LEDGER s_systems__on_prem;
   class SYS_COLLECT_API,SYS_COLLECT_WEB s_systems__private_app;
   class SYS_COLLECT_STORE s_systems__private_data;
@@ -111,4 +115,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | dotted `#7a8699` | Azure region |
 | solid `#5b9bd5` | Azure subnet |
 
-10 entities, 11 relationships. Generated from the model; edit the model, not this file.
+12 entities, 13 relationships. Generated from the model; edit the model, not this file.

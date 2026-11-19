@@ -1,0 +1,77 @@
+# Dealer portal — Processes and Capabilities
+
+One system, every process that uses it and in what role, and the capabilities those processes support. This shows the business impact of changing the system. A long list against a low criticality rating is worth a second look.
+
+```mermaid
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Dealer portal — Processes and Capabilities
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Capability["Capability"]
+    direction LR
+    CAP_LEND_07{{"Ancillary Product & Dealer<br/>Reserve Administration"}}
+    CAP_LEND_04{{"Collateral, Title & Lien<br/>Management"}}
+    CAP_LEND_02_01{{"Dealer Application Intake"}}
+    CAP_LEND_01{{"Dealer Network & Program<br/>Management"}}
+    CAP_LEND_02{{"Indirect Application &<br/>Underwriting"}}
+    CAP_LEND_04_01{{"Lien Perfection & Title<br/>Custody"}}
+    CAP_LEND_03{{"Loan Boarding & Dealer<br/>Funding"}}
+  end
+
+  subgraph grp_Process["Process"]
+    direction LR
+    P_LENDING_015[\"Calculate and settle<br/>dealer reserve"/]
+    P_LENDING_014[\"Cancel ancillary products<br/>and refund unearned<br/>premium"/]
+    P_LENDING_002[\"Monitor dealer performance<br/>and program compliance"/]
+    P_LENDING_007[\"Perfect lien with titling<br/>state"/]
+    P_LENDING_003[\"Receive and validate<br/>dealer-submitted<br/>application"/]
+    P_LENDING_001[\"Recruit, vet, and contract<br/>dealer"/]
+    P_LENDING_005[\"Review contract package<br/>and clear stipulations"/]
+  end
+
+  subgraph grp_System["System"]
+    direction LR
+    SYS_DEALER_PORTAL["Dealer portal<br/>[SaaS]"]
+  end
+
+  P_LENDING_001 -->|"Primary"| SYS_DEALER_PORTAL
+  P_LENDING_002 -->|"Supporting"| SYS_DEALER_PORTAL
+  P_LENDING_003 -->|"Supporting"| SYS_DEALER_PORTAL
+  P_LENDING_005 -->|"Supporting"| SYS_DEALER_PORTAL
+  P_LENDING_007 -->|"Supporting"| SYS_DEALER_PORTAL
+  P_LENDING_014 -->|"Supporting"| SYS_DEALER_PORTAL
+  P_LENDING_015 -->|"Supporting"| SYS_DEALER_PORTAL
+  P_LENDING_001 -->|"supports"| CAP_LEND_01
+  P_LENDING_002 -->|"supports"| CAP_LEND_01
+  P_LENDING_003 -->|"supports"| CAP_LEND_02_01
+  P_LENDING_005 -->|"supports"| CAP_LEND_03
+  P_LENDING_007 -->|"supports"| CAP_LEND_04_01
+  P_LENDING_014 -->|"supports"| CAP_LEND_07
+  P_LENDING_015 -->|"supports"| CAP_LEND_07
+  P_LENDING_003 -->|"supports"| CAP_LEND_02
+  P_LENDING_007 -->|"supports"| CAP_LEND_04
+
+  classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
+  classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  class CAP_LEND_01,CAP_LEND_02,CAP_LEND_02_01,CAP_LEND_03,CAP_LEND_04,CAP_LEND_04_01,CAP_LEND_07 s_capabilities__capabilities;
+  class P_LENDING_001,P_LENDING_002,P_LENDING_003,P_LENDING_005,P_LENDING_007,P_LENDING_014,P_LENDING_015 s_processes__processes;
+  class SYS_DEALER_PORTAL s_systems__systems;
+  classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_Capability,grp_Process,grp_System boundary1;
+```
+
+The same view as the app draws it, written beside the Mermaid by `terrane render`:
+
+![Dealer portal — Processes and Capabilities](../svg/system-processes--sys-dealer-portal.svg)
+
+**Hue is the entity type.**
+
+| | Entity type |
+|---|---|
+| `#6d28d9` | capabilities |
+| `#0369a1` | processes |
+| `#4338ca` | systems |
+
+15 entities, 16 relationships. Generated from the model; edit the model, not this file.

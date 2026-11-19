@@ -1,5 +1,187 @@
 # Changelog
 
+## 1.3.0 (not yet released)
+
+- **The rest of the estate on Add.** Four shelves more: the library's
+  Building blocks, and the estate's Data (by classification), Actors and
+  Teams. A data asset, an actor or a team placed is drawn with the lines
+  that join it to what is on the diagram: the systems that read and write
+  the data and the one that keeps its master, the systems the actor uses,
+  what the team owns. A building block dropped into an account asks its
+  name and who owns it (the owner most of the account's services have),
+  and writes its services there, each the cloud's usual product, with
+  their lines. A block's product is the provider's first choice, not the
+  whole answer ("Amazon Kinesis", not "Amazon Kinesis or MSK").
+
+- **Add on shelves.** The canvas's Add keeps what can be placed on
+  shelves, each counted: Whole applications (the kits), Parts of an
+  application, Business systems and Cloud services from the library,
+  Systems and Boundaries from the estate. A shelf lists everything it
+  holds under its headings (a kind's group, or its category), two to a
+  row, each kind with an icon of its own; the one pointed at is described
+  under the list with the kits that make one. Typing searches every
+  shelf at once, listed by shelf and heading, the arrow keys moving
+  through it and Enter placing it. It opens on the shelf picked last.
+- **A list of products is split at its commas.** A provider's answer of
+  "ADP, Workday Payroll or UKG Pro" offered two products; it is three.
+
+- **Fifty more kinds in the library, each under a group.** The parts a
+  system we build is made of (an admin console, a desktop application, a
+  chat interface, a device application, a background worker, an event
+  processor, a workflow, decision, notification, reporting and inference
+  service, an integration adapter, an AI agent) and the business systems
+  an organization runs (billing, payments, payroll, recruiting, marketing,
+  e-commerce, the website's content, a support desk, order management, a
+  warehouse, contract management, privacy and consent, fraud detection,
+  identity verification, a health record and thirty more). A component
+  type may say the heading it is listed under, `group`. The library's parts
+  say these kinds of the systems they make, and two kits more: a customer
+  portal and an API offered to partners.
+
+- **A kit placed whole on the canvas.** The canvas's Add offers the
+  library's kits beside its parts, so an AI assistant dropped on a diagram
+  is six systems with their lines rather than one box. Dropped into an
+  account, a kit asks its name, who owns it and what its parameters ask,
+  says what each system runs on in that account's landing zone, and is
+  written as one product assembled from it. A kit's parameter may say how
+  it is asked (`ask`) and what kind of record its value names (`names`).
+
+- **What organizations build again and again.** An AI agent kit that acts
+  through the APIs it is given, every action logged; customer sign-in on
+  each cloud's customer identity service; a feed of a product's data to
+  analytics by change data capture; a partner API through the gateway; and
+  document intake read by each cloud's document processing. A kind a part
+  uses by default is now checked against every landing zone too.
+
+- **An AI assistant kit.** A chat behind workforce sign-on, the API, the
+  inference service calling the landing zone's model through its AI
+  gateway, a retrieval index the named systems' documents are embedded
+  into, and the conversation history, resolved on AWS, Azure and Google
+  Cloud; and an AI assistant application type that requires it.
+
+- **A network made once per account.** A network is made from a shape on
+  each cloud, the VPC or virtual network with its subnets, NAT gateways,
+  hub attachment and resolver link, three tiers by default; every system
+  in the account lands in its subnets by network zone, with nothing
+  written, and a kind that sits in no subnet says so (`subnet: false`).
+
+- **A database's ways in and out.** A line drawn into or out of a database
+  says what the estate does with that kind of store and offers its ways in
+  or out first: its own service reading and writing it, and out of it a
+  change data capture feed, a scheduled extract, a replica or a backup,
+  four new connection kinds. A system of another product reaching into a
+  database another service owns is said to be the shared database the
+  library deprecates. A connection kind may say `datastore:`, which end is
+  a data store.
+
+- **Names the model does not hold, on Sources.** A column that names
+  records, an owner most often, has its names on the Words step: each with
+  its rows, the record it already is, or a choice of the kind's records,
+  with one offered where it reads like the name, and the words they share.
+  Nothing is chosen for you, and a name left holds its rows back.
+- **Names that read alike, on Checks.** Beside the rules, the records of
+  one type whose names read alike, grouped by why each pair is probably
+  two things: a letter or a DR copy, another cloud, an interface's two
+  ends, another place on the map. Not a finding, counted in neither box.
+
+- **What is this line?, ranked.** A line drawn between two records, or a
+  connection asked for, lists its answers in the order the estate makes
+  them, each with why in the estate's numbers: a call the way the two
+  systems lean, the likeliest marked and its likeliest kinds offered as
+  chips that fill the form at once. Nothing is chosen for you.
+- **Probably here already, on the adopt page.** A drawing dropped lists
+  what it adds that reads like a record the estate has, with the estate's
+  record, the score and the words they share, and a Same record box,
+  ticked where one stands alone; the counts and the picture follow the
+  boxes, and Adopt joins the drawing's records to the estate's, their lines
+  with them, writing no second one. A record joined so is never corrected
+  to the drawing's name, from the app or from `terrane adopt --same`.
+- **What kind each record probably is.** Checks, under What the
+  diagrams need, groups each record with no component type by the kind it
+  most likely is, with the words that matched and the next kinds; a sure
+  match is ticked, and Set gives the kind to what is ticked, each in its
+  own file, with Undo.
+- **Parts say the kind of what they make.** The library's parts and
+  shapes give each system they make its `component_type` where a kind
+  plainly is it, a web channel's front end a web application, a datastore
+  a relational database, so a product built from parts comes out typed.
+  A part with no such kind says none.
+
+- **Heads from four notations.** A line picked names each end, At
+  Customer, with a picker of the heads it may have: plain ones, UML's,
+  crow's foot's and ArchiMate's. A UML or ArchiMate head draws its line
+  as its notation does, and Assignment puts a dot at the other end. The
+  picture, the deck and draw.io draw them all, PowerPoint its own where
+  it has one.
+- **Bends on a square or curved line.** A square or curved line picked
+  has a handle on each stretch; carried across it, the stretch moves and
+  the line keeps the bends it then has, still square, as things move.
+  Remove the bends lets it find its own way around the boxes again. The
+  picture, the deck and draw.io draw it through the same bends.
+- **A line's words at three places, dotted, heavy, rounded.** A line
+  picked lists its words by where they sit, its start, its middle and its
+  end, with + Add a label for the next; its look is solid, dashed or
+  dotted and S, M or L heavy; a square line's turns can be rounded. The
+  picture, the deck and draw.io draw them all.
+- **Styles for every diagram.** A style saved from the Style tab can be
+  kept for every diagram, in the estate's model.yaml, rather than in one
+  diagram's file; every diagram offers it, marked, and it can be removed
+  from any of them. `terrane validate` checks them.
+- **A group turned, and a place typed.** A group's panel turns it as one
+  about its middle, left or right by the degrees said. The Arrange tab
+  says where a shape sits and takes a place typed, from the corner of what
+  it sits in or of the sheet.
+- **Pages.** A diagram can have more than one page, as tabs at the foot
+  of the canvas's sheet: each one more sheet in the diagram's file, with
+  its own shapes and its own records placed, under the diagram's name and
+  look. A click opens a page and a double-click renames it; + adds one;
+  a page's menu opens, renames, duplicates, moves it left or right, or
+  deletes it after asking. Each page is drawn as a picture of its own, and
+  the review pack has a slide for each.
+- **Drawing layers.** The canvas's toolbar opens Drawing layers: the
+  diagram's layers top first, with the estate's records among them. A
+  layer is shown or hidden, locked or not, renamed with a double-click,
+  carried by its grip to another place, or deleted, what was on it going to
+  the layer under it; what is drawn goes on the layer marked. A layer under
+  the records draws under them, and a hidden one is left out of the
+  picture, the export and the review pack. Ctrl+Alt+] and Ctrl+Alt+[ take
+  what is picked to the layer above or below, as does Drawing layer in
+  Arrange.
+- **Swimlanes.** Swimlane, the last of Shapes, draws a pool of three
+  lanes, stacked across it or side by side down it, each lane's name in a
+  column at its left or a band at its top. What is drawn in a lane moves
+  with it, and a box carried into another lane changes lanes. A lane can
+  stand for an actor or an org unit: it is named as the record is, and the
+  record's page lists the diagram. Lanes are added, reordered by their
+  grips in the panel, made deeper by their handles, and deleted keeping what
+  they held in the lane above. The picture, the deck and draw.io draw a
+  swimlane as the canvas does.
+- **Groups.** Several of a diagram's own shapes, picked, are grouped from
+  the bar or the panel (Ctrl+Shift+G), and are then picked, moved, copied,
+  pasted and painted as one; a double-click goes inside to pick one of
+  them, Esc comes back out, and Ctrl+Shift+U ungroups. A group has a name
+  and may hold groups. It has no box: its outline and name show while it
+  is picked, and the picture, the deck and draw.io draw its shapes as
+  before.
+- **A double-click opens a shape's words.** maxGraph's own double-click
+  stopped the event at the shape, so it opened the words only on an empty
+  spot of the sheet, where there were none.
+- **Ctrl+D on several keeps the diagram saving.** Every copy took the
+  same key, and the diagram's file was refused from then on.
+- **A link on a shape.** The words' toolbar's last button links a shape,
+  a note, text or a frame to an address on the web or for email. A mark at
+  its corner on the canvas opens it in a new tab; the picture, the deck
+  and draw.io make the shape itself open it. An address of any other kind
+  is refused.
+- **Styles, and how the words are set.** The Style tab offers five styles
+  to start from, Service, Data, Outside, Risk and Quiet, and a diagram's
+  own, saved by name in its file with "Save this as a style": choosing one
+  copies its look onto what is picked, and its chip is ticked while the
+  look matches. A toolbar over the words sets them bold, italic,
+  underlined or struck through, places them left, in the middle or right,
+  and makes a note's or text's lines a bulleted list. The picture, the
+  deck and draw.io set the words as the canvas does.
+
 ## 1.2.0 (2026-10-27)
 
 - **The export and the overview draw what the canvas draws.** Export's PNG

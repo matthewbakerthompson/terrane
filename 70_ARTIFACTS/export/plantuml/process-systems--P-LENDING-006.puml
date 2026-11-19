@@ -1,0 +1,65 @@
+@startuml
+' Board loan and fund dealer — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Board loan and fund dealer — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_LEND_03, "Loan Boarding & Dealer Funding", "Board approved loans, verify stipulations and documentation, and fund the dealer.", $tags="capabilities")
+  ' aac CAP_LEND_03: company_domain="Lending"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_FUNDING_CONF, "Settlement funding confirmation", "The daily funding position is confirmed funded by the network deadline with dual verification and same-day escalation on a miss.", $tags="controls")
+  ' aac CTL_FUNDING_CONF: company_domain=""
+  System(CTL_FUND_STIPS, "Stipulations cleared before funding", "No dealer is funded until every stipulation on the approval is cleared and the contract package is complete and signed.", $tags="controls")
+  ' aac CTL_FUND_STIPS: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_GL, "General ledger entries", "Posted financial entries, settlement and reconciliation balances.", $tags="data_assets")
+  ' aac DA_GL: company_domain=""
+  SystemDb(DA_LOAN_ACCOUNT, "Installment loan account", "Loan terms, payment schedule, balances, payment history and status for each installment loan.", $tags="data_assets")
+  ' aac DA_LOAN_ACCOUNT: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_LENDING_006, "Board loan and fund dealer", "Create the loan on the servicing platform with its terms, payment schedule and collateral, pay the dealer the amount financed with its reserve, and post the entries. Boarding errors surface months later as wrong payment amounts or payoff quotes, and a funding paid twice or to the wrong dealer is cash out of the door.", $tags="processes")
+  ' aac P_LENDING_006: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_GL, "General ledger", "General ledger and financial accounting.", $tags="systems")
+  ' aac SYS_GL: company_domain=""
+  System(SYS_LOS, "Indirect loan origination system", "Takes dealer applications, runs the credit decision and counteroffers, and carries the contract package to funding.", $tags="systems")
+  ' aac SYS_LOS: company_domain=""
+  System(SYS_LOAN_SVC, "Installment loan servicing platform", "System of record for installment loans: boarding, billing, payment posting, payoff quotes, deferrals and ancillary product refunds.", $tags="systems")
+  ' aac SYS_LOAN_SVC: company_domain=""
+  System(SYS_TREASURY, "Treasury management", "Treasury, funding, and liquidity management.", $tags="systems")
+  ' aac SYS_TREASURY: company_domain=""
+}
+
+Rel(P_LENDING_006, SYS_LOAN_SVC, "Primary")
+' aac rel: source="P_LENDING_006"; target="SYS_LOAN_SVC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_LENDING_006, SYS_LOS, "Supporting")
+' aac rel: source="P_LENDING_006"; target="SYS_LOS"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_006, SYS_TREASURY, "Supporting")
+' aac rel: source="P_LENDING_006"; target="SYS_TREASURY"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_006, SYS_GL, "Supporting")
+' aac rel: source="P_LENDING_006"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_006, DA_LOAN_ACCOUNT, "Write")
+' aac rel: source="P_LENDING_006"; target="DA_LOAN_ACCOUNT"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_LENDING_006, DA_GL, "Write")
+' aac rel: source="P_LENDING_006"; target="DA_GL"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_LENDING_006, CTL_FUND_STIPS, "governed by")
+' aac rel: source="P_LENDING_006"; target="CTL_FUND_STIPS"; label="governed by"; relation="process_governed_by_control"
+Rel(P_LENDING_006, CTL_FUNDING_CONF, "governed by")
+' aac rel: source="P_LENDING_006"; target="CTL_FUNDING_CONF"; label="governed by"; relation="process_governed_by_control"
+Rel(P_LENDING_006, CAP_LEND_03, "supports")
+' aac rel: source="P_LENDING_006"; target="CAP_LEND_03"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

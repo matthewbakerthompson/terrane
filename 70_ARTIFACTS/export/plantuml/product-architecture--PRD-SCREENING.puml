@@ -87,6 +87,10 @@ Boundary(b_SaaS, "SaaS") {
     ' aac SYS_SIEM: company_domain="Enterprise Platform"; hosting="SaaS"; technology="Microsoft Sentinel"
   }
 }
+System(SYS_DEPOSIT, "Deposit platform", "System of record for CDs and savings: opening, interest accrual, maturities, early withdrawal and tax reporting.", $tags="systems")
+' aac SYS_DEPOSIT: company_domain=""
+System(SYS_MERCH_RISK, "Merchant risk monitoring", "Monitors merchant volume, chargeback ratios and exposure, and checks merchants against the networks' terminated-merchant file.", $tags="systems")
+' aac SYS_MERCH_RISK: company_domain=""
 Deployment_Node(TS_ENTRA_ID, "Microsoft Entra ID", "Identity provider", "Workforce and customer identity provider.", $tags="tech_services") {
   ' aac TS_ENTRA_ID: company_domain="Enterprise Platform"; technology="Identity provider"
 }
@@ -95,6 +99,10 @@ SystemDb(DA_SCREENING_OUTCOMES, "NICE Actimize Screening outcomes", "What the ve
 Person(ACT_SCREENING_ANALYST, "Screening Analyst", "Works the alert queue: clears the false positives and escalates the rest. The queue exists because the screening does, and its volume is the number the vendor's tuning is judged on.", $tags="actors")
 ' aac ACT_SCREENING_ANALYST: company_domain="Risk and Compliance"; actor_kind="Role"; internal="Yes"
 
+Rel(SYS_MERCH_RISK, SYS_SCREENING_GATEWAY, "Merchant Risk Monitoring to Screening Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_MERCH_RISK"; target="SYS_SCREENING_GATEWAY"; label="Merchant Risk Monitoring to Screening Gateway"; interface_id="INT-MERCH-RISK-SCREENING"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="inline-risk-decision"
+Rel(SYS_DEPOSIT, SYS_SCREENING_GATEWAY, "Deposit Platform to Screening Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_DEPOSIT"; target="SYS_SCREENING_GATEWAY"; label="Deposit Platform to Screening Gateway"; interface_id="INT-DEPOSIT-SCREENING"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="inline-risk-decision"
 Rel(SYS_AUTH_SWITCH, SYS_SCREENING_GATEWAY, "SYS-AUTH-SWITCH to NICE Actimize Screening Gateway", "HTTPS", $tags="api-call")
 ' aac rel: source="SYS_AUTH_SWITCH"; target="SYS_SCREENING_GATEWAY"; label="SYS-AUTH-SWITCH to NICE Actimize Screening Gateway"; interface_id="INT-SCREENING-CALLER-GATEWAY"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"
 Rel(SYS_SCREENING_FEDERATION, SYS_SCREENING_VENDOR, "Identity Federation to NICE Actimize", "SAML", $tags="sign-on-federation")

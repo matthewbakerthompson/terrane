@@ -20,6 +20,7 @@ flowchart LR
 
   subgraph grp_Control["Control"]
     direction LR
+    CTL_MKT_REVIEW[["Marketing material<br/>compliance review"]]
     CTL_NOTICE_CONTENT[["Notice content and<br/>delivery evidence"]]
   end
 
@@ -32,6 +33,7 @@ flowchart LR
     direction LR
     P_PRODUCT_002[\"Author and version<br/>disclosure"/]
     P_PRODUCT_001[\"Design and approve product<br/>change"/]
+    P_PRODUCT_005[\"Design rewards program and<br/>earn structure"/]
     P_PRODUCT_003[\"Launch product to market"/]
     P_PRODUCT_004[\"Retire or migrate product"/]
   end
@@ -40,6 +42,7 @@ flowchart LR
     direction LR
     SYS_CORE_LEDGER["Core Card Ledger"]
     SYS_DOC["Document management and<br/>archive"]
+    SYS_REWARDS["Rewards ledger"]
   end
 
   CAP_PROD_01 -->|"part of"| CAP_PROD
@@ -58,12 +61,16 @@ flowchart LR
   P_PRODUCT_002 -->|"supported by"| CAP_PROD_03
   P_PRODUCT_003 -->|"supported by"| CAP_PROD_05
   P_PRODUCT_004 -->|"supported by"| CAP_PROD_05
+  P_PRODUCT_005 -->|"supported by"| CAP_PROD_04
+  CAP_PROD -->|"governed by"| CTL_MKT_REVIEW
   CAP_PROD -->|"governed by"| CTL_NOTICE_CONTENT
   CAP_PROD_03 -->|"governed by"| CTL_NOTICE_CONTENT
+  CAP_PROD_04 -->|"governed by"| CTL_MKT_REVIEW
   SYS_CORE_LEDGER -->|"realizes"| CAP_PROD_01
   SYS_CORE_LEDGER -->|"realizes"| CAP_PROD_02
   SYS_CORE_LEDGER -->|"realizes"| CAP_PROD_05
   SYS_DOC -->|"realizes"| CAP_PROD_03
+  SYS_REWARDS -->|"realizes"| CAP_PROD_04
 
   classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
   classDef s_controls__controls fill:#fca5a5,stroke:#b91c1c,color:#0f172a,stroke-width:1.4px;
@@ -71,10 +78,10 @@ flowchart LR
   classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   class CAP_PROD,CAP_PROD_01,CAP_PROD_02,CAP_PROD_03,CAP_PROD_04,CAP_PROD_05 s_capabilities__capabilities;
-  class CTL_NOTICE_CONTENT s_controls__controls;
+  class CTL_MKT_REVIEW,CTL_NOTICE_CONTENT s_controls__controls;
   class FW_BIAN s_frameworks__frameworks;
-  class P_PRODUCT_001,P_PRODUCT_002,P_PRODUCT_003,P_PRODUCT_004 s_processes__processes;
-  class SYS_CORE_LEDGER,SYS_DOC s_systems__systems;
+  class P_PRODUCT_001,P_PRODUCT_002,P_PRODUCT_003,P_PRODUCT_004,P_PRODUCT_005 s_processes__processes;
+  class SYS_CORE_LEDGER,SYS_DOC,SYS_REWARDS s_systems__systems;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Capability,grp_Control,grp_Framework,grp_Process,grp_System boundary1;
 ```
@@ -93,4 +100,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#0369a1` | processes |
 | `#4338ca` | systems |
 
-14 entities, 22 relationships. Generated from the model; edit the model, not this file.
+17 entities, 26 relationships. Generated from the model; edit the model, not this file.

@@ -1,0 +1,55 @@
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Decide indirect loan and return terms — Systems, Data and Controls
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Capability["Capability"]
+    direction LR
+    CAP_LEND_02{{"Indirect Application &<br/>Underwriting"}}
+    CAP_LEND_02_02{{"Indirect Credit Decision &<br/>Counteroffer"}}
+  end
+
+  subgraph grp_Control["Control"]
+    direction LR
+    CTL_ADVERSE_ACT[["Adverse action notice<br/>completeness"]]
+  end
+
+  subgraph grp_Data_Asset["Data Asset"]
+    direction LR
+    DA_APPLICATION[("Credit application record")]
+  end
+
+  subgraph grp_Process["Process"]
+    direction LR
+    P_LENDING_004[\"Decide indirect loan and<br/>return terms"/]
+  end
+
+  subgraph grp_System["System"]
+    direction LR
+    SYS_BUREAU_GW["Credit bureau gateway"]
+    SYS_CREDIT_DATA["Credit data and<br/>decisioning environment<br/>[Snowflake Data Cloud]"]
+    SYS_LOS["Indirect loan origination<br/>system"]
+    SYS_MODEL["Model platform"]
+  end
+
+  P_LENDING_004 -->|"Primary"| SYS_LOS
+  P_LENDING_004 -->|"Supporting"| SYS_CREDIT_DATA
+  P_LENDING_004 -->|"Supporting"| SYS_BUREAU_GW
+  P_LENDING_004 -->|"Supporting"| SYS_MODEL
+  P_LENDING_004 -->|"Both"| DA_APPLICATION
+  P_LENDING_004 -->|"governed by"| CTL_ADVERSE_ACT
+  P_LENDING_004 -->|"supports"| CAP_LEND_02_02
+  P_LENDING_004 -->|"supports"| CAP_LEND_02
+
+  classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
+  classDef s_controls__controls fill:#fca5a5,stroke:#b91c1c,color:#0f172a,stroke-width:1.4px;
+  classDef s_data_assets__data_assets fill:#a7f3d0,stroke:#047857,color:#0f172a,stroke-width:1.4px;
+  classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  class CAP_LEND_02,CAP_LEND_02_02 s_capabilities__capabilities;
+  class CTL_ADVERSE_ACT s_controls__controls;
+  class DA_APPLICATION s_data_assets__data_assets;
+  class P_LENDING_004 s_processes__processes;
+  class SYS_BUREAU_GW,SYS_CREDIT_DATA,SYS_LOS,SYS_MODEL s_systems__systems;
+  classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_Capability,grp_Control,grp_Data_Asset,grp_Process,grp_System boundary1;

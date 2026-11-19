@@ -1,0 +1,65 @@
+@startuml
+' Collect delinquent installment loan — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Collect delinquent installment loan — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_LEND_05, "Installment Loan Servicing", "Bill, post, and service fixed-term installment loans: payments, payoffs, extensions, and customer contact.", $tags="capabilities")
+  ' aac CAP_LEND_05: company_domain="Lending"
+  System(CAP_COLL_02, "Outbound Contact Operations", "Execute dialer, digital, and letter treatment.", $tags="capabilities")
+  ' aac CAP_COLL_02: company_domain="Collections"
+  System(CAP_COLL_02_01, "Owned-Portfolio Collections Contact", "Contact delinquent borrowers on the bank's own card and loan portfolios.", $tags="capabilities")
+  ' aac CAP_COLL_02_01: company_domain="Collections"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_CONTACT_LIM, "Collections contact limits", "Outbound contact respects time-of-day, frequency, and channel-consent constraints; blocked numbers and cease requests are honored.", $tags="controls")
+  ' aac CTL_CONTACT_LIM: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_COLLECT_ACT, "Collections activity record", "Contact attempts, dispositions, promises, and arrangement terms.", $tags="data_assets")
+  ' aac DA_COLLECT_ACT: company_domain=""
+  SystemDb(DA_LOAN_ACCOUNT, "Installment loan account", "Loan terms, payment schedule, balances, payment history and status for each installment loan.", $tags="data_assets")
+  ' aac DA_LOAN_ACCOUNT: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_LENDING_011, "Collect delinquent installment loan", "Work past-due installment loans through calls, letters and digital contact, take promises and arrangements, and decide when a loan goes to repossession. Recreation loans are secured and seasonal, so treatment weighs the collateral and the season as well as the days past due; the contact limits that apply to cards apply here too.", $tags="processes")
+  ' aac P_LENDING_011: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_COLLECT_API, "Collections Workspace Service", "The service behind the Collections Workspace API, backing the channel. Built with AKS · Collections Workspace Cache.", $tags="systems")
+  ' aac SYS_COLLECT_API: company_domain="Collections"; hosting="Azure"; technology="AKS · Collections Workspace Cache"
+  System(SYS_LOAN_SVC, "Installment loan servicing platform", "System of record for installment loans: boarding, billing, payment posting, payoff quotes, deferrals and ancillary product refunds.", $tags="systems")
+  ' aac SYS_LOAN_SVC: company_domain=""
+  System(SYS_DIALER, "Outbound contact platform", "Outbound dialer and contact campaign execution.", $tags="systems")
+  ' aac SYS_DIALER: company_domain=""
+}
+
+Rel(P_LENDING_011, SYS_COLLECT_API, "Primary")
+' aac rel: source="P_LENDING_011"; target="SYS_COLLECT_API"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_LENDING_011, SYS_LOAN_SVC, "Supporting")
+' aac rel: source="P_LENDING_011"; target="SYS_LOAN_SVC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_011, SYS_DIALER, "Supporting")
+' aac rel: source="P_LENDING_011"; target="SYS_DIALER"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_011, DA_COLLECT_ACT, "Write")
+' aac rel: source="P_LENDING_011"; target="DA_COLLECT_ACT"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_LENDING_011, DA_LOAN_ACCOUNT, "Read")
+' aac rel: source="P_LENDING_011"; target="DA_LOAN_ACCOUNT"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_LENDING_011, CTL_CONTACT_LIM, "governed by")
+' aac rel: source="P_LENDING_011"; target="CTL_CONTACT_LIM"; label="governed by"; relation="process_governed_by_control"
+Rel(P_LENDING_011, CAP_LEND_05, "supports")
+' aac rel: source="P_LENDING_011"; target="CAP_LEND_05"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_011, CAP_COLL_02_01, "supports")
+' aac rel: source="P_LENDING_011"; target="CAP_COLL_02_01"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_011, CAP_COLL_02, "supports")
+' aac rel: source="P_LENDING_011"; target="CAP_COLL_02"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

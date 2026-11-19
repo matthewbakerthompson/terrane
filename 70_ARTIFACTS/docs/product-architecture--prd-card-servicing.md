@@ -30,11 +30,13 @@ flowchart LR
         TS_CARDSVC_CACHE[/"Card Servicing Cache<br/>[Azure Cache for Redis]"/]
         SYS_CARDSVC_API["Card Servicing Service<br/>[AKS · Card Servicing Cache]"]
         SYS_CARDSVC_WEB["Card Servicing Web<br/>[AKS]"]
+        TS_NET_SUB_AZ_CARDS_APP[/"Cards App Subnet<br/>[Subnet]"/]
       end
       subgraph grp_Azure__azure_cards_prod__Private_Data["Private-Data"]
         direction LR
         TS_CARDSVC_BACKUP[/"Card Servicing Backup and<br/>recovery<br/>[Azure Backup]"/]
         SYS_CARDSVC_STORE["Card Servicing Datastore<br/>[Azure SQL]"]
+        TS_NET_SUB_AZ_CARDS_DATA[/"Cards Data Subnet<br/>[Subnet]"/]
       end
     end
     subgraph grp_Azure__azure_data_prod["subscription azure-data-prod"]
@@ -94,6 +96,9 @@ flowchart LR
   SYS_IDENTITY_SVC -.->|"runs on"| TS_AZURE_AKS
   SYS_IDENTITY_SVC -.->|"runs on"| TS_AZURE_KEYVAULT
   SYS_DATA_INGEST -.->|"runs on"| TS_AZURE_SERVICEBUS
+  SYS_CARDSVC_API -.->|"runs on"| TS_NET_SUB_AZ_CARDS_APP
+  SYS_CARDSVC_WEB -.->|"runs on"| TS_NET_SUB_AZ_CARDS_APP
+  SYS_CARDSVC_STORE -.->|"runs on"| TS_NET_SUB_AZ_CARDS_DATA
   SYS_CARDSVC_API -->|"ReadWrite"| DA_CARDSVC_OPERATIONAL
   SYS_CARDSVC_STORE -->|"ReadWrite"| DA_CARDSVC_OPERATIONAL
   SYS_MOBILE -->|"Read"| DA_CARD_ACCOUNT
@@ -118,7 +123,7 @@ flowchart LR
   class DA_CARD_ACCOUNT,DA_CARDSVC_OPERATIONAL,DA_TRANSACTION s_data_assets__data_assets;
   class OI_CARDSVC_API,OI_IDENTITY_API,OI_LEDGER_QUEUE s_offered_interfaces__offered_interfaces;
   class SYS_CARDSVC_API,SYS_CARDSVC_EVENTS,SYS_CARDSVC_STORE,SYS_CARDSVC_WEB,SYS_CORE_LEDGER,SYS_DATA_INGEST,SYS_IDENTITY_SVC,SYS_IVR,SYS_MOBILE s_systems__systems;
-  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT,TS_AZURE_MONITOR,TS_AZURE_SERVICEBUS,TS_AZURE_SQL,TS_CARDSVC_BACKUP,TS_CARDSVC_CACHE,TS_CARDSVC_DNS,TS_CARDSVC_WAF,TS_ENTRA_ID s_tech_services__tech_services;
+  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT,TS_AZURE_MONITOR,TS_AZURE_SERVICEBUS,TS_AZURE_SQL,TS_CARDSVC_BACKUP,TS_CARDSVC_CACHE,TS_CARDSVC_DNS,TS_CARDSVC_WAF,TS_ENTRA_ID,TS_NET_SUB_AZ_CARDS_APP,TS_NET_SUB_AZ_CARDS_DATA s_tech_services__tech_services;
   classDef boundary1 fill:#f1f6fb,stroke:#5b9bd5,color:#2f5d8a;
   class grp_Azure__azure_cards_prod__Edge,grp_Azure__azure_cards_prod__Private_App,grp_Azure__azure_cards_prod__Private_Data,grp_Azure__azure_data_prod__Private_Data,grp_Azure__azure_platform_prod__Shared_Services boundary1;
   classDef boundary2 fill:#f4f5f7,stroke:#5f6b7a,color:#3f4a5c;
@@ -163,4 +168,4 @@ Each flow is a recorded sequence of interfaces. The steps drawn on this diagram 
 3. Customer 360 Pipeline → Customer 360 Semantic Layer (SQL) — not on this diagram
 4. Customer 360 Semantic Layer → Regulatory Reporting Engine (SQL) — not on this diagram
 
-27 entities, 40 relationships. Generated from the model; edit the model, not this file.
+29 entities, 43 relationships. Generated from the model; edit the model, not this file.

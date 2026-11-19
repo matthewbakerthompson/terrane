@@ -1,204 +1,230 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1392.4" height="709.7" viewBox="0 0 1392.4 709.7" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1375.4" height="809.7" viewBox="0 0 1375.4 809.7" font-family="Geist, system-ui, sans-serif" data-layout="elk">
 <title>Installment Lending Integration Hub — Architecture</title>
 <rect width="100%" height="100%" fill="#ffffff"/>
 <g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Installment Lending Integration Hub — Architecture</text>
-<text x="1364.4" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   11 nodes · 11 edges</text>
+<text x="1347.4" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   13 nodes · 13 edges</text>
 <text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One system, the systems it talks to, and the technology it runs on. The most common whiteboard diagram, generated from the model for any system.</text>
-<line x1="28" y1="92" x2="1364.4" y2="92" stroke="#d2dae5" stroke-width="1"/></g>
-<g class="drawing" transform="translate(19.2 79.2)">
+<line x1="28" y1="92" x2="1347.4" y2="92" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(19.2 88.5)">
 <g class="boundary" data-id="grp::Data Asset">
-<rect x="1122.3" y="24.3" width="221.4" height="391.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
-<text x="1164.3" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+<rect x="1105.3" y="212.3" width="221.4" height="391.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="1147.3" y="229.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
 </g>
 <g class="boundary" data-id="grp::System">
-<rect x="10.3" y="24.3" width="777.4" height="240.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
-<text x="40.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+<rect x="10.3" y="172.3" width="747.4" height="255.45" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="40.1" y="189.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
 </g>
 <g class="boundary" data-id="grp::Technology Service">
-<rect x="825.5" y="310.3" width="272" height="165.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
-<text x="891.9" y="327.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Technology Service</text>
+<rect x="807" y="102.3" width="272" height="363.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="873.4" y="119.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Technology Service</text>
 </g>
 <g class="edge" data-id="e0::SYS-CRM::SYS-CORE-LEDGER">
 <title>HTTPS</title>
-<path d="M206 143.5 L236 143.5 A10 10 0 0 1 246 153.5 L246 197.5 A10 10 0 0 0 256 207.5 L315.48 207.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M319 207.5 L309.43 212.28 L309.43 202.72 Z" fill="#7b8798"/>
+<path d="M206 306.55 L216 306.55 A10 10 0 0 1 226 316.55 L226 360.55 A10 10 0 0 0 236 370.55 L295.48 370.55" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M299 370.55 L289.43 375.34 L289.43 365.76 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e0::SYS-CRM::SYS-CORE-LEDGER">
-<rect x="259" y="212" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="277.5" y="223.55" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+<rect x="239" y="375.05" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="257.5" y="386.6" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
 </g>
 <g class="edge" data-id="e1::SYS-CORE-LEDGER::SYS-LENDING-HUB">
 <title>HTTPS</title>
-<path d="M489 188.6 L572 188.6 A10 10 0 0 0 582 178.6 L582 151.99 A3.24 3.24 0 0 1 585.24 148.75 L588.48 148.75" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M592 148.75 L582.43 153.53 L582.43 143.97 Z" fill="#7b8798"/>
+<path d="M469 351.65 L474 351.65 A5 5 0 0 0 479 346.65 L479 341.25 A10 10 0 0 1 489 331.25 L558.48 331.25" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M562 331.25 L552.43 336.04 L552.43 326.46 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e1::SYS-CORE-LEDGER::SYS-LENDING-HUB">
-<rect x="532" y="193.1" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="550.5" y="204.65" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+<rect x="492" y="335.75" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="510.5" y="347.3" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
 </g>
 <g class="edge" data-id="e2::SYS-CREDIT-BUREAU::SYS-LENDING-HUB">
 <title>HTTPS</title>
-<path d="M489 92 L572 92 A10 10 0 0 1 582 102 L582 114.01 A3.24 3.24 0 0 0 585.24 117.25 L588.48 117.25" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M592 117.25 L582.43 122.03 L582.43 112.47 Z" fill="#7b8798"/>
+<path d="M469 240 L542 240 A10 10 0 0 1 552 250 L552 296.51 A3.24 3.24 0 0 0 555.24 299.75 L558.48 299.75" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M562 299.75 L552.43 304.54 L552.43 294.96 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e2::SYS-CREDIT-BUREAU::SYS-LENDING-HUB">
-<rect x="532" y="96.5" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="550.5" y="108.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+<rect x="492" y="244.5" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="510.5" y="256.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
 </g>
 <g class="edge" data-id="e3::SYS-CRM::SYS-LENDING-HUB">
 <title>HTTPS</title>
-<path d="M206 133 L588.48 133" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M592 133 L582.43 137.78 L582.43 128.22 Z" fill="#7b8798"/>
+<path d="M206 296.05 L532.27 296.05 A9.72 9.72 0 0 1 542 305.77 L542 307.26 A8.24 8.24 0 0 0 550.24 315.5 L558.48 315.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M562 315.5 L552.43 320.29 L552.43 310.71 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e3::SYS-CRM::SYS-LENDING-HUB">
-<rect x="385.5" y="137.5" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="404" y="149.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+<rect x="365.5" y="300.55" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="384" y="312.1" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
 </g>
 <g class="edge" data-id="e4::SYS-CRM::TS-ENTRA-ID">
 <title>runs on</title>
-<path d="M206 175 L211 175 A5 5 0 0 1 216 180 L216 266.61 A10 10 0 0 0 225.99 276.61 L791 277 A10 10 0 0 0 791 277 L807 277 A10 10 0 0 1 817 287 L817 416.81 A10 10 0 0 0 827.19 426.8 L842.9 426.5 A10 10 0 0 1 843.1 426.5 L868.48 426.5" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
-<path d="M872 426.5 L862.43 431.29 L862.43 421.71 Z" fill="#7b8798"/>
+<path d="M206 285.55 L219.72 285.55 A6.28 6.28 0 0 0 226 279.27 L226 279.27 A6.28 6.28 0 0 1 232.28 273 L761 273 L787 273 A10 10 0 0 0 797 263 L797 169.81 A10 10 0 0 1 806.81 159.81 L822.9 159.5 A10 10 0 0 1 823.1 159.5 L848.48 159.5" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M852 159.5 L842.43 164.28 L842.43 154.72 Z" fill="#7b8798"/>
 </g>
 <g class="edge" data-id="e5::SYS-CORE-LEDGER::TS-ONPREM-DC">
 <title>runs on</title>
-<path d="M489 213.8 L499.6 213.8 A9.4 9.4 0 0 1 509 223.2 L509 223.2 A9.41 9.41 0 0 0 518.4 232.61 L790.99 233 A10 10 0 0 0 791.01 233 L817 233 A10 10 0 0 1 827 243 L827 352 A7.76 7.76 0 0 0 835 359.75 L842.84 359.5 A10 10 0 0 1 843.16 359.5 L868.48 359.5" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
-<path d="M872 359.5 L862.43 364.29 L862.43 354.71 Z" fill="#7b8798"/>
+<path d="M469 364.25 L761 364 A10 10 0 0 1 761 364 L797 364 A10 10 0 0 1 807 374 L807 401 A7.76 7.76 0 0 0 815 408.75 L822.84 408.5 A10 10 0 0 1 823.16 408.5 L848.48 408.5" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M852 408.5 L842.43 413.29 L842.43 403.71 Z" fill="#7b8798"/>
 </g>
-<g class="edge" data-id="e6::SYS-CORE-LEDGER::DA-PAYMENT-INSTR">
+<g class="edge" data-id="e6::SYS-LENDING-HUB::TS-NET-SUB-LEND-APP-A">
+<title>runs on</title>
+<path d="M732 326 L760.96 326 A10 10 0 0 0 761.04 326 L822.96 325.5 A10 10 0 0 1 823.04 325.5 L848.48 325.5" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M852 325.5 L842.43 330.29 L842.43 320.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e7::SYS-LENDING-HUB::TS-NET-SUB-LEND-APP-B">
+<title>runs on</title>
+<path d="M732 305 L761 305 L797 305 A10 10 0 0 0 807 295 L807 251 A8.26 8.26 0 0 1 815 242.75 L822.84 242.5 A10 10 0 0 1 823.16 242.5 L848.48 242.5" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M852 242.5 L842.43 247.28 L842.43 237.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e8::SYS-CORE-LEDGER::DA-PAYMENT-INSTR">
 <title>Read</title>
-<path d="M489 226.4 L494 226.4 A5 5 0 0 1 499 231.4 L499 235 A8.61 8.61 0 0 0 507.6 243.61 L790.99 244 A10 10 0 0 0 791.01 244 L807 244 A10 10 0 0 0 817 234 L817 230 A10 10 0 0 1 827 220 L1119 220 L1144.48 220" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M1148 220 L1138.43 224.78 L1138.43 215.22 Z" fill="#7b8798"/>
+<path d="M469 389.45 L760.99 389 A10 10 0 0 1 761.01 389 L777 389 A10 10 0 0 1 787 399 L787 507 A10 10 0 0 0 797 517 L1074 517 A10 10 0 0 0 1084 507 L1084 489 A9 9 0 0 1 1093 480 L1102 480 L1127.48 480" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1131 480 L1121.43 484.79 L1121.43 475.21 Z" fill="#7b8798"/>
 </g>
-<g class="edge-label" data-edge="e6::SYS-CORE-LEDGER::DA-PAYMENT-INSTR">
-<rect x="943.96" y="226.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="959" y="238.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+<g class="edge-label" data-edge="e8::SYS-CORE-LEDGER::DA-PAYMENT-INSTR">
+<rect x="925.46" y="523.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="940.5" y="535.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
 </g>
-<g class="edge" data-id="e7::SYS-CREDIT-BUREAU::DA-BUREAU-FILE">
+<g class="edge" data-id="e9::SYS-CREDIT-BUREAU::DA-BUREAU-FILE">
 <title>Read</title>
-<path d="M489 71 L791 71 L1088.5 71 A2.5 2.5 0 0 1 1091 73.5 L1091 73.5 A2.5 2.5 0 0 0 1093.5 76 L1119 76 L1144.48 76" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M1148 76 L1138.43 80.78 L1138.43 71.22 Z" fill="#7b8798"/>
+<path d="M469 219 L761 219 L777 219 A10 10 0 0 0 787 209 L787 57 A10 10 0 0 1 797 47 L1064 47 A10 10 0 0 1 1074 57 L1074 326 A10 10 0 0 0 1084 336 L1102 336 L1127.48 336" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1131 336 L1121.43 340.79 L1121.43 331.21 Z" fill="#7b8798"/>
 </g>
-<g class="edge-label" data-edge="e7::SYS-CREDIT-BUREAU::DA-BUREAU-FILE">
-<rect x="943.96" y="77.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="959" y="89.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+<g class="edge-label" data-edge="e9::SYS-CREDIT-BUREAU::DA-BUREAU-FILE">
+<rect x="925.46" y="53.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="940.5" y="65.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
 </g>
-<g class="edge" data-id="e8::SYS-CRM::DA-DISPUTE-CASE">
+<g class="edge" data-id="e10::SYS-CRM::DA-DISPUTE-CASE">
 <title>ReadWrite</title>
-<path d="M206 154 L226 154 A10 10 0 0 1 236 164 L236 244.61 A10 10 0 0 0 245.99 254.61 L791 255 A10 10 0 0 0 791 255 L1081 255 A10 10 0 0 1 1091 265 L1091 282 A10 10 0 0 0 1101 292 L1119 292 L1144.48 292" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M1148 292 L1138.43 296.79 L1138.43 287.21 Z" fill="#7b8798"/>
+<path d="M206 317.05 L211 317.05 A5 5 0 0 1 216 322.05 L216 402.05 A10 10 0 0 0 226 412.05 L761 412 A10 10 0 0 1 761 412 L769 412 A8 8 0 0 1 777 420 L777 542 A10 10 0 0 0 787 552 L1102 552 L1127.48 552" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1131 552 L1121.43 556.78 L1121.43 547.22 Z" fill="#7b8798"/>
 </g>
-<g class="edge-label" data-edge="e8::SYS-CRM::DA-DISPUTE-CASE">
-<rect x="931.61" y="261.5" width="54.78" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="959" y="273.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">ReadWrite</text>
+<g class="edge-label" data-edge="e10::SYS-CRM::DA-DISPUTE-CASE">
+<rect x="913.11" y="558.5" width="54.78" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="940.5" y="570.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">ReadWrite</text>
 </g>
-<g class="edge" data-id="e9::SYS-CORE-LEDGER::DA-CARD-ACCOUNT">
+<g class="edge" data-id="e11::SYS-CORE-LEDGER::DA-CARD-ACCOUNT">
 <title>ReadWrite</title>
-<path d="M489 201.2 L509 201.2 A10 10 0 0 1 519 211.2 L519 211.61 A10 10 0 0 0 528.99 221.61 L790.99 222 A10 10 0 0 0 791.01 222 L799 222 A8 8 0 0 0 807 214 L807 158 A10 10 0 0 1 817 148 L1119 148 L1144.48 148" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M1148 148 L1138.43 152.78 L1138.43 143.22 Z" fill="#7b8798"/>
+<path d="M469 376.85 L761 377 A10 10 0 0 0 761 377 L787 377 A10 10 0 0 1 797 387 L797 472 A10 10 0 0 0 807 482 L1064 482 A10 10 0 0 0 1074 472 L1074 418 A10 10 0 0 1 1084 408 L1102 408 L1127.48 408" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1131 408 L1121.43 412.79 L1121.43 403.21 Z" fill="#7b8798"/>
 </g>
-<g class="edge-label" data-edge="e9::SYS-CORE-LEDGER::DA-CARD-ACCOUNT">
-<rect x="931.61" y="154.5" width="54.78" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="959" y="166.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">ReadWrite</text>
+<g class="edge-label" data-edge="e11::SYS-CORE-LEDGER::DA-CARD-ACCOUNT">
+<rect x="913.11" y="488.5" width="54.78" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="940.5" y="500.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">ReadWrite</text>
 </g>
-<g class="edge" data-id="e10::SYS-CRM::DA-CUSTOMER-PROFILE">
+<g class="edge" data-id="e12::SYS-CRM::DA-CUSTOMER-PROFILE">
 <title>ReadWrite</title>
-<path d="M206 164.5 L216 164.5 A10 10 0 0 1 226 174.5 L226 255.61 A10 10 0 0 0 235.99 265.61 L791 266 A10 10 0 0 0 791 266 L799 266 A8 8 0 0 1 807 274 L807 482 A10 10 0 0 0 817 492 L1081 492 A10 10 0 0 0 1091 482 L1091 374 A10 10 0 0 1 1101 364 L1119 364 L1144.48 364" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M1148 364 L1138.43 368.79 L1138.43 359.21 Z" fill="#7b8798"/>
+<path d="M206 275.05 L211 275.05 A5 5 0 0 0 216 270.05 L216 197 A10 10 0 0 1 226 187 L761 187 L769 187 A8 8 0 0 0 777 179 L777 46 A10 10 0 0 1 787 36 L1074 36 A10 10 0 0 1 1084 46 L1084 255 A9 9 0 0 0 1093 264 L1102 264 L1127.48 264" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1131 264 L1121.43 268.79 L1121.43 259.21 Z" fill="#7b8798"/>
 </g>
-<g class="edge-label" data-edge="e10::SYS-CRM::DA-CUSTOMER-PROFILE">
-<rect x="931.61" y="498.5" width="54.78" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="959" y="510.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">ReadWrite</text>
+<g class="edge-label" data-edge="e12::SYS-CRM::DA-CUSTOMER-PROFILE">
+<rect x="913.11" y="13.5" width="54.78" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="940.5" y="25.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">ReadWrite</text>
 </g>
 <g class="node" data-id="DA-BUREAU-FILE" data-type="data_assets">
 <title>Credit bureau furnishing file</title>
-<path d="M1148 52.6 Q1156.5 50 1190.5 50 L1275.5 50 Q1309.5 50 1318 52.6 L1318 99.4 Q1309.5 102 1275.5 102 L1190.5 102 Q1156.5 102 1148 99.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
-<text x="1229" y="74.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit bureau</text>
-<text x="1229" y="86.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">furnishing file</text>
-<svg x="1300" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+<path d="M1131 312.6 Q1139.5 310 1173.5 310 L1258.5 310 Q1292.5 310 1301 312.6 L1301 359.4 Q1292.5 362 1258.5 362 L1173.5 362 Q1139.5 362 1131 359.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="1212" y="334.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit bureau</text>
+<text x="1212" y="346.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">furnishing file</text>
+<svg x="1283" y="315" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
 </g>
 <g class="node" data-id="DA-CARD-ACCOUNT" data-type="data_assets">
 <title>Card account master</title>
-<path d="M1148 124.6 Q1156.5 122 1190.5 122 L1275.5 122 Q1309.5 122 1318 124.6 L1318 171.4 Q1309.5 174 1275.5 174 L1190.5 174 Q1156.5 174 1148 171.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
-<text x="1229" y="152.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Card account master</text>
-<svg x="1300" y="127" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+<path d="M1131 384.6 Q1139.5 382 1173.5 382 L1258.5 382 Q1292.5 382 1301 384.6 L1301 431.4 Q1292.5 434 1258.5 434 L1173.5 434 Q1139.5 434 1131 431.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="1212" y="412.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Card account master</text>
+<svg x="1283" y="387" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
 </g>
 <g class="node" data-id="DA-CUSTOMER-PROFILE" data-type="data_assets">
 <title>Customer profile</title>
-<path d="M1148 340.6 Q1156.5 338 1190.5 338 L1275.5 338 Q1309.5 338 1318 340.6 L1318 387.4 Q1309.5 390 1275.5 390 L1190.5 390 Q1156.5 390 1148 387.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
-<text x="1229" y="368.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer profile</text>
-<svg x="1300" y="343" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+<path d="M1131 240.6 Q1139.5 238 1173.5 238 L1258.5 238 Q1292.5 238 1301 240.6 L1301 287.4 Q1292.5 290 1258.5 290 L1173.5 290 Q1139.5 290 1131 287.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="1212" y="268.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer profile</text>
+<svg x="1283" y="243" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
 </g>
 <g class="node" data-id="DA-DISPUTE-CASE" data-type="data_assets">
 <title>Dispute case file</title>
-<path d="M1148 268.6 Q1156.5 266 1190.5 266 L1275.5 266 Q1309.5 266 1318 268.6 L1318 315.4 Q1309.5 318 1275.5 318 L1190.5 318 Q1156.5 318 1148 315.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
-<text x="1229" y="296.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dispute case file</text>
-<svg x="1300" y="271" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+<path d="M1131 528.6 Q1139.5 526 1173.5 526 L1258.5 526 Q1292.5 526 1301 528.6 L1301 575.4 Q1292.5 578 1258.5 578 L1173.5 578 Q1139.5 578 1131 575.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="1212" y="556.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dispute case file</text>
+<svg x="1283" y="531" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
 </g>
 <g class="node" data-id="DA-PAYMENT-INSTR" data-type="data_assets">
 <title>Payment instructions</title>
-<path d="M1148 196.6 Q1156.5 194 1190.5 194 L1275.5 194 Q1309.5 194 1318 196.6 L1318 243.4 Q1309.5 246 1275.5 246 L1190.5 246 Q1156.5 246 1148 243.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
-<text x="1229" y="224.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Payment instructions</text>
-<svg x="1300" y="199" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+<path d="M1131 456.6 Q1139.5 454 1173.5 454 L1258.5 454 Q1292.5 454 1301 456.6 L1301 503.4 Q1292.5 506 1258.5 506 L1173.5 506 Q1139.5 506 1131 503.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="1212" y="484.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Payment instructions</text>
+<svg x="1283" y="459" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
 </g>
 <g class="node" data-id="SYS-CORE-LEDGER" data-type="systems">
 <title>Core Card Ledger</title>
-<rect x="319" y="176" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
-<text x="400" y="211.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Core Card Ledger</text>
-<svg x="471" y="181" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+<rect x="299" y="339.05" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="380" y="374.81" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Core Card Ledger</text>
+<svg x="451" y="344.05" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
 </g>
 <g class="node" data-id="SYS-CREDIT-BUREAU" data-type="systems">
 <title>Experian Credit Bureau</title>
-<rect x="319" y="50" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
-<text x="400" y="74.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Experian Credit</text>
-<text x="400" y="86.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Bureau</text>
-<text x="404" y="107.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Experian</text>
-<svg x="471" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+<rect x="299" y="198" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="380" y="222.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Experian Credit</text>
+<text x="380" y="234.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Bureau</text>
+<text x="384" y="255.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Experian</text>
+<svg x="451" y="203" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
 </g>
 <g class="node" data-id="SYS-CRM" data-type="systems">
 <title>Dynamics 365 Customer Service</title>
-<rect x="36" y="122.5" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
-<text x="117" y="146.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dynamics 365</text>
-<text x="117" y="158.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer Service</text>
-<text x="121" y="180" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Microsoft</text>
-<svg x="188" y="127.5" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+<rect x="36" y="264.55" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="117" y="288.81" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dynamics 365</text>
+<text x="117" y="300.81" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer Service</text>
+<text x="121" y="322.05" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Microsoft</text>
+<svg x="188" y="269.55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
 </g>
 <g class="node" data-id="SYS-LENDING-HUB" data-type="systems">
 <title>Installment Lending Integration Hub</title>
-<rect x="592" y="101.5" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
-<text x="673" y="131.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment Lending</text>
-<text x="673" y="143.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Integration Hub</text>
-<svg x="744" y="106.5" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+<rect x="562" y="284" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="643" y="313.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment Lending</text>
+<text x="643" y="325.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Integration Hub</text>
+<svg x="714" y="289" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M2 5.5h9l-2.5-2.5 M14 10.5H5l2.5 2.5" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </g>
 <g class="node" data-id="TS-ENTRA-ID" data-type="tech_services">
 <title>Microsoft Entra ID</title>
-<path d="M872 403 L991.3 403 L1051 450 L931.7 450 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
-<text x="951.5" y="425.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Microsoft Entra ID</text>
-<text x="961.5" y="444.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Identity provider</text>
-<image x="1017" y="407" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0idXVpZC0zMTg3MWJiMC01NTE3LTRhZWUtYjJiYS01YTM4NDhiYTYxNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjE4IiBoZWlnaHQ9IjE4IiB2aWV3Qm94PSIwIDAgMTggMTgiPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0idXVpZC0xMGQzMDNkYy1kYmM2LTRmZDYtOWI1MS00ZDJjN2VmMWFmOTMiIHgxPSIxMC45MDEiIHkxPSI0LjM4NSIgeDI9IjEwLjkwMSIgeTI9IjE4Ljc4MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iLjA4NSIgc3RvcC1jb2xvcj0iI2VmNzEwMCIgLz48c3RvcCBvZmZzZXQ9Ii45OTkiIHN0b3AtY29sb3I9IiNmNzhkMWUiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9InV1aWQtNmJiZTc0NWYtYjQ5NS00NmNhLWE3ZjYtNmQ0OWQ1N2VlMDI5IiB4MT0iLTc5LjQ1MiIgeTE9Ijc3OC42NTciIHgyPSItNzkuNDUyIiB5Mj0iNzg2LjM3OCIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSg5NCA3OTUuNTE2KSBzY2FsZSgxIC0xKSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzAwNzhkNCIgLz48c3RvcCBvZmZzZXQ9Ii4wNiIgc3RvcC1jb2xvcj0iIzBhN2NkNyIgLz48c3RvcCBvZmZzZXQ9Ii4zNCIgc3RvcC1jb2xvcj0iIzJlOGNlMSIgLz48c3RvcCBvZmZzZXQ9Ii41OSIgc3RvcC1jb2xvcj0iIzQ4OTdlOSIgLz48c3RvcCBvZmZzZXQ9Ii44MiIgc3RvcC1jb2xvcj0iIzU4OWVlZCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM1ZWEwZWYiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PGc+PHBvbHlnb24gcG9pbnRzPSI0LjYzNiA5Ljk4NSA0LjY4OCAxMC4wMTcgOSAxMi43MTMgOS4wMDEgMTIuNzEzIDkuMDAxIDEyLjcxMyA5LjAwMSA1LjA2MiA5IDUuMDYxIDQuNjM2IDkuOTg1IiBmaWxsPSIjZmZiMzRkIiBpc29sYXRpb249Imlzb2xhdGUiIG9wYWNpdHk9Ii45IiBzdHJva2Utd2lkdGg9IjAiIC8+PHBhdGggZD0ibTEwLjE0NiwxLjI5NGMtLjI5OS0uMzM4LS43MjItLjUwNy0xLjE0NS0uNTA3aDBjLS40MjQtLjAwMS0uODQ3LjE2OC0xLjE0Ny41MDZoLS4wMDFMLjM1Myw5Ljc1M2MtLjU3OS42NTQtLjQyOCwxLjY0Mi4zMjMsMi4xMTEsMCwwLDIuNzc2LDEuNzM1LDMuMTI2LDEuOTU0LjM4OC4yNDIsMS4wMzMuNTExLDEuNzE1LjUxMS42MjEsMCwxLjE5OC0uMTgsMS42NzYtLjQ4NywwLDAsMCwwLC4wMDIsMGwxLjgwNS0xLjEyOC00LjM2NC0yLjcyOCw0LjM2NS00LjkyNC4xMDktLjEyM2MuNTUtLjYyNywxLjM3Ny0xLjAyNiwyLjMwMi0xLjAyNi40NzIsMCwuOTE2LjEwNywxLjMxMy4yOTFsLTIuNTc5LTIuOTA5WiIgZmlsbD0iI2ZhYTIxZCIgc3Ryb2tlLXdpZHRoPSIwIiAvPjxwb2x5Z29uIHBvaW50cz0iMTMuMzY1IDkuOTg1IDEzLjM2NSA5Ljk4NSAxMy4zNjUgOS45ODUgOS4wMDEgNS4wNjIgOS4wMDEgMTIuNzEyIDEzLjM2NSA5Ljk4NSIgZmlsbD0iI2Y3OGQxZSIgc3Ryb2tlLXdpZHRoPSIwIiAvPjxwYXRoIGQ9Im0xNy42NDcsOS43NTNsLTQuOTIxLTUuNTUxYy0uMzk3LS4xODUtLjg0Mi0uMjkxLTEuMzEzLS4yOTEtLjkyNSwwLTEuNzUyLjM5OS0yLjMwMiwxLjAyNmwtLjEwOS4xMjMsNC4zNjQsNC45MjQtNC4yNjYsMi42NjYtLjA5OS4wNjJ2LjAwM3MtLjAwMS0uMDAyLS4wMDEtLjAwMmwtMS44MDUsMS4xMjhzLS4wMDIsMC0uMDAyLDBjLS40NzguMzA3LTEuMDU1LjQ4Ny0xLjY3Ni40ODctLjY4MiwwLTEuMzI3LS4yNjktMS43MTUtLjUxMWw0LjM3NCwyLjczNGMuMjUuMTU2LjUzOC4yMzQuODI0LjIzNGgwcy4wMDEsMCwuMDAxLDBjLjI4NywwLC41NzMtLjA3OC44MjMtLjIzNGwxLjczLTEuMDgxaDBzNS43Ny0zLjYwNyw1Ljc3LTMuNjA3aDBjLjc1MS0uNDY4LjkwMi0xLjQ1Ni4zMjMtMi4xMVoiIGZpbGw9InVybCgjdXVpZC0xMGQzMDNkYy1kYmM2LTRmZDYtOWI1MS00ZDJjN2VmMWFmOTMpIiBzdHJva2Utd2lkdGg9IjAiIC8+PC9nPjxwYXRoIGQ9Im0xOCwxMi43MjFjMCwyLjI2NS0yLjczOSw0LjA4OC0zLjMzOCw0LjQ2LS4wNjguMDQ0LS4xNTYuMDQ0LS4yMjQsMC0uNTk5LS4zNjctMy4zMzgtMi4xOS0zLjMzOC00LjQ2di0yLjcyNWMwLS4xMTkuMDkzLS4yMTUuMjEtLjIxOCwyLjEzNC0uMDU1LDEuNjQyLS45OTEsMy4yNDEtLjk5MXMxLjEwNi45MzcsMy4yNDEuOTkxYy4xMTcuMDAzLjIxLjEuMjEuMjE4djIuNzI1WiIgZmlsbD0iIzAwNzhkNCIgc3Ryb2tlLXdpZHRoPSIwIiAvPjxwYXRoIGQ9Im0xNy43MTcsMTIuNzQxYzAsMi4wODEtMi41MTUsMy43NTEtMy4wNjUsNC4wODgtLjA2My4wMzktLjE0Mi4wMzktLjIwNSwwLS41NTEtLjMzNy0zLjA2NS0yLjAwNy0zLjA2NS00LjA4OHYtMi40NzhjLS4wMTktLjExMS4wNTQtLjIxNi4xNjMtLjIzNS4wMTEtLjAwMi4wMjEtLjAwMy4wMzItLjAwMywxLjk1OS0uMDM1LDEuNTExLS44ODcsMi45NzMtLjg4N3MxLjAxNC44NTIsMi45NzMuODg3Yy4xMDcuMDAzLjE5Mi4wOS4xOTUuMTk4djIuNTE3WiIgZmlsbD0idXJsKCN1dWlkLTZiYmU3NDVmLWI0OTUtNDZjYS1hN2Y2LTZkNDlkNTdlZTAyOSkiIHN0cm9rZS13aWR0aD0iMCIgLz48L3N2Zz4="/>
+<path d="M852 128 L973.3 128 L1034 191 L912.7 191 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="933" y="158.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Microsoft Entra ID</text>
+<text x="943" y="185.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Identity provider</text>
+<image x="1000" y="132" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0idXVpZC0zMTg3MWJiMC01NTE3LTRhZWUtYjJiYS01YTM4NDhiYTYxNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjE4IiBoZWlnaHQ9IjE4IiB2aWV3Qm94PSIwIDAgMTggMTgiPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0idXVpZC0xMGQzMDNkYy1kYmM2LTRmZDYtOWI1MS00ZDJjN2VmMWFmOTMiIHgxPSIxMC45MDEiIHkxPSI0LjM4NSIgeDI9IjEwLjkwMSIgeTI9IjE4Ljc4MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iLjA4NSIgc3RvcC1jb2xvcj0iI2VmNzEwMCIgLz48c3RvcCBvZmZzZXQ9Ii45OTkiIHN0b3AtY29sb3I9IiNmNzhkMWUiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9InV1aWQtNmJiZTc0NWYtYjQ5NS00NmNhLWE3ZjYtNmQ0OWQ1N2VlMDI5IiB4MT0iLTc5LjQ1MiIgeTE9Ijc3OC42NTciIHgyPSItNzkuNDUyIiB5Mj0iNzg2LjM3OCIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSg5NCA3OTUuNTE2KSBzY2FsZSgxIC0xKSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzAwNzhkNCIgLz48c3RvcCBvZmZzZXQ9Ii4wNiIgc3RvcC1jb2xvcj0iIzBhN2NkNyIgLz48c3RvcCBvZmZzZXQ9Ii4zNCIgc3RvcC1jb2xvcj0iIzJlOGNlMSIgLz48c3RvcCBvZmZzZXQ9Ii41OSIgc3RvcC1jb2xvcj0iIzQ4OTdlOSIgLz48c3RvcCBvZmZzZXQ9Ii44MiIgc3RvcC1jb2xvcj0iIzU4OWVlZCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM1ZWEwZWYiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PGc+PHBvbHlnb24gcG9pbnRzPSI0LjYzNiA5Ljk4NSA0LjY4OCAxMC4wMTcgOSAxMi43MTMgOS4wMDEgMTIuNzEzIDkuMDAxIDEyLjcxMyA5LjAwMSA1LjA2MiA5IDUuMDYxIDQuNjM2IDkuOTg1IiBmaWxsPSIjZmZiMzRkIiBpc29sYXRpb249Imlzb2xhdGUiIG9wYWNpdHk9Ii45IiBzdHJva2Utd2lkdGg9IjAiIC8+PHBhdGggZD0ibTEwLjE0NiwxLjI5NGMtLjI5OS0uMzM4LS43MjItLjUwNy0xLjE0NS0uNTA3aDBjLS40MjQtLjAwMS0uODQ3LjE2OC0xLjE0Ny41MDZoLS4wMDFMLjM1Myw5Ljc1M2MtLjU3OS42NTQtLjQyOCwxLjY0Mi4zMjMsMi4xMTEsMCwwLDIuNzc2LDEuNzM1LDMuMTI2LDEuOTU0LjM4OC4yNDIsMS4wMzMuNTExLDEuNzE1LjUxMS42MjEsMCwxLjE5OC0uMTgsMS42NzYtLjQ4NywwLDAsMCwwLC4wMDIsMGwxLjgwNS0xLjEyOC00LjM2NC0yLjcyOCw0LjM2NS00LjkyNC4xMDktLjEyM2MuNTUtLjYyNywxLjM3Ny0xLjAyNiwyLjMwMi0xLjAyNi40NzIsMCwuOTE2LjEwNywxLjMxMy4yOTFsLTIuNTc5LTIuOTA5WiIgZmlsbD0iI2ZhYTIxZCIgc3Ryb2tlLXdpZHRoPSIwIiAvPjxwb2x5Z29uIHBvaW50cz0iMTMuMzY1IDkuOTg1IDEzLjM2NSA5Ljk4NSAxMy4zNjUgOS45ODUgOS4wMDEgNS4wNjIgOS4wMDEgMTIuNzEyIDEzLjM2NSA5Ljk4NSIgZmlsbD0iI2Y3OGQxZSIgc3Ryb2tlLXdpZHRoPSIwIiAvPjxwYXRoIGQ9Im0xNy42NDcsOS43NTNsLTQuOTIxLTUuNTUxYy0uMzk3LS4xODUtLjg0Mi0uMjkxLTEuMzEzLS4yOTEtLjkyNSwwLTEuNzUyLjM5OS0yLjMwMiwxLjAyNmwtLjEwOS4xMjMsNC4zNjQsNC45MjQtNC4yNjYsMi42NjYtLjA5OS4wNjJ2LjAwM3MtLjAwMS0uMDAyLS4wMDEtLjAwMmwtMS44MDUsMS4xMjhzLS4wMDIsMC0uMDAyLDBjLS40NzguMzA3LTEuMDU1LjQ4Ny0xLjY3Ni40ODctLjY4MiwwLTEuMzI3LS4yNjktMS43MTUtLjUxMWw0LjM3NCwyLjczNGMuMjUuMTU2LjUzOC4yMzQuODI0LjIzNGgwcy4wMDEsMCwuMDAxLDBjLjI4NywwLC41NzMtLjA3OC44MjMtLjIzNGwxLjczLTEuMDgxaDBzNS43Ny0zLjYwNyw1Ljc3LTMuNjA3aDBjLjc1MS0uNDY4LjkwMi0xLjQ1Ni4zMjMtMi4xMVoiIGZpbGw9InVybCgjdXVpZC0xMGQzMDNkYy1kYmM2LTRmZDYtOWI1MS00ZDJjN2VmMWFmOTMpIiBzdHJva2Utd2lkdGg9IjAiIC8+PC9nPjxwYXRoIGQ9Im0xOCwxMi43MjFjMCwyLjI2NS0yLjczOSw0LjA4OC0zLjMzOCw0LjQ2LS4wNjguMDQ0LS4xNTYuMDQ0LS4yMjQsMC0uNTk5LS4zNjctMy4zMzgtMi4xOS0zLjMzOC00LjQ2di0yLjcyNWMwLS4xMTkuMDkzLS4yMTUuMjEtLjIxOCwyLjEzNC0uMDU1LDEuNjQyLS45OTEsMy4yNDEtLjk5MXMxLjEwNi45MzcsMy4yNDEuOTkxYy4xMTcuMDAzLjIxLjEuMjEuMjE4djIuNzI1WiIgZmlsbD0iIzAwNzhkNCIgc3Ryb2tlLXdpZHRoPSIwIiAvPjxwYXRoIGQ9Im0xNy43MTcsMTIuNzQxYzAsMi4wODEtMi41MTUsMy43NTEtMy4wNjUsNC4wODgtLjA2My4wMzktLjE0Mi4wMzktLjIwNSwwLS41NTEtLjMzNy0zLjA2NS0yLjAwNy0zLjA2NS00LjA4OHYtMi40NzhjLS4wMTktLjExMS4wNTQtLjIxNi4xNjMtLjIzNS4wMTEtLjAwMi4wMjEtLjAwMy4wMzItLjAwMywxLjk1OS0uMDM1LDEuNTExLS44ODcsMi45NzMtLjg4N3MxLjAxNC44NTIsMi45NzMuODg3Yy4xMDcuMDAzLjE5Mi4wOS4xOTUuMTk4djIuNTE3WiIgZmlsbD0idXJsKCN1dWlkLTZiYmU3NDVmLWI0OTUtNDZjYS1hN2Y2LTZkNDlkNTdlZTAyOSkiIHN0cm9rZS13aWR0aD0iMCIgLz48L3N2Zz4="/>
+</g>
+<g class="node" data-id="TS-NET-SUB-LEND-APP-A" data-type="tech_services">
+<title>Lending App Subnet A</title>
+<path d="M852 294 L973.3 294 L1034 357 L912.7 357 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="933" y="318.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Lending App</text>
+<text x="933" y="330.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Subnet A</text>
+<text x="943" y="351.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Subnet</text>
+<image x="1000" y="298" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNDBweCIgaGVpZ2h0PSI0MHB4IiB2aWV3Qm94PSIwIDAgNDAgNDAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8dGl0bGU+SWNvbi1BcmNoaXRlY3R1cmUtR3JvdXAvMzIvUHJpdmF0ZS1zdWJuZXRfMzI8L3RpdGxlPgogICAgPGcgaWQ9Ikljb24tQXJjaGl0ZWN0dXJlLUdyb3VwLzMyL1ByaXZhdGUtc3VibmV0XzMyIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8cmVjdCBpZD0iUmVjdGFuZ2xlIiBmaWxsPSIjMDBBNEE2IiB4PSIwIiB5PSIwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiPjwvcmVjdD4KICAgICAgICA8cGF0aCBkPSJNMTkuNTM2LDIyLjA0OSBDMjAuNjQyLDIyLjA0OSAyMS41NDIsMjIuOTQ4IDIxLjU0MiwyNC4wNTQgQzIxLjU0MiwyNS4xNiAyMC42NDIsMjYuMDYgMTkuNTM2LDI2LjA2IEMxOC40MywyNi4wNiAxNy41MywyNS4xNiAxNy41MywyNC4wNTQgQzE3LjUzLDIyLjk0OCAxOC40MywyMi4wNDkgMTkuNTM2LDIyLjA0OSBMMTkuNTM2LDIyLjA0OSBaIE0xOS4wMTIsMjcuMDA3IEwxOS4wMTIsMzAuNTAxIEwyMC4wMTIsMzAuNTAxIEwyMC4wMTIsMjcuMDEyIEMyMS40NDIsMjYuNzgyIDIyLjU0MiwyNS41NDkgMjIuNTQyLDI0LjA1NCBDMjIuNTQyLDIyLjM5NyAyMS4xOTMsMjEuMDQ5IDE5LjUzNiwyMS4wNDkgQzE3Ljg3OSwyMS4wNDkgMTYuNTMsMjIuMzk3IDE2LjUzLDI0LjA1NCBDMTYuNTMsMjUuNTMyIDE3LjYwNCwyNi43NTcgMTkuMDEyLDI3LjAwNyBMMTkuMDEyLDI3LjAwNyBaIE0xMCwzMy4wMTQgTDI5LjAxMiwzMy4wMTQgTDI5LjAxMiwxOCBMMTAsMTggTDEwLDMzLjAxNCBaIE0xNC4wNDYsMTIuNDg0IEMxNC4wNDYsOS40NiAxNi41MDYsNyAxOS41MjksNyBDMjIuNTUzLDcgMjUuMDEyLDkuNDYgMjUuMDEyLDEyLjQ4NCBMMjUuMDEyLDE3IEwxNC4wNDYsMTcgTDE0LjA0NiwxMi40ODQgWiBNMjkuNTEyLDE3IEwyNi4wMTIsMTcgTDI2LjAxMiwxMi40ODQgQzI2LjAxMiw4LjkwOCAyMy4xMDMsNiAxOS41MjksNiBDMTUuOTU0LDYgMTMuMDQ2LDguOTA4IDEzLjA0NiwxMi40ODQgTDEzLjA0NiwxNyBMOS41LDE3IEM5LjIyMywxNyA5LDE3LjIyNCA5LDE3LjUgTDksMzMuNTE0IEM5LDMzLjc5IDkuMjIzLDM0LjAxNCA5LjUsMzQuMDE0IEwyOS41MTIsMzQuMDE0IEMyOS43ODgsMzQuMDE0IDMwLjAxMiwzMy43OSAzMC4wMTIsMzMuNTE0IEwzMC4wMTIsMTcuNSBDMzAuMDEyLDE3LjIyNCAyOS43ODgsMTcgMjkuNTEyLDE3IEwyOS41MTIsMTcgWiIgaWQ9IkZpbGwtMSIgZmlsbD0iI0ZGRkZGRiI+PC9wYXRoPgogICAgPC9nPgo8L3N2Zz4="/>
+</g>
+<g class="node" data-id="TS-NET-SUB-LEND-APP-B" data-type="tech_services">
+<title>Lending App Subnet B</title>
+<path d="M852 211 L973.3 211 L1034 274 L912.7 274 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="933" y="235.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Lending App</text>
+<text x="933" y="247.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Subnet B</text>
+<text x="943" y="268.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Subnet</text>
+<image x="1000" y="215" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNDBweCIgaGVpZ2h0PSI0MHB4IiB2aWV3Qm94PSIwIDAgNDAgNDAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8dGl0bGU+SWNvbi1BcmNoaXRlY3R1cmUtR3JvdXAvMzIvUHJpdmF0ZS1zdWJuZXRfMzI8L3RpdGxlPgogICAgPGcgaWQ9Ikljb24tQXJjaGl0ZWN0dXJlLUdyb3VwLzMyL1ByaXZhdGUtc3VibmV0XzMyIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8cmVjdCBpZD0iUmVjdGFuZ2xlIiBmaWxsPSIjMDBBNEE2IiB4PSIwIiB5PSIwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiPjwvcmVjdD4KICAgICAgICA8cGF0aCBkPSJNMTkuNTM2LDIyLjA0OSBDMjAuNjQyLDIyLjA0OSAyMS41NDIsMjIuOTQ4IDIxLjU0MiwyNC4wNTQgQzIxLjU0MiwyNS4xNiAyMC42NDIsMjYuMDYgMTkuNTM2LDI2LjA2IEMxOC40MywyNi4wNiAxNy41MywyNS4xNiAxNy41MywyNC4wNTQgQzE3LjUzLDIyLjk0OCAxOC40MywyMi4wNDkgMTkuNTM2LDIyLjA0OSBMMTkuNTM2LDIyLjA0OSBaIE0xOS4wMTIsMjcuMDA3IEwxOS4wMTIsMzAuNTAxIEwyMC4wMTIsMzAuNTAxIEwyMC4wMTIsMjcuMDEyIEMyMS40NDIsMjYuNzgyIDIyLjU0MiwyNS41NDkgMjIuNTQyLDI0LjA1NCBDMjIuNTQyLDIyLjM5NyAyMS4xOTMsMjEuMDQ5IDE5LjUzNiwyMS4wNDkgQzE3Ljg3OSwyMS4wNDkgMTYuNTMsMjIuMzk3IDE2LjUzLDI0LjA1NCBDMTYuNTMsMjUuNTMyIDE3LjYwNCwyNi43NTcgMTkuMDEyLDI3LjAwNyBMMTkuMDEyLDI3LjAwNyBaIE0xMCwzMy4wMTQgTDI5LjAxMiwzMy4wMTQgTDI5LjAxMiwxOCBMMTAsMTggTDEwLDMzLjAxNCBaIE0xNC4wNDYsMTIuNDg0IEMxNC4wNDYsOS40NiAxNi41MDYsNyAxOS41MjksNyBDMjIuNTUzLDcgMjUuMDEyLDkuNDYgMjUuMDEyLDEyLjQ4NCBMMjUuMDEyLDE3IEwxNC4wNDYsMTcgTDE0LjA0NiwxMi40ODQgWiBNMjkuNTEyLDE3IEwyNi4wMTIsMTcgTDI2LjAxMiwxMi40ODQgQzI2LjAxMiw4LjkwOCAyMy4xMDMsNiAxOS41MjksNiBDMTUuOTU0LDYgMTMuMDQ2LDguOTA4IDEzLjA0NiwxMi40ODQgTDEzLjA0NiwxNyBMOS41LDE3IEM5LjIyMywxNyA5LDE3LjIyNCA5LDE3LjUgTDksMzMuNTE0IEM5LDMzLjc5IDkuMjIzLDM0LjAxNCA5LjUsMzQuMDE0IEwyOS41MTIsMzQuMDE0IEMyOS43ODgsMzQuMDE0IDMwLjAxMiwzMy43OSAzMC4wMTIsMzMuNTE0IEwzMC4wMTIsMTcuNSBDMzAuMDEyLDE3LjIyNCAyOS43ODgsMTcgMjkuNTEyLDE3IEwyOS41MTIsMTcgWiIgaWQ9IkZpbGwtMSIgZmlsbD0iI0ZGRkZGRiI+PC9wYXRoPgogICAgPC9nPgo8L3N2Zz4="/>
 </g>
 <g class="node" data-id="TS-ONPREM-DC" data-type="tech_services">
 <title>Primary Data Center</title>
-<path d="M872 336 L991.3 336 L1051 383 L931.7 383 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
-<text x="951.5" y="352.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Primary Data</text>
-<text x="951.5" y="364.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Center</text>
-<text x="961.5" y="377.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Virtual network</text>
-<image x="1017" y="340" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNDBweCIgaGVpZ2h0PSI0MHB4IiB2aWV3Qm94PSIwIDAgNDAgNDAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8dGl0bGU+SWNvbi1BcmNoaXRlY3R1cmUtR3JvdXAvMzIvQ29ycG9yYXRlLWRhdGEtY2VudGVyXzMyPC90aXRsZT4KICAgIDxnIGlkPSJJY29uLUFyY2hpdGVjdHVyZS1Hcm91cC8zMi9Db3Jwb3JhdGUtZGF0YS1jZW50ZXJfMzIiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxyZWN0IGlkPSJSZWN0YW5nbGUiIGZpbGw9IiM3RDg5OTgiIHg9IjAiIHk9IjAiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PC9yZWN0PgogICAgICAgIDxwYXRoIGQ9Ik0xMiwxNyBMMTUuNSwxNyBDMTUuNzc2LDE3IDE2LDE2Ljc3NiAxNiwxNi41IEwxNiw3IEwyMyw3IEwyMywxNi41IEMyMywxNi43NzYgMjMuMjI0LDE3IDIzLjUsMTcgTDI3LDE3IEwyNywzMyBMMTIsMzMgTDEyLDE3IFogTTI4LDMzLjUgTDI4LDE2LjUgQzI4LDE2LjIyNCAyNy43NzYsMTYgMjcuNSwxNiBMMjQsMTYgTDI0LDYuNSBDMjQsNi4yMjQgMjMuNzc2LDYgMjMuNSw2IEwxNS41LDYgQzE1LjIyNCw2IDE1LDYuMjI0IDE1LDYuNSBMMTUsMTYgTDExLjUsMTYgQzExLjIyNCwxNiAxMSwxNi4yMjQgMTEsMTYuNSBMMTEsMzMuNSBDMTEsMzMuNzc2IDExLjIyNCwzNCAxMS41LDM0IEwyNy41LDM0IEMyNy43NzYsMzQgMjgsMzMuNzc2IDI4LDMzLjUgTDI4LDMzLjUgWiBNMjQsMzEgTDI1LDMxIEwyNSwyOSBMMjQsMjkgTDI0LDMxIFogTTE5LDMxIEwyMCwzMSBMMjAsMjkgTDE5LDI5IEwxOSwzMSBaIE0xNCwzMSBMMTUsMzEgTDE1LDI5IEwxNCwyOSBMMTQsMzEgWiBNMjQsMjcgTDI1LDI3IEwyNSwyNCBMMjQsMjQgTDI0LDI3IFogTTE5LDI3IEwyMCwyNyBMMjAsMjQgTDE5LDI0IEwxOSwyNyBaIE0xNCwyNyBMMTUsMjcgTDE1LDI0IEwxNCwyNCBMMTQsMjcgWiBNMjQsMjIgTDI1LDIyIEwyNSwxOSBMMjQsMTkgTDI0LDIyIFogTTE5LDEyIEwyMCwxMiBMMjAsOSBMMTksOSBMMTksMTIgWiBNMTksMTcgTDIwLDE3IEwyMCwxNCBMMTksMTQgTDE5LDE3IFogTTE5LDIyIEwyMCwyMiBMMjAsMTkgTDE5LDE5IEwxOSwyMiBaIE0xNCwyMiBMMTUsMjIgTDE1LDE5IEwxNCwxOSBMMTQsMjIgWiIgaWQ9IkZpbGwtMSIgZmlsbD0iI0ZGRkZGRiI+PC9wYXRoPgogICAgPC9nPgo8L3N2Zz4="/>
+<path d="M852 377 L973.3 377 L1034 440 L912.7 440 Z" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"/>
+<text x="933" y="401.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Primary Data</text>
+<text x="933" y="413.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Center</text>
+<text x="943" y="434.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Virtual network</text>
+<image x="1000" y="381" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNDBweCIgaGVpZ2h0PSI0MHB4IiB2aWV3Qm94PSIwIDAgNDAgNDAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8dGl0bGU+SWNvbi1BcmNoaXRlY3R1cmUtR3JvdXAvMzIvQ29ycG9yYXRlLWRhdGEtY2VudGVyXzMyPC90aXRsZT4KICAgIDxnIGlkPSJJY29uLUFyY2hpdGVjdHVyZS1Hcm91cC8zMi9Db3Jwb3JhdGUtZGF0YS1jZW50ZXJfMzIiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxyZWN0IGlkPSJSZWN0YW5nbGUiIGZpbGw9IiM3RDg5OTgiIHg9IjAiIHk9IjAiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PC9yZWN0PgogICAgICAgIDxwYXRoIGQ9Ik0xMiwxNyBMMTUuNSwxNyBDMTUuNzc2LDE3IDE2LDE2Ljc3NiAxNiwxNi41IEwxNiw3IEwyMyw3IEwyMywxNi41IEMyMywxNi43NzYgMjMuMjI0LDE3IDIzLjUsMTcgTDI3LDE3IEwyNywzMyBMMTIsMzMgTDEyLDE3IFogTTI4LDMzLjUgTDI4LDE2LjUgQzI4LDE2LjIyNCAyNy43NzYsMTYgMjcuNSwxNiBMMjQsMTYgTDI0LDYuNSBDMjQsNi4yMjQgMjMuNzc2LDYgMjMuNSw2IEwxNS41LDYgQzE1LjIyNCw2IDE1LDYuMjI0IDE1LDYuNSBMMTUsMTYgTDExLjUsMTYgQzExLjIyNCwxNiAxMSwxNi4yMjQgMTEsMTYuNSBMMTEsMzMuNSBDMTEsMzMuNzc2IDExLjIyNCwzNCAxMS41LDM0IEwyNy41LDM0IEMyNy43NzYsMzQgMjgsMzMuNzc2IDI4LDMzLjUgTDI4LDMzLjUgWiBNMjQsMzEgTDI1LDMxIEwyNSwyOSBMMjQsMjkgTDI0LDMxIFogTTE5LDMxIEwyMCwzMSBMMjAsMjkgTDE5LDI5IEwxOSwzMSBaIE0xNCwzMSBMMTUsMzEgTDE1LDI5IEwxNCwyOSBMMTQsMzEgWiBNMjQsMjcgTDI1LDI3IEwyNSwyNCBMMjQsMjQgTDI0LDI3IFogTTE5LDI3IEwyMCwyNyBMMjAsMjQgTDE5LDI0IEwxOSwyNyBaIE0xNCwyNyBMMTUsMjcgTDE1LDI0IEwxNCwyNCBMMTQsMjcgWiBNMjQsMjIgTDI1LDIyIEwyNSwxOSBMMjQsMTkgTDI0LDIyIFogTTE5LDEyIEwyMCwxMiBMMjAsOSBMMTksOSBMMTksMTIgWiBNMTksMTcgTDIwLDE3IEwyMCwxNCBMMTksMTQgTDE5LDE3IFogTTE5LDIyIEwyMCwyMiBMMjAsMTkgTDE5LDE5IEwxOSwyMiBaIE0xNCwyMiBMMTUsMjIgTDE1LDE5IEwxNCwxOSBMMTQsMjIgWiIgaWQ9IkZpbGwtMSIgZmlsbD0iI0ZGRkZGRiI+PC9wYXRoPgogICAgPC9nPgo8L3N2Zz4="/>
 </g>
 </g>
-<g class="foot"><line x1="28" y1="607.7" x2="1364.4" y2="607.7" stroke="#d2dae5" stroke-width="1"/>
-<text x="28" y="631.7" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
-<g transform="translate(67.2 620.7)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
-<text x="93.2" y="631.7" font-size="12" font-weight="400" fill="#343d50">data asset · 5</text>
-<g transform="translate(184.21 620.7)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
-<text x="210.21" y="631.7" font-size="12" font-weight="400" fill="#343d50">system · 4</text>
-<g transform="translate(283.6 620.7)" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"><path d="M5 1h14l-4 12H1z"/></g>
-<text x="309.6" y="631.7" font-size="12" font-weight="400" fill="#343d50">technology service · 2</text>
-<text x="28" y="653.7" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
-<g transform="translate(73.5 642.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
-<text x="99.5" y="653.7" font-size="12" font-weight="400" fill="#343d50">calls</text>
-<g transform="translate(143.05 642.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
-<text x="169.05" y="653.7" font-size="12" font-weight="400" fill="#343d50">reads / writes</text>
-<g transform="translate(263 642.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
-<text x="289" y="653.7" font-size="12" font-weight="400" fill="#343d50">runs on</text>
-<text x="28" y="687.7" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-architecture--sys-lending-hub · edit the model, not the picture</text></g>
+<g class="foot"><line x1="28" y1="707.7" x2="1347.4" y2="707.7" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="731.7" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 720.7)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="93.2" y="731.7" font-size="12" font-weight="400" fill="#343d50">data asset · 5</text>
+<g transform="translate(184.21 720.7)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="210.21" y="731.7" font-size="12" font-weight="400" fill="#343d50">system · 4</text>
+<g transform="translate(283.6 720.7)" fill="#fed7aa" stroke="#c2410c" stroke-width="1.4"><path d="M5 1h14l-4 12H1z"/></g>
+<text x="309.6" y="731.7" font-size="12" font-weight="400" fill="#343d50">technology service · 4</text>
+<text x="28" y="753.7" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 742.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="753.7" font-size="12" font-weight="400" fill="#343d50">calls</text>
+<g transform="translate(143.05 742.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="169.05" y="753.7" font-size="12" font-weight="400" fill="#343d50">reads / writes</text>
+<g transform="translate(263 742.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="289" y="753.7" font-size="12" font-weight="400" fill="#343d50">runs on</text>
+<text x="28" y="787.7" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-architecture--sys-lending-hub · edit the model, not the picture</text></g>
 </svg>

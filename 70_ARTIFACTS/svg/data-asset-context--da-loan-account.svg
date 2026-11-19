@@ -1,0 +1,326 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="1905.13" viewBox="0 0 1100 1905.13" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Installment loan account — Where It Lives and Who Uses It</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Installment loan account — Where It Lives and Who Uses It</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   18 nodes · 18 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One data asset in full: the system that masters it, the systems that read or write it, the processes that use it, the controls that govern it and the policies it is subject</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">to. The page a privacy or audit question starts from.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(147.53 99.08)">
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="571.9" y="721.91" width="222.6" height="136.6" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="613.9" y="739.32" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="32.11" y="24.42" width="211.78" height="1087.13" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="64.96" y="41.83" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="10.45" y="1140.45" width="233.1" height="526.1" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="40.25" y="1157.86" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::SYS-LOAN-SVC::DA-LOAN-ACCOUNT">
+<title>masters</title>
+<path d="M218 1489.33 L246.94 1489 A10 10 0 0 1 247.06 1489 L324.1 1489 L423.2 1489 A10 10 0 0 0 433.2 1479 L433.2 868 A10 10 0 0 1 443.2 858 L469.2 858 L558.2 858 A10 10 0 0 0 568.2 848 L568.2 828.95 A10 10 0 0 1 578.2 818.95 L594.68 818.95" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M598.2 818.95 L588.63 823.73 L588.63 814.16 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e1::SYS-LOAN-SVC::DA-LOAN-ACCOUNT">
+<title>ReadWrite</title>
+<path d="M218 1515.67 L246.94 1516 A10 10 0 0 0 247.06 1516 L433.2 1516 A10 10 0 0 0 443.2 1506 L443.2 878 A10 10 0 0 1 453.2 868 L469.2 868 L568.2 868 A10 10 0 0 0 578.2 858 L578.2 831.61 A8.24 8.24 0 0 1 586.44 823.37 L594.68 823.37" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M598.2 823.37 L588.63 828.15 L588.63 818.58 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::SYS-LOAN-SVC::DA-LOAN-ACCOUNT">
+<rect x="296.71" y="1522.5" width="54.78" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="1534.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">ReadWrite</text>
+</g>
+<g class="edge" data-id="e2::SYS-REMARKET::DA-LOAN-ACCOUNT">
+<title>Read</title>
+<path d="M218 1601.5 L246.91 1602 A10 10 0 0 0 247.09 1602 L443.2 1602 A10 10 0 0 0 453.2 1592 L453.2 886 A8 8 0 0 1 461.2 878 L469.2 878 L578.2 878 A10 10 0 0 0 588.2 868 L588.2 831.03 A3.24 3.24 0 0 1 591.44 827.79 L594.68 827.79" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M598.2 827.79 L588.63 832.57 L588.63 823 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::SYS-REMARKET::DA-LOAN-ACCOUNT">
+<rect x="309.06" y="1608.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="1620.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e3::SYS-COLLECT-API::DA-LOAN-ACCOUNT">
+<title>Read</title>
+<path d="M218 1403.5 L246.91 1404 A10 10 0 0 0 247.09 1404 L413.2 1404 A10 10 0 0 0 423.2 1394 L423.2 858 A10 10 0 0 1 433.2 848 L469.2 848 L548.2 848 A10 10 0 0 0 558.2 838 L558.2 824.53 A10 10 0 0 1 568.2 814.53 L594.68 814.53" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M598.2 814.53 L588.63 819.31 L588.63 809.74 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::SYS-COLLECT-API::DA-LOAN-ACCOUNT">
+<rect x="309.06" y="1410.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="1422.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e4::SYS-BUREAU-GW::DA-LOAN-ACCOUNT">
+<title>Read</title>
+<path d="M218 1304.5 L246.91 1305 A10 10 0 0 0 247.09 1305 L403.2 1305 A10 10 0 0 0 413.2 1295 L413.2 848 A10 10 0 0 1 423.2 838 L469.2 838 L538.2 838 A10 10 0 0 0 548.2 828 L548.2 820.11 A10 10 0 0 1 558.2 810.11 L594.68 810.11" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M598.2 810.11 L588.63 814.89 L588.63 805.32 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::SYS-BUREAU-GW::DA-LOAN-ACCOUNT">
+<rect x="309.06" y="1311.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="1323.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e5::SYS-LENDPERF-SEMANTIC::DA-LOAN-ACCOUNT">
+<title>Read</title>
+<path d="M218 1205.5 L246.91 1206 A10 10 0 0 0 247.09 1206 L393.2 1206 A10 10 0 0 0 403.2 1196 L403.2 838 A10 10 0 0 1 413.2 828 L469.2 828 L528.2 828 A10 10 0 0 0 538.2 818 L538.2 815.68 A10 10 0 0 1 548.2 805.68 L594.68 805.68" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M598.2 805.68 L588.63 810.47 L588.63 800.9 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e5::SYS-LENDPERF-SEMANTIC::DA-LOAN-ACCOUNT">
+<rect x="309.06" y="1212.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="1224.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e6::P-LENDING-002::DA-LOAN-ACCOUNT">
+<title>Read</title>
+<path d="M218 524 L247 524 L383.2 524 A10 10 0 0 1 393.2 534 L393.2 748 A10 10 0 0 0 403.2 758 L469.2 758 L519.83 758 A8.37 8.37 0 0 1 528.2 766.37 L528.2 766.37 A8.37 8.37 0 0 0 536.57 774.74 L594.68 774.74" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M598.2 774.74 L588.63 779.52 L588.63 769.95 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e6::P-LENDING-002::DA-LOAN-ACCOUNT">
+<rect x="309.06" y="530.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="542.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e7::P-LENDING-006::DA-LOAN-ACCOUNT">
+<title>Write</title>
+<path d="M218 84 L247 84 L433.2 84 A10 10 0 0 1 443.2 94 L443.2 698 A10 10 0 0 0 453.2 708 L469.2 708 L568.2 708 A10 10 0 0 1 578.2 718 L578.2 744.39 A8.24 8.24 0 0 0 586.44 752.63 L594.68 752.63" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M598.2 752.63 L588.63 757.42 L588.63 747.85 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e7::P-LENDING-006::DA-LOAN-ACCOUNT">
+<rect x="308.65" y="90.5" width="30.91" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="102.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Write</text>
+</g>
+<g class="edge" data-id="e8::P-LENDING-007::DA-LOAN-ACCOUNT">
+<title>Read</title>
+<path d="M218 788 L247 788 L469.2 788 L594.68 788" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M598.2 788 L588.63 792.78 L588.63 783.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e8::P-LENDING-007::DA-LOAN-ACCOUNT">
+<rect x="309.06" y="794.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="806.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e9::P-LENDING-008::DA-LOAN-ACCOUNT">
+<title>Both</title>
+<path d="M218 876 L247 876 L363.2 876 A10 10 0 0 0 373.2 866 L373.2 808 A10 10 0 0 1 383.2 798 L469.2 798 L505.41 798 A2.79 2.79 0 0 0 508.2 795.21 L508.2 795.21 A2.79 2.79 0 0 1 510.99 792.42 L594.68 792.42" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M598.2 792.42 L588.63 797.21 L588.63 787.64 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e9::P-LENDING-008::DA-LOAN-ACCOUNT">
+<rect x="309.95" y="882.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="894.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e10::P-LENDING-009::DA-LOAN-ACCOUNT">
+<title>Both</title>
+<path d="M218 260 L247 260 L413.2 260 A10 10 0 0 1 423.2 270 L423.2 718 A10 10 0 0 0 433.2 728 L469.2 728 L548.2 728 A10 10 0 0 1 558.2 738 L558.2 751.47 A10 10 0 0 0 568.2 761.47 L594.68 761.47" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M598.2 761.47 L588.63 766.26 L588.63 756.69 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e10::P-LENDING-009::DA-LOAN-ACCOUNT">
+<rect x="309.95" y="266.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="278.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e11::P-LENDING-010::DA-LOAN-ACCOUNT">
+<title>Both</title>
+<path d="M218 436 L247 436 L393.2 436 A10 10 0 0 1 403.2 446 L403.2 738 A10 10 0 0 0 413.2 748 L469.2 748 L528.2 748 A10 10 0 0 1 538.2 758 L538.2 760.32 A10 10 0 0 0 548.2 770.32 L594.68 770.32" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M598.2 770.32 L588.63 775.1 L588.63 765.53 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e11::P-LENDING-010::DA-LOAN-ACCOUNT">
+<rect x="309.95" y="442.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="454.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e12::P-LENDING-011::DA-LOAN-ACCOUNT">
+<title>Read</title>
+<path d="M218 700 L247 700 L363.2 700 A10 10 0 0 1 373.2 710 L373.2 768 A10 10 0 0 0 383.2 778 L469.2 778 L505.41 778 A2.79 2.79 0 0 1 508.2 780.79 L508.2 780.79 A2.79 2.79 0 0 0 510.99 783.58 L594.68 783.58" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M598.2 783.58 L588.63 788.36 L588.63 778.79 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e12::P-LENDING-011::DA-LOAN-ACCOUNT">
+<rect x="309.06" y="706.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="718.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e13::P-LENDING-012::DA-LOAN-ACCOUNT">
+<title>Read</title>
+<path d="M218 964 L247 964 L373.2 964 A10 10 0 0 0 383.2 954 L383.2 818 A10 10 0 0 1 393.2 808 L469.2 808 L512.62 808 A5.58 5.58 0 0 0 518.2 802.42 L518.2 802.42 A5.58 5.58 0 0 1 523.78 796.84 L594.68 796.84" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M598.2 796.84 L588.63 801.63 L588.63 792.06 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e13::P-LENDING-012::DA-LOAN-ACCOUNT">
+<rect x="309.06" y="970.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="982.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e14::P-LENDING-013::DA-LOAN-ACCOUNT">
+<title>Both</title>
+<path d="M218 612 L247 612 L373.2 612 A10 10 0 0 1 383.2 622 L383.2 758 A10 10 0 0 0 393.2 768 L469.2 768 L512.62 768 A5.58 5.58 0 0 1 518.2 773.58 L518.2 773.58 A5.58 5.58 0 0 0 523.78 779.16 L594.68 779.16" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M598.2 779.16 L588.63 783.94 L588.63 774.37 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e14::P-LENDING-013::DA-LOAN-ACCOUNT">
+<rect x="309.95" y="618.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="630.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e15::P-LENDING-014::DA-LOAN-ACCOUNT">
+<title>Both</title>
+<path d="M218 1052 L247 1052 L383.2 1052 A10 10 0 0 0 393.2 1042 L393.2 828 A10 10 0 0 1 403.2 818 L469.2 818 L519.83 818 A8.37 8.37 0 0 0 528.2 809.63 L528.2 809.63 A8.37 8.37 0 0 1 536.57 801.26 L594.68 801.26" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M598.2 801.26 L588.63 806.05 L588.63 796.48 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e15::P-LENDING-014::DA-LOAN-ACCOUNT">
+<rect x="309.95" y="1058.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="1070.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e16::P-LENDING-015::DA-LOAN-ACCOUNT">
+<title>Read</title>
+<path d="M218 348 L247 348 L403.2 348 A10 10 0 0 1 413.2 358 L413.2 728 A10 10 0 0 0 423.2 738 L469.2 738 L538.2 738 A10 10 0 0 1 548.2 748 L548.2 755.89 A10 10 0 0 0 558.2 765.89 L594.68 765.89" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M598.2 765.89 L588.63 770.68 L588.63 761.11 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e16::P-LENDING-015::DA-LOAN-ACCOUNT">
+<rect x="309.06" y="354.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="366.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e17::P-COMPLIANCE-006::DA-LOAN-ACCOUNT">
+<title>Read</title>
+<path d="M218 172 L247 172 L423.2 172 A10 10 0 0 1 433.2 182 L433.2 708 A10 10 0 0 0 443.2 718 L469.2 718 L558.2 718 A10 10 0 0 1 568.2 728 L568.2 747.05 A10 10 0 0 0 578.2 757.05 L594.68 757.05" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M598.2 757.05 L588.63 761.84 L588.63 752.27 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e17::P-COMPLIANCE-006::DA-LOAN-ACCOUNT">
+<rect x="309.06" y="178.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="324.1" y="190.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="node" data-id="DA-LOAN-ACCOUNT" data-type="data_assets">
+<title>Installment loan account</title>
+<path d="M598.2 752.41 Q606.7 748.21 640.7 748.21 L725.7 748.21 Q759.7 748.21 768.2 752.41 L768.2 828.01 Q759.7 832.21 725.7 832.21 L640.7 832.21 Q606.7 832.21 598.2 828.01 Z" fill="#70c9a7" stroke="#047857" stroke-width="2.6"/>
+<text x="679.2" y="788.47" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment loan</text>
+<text x="679.2" y="800.47" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">account</text>
+<svg x="750.2" y="753.21" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-COMPLIANCE-006" data-type="processes">
+<title>Test credit decisions and pricing for fair lending</title>
+<path d="M138 138 L58 163.97 L88.56 206 L187.44 206 L218 163.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="138" y="164.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Test credit decisions</text>
+<text x="138" y="176.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and pricing for fair</text>
+<text x="138" y="188.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">lending</text>
+</g>
+<g class="node" data-id="P-LENDING-002" data-type="processes">
+<title>Monitor dealer performance and program compliance</title>
+<path d="M138 490 L58 515.97 L88.56 558 L187.44 558 L218 515.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="138" y="516.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Monitor dealer</text>
+<text x="138" y="528.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">performance and</text>
+<text x="138" y="540.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">program compliance</text>
+</g>
+<g class="node" data-id="P-LENDING-006" data-type="processes">
+<title>Board loan and fund dealer</title>
+<path d="M138 50 L58 75.97 L88.56 118 L187.44 118 L218 75.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="138" y="82.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Board loan and fund</text>
+<text x="138" y="94.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">dealer</text>
+</g>
+<g class="node" data-id="P-LENDING-007" data-type="processes">
+<title>Perfect lien with titling state</title>
+<path d="M138 754 L58 779.97 L88.56 822 L187.44 822 L218 779.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="138" y="786.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Perfect lien with titling</text>
+<text x="138" y="798.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">state</text>
+</g>
+<g class="node" data-id="P-LENDING-008" data-type="processes">
+<title>Quote payoff and release title</title>
+<path d="M138 842 L58 867.97 L88.56 910 L187.44 910 L218 867.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="138" y="874.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Quote payoff and</text>
+<text x="138" y="886.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">release title</text>
+</g>
+<g class="node" data-id="P-LENDING-009" data-type="processes">
+<title>Bill installment loan and post payments</title>
+<path d="M138 226 L58 251.97 L88.56 294 L187.44 294 L218 251.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="138" y="258.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Bill installment loan</text>
+<text x="138" y="270.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and post payments</text>
+</g>
+<g class="node" data-id="P-LENDING-010" data-type="processes">
+<title>Service installment loan account requests</title>
+<path d="M138 402 L58 427.97 L88.56 470 L187.44 470 L218 427.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="138" y="434.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Service installment</text>
+<text x="138" y="446.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">loan account requests</text>
+</g>
+<g class="node" data-id="P-LENDING-011" data-type="processes">
+<title>Collect delinquent installment loan</title>
+<path d="M138 666 L58 691.97 L88.56 734 L187.44 734 L218 691.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="138" y="698.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Collect delinquent</text>
+<text x="138" y="710.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">installment loan</text>
+</g>
+<g class="node" data-id="P-LENDING-012" data-type="processes">
+<title>Assign repossession and send required notices</title>
+<path d="M138 930 L58 955.97 L88.56 998 L187.44 998 L218 955.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="138" y="956.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Assign repossession</text>
+<text x="138" y="968.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and send required</text>
+<text x="138" y="980.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">notices</text>
+</g>
+<g class="node" data-id="P-LENDING-013" data-type="processes">
+<title>Remarket recovered collateral and pursue deficiency</title>
+<path d="M138 578 L58 603.97 L88.56 646 L187.44 646 L218 603.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="138" y="604.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Remarket recovered</text>
+<text x="138" y="616.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">collateral and pursue</text>
+<text x="138" y="628.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">deficiency</text>
+</g>
+<g class="node" data-id="P-LENDING-014" data-type="processes">
+<title>Cancel ancillary products and refund unearned premium</title>
+<path d="M138 1018 L58 1043.97 L88.56 1086 L187.44 1086 L218 1043.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="138" y="1044.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Cancel ancillary</text>
+<text x="138" y="1056.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">products and refund</text>
+<text x="138" y="1068.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">unearned premium</text>
+</g>
+<g class="node" data-id="P-LENDING-015" data-type="processes">
+<title>Calculate and settle dealer reserve</title>
+<path d="M138 314 L58 339.97 L88.56 382 L187.44 382 L218 339.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="138" y="346.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Calculate and settle</text>
+<text x="138" y="358.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">dealer reserve</text>
+</g>
+<g class="node" data-id="SYS-BUREAU-GW" data-type="systems">
+<title>Credit bureau gateway</title>
+<rect x="36" y="1265" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="123" y="1302.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit bureau</text>
+<text x="123" y="1314.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">gateway</text>
+<svg x="200" y="1270" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-COLLECT-API" data-type="systems">
+<title>Collections Workspace Service</title>
+<rect x="36" y="1364" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="117" y="1396.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Collections</text>
+<text x="117" y="1408.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Workspace Service</text>
+<text x="127" y="1437.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AKS · Collections Workspace Cache</text>
+<image x="196" y="1368" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYWY2YTJjNDItYmQ0OC00ODU3LWE0NzktYWVjZjhiM2RlNGY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImI3MGM5Y2YxLWJhYjgtNDdlMC1iYmRiLWNlMWNkNjY0ZDI2OCIgeDE9IjIuOTQiIHkxPSIzLjc0IiB4Mj0iOC42NyIgeTI9IjMuNzQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiZWI2OTk1My1iZDk2LTQ1MTUtODg0My1hYzEyNTQ2YWY5MzYiIHgxPSI5LjEzIiB5MT0iMy43OSIgeDI9IjE0Ljg1IiB5Mj0iMy43OSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImEzOWM3NmU4LTU0N2UtNGViNC1iYzI1LWQ4MWMwZjhjZGE2MiIgeDE9IjAuMDEiIHkxPSI5LjEyIiB4Mj0iNS43MyIgeTI9IjkuMTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJmMGEyYTQ5MS0xN2RjLTRiYjgtYmJmYy1lZTU4YTVjZjQ3ZGEiIHgxPSI2LjE4IiB5MT0iOS4wOCIgeDI9IjExLjkiIHkyPSI5LjA4IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwIiB4MT0iMTIuMzUiIHkxPSI5LjEzIiB4Mj0iMTguMDgiIHkyPSI5LjEzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZTM5OWFhOTMtMzQxZi00ZGYyLTljMDItNjAzYjgyYjQ4NGMyIiB4MT0iMi44NyIgeTE9IjE0LjU2IiB4Mj0iOC42IiB5Mj0iMTQuNTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJhMTUyYmJhMC1iYTJiLTQ4M2EtYjhjMS0wYWU3ZGUzNTU5OTAiIHgxPSI5LjA1IiB5MT0iMTQuNiIgeDI9IjE0Ljc4IiB5Mj0iMTQuNiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPkljb24tY29tcHV0ZS0yMzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSI1LjggMS4yMiAyLjk0IDEuNzUgMi45NCA1LjY1IDUuOCA2LjI2IDguNjcgNS4xMSA4LjY3IDIuMiA1LjggMS4yMiIgZmlsbD0idXJsKCNiNzBjOWNmMS1iYWI4LTQ3ZTAtYmJkYi1jZTFjZDY2NGQyNjgpIiAvPjxwYXRoIGQ9Ik01LjkxLDYuMiw4LjUzLDUuMTRBLjIuMiwwLDAsMCw4LjY1LDVWMi4zNmEuMjEuMjEsMCwwLDAtLjEzLS4xOGwtMi42NS0uOUg1Ljc1bC0yLjYuNDhBLjIuMiwwLDAsMCwzLDEuOTRWNS40N2EuMTkuMTksMCwwLDAsLjE1LjE5bDIuNjMuNTVBLjMyLjMyLDAsMCwwLDUuOTEsNi4yWiIgZmlsbD0ibm9uZSIgLz48cGF0aCBkPSJNMi45NCwxLjc1djMuOWwyLjg5LjYxdi01Wm0xLjIyLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYybC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMTEuOTkgMS4yNyA5LjEzIDEuOCA5LjEzIDUuNyAxMS45OSA2LjMxIDE0Ljg1IDUuMTUgMTQuODUgMi4yNSAxMS45OSAxLjI3IiBmaWxsPSJ1cmwoI2JlYjY5OTUzLWJkOTYtNDUxNS04ODQzLWFjMTI1NDZhZjkzNikiIC8+PHBhdGggZD0iTTkuMTMsMS44VjUuN0wxMiw2LjMxdi01Wm0xLjIxLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYyLjA1bC45My0uMTdaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMi44NyA2LjYgMC4wMSA3LjEzIDAuMDEgMTEuMDMgMi44NyAxMS42NCA1Ljc0IDEwLjQ5IDUuNzQgNy41OCAyLjg3IDYuNiIgZmlsbD0idXJsKCNhMzljNzZlOC01NDdlLTRlYjQtYmMyNS1kODFjMGY4Y2RhNjIpIiAvPjxwYXRoIGQ9Ik0wLDcuMTNWMTFsMi44OS42MXYtNVptMS4yMSwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFpNMi40OCwxMWwtLjkzLS4xNVY3LjM4bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iOS4wNCA2LjU2IDYuMTggNy4wOSA2LjE4IDEwLjk5IDkuMDQgMTEuNjEgMTEuOSAxMC40NSAxMS45IDcuNTQgOS4wNCA2LjU2IiBmaWxsPSJ1cmwoI2YwYTJhNDkxLTE3ZGMtNGJiOC1iYmZjLWVlNThhNWNmNDdkYSkiIC8+PHBhdGggZD0iTTYuMTgsNy4wOVYxMWwyLjg4LjYxdi01Wk03LjM5LDEwLjdsLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjcuMzRsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxNS4yMSA2LjYxIDEyLjM1IDcuMTQgMTIuMzUgMTEuMDQgMTUuMjEgMTEuNjUgMTguMDggMTAuNSAxOC4wOCA3LjU5IDE1LjIxIDYuNjEiIGZpbGw9InVybCgjZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwKSIgLz48cGF0aCBkPSJNMTIuMzUsNy4xNFYxMWwyLjg5LjYxdi01Wm0xLjIyLDMuNjEtLjgxLS4xN3YtM2wuODEtLjE0Wm0xLjI2LjIyLS45My0uMTVWNy4zOWwuOTMtLjE2WiIgZmlsbD0iIzM0MWE2ZSIgLz48cG9seWdvbiBwb2ludHM9IjUuNzMgMTIuMDQgMi44NyAxMi41NiAyLjg3IDE2LjQ2IDUuNzMgMTcuMDggOC42IDE1LjkyIDguNiAxMy4wMiA1LjczIDEyLjA0IiBmaWxsPSJ1cmwoI2UzOTlhYTkzLTM0MWYtNGRmMi05YzAyLTYwM2I4MmI0ODRjMikiIC8+PHBhdGggZD0iTTUuODQsMTcsOC40NSwxNmEuMTguMTgsMCwwLDAsLjEyLS4xOHYtMi42QS4yLjIsMCwwLDAsOC40NCwxM0w1LjgsMTIuMWEuMTcuMTcsMCwwLDAtLjEyLDBsLTIuNi40N2EuMTkuMTksMCwwLDAtLjE2LjE5djMuNTRhLjE5LjE5LDAsMCwwLC4xNS4xOUw1LjcsMTdBLjIzLjIzLDAsMCwwLDUuODQsMTdaIiBmaWxsPSJub25lIiAvPjxwYXRoIGQ9Ik0yLjg3LDEyLjU2djMuOWwyLjg5LjYyVjEyWm0xLjIyLDMuNjFMMy4yOCwxNlYxM2wuODEtLjE0Wm0xLjI2LjIzLS45My0uMTVWMTIuODFsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxMS45MSAxMi4wOCA5LjA1IDEyLjYxIDkuMDUgMTYuNTEgMTEuOTEgMTcuMTIgMTQuNzggMTUuOTcgMTQuNzggMTMuMDYgMTEuOTEgMTIuMDgiIGZpbGw9InVybCgjYTE1MmJiYTAtYmEyYi00ODNhLWI4YzEtMGFlN2RlMzU1OTkwKSIgLz48cGF0aCBkPSJNOS4wNSwxMi42MXYzLjlsMi44OS42MXYtNVptMS4yMiwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjEyLjg2bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-LENDPERF-SEMANTIC" data-type="systems">
+<title>Lending Portfolio Performance Semantic Layer</title>
+<rect x="36" y="1166" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="117" y="1192.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Lending Portfolio</text>
+<text x="117" y="1204.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Performance</text>
+<text x="117" y="1216.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Semantic Layer</text>
+<text x="127" y="1239.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">BigQuery · Looker</text>
+<image x="196" y="1170" width="18" height="18" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0ic3RhbmRhcmRfcHJvZHVjdF9pY29uIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDUxMiA1MTIiPgogIDwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiAyLjEuMCBCdWlsZCAxNDIpICAtLT4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLnN0MCB7CiAgICAgICAgZmlsbDogbm9uZTsKICAgICAgfQoKICAgICAgLnN0MSB7CiAgICAgICAgZmlsbDogIzQyODVmNDsKICAgICAgfQoKICAgICAgLnN0MiB7CiAgICAgICAgZmlsbDogIzM0YTg1MzsKICAgICAgfQoKICAgICAgLnN0MyB7CiAgICAgICAgZmlsbDogI2ZiYmMwNDsKICAgICAgfQoKICAgICAgLnN0NCB7CiAgICAgICAgZmlsbDogI2VhNDMzNTsKICAgICAgfQogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPGcgaWQ9ImJvdW5kaW5nX2JveCI+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIvPgogIDwvZz4KICA8ZyBpZD0iYXJ0Ij4KICAgIDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0zMTEuOSw0MTguOWMtOC44LDAtMTYtNy4yLTE2LTE2di0xNDUuOGMwLTguOCw3LjItMTYsMTYtMTZzMTYsNy4yLDE2LDE2djE0NS44YzAsOC44LTcuMiwxNi0xNiwxNmgwWiIvPgogICAgPHBhdGggY2xhc3M9InN0MiIgZD0iTTE0Ny42LDQxOC45Yy04LjgsMC0xNi03LjItMTYtMTZ2LTIwMC41YzAtOC44LDcuMi0xNiwxNi0xNnMxNiw3LjIsMTYsMTZ2MjAwLjVjMCw4LjgtNy4yLDE2LTE2LDE2WiIvPgogICAgPHBhdGggY2xhc3M9InN0MiIgZD0iTTIyOS44LDQzNy40Yy04LjgsMC0xNi03LjItMTYtMTZWMTQ3LjZjMC04LjgsNy4yLTE2LDE2LTE2czE2LDcuMiwxNiwxNnYyNzMuN2MwLDguOC03LjIsMTYtMTYsMTZoMFoiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDMiIGQ9Ik0yMjkuOCw0MzcuNGMtMTE0LjUsMC0yMDcuNi05My4xLTIwNy42LTIwNy42aDMyYzAsOTYuOCw3OC44LDE3NS42LDE3NS42LDE3NS42czE3NS42LTc4LjgsMTc1LjYtMTc1LjZoMzJjMCwxMTQuNS05My4xLDIwNy42LTIwNy42LDIwNy42aDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3Q0IiBkPSJNNDM3LjQsMjI5LjhoLTMyYzAtOTYuOC03OC44LTE3NS42LTE3NS42LTE3NS42UzU0LjEsMTMyLjksNTQuMSwyMjkuOEgyMi4xYzAtMTE0LjUsOTMuMi0yMDcuNywyMDcuNy0yMDcuN3MyMDcuNiw5My4xLDIwNy42LDIwNy42aDBaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNNDg3LjQsNDY0LjhsLTEwMC0xMDBjMzIuMy0zNy42LDQ5LjktODUsNDkuOS0xMzUuMXMtMjEuNi0xMDcuNi02MC44LTE0Ni44bC0yMi42LDIyLjZjMzMuMiwzMy4yLDUxLjQsNzcuMyw1MS40LDEyNC4ycy0xOC4zLDkwLjktNTEuNSwxMjQuMWgwYy01LDUtNy41LDctMTEuOCwxMC44bDEyMi44LDEyMi44YzMuMSwzLjEsNy4yLDQuNywxMS4zLDQuN2gwYzQuMSwwLDguMi0xLjYsMTEuMy00LjcsNi4yLTYuMiw2LjItMTYuNCwwLTIyLjZoMFoiLz4KICA8L2c+Cjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-LOAN-SVC" data-type="systems">
+<title>Installment loan servicing platform</title>
+<rect x="36" y="1463" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="123" y="1500.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment loan</text>
+<text x="123" y="1512.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">servicing platform</text>
+<svg x="200" y="1468" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-REMARKET" data-type="systems">
+<title>Repossession and remarketing management</title>
+<rect x="36" y="1562" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="123" y="1588.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Repossession and</text>
+<text x="123" y="1600.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">remarketing</text>
+<text x="123" y="1612.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">management</text>
+<text x="127" y="1635.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">external</text>
+<svg x="200" y="1567" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="1781.13" x2="1072" y2="1781.13" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="1805.13" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 1794.13)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="93.2" y="1805.13" font-size="12" font-weight="400" fill="#343d50">data asset · 1</text>
+<g transform="translate(181.3 1794.13)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="207.3" y="1805.13" font-size="12" font-weight="400" fill="#343d50">process · 12</text>
+<g transform="translate(288.88 1794.13)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="314.88" y="1805.13" font-size="12" font-weight="400" fill="#343d50">system · 5</text>
+<text x="28" y="1827.13" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">CLASSIFICATION</text>
+<g transform="translate(130.2 1816.13)" fill="#70c9a7" stroke="#047857" stroke-width="2.6"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="156.2" y="1827.13" font-size="12" font-weight="400" fill="#343d50">Restricted · 1</text>
+<g transform="translate(243.85 1816.13)" fill="#a7f3d0" stroke="#047857" stroke-width="1.1"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="269.85" y="1827.13" font-size="12" font-weight="400" fill="#343d50">not recorded · 17</text>
+<text x="28" y="1849.13" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 1838.13)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="1849.13" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<g transform="translate(143.25 1838.13)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="169.25" y="1849.13" font-size="12" font-weight="400" fill="#343d50">masters</text>
+<g transform="translate(231.51 1838.13)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="257.51" y="1849.13" font-size="12" font-weight="400" fill="#343d50">reads / writes</text>
+<text x="28" y="1883.13" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · data-asset-context--da-loan-account · edit the model, not the picture</text></g>
+</svg>

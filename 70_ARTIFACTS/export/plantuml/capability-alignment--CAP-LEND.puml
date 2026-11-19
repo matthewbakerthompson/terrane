@@ -6,9 +6,14 @@
 title Consumer & Recreation Lending — Frameworks, Controls, Systems
 
 AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
 AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
 
 Boundary(b_Capability, "Capability") {
+  System(CAP_LEND_07, "Ancillary Product & Dealer Reserve Administration", "Administer the dealer's reserve on each loan and the protection products sold with it, including refunds when a loan ends early.", $tags="capabilities")
+  ' aac CAP_LEND_07: company_domain="Lending"
   System(CAP_LEND_04, "Collateral, Title & Lien Management", "Perfect and track liens and titles on financed assets across state regimes; release on payoff.", $tags="capabilities")
   ' aac CAP_LEND_04: company_domain="Lending"
   System(CAP_LEND, "Consumer & Recreation Lending", "Consumer & Recreation Lending. Level 0 enterprise capability domain (Core tier). Dealer-originated RV, marine, and powersports lending plus direct consumer loans.", $tags="capabilities")
@@ -24,9 +29,93 @@ Boundary(b_Capability, "Capability") {
   System(CAP_LEND_06, "Repossession & Asset Remarketing", "Recover, recondition, and remarket collateral on defaulted loans; manage deficiency balances.", $tags="capabilities")
   ' aac CAP_LEND_06: company_domain="Lending"
 }
+Boundary(b_Control, "Control") {
+  System(CTL_ADVERSE_ACT, "Adverse action notice completeness", "Every declined application generates a compliant adverse action notice with the principal reasons, within the required period.", $tags="controls")
+  ' aac CTL_ADVERSE_ACT: company_domain=""
+  System(CTL_ANCILLARY_REFUND, "Ancillary product refund on early termination", "When a loan ends early the protection products sold with it are canceled and the unearned part refunded, and the refunds are reconciled monthly.", $tags="controls")
+  ' aac CTL_ANCILLARY_REFUND: company_domain=""
+  System(CTL_APP_INTAKE, "Application completeness and disclosure", "Applications are complete and required disclosures delivered before decisioning; incomplete files route to cure with notice-of-incompleteness timing honored.", $tags="controls")
+  ' aac CTL_APP_INTAKE: company_domain=""
+  System(CTL_CONTACT_LIM, "Collections contact limits", "Outbound contact respects time-of-day, frequency, and channel-consent constraints; blocked numbers and cease requests are honored.", $tags="controls")
+  ' aac CTL_CONTACT_LIM: company_domain=""
+  System(CTL_DEALER_MON, "Dealer program and markup monitoring", "Dealer rate markup, early defaults, exceptions and complaints are reviewed monthly against program limits, with action recorded.", $tags="controls")
+  ' aac CTL_DEALER_MON: company_domain=""
+  System(CTL_LIEN_PERFECT, "Lien perfection within policy window", "Liens not perfected within the policy window are aged and chased by state and by dealer, and reported weekly.", $tags="controls")
+  ' aac CTL_LIEN_PERFECT: company_domain=""
+  System(CTL_PMT_POSTING, "Payment posting timeliness", "Cardholder payments post as of the day of receipt per Reg Z crediting rules, with cutoff disclosures honored and exceptions reported.", $tags="controls")
+  ' aac CTL_PMT_POSTING: company_domain=""
+  System(CTL_REPO_NOTICE, "Repossession and disposition notices", "Notices of repossession, redemption rights and intended sale are sent in each state's form and time before collateral is sold.", $tags="controls")
+  ' aac CTL_REPO_NOTICE: company_domain=""
+  System(CTL_SANCTIONS, "Sanctions and watchlist screening", "Parties are screened at onboarding and on list updates; hits are dispositioned before processing continues.", $tags="controls")
+  ' aac CTL_SANCTIONS: company_domain=""
+  System(CTL_FUNDING_CONF, "Settlement funding confirmation", "The daily funding position is confirmed funded by the network deadline with dual verification and same-day escalation on a miss.", $tags="controls")
+  ' aac CTL_FUNDING_CONF: company_domain=""
+  System(CTL_FUND_STIPS, "Stipulations cleared before funding", "No dealer is funded until every stipulation on the approval is cleared and the contract package is complete and signed.", $tags="controls")
+  ' aac CTL_FUND_STIPS: company_domain=""
+  System(CTL_TPRM_DD, "Third-party due diligence before onboarding", "No supplier processes cardholder data before risk-tiered due diligence is complete and accepted.", $tags="controls")
+  ' aac CTL_TPRM_DD: company_domain=""
+  System(CTL_LIEN_RELEASE, "Title release within statutory deadline", "On payoff the lien is released and the title sent within the titling state's deadline, after the payoff funds have cleared.", $tags="controls")
+  ' aac CTL_LIEN_RELEASE: company_domain=""
+}
 Boundary(b_Framework, "Framework") {
   System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
   ' aac FW_BIAN: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_LENDING_012, "Assign repossession and send required notices", "Assign a licensed repossession agent, confirm the recovery and the personal property found inside, and send the notices of redemption rights and intended sale each state requires. A repossession done or noticed outside state law voids the deficiency and invites a claim, so the notice timeline is controlled state by state.", $tags="processes")
+  ' aac P_LENDING_012: company_domain=""
+  System(P_LENDING_009, "Bill installment loan and post payments", "Send the monthly bill, take payments by ACH, debit card, check and automatic payment, and post them to interest, principal and fees in the order the contract says. Posting drives the delinquency that collections and bureau reporting read, so a misposted payment shows up as a wrong late fee, a wrong call and a wrong bureau line.", $tags="processes")
+  ' aac P_LENDING_009: company_domain=""
+  System(P_LENDING_006, "Board loan and fund dealer", "Create the loan on the servicing platform with its terms, payment schedule and collateral, pay the dealer the amount financed with its reserve, and post the entries. Boarding errors surface months later as wrong payment amounts or payoff quotes, and a funding paid twice or to the wrong dealer is cash out of the door.", $tags="processes")
+  ' aac P_LENDING_006: company_domain=""
+  System(P_LENDING_015, "Calculate and settle dealer reserve", "Calculate the dealer's participation on each funded loan, pay it, and charge back the unearned part when a loan pays off or defaults inside the chargeback window. Reserve is the dealer's pay for the rate it sets, so its calculation is also what the markup review reads.", $tags="processes")
+  ' aac P_LENDING_015: company_domain=""
+  System(P_LENDING_014, "Cancel ancillary products and refund unearned premium", "When a loan pays off early, is charged off, or its collateral is repossessed or destroyed, cancel the gap coverage, service contract and credit insurance sold with it and refund the unearned part. Missed refunds are a recurring supervisory finding in indirect lending, and they are owed whether or not the borrower asks.", $tags="processes")
+  ' aac P_LENDING_014: company_domain=""
+  System(P_LENDING_011, "Collect delinquent installment loan", "Work past-due installment loans through calls, letters and digital contact, take promises and arrangements, and decide when a loan goes to repossession. Recreation loans are secured and seasonal, so treatment weighs the collateral and the season as well as the days past due; the contact limits that apply to cards apply here too.", $tags="processes")
+  ' aac P_LENDING_011: company_domain=""
+  System(P_LENDING_004, "Decide indirect loan and return terms", "Score the application against the recreation lending credit policy, price it, and return an approval, a counteroffer with conditions, or a decline to the dealer while the buyer waits. Counteroffers and declines carry adverse action obligations, and the collateral's value sets the advance, so the decision reads the asset's value guide as well as the bureau.", $tags="processes")
+  ' aac P_LENDING_004: company_domain=""
+  System(P_LENDING_002, "Monitor dealer performance and program compliance", "Review each dealer's volume, early payment defaults, funding exceptions, complaints and rate markup against program limits, and put dealers on watch, retrain or end them. Dealer markup is where indirect lending meets fair lending exposure, so the review evidences the markup cap as well as credit quality.", $tags="processes")
+  ' aac P_LENDING_002: company_domain=""
+  System(P_LENDING_016, "Originate point-of-sale installment loan", "Take a financing application started in a retailer's checkout, check affordability from the shopper's bank data with consent, decide it, and book the installment loan with disbursement through the card ledger. The point-of-sale products run on platforms of their own, apart from the dealer channel, and share its credit policy and adverse action rules.", $tags="processes")
+  ' aac P_LENDING_016: company_domain=""
+  System(P_LENDING_007, "Perfect lien with titling state", "Record the bank as lienholder with the titling state, electronically where the state allows and on paper where it does not, and chase the title until it is in custody. An unperfected lien leaves the loan unsecured in a bankruptcy, so anything aging past the policy window is reported weekly by state and by dealer.", $tags="processes")
+  ' aac P_LENDING_007: company_domain=""
+  System(P_LENDING_008, "Quote payoff and release title", "Give the borrower or a refinancing lender a payoff quote, apply the payoff, and release the lien and send the title within the state's deadline. Late releases carry statutory penalties and complaints, and a release sent before the payoff funds clear is collateral given away.", $tags="processes")
+  ' aac P_LENDING_008: company_domain=""
+  System(P_LENDING_003, "Receive and validate dealer-submitted application", "Accept a credit application keyed by the dealer's finance office, check it is complete, verify the applicant's identity and screen it for application fraud before it reaches the decision. The buyer is at the dealership, so intake runs against a point-of-sale clock; an incomplete or unverified application that slips through becomes a funding exception later.", $tags="processes")
+  ' aac P_LENDING_003: company_domain=""
+  System(P_LENDING_001, "Recruit, vet, and contract dealer", "Recruit a dealer, check its licensing, ownership and complaint history, and sign the dealer agreement and program terms. A dealer takes credit applications in the bank's name, so diligence before the first application is the control that matters; an unvetted dealer is a fair lending and fraud exposure on every loan it sends.", $tags="processes")
+  ' aac P_LENDING_001: company_domain=""
+  System(P_LENDING_013, "Remarket recovered collateral and pursue deficiency", "Recondition and sell the recovered vehicle or boat at auction or retail, apply the proceeds, cancel the ancillary products for refund, and collect, place or sell the deficiency balance. The sale must be commercially reasonable and properly noticed, or the deficiency cannot be collected at all.", $tags="processes")
+  ' aac P_LENDING_013: company_domain=""
+  System(P_LENDING_005, "Review contract package and clear stipulations", "Check the signed retail installment contract, the title application and the proofs of income, insurance and identity the approval was conditioned on, and send back what is missing or wrong. A contract funded with an open stipulation is a loan the bank may not be able to enforce or perfect, which is why funding waits on this review.", $tags="processes")
+  ' aac P_LENDING_005: company_domain=""
+  System(P_LENDING_010, "Service installment loan account requests", "Handle borrower requests on a loan: due-date changes, payment deferrals and extensions, insurance and address updates, and statements of account. A deferral changes the payment schedule and the interest earned, so it is approved to policy and recorded where collections and finance will see it.", $tags="processes")
+  ' aac P_LENDING_010: company_domain=""
+  System(P_LENDING_017, "Service point-of-sale installment loan", "Collect the scheduled installments on point-of-sale loans, handle early settlement and missed payments, and keep the shopper informed by message and statement. These loans repay over months rather than years and are serviced on the installment lending platform, not on the recreation loan system.", $tags="processes")
+  ' aac P_LENDING_017: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_COLLECT_API, "Collections Workspace Service", "The service behind the Collections Workspace API, backing the channel. Built with AKS · Collections Workspace Cache.", $tags="systems")
+  ' aac SYS_COLLECT_API: company_domain="Collections"; hosting="Azure"; technology="AKS · Collections Workspace Cache"
+  System_Ext(SYS_DEALER_PORTAL, "Dealer portal", "Where dealers submit applications, see decisions and stipulations, upload contracts, and track funding and reserve. Built with SaaS.", $tags="systems")
+  ' aac SYS_DEALER_PORTAL: company_domain=""; hosting="SaaS"; technology="SaaS"
+  System(SYS_LOS, "Indirect loan origination system", "Takes dealer applications, runs the credit decision and counteroffers, and carries the contract package to funding.", $tags="systems")
+  ' aac SYS_LOS: company_domain=""
+  System(SYS_LENDING_API, "Installment Lending Service", "Domain service for Installment Lending, behind the Installment Lending API. Built with EKS · Installment Lending Cache.", $tags="systems")
+  ' aac SYS_LENDING_API: company_domain="Lending"; hosting="AWS"; technology="EKS · Installment Lending Cache"
+  System(SYS_LOAN_SVC, "Installment loan servicing platform", "System of record for installment loans: boarding, billing, payment posting, payoff quotes, deferrals and ancillary product refunds.", $tags="systems")
+  ' aac SYS_LOAN_SVC: company_domain=""
+  System(SYS_LENDPERF_SEMANTIC, "Lending Portfolio Performance Semantic Layer", "Governed models and metrics exposed to analysts for Lending Portfolio Performance, served from BigQuery through Looker. Built with BigQuery · Looker.", $tags="systems")
+  ' aac SYS_LENDPERF_SEMANTIC: company_domain="Lending"; hosting="GCP"; technology="BigQuery · Looker"
+  System(SYS_POSFIN_API, "Point-of-Sale Finance Service", "Domain API for point-of-sale finance: dealer applications, shopper identity and consent, decisions, and the payment schedule that follows. Built with GKE · Point-of-Sale Finance Cache.", $tags="systems")
+  ' aac SYS_POSFIN_API: company_domain="Lending"; hosting="GCP"; technology="GKE · Point-of-Sale Finance Cache"
+  System_Ext(SYS_REMARKET, "Repossession and remarketing management", "Assigns repossession agents, tracks condition reports and notices, and runs auction and retail remarketing. Built with external.", $tags="systems")
+  ' aac SYS_REMARKET: company_domain=""; hosting="External"; technology="external"
+  System_Ext(SYS_TITLE, "Title and lien management", "Electronic lien and title tracking across the titling states, title custody, and release on payoff. Built with external.", $tags="systems")
+  ' aac SYS_TITLE: company_domain=""; hosting="External"; technology="external"
 }
 
 Rel(CAP_LEND_01, CAP_LEND, "part of")
@@ -35,20 +124,135 @@ Rel(CAP_LEND_03, CAP_LEND, "part of")
 Rel(CAP_LEND_04, CAP_LEND, "part of")
 Rel(CAP_LEND_05, CAP_LEND, "part of")
 Rel(CAP_LEND_06, CAP_LEND, "part of")
+Rel(CAP_LEND_07, CAP_LEND, "part of")
 Rel(CAP_LEND, FW_BIAN, "Aligned to")
 ' aac rel: source="CAP_LEND"; target="FW_BIAN"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
 Rel(CAP_LEND_01, FW_BIAN, "Reference Data > External Agency > Partner Administration")
 ' aac rel: source="CAP_LEND_01"; target="FW_BIAN"; label="Reference Data > External Agency > Partner Administration"; relation="capability_references_framework"; ref="Reference Data > External Agency > Partner Administration"
-Rel(CAP_LEND_02, FW_BIAN, "Sales and Service > Sales > Consumer Loan")
-' aac rel: source="CAP_LEND_02"; target="FW_BIAN"; label="Sales and Service > Sales > Consumer Loan"; relation="capability_references_framework"; ref="Sales and Service > Sales > Consumer Loan"
+Rel(CAP_LEND_02, FW_BIAN, "Operations and Execution > Loans and Deposits > Consumer Loan")
+' aac rel: source="CAP_LEND_02"; target="FW_BIAN"; label="Operations and Execution > Loans and Deposits > Consumer Loan"; relation="capability_references_framework"; ref="Operations and Execution > Loans and Deposits > Consumer Loan"
 Rel(CAP_LEND_03, FW_BIAN, "Operations and Execution > Loans and Deposits > Merchandising Loan")
 ' aac rel: source="CAP_LEND_03"; target="FW_BIAN"; label="Operations and Execution > Loans and Deposits > Merchandising Loan"; relation="capability_references_framework"; ref="Operations and Execution > Loans and Deposits > Merchandising Loan"
 Rel(CAP_LEND_04, FW_BIAN, "Operations and Execution > Collateral Administration > Collateral Asset Administration")
 ' aac rel: source="CAP_LEND_04"; target="FW_BIAN"; label="Operations and Execution > Collateral Administration > Collateral Asset Administration"; relation="capability_references_framework"; ref="Operations and Execution > Collateral Administration > Collateral Asset Administration"
-Rel(CAP_LEND_05, FW_BIAN, "Sales and Service > Sales > Consumer Loan")
-' aac rel: source="CAP_LEND_05"; target="FW_BIAN"; label="Sales and Service > Sales > Consumer Loan"; relation="capability_references_framework"; ref="Sales and Service > Sales > Consumer Loan"
+Rel(CAP_LEND_05, FW_BIAN, "Operations and Execution > Loans and Deposits > Consumer Loan")
+' aac rel: source="CAP_LEND_05"; target="FW_BIAN"; label="Operations and Execution > Loans and Deposits > Consumer Loan"; relation="capability_references_framework"; ref="Operations and Execution > Loans and Deposits > Consumer Loan"
 Rel(CAP_LEND_06, FW_BIAN, "Sales and Service > Customer Management > Account Recovery")
 ' aac rel: source="CAP_LEND_06"; target="FW_BIAN"; label="Sales and Service > Customer Management > Account Recovery"; relation="capability_references_framework"; ref="Sales and Service > Customer Management > Account Recovery"
+Rel(CAP_LEND_07, FW_BIAN, "Operations and Execution > Account Management > Product Combination")
+' aac rel: source="CAP_LEND_07"; target="FW_BIAN"; label="Operations and Execution > Account Management > Product Combination"; relation="capability_references_framework"; ref="Operations and Execution > Account Management > Product Combination"
+Rel(P_LENDING_001, CAP_LEND_01, "supported by")
+' aac rel: source="P_LENDING_001"; target="CAP_LEND_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_LENDING_002, CAP_LEND_01, "supported by")
+' aac rel: source="P_LENDING_002"; target="CAP_LEND_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_LENDING_005, CAP_LEND_03, "supported by")
+' aac rel: source="P_LENDING_005"; target="CAP_LEND_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_LENDING_006, CAP_LEND_03, "supported by")
+' aac rel: source="P_LENDING_006"; target="CAP_LEND_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_LENDING_009, CAP_LEND_05, "supported by")
+' aac rel: source="P_LENDING_009"; target="CAP_LEND_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_LENDING_010, CAP_LEND_05, "supported by")
+' aac rel: source="P_LENDING_010"; target="CAP_LEND_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_LENDING_011, CAP_LEND_05, "supported by")
+' aac rel: source="P_LENDING_011"; target="CAP_LEND_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_LENDING_014, CAP_LEND_07, "supported by")
+' aac rel: source="P_LENDING_014"; target="CAP_LEND_07"; label="supported by"; relation="process_supports_capability"
+Rel(P_LENDING_015, CAP_LEND_07, "supported by")
+' aac rel: source="P_LENDING_015"; target="CAP_LEND_07"; label="supported by"; relation="process_supports_capability"
+Rel(P_LENDING_017, CAP_LEND_05, "supported by")
+' aac rel: source="P_LENDING_017"; target="CAP_LEND_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_LENDING_003, CAP_LEND_02, "supported by")
+' aac rel: source="P_LENDING_003"; target="CAP_LEND_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_LENDING_004, CAP_LEND_02, "supported by")
+' aac rel: source="P_LENDING_004"; target="CAP_LEND_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_LENDING_007, CAP_LEND_04, "supported by")
+' aac rel: source="P_LENDING_007"; target="CAP_LEND_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_LENDING_008, CAP_LEND_04, "supported by")
+' aac rel: source="P_LENDING_008"; target="CAP_LEND_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_LENDING_012, CAP_LEND_06, "supported by")
+' aac rel: source="P_LENDING_012"; target="CAP_LEND_06"; label="supported by"; relation="process_supports_capability"
+Rel(P_LENDING_013, CAP_LEND_06, "supported by")
+' aac rel: source="P_LENDING_013"; target="CAP_LEND_06"; label="supported by"; relation="process_supports_capability"
+Rel(P_LENDING_016, CAP_LEND_02, "supported by")
+' aac rel: source="P_LENDING_016"; target="CAP_LEND_02"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_LEND, CTL_ADVERSE_ACT, "governed by")
+' aac rel: source="CAP_LEND"; target="CTL_ADVERSE_ACT"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_LEND, CTL_ANCILLARY_REFUND, "governed by")
+' aac rel: source="CAP_LEND"; target="CTL_ANCILLARY_REFUND"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_LEND, CTL_APP_INTAKE, "governed by")
+' aac rel: source="CAP_LEND"; target="CTL_APP_INTAKE"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_LEND, CTL_CONTACT_LIM, "governed by")
+' aac rel: source="CAP_LEND"; target="CTL_CONTACT_LIM"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_LEND, CTL_DEALER_MON, "governed by")
+' aac rel: source="CAP_LEND"; target="CTL_DEALER_MON"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_LEND, CTL_FUND_STIPS, "governed by")
+' aac rel: source="CAP_LEND"; target="CTL_FUND_STIPS"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_LEND, CTL_FUNDING_CONF, "governed by")
+' aac rel: source="CAP_LEND"; target="CTL_FUNDING_CONF"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_LEND, CTL_LIEN_PERFECT, "governed by")
+' aac rel: source="CAP_LEND"; target="CTL_LIEN_PERFECT"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_LEND, CTL_LIEN_RELEASE, "governed by")
+' aac rel: source="CAP_LEND"; target="CTL_LIEN_RELEASE"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_LEND, CTL_PMT_POSTING, "governed by")
+' aac rel: source="CAP_LEND"; target="CTL_PMT_POSTING"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_LEND, CTL_REPO_NOTICE, "governed by")
+' aac rel: source="CAP_LEND"; target="CTL_REPO_NOTICE"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_LEND, CTL_SANCTIONS, "governed by")
+' aac rel: source="CAP_LEND"; target="CTL_SANCTIONS"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_LEND, CTL_TPRM_DD, "governed by")
+' aac rel: source="CAP_LEND"; target="CTL_TPRM_DD"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_LEND_01, CTL_DEALER_MON, "governed by")
+' aac rel: source="CAP_LEND_01"; target="CTL_DEALER_MON"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_LEND_01, CTL_TPRM_DD, "governed by")
+' aac rel: source="CAP_LEND_01"; target="CTL_TPRM_DD"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_LEND_02, CTL_ADVERSE_ACT, "governed by")
+' aac rel: source="CAP_LEND_02"; target="CTL_ADVERSE_ACT"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_LEND_02, CTL_APP_INTAKE, "governed by")
+' aac rel: source="CAP_LEND_02"; target="CTL_APP_INTAKE"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_LEND_02, CTL_SANCTIONS, "governed by")
+' aac rel: source="CAP_LEND_02"; target="CTL_SANCTIONS"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_LEND_03, CTL_FUND_STIPS, "governed by")
+' aac rel: source="CAP_LEND_03"; target="CTL_FUND_STIPS"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_LEND_03, CTL_FUNDING_CONF, "governed by")
+' aac rel: source="CAP_LEND_03"; target="CTL_FUNDING_CONF"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_LEND_04, CTL_LIEN_PERFECT, "governed by")
+' aac rel: source="CAP_LEND_04"; target="CTL_LIEN_PERFECT"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_LEND_04, CTL_LIEN_RELEASE, "governed by")
+' aac rel: source="CAP_LEND_04"; target="CTL_LIEN_RELEASE"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_LEND_05, CTL_CONTACT_LIM, "governed by")
+' aac rel: source="CAP_LEND_05"; target="CTL_CONTACT_LIM"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_LEND_05, CTL_PMT_POSTING, "governed by")
+' aac rel: source="CAP_LEND_05"; target="CTL_PMT_POSTING"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_LEND_06, CTL_REPO_NOTICE, "governed by")
+' aac rel: source="CAP_LEND_06"; target="CTL_REPO_NOTICE"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_LEND_07, CTL_ANCILLARY_REFUND, "governed by")
+' aac rel: source="CAP_LEND_07"; target="CTL_ANCILLARY_REFUND"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_LEND_07, CTL_DEALER_MON, "governed by")
+' aac rel: source="CAP_LEND_07"; target="CTL_DEALER_MON"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(SYS_COLLECT_API, CAP_LEND_05, "realizes")
+' aac rel: source="SYS_COLLECT_API"; target="CAP_LEND_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DEALER_PORTAL, CAP_LEND_01, "realizes")
+' aac rel: source="SYS_DEALER_PORTAL"; target="CAP_LEND_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_LENDING_API, CAP_LEND_05, "realizes")
+' aac rel: source="SYS_LENDING_API"; target="CAP_LEND_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_LENDPERF_SEMANTIC, CAP_LEND_01, "realizes")
+' aac rel: source="SYS_LENDPERF_SEMANTIC"; target="CAP_LEND_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_LOAN_SVC, CAP_LEND_03, "realizes")
+' aac rel: source="SYS_LOAN_SVC"; target="CAP_LEND_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_LOAN_SVC, CAP_LEND_05, "realizes")
+' aac rel: source="SYS_LOAN_SVC"; target="CAP_LEND_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_LOAN_SVC, CAP_LEND_07, "realizes")
+' aac rel: source="SYS_LOAN_SVC"; target="CAP_LEND_07"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_LOS, CAP_LEND_02, "realizes")
+' aac rel: source="SYS_LOS"; target="CAP_LEND_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_LOS, CAP_LEND_03, "realizes")
+' aac rel: source="SYS_LOS"; target="CAP_LEND_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_POSFIN_API, CAP_LEND_02, "realizes")
+' aac rel: source="SYS_POSFIN_API"; target="CAP_LEND_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_REMARKET, CAP_LEND_06, "realizes")
+' aac rel: source="SYS_REMARKET"; target="CAP_LEND_06"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_TITLE, CAP_LEND_04, "realizes")
+' aac rel: source="SYS_TITLE"; target="CAP_LEND_04"; label="realizes"; relation="system_realizes_capability"
 
 SHOW_LEGEND()
 @enduml

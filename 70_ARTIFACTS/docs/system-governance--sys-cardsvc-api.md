@@ -11,10 +11,12 @@ flowchart LR
   subgraph grp_Capability["Capability"]
     direction LR
     CAP_SERV{{"Customer Servicing & Care"}}
+    CAP_SERV_09{{"Retention, Product Change<br/>& Account Closure"}}
   end
 
   subgraph grp_Control["Control"]
     direction LR
+    CTL_BUREAU_ACC[["Bureau furnishing accuracy"]]
     CTL_COMPLAINT_REG[["Complaint regulatory<br/>routing"]]
     CTL_REGE_DETERM[["Dispute determination<br/>timeliness and notice"]]
     CTL_NOTICE_CONTENT[["Notice content and<br/>delivery evidence"]]
@@ -34,10 +36,15 @@ flowchart LR
   end
 
   SYS_CARDSVC_API -->|"realizes"| CAP_SERV
+  SYS_CARDSVC_API -->|"realizes"| CAP_SERV_09
+  CAP_SERV -->|"governed by"| CTL_BUREAU_ACC
   CAP_SERV -->|"governed by"| CTL_COMPLAINT_REG
   CAP_SERV -->|"governed by"| CTL_NOTICE_CONTENT
   CAP_SERV -->|"governed by"| CTL_REGE_DETERM
   CAP_SERV -->|"governed by"| CTL_SCRA_MLA
+  CAP_SERV_09 -->|"governed by"| CTL_BUREAU_ACC
+  CAP_SERV_09 -->|"governed by"| CTL_NOTICE_CONTENT
+  CTL_BUREAU_ACC -->|"gives effect to"| POL_FAIR_LEND
   CTL_COMPLAINT_REG -->|"gives effect to"| POL_MKT_UDAAP
   CTL_NOTICE_CONTENT -->|"gives effect to"| POL_ERROR_RES
   CTL_REGE_DETERM -->|"gives effect to"| POL_ERROR_RES
@@ -47,8 +54,8 @@ flowchart LR
   classDef s_controls__controls fill:#fca5a5,stroke:#b91c1c,color:#0f172a,stroke-width:1.4px;
   classDef s_policies__policies fill:#fecaca,stroke:#dc2626,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
-  class CAP_SERV s_capabilities__capabilities;
-  class CTL_COMPLAINT_REG,CTL_NOTICE_CONTENT,CTL_REGE_DETERM,CTL_SCRA_MLA s_controls__controls;
+  class CAP_SERV,CAP_SERV_09 s_capabilities__capabilities;
+  class CTL_BUREAU_ACC,CTL_COMPLAINT_REG,CTL_NOTICE_CONTENT,CTL_REGE_DETERM,CTL_SCRA_MLA s_controls__controls;
   class POL_ERROR_RES,POL_FAIR_LEND,POL_MKT_UDAAP s_policies__policies;
   class SYS_CARDSVC_API s_systems__systems;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
@@ -68,4 +75,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#dc2626` | policies |
 | `#4338ca` | systems |
 
-9 entities, 9 relationships. Generated from the model; edit the model, not this file.
+11 entities, 14 relationships. Generated from the model; edit the model, not this file.

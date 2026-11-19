@@ -28,7 +28,9 @@ Two files: `build-types.yaml` for the kinds of product (a digital product,
 a platform service, a bought SaaS capability, a data product, a shared hub)
 and `application-types.yaml` for the kinds of application (an internal tool,
 a mobile application, an event-driven service, a batch application, an
-integration adapter, an AI inference service, a reporting application). An
+integration adapter, an AI inference service, an AI assistant, an AI agent,
+a reporting application, a web application, a customer portal, an API
+offered to partners). An
 application type requires the standard application kit from
 `28_MODULES/applications.yaml` and offers the components an application of
 that kind may add; it has no shape of its own and is assembled from its parts

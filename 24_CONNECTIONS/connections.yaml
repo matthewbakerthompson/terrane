@@ -46,6 +46,7 @@
   frequency: Realtime
   direction: Outbound
   patterns: [stateless-request-service]
+  datastore: target
 
 - connection_id: private-egress
   name: Private path to a vendor
@@ -146,6 +147,7 @@
   frequency: Daily
   direction: Outbound
   patterns: [analytics-landing-zone]
+  datastore: target
 
 - connection_id: scheduled-pull
   name: Scheduled API pull
@@ -157,3 +159,65 @@
   auth_methods: [OAuth2, WorkloadIdentity]
   frequency: Weekly
   direction: Inbound
+
+# A database's ways out. Its own service reads and writes it (its own
+# datastore, above); what else needs its data takes it out one of these ways
+# rather than reaching in, which is the shared database the library
+# deprecates. They are the library's ahead of the estate, which has no
+# connection out of a database yet. `datastore` says which end is the data
+# store -- a component type the library draws as a cylinder -- and the
+# chooser offers the kind first where that end is one: `target` a way in
+# from something that is not a store, `source` a way out, `both` from one
+# store to another.
+
+- connection_id: change-data-capture
+  name: Change data capture feed
+  description: >
+    A database's committed changes read from its log and published as they
+    happen, so another system follows it without querying it or sharing it.
+    The way out of a database that leaves it its own service's.
+  integration_style: Event
+  protocols: [CDC]
+  auth_methods: [IAM, ManagedIdentity, WorkloadIdentity]
+  frequency: Realtime
+  direction: Outbound
+  datastore: source
+
+- connection_id: database-extract
+  name: Scheduled extract
+  description: >
+    Rows read out of a database by a query on a schedule, into a pipeline or
+    a report, at an hour agreed with the service that owns it so the read
+    does not slow it. Simpler than a feed, and a day behind.
+  integration_style: Batch
+  protocols: [TDS, PostgreSQL]
+  auth_methods: [ManagedIdentity, IAM, WorkloadIdentity]
+  frequency: Daily
+  direction: Outbound
+  datastore: source
+
+- connection_id: database-replica
+  name: Database replica
+  description: >
+    One database kept a copy of another as it changes: a read replica that
+    takes reporting off the primary, or a standby in another region to
+    recover to. Both ends are databases, and the copy is never written to.
+  integration_style: Event
+  protocols: [Replication]
+  auth_methods: [MutualTLS, IAM]
+  frequency: Realtime
+  direction: Outbound
+  datastore: both
+
+- connection_id: database-backup
+  name: Backup
+  description: >
+    A database copied on a schedule to a store it can be restored from, kept
+    apart from it in another account or region and for as long as the
+    retention policy says.
+  integration_style: Batch
+  protocols: [Snapshot]
+  auth_methods: [IAM, ManagedIdentity]
+  frequency: Daily
+  direction: Outbound
+  datastore: both

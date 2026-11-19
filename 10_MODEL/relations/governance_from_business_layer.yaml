@@ -15,6 +15,9 @@ capability_governed_by_control:
     control_id: CTL-MKT-REVIEW
     basis: Process
   - capability_id: CAP-BILL
+    control_id: CTL-CREDIT-BAL
+    basis: Descendant
+  - capability_id: CAP-BILL
     control_id: CTL-CYCLE-VALID
     basis: Descendant
   - capability_id: CAP-BILL-01
@@ -26,11 +29,17 @@ capability_governed_by_control:
   - capability_id: CAP-BILL-04
     control_id: CTL-CYCLE-VALID
     basis: Process
+  - capability_id: CAP-BILL-06
+    control_id: CTL-CREDIT-BAL
+    basis: Process
   - capability_id: CAP-COLL
     control_id: CTL-BUREAU-ACC
     basis: Descendant
   - capability_id: CAP-COLL
     control_id: CTL-CHARGEOFF-TIME
+    basis: Descendant
+  - capability_id: CAP-COLL
+    control_id: CTL-CLIENT-SLA
     basis: Descendant
   - capability_id: CAP-COLL
     control_id: CTL-CONTACT-LIM
@@ -51,12 +60,42 @@ capability_governed_by_control:
     control_id: CTL-TREATMENT-APPR
     basis: Process
   - capability_id: CAP-COLL-02
+    control_id: CTL-CLIENT-SLA
+    basis: Process
+  - capability_id: CAP-COLL-02
     control_id: CTL-CONTACT-LIM
+    basis: Process
+  - capability_id: CAP-COLL-02
+    control_id: CTL-FDCPA-NOTICE
+    basis: Process
+  - capability_id: CAP-COLL-02-01
+    control_id: CTL-CONTACT-LIM
+    basis: Process
+  - capability_id: CAP-COLL-02-02
+    control_id: CTL-CLIENT-SLA
+    basis: Process
+  - capability_id: CAP-COLL-02-02
+    control_id: CTL-CONTACT-LIM
+    basis: Process
+  - capability_id: CAP-COLL-02-02
+    control_id: CTL-FDCPA-NOTICE
+    basis: Process
+  - capability_id: CAP-COLL-03
+    control_id: CTL-TREATMENT-APPR
+    basis: Process
+  - capability_id: CAP-COLL-03-02
+    control_id: CTL-TREATMENT-APPR
     basis: Process
   - capability_id: CAP-COLL-04
     control_id: CTL-CHARGEOFF-TIME
     basis: Process
   - capability_id: CAP-COLL-06
+    control_id: CTL-FDCPA-NOTICE
+    basis: Process
+  - capability_id: CAP-COLL-06-01
+    control_id: CTL-FDCPA-NOTICE
+    basis: Process
+  - capability_id: CAP-COLL-06-03
     control_id: CTL-FDCPA-NOTICE
     basis: Process
   - capability_id: CAP-COLL-07
@@ -123,6 +162,45 @@ capability_governed_by_control:
     control_id: CTL-REGRPT-CERT
     basis: Process
   - capability_id: CAP-DATA-07
+    control_id: CTL-RETENTION
+    basis: Process
+  - capability_id: CAP-DEP
+    control_id: CTL-BROKERED-RECON
+    basis: Descendant
+  - capability_id: CAP-DEP
+    control_id: CTL-MKT-REVIEW
+    basis: Descendant
+  - capability_id: CAP-DEP
+    control_id: CTL-RETENTION
+    basis: Descendant
+  - capability_id: CAP-DEP
+    control_id: CTL-SANCTIONS
+    basis: Descendant
+  - capability_id: CAP-DEP
+    control_id: CTL-TAX-REPORT
+    basis: Descendant
+  - capability_id: CAP-DEP-01
+    control_id: CTL-MKT-REVIEW
+    basis: Process
+  - capability_id: CAP-DEP-02
+    control_id: CTL-SANCTIONS
+    basis: Process
+  - capability_id: CAP-DEP-03
+    control_id: CTL-BROKERED-RECON
+    basis: Process
+  - capability_id: CAP-DEP-03-01
+    control_id: CTL-BROKERED-RECON
+    basis: Process
+  - capability_id: CAP-DEP-03-02
+    control_id: CTL-BROKERED-RECON
+    basis: Process
+  - capability_id: CAP-DEP-04
+    control_id: CTL-TAX-REPORT
+    basis: Process
+  - capability_id: CAP-DEP-04-01
+    control_id: CTL-TAX-REPORT
+    basis: Process
+  - capability_id: CAP-DEP-05
     control_id: CTL-RETENTION
     basis: Process
   - capability_id: CAP-FIN
@@ -200,11 +278,185 @@ capability_governed_by_control:
   - capability_id: CAP-FRAUD-04
     control_id: CTL-REGE-DETERM
     basis: Process
+  - capability_id: CAP-FRAUD-04-01
+    control_id: CTL-REGE-DETERM
+    basis: Process
   - capability_id: CAP-FRAUD-06
     control_id: CTL-AUTH-POLICY
     basis: Process
   - capability_id: CAP-FRAUD-06
     control_id: CTL-IR-PLAYBOOK
+    basis: Process
+  - capability_id: CAP-FRAUD-08
+    control_id: CTL-FRAUD-SLA
+    basis: Process
+  - capability_id: CAP-LEND
+    control_id: CTL-ADVERSE-ACT
+    basis: Descendant
+  - capability_id: CAP-LEND
+    control_id: CTL-ANCILLARY-REFUND
+    basis: Descendant
+  - capability_id: CAP-LEND
+    control_id: CTL-APP-INTAKE
+    basis: Descendant
+  - capability_id: CAP-LEND
+    control_id: CTL-CONTACT-LIM
+    basis: Descendant
+  - capability_id: CAP-LEND
+    control_id: CTL-DEALER-MON
+    basis: Descendant
+  - capability_id: CAP-LEND
+    control_id: CTL-FUND-STIPS
+    basis: Descendant
+  - capability_id: CAP-LEND
+    control_id: CTL-FUNDING-CONF
+    basis: Descendant
+  - capability_id: CAP-LEND
+    control_id: CTL-LIEN-PERFECT
+    basis: Descendant
+  - capability_id: CAP-LEND
+    control_id: CTL-LIEN-RELEASE
+    basis: Descendant
+  - capability_id: CAP-LEND
+    control_id: CTL-PMT-POSTING
+    basis: Descendant
+  - capability_id: CAP-LEND
+    control_id: CTL-REPO-NOTICE
+    basis: Descendant
+  - capability_id: CAP-LEND
+    control_id: CTL-SANCTIONS
+    basis: Descendant
+  - capability_id: CAP-LEND
+    control_id: CTL-TPRM-DD
+    basis: Descendant
+  - capability_id: CAP-LEND-01
+    control_id: CTL-DEALER-MON
+    basis: Process
+  - capability_id: CAP-LEND-01
+    control_id: CTL-TPRM-DD
+    basis: Process
+  - capability_id: CAP-LEND-02
+    control_id: CTL-ADVERSE-ACT
+    basis: Process
+  - capability_id: CAP-LEND-02
+    control_id: CTL-APP-INTAKE
+    basis: Process
+  - capability_id: CAP-LEND-02
+    control_id: CTL-SANCTIONS
+    basis: Process
+  - capability_id: CAP-LEND-02-01
+    control_id: CTL-ADVERSE-ACT
+    basis: Process
+  - capability_id: CAP-LEND-02-01
+    control_id: CTL-APP-INTAKE
+    basis: Process
+  - capability_id: CAP-LEND-02-01
+    control_id: CTL-SANCTIONS
+    basis: Process
+  - capability_id: CAP-LEND-02-02
+    control_id: CTL-ADVERSE-ACT
+    basis: Process
+  - capability_id: CAP-LEND-03
+    control_id: CTL-FUND-STIPS
+    basis: Process
+  - capability_id: CAP-LEND-03
+    control_id: CTL-FUNDING-CONF
+    basis: Process
+  - capability_id: CAP-LEND-04
+    control_id: CTL-LIEN-PERFECT
+    basis: Process
+  - capability_id: CAP-LEND-04
+    control_id: CTL-LIEN-RELEASE
+    basis: Process
+  - capability_id: CAP-LEND-04-01
+    control_id: CTL-LIEN-PERFECT
+    basis: Process
+  - capability_id: CAP-LEND-04-02
+    control_id: CTL-LIEN-RELEASE
+    basis: Process
+  - capability_id: CAP-LEND-05
+    control_id: CTL-CONTACT-LIM
+    basis: Process
+  - capability_id: CAP-LEND-05
+    control_id: CTL-PMT-POSTING
+    basis: Process
+  - capability_id: CAP-LEND-06
+    control_id: CTL-REPO-NOTICE
+    basis: Process
+  - capability_id: CAP-LEND-06-01
+    control_id: CTL-REPO-NOTICE
+    basis: Process
+  - capability_id: CAP-LEND-06-02
+    control_id: CTL-REPO-NOTICE
+    basis: Process
+  - capability_id: CAP-LEND-07
+    control_id: CTL-ANCILLARY-REFUND
+    basis: Process
+  - capability_id: CAP-LEND-07
+    control_id: CTL-DEALER-MON
+    basis: Process
+  - capability_id: CAP-MERCH
+    control_id: CTL-DAILY-RECON
+    basis: Descendant
+  - capability_id: CAP-MERCH
+    control_id: CTL-FUNDING-CONF
+    basis: Descendant
+  - capability_id: CAP-MERCH
+    control_id: CTL-MERCH-EXPOSURE
+    basis: Descendant
+  - capability_id: CAP-MERCH
+    control_id: CTL-MERCH-SCREEN
+    basis: Descendant
+  - capability_id: CAP-MERCH
+    control_id: CTL-SANCTIONS
+    basis: Descendant
+  - capability_id: CAP-MERCH
+    control_id: CTL-TPRM-DD
+    basis: Descendant
+  - capability_id: CAP-MERCH-01
+    control_id: CTL-TPRM-DD
+    basis: Process
+  - capability_id: CAP-MERCH-02
+    control_id: CTL-MERCH-EXPOSURE
+    basis: Process
+  - capability_id: CAP-MERCH-02
+    control_id: CTL-MERCH-SCREEN
+    basis: Process
+  - capability_id: CAP-MERCH-02
+    control_id: CTL-SANCTIONS
+    basis: Process
+  - capability_id: CAP-MERCH-02-01
+    control_id: CTL-MERCH-EXPOSURE
+    basis: Process
+  - capability_id: CAP-MERCH-02-02
+    control_id: CTL-MERCH-SCREEN
+    basis: Process
+  - capability_id: CAP-MERCH-02-02
+    control_id: CTL-SANCTIONS
+    basis: Process
+  - capability_id: CAP-MERCH-03
+    control_id: CTL-MERCH-SCREEN
+    basis: Process
+  - capability_id: CAP-MERCH-04
+    control_id: CTL-DAILY-RECON
+    basis: Process
+  - capability_id: CAP-MERCH-04
+    control_id: CTL-FUNDING-CONF
+    basis: Process
+  - capability_id: CAP-MERCH-04
+    control_id: CTL-MERCH-EXPOSURE
+    basis: Process
+  - capability_id: CAP-MERCH-04-01
+    control_id: CTL-DAILY-RECON
+    basis: Process
+  - capability_id: CAP-MERCH-04-01
+    control_id: CTL-FUNDING-CONF
+    basis: Process
+  - capability_id: CAP-MERCH-04-02
+    control_id: CTL-MERCH-EXPOSURE
+    basis: Process
+  - capability_id: CAP-MERCH-06
+    control_id: CTL-MERCH-EXPOSURE
     basis: Process
   - capability_id: CAP-ORIG
     control_id: CTL-ADVERSE-ACT
@@ -242,11 +494,44 @@ capability_governed_by_control:
   - capability_id: CAP-ORIG-06
     control_id: CTL-AUTH-POLICY
     basis: Process
+  - capability_id: CAP-PART
+    control_id: CTL-CLIENT-SLA
+    basis: Descendant
+  - capability_id: CAP-PART
+    control_id: CTL-CLOSE-SIGNOFF
+    basis: Descendant
+  - capability_id: CAP-PART
+    control_id: CTL-MKT-REVIEW
+    basis: Descendant
+  - capability_id: CAP-PART-04
+    control_id: CTL-CLIENT-SLA
+    basis: Process
+  - capability_id: CAP-PART-05
+    control_id: CTL-CLOSE-SIGNOFF
+    basis: Process
+  - capability_id: CAP-PART-05
+    control_id: CTL-MKT-REVIEW
+    basis: Process
+  - capability_id: CAP-PART-05-01
+    control_id: CTL-MKT-REVIEW
+    basis: Process
+  - capability_id: CAP-PART-05-02
+    control_id: CTL-CLOSE-SIGNOFF
+    basis: Process
   - capability_id: CAP-PAY
     control_id: CTL-AUTH-AVAIL
     basis: Descendant
   - capability_id: CAP-PAY
+    control_id: CTL-CHG-APPROVAL
+    basis: Descendant
+  - capability_id: CAP-PAY
     control_id: CTL-DAILY-RECON
+    basis: Descendant
+  - capability_id: CAP-PAY
+    control_id: CTL-FRAUD-SLA
+    basis: Descendant
+  - capability_id: CAP-PAY
+    control_id: CTL-PMT-ALLOC
     basis: Descendant
   - capability_id: CAP-PAY
     control_id: CTL-PMT-POSTING
@@ -254,11 +539,47 @@ capability_governed_by_control:
   - capability_id: CAP-PAY-01
     control_id: CTL-AUTH-AVAIL
     basis: Process
+  - capability_id: CAP-PAY-01
+    control_id: CTL-CHG-APPROVAL
+    basis: Process
+  - capability_id: CAP-PAY-01
+    control_id: CTL-FRAUD-SLA
+    basis: Descendant
+  - capability_id: CAP-PAY-01-01
+    control_id: CTL-AUTH-AVAIL
+    basis: Process
+  - capability_id: CAP-PAY-01-02
+    control_id: CTL-AUTH-AVAIL
+    basis: Process
+  - capability_id: CAP-PAY-01-02
+    control_id: CTL-FRAUD-SLA
+    basis: Process
+  - capability_id: CAP-PAY-01-03
+    control_id: CTL-AUTH-AVAIL
+    basis: Process
+  - capability_id: CAP-PAY-01-04
+    control_id: CTL-AUTH-AVAIL
+    basis: Process
+  - capability_id: CAP-PAY-01-05
+    control_id: CTL-AUTH-AVAIL
+    basis: Process
+  - capability_id: CAP-PAY-01-05
+    control_id: CTL-CHG-APPROVAL
+    basis: Process
   - capability_id: CAP-PAY-02
     control_id: CTL-DAILY-RECON
     basis: Process
   - capability_id: CAP-PAY-03
+    control_id: CTL-PMT-ALLOC
+    basis: Process
+  - capability_id: CAP-PAY-03
     control_id: CTL-PMT-POSTING
+    basis: Process
+  - capability_id: CAP-PAY-03-01
+    control_id: CTL-PMT-POSTING
+    basis: Process
+  - capability_id: CAP-PAY-03-02
+    control_id: CTL-PMT-ALLOC
     basis: Process
   - capability_id: CAP-PAY-05
     control_id: CTL-DAILY-RECON
@@ -267,13 +588,22 @@ capability_governed_by_control:
     control_id: CTL-DAILY-RECON
     basis: Process
   - capability_id: CAP-PROD
+    control_id: CTL-MKT-REVIEW
+    basis: Descendant
+  - capability_id: CAP-PROD
     control_id: CTL-NOTICE-CONTENT
     basis: Descendant
   - capability_id: CAP-PROD-03
     control_id: CTL-NOTICE-CONTENT
     basis: Process
+  - capability_id: CAP-PROD-04
+    control_id: CTL-MKT-REVIEW
+    basis: Process
   - capability_id: CAP-RGOV
     control_id: CTL-COMPLAINT-REG
+    basis: Descendant
+  - capability_id: CAP-RGOV
+    control_id: CTL-FAIR-LEND-TEST
     basis: Descendant
   - capability_id: CAP-RGOV
     control_id: CTL-REGCHANGE-TRACK
@@ -301,6 +631,15 @@ capability_governed_by_control:
     basis: Process
   - capability_id: CAP-RGOV-07
     control_id: CTL-SAR-FILING
+    basis: Process
+  - capability_id: CAP-RGOV-07-01
+    control_id: CTL-SANCTIONS
+    basis: Process
+  - capability_id: CAP-RGOV-07-02
+    control_id: CTL-SAR-FILING
+    basis: Process
+  - capability_id: CAP-RGOV-09
+    control_id: CTL-FAIR-LEND-TEST
     basis: Process
   - capability_id: CAP-SEC
     control_id: CTL-ACCESS-CERT
@@ -345,6 +684,9 @@ capability_governed_by_control:
     control_id: CTL-PRIV-REQ
     basis: Process
   - capability_id: CAP-SERV
+    control_id: CTL-BUREAU-ACC
+    basis: Descendant
+  - capability_id: CAP-SERV
     control_id: CTL-COMPLAINT-REG
     basis: Descendant
   - capability_id: CAP-SERV
@@ -359,6 +701,9 @@ capability_governed_by_control:
   - capability_id: CAP-SERV-02
     control_id: CTL-SCRA-MLA
     basis: Process
+  - capability_id: CAP-SERV-02-02
+    control_id: CTL-SCRA-MLA
+    basis: Process
   - capability_id: CAP-SERV-04
     control_id: CTL-NOTICE-CONTENT
     basis: Process
@@ -367,6 +712,12 @@ capability_governed_by_control:
     basis: Process
   - capability_id: CAP-SERV-05
     control_id: CTL-COMPLAINT-REG
+    basis: Process
+  - capability_id: CAP-SERV-09
+    control_id: CTL-BUREAU-ACC
+    basis: Process
+  - capability_id: CAP-SERV-09
+    control_id: CTL-NOTICE-CONTENT
     basis: Process
   - capability_id: CAP-TECH
     control_id: CTL-AUTH-AVAIL
@@ -451,11 +802,17 @@ capability_subject_to_policy:
   - capability_id: CAP-BILL-04
     policy_id: POL-ERROR-RES
     basis: Process
+  - capability_id: CAP-BILL-06
+    policy_id: POL-ERROR-RES
+    basis: Process
   - capability_id: CAP-COLL
     policy_id: POL-COLLECT
     basis: Descendant
   - capability_id: CAP-COLL
     policy_id: POL-FAIR-LEND
+    basis: Descendant
+  - capability_id: CAP-COLL
+    policy_id: POL-TPRM
     basis: Descendant
   - capability_id: CAP-COLL-01
     policy_id: POL-FAIR-LEND
@@ -463,10 +820,34 @@ capability_subject_to_policy:
   - capability_id: CAP-COLL-02
     policy_id: POL-COLLECT
     basis: Process
+  - capability_id: CAP-COLL-02
+    policy_id: POL-TPRM
+    basis: Process
+  - capability_id: CAP-COLL-02-01
+    policy_id: POL-COLLECT
+    basis: Process
+  - capability_id: CAP-COLL-02-02
+    policy_id: POL-COLLECT
+    basis: Process
+  - capability_id: CAP-COLL-02-02
+    policy_id: POL-TPRM
+    basis: Process
+  - capability_id: CAP-COLL-03
+    policy_id: POL-COLLECT
+    basis: Process
+  - capability_id: CAP-COLL-03-02
+    policy_id: POL-COLLECT
+    basis: Process
   - capability_id: CAP-COLL-04
     policy_id: POL-COLLECT
     basis: Process
   - capability_id: CAP-COLL-06
+    policy_id: POL-COLLECT
+    basis: Process
+  - capability_id: CAP-COLL-06-01
+    policy_id: POL-COLLECT
+    basis: Process
+  - capability_id: CAP-COLL-06-03
     policy_id: POL-COLLECT
     basis: Process
   - capability_id: CAP-COLL-07
@@ -511,6 +892,39 @@ capability_subject_to_policy:
   - capability_id: CAP-DATA-07
     policy_id: POL-RECORDS
     basis: Process
+  - capability_id: CAP-DEP
+    policy_id: POL-BSA-AML
+    basis: Descendant
+  - capability_id: CAP-DEP
+    policy_id: POL-MKT-UDAAP
+    basis: Descendant
+  - capability_id: CAP-DEP
+    policy_id: POL-RECORDS
+    basis: Descendant
+  - capability_id: CAP-DEP-01
+    policy_id: POL-MKT-UDAAP
+    basis: Process
+  - capability_id: CAP-DEP-02
+    policy_id: POL-BSA-AML
+    basis: Process
+  - capability_id: CAP-DEP-03
+    policy_id: POL-RECORDS
+    basis: Process
+  - capability_id: CAP-DEP-03-01
+    policy_id: POL-RECORDS
+    basis: Process
+  - capability_id: CAP-DEP-03-02
+    policy_id: POL-RECORDS
+    basis: Process
+  - capability_id: CAP-DEP-04
+    policy_id: POL-RECORDS
+    basis: Process
+  - capability_id: CAP-DEP-04-01
+    policy_id: POL-RECORDS
+    basis: Process
+  - capability_id: CAP-DEP-05
+    policy_id: POL-RECORDS
+    basis: Process
   - capability_id: CAP-FIN
     policy_id: POL-COLLECT
     basis: Descendant
@@ -550,8 +964,146 @@ capability_subject_to_policy:
   - capability_id: CAP-FRAUD-04
     policy_id: POL-ERROR-RES
     basis: Process
+  - capability_id: CAP-FRAUD-04-01
+    policy_id: POL-ERROR-RES
+    basis: Process
   - capability_id: CAP-FRAUD-06
     policy_id: POL-INFOSEC
+    basis: Process
+  - capability_id: CAP-FRAUD-08
+    policy_id: POL-ERROR-RES
+    basis: Process
+  - capability_id: CAP-LEND
+    policy_id: POL-BSA-AML
+    basis: Descendant
+  - capability_id: CAP-LEND
+    policy_id: POL-COLLATERAL
+    basis: Descendant
+  - capability_id: CAP-LEND
+    policy_id: POL-COLLECT
+    basis: Descendant
+  - capability_id: CAP-LEND
+    policy_id: POL-ERROR-RES
+    basis: Descendant
+  - capability_id: CAP-LEND
+    policy_id: POL-FAIR-LEND
+    basis: Descendant
+  - capability_id: CAP-LEND
+    policy_id: POL-MKT-UDAAP
+    basis: Descendant
+  - capability_id: CAP-LEND
+    policy_id: POL-RECORDS
+    basis: Descendant
+  - capability_id: CAP-LEND
+    policy_id: POL-TPRM
+    basis: Descendant
+  - capability_id: CAP-LEND-01
+    policy_id: POL-FAIR-LEND
+    basis: Process
+  - capability_id: CAP-LEND-01
+    policy_id: POL-TPRM
+    basis: Process
+  - capability_id: CAP-LEND-02
+    policy_id: POL-BSA-AML
+    basis: Process
+  - capability_id: CAP-LEND-02
+    policy_id: POL-FAIR-LEND
+    basis: Process
+  - capability_id: CAP-LEND-02-01
+    policy_id: POL-BSA-AML
+    basis: Process
+  - capability_id: CAP-LEND-02-01
+    policy_id: POL-FAIR-LEND
+    basis: Process
+  - capability_id: CAP-LEND-02-02
+    policy_id: POL-FAIR-LEND
+    basis: Process
+  - capability_id: CAP-LEND-03
+    policy_id: POL-COLLATERAL
+    basis: Process
+  - capability_id: CAP-LEND-03
+    policy_id: POL-RECORDS
+    basis: Process
+  - capability_id: CAP-LEND-04
+    policy_id: POL-COLLATERAL
+    basis: Process
+  - capability_id: CAP-LEND-04-01
+    policy_id: POL-COLLATERAL
+    basis: Process
+  - capability_id: CAP-LEND-04-02
+    policy_id: POL-COLLATERAL
+    basis: Process
+  - capability_id: CAP-LEND-05
+    policy_id: POL-COLLECT
+    basis: Process
+  - capability_id: CAP-LEND-05
+    policy_id: POL-ERROR-RES
+    basis: Process
+  - capability_id: CAP-LEND-06
+    policy_id: POL-COLLATERAL
+    basis: Process
+  - capability_id: CAP-LEND-06-01
+    policy_id: POL-COLLATERAL
+    basis: Process
+  - capability_id: CAP-LEND-06-02
+    policy_id: POL-COLLATERAL
+    basis: Process
+  - capability_id: CAP-LEND-07
+    policy_id: POL-FAIR-LEND
+    basis: Process
+  - capability_id: CAP-LEND-07
+    policy_id: POL-MKT-UDAAP
+    basis: Process
+  - capability_id: CAP-MERCH
+    policy_id: POL-BSA-AML
+    basis: Descendant
+  - capability_id: CAP-MERCH
+    policy_id: POL-MERCHANT
+    basis: Descendant
+  - capability_id: CAP-MERCH
+    policy_id: POL-RECORDS
+    basis: Descendant
+  - capability_id: CAP-MERCH
+    policy_id: POL-TPRM
+    basis: Descendant
+  - capability_id: CAP-MERCH-01
+    policy_id: POL-MERCHANT
+    basis: Process
+  - capability_id: CAP-MERCH-01
+    policy_id: POL-TPRM
+    basis: Process
+  - capability_id: CAP-MERCH-02
+    policy_id: POL-BSA-AML
+    basis: Process
+  - capability_id: CAP-MERCH-02
+    policy_id: POL-MERCHANT
+    basis: Process
+  - capability_id: CAP-MERCH-02-01
+    policy_id: POL-MERCHANT
+    basis: Process
+  - capability_id: CAP-MERCH-02-02
+    policy_id: POL-BSA-AML
+    basis: Process
+  - capability_id: CAP-MERCH-03
+    policy_id: POL-BSA-AML
+    basis: Process
+  - capability_id: CAP-MERCH-03
+    policy_id: POL-MERCHANT
+    basis: Process
+  - capability_id: CAP-MERCH-04
+    policy_id: POL-MERCHANT
+    basis: Process
+  - capability_id: CAP-MERCH-04
+    policy_id: POL-RECORDS
+    basis: Process
+  - capability_id: CAP-MERCH-04-01
+    policy_id: POL-RECORDS
+    basis: Process
+  - capability_id: CAP-MERCH-04-02
+    policy_id: POL-MERCHANT
+    basis: Process
+  - capability_id: CAP-MERCH-06
+    policy_id: POL-MERCHANT
     basis: Process
   - capability_id: CAP-ORIG
     policy_id: POL-BSA-AML
@@ -580,6 +1132,33 @@ capability_subject_to_policy:
   - capability_id: CAP-ORIG-06
     policy_id: POL-INFOSEC
     basis: Process
+  - capability_id: CAP-PART
+    policy_id: POL-MKT-UDAAP
+    basis: Descendant
+  - capability_id: CAP-PART
+    policy_id: POL-RECORDS
+    basis: Descendant
+  - capability_id: CAP-PART
+    policy_id: POL-TPRM
+    basis: Descendant
+  - capability_id: CAP-PART-03
+    policy_id: POL-TPRM
+    basis: Process
+  - capability_id: CAP-PART-04
+    policy_id: POL-TPRM
+    basis: Process
+  - capability_id: CAP-PART-05
+    policy_id: POL-MKT-UDAAP
+    basis: Process
+  - capability_id: CAP-PART-05
+    policy_id: POL-RECORDS
+    basis: Process
+  - capability_id: CAP-PART-05-01
+    policy_id: POL-MKT-UDAAP
+    basis: Process
+  - capability_id: CAP-PART-05-02
+    policy_id: POL-RECORDS
+    basis: Process
   - capability_id: CAP-PAY
     policy_id: POL-CHANGE
     basis: Descendant
@@ -592,10 +1171,37 @@ capability_subject_to_policy:
   - capability_id: CAP-PAY-01
     policy_id: POL-CHANGE
     basis: Process
+  - capability_id: CAP-PAY-01
+    policy_id: POL-ERROR-RES
+    basis: Descendant
+  - capability_id: CAP-PAY-01-01
+    policy_id: POL-CHANGE
+    basis: Process
+  - capability_id: CAP-PAY-01-02
+    policy_id: POL-CHANGE
+    basis: Process
+  - capability_id: CAP-PAY-01-02
+    policy_id: POL-ERROR-RES
+    basis: Process
+  - capability_id: CAP-PAY-01-03
+    policy_id: POL-CHANGE
+    basis: Process
+  - capability_id: CAP-PAY-01-04
+    policy_id: POL-CHANGE
+    basis: Process
+  - capability_id: CAP-PAY-01-05
+    policy_id: POL-CHANGE
+    basis: Process
   - capability_id: CAP-PAY-02
     policy_id: POL-RECORDS
     basis: Process
   - capability_id: CAP-PAY-03
+    policy_id: POL-ERROR-RES
+    basis: Process
+  - capability_id: CAP-PAY-03-01
+    policy_id: POL-ERROR-RES
+    basis: Process
+  - capability_id: CAP-PAY-03-02
     policy_id: POL-ERROR-RES
     basis: Process
   - capability_id: CAP-PAY-05
@@ -607,11 +1213,20 @@ capability_subject_to_policy:
   - capability_id: CAP-PROD
     policy_id: POL-ERROR-RES
     basis: Descendant
+  - capability_id: CAP-PROD
+    policy_id: POL-MKT-UDAAP
+    basis: Descendant
   - capability_id: CAP-PROD-03
     policy_id: POL-ERROR-RES
     basis: Process
+  - capability_id: CAP-PROD-04
+    policy_id: POL-MKT-UDAAP
+    basis: Process
   - capability_id: CAP-RGOV
     policy_id: POL-BSA-AML
+    basis: Descendant
+  - capability_id: CAP-RGOV
+    policy_id: POL-FAIR-LEND
     basis: Descendant
   - capability_id: CAP-RGOV
     policy_id: POL-MKT-UDAAP
@@ -630,6 +1245,15 @@ capability_subject_to_policy:
     basis: Process
   - capability_id: CAP-RGOV-07
     policy_id: POL-BSA-AML
+    basis: Process
+  - capability_id: CAP-RGOV-07-01
+    policy_id: POL-BSA-AML
+    basis: Process
+  - capability_id: CAP-RGOV-07-02
+    policy_id: POL-BSA-AML
+    basis: Process
+  - capability_id: CAP-RGOV-09
+    policy_id: POL-FAIR-LEND
     basis: Process
   - capability_id: CAP-SEC
     policy_id: POL-INFOSEC
@@ -664,11 +1288,20 @@ capability_subject_to_policy:
   - capability_id: CAP-SERV-02
     policy_id: POL-FAIR-LEND
     basis: Process
+  - capability_id: CAP-SERV-02-02
+    policy_id: POL-FAIR-LEND
+    basis: Process
   - capability_id: CAP-SERV-04
     policy_id: POL-ERROR-RES
     basis: Process
   - capability_id: CAP-SERV-05
     policy_id: POL-MKT-UDAAP
+    basis: Process
+  - capability_id: CAP-SERV-09
+    policy_id: POL-ERROR-RES
+    basis: Process
+  - capability_id: CAP-SERV-09
+    policy_id: POL-FAIR-LEND
     basis: Process
   - capability_id: CAP-TECH
     policy_id: POL-CHANGE

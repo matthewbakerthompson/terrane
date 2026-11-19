@@ -92,17 +92,19 @@ flowchart LR
   SYS_LENDING_DB -.->|"runs on"| TS_AWS_KMS
   SYS_LENDING_BUCKET -.->|"runs on"| TS_AWS_S3
   SYS_LENDING_BUCKET -.->|"runs on"| TS_AWS_KMS
-  SYS_LENDING_ALB -.->|"runs on"| TS_NET_SUB_LEND_PUB_A
-  SYS_LENDING_ALB -.->|"runs on"| TS_NET_SUB_LEND_PUB_B
-  SYS_LENDING_WEB -.->|"runs on"| TS_NET_SUB_LEND_APP_A
-  SYS_LENDING_WEB -.->|"runs on"| TS_NET_SUB_LEND_APP_B
+  SYS_LENDING_BUCKET -.->|"runs on"| TS_NET_SUB_LEND_DATA_A
   SYS_LENDING_API -.->|"runs on"| TS_NET_SUB_LEND_APP_A
   SYS_LENDING_API -.->|"runs on"| TS_NET_SUB_LEND_APP_B
+  SYS_LENDING_WEB -.->|"runs on"| TS_NET_SUB_LEND_APP_A
+  SYS_LENDING_WEB -.->|"runs on"| TS_NET_SUB_LEND_APP_B
+  SYS_LENDING_ALB -.->|"runs on"| TS_NET_SUB_LEND_PUB_A
+  SYS_LENDING_ALB -.->|"runs on"| TS_NET_SUB_LEND_PUB_B
   SYS_LENDING_WORKER -.->|"runs on"| TS_NET_SUB_LEND_APP_A
   SYS_LENDING_WORKER -.->|"runs on"| TS_NET_SUB_LEND_APP_B
   SYS_LENDING_DB -.->|"runs on"| TS_NET_SUB_LEND_DATA_A
   SYS_LENDING_DB -.->|"runs on"| TS_NET_SUB_LEND_DATA_B
-  SYS_LENDING_BUCKET -.->|"runs on"| TS_NET_SUB_LEND_DATA_A
+  SYS_LENDING_HUB -.->|"runs on"| TS_NET_SUB_LEND_APP_A
+  SYS_LENDING_HUB -.->|"runs on"| TS_NET_SUB_LEND_APP_B
   SYS_LENDING_API -->|"ReadWrite"| DA_LENDING_OPERATIONAL
   SYS_LENDING_WORKER -->|"Read"| DA_LENDING_OPERATIONAL
   OI_LENDING_API --- SYS_LENDING_API
@@ -147,4 +149,4 @@ Each flow is a recorded sequence of interfaces. The steps drawn on this diagram 
 7. Installment Lending Service → Core Card Ledger (MQ) — not on this diagram
 8. Installment Lending Service → Installment Lending Async Worker (Kafka)
 
-30 entities, 39 relationships. Generated from the model; edit the model, not this file.
+30 entities, 41 relationships. Generated from the model; edit the model, not this file.

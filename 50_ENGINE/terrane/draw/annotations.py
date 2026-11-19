@@ -32,7 +32,8 @@ import math
 from typing import Dict, List, Mapping, NamedTuple, Optional, Sequence, Tuple
 from xml.sax.saxutils import escape
 
-from ..annotations import DEFAULT_LOOK, FILLS, KIND_ICONS, TEXT_SIZES, WEIGHTS, WORDS_ON
+from ..annotations import (CONTAINERS, DEFAULT_LOOK, FILLS, KIND_ICONS, LINE_WEIGHTS, TEXT_SIZES, WEIGHTS, WORDS_ON,
+                           heads_of)
 from ..icons import mark_file
 from .metrics import Metrics
 
@@ -82,6 +83,109 @@ NAME_FACE = ("Libre Franklin", 700)
 NAME_FAMILIES = "Libre Franklin, Geist, system-ui, sans-serif"
 #: A rounded box's corner radius, and a frame's.
 ROUND = 6.0
+#: How far a rounded turn of a line starts before its corner, as maxGraph
+#: rounds one (half its LINE_ARCSIZE).
+ROUND_TURN = 10.0
+#: Where a line's words at its start and its end sit: this share of its
+#: length in from each end (END_LABEL_AT in engine.js is one less twice it).
+END_LABELS_AT = 0.15
+#: The dashes of a dashed outline and a dotted one.
+DASHES = {"dashed": "6 4", "dotted": "2 3"}
+#: Each head an end of a line may have (V16), as the picture and the canvas
+#: draw it, in the drawing's units back from its tip along the line (`a`)
+#: and across it (`b`): `stop`, how far back the line itself stops, and its
+#: parts, each "fill" (a shape filled with the line's ink), "hollow" (a
+#: shape drawn round), "line" (strokes), "dot" (a filled circle at `a`, of
+#: radius `r`) or "ring" (one drawn round), points as [a, b, a, b, ...].
+#: HEAD_GLYPHS in the canvas's engine.js is held equal to it.
+HEAD_GLYPHS: Dict[str, Dict[str, object]] = {
+    "none": {"stop": 0, "parts": []},
+    "arrow": {"stop": 7, "parts": [["fill", [0, 0, 7, 3.5, 7, -3.5]]]},
+    "open-arrow": {"stop": 0, "parts": [["line", [7, 4, 0, 0, 7, -4]]]},
+    "dot": {"stop": 6, "parts": [["dot", [3, 3]]]},
+    "inherits": {"stop": 9, "parts": [["hollow", [0, 0, 9, 4.5, 9, -4.5]]]},
+    "made-of": {"stop": 12, "parts": [["fill", [0, 0, 6, 3.5, 12, 0, 6, -3.5]]]},
+    "has": {"stop": 12, "parts": [["hollow", [0, 0, 6, 3.5, 12, 0, 6, -3.5]]]},
+    "depends-on": {"stop": 0, "parts": [["line", [7, 4, 0, 0, 7, -4]]]},
+    "one": {"stop": 0, "parts": [["line", [4, 4.5, 4, -4.5]], ["line", [8, 4.5, 8, -4.5]]]},
+    "many": {"stop": 0, "parts": [["line", [0, 4.5, 8, 0, 0, -4.5]]]},
+    "one-or-many": {"stop": 0, "parts": [["line", [11, 4.5, 11, -4.5]], ["line", [0, 4.5, 8, 0, 0, -4.5]]]},
+    "none-or-one": {"stop": 15, "parts": [["line", [10, 0, 0, 0]], ["line", [5, 4.5, 5, -4.5]], ["ring", [12.5, 2.5]]]},
+    "none-or-many": {"stop": 17, "parts": [["line", [12, 0, 0, 0]], ["line", [0, 4.5, 8, 0, 0, -4.5]],
+                                           ["ring", [14.5, 2.5]]]},
+    "serving": {"stop": 0, "parts": [["line", [7, 4, 0, 0, 7, -4]]]},
+    "triggering": {"stop": 7, "parts": [["fill", [0, 0, 7, 3.5, 7, -3.5]]]},
+    "flow": {"stop": 7, "parts": [["fill", [0, 0, 7, 3.5, 7, -3.5]]]},
+    "realization": {"stop": 9, "parts": [["hollow", [0, 0, 9, 4.5, 9, -4.5]]]},
+    "assignment": {"stop": 7, "parts": [["fill", [0, 0, 7, 3.5, 7, -3.5]]]},
+    "access": {"stop": 0, "parts": [["line", [5, 3, 0, 0, 5, -3]]]},
+}
+
+
+def head_parts(tip: Point, toward: Point, head: str) -> Tuple[Point, List[Tuple[str, Tuple[Point, ...], float]]]:
+    """A head at `tip`, pointing away from `toward`, in the sheet's units:
+    where the line itself stops, and its parts, each its kind, its points (a
+    circle's middle alone) and a circle's radius, as HEAD_GLYPHS says."""
+    glyph = HEAD_GLYPHS[head]
+    ux, uy = toward[0] - tip[0], toward[1] - tip[1]
+    n = math.hypot(ux, uy) or 1.0
+    ux, uy = ux / n, uy / n
+
+    def at(a: float, b: float) -> Point:
+        return (tip[0] + ux * a - uy * b, tip[1] + uy * a + ux * b)
+
+    stop = float(glyph["stop"])  # type: ignore[arg-type]
+    parts: List[Tuple[str, Tuple[Point, ...], float]] = []
+    for kind, v in glyph["parts"]:  # type: ignore[attr-defined]
+        if kind in ("dot", "ring"):
+            parts.append((kind, (at(v[0], 0),), float(v[1])))
+        else:
+            parts.append((kind, tuple(at(v[i], v[i + 1]) for i in range(0, len(v), 2)), 0.0))
+    return (at(stop, 0) if stop else tip), parts
+
+
+def dash_of(line: object) -> str:
+    """An outline's dashes as the picture's attribute, or nothing."""
+    pattern = DASHES.get(str(line or ""))
+    return ' stroke-dasharray="%s"' % pattern if pattern else ""
+
+
+def along(pts: Sequence[Point], share: float) -> Point:
+    """The point a share of the way along a run of pieces."""
+    lengths = [math.hypot(pts[i + 1][0] - pts[i][0], pts[i + 1][1] - pts[i][1]) for i in range(len(pts) - 1)]
+    goal, walked = sum(lengths) * share, 0.0
+    for i, piece in enumerate(lengths):
+        if walked + piece >= goal and piece:
+            t = (goal - walked) / piece
+            return (pts[i][0] + (pts[i + 1][0] - pts[i][0]) * t, pts[i][1] + (pts[i + 1][1] - pts[i][1]) * t)
+        walked += piece
+    return pts[-1]
+
+
+def rounded(pts: Sequence[Point], radius: float = ROUND_TURN) -> List[tuple]:
+    """A run of pieces with each turn rounded as maxGraph rounds one: the
+    line stops `radius` short of the corner, or half the shorter piece, and
+    a quadratic through the corner carries it on. `("M", p)`, then `("L",
+    p)` and `("Q", corner, p)`."""
+    out: List[tuple] = [("M", pts[0])]
+    for i in range(1, len(pts) - 1):
+        (ax, ay), (cx, cy), (bx, by) = pts[i - 1], pts[i], pts[i + 1]
+        la, lb = math.hypot(cx - ax, cy - ay), math.hypot(bx - cx, by - cy)
+        r = min(radius, la / 2, lb / 2)
+        if not la or not lb or not r:
+            out.append(("L", pts[i]))
+            continue
+        out.append(("L", (cx - (cx - ax) / la * r, cy - (cy - ay) / la * r)))
+        out.append(("Q", (cx, cy), (cx + (bx - cx) / lb * r, cy + (by - cy) / lb * r)))
+    out.append(("L", pts[-1]))
+    return out
+#: A swimlane (V16): the band its pool's name sits in across its top, the
+#: column at a lane's left or the band at its top that the lane's name sits
+#: in, and their paint. engine.js paints the same, by the same names.
+POOL_TITLE = 34.0
+LANE_COLUMN = 130.0
+LANE_BAND = 40.0
+BAND = "#f3eee5"
 #: How much smaller a caption is than the name over it.
 CAPTION_STEP = 2.0
 
@@ -178,7 +282,9 @@ def layer_of(item: Mapping, boxes: Mapping[str, Box], bounds: Sequence[Box]):
     if item.get("role") == "line":
         return "over"
     inside = list(item.get("in") or [])
-    if item.get("role") != "frame" and not inside:
+    # What is on a drawing layer under the estate's records goes under
+    # them, as a frame does (`by_layer` marks it).
+    if item.get("role") not in CONTAINERS and not inside and not item.get("_under"):
         return "over"
     top = str(inside[0]) if inside else str(item["key"])
     box = boxes.get(top)
@@ -231,7 +337,7 @@ def _look(item: Mapping) -> Tuple[str, str, str, float, str]:
     name = (look.get("fill") if look.get("fill") in FILLS else ROLE_FILL.get(str(role))) if role != "text" else None
     fill = FILLS[name] if name else "none"
     edge = "none" if role == "text" or look.get("line") == "none" else INK
-    dash = ' stroke-dasharray="6 4"' if look.get("line") == "dashed" else ""
+    dash = dash_of(look.get("line"))
     size = float(TEXT_SIZES.get(look.get("text"), 12 if role == "frame" else 13))
     return fill, edge, dash, size, WORDS_ON.get(name or "", INK)
 
@@ -244,8 +350,8 @@ def _baseline(m: Metrics, face: Tuple[str, int], size: float) -> float:
     return (LEADING * size - ascent - descent) / 2 + ascent
 
 
-def named_rows(label: str, room: float, m: Metrics, size: float,
-               face: Tuple[str, int] = NAME_FACE) -> List[Tuple[str, Tuple[str, int], float]]:
+def named_rows(label: str, room: float, m: Metrics, size: float, face: Tuple[str, int] = NAME_FACE,
+               caption_weight: int = 400) -> List[Tuple[str, Tuple[str, int], float]]:
     """A shape's words as the lines it draws, each with its face and size:
     the first line of the words its name in the display face, wrapped to the
     room; every later line a caption two sizes down. A blank line is no line:
@@ -257,26 +363,31 @@ def named_rows(label: str, room: float, m: Metrics, size: float,
     small = size - CAPTION_STEP
     for p in lines[1:]:
         if p.strip():
-            rows += [(t, ("Geist", 400), small) for t in m.wrap(p, room, "Geist", 400, small)]
+            rows += [(t, ("Geist", caption_weight), small) for t in m.wrap(p, room, "Geist", caption_weight, small)]
     return rows
 
 
-def _named(item: Mapping, box: Box, m: Metrics, size: float, words: str) -> List[str]:
+def _named(item: Mapping, box: Box, m: Metrics, size: float, ink: str) -> List[str]:
     """A shape's name and caption, the block of them in its middle."""
     x1, y1, x2, y2 = box
     px, _py = PADDING["shape"]
-    rows = named_rows(str(item.get("label") or ""), max(1.0, x2 - x1 - 2 * px + 2), m, size)
+    words = words_of(item)
+    rows = named_rows(str(item.get("label") or ""), max(1.0, x2 - x1 - 2 * px + 2), m, size,
+                      caption_weight=600 if words["bold"] else 400)
     top = (y1 + y2) / 2 - sum(s * LEADING for _t, _f, s in rows) / 2
-    caption = 'fill="%s" fill-opacity="0.75"' % words if words != INK else 'fill="%s"' % CAPTION_INK
+    x, anchor = {"left": (x1 + px, ""), "right": (x2 - px, ' text-anchor="end"')}.get(
+        str(words["align"]), ((x1 + x2) / 2, ' text-anchor="middle"'))
+    dress = _dress(words)
+    caption = 'fill="%s" fill-opacity="0.75"' % ink if ink != INK else 'fill="%s"' % CAPTION_INK
     out = []
     for i, (line, face, s) in enumerate(rows):
         if top + s * LEADING > y2 + 0.5 and i:
             break  # what does not fit is clipped on the canvas too
         named = face == NAME_FACE
-        out.append('<text x="%s" y="%s" font-size="%s" font-weight="%d" %s text-anchor="middle"%s>%s</text>' % (
-            fmt((x1 + x2) / 2), fmt(top + _baseline(m, face, s)), fmt(s), face[1],
-            'fill="%s"' % words if named else caption, ' font-family="%s"' % NAME_FAMILIES if named else "",
-            escape(line)))
+        out.append('<text x="%s" y="%s" font-size="%s" font-weight="%d" %s%s%s%s>%s</text>' % (
+            fmt(x), fmt(top + _baseline(m, face, s)), fmt(s), face[1],
+            'fill="%s"' % ink if named else caption, anchor, ' font-family="%s"' % NAME_FAMILIES if named else "",
+            dress, escape(line)))
         top += s * LEADING
     return out
 
@@ -293,9 +404,9 @@ def _tab(item: Mapping, box: Box, m: Metrics, size: float) -> List[str]:
     top = y1 - h / 2
     return ['<rect x="%s" y="%s" width="%s" height="%s" rx="3" fill="%s"/>' % (
                 fmt(x1 + 12), fmt(top), fmt(w), fmt(h), INK),
-            '<text x="%s" y="%s" font-size="%s" font-weight="600" fill="%s">%s</text>' % (
+            '<text x="%s" y="%s" font-size="%s" font-weight="600" fill="%s"%s>%s</text>' % (
                 fmt(x1 + 12 + TAB_PAD), fmt(top + 2 + _baseline(m, ("Geist", 600), size)), fmt(size), PAPER,
-                escape(name))]
+                _dress(words_of(item)), escape(name))]
 
 
 #: The room either side of a frame's name on its tab.
@@ -309,26 +420,37 @@ def _words(item: Mapping, box: Box, m: Metrics, size: float, ink: str = INK) -> 
         return []
     x1, y1, x2, y2 = box
     px, py = PADDING.get(str(role), (8, 8))
-    weight = 600 if role == "frame" else 400
+    words = words_of(item)
+    weight = 600 if role == "frame" or words["bold"] else 400
+    # A list's lines each start past a bullet, a font size in, and wrap to
+    # the room left after it.
+    indent = size if words["listed"] else 0.0
     # Wrapped two pixels wider than the room inside the padding: maxGraph
     # lays a wrapped label out that much wider than its cell, and a note's
     # "Guardrails: every account is", 164.3 at 13, kept its "is" there.
-    lines = m.wrap(label, max(1.0, x2 - x1 - 2 * px + 2), "Geist", weight, size)
+    room = max(1.0, x2 - x1 - 2 * px + 2 - indent)
+    rows = []
+    for para in label.split("\n"):
+        rows += [(t, words["listed"] and i == 0 and bool(para.strip()))
+                 for i, t in enumerate(m.wrap(para, room, "Geist", weight, size))]
     step = size * LEADING
     first = size * (LEADING - 1) / 2 + BASELINE * size
-    if role == "shape":
-        x, anchor = (x1 + x2) / 2, ' text-anchor="middle"'
-        top = (y1 + y2) / 2 - len(lines) * step / 2
-    else:
-        x, anchor = x1 + px, ""
-        top = y1 + py
+    align = "left" if words["listed"] else words["align"] or ("center" if role == "shape" else "left")
+    x, anchor = {"left": (x1 + px, ""), "center": ((x1 + x2) / 2, ' text-anchor="middle"'),
+                 "right": (x2 - px, ' text-anchor="end"')}[str(align)]
+    top = (y1 + y2) / 2 - len(rows) * step / 2 if role == "shape" else y1 + py
     fill = TEXT_INK if role == "text" else ink
+    dress = _dress(words)
     out = []
-    for i, line in enumerate(lines):
+    for i, (line, bullet) in enumerate(rows):
         if top + i * step + step > y2 + 0.5 and role != "text" and i:
             break  # what does not fit is clipped on the canvas too
-        out.append('<text x="%s" y="%s" font-size="%s" font-weight="%d" fill="%s"%s>%s</text>' % (
-            fmt(x), fmt(top + first + i * step), fmt(size), weight, fill, anchor, escape(line)))
+        y = top + first + i * step
+        if bullet:
+            out.append('<text x="%s" y="%s" font-size="%s" font-weight="%d" fill="%s">•</text>' % (
+                fmt(x), fmt(y), fmt(size), weight, fill))
+        out.append('<text x="%s" y="%s" font-size="%s" font-weight="%d" fill="%s"%s%s>%s</text>' % (
+            fmt(x + indent), fmt(y), fmt(size), weight, fill, anchor, dress, escape(line)))
     return out
 
 
@@ -361,6 +483,23 @@ def corners_of(item: Mapping, look: str = DEFAULT_LOOK) -> Optional[float]:
     return ROUND if role == "frame" or kind == "rounded" else 0.0
 
 
+def words_of(item: Mapping) -> Dict[str, object]:
+    """How its words are set (V16's words toolbar), each false or blank
+    when its look says nothing."""
+    look = item.get("look") or {}
+    return {"bold": look.get("bold") is True, "italic": look.get("italic") is True,
+            "underline": look.get("underline") is True, "strike": look.get("strike") is True,
+            "align": str(look.get("align") or ""), "listed": look.get("list") is True}
+
+
+def _dress(words: Mapping) -> str:
+    """Italic, underlined and struck through, as a text's attributes; the
+    face has no italic of its own, and the browser slants the upright one,
+    on the canvas as here, so a line measures the same either way."""
+    deco = " ".join(n for n, on in (("underline", words["underline"]), ("line-through", words["strike"])) if on)
+    return (' font-style="italic"' if words["italic"] else "") + (' text-decoration="%s"' % deco if deco else "")
+
+
 def opacity_of(item: Mapping) -> float:
     """How much of its fill shows, from 0.1 to 1."""
     return float((item.get("look") or {}).get("opacity") or 100) / 100
@@ -380,7 +519,8 @@ def tile_rows(item: Mapping, box: Box, m: Metrics) -> List[Tuple[str, Tuple[str,
     little wider than the box."""
     size = float(TEXT_SIZES.get((item.get("look") or {}).get("text"), 13))
     room = box[2] - box[0] + 2 * TILE_WORDS_OVER
-    return named_rows(str(item.get("label") or ""), room, m, size, TILE_NAME_FACE)
+    return named_rows(str(item.get("label") or ""), room, m, size, TILE_NAME_FACE,
+                      600 if words_of(item)["bold"] else 400)
 
 
 def tile_ground(item: Mapping, by_key: Mapping[str, Mapping]) -> str:
@@ -388,6 +528,9 @@ def tile_ground(item: Mapping, by_key: Mapping[str, Mapping]) -> str:
     innermost, as Icon tiles fill one, else the sheet."""
     for key in reversed(list(item.get("in") or [])):
         frame = by_key.get(str(key))
+        # A swimlane's lane lies on its pool's paper.
+        if frame is not None and frame.get("role") in ("pool", "lane"):
+            return PAPER
         if frame is not None and frame.get("role") == "frame":
             name = (frame.get("look") or {}).get("fill")
             return FILLS[name] if name in FILLS else TILE_FRAME
@@ -409,9 +552,9 @@ def tile_words(item: Mapping, box: Box, m: Metrics, ground: str = TILE_SHEET) ->
         fmt(sum(s * LEADING for _line, _face, s in rows)), ground)]
     for line, face, s in rows:
         named = face == TILE_NAME_FACE
-        out.append('<text x="%s" y="%s" font-size="%s" font-weight="%d" fill="%s" text-anchor="middle">%s</text>' % (
+        out.append('<text x="%s" y="%s" font-size="%s" font-weight="%d" fill="%s" text-anchor="middle"%s>%s</text>' % (
             fmt(cx), fmt(top_of_words + _baseline(m, face, s)), fmt(s), face[1],
-            TILE_INK if named else TILE_CAPTION, escape(line)))
+            TILE_INK if named else TILE_CAPTION, _dress(words_of(item)), escape(line)))
         top_of_words += s * LEADING
     return out
 
@@ -422,7 +565,7 @@ def _tiled(item: Mapping, box: Box, m: Metrics, ground: str = TILE_SHEET) -> Lis
     x1, y1, x2, y2 = box
     w, h = x2 - x1, y2 - y1
     name = look.get("fill") if look.get("fill") in FILLS else ROLE_FILL.get(str(role))
-    dash = ' stroke-dasharray="6 4"' if look.get("line") == "dashed" else ""
+    dash = dash_of(look.get("line"))
     size = float(TEXT_SIZES.get(look.get("text"), 12 if role == "frame" else 13))
     if role == "shape":
         top, foot = TILE_FILLS[name or "white"]
@@ -490,14 +633,83 @@ def _tiled_paint(item: Mapping) -> Tuple[str, str, str]:
     return "none", "none", INK
 
 
-def _box(item: Mapping, box: Box, m: Metrics, look: str = DEFAULT_LOOK, ground: str = TILE_SHEET) -> str:
+def names_of(item: Mapping, by_key: Mapping[str, Mapping]) -> str:
+    """Where a lane's name sits, as its swimlane says: at its left unless
+    the swimlane says top."""
+    inside = list(item.get("in") or [])
+    pool = by_key.get(str(inside[-1])) if inside else None
+    return "top" if pool is not None and pool.get("names") == "top" else "left"
+
+
+def swim_parts(item: Mapping, box: Box, names: str, m: Metrics) -> List[Tuple[str, Box, str, str, float, bool]]:
+    """What a swimlane's pool or lane is drawn as, the same for every
+    painter: rectangles, each `("rect", box, fill, "", size, False)`, and
+    words, each `("words", box, fill, label, size, bold)` set from the box's
+    corner. A pool is its ground and the band its name sits in; a lane its
+    outline, the column or band its name sits in, its name, and the id of
+    the record it stands for under it."""
+    x1, y1, x2, y2 = box
+    size = float(TEXT_SIZES.get((item.get("look") or {}).get("text"), 13))
+    label = str(item.get("label") or "")
+    if item.get("role") == "pool":
+        out = [("rect", box, PAPER, "", size, False), ("rect", (x1, y1, x2, min(y2, y1 + POOL_TITLE)), BAND, "", size,
+                                                       False)]
+        title = label.split("\n")[0]
+        if title.strip():
+            name = m.fit(title, max(1.0, x2 - x1 - 24), "Geist", 600, size)
+            top = y1 + (POOL_TITLE - size * LEADING) / 2
+            out.append(("words", (x1 + 12, top, x2 - 12, top + size * LEADING), INK, name, size, True))
+        return out
+    out = [("rect", box, "none", "", size, False)]
+    caption = str(item.get("stands_for") or "")
+    if names == "top":
+        out.append(("rect", (x1, y1, x2, min(y2, y1 + LANE_BAND)), BAND, "", size, False))
+        rows = [m.fit(label.split("\n")[0], max(1.0, x2 - x1 - 24), "Geist", 600, size)] if label.strip() else []
+        top = y1 + 5
+    else:
+        right = min(x2, x1 + LANE_COLUMN)
+        out.append(("rect", (x1, y1, right, y2), BAND, "", size, False))
+        rows = m.wrap(label.split("\n")[0], max(1.0, right - x1 - 24), "Geist", 600, size) if label.strip() else []
+        top = y1 + 10
+    room = (x2 if names == "top" else min(x2, x1 + LANE_COLUMN)) - 12
+    if rows:
+        out.append(("words", (x1 + 12, top, room, top + len(rows) * size * LEADING), INK, "\n".join(rows), size, True))
+        top += len(rows) * size * LEADING + (1 if names == "top" else 4)
+    if caption:
+        small = size - CAPTION_STEP
+        out.append(("words", (x1 + 12, top, room, top + small * LEADING), CAPTION_INK, caption, small, False))
+    return out
+
+
+def _swim(item: Mapping, box: Box, m: Metrics, names: str) -> str:
+    """A swimlane's pool or lane, as `swim_parts` makes it, whatever the
+    diagram's look: a swimlane is drawn one way."""
+    out = ['<g class="own" data-key="%s" data-role="%s">' % (escape(str(item["key"]), {'"': "&quot;"}), item["role"])]
+    for kind, (x1, y1, x2, y2), fill, label, size, bold in swim_parts(item, box, names, m):
+        if kind == "rect":
+            out.append('<rect x="%s" y="%s" width="%s" height="%s" fill="%s" stroke="%s" stroke-width="%s"/>' % (
+                fmt(x1), fmt(y1), fmt(x2 - x1), fmt(y2 - y1), fill, INK, fmt(WEIGHTS["m"])))
+            continue
+        weight = 600 if bold else 400
+        for i, row in enumerate(label.split("\n")):
+            out.append('<text x="%s" y="%s" font-size="%s" font-weight="%d" fill="%s">%s</text>' % (
+                fmt(x1), fmt(y1 + size * (LEADING - 1) / 2 + BASELINE * size + i * size * LEADING), fmt(size), weight,
+                fill, escape(row)))
+    out.append("</g>")
+    return "\n".join(out)
+
+
+def _box(item: Mapping, box: Box, m: Metrics, look: str = DEFAULT_LOOK, ground: str = TILE_SHEET,
+         names: str = "left") -> str:
     role = item.get("role")
+    if role in ("pool", "lane"):
+        return _swim(item, box, m, names)
     if look == "tiles":
         x1, y1, x2, y2 = box
         turn = float(item.get("rotate") or 0)
         spin = ' transform="rotate(%s %s %s)"' % (fmt(turn), fmt((x1 + x2) / 2), fmt((y1 + y2) / 2)) if turn else ""
-        return "\n".join(['<g class="own" data-key="%s" data-role="%s"%s>' % (
-            escape(str(item["key"]), {'"': "&quot;"}), role, spin)] + _tiled(item, box, m, ground) + ["</g>"])
+        return _linked("\n".join(['<g class="own" data-key="%s" data-role="%s"%s>' % (
+            escape(str(item["key"]), {'"': "&quot;"}), role, spin)] + _tiled(item, box, m, ground) + ["</g>"]), item)
     fill, edge, dash, size, words = _look(item)
     x1, y1, x2, y2 = box
     w, h = x2 - x1, y2 - y1
@@ -528,7 +740,19 @@ def _box(item: Mapping, box: Box, m: Metrics, look: str = DEFAULT_LOOK, ground: 
     else:
         out.extend(_words(item, box, m, size, words))
     out.append("</g>")
-    return "\n".join(out)
+    return _linked("\n".join(out), item)
+
+
+def _linked(svg: str, item: Mapping) -> str:
+    """One of its own that links somewhere (`link:`), as a link of the
+    picture's: the shape opens it in a browser, and says where on hover. No
+    mark is drawn: the canvas's is over the drawing for the person, as its
+    handles are, and its export leaves it out too."""
+    link = str(item.get("link") or "")
+    if not link:
+        return svg
+    return '<a href="%s" target="_blank" rel="noopener"><title>%s</title>\n%s\n</a>' % (
+        escape(link, {'"': "&quot;"}), escape(link), svg)
 
 
 def _clip(box: Box, inner: Point, outer: Point, shape: str = "") -> Point:
@@ -716,11 +940,26 @@ def detour(a: Box, b: Box, obstacles: Sequence[Box], plain: Sequence[Point]) -> 
     return kept[1:-1]
 
 
+def kept_turns(a: Box, b: Box, kept: Sequence[Point]) -> List[Point]:
+    """A square or curved line's turns where its stretches were moved by
+    hand (V16), from its `via`: through them, each end leaving its box
+    square toward the first or the last, with a turn of its own where the
+    box faces neither across nor down to it. keptTurns in engine.js."""
+    turns = [tuple(p) for p in kept]
+    f, last = turns[0], turns[-1]
+    if not a[0] <= f[0] <= a[2] and not a[1] <= f[1] <= a[3]:
+        turns.insert(0, (f[0], (a[1] + a[3]) / 2))
+    if not b[0] <= last[0] <= b[2] and not b[1] <= last[1] <= b[3]:
+        turns.append((last[0], (b[1] + b[3]) / 2))
+    return turns  # type: ignore[return-value]
+
+
 def line_route(item: Mapping, ends: Tuple[object, object], shapes: Tuple[str, str] = ("", ""),
-               origin: Point = (0.0, 0.0), obstacles: Sequence[Box] = ()) -> Tuple[List[Point], List[Tuple[Point, Point]]]:
+               origin: Point = (0.0, 0.0),
+               obstacles: Sequence[Box] = ()) -> Tuple[List[Point], List[Tuple[Point, Point, str]]]:
     """A line's points from end to end, each end where the line leaves its
-    box's outline, and its heads, each a tip and the point it points away
-    from. An end is a box, or a point of the sheet; a straight line's bends
+    box's outline, and its heads, each a tip, the point it points away from
+    and which head it is (`heads_of`), its end's before its start's. An end is a box, or a point of the sheet; a straight line's bends
     (`via`) are points of the sheet from `origin`, as a point end is; and a
     square or curved line goes around the boxes in `obstacles` (`detour`)."""
 
@@ -741,18 +980,37 @@ def line_route(item: Mapping, ends: Tuple[object, object], shapes: Tuple[str, st
     sa, sb = _stub(a), _stub(b)
     ra = (sa[0], sa[1], sa[0], sa[1]) if sa else boxed(a)
     rb = (sb[0], sb[1], sb[0], sb[1]) if sb else boxed(b)
-    turns = square(ra, rb) if route in ("square", "curved") else []
-    if turns and obstacles:
-        turns = detour(ra, rb, obstacles, turns)
+    # Its stretches moved by hand, a square or curved line keeps its turns
+    # and goes around nothing: where it runs is the person's.
+    kept = route in ("square", "curved") and bool(item.get("via"))
+    if kept:
+        turns = kept_turns(ra, rb, [(origin[0] + float(p[0]), origin[1] + float(p[1])) for p in item["via"]])
+    else:
+        turns = square(ra, rb) if route in ("square", "curved") else []
+        if turns and obstacles:
+            turns = detour(ra, rb, obstacles, turns)
     if route in ("square", "curved"):
         turns = ([sa] if sa else []) + turns + ([sb] if sb else [])
     if route == "straight" and item.get("via"):
         turns = [(origin[0] + float(p[0]), origin[1] + float(p[1])) for p in item["via"]]
     first, last = (turns[0] if turns else cb), (turns[-1] if turns else ca)
-    p1 = _clip(a, ca, first, shapes[0]) if isinstance(a, tuple) and len(a) == 4 else ca
-    p2 = _clip(b, cb, last, shapes[1]) if isinstance(b, tuple) and len(b) == 4 else cb
+
+    def square_from(end: object, c: Point, toward: Point) -> Point:
+        # A kept turn need not face a box's middle: the line leaves square,
+        # from under or beside the turn, as maxGraph's orthogonal outline
+        # point puts it.
+        if kept and isinstance(end, tuple) and len(end) == 4:
+            if end[0] <= toward[0] <= end[2]:
+                return (toward[0], c[1])
+            if end[1] <= toward[1] <= end[3]:
+                return (c[0], toward[1])
+        return c
+
+    p1 = _clip(a, square_from(a, ca, first), first, shapes[0]) if isinstance(a, tuple) and len(a) == 4 else ca
+    p2 = _clip(b, square_from(b, cb, last), last, shapes[1]) if isinstance(b, tuple) and len(b) == 4 else cb
     pts = [p1] + turns + [p2]
-    heads = {"end": [(p2, pts[-2])], "both": [(p2, pts[-2]), (p1, pts[1])], "none": []}[str(item.get("ends") or "end")]
+    start, end = heads_of(item)
+    heads = [(tip, toward, head) for tip, toward, head in ((p2, pts[-2], end), (p1, pts[1], start)) if head != "none"]
     return pts, heads
 
 
@@ -765,16 +1023,14 @@ def _line(item: Mapping, ends: Tuple[object, object], m: Metrics, shapes: Tuple[
     # maxGraph's perimeters put it, and each head along the run it ends.
     pts, heads = line_route(item, ends, shapes, origin, obstacles)
     p2 = pts[-1]
-    dash = ' stroke-dasharray="6 4"' if look.get("line") == "dashed" else ""
+    dash = dash_of(look.get("line"))
+    heavy = LINE_WEIGHTS.get(str(look.get("weight") or "m"), LINE_WEIGHTS["m"])
     out = ['<g class="own" data-key="%s" data-role="line">' % escape(str(item["key"]), {'"': "&quot;"})]
     # The line stops where each head's base is, so its end does not show
-    # past the point of the arrow.
+    # past the point of the arrow or through a hollow head.
     line = list(pts)
-    for tip, toward in heads:
-        ux, uy = toward[0] - tip[0], toward[1] - tip[1]
-        n = math.hypot(ux, uy) or 1.0
-        base = (tip[0] + ux / n * 7, tip[1] + uy / n * 7)
-        line[-1 if tip == p2 else 0] = base
+    for tip, toward, head in heads:
+        line[-1 if tip == p2 else 0] = head_parts(tip, toward, head)[0]
     if route == "curved" and len(line) > 2:
         # maxGraph's curved line: a quadratic through each turn to the
         # middle of the next piece, and the last to the end.
@@ -784,28 +1040,42 @@ def _line(item: Mapping, ends: Tuple[object, object], m: Metrics, shapes: Tuple[
             d.append("Q%s %s %s %s" % (fmt(line[i][0]), fmt(line[i][1]), fmt(mx), fmt(my)))
         d.append("Q%s %s %s %s" % (fmt(line[-2][0]), fmt(line[-2][1]), fmt(line[-1][0]), fmt(line[-1][1])))
         path_d = " ".join(d)
+    elif item.get("turns") == "rounded" and len(line) > 2:
+        path_d = " ".join(("%s%s %s" % (op[0], fmt(op[1][0]), fmt(op[1][1]))) if op[0] != "Q" else
+                          "Q%s %s %s %s" % (fmt(op[1][0]), fmt(op[1][1]), fmt(op[2][0]), fmt(op[2][1]))
+                          for op in rounded(line))
     else:
         path_d = "M%s %s" % (fmt(line[0][0]), fmt(line[0][1])) + "".join(
             " L%s %s" % (fmt(x), fmt(y)) for x, y in line[1:])
     ink = TILE_LINE if tiles else LINE_INK
-    out.append('<path d="%s" fill="none" stroke="%s" stroke-width="1.5"%s/>' % (path_d, ink, dash))
+    out.append('<path d="%s" fill="none" stroke="%s" stroke-width="%s"%s/>' % (path_d, ink, fmt(heavy), dash))
     taken: List[Box] = [(min(p[0] for p in pts), min(p[1] for p in pts), max(p[0] for p in pts), max(p[1] for p in pts))]
-    for tip, toward in heads:
-        ux, uy = toward[0] - tip[0], toward[1] - tip[1]
-        n = math.hypot(ux, uy) or 1.0
-        ux, uy = ux / n, uy / n
-        bx, by = tip[0] + ux * 7, tip[1] + uy * 7
-        out.append('<path d="M%s %s L%s %s L%s %s Z" fill="%s"/>' % (
-            fmt(tip[0]), fmt(tip[1]), fmt(bx - uy * 3.5), fmt(by + ux * 3.5), fmt(bx + uy * 3.5), fmt(by - ux * 3.5),
-            ink))
-    label = str(item.get("label") or "")
-    if label:
-        size = float(TEXT_SIZES.get(look.get("text"), 11))
+    # Each head's parts, its strokes as heavy as the line and never dashed.
+    for tip, toward, head in heads:
+        for kind, at, r in head_parts(tip, toward, head)[1]:
+            if kind in ("dot", "ring"):
+                out.append('<circle cx="%s" cy="%s" r="%s" %s/>' % (
+                    fmt(at[0][0]), fmt(at[0][1]), fmt(r), 'fill="%s"' % ink if kind == "dot" else
+                    'fill="none" stroke="%s" stroke-width="%s"' % (ink, fmt(heavy))))
+                continue
+            d = "M%s %s" % (fmt(at[0][0]), fmt(at[0][1])) + "".join(" L%s %s" % (fmt(x), fmt(y)) for x, y in at[1:])
+            if kind == "fill":
+                out.append('<path d="%s Z" fill="%s"/>' % (d, ink))
+            else:
+                out.append('<path d="%s%s" fill="none" stroke="%s" stroke-width="%s" stroke-linejoin="round" '
+                           'stroke-linecap="round"/>' % (d, " Z" if kind == "hollow" else "", ink, fmt(heavy)))
+    size = float(TEXT_SIZES.get(look.get("text"), 11))
+    # Its middle's words at the middle of the run, as maxGraph puts an
+    # edge's label halfway along its length; its start's and its end's a
+    # share in from each end (V16); each on a paper tag edged in ink, as the
+    # app's pictures label a joint.
+    words = [(str(item.get("label") or ""), _halfway(pts))] + [
+        (str((item.get("labels") or {}).get(place) or ""), along(pts, share))
+        for place, share in (("start", END_LABELS_AT), ("end", 1 - END_LABELS_AT))]
+    for label, (cx, cy) in words:
+        if not label:
+            continue
         tw = m.width(label, "Geist", 400, size)
-        # At the middle of the run: of its middle piece when it turns, as
-        # maxGraph puts an edge's label halfway along its length; on a
-        # paper tag edged in ink, as the app's pictures label a joint.
-        cx, cy = _halfway(pts)
         w, h = tw + 6, size + 6
         if tiles:
             out.append('<rect x="%s" y="%s" width="%s" height="%s" rx="3" fill="#ffffff"/>'
@@ -853,7 +1123,7 @@ def paint(items: Sequence[Mapping], origin: Point, records: Mapping[str, Box], m
         taken.append(_reach(item, box, m, look))
         # As tiles, a tile is drawn last, over the lines (below).
         if look != "tiles" or item.get("role") != "shape":
-            out.append(_box(item, box, m, look))
+            out.append(_box(item, box, m, look, names=names_of(item, by_key)))
     drawn = len(out)
     if layer == "over":
         walls = _walls(items, boxes, records)
@@ -1011,6 +1281,45 @@ class Own(NamedTuple):
     opacity: float = 1.0
     weight: float = 1.25
     corners: Optional[float] = None
+    #: How its words are set: bold, italic, underlined, struck through,
+    #: where they sit (blank for its kind's place) and a note's as a list.
+    bold: bool = False
+    italic: bool = False
+    underline: bool = False
+    strike: bool = False
+    align: str = ""
+    listed: bool = False
+    #: Where it links to, blank for nowhere.
+    link: str = ""
+    #: An outline drawn dotted rather than dashed; a line's words at its
+    #: start and its end, `(("start", words), ("end", words))`; and its
+    #: turns, rounded or not.
+    dotted: bool = False
+    labels: Tuple[Tuple[str, str], ...] = ()
+    turns: str = ""
+    #: A line's heads at its start and its end (V16), as `heads_of` says.
+    heads: Tuple[str, str] = ("none", "arrow")
+
+
+def _swim_own(item: Mapping, box: Box, layer: object, names: str) -> List["Own"]:
+    """A swimlane's pool or lane for another painter, from the parts the
+    picture draws: itself a flat frame with no name, holding what sits in
+    it, then its band and its words, each a part of it. The words go as a
+    note with no fill or edge, whose ten in from its box the box gives
+    back, so they sit where the picture sets them."""
+    from .metrics import default_metrics
+    key = str(item["key"])
+    inside = list(item.get("in") or [])
+    out: List[Own] = []
+    for i, (kind, b, fill, label, size, bold) in enumerate(swim_parts(item, box, names, default_metrics())):
+        if kind == "rect":
+            out.append(Own(key if i == 0 else "%s~%d" % (key, i), "frame", b, layer, "", fill, INK, False, size, "",
+                           (str(inside[-1]) if inside else "") if i == 0 else key, weight=WEIGHTS["m"], corners=0.0))
+        else:
+            pad = PADDING["note"]
+            out.append(Own("%s~%d" % (key, i), "note", (b[0] - pad[0], b[1] - pad[1], b[2] + pad[0], b[3] + pad[1]),
+                           layer, "", "none", "none", False, size, label, key, words=fill, bold=bold))
+    return out
 
 
 def scene(items: Sequence[Mapping], origin: Point, records: Mapping[str, Box],
@@ -1023,9 +1332,13 @@ def scene(items: Sequence[Mapping], origin: Point, records: Mapping[str, Box],
     shape_of = _outlines(items, look)
     walls = _walls(items, boxes, records)
     tiled = _tiles(items, look)
+    by_key = {str(i.get("key")): i for i in items}
     out: List[Own] = []
     for item in items:
         key, role = str(item["key"]), str(item.get("role") or "")
+        if role in ("pool", "lane"):
+            out.extend(_swim_own(item, boxes[key], layer_of(item, boxes, bounds), names_of(item, by_key)))
+            continue
         fill, edge, dash, size, words = _look(item)
         if role == "line":
             ends = _ends(item, origin, boxes, records, tiled)
@@ -1038,13 +1351,18 @@ def scene(items: Sequence[Mapping], origin: Point, records: Mapping[str, Box],
             out.append(Own(key, role, (min(p[0] for p in pts), min(p[1] for p in pts), max(p[0] for p in pts),
                                        max(p[1] for p in pts)), "over", "", "none",
                            TILE_LINE if look == "tiles" else LINE_INK,
-                           mine.get("line") == "dashed", float(TEXT_SIZES.get(mine.get("text"), 11)),
+                           mine.get("line") in DASHES, float(TEXT_SIZES.get(mine.get("text"), 11)),
                            str(item.get("label") or ""), "", tuple(pts), str(item.get("ends") or "end"),
                            str(item.get("route") or "straight"),
                            "" if isinstance(frm, (list, tuple)) else str(frm),
                            "" if isinstance(to, (list, tuple)) else str(to),
                            from_at=tuple(float(v) for v in item.get("from_at") or ()),
-                           to_at=tuple(float(v) for v in item.get("to_at") or ())))
+                           to_at=tuple(float(v) for v in item.get("to_at") or ()),
+                           weight=LINE_WEIGHTS.get(str(mine.get("weight") or "m"), LINE_WEIGHTS["m"]),
+                           dotted=mine.get("line") == "dotted",
+                           labels=tuple((place, str(words)) for place, words in sorted((item.get("labels") or {}).items())
+                                        if words),
+                           turns=str(item.get("turns") or ""), heads=heads_of(item)))
             continue
         inside = list(item.get("in") or [])
         if look == "tiles":
@@ -1053,7 +1371,9 @@ def scene(items: Sequence[Mapping], origin: Point, records: Mapping[str, Box],
                        str(item.get("shape") or ("rectangle" if role == "shape" else "")), fill, edge, bool(dash),
                        size, str(item.get("label") or ""), str(inside[-1]) if inside else "",
                        rotate=float(item.get("rotate") or 0), words=words, shadow=casts_shadow(item, look),
+                       dotted=(item.get("look") or {}).get("line") == "dotted",
                        look=look, opacity=opacity_of(item), weight=weight_of(item), corners=corners_of(item, look),
+                       **words_of(item), link=str(item.get("link") or ""),
                        tint=TILE_FILLS[str((item.get("look") or {}).get("fill") or "white")]
                        if look == "tiles" and role == "shape" and (item.get("look") or {}).get("fill", "white") in TILE_FILLS
                        else (),

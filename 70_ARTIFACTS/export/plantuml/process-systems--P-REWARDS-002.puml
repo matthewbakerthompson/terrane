@@ -12,6 +12,8 @@ AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor=
 Boundary(b_Capability, "Capability") {
   System(CAP_BILL_04, "Rewards Earn, Accrual & Redemption", "Operate the rewards ledger, accrual, and redemption.", $tags="capabilities")
   ' aac CAP_BILL_04: company_domain="Servicing"
+  System(CAP_BILL_04_02, "Rewards Redemption", "Execute redemptions across cash, credit, and partner channels.", $tags="capabilities")
+  ' aac CAP_BILL_04_02: company_domain="Servicing"
 }
 Boundary(b_Process, "Process") {
   System(P_REWARDS_002, "Process rewards redemption", "Execute a cardholder rewards redemption and settle the resulting obligation. Redemption executes across cash, statement credit, and partner channels; partner settlement follows the program contract, and failed redemptions reverse cleanly.", $tags="processes")
@@ -34,6 +36,8 @@ Rel(P_REWARDS_002, SYS_CARDSVC_WEB, "Supporting")
 ' aac rel: source="P_REWARDS_002"; target="SYS_CARDSVC_WEB"; label="Supporting"; relation="process_uses_system"; role="Supporting"
 Rel(P_REWARDS_002, CAP_BILL_04, "supports")
 ' aac rel: source="P_REWARDS_002"; target="CAP_BILL_04"; label="supports"; relation="process_supports_capability"
+Rel(P_REWARDS_002, CAP_BILL_04_02, "supports")
+' aac rel: source="P_REWARDS_002"; target="CAP_BILL_04_02"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

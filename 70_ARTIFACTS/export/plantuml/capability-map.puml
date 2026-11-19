@@ -49,6 +49,8 @@ Boundary(b_Direct, "Direct") {
     ' aac CAP_RGOV_06: company_domain="Cross-Functional Services"
     System(CAP_RGOV_03, "Compliance Monitoring & Testing", "Test whether controls operate as designed and report the result.", $tags="capabilities")
     ' aac CAP_RGOV_03: company_domain="Cross-Functional Services"
+    System(CAP_RGOV_09, "Fair Lending Monitoring", "Test credit decisions, pricing and dealer markup for disparities, and remediate what the testing finds.", $tags="capabilities")
+    ' aac CAP_RGOV_09: company_domain="Cross-Functional Services"
     System(CAP_RGOV_07, "Financial Crimes & BSA/AML Compliance", "Operate the KYC/CIP program, transaction monitoring, sanctions screening, and regulatory filing.", $tags="capabilities")
     ' aac CAP_RGOV_07: company_domain="Cross-Functional Services"
     System(CAP_RGOV_05, "Internal Audit & Examination Management", "Coordinate internal audits and regulatory examinations.", $tags="capabilities")
@@ -67,6 +69,8 @@ Boundary(b_Core, "Core") {
   Boundary(b_Core__Billing__Statements___Rewards, "Billing, Statements & Rewards") {
     System(CAP_BILL_05, "Billing Adjustment & Credit Processing", "Apply goodwill credits, fee reversals, and billing corrections.", $tags="capabilities")
     ' aac CAP_BILL_05: company_domain="Servicing"
+    System(CAP_BILL_06, "Credit Balance Refund & Unclaimed Property", "Refund credit balances on request or after the regulatory period, and report and remit unclaimed balances to the states.", $tags="capabilities")
+    ' aac CAP_BILL_06: company_domain="Servicing"
     System(CAP_BILL_02, "Cycle & Statement Generation", "Cut billing cycles and generate statements.", $tags="capabilities")
     ' aac CAP_BILL_02: company_domain="Servicing"
     System(CAP_BILL_01, "Interest & Fee Assessment", "Calculate interest, fees, and minimum payment.", $tags="capabilities")
@@ -95,6 +99,8 @@ Boundary(b_Core, "Core") {
     ' aac CAP_COLL_05: company_domain="Collections"
   }
   Boundary(b_Core__Consumer___Recreation_Lending, "Consumer & Recreation Lending") {
+    System(CAP_LEND_07, "Ancillary Product & Dealer Reserve Administration", "Administer the dealer's reserve on each loan and the protection products sold with it, including refunds when a loan ends early.", $tags="capabilities")
+    ' aac CAP_LEND_07: company_domain="Lending"
     System(CAP_LEND_04, "Collateral, Title & Lien Management", "Perfect and track liens and titles on financed assets across state regimes; release on payoff.", $tags="capabilities")
     ' aac CAP_LEND_04: company_domain="Lending"
     System(CAP_LEND_01, "Dealer Network & Program Management", "Recruit, contract, monitor, and manage the dealer network that originates recreation loans, including program terms and dealer performance.", $tags="capabilities")
@@ -149,6 +155,8 @@ Boundary(b_Core, "Core") {
     ' aac CAP_SERV_03: company_domain="Servicing"
     System(CAP_SERV_07, "Hardship & Payment Assistance", "Operate hardship, forbearance, and payment assistance programs.", $tags="capabilities")
     ' aac CAP_SERV_07: company_domain="Servicing"
+    System(CAP_SERV_09, "Retention, Product Change & Account Closure", "Keep customers who ask to leave, move accounts between products, and close accounts with balances, rewards and notices settled.", $tags="capabilities")
+    ' aac CAP_SERV_09: company_domain="Servicing"
     System(CAP_SERV_06, "Servicing Knowledge & Agent Enablement", "Equip agents with current, compliant guidance.", $tags="capabilities")
     ' aac CAP_SERV_06: company_domain="Servicing"
     System(CAP_SERV_08, "Servicing Quality Monitoring", "Monitor and score servicing interactions for quality and compliance.", $tags="capabilities")
@@ -171,6 +179,8 @@ Boundary(b_Core, "Core") {
     ' aac CAP_FRAUD_04: company_domain="Servicing"
     System(CAP_FRAUD_03, "Dispute Intake & Provisional Credit", "Take dispute claims and apply provisional credit within regulatory timers.", $tags="capabilities")
     ' aac CAP_FRAUD_03: company_domain="Servicing"
+    System(CAP_FRAUD_08, "First-Party Fraud & Bust-Out Management", "Detect and act on credit abuse by account holders themselves: bust-out, synthetic identities and payment fraud.", $tags="capabilities")
+    ' aac CAP_FRAUD_08: company_domain="Servicing"
     System(CAP_FRAUD_02, "Fraud Case Investigation", "Investigate and adjudicate fraud cases.", $tags="capabilities")
     ' aac CAP_FRAUD_02: company_domain="Servicing"
     System(CAP_FRAUD_05, "Fraud Loss Recovery & Write-off", "Recover and account for fraud losses.", $tags="capabilities")
@@ -191,6 +201,8 @@ Boundary(b_Core, "Core") {
     ' aac CAP_MERCH_03: company_domain="Merchant Services"
     System(CAP_MERCH_06, "Merchant Monitoring & Exposure Management", "Monitor merchant transaction behavior, credit exposure, and collusion or bust-out patterns across the portfolio.", $tags="capabilities")
     ' aac CAP_MERCH_06: company_domain="Merchant Services"
+    System(CAP_MERCH_07, "Merchant Servicing & Billing", "Bill merchant fees, deliver statements, pay ISO residuals and answer merchant and ISO questions.", $tags="capabilities")
+    ' aac CAP_MERCH_07: company_domain="Merchant Services"
     System(CAP_MERCH_04, "Merchant Settlement & Funding", "Clear and settle merchant card volume and fund merchant accounts daily, with reserves where risk requires them.", $tags="capabilities")
     ' aac CAP_MERCH_04: company_domain="Merchant Services"
     System(CAP_MERCH_02, "Merchant Underwriting & Risk Vetting", "Underwrite merchants against credit and brand risk appetite — the specialty-vertical appetite is the differentiator.", $tags="capabilities")

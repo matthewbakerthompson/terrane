@@ -39,7 +39,7 @@ from terrane.render_archimate import export_archimate  # noqa: E402
 from terrane.render_mermaid import render  # noqa: E402
 from terrane.render_plantuml import render_plantuml  # noqa: E402
 
-from _fixture import REPO, seeded_model, seeded_views, setup_shared, teardown_shared  # noqa: E402
+from _fixture import REPO, remove_scratch, seeded_model, seeded_views, setup_shared, teardown_shared  # noqa: E402
 
 WEB = REPO / "80_APP" / "web"
 ARCHIMATE = "http://www.opengroup.org/xsd/archimate/3.0/"
@@ -193,7 +193,9 @@ class TestTheDrawing(unittest.TestCase):
             "views": [{"view_id": "orders", "title": "Orders", "kind": "diagram",
                        "scope": {"include": [{"type": "systems"}]}, "edges": [{"via": "interfaces"}]}],
         }
-        root = Path(tempfile.mkdtemp(prefix="aac-offered-")) / "sketch"
+        folder = Path(tempfile.mkdtemp(prefix="aac-offered-"))
+        self.addCleanup(remove_scratch, folder, "aac-offered-")
+        root = folder / "sketch"
         materialize(doc, root)
         model = model_module.load(root)
         self.assertEqual(validate.run(model).errors, [])
@@ -213,6 +215,7 @@ class TestTheExports(unittest.TestCase):
         cls.model = seeded_model()
         cls.views = seeded_views()
         cls.tmp = Path(tempfile.mkdtemp(prefix="aac-offered-"))
+        cls.addClassCleanup(remove_scratch, cls.tmp, "aac-offered-")
 
     def test_archimate_composes_the_interface_in_its_component_and_reads_it_back(self) -> None:
         from xml.etree import ElementTree

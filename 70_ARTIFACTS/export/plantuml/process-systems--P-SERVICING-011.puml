@@ -1,0 +1,47 @@
+@startuml
+' Administer secured card deposit lifecycle — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Administer secured card deposit lifecycle — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_SERV_02, "Account Maintenance & Servicing Requests", "Execute cardholder-requested account changes.", $tags="capabilities")
+  ' aac CAP_SERV_02: company_domain="Servicing"
+  System(CAP_SERV_02_03, "Secured Card Collateral Administration", "Hold, adjust and return the deposits that secure secured cards.", $tags="capabilities")
+  ' aac CAP_SERV_02_03: company_domain="Servicing"
+}
+Boundary(b_Process, "Process") {
+  System(P_SERVICING_011, "Administer secured card deposit lifecycle", "Collect, hold, apply, and refund security deposits for secured card accounts, including graduation and charge-off application, with correct accounting and disclosure treatment.", $tags="processes")
+  ' aac P_SERVICING_011: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+  System(SYS_GL, "General ledger", "General ledger and financial accounting.", $tags="systems")
+  ' aac SYS_GL: company_domain=""
+  System(SYS_PAYMENT_GW, "Payment capture gateway", "Payment capture across ACH, debit, lockbox, and wallet channels.", $tags="systems")
+  ' aac SYS_PAYMENT_GW: company_domain=""
+}
+
+Rel(P_SERVICING_011, SYS_CORE_LEDGER, "Primary")
+' aac rel: source="P_SERVICING_011"; target="SYS_CORE_LEDGER"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_SERVICING_011, SYS_PAYMENT_GW, "Supporting")
+' aac rel: source="P_SERVICING_011"; target="SYS_PAYMENT_GW"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_011, SYS_GL, "Supporting")
+' aac rel: source="P_SERVICING_011"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_011, SYS_DOC, "Supporting")
+' aac rel: source="P_SERVICING_011"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_011, CAP_SERV_02, "supports")
+' aac rel: source="P_SERVICING_011"; target="CAP_SERV_02"; label="supports"; relation="process_supports_capability"
+Rel(P_SERVICING_011, CAP_SERV_02_03, "supports")
+' aac rel: source="P_SERVICING_011"; target="CAP_SERV_02_03"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

@@ -1,0 +1,206 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="1103.4" viewBox="0 0 1100 1103.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Remarket recovered collateral and pursue deficiency — Systems, Data and Controls</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Remarket recovered collateral and pursue deficiency — Systems, Data and Controls</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   11 nodes · 10 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(120.66 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="349.92" y="679.3" width="212.16" height="207.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="391.92" y="696.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Control">
+<rect x="350.3" y="547.3" width="211.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="383.15" y="564.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Control</text>
+</g>
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="615.3" y="480.3" width="221.4" height="247.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="657.3" y="497.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.98" y="358.06" width="212.03" height="135.45" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.83" y="375.47" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="615.3" y="24.3" width="233.4" height="427.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="645.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-LENDING-013::SYS-REMARKET">
+<title>Primary</title>
+<path d="M196 391.45 L201.27 391.45 A4.73 4.73 0 0 0 206 386.73 L206 386.73 A4.73 4.73 0 0 1 210.73 382 L275 382 L283 382 A8 8 0 0 0 291 374 L291 99.98 A10 10 0 0 1 300.98 89.98 L611.99 89.5 A10 10 0 0 1 612.01 89.5 L637.48 89.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M641 89.5 L631.43 94.28 L631.43 84.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-LENDING-013::SYS-REMARKET">
+<rect x="432.32" y="96.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="453.5" y="108.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-LENDING-013::SYS-LOAN-SVC">
+<title>Supporting</title>
+<path d="M196 399.09 L212.45 399.09 A3.55 3.55 0 0 0 216 395.55 L216 395.55 A3.55 3.55 0 0 1 219.55 392 L275 392 L291 392 A10 10 0 0 0 301 382 L301 198.98 A10 10 0 0 1 310.98 188.98 L611.99 188.5 A10 10 0 0 1 612.01 188.5 L637.48 188.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M641 188.5 L631.43 193.28 L631.43 183.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-LENDING-013::SYS-LOAN-SVC">
+<rect x="424.46" y="195.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="453.5" y="207.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-LENDING-013::SYS-COLLECT-API">
+<title>Supporting</title>
+<path d="M196 406.73 L223.64 406.73 A2.36 2.36 0 0 0 226 404.36 L226 404.36 A2.36 2.36 0 0 1 228.36 402 L275 402 L301 402 A10 10 0 0 0 311 392 L311 297.98 A10 10 0 0 1 320.98 287.98 L611.99 287.5 A10 10 0 0 1 612.01 287.5 L637.48 287.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M641 287.5 L631.43 292.29 L631.43 282.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-LENDING-013::SYS-COLLECT-API">
+<rect x="424.46" y="294.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="453.5" y="306.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e3::P-LENDING-013::SYS-GL">
+<title>Supporting</title>
+<path d="M196 414.36 L204.82 414.36 A1.18 1.18 0 0 0 206 413.18 L206 413.18 A1.18 1.18 0 0 1 207.18 412 L275 412 L311 412 A10 10 0 0 0 321 402 L321 396.98 A10 10 0 0 1 330.98 386.98 L611.99 386.5 A10 10 0 0 1 612.01 386.5 L637.48 386.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M641 386.5 L631.43 391.29 L631.43 381.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::P-LENDING-013::SYS-GL">
+<rect x="424.46" y="393.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="453.5" y="405.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e4::P-LENDING-013::DA-COLLATERAL">
+<title>Read</title>
+<path d="M196 422 L275 422 L586 422 A10 10 0 0 1 596 432 L596 524 A8 8 0 0 0 604 532 L612 532 L637.48 532" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M641 532 L631.43 536.78 L631.43 527.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::P-LENDING-013::DA-COLLATERAL">
+<rect x="438.45" y="428.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="453.5" y="440.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e5::P-LENDING-013::DA-LOAN-ACCOUNT">
+<title>Both</title>
+<path d="M196 429.64 L204.82 429.64 A1.18 1.18 0 0 1 206 430.82 L206 430.82 A1.18 1.18 0 0 0 207.18 432 L275 432 L321 432 A10 10 0 0 1 331 442 L331 447 A10 10 0 0 0 341 457 L576 457 A10 10 0 0 1 586 467 L586 594 A10 10 0 0 0 596 604 L612 604 L637.48 604" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M641 604 L631.43 608.78 L631.43 599.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e5::P-LENDING-013::DA-LOAN-ACCOUNT">
+<rect x="439.35" y="463.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="453.5" y="475.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e6::P-LENDING-013::DA-GL">
+<title>Write</title>
+<path d="M196 437.27 L233.64 437.27 A2.36 2.36 0 0 1 236 439.64 L236 439.64 A2.36 2.36 0 0 0 238.36 442 L275 442 L311 442 A10 10 0 0 1 321 452 L321 482 A10 10 0 0 0 331 492 L566 492 A10 10 0 0 1 576 502 L576 666 A10 10 0 0 0 586 676 L612 676 L637.48 676" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M641 676 L631.43 680.78 L631.43 671.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e6::P-LENDING-013::DA-GL">
+<rect x="438.05" y="498.5" width="30.91" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="453.5" y="510.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Write</text>
+</g>
+<g class="edge" data-id="e7::P-LENDING-013::CTL-REPO-NOTICE">
+<title>governed by</title>
+<path d="M196 444.91 L222.45 444.91 A3.55 3.55 0 0 1 226 448.45 L226 448.45 A3.55 3.55 0 0 0 229.55 452 L275 452 L301 452 A10 10 0 0 1 311 462 L311 589 A10 10 0 0 0 321 599 L347 599 L372.48 599" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M376 599 L366.43 603.78 L366.43 594.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e8::P-LENDING-013::CAP-LEND-06-02">
+<title>supports</title>
+<path d="M196 452.55 L211.27 452.55 A4.73 4.73 0 0 1 216 457.27 L216 457.27 A4.73 4.73 0 0 0 220.73 462 L275 462 L291 462 A10 10 0 0 1 301 472 L301 729 A10 10 0 0 0 311 739 L347 739 L372.48 739" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M376 739 L366.43 743.78 L366.43 734.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e9::P-LENDING-013::CAP-LEND-06">
+<title>supports</title>
+<path d="M196 460.18 L201 460.18 A5 5 0 0 1 206 465.18 L206 466.09 A5.91 5.91 0 0 0 211.91 472 L275 472 L283 472 A8 8 0 0 1 291 480 L291 817 A10 10 0 0 0 301 827 L347 827 L372.48 827" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M376 827 L366.43 831.78 L366.43 822.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-LEND-06" data-type="capabilities">
+<title>Repossession &amp; Asset Remarketing</title>
+<path d="M416 793 L376 827 L416 861 L496 861 L536 827 L496 793 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="456" y="825.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Repossession &amp; Asset</text>
+<text x="456" y="837.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Remarketing</text>
+</g>
+<g class="node" data-id="CAP-LEND-06-02" data-type="capabilities">
+<title>Collateral Remarketing &amp; Deficiency Recovery</title>
+<path d="M416 705 L376 739 L416 773 L496 773 L536 739 L496 705 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="456" y="731.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Collateral</text>
+<text x="456" y="743.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Remarketing &amp;</text>
+<text x="456" y="755.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Deficiency Recovery</text>
+</g>
+<g class="node" data-id="CTL-REPO-NOTICE" data-type="controls">
+<title>Repossession and disposition notices</title>
+<path d="M422.86 573 L376 588.23 L376 609.77 L422.86 625 L489.14 625 L536 609.77 L536 588.23 L489.14 573 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="456" y="597.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Repossession and</text>
+<text x="456" y="609.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">disposition notices</text>
+</g>
+<g class="node" data-id="DA-COLLATERAL" data-type="data_assets">
+<title>Collateral, title and lien record</title>
+<path d="M641 508.6 Q649.5 506 683.5 506 L768.5 506 Q802.5 506 811 508.6 L811 555.4 Q802.5 558 768.5 558 L683.5 558 Q649.5 558 641 555.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="722" y="530.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Collateral, title and</text>
+<text x="722" y="542.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">lien record</text>
+<svg x="793" y="511" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-GL" data-type="data_assets">
+<title>General ledger entries</title>
+<path d="M641 652.6 Q649.5 650 683.5 650 L768.5 650 Q802.5 650 811 652.6 L811 699.4 Q802.5 702 768.5 702 L683.5 702 Q649.5 702 641 699.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="722" y="674.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">General ledger</text>
+<text x="722" y="686.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">entries</text>
+<svg x="793" y="655" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-LOAN-ACCOUNT" data-type="data_assets">
+<title>Installment loan account</title>
+<path d="M641 580.6 Q649.5 578 683.5 578 L768.5 578 Q802.5 578 811 580.6 L811 627.4 Q802.5 630 768.5 630 L683.5 630 Q649.5 630 641 627.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="722" y="602.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment loan</text>
+<text x="722" y="614.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">account</text>
+<svg x="793" y="583" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-LENDING-013" data-type="processes">
+<title>Remarket recovered collateral and pursue deficiency</title>
+<path d="M116 383.82 L36 415.9 L66.56 467.82 L165.44 467.82 L196 415.9 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="418.08" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Remarket recovered</text>
+<text x="116" y="430.08" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">collateral and pursue</text>
+<text x="116" y="442.08" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">deficiency</text>
+</g>
+<g class="node" data-id="SYS-COLLECT-API" data-type="systems">
+<title>Collections Workspace Service</title>
+<rect x="641" y="248" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="722" y="280.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Collections</text>
+<text x="722" y="292.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Workspace Service</text>
+<text x="732" y="321.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AKS · Collections Workspace Cache</text>
+<image x="801" y="252" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYWY2YTJjNDItYmQ0OC00ODU3LWE0NzktYWVjZjhiM2RlNGY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImI3MGM5Y2YxLWJhYjgtNDdlMC1iYmRiLWNlMWNkNjY0ZDI2OCIgeDE9IjIuOTQiIHkxPSIzLjc0IiB4Mj0iOC42NyIgeTI9IjMuNzQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiZWI2OTk1My1iZDk2LTQ1MTUtODg0My1hYzEyNTQ2YWY5MzYiIHgxPSI5LjEzIiB5MT0iMy43OSIgeDI9IjE0Ljg1IiB5Mj0iMy43OSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImEzOWM3NmU4LTU0N2UtNGViNC1iYzI1LWQ4MWMwZjhjZGE2MiIgeDE9IjAuMDEiIHkxPSI5LjEyIiB4Mj0iNS43MyIgeTI9IjkuMTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJmMGEyYTQ5MS0xN2RjLTRiYjgtYmJmYy1lZTU4YTVjZjQ3ZGEiIHgxPSI2LjE4IiB5MT0iOS4wOCIgeDI9IjExLjkiIHkyPSI5LjA4IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwIiB4MT0iMTIuMzUiIHkxPSI5LjEzIiB4Mj0iMTguMDgiIHkyPSI5LjEzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZTM5OWFhOTMtMzQxZi00ZGYyLTljMDItNjAzYjgyYjQ4NGMyIiB4MT0iMi44NyIgeTE9IjE0LjU2IiB4Mj0iOC42IiB5Mj0iMTQuNTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJhMTUyYmJhMC1iYTJiLTQ4M2EtYjhjMS0wYWU3ZGUzNTU5OTAiIHgxPSI5LjA1IiB5MT0iMTQuNiIgeDI9IjE0Ljc4IiB5Mj0iMTQuNiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPkljb24tY29tcHV0ZS0yMzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSI1LjggMS4yMiAyLjk0IDEuNzUgMi45NCA1LjY1IDUuOCA2LjI2IDguNjcgNS4xMSA4LjY3IDIuMiA1LjggMS4yMiIgZmlsbD0idXJsKCNiNzBjOWNmMS1iYWI4LTQ3ZTAtYmJkYi1jZTFjZDY2NGQyNjgpIiAvPjxwYXRoIGQ9Ik01LjkxLDYuMiw4LjUzLDUuMTRBLjIuMiwwLDAsMCw4LjY1LDVWMi4zNmEuMjEuMjEsMCwwLDAtLjEzLS4xOGwtMi42NS0uOUg1Ljc1bC0yLjYuNDhBLjIuMiwwLDAsMCwzLDEuOTRWNS40N2EuMTkuMTksMCwwLDAsLjE1LjE5bDIuNjMuNTVBLjMyLjMyLDAsMCwwLDUuOTEsNi4yWiIgZmlsbD0ibm9uZSIgLz48cGF0aCBkPSJNMi45NCwxLjc1djMuOWwyLjg5LjYxdi01Wm0xLjIyLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYybC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMTEuOTkgMS4yNyA5LjEzIDEuOCA5LjEzIDUuNyAxMS45OSA2LjMxIDE0Ljg1IDUuMTUgMTQuODUgMi4yNSAxMS45OSAxLjI3IiBmaWxsPSJ1cmwoI2JlYjY5OTUzLWJkOTYtNDUxNS04ODQzLWFjMTI1NDZhZjkzNikiIC8+PHBhdGggZD0iTTkuMTMsMS44VjUuN0wxMiw2LjMxdi01Wm0xLjIxLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYyLjA1bC45My0uMTdaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMi44NyA2LjYgMC4wMSA3LjEzIDAuMDEgMTEuMDMgMi44NyAxMS42NCA1Ljc0IDEwLjQ5IDUuNzQgNy41OCAyLjg3IDYuNiIgZmlsbD0idXJsKCNhMzljNzZlOC01NDdlLTRlYjQtYmMyNS1kODFjMGY4Y2RhNjIpIiAvPjxwYXRoIGQ9Ik0wLDcuMTNWMTFsMi44OS42MXYtNVptMS4yMSwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFpNMi40OCwxMWwtLjkzLS4xNVY3LjM4bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iOS4wNCA2LjU2IDYuMTggNy4wOSA2LjE4IDEwLjk5IDkuMDQgMTEuNjEgMTEuOSAxMC40NSAxMS45IDcuNTQgOS4wNCA2LjU2IiBmaWxsPSJ1cmwoI2YwYTJhNDkxLTE3ZGMtNGJiOC1iYmZjLWVlNThhNWNmNDdkYSkiIC8+PHBhdGggZD0iTTYuMTgsNy4wOVYxMWwyLjg4LjYxdi01Wk03LjM5LDEwLjdsLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjcuMzRsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxNS4yMSA2LjYxIDEyLjM1IDcuMTQgMTIuMzUgMTEuMDQgMTUuMjEgMTEuNjUgMTguMDggMTAuNSAxOC4wOCA3LjU5IDE1LjIxIDYuNjEiIGZpbGw9InVybCgjZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwKSIgLz48cGF0aCBkPSJNMTIuMzUsNy4xNFYxMWwyLjg5LjYxdi01Wm0xLjIyLDMuNjEtLjgxLS4xN3YtM2wuODEtLjE0Wm0xLjI2LjIyLS45My0uMTVWNy4zOWwuOTMtLjE2WiIgZmlsbD0iIzM0MWE2ZSIgLz48cG9seWdvbiBwb2ludHM9IjUuNzMgMTIuMDQgMi44NyAxMi41NiAyLjg3IDE2LjQ2IDUuNzMgMTcuMDggOC42IDE1LjkyIDguNiAxMy4wMiA1LjczIDEyLjA0IiBmaWxsPSJ1cmwoI2UzOTlhYTkzLTM0MWYtNGRmMi05YzAyLTYwM2I4MmI0ODRjMikiIC8+PHBhdGggZD0iTTUuODQsMTcsOC40NSwxNmEuMTguMTgsMCwwLDAsLjEyLS4xOHYtMi42QS4yLjIsMCwwLDAsOC40NCwxM0w1LjgsMTIuMWEuMTcuMTcsMCwwLDAtLjEyLDBsLTIuNi40N2EuMTkuMTksMCwwLDAtLjE2LjE5djMuNTRhLjE5LjE5LDAsMCwwLC4xNS4xOUw1LjcsMTdBLjIzLjIzLDAsMCwwLDUuODQsMTdaIiBmaWxsPSJub25lIiAvPjxwYXRoIGQ9Ik0yLjg3LDEyLjU2djMuOWwyLjg5LjYyVjEyWm0xLjIyLDMuNjFMMy4yOCwxNlYxM2wuODEtLjE0Wm0xLjI2LjIzLS45My0uMTVWMTIuODFsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxMS45MSAxMi4wOCA5LjA1IDEyLjYxIDkuMDUgMTYuNTEgMTEuOTEgMTcuMTIgMTQuNzggMTUuOTcgMTQuNzggMTMuMDYgMTEuOTEgMTIuMDgiIGZpbGw9InVybCgjYTE1MmJiYTAtYmEyYi00ODNhLWI4YzEtMGFlN2RlMzU1OTkwKSIgLz48cGF0aCBkPSJNOS4wNSwxMi42MXYzLjlsMi44OS42MXYtNVptMS4yMiwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjEyLjg2bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-GL" data-type="systems">
+<title>General ledger</title>
+<rect x="641" y="347" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="728" y="390.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">General ledger</text>
+<svg x="805" y="352" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-LOAN-SVC" data-type="systems">
+<title>Installment loan servicing platform</title>
+<rect x="641" y="149" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="728" y="186.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment loan</text>
+<text x="728" y="198.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">servicing platform</text>
+<svg x="805" y="154" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-REMARKET" data-type="systems">
+<title>Repossession and remarketing management</title>
+<rect x="641" y="50" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="728" y="76.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Repossession and</text>
+<text x="728" y="88.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">remarketing</text>
+<text x="728" y="100.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">management</text>
+<text x="732" y="123.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">external</text>
+<svg x="805" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="1001.4" x2="1072" y2="1001.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="1025.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 1014.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="1025.4" font-size="12" font-weight="400" fill="#343d50">capability · 2</text>
+<g transform="translate(180.32 1014.4)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="206.32" y="1025.4" font-size="12" font-weight="400" fill="#343d50">control · 1</text>
+<g transform="translate(275.87 1014.4)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="301.87" y="1025.4" font-size="12" font-weight="400" fill="#343d50">data asset · 3</text>
+<g transform="translate(392.72 1014.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="418.72" y="1025.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(492.99 1014.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="518.99" y="1025.4" font-size="12" font-weight="400" fill="#343d50">system · 4</text>
+<text x="28" y="1047.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 1036.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="1047.4" font-size="12" font-weight="400" fill="#343d50">governed by</text>
+<g transform="translate(184.75 1036.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="210.75" y="1047.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(277.26 1036.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="303.26" y="1047.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="1081.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-lending-013 · edit the model, not the picture</text></g>
+</svg>

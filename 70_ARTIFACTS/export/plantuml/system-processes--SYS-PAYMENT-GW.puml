@@ -12,18 +12,56 @@ AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor=
 Boundary(b_Capability, "Capability") {
   System(CAP_SERV_02, "Account Maintenance & Servicing Requests", "Execute cardholder-requested account changes.", $tags="capabilities")
   ' aac CAP_SERV_02: company_domain="Servicing"
+  System(CAP_LEND_04, "Collateral, Title & Lien Management", "Perfect and track liens and titles on financed assets across state regimes; release on payoff.", $tags="capabilities")
+  ' aac CAP_LEND_04: company_domain="Lending"
+  System(CAP_BILL_06, "Credit Balance Refund & Unclaimed Property", "Refund credit balances on request or after the regulatory period, and report and remit unclaimed balances to the states.", $tags="capabilities")
+  ' aac CAP_BILL_06: company_domain="Servicing"
+  System(CAP_DEP_02, "Deposit Account Opening", "Open and fund consumer deposit accounts directly: identity, disclosures, initial funding.", $tags="capabilities")
+  ' aac CAP_DEP_02: company_domain="Deposits"
+  System(CAP_DEP_04, "Deposit Servicing, Interest & Maturities", "Accrue and pay interest, process maturities and renewals, and handle early withdrawal within terms.", $tags="capabilities")
+  ' aac CAP_DEP_04: company_domain="Deposits"
+  System(CAP_LEND_05, "Installment Loan Servicing", "Bill, post, and service fixed-term installment loans: payments, payoffs, extensions, and customer contact.", $tags="capabilities")
+  ' aac CAP_LEND_05: company_domain="Lending"
+  System(CAP_DEP_04_02, "Maturity, Renewal & Early Withdrawal", "Notify ahead of maturity, renew or pay out, and apply early withdrawal penalties.", $tags="capabilities")
+  ' aac CAP_DEP_04_02: company_domain="Deposits"
+  System(CAP_PAY_03_02, "Payment Allocation & Posting", "Allocate payments across balances as the card rules require, and post them on the day received.", $tags="capabilities")
+  ' aac CAP_PAY_03_02: company_domain="Servicing"
   System(CAP_PAY_03, "Payment Capture & Application", "Accept and apply cardholder payments across all channels.", $tags="capabilities")
   ' aac CAP_PAY_03: company_domain="Servicing"
+  System(CAP_PAY_03_01, "Payment Channel Capture", "Take payments by ACH, debit card, check, lockbox and automatic payment.", $tags="capabilities")
+  ' aac CAP_PAY_03_01: company_domain="Servicing"
+  System(CAP_LEND_04_02, "Payoff & Lien Release", "Quote and apply payoffs, and release the lien within each state's deadline.", $tags="capabilities")
+  ' aac CAP_LEND_04_02: company_domain="Lending"
   System(CAP_PAY_04, "Returned Payment & NSF Handling", "Process returns, reversals, and associated fees.", $tags="capabilities")
   ' aac CAP_PAY_04: company_domain="Servicing"
+  System(CAP_SERV_02_03, "Secured Card Collateral Administration", "Hold, adjust and return the deposits that secure secured cards.", $tags="capabilities")
+  ' aac CAP_SERV_02_03: company_domain="Servicing"
 }
 Boundary(b_Process, "Process") {
   System(P_SERVICING_011, "Administer secured card deposit lifecycle", "Collect, hold, apply, and refund security deposits for secured card accounts, including graduation and charge-off application, with correct accounting and disclosure treatment.", $tags="processes")
   ' aac P_SERVICING_011: company_domain=""
+  System(P_PAYMENTS_010, "Allocate payment across balances", "Apply each payment above the minimum to the balance with the highest rate first, as the card rules require, and treat promotional, deferred-interest and disputed balances correctly. Allocation errors overcharge interest on every account with more than one balance, which makes them a remediation, not a correction.", $tags="processes")
+  ' aac P_PAYMENTS_010: company_domain=""
+  System(P_LENDING_009, "Bill installment loan and post payments", "Send the monthly bill, take payments by ACH, debit card, check and automatic payment, and post them to interest, principal and fees in the order the contract says. Posting drives the delinquency that collections and bureau reporting read, so a misposted payment shows up as a wrong late fee, a wrong call and a wrong bureau line.", $tags="processes")
+  ' aac P_LENDING_009: company_domain=""
   System(P_CARD_PMT_001, "Capture and apply cardholder payment", "Accept a cardholder payment through any channel and apply it to the account on the correct effective date.", $tags="processes")
   ' aac P_CARD_PMT_001: company_domain=""
+  System(P_PAYMENTS_008, "Enroll and run automatic payments", "Enroll a cardholder's bank account for recurring payments of the minimum, the statement balance or a fixed amount, verify the account, and originate the debits on schedule under the authorization the cardholder gave. Each debit needs a valid authorization, and a debit taken after it was revoked is an error claim.", $tags="processes")
+  ' aac P_PAYMENTS_008: company_domain=""
+  System(P_DEPOSITS_002, "Open and fund direct deposit account", "Open a CD or savings account applied for online, verify the depositor's identity and screen for sanctions, deliver the account disclosures, and take the opening deposit by ACH or wire. Deposit accounts are an entry point for fraud and money laundering, so identity and the source of funds are checked before the account goes live.", $tags="processes")
+  ' aac P_DEPOSITS_002: company_domain=""
+  System(P_DEPOSITS_007, "Process CD maturity, renewal, and early withdrawal", "Send maturity notices ahead of the date, take the depositor's instruction, renew at the current rate or pay out at maturity, and calculate the penalty on an early withdrawal. A CD that renews without the required notice, or pays out to an unverified account, is both a complaint and a fraud exposure.", $tags="processes")
+  ' aac P_DEPOSITS_007: company_domain=""
+  System(P_PAYMENTS_009, "Process lockbox and check payments", "Receive mailed checks through the lockbox, match each to an account by coupon or by research, post it the day it arrives, and work the exceptions. A payment received by the cutoff must be credited that day, so unmatched items are researched before they age.", $tags="processes")
+  ' aac P_PAYMENTS_009: company_domain=""
   System(P_PAYMENTS_003, "Process returned payment and assess NSF", "Handle returned and reversed payments and assess the associated fees. Return handling reverses the payment application, restores the balance, assesses any permitted fee, and feeds NSF patterns to risk; Reg E error claims can start here.", $tags="processes")
   ' aac P_PAYMENTS_003: company_domain=""
+  System(P_LENDING_008, "Quote payoff and release title", "Give the borrower or a refinancing lender a payoff quote, apply the payoff, and release the lien and send the title within the state's deadline. Late releases carry statutory penalties and complaints, and a release sent before the payoff funds clear is collateral given away.", $tags="processes")
+  ' aac P_LENDING_008: company_domain=""
+  System(P_SERVICING_016, "Refund credit balance and report unclaimed property", "Refund a credit balance when the cardholder asks or once it reaches the regulatory age, by check or deposit, and report and remit balances that cannot be returned to the states as unclaimed property. Both clocks are regulatory, and a refund check that is never cashed starts the unclaimed property clock again.", $tags="processes")
+  ' aac P_SERVICING_016: company_domain=""
+  System(P_LENDING_017, "Service point-of-sale installment loan", "Collect the scheduled installments on point-of-sale loans, handle early settlement and missed payments, and keep the shopper informed by message and statement. These loans repay over months rather than years and are serviced on the installment lending platform, not on the recreation loan system.", $tags="processes")
+  ' aac P_LENDING_017: company_domain=""
 }
 Boundary(b_System, "System") {
   System(SYS_PAYMENT_GW, "Payment capture gateway", "Payment capture across ACH, debit, lockbox, and wallet channels.", $tags="systems")
@@ -36,12 +74,62 @@ Rel(P_PAYMENTS_003, SYS_PAYMENT_GW, "Primary")
 ' aac rel: source="P_PAYMENTS_003"; target="SYS_PAYMENT_GW"; label="Primary"; relation="process_uses_system"; role="Primary"
 Rel(P_SERVICING_011, SYS_PAYMENT_GW, "Supporting")
 ' aac rel: source="P_SERVICING_011"; target="SYS_PAYMENT_GW"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_008, SYS_PAYMENT_GW, "Supporting")
+' aac rel: source="P_LENDING_008"; target="SYS_PAYMENT_GW"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_009, SYS_PAYMENT_GW, "Supporting")
+' aac rel: source="P_LENDING_009"; target="SYS_PAYMENT_GW"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_017, SYS_PAYMENT_GW, "Supporting")
+' aac rel: source="P_LENDING_017"; target="SYS_PAYMENT_GW"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DEPOSITS_002, SYS_PAYMENT_GW, "Supporting")
+' aac rel: source="P_DEPOSITS_002"; target="SYS_PAYMENT_GW"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DEPOSITS_007, SYS_PAYMENT_GW, "Supporting")
+' aac rel: source="P_DEPOSITS_007"; target="SYS_PAYMENT_GW"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_016, SYS_PAYMENT_GW, "Supporting")
+' aac rel: source="P_SERVICING_016"; target="SYS_PAYMENT_GW"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PAYMENTS_008, SYS_PAYMENT_GW, "Primary")
+' aac rel: source="P_PAYMENTS_008"; target="SYS_PAYMENT_GW"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_PAYMENTS_009, SYS_PAYMENT_GW, "Primary")
+' aac rel: source="P_PAYMENTS_009"; target="SYS_PAYMENT_GW"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_PAYMENTS_010, SYS_PAYMENT_GW, "Supporting")
+' aac rel: source="P_PAYMENTS_010"; target="SYS_PAYMENT_GW"; label="Supporting"; relation="process_uses_system"; role="Supporting"
 Rel(P_CARD_PMT_001, CAP_PAY_03, "supports")
 ' aac rel: source="P_CARD_PMT_001"; target="CAP_PAY_03"; label="supports"; relation="process_supports_capability"
 Rel(P_PAYMENTS_003, CAP_PAY_04, "supports")
 ' aac rel: source="P_PAYMENTS_003"; target="CAP_PAY_04"; label="supports"; relation="process_supports_capability"
 Rel(P_SERVICING_011, CAP_SERV_02, "supports")
 ' aac rel: source="P_SERVICING_011"; target="CAP_SERV_02"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_008, CAP_LEND_04_02, "supports")
+' aac rel: source="P_LENDING_008"; target="CAP_LEND_04_02"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_009, CAP_LEND_05, "supports")
+' aac rel: source="P_LENDING_009"; target="CAP_LEND_05"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_017, CAP_LEND_05, "supports")
+' aac rel: source="P_LENDING_017"; target="CAP_LEND_05"; label="supports"; relation="process_supports_capability"
+Rel(P_DEPOSITS_002, CAP_DEP_02, "supports")
+' aac rel: source="P_DEPOSITS_002"; target="CAP_DEP_02"; label="supports"; relation="process_supports_capability"
+Rel(P_DEPOSITS_007, CAP_DEP_04_02, "supports")
+' aac rel: source="P_DEPOSITS_007"; target="CAP_DEP_04_02"; label="supports"; relation="process_supports_capability"
+Rel(P_SERVICING_016, CAP_BILL_06, "supports")
+' aac rel: source="P_SERVICING_016"; target="CAP_BILL_06"; label="supports"; relation="process_supports_capability"
+Rel(P_PAYMENTS_008, CAP_PAY_03_01, "supports")
+' aac rel: source="P_PAYMENTS_008"; target="CAP_PAY_03_01"; label="supports"; relation="process_supports_capability"
+Rel(P_PAYMENTS_009, CAP_PAY_03_01, "supports")
+' aac rel: source="P_PAYMENTS_009"; target="CAP_PAY_03_01"; label="supports"; relation="process_supports_capability"
+Rel(P_PAYMENTS_010, CAP_PAY_03_02, "supports")
+' aac rel: source="P_PAYMENTS_010"; target="CAP_PAY_03_02"; label="supports"; relation="process_supports_capability"
+Rel(P_CARD_PMT_001, CAP_PAY_03_01, "supports")
+' aac rel: source="P_CARD_PMT_001"; target="CAP_PAY_03_01"; label="supports"; relation="process_supports_capability"
+Rel(P_SERVICING_011, CAP_SERV_02_03, "supports")
+' aac rel: source="P_SERVICING_011"; target="CAP_SERV_02_03"; label="supports"; relation="process_supports_capability"
+Rel(P_PAYMENTS_008, CAP_PAY_03, "supports")
+' aac rel: source="P_PAYMENTS_008"; target="CAP_PAY_03"; label="supports"; relation="process_supports_capability"
+Rel(P_PAYMENTS_009, CAP_PAY_03, "supports")
+' aac rel: source="P_PAYMENTS_009"; target="CAP_PAY_03"; label="supports"; relation="process_supports_capability"
+Rel(P_PAYMENTS_010, CAP_PAY_03, "supports")
+' aac rel: source="P_PAYMENTS_010"; target="CAP_PAY_03"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_008, CAP_LEND_04, "supports")
+' aac rel: source="P_LENDING_008"; target="CAP_LEND_04"; label="supports"; relation="process_supports_capability"
+Rel(P_DEPOSITS_007, CAP_DEP_04, "supports")
+' aac rel: source="P_DEPOSITS_007"; target="CAP_DEP_04"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

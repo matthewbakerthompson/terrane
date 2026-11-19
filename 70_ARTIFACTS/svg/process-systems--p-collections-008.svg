@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="929.4" viewBox="0 0 1100 929.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Negotiate settlement offer — Systems, Data and Controls</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Negotiate settlement offer — Systems, Data and Controls</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   9 nodes · 8 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(149.66 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="299.92" y="505.3" width="212.16" height="207.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="341.92" y="522.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Control">
+<rect x="300.3" y="373.3" width="211.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="333.15" y="390.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Control</text>
+</g>
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="557.3" y="333.3" width="221.4" height="175.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="599.3" y="350.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.98" y="242.25" width="212.03" height="135.45" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.83" y="259.65" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="557.3" y="24.3" width="233.4" height="280.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="587.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-COLLECTIONS-008::SYS-COLLECT-API">
+<title>Primary</title>
+<path d="M196 277.33 L244.97 277 A10 10 0 0 1 245.03 277 L253 277 A8 8 0 0 0 261 269 L261 91.98 A10 10 0 0 1 270.98 81.98 L553.99 81.5 A10 10 0 0 1 554.01 81.5 L579.48 81.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M583 81.5 L573.43 86.28 L573.43 76.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-COLLECTIONS-008::SYS-COLLECT-API">
+<rect x="382.32" y="88.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="403.5" y="100.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-COLLECTIONS-008::SYS-DOC">
+<title>Supporting</title>
+<path d="M196 286.67 L205.67 286.67 A0.33 0.33 0 0 1 206 287 L206 287 A0.33 0.33 0 0 0 206.33 287.33 L244.96 287 A10 10 0 0 1 245.04 287 L261 287 A10 10 0 0 0 271 277 L271 174.98 A10 10 0 0 1 280.98 164.98 L553.99 164.5 A10 10 0 0 1 554.01 164.5 L579.48 164.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M583 164.5 L573.43 169.28 L573.43 159.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-COLLECTIONS-008::SYS-DOC">
+<rect x="374.46" y="171.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="403.5" y="183.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-COLLECTIONS-008::SYS-BUREAU-GW">
+<title>Supporting</title>
+<path d="M196 296 L205.33 296 A0.67 0.67 0 0 1 206 296.67 L206 296.67 A0.66 0.66 0 0 0 206.67 297.33 L244.96 297 A10 10 0 0 1 245.04 297 L271 297 A10 10 0 0 0 281 287 L281 257.98 A10 10 0 0 1 290.98 247.98 L553.99 247.5 A10 10 0 0 1 554.01 247.5 L579.48 247.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M583 247.5 L573.43 252.28 L573.43 242.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-COLLECTIONS-008::SYS-BUREAU-GW">
+<rect x="374.46" y="254.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="403.5" y="266.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e3::P-COLLECTIONS-008::DA-COLLECT-ACT">
+<title>Write</title>
+<path d="M196 305.33 L205 305.33 A1 1 0 0 1 206 306.33 L206 306.33 A0.99 0.99 0 0 0 207 307.32 L244.96 307 A10 10 0 0 1 245.04 307 L526 307 A10 10 0 0 1 536 317 L536 376 A9 9 0 0 0 545 385 L554 385 L579.48 385" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M583 385 L573.43 389.79 L573.43 380.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::P-COLLECTIONS-008::DA-COLLECT-ACT">
+<rect x="388.05" y="284.5" width="30.91" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="403.5" y="296.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Write</text>
+</g>
+<g class="edge" data-id="e4::P-COLLECTIONS-008::DA-BUREAU-FILE">
+<title>Write</title>
+<path d="M196 314.67 L204.67 314.67 A1.33 1.33 0 0 1 206 316 L206 316 A1.32 1.32 0 0 0 207.33 317.32 L244.96 317 A10 10 0 0 1 245.04 317 L260.5 317 A0.5 0.5 0 0 1 261 317.5 L261 317.5 A0.5 0.5 0 0 0 261.5 318 L516 318 A10 10 0 0 1 526 328 L526 447 A10 10 0 0 0 536 457 L554 457 L579.48 457" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M583 457 L573.43 461.79 L573.43 452.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::P-COLLECTIONS-008::DA-BUREAU-FILE">
+<rect x="388.05" y="324.5" width="30.91" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="403.5" y="336.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Write</text>
+</g>
+<g class="edge" data-id="e5::P-COLLECTIONS-008::CTL-TREATMENT-APPR">
+<title>governed by</title>
+<path d="M196 324 L204.33 324 A1.67 1.67 0 0 1 206 325.67 L206 325.67 A1.65 1.65 0 0 0 207.67 327.32 L244.96 327 A10 10 0 0 1 245.04 327 L271 327 A10 10 0 0 1 281 337 L281 417 A8 8 0 0 0 289 425 L297 425 L322.48 425" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M326 425 L316.43 429.79 L316.43 420.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e6::P-COLLECTIONS-008::CAP-COLL-03-02">
+<title>supports</title>
+<path d="M196 333.33 L204 333.33 A2 2 0 0 1 206 335.33 L206 335.33 A1.98 1.98 0 0 0 208 337.32 L244.96 337 A10 10 0 0 1 245.04 337 L261 337 A10 10 0 0 1 271 347 L271 555 A10 10 0 0 0 281 565 L297 565 L322.48 565" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M326 565 L316.43 569.78 L316.43 560.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e7::P-COLLECTIONS-008::CAP-COLL-03">
+<title>supports</title>
+<path d="M196 342.67 L203.67 342.67 A2.33 2.33 0 0 1 206 345 L206 345 A2.31 2.31 0 0 0 208.33 347.31 L244.96 347 A10 10 0 0 1 245.04 347 L253 347 A8 8 0 0 1 261 355 L261 643 A10 10 0 0 0 271 653 L297 653 L322.48 653" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M326 653 L316.43 657.78 L316.43 648.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-COLL-03" data-type="capabilities">
+<title>Payment Arrangement &amp; Settlement Offers</title>
+<path d="M366 619 L326 653 L366 687 L446 687 L486 653 L446 619 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="406" y="651.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Payment Arrangement</text>
+<text x="406" y="663.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">&amp; Settlement Offers</text>
+</g>
+<g class="node" data-id="CAP-COLL-03-02" data-type="capabilities">
+<title>Settlement Offers</title>
+<path d="M366 531 L326 565 L366 599 L446 599 L486 565 L446 531 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="406" y="569.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Settlement Offers</text>
+</g>
+<g class="node" data-id="CTL-TREATMENT-APPR" data-type="controls">
+<title>Treatment strategy approval</title>
+<path d="M372.86 399 L326 414.23 L326 435.77 L372.86 451 L439.14 451 L486 435.77 L486 414.23 L439.14 399 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="406" y="423.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Treatment strategy</text>
+<text x="406" y="435.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">approval</text>
+</g>
+<g class="node" data-id="DA-BUREAU-FILE" data-type="data_assets">
+<title>Credit bureau furnishing file</title>
+<path d="M583 433.6 Q591.5 431 625.5 431 L710.5 431 Q744.5 431 753 433.6 L753 480.4 Q744.5 483 710.5 483 L625.5 483 Q591.5 483 583 480.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="664" y="455.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit bureau</text>
+<text x="664" y="467.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">furnishing file</text>
+<svg x="735" y="436" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-COLLECT-ACT" data-type="data_assets">
+<title>Collections activity record</title>
+<path d="M583 361.6 Q591.5 359 625.5 359 L710.5 359 Q744.5 359 753 361.6 L753 408.4 Q744.5 411 710.5 411 L625.5 411 Q591.5 411 583 408.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="664" y="383.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Collections activity</text>
+<text x="664" y="395.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">record</text>
+<svg x="735" y="364" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-COLLECTIONS-008" data-type="processes">
+<title>Negotiate settlement offer</title>
+<path d="M116 268 L36 300.09 L66.56 352 L165.44 352 L196 300.09 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="308.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Negotiate settlement</text>
+<text x="116" y="320.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">offer</text>
+</g>
+<g class="node" data-id="SYS-BUREAU-GW" data-type="systems">
+<title>Credit bureau gateway</title>
+<rect x="583" y="216" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="670" y="245.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit bureau</text>
+<text x="670" y="257.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">gateway</text>
+<svg x="747" y="221" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-COLLECT-API" data-type="systems">
+<title>Collections Workspace Service</title>
+<rect x="583" y="50" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="664" y="74.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Collections</text>
+<text x="664" y="86.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Workspace Service</text>
+<text x="674" y="107.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AKS · Collections Workspace Cache</text>
+<image x="743" y="54" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYWY2YTJjNDItYmQ0OC00ODU3LWE0NzktYWVjZjhiM2RlNGY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImI3MGM5Y2YxLWJhYjgtNDdlMC1iYmRiLWNlMWNkNjY0ZDI2OCIgeDE9IjIuOTQiIHkxPSIzLjc0IiB4Mj0iOC42NyIgeTI9IjMuNzQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiZWI2OTk1My1iZDk2LTQ1MTUtODg0My1hYzEyNTQ2YWY5MzYiIHgxPSI5LjEzIiB5MT0iMy43OSIgeDI9IjE0Ljg1IiB5Mj0iMy43OSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImEzOWM3NmU4LTU0N2UtNGViNC1iYzI1LWQ4MWMwZjhjZGE2MiIgeDE9IjAuMDEiIHkxPSI5LjEyIiB4Mj0iNS43MyIgeTI9IjkuMTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJmMGEyYTQ5MS0xN2RjLTRiYjgtYmJmYy1lZTU4YTVjZjQ3ZGEiIHgxPSI2LjE4IiB5MT0iOS4wOCIgeDI9IjExLjkiIHkyPSI5LjA4IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwIiB4MT0iMTIuMzUiIHkxPSI5LjEzIiB4Mj0iMTguMDgiIHkyPSI5LjEzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZTM5OWFhOTMtMzQxZi00ZGYyLTljMDItNjAzYjgyYjQ4NGMyIiB4MT0iMi44NyIgeTE9IjE0LjU2IiB4Mj0iOC42IiB5Mj0iMTQuNTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJhMTUyYmJhMC1iYTJiLTQ4M2EtYjhjMS0wYWU3ZGUzNTU5OTAiIHgxPSI5LjA1IiB5MT0iMTQuNiIgeDI9IjE0Ljc4IiB5Mj0iMTQuNiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPkljb24tY29tcHV0ZS0yMzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSI1LjggMS4yMiAyLjk0IDEuNzUgMi45NCA1LjY1IDUuOCA2LjI2IDguNjcgNS4xMSA4LjY3IDIuMiA1LjggMS4yMiIgZmlsbD0idXJsKCNiNzBjOWNmMS1iYWI4LTQ3ZTAtYmJkYi1jZTFjZDY2NGQyNjgpIiAvPjxwYXRoIGQ9Ik01LjkxLDYuMiw4LjUzLDUuMTRBLjIuMiwwLDAsMCw4LjY1LDVWMi4zNmEuMjEuMjEsMCwwLDAtLjEzLS4xOGwtMi42NS0uOUg1Ljc1bC0yLjYuNDhBLjIuMiwwLDAsMCwzLDEuOTRWNS40N2EuMTkuMTksMCwwLDAsLjE1LjE5bDIuNjMuNTVBLjMyLjMyLDAsMCwwLDUuOTEsNi4yWiIgZmlsbD0ibm9uZSIgLz48cGF0aCBkPSJNMi45NCwxLjc1djMuOWwyLjg5LjYxdi01Wm0xLjIyLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYybC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMTEuOTkgMS4yNyA5LjEzIDEuOCA5LjEzIDUuNyAxMS45OSA2LjMxIDE0Ljg1IDUuMTUgMTQuODUgMi4yNSAxMS45OSAxLjI3IiBmaWxsPSJ1cmwoI2JlYjY5OTUzLWJkOTYtNDUxNS04ODQzLWFjMTI1NDZhZjkzNikiIC8+PHBhdGggZD0iTTkuMTMsMS44VjUuN0wxMiw2LjMxdi01Wm0xLjIxLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYyLjA1bC45My0uMTdaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMi44NyA2LjYgMC4wMSA3LjEzIDAuMDEgMTEuMDMgMi44NyAxMS42NCA1Ljc0IDEwLjQ5IDUuNzQgNy41OCAyLjg3IDYuNiIgZmlsbD0idXJsKCNhMzljNzZlOC01NDdlLTRlYjQtYmMyNS1kODFjMGY4Y2RhNjIpIiAvPjxwYXRoIGQ9Ik0wLDcuMTNWMTFsMi44OS42MXYtNVptMS4yMSwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFpNMi40OCwxMWwtLjkzLS4xNVY3LjM4bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iOS4wNCA2LjU2IDYuMTggNy4wOSA2LjE4IDEwLjk5IDkuMDQgMTEuNjEgMTEuOSAxMC40NSAxMS45IDcuNTQgOS4wNCA2LjU2IiBmaWxsPSJ1cmwoI2YwYTJhNDkxLTE3ZGMtNGJiOC1iYmZjLWVlNThhNWNmNDdkYSkiIC8+PHBhdGggZD0iTTYuMTgsNy4wOVYxMWwyLjg4LjYxdi01Wk03LjM5LDEwLjdsLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjcuMzRsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxNS4yMSA2LjYxIDEyLjM1IDcuMTQgMTIuMzUgMTEuMDQgMTUuMjEgMTEuNjUgMTguMDggMTAuNSAxOC4wOCA3LjU5IDE1LjIxIDYuNjEiIGZpbGw9InVybCgjZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwKSIgLz48cGF0aCBkPSJNMTIuMzUsNy4xNFYxMWwyLjg5LjYxdi01Wm0xLjIyLDMuNjEtLjgxLS4xN3YtM2wuODEtLjE0Wm0xLjI2LjIyLS45My0uMTVWNy4zOWwuOTMtLjE2WiIgZmlsbD0iIzM0MWE2ZSIgLz48cG9seWdvbiBwb2ludHM9IjUuNzMgMTIuMDQgMi44NyAxMi41NiAyLjg3IDE2LjQ2IDUuNzMgMTcuMDggOC42IDE1LjkyIDguNiAxMy4wMiA1LjczIDEyLjA0IiBmaWxsPSJ1cmwoI2UzOTlhYTkzLTM0MWYtNGRmMi05YzAyLTYwM2I4MmI0ODRjMikiIC8+PHBhdGggZD0iTTUuODQsMTcsOC40NSwxNmEuMTguMTgsMCwwLDAsLjEyLS4xOHYtMi42QS4yLjIsMCwwLDAsOC40NCwxM0w1LjgsMTIuMWEuMTcuMTcsMCwwLDAtLjEyLDBsLTIuNi40N2EuMTkuMTksMCwwLDAtLjE2LjE5djMuNTRhLjE5LjE5LDAsMCwwLC4xNS4xOUw1LjcsMTdBLjIzLjIzLDAsMCwwLDUuODQsMTdaIiBmaWxsPSJub25lIiAvPjxwYXRoIGQ9Ik0yLjg3LDEyLjU2djMuOWwyLjg5LjYyVjEyWm0xLjIyLDMuNjFMMy4yOCwxNlYxM2wuODEtLjE0Wm0xLjI2LjIzLS45My0uMTVWMTIuODFsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxMS45MSAxMi4wOCA5LjA1IDEyLjYxIDkuMDUgMTYuNTEgMTEuOTEgMTcuMTIgMTQuNzggMTUuOTcgMTQuNzggMTMuMDYgMTEuOTEgMTIuMDgiIGZpbGw9InVybCgjYTE1MmJiYTAtYmEyYi00ODNhLWI4YzEtMGFlN2RlMzU1OTkwKSIgLz48cGF0aCBkPSJNOS4wNSwxMi42MXYzLjlsMi44OS42MXYtNVptMS4yMiwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjEyLjg2bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjwvc3ZnPg=="/>
+</g>
+<g class="node" data-id="SYS-DOC" data-type="systems">
+<title>Document management and archive</title>
+<rect x="583" y="133" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="670" y="156.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Document</text>
+<text x="670" y="168.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">management and</text>
+<text x="670" y="180.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">archive</text>
+<svg x="747" y="138" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="827.4" x2="1072" y2="827.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="851.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 840.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="851.4" font-size="12" font-weight="400" fill="#343d50">capability · 2</text>
+<g transform="translate(180.32 840.4)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="206.32" y="851.4" font-size="12" font-weight="400" fill="#343d50">control · 1</text>
+<g transform="translate(275.87 840.4)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="301.87" y="851.4" font-size="12" font-weight="400" fill="#343d50">data asset · 2</text>
+<g transform="translate(392.8 840.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="418.8" y="851.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(493.06 840.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="519.06" y="851.4" font-size="12" font-weight="400" fill="#343d50">system · 3</text>
+<text x="28" y="873.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 862.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="873.4" font-size="12" font-weight="400" fill="#343d50">governed by</text>
+<g transform="translate(184.75 862.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="210.75" y="873.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(277.26 862.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="303.26" y="873.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="907.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-collections-008 · edit the model, not the picture</text></g>
+</svg>

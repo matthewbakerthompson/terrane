@@ -65,6 +65,15 @@ class ComponentType(NamedTuple):
     #: "RDBMS"); a product is a provider's, under `providers`. Read by the
     #: type suggestions (`terrane.match.suggest_types`).
     aliases: Tuple[str, ...] = ()
+    #: Whether a system of this kind is deployed into a subnet of ours. False
+    #: for a managed service reached through the provider's endpoints (an
+    #: object store, a BI layer, a CDN) and for what someone else runs (bought
+    #: SaaS): such a system is not placed in its account's subnets by zone.
+    subnet: bool = True
+    #: The heading it is listed under within its category: Finance, Front
+    #: ends. Fifty business systems in one list read as a list; by what each
+    #: is for, as a shelf. A kind with none is listed under its category.
+    group: str = ""
 
 
 class Provided(NamedTuple):
@@ -89,7 +98,8 @@ class BuildingBlock(NamedTuple):
 
 
 #: A provider's answer that is one product among choices, "Amazon EKS or
-#: ECS", is split at " or "; one joined by "and", "AWS Cost Explorer and
+#: ECS", is split at " or ", and so is a list of them, "Zuora, Stripe
+#: Billing or Chargebee"; one joined by "and", "AWS Cost Explorer and
 #: Budgets", is one answer of two products together and stays whole. A
 #: name's aside, "(formerly Agentspace)", is not part of the name.
 _ASIDE = re.compile(r"\s*\(formerly [^)]*\)")
@@ -98,10 +108,19 @@ _ASIDE = re.compile(r"\s*\(formerly [^)]*\)")
 def offered(answer: str) -> List[str]:
     """The products a provider's answer offers, the first the usual one:
     `Amazon EKS or ECS` is Amazon EKS and ECS, `MinIO or a NAS` is MinIO
-    and NAS, and an answer of no choice is itself."""
+    and NAS, `ADP, Workday Payroll or UKG Pro` is all three, and an answer
+    of no choice is itself."""
     out: List[str] = []
-    for choice in str(answer or "").split(" or "):
-        choice = _ASIDE.sub("", choice).strip()
+    text = _ASIDE.sub("", str(answer or ""))
+    choices = text.split(" or ")
+    # Split at " or " alone, "ADP, Workday Payroll" was offered as one
+    # product. A comma in an answer of no choice is its own ("Amazon EC2 P
+    # and G instances, AWS Trainium and Inferentia"), and one in brackets
+    # or beside a semicolon is a range inside one maker's answer.
+    if len(choices) > 1 and "(" not in text and ";" not in text:
+        choices = [part for choice in choices for part in choice.split(", ")]
+    for choice in choices:
+        choice = choice.strip()
         for article in ("a ", "an "):
             if choice.lower().startswith(article):
                 choice = choice[len(article):]
@@ -123,6 +142,14 @@ def parse_component(data: dict, source: Optional[Path] = None) -> ComponentType:
             "component %s: applies_to names an unknown entity type %r"
             % (data["component_type_id"], applies_to)
         )
+    subnet = data.get("subnet", True)
+    if not isinstance(subnet, bool):
+        raise LibraryError("component %s: subnet is true or false, whether the kind sits in a subnet of ours"
+                           % data["component_type_id"])
+    group = data.get("group", "")
+    if not isinstance(group, str):
+        raise LibraryError("component %s: group is the heading it is listed under, in words"
+                           % data["component_type_id"])
     return ComponentType(
         component_type_id=str(data["component_type_id"]),
         name=str(data.get("name") or data["component_type_id"]),
@@ -134,6 +161,8 @@ def parse_component(data: dict, source: Optional[Path] = None) -> ComponentType:
         defaults=dict(data.get("defaults") or {}),
         source_file=source,
         aliases=tuple(a.strip() for a in aliases),
+        subnet=subnet,
+        group=group.strip(),
     )
 
 
@@ -365,10 +394,13 @@ def expand(
         record.setdefault("service_category", component.category)
         record.setdefault("status", "Planned")
         if provider:
-            product = component.providers.get(provider)
+            # The provider's usual product, as a part placed on its own is:
+            # the whole answer recorded an event stream's product as
+            # "Amazon Kinesis or MSK", which is a choice, not a product.
+            choices = offered(component.providers.get(provider, ""))
             record.setdefault("provider", provider)
-            if product:
-                record.setdefault("product", product)
+            if choices:
+                record.setdefault("product", choices[0])
 
         entities.setdefault(component.applies_to, []).append(record)
         created[component.component_type_id] = this_id

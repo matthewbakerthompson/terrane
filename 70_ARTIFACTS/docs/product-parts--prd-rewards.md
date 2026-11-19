@@ -35,6 +35,12 @@ flowchart LR
     SYS_REWARDS_WEB["Rewards Redemption Web<br/>[AKS]"]
   end
 
+  subgraph grp_workload_network["workload-network"]
+    direction LR
+    TS_NET_SUB_AZ_CARDS_APP[/"Cards App Subnet<br/>[Subnet]"/]
+    TS_NET_SUB_AZ_CARDS_DATA[/"Cards Data Subnet<br/>[Subnet]"/]
+  end
+
   TS_AZURE_APIM[/"Azure API Management<br/>[API gateway]"/]
   TS_AZURE_EVENTHUBS[/"Azure Event Hubs<br/>[Event stream]"/]
   TS_AZURE_KEYVAULT[/"Azure Key Vault<br/>[Secrets manager]"/]
@@ -68,6 +74,10 @@ flowchart LR
   SYS_REWARDS_WORKER -.->|"runs on"| TS_AZURE_AKS
   SYS_REWARDS_WORKER -.->|"runs on"| TS_AZURE_MONITOR
   SYS_REWARDS_WORKER -.->|"runs on"| TS_AZURE_EVENTHUBS
+  SYS_REWARDS_API -.->|"runs on"| TS_NET_SUB_AZ_CARDS_APP
+  SYS_REWARDS_WEB -.->|"runs on"| TS_NET_SUB_AZ_CARDS_APP
+  SYS_REWARDS_STORE -.->|"runs on"| TS_NET_SUB_AZ_CARDS_DATA
+  SYS_REWARDS_WORKER -.->|"runs on"| TS_NET_SUB_AZ_CARDS_APP
   SYS_REWARDS_API -->|"ReadWrite"| DA_REWARDS_OPERATIONAL
   SYS_REWARDS_STORE -->|"ReadWrite"| DA_REWARDS_OPERATIONAL
   OI_REWARDS_API --- SYS_REWARDS_API
@@ -79,9 +89,9 @@ flowchart LR
   class DA_REWARDS_OPERATIONAL s_data_assets__data_assets;
   class OI_REWARDS_API s_offered_interfaces__offered_interfaces;
   class SYS_REWARDS_API,SYS_REWARDS_EVENTS,SYS_REWARDS_STORE,SYS_REWARDS_WEB,SYS_REWARDS_WORKER s_systems__systems;
-  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_EVENTHUBS,TS_AZURE_KEYVAULT,TS_AZURE_MONITOR,TS_AZURE_SERVICEBUS,TS_AZURE_SQL,TS_ENTRA_ID,TS_REWARDS_BACKUP,TS_REWARDS_CACHE,TS_REWARDS_DNS,TS_REWARDS_WAF s_tech_services__tech_services;
+  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_EVENTHUBS,TS_AZURE_KEYVAULT,TS_AZURE_MONITOR,TS_AZURE_SERVICEBUS,TS_AZURE_SQL,TS_ENTRA_ID,TS_NET_SUB_AZ_CARDS_APP,TS_NET_SUB_AZ_CARDS_DATA,TS_REWARDS_BACKUP,TS_REWARDS_CACHE,TS_REWARDS_DNS,TS_REWARDS_WAF s_tech_services__tech_services;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
-  class grp_api_service,grp_async_worker,grp_event_publisher,grp_relational_datastore,grp_web_channel boundary1;
+  class grp_api_service,grp_async_worker,grp_event_publisher,grp_relational_datastore,grp_web_channel,grp_workload_network boundary1;
 ```
 
 The same view as the app draws it, written beside the Mermaid by `terrane render`:
@@ -97,4 +107,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#4338ca` | systems |
 | `#c2410c` | tech services |
 
-19 entities, 23 relationships. Generated from the model; edit the model, not this file.
+21 entities, 27 relationships. Generated from the model; edit the model, not this file.

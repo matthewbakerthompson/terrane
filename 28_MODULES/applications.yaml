@@ -57,7 +57,9 @@
   parameters:
     - name: source_system
       required: true
-      description: The system whose events the service consumes, as a system id
+      ask: Consumes the events of
+      names: systems
+      description: The system whose events the service consumes.
   modules:
     - module: api-service
     - module: event-consumer
@@ -88,10 +90,13 @@
   parameters:
     - name: partner
       required: true
-      description: Who is on the other end, as a name
+      ask: Partner
+      description: Who is on the other end, by name.
     - name: target_system
       required: true
-      description: The partner's system in the model, as a system id
+      ask: The partner's system
+      names: systems
+      description: Where the partner's end is in the model.
   modules:
     - module: api-service
     - module: partner-adapter
@@ -110,6 +115,95 @@
   modules:
     - module: api-service
     - module: ml-inference-service
+
+- module_id: ai-assistant-baseline
+  name: AI assistant
+  category: Application
+  optional: true
+  description: >
+    The standard AI assistant, built: a chat behind workforce sign-on, the
+    API behind it, the inference service that assembles each prompt and
+    calls the landing zone's foundation model through its AI gateway, the
+    retrieval index the organization's documents are loaded into, and the
+    history of what was asked and answered. One component on the canvas,
+    and never one box: an assistant bought whole is a vendor, on the vendor
+    shapes.
+  parameters:
+    - name: sources
+      default: []
+      ask: Answers from
+      names: systems
+      description: Their documents are embedded into the retrieval index, each a daily feed.
+  modules:
+    - module: api-service
+    - module: assistant-chat
+    - module: ml-inference-service
+    - module: retrieval-index
+      with:
+        sources: "{sources}"
+    - module: conversation-history
+
+- module_id: ai-agent-baseline
+  name: AI agent
+  category: Application
+  optional: true
+  description: >
+    The standard AI agent: the API work is asked of, and an agent on the
+    landing zone's agent platform that plans with its model through its AI
+    gateway and acts through the APIs of the systems it is given as tools,
+    every action written to its action log first. The tools are named on
+    the product.
+  parameters:
+    - name: tools
+      default: []
+      ask: Acts through
+      names: systems
+      description: It calls their APIs, every action written to its action log first.
+  modules:
+    - module: api-service
+    - module: agent-service
+      with:
+        tools: "{tools}"
+
+- module_id: customer-portal-baseline
+  name: Customer portal
+  category: Application
+  optional: true
+  description: >
+    The standard customer portal: a web front end behind the public front
+    door that customers sign in to with accounts of their own, the API
+    behind it, the operational database, and the notifications it sends
+    them. What a customer-facing web application becomes once it has
+    customers who log in.
+  modules:
+    - module: api-service
+    - module: web-channel
+    - module: public-web-entry
+    - module: customer-sign-in
+    - module: relational-datastore
+    - module: notification-service
+
+- module_id: partner-api-baseline
+  name: Partner API
+  category: Application
+  optional: true
+  description: >
+    The standard API offered to partners: the service and its database,
+    published through the landing zone's API gateway, each partner a client
+    with its own credentials and quota. The partners are named on the
+    product, and each gets a line of its own to the API.
+  parameters:
+    - name: partners
+      default: []
+      ask: Called by
+      names: systems
+      description: The partners' systems, each a client of the gateway with its own credentials.
+  modules:
+    - module: api-service
+    - module: partner-api
+      with:
+        partners: "{partners}"
+    - module: relational-datastore
 
 - module_id: reporting-baseline
   name: Reporting application

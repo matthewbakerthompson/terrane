@@ -12,10 +12,16 @@ AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor=
 Boundary(b_Capability, "Capability") {
   System(CAP_SERV_02, "Account Maintenance & Servicing Requests", "Execute cardholder-requested account changes.", $tags="capabilities")
   ' aac CAP_SERV_02: company_domain="Servicing"
+  System(CAP_SERV_01_01, "Contact Center Operations", "Run the daily contact center: staffing, queues, quality.", $tags="capabilities")
+  ' aac CAP_SERV_01_01: company_domain="Servicing"
   System(CAP_SERV_01, "Contact Handling & Routing", "Receive and route contacts across voice, chat, and messaging.", $tags="capabilities")
   ' aac CAP_SERV_01: company_domain="Servicing"
+  System(CAP_SERV_01_02, "Contact Routing", "Route contacts to the right queue and skill.", $tags="capabilities")
+  ' aac CAP_SERV_01_02: company_domain="Servicing"
   System(CAP_PAY_03, "Payment Capture & Application", "Accept and apply cardholder payments across all channels.", $tags="capabilities")
   ' aac CAP_PAY_03: company_domain="Servicing"
+  System(CAP_PAY_03_01, "Payment Channel Capture", "Take payments by ACH, debit card, check, lockbox and automatic payment.", $tags="capabilities")
+  ' aac CAP_PAY_03_01: company_domain="Servicing"
 }
 Boundary(b_Process, "Process") {
   System(P_CARD_PMT_001, "Capture and apply cardholder payment", "Accept a cardholder payment through any channel and apply it to the account on the correct effective date.", $tags="processes")
@@ -38,6 +44,12 @@ Rel(P_CUST_INQ_001, CAP_SERV_01, "supports")
 ' aac rel: source="P_CUST_INQ_001"; target="CAP_SERV_01"; label="supports"; relation="process_supports_capability"
 Rel(P_CUST_INQ_001, CAP_SERV_02, "supports")
 ' aac rel: source="P_CUST_INQ_001"; target="CAP_SERV_02"; label="supports"; relation="process_supports_capability"
+Rel(P_CARD_PMT_001, CAP_PAY_03_01, "supports")
+' aac rel: source="P_CARD_PMT_001"; target="CAP_PAY_03_01"; label="supports"; relation="process_supports_capability"
+Rel(P_CUST_INQ_001, CAP_SERV_01_01, "supports")
+' aac rel: source="P_CUST_INQ_001"; target="CAP_SERV_01_01"; label="supports"; relation="process_supports_capability"
+Rel(P_CUST_INQ_001, CAP_SERV_01_02, "supports")
+' aac rel: source="P_CUST_INQ_001"; target="CAP_SERV_01_02"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

@@ -11,11 +11,11 @@ from contextlib import redirect_stdout
 
 import terrane
 from terrane import cli
-from terrane.join import AdoptError, describe, join_estate
+from terrane.join import AdoptError, describe, join_estate, likely_same
 from terrane.model import load
 from terrane.quick import read_any
 
-from _fixture import REPO, Sandbox
+from _fixture import REPO, Sandbox, remove_scratch
 
 QUICK = REPO / "90_EXAMPLE" / "quick"
 
@@ -189,7 +189,9 @@ class TestJoin(unittest.TestCase):
         # overrides and left it: the method's answer, named and not taken.
         from terrane.join import estate_copy
 
-        root = estate_copy(REPO, Path(tempfile.mkdtemp(prefix="aac-over-")))
+        tmp = Path(tempfile.mkdtemp(prefix="aac-over-"))
+        self.addCleanup(remove_scratch, tmp, "aac-over-")
+        root = estate_copy(REPO, tmp)
         product = root / "10_MODEL" / "products" / "PRD-CARD-SERVICING.yaml"
         before = product.read_text(encoding="utf-8")
         doc = {"model": {"name": "r"},
@@ -391,6 +393,7 @@ class TestJoin(unittest.TestCase):
 
         second = REPO / "90_EXAMPLE" / "thurman-health"
         tmp = Path(tempfile.mkdtemp(prefix="aac-copy-"))
+        self.addCleanup(remove_scratch, tmp, "aac-copy-")
         place = estate_copy(second, tmp)
         self.assertEqual(place, tmp / "90_EXAMPLE" / "thurman-health")
         self.assertTrue((tmp / "24_CONNECTIONS").is_dir())
@@ -556,6 +559,38 @@ class TestProbablyHere(unittest.TestCase):
             self.assertEqual(code, 0)
             self.assertNotIn("SYS-LEDGER may be", out.getvalue())
             self.assertIn("SYS-LEDGER is SYS-CORE-LEDGER here", out.getvalue())
+
+    def test_the_likely_ones_and_the_ones_left_to_a_person(self) -> None:
+        # V15's Same record, ticked before a person looks: the ArchiMate
+        # sample's switch and ledger, alone and of a type with no levels;
+        # its two capabilities, whose names repeat at every level of a map,
+        # listed and left.
+        with Sandbox(seed=True) as root:
+            doc, _ = read_any(QUICK / "sample.archimate", root)
+            result = join_estate(doc, root, source_name="sample.archimate", dry_run=True)
+            self.assertEqual(sorted(result.probable), ["CAP-FRAUD-DETECTION", "CAP-PAYMENT-PROCESSING",
+                                                       "SYS-AUTHORIZATION-SWITCH", "SYS-CARD-LEDGER"])
+            self.assertEqual(likely_same(doc, result.probable), {"SYS-AUTHORIZATION-SWITCH": "SYS-AUTH-SWITCH",
+                                                                 "SYS-CARD-LEDGER": "SYS-CORE-LEDGER"})
+        # Two candidates as likely as each other: the person chooses.
+        from terrane.match import Candidate
+        near = {"SYS-PORTAL": [Candidate("SYS-MERCHANT-API", "Merchant Portal Service", 0.865, ("merchant", "portal")),
+                               Candidate("SYS-MERCHANT-WEB", "Merchant Portal Web", 0.863, ("merchant", "portal"))]}
+        self.assertEqual(likely_same({"systems": [{"system_id": "SYS-PORTAL"}]}, near), {})
+        self.assertEqual(likely_same({"systems": [{"system_id": "SYS-PORTAL"}]}, {"SYS-PORTAL": near["SYS-PORTAL"][:1]}),
+                         {"SYS-PORTAL": "SYS-MERCHANT-API"})
+
+    def test_a_record_taken_is_joined_not_corrected(self) -> None:
+        # The sketch calls the ledger "Card ledger": taken as the estate's,
+        # the estate's name stays, while what else the sketch says
+        # differently is corrected as before.
+        with Sandbox(seed=True) as root:
+            doc, _ = read_any(QUICK / "payments.yaml")
+            result = join_estate(doc, root, source_name="payments.yaml", dry_run=True, correct=True,
+                                 same={"SYS-LEDGER": "SYS-CORE-LEDGER"})
+            self.assertIn("SYS-CORE-LEDGER", result.skipped["systems"])
+            self.assertEqual([c for c in result.changes if c.startswith("SYS-CORE-LEDGER")], [])
+            self.assertTrue([c for c in result.changes if c.startswith("SYS-MOBILE name")], result.changes)
 
 
 if __name__ == "__main__":

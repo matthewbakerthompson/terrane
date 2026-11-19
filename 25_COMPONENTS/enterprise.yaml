@@ -6,24 +6,6 @@
 # column says who sells it; the kind says what it is for, which is what a
 # migration, a renewal or an incident actually turns on.
 
-- component_type_id: hr-system
-  name: Human resources system
-  aliases:
-    - HRIS
-    - HCM
-    - payroll
-    - human capital
-    - people system
-  category: Enterprise
-  applies_to: systems
-  shape: round-tag
-  description: >
-    People, positions, pay and the joiner-mover-leaver events everything downstream keys on. The system of record for who works here.
-  providers:
-    SaaS: Workday HCM, SAP SuccessFactors or Oracle Fusion Cloud HCM
-  defaults:
-    network_zone: Public
-
 - component_type_id: erp
   name: Enterprise resource planning
   aliases:
@@ -33,13 +15,254 @@
     - accounts payable
     - back office
   category: Enterprise
+  group: Finance
   applies_to: systems
   shape: round-tag
+  subnet: false
   description: >
     Finance, procurement and the general ledger. The system of record for money, and the one every other system eventually posts to.
   providers:
     SaaS: SAP S/4HANA Cloud, Oracle Fusion Cloud ERP or Workday Financial Management
     Azure: Dynamics 365 Finance and Supply Chain
+  defaults:
+    network_zone: Public
+
+- component_type_id: procurement
+  name: Procurement and spend
+  aliases:
+    - purchasing
+    - spend management
+    - sourcing
+    - supplier management
+    - source to pay
+  category: Enterprise
+  group: Finance
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Sourcing, purchasing and supplier management. Where a vendor in this model first became a vendor.
+  providers:
+    SaaS: Coupa or SAP Ariba
+  defaults:
+    network_zone: Public
+
+- component_type_id: billing
+  name: Billing and invoicing
+  aliases:
+    - invoicing
+    - recurring billing
+    - accounts receivable
+    - rating and charging
+    - billing engine
+  category: Enterprise
+  group: Finance
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Turns what a customer bought or used into an invoice, and an invoice into money owed. The number on it is the one the customer argues with.
+  providers:
+    SaaS: Zuora, Stripe Billing or Chargebee
+  defaults:
+    network_zone: Public
+
+- component_type_id: payment-processing
+  name: Payment processing
+  aliases:
+    - payment service provider
+    - checkout payments
+    - acquiring
+    - online payments
+    - refunds
+  category: Enterprise
+  group: Finance
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Takes the money: payments and refunds, through a provider that holds the payment details so the estate does not have to.
+  providers:
+    SaaS: Stripe, Adyen or Worldpay
+  defaults:
+    network_zone: Public
+
+- component_type_id: expense-management
+  name: Expense management
+  aliases:
+    - expenses
+    - travel and expense
+    - expense claims
+    - receipts
+    - spend approvals
+  category: Enterprise
+  group: Finance
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Expense claims, receipts and approvals, posted to the ledger. The system staff use most and like least.
+  providers:
+    SaaS: SAP Concur, Expensify or Navan
+  defaults:
+    network_zone: Public
+
+- component_type_id: treasury
+  name: Treasury management
+  aliases:
+    - cash management
+    - liquidity
+    - bank connectivity
+    - cash forecasting
+    - hedging
+  category: Enterprise
+  group: Finance
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Cash, bank accounts, liquidity and the payments the organization itself makes. Few users, large amounts.
+  providers:
+    SaaS: Kyriba or FIS Quantum
+  defaults:
+    network_zone: Public
+
+- component_type_id: tax-engine
+  name: Tax calculation
+  aliases:
+    - sales tax
+    - VAT calculation
+    - indirect tax
+    - tax compliance
+    - tax engine
+  category: Enterprise
+  group: Finance
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Works out the tax on every sale, by where it happened and what was sold, and keeps the record for the return. Called in line by billing and checkout.
+  providers:
+    SaaS: Avalara, Vertex or Sovos
+  defaults:
+    network_zone: Public
+
+- component_type_id: financial-planning
+  name: Financial planning
+  aliases:
+    - budgeting
+    - forecasting
+    - FP&A
+    - planning and analysis
+    - corporate performance management
+  category: Enterprise
+  group: Finance
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Budgets, forecasts and the plan the actuals are compared against. Fed from the ledger, mostly by spreadsheet.
+  providers:
+    SaaS: Anaplan, Workday Adaptive Planning or Oracle EPM
+  defaults:
+    network_zone: Public
+
+- component_type_id: hr-system
+  name: Human resources system
+  aliases:
+    - HRIS
+    - HCM
+    - human capital
+    - people system
+  category: Enterprise
+  group: People
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    People, positions, pay and the joiner-mover-leaver events everything downstream keys on. The system of record for who works here.
+  providers:
+    SaaS: Workday HCM, SAP SuccessFactors or Oracle Fusion Cloud HCM
+  defaults:
+    network_zone: Public
+
+- component_type_id: payroll
+  name: Payroll
+  aliases:
+    - pay run
+    - salary payments
+    - gross to net
+    - payslips
+    - earnings
+  category: Enterprise
+  group: People
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Gross to net, every pay period, with the tax and the deductions. Late is not an option, and the deadline is in the law.
+  providers:
+    SaaS: ADP, Workday Payroll or UKG Pro
+  defaults:
+    network_zone: Public
+
+- component_type_id: recruiting
+  name: Recruiting
+  aliases:
+    - applicant tracking
+    - ATS
+    - hiring
+    - talent acquisition
+    - job applications
+  category: Enterprise
+  group: People
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Jobs, candidates, interviews and offers, until an offer is accepted and the person becomes a joiner in the HR system. Holds personal details of people who never worked here.
+  providers:
+    SaaS: Greenhouse, iCIMS or Workday Recruiting
+  defaults:
+    network_zone: Public
+
+- component_type_id: learning-management
+  name: Learning management
+  aliases:
+    - LMS
+    - training
+    - courses
+    - e-learning
+    - mandatory training
+  category: Enterprise
+  group: People
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Courses, who has taken them, and who is overdue. The evidence an auditor wants when asking whether staff were trained.
+  providers:
+    SaaS: Cornerstone, Docebo or Workday Learning
+  defaults:
+    network_zone: Public
+
+- component_type_id: workforce-management
+  name: Workforce scheduling
+  aliases:
+    - rostering
+    - shift scheduling
+    - time and attendance
+    - timekeeping
+    - labor scheduling
+  category: Enterprise
+  group: People
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Rotas, shifts, time and attendance: who is working when, and what they are owed for it.
+  providers:
+    SaaS: UKG Pro Workforce Management, Deputy or Quinyx
   defaults:
     network_zone: Public
 
@@ -52,13 +275,481 @@
     - customer service
     - case management
   category: Enterprise
+  group: Customers and sales
   applies_to: systems
   shape: round-tag
+  subnet: false
   description: >
     Customers, accounts, cases and campaigns. Where sales and service see one customer, if anywhere.
   providers:
     SaaS: Salesforce
     Azure: Dynamics 365 Customer Service and Sales
+  defaults:
+    network_zone: Public
+
+- component_type_id: marketing-automation
+  name: Marketing automation
+  aliases:
+    - campaign management
+    - email marketing
+    - customer journeys
+    - lead nurturing
+    - segmentation
+  category: Enterprise
+  group: Customers and sales
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Campaigns, segments and the journeys customers are sent on. Holds their consent, or should.
+  providers:
+    SaaS: Salesforce Marketing Cloud, Adobe Marketo Engage or HubSpot
+    Azure: Dynamics 365 Customer Insights
+  defaults:
+    network_zone: Public
+
+- component_type_id: customer-data-platform
+  name: Customer data platform
+  aliases:
+    - CDP
+    - single customer view
+    - customer profiles
+    - identity resolution
+    - audience building
+  category: Enterprise
+  group: Customers and sales
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    One profile per customer, stitched from every channel's events and handed to marketing and service. The single view of the customer, for as long as the stitching holds.
+  providers:
+    SaaS: Segment, Adobe Real-Time CDP or Tealium
+  defaults:
+    network_zone: Public
+
+- component_type_id: ecommerce
+  name: E-commerce platform
+  aliases:
+    - online store
+    - storefront
+    - shopping cart
+    - online shop
+    - digital commerce
+  category: Enterprise
+  group: Customers and sales
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    The catalog, the basket and the checkout. Usually bought, then customized until upgrading it is a project.
+  providers:
+    SaaS: Shopify, Salesforce Commerce Cloud or Adobe Commerce
+  defaults:
+    network_zone: Public
+
+- component_type_id: web-cms
+  name: Website content management
+  aliases:
+    - CMS
+    - content management system
+    - headless CMS
+    - web publishing
+    - site pages
+  category: Enterprise
+  group: Customers and sales
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    The pages, articles and help content of the public site, edited by marketing without a release. Not the application behind the sign-in.
+  providers:
+    SaaS: Contentful, Adobe Experience Manager or Sitecore
+  defaults:
+    network_zone: Public
+
+- component_type_id: digital-asset-management
+  name: Digital asset management
+  aliases:
+    - DAM
+    - brand assets
+    - media library
+    - image library
+    - creative assets
+  category: Enterprise
+  group: Customers and sales
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Images, video and brand files, with the rights to use each. Where the logo on the website comes from, or should.
+  providers:
+    SaaS: Bynder, Aprimo or Adobe Experience Manager Assets
+  defaults:
+    network_zone: Public
+
+- component_type_id: cpq
+  name: Quote and pricing
+  aliases:
+    - CPQ
+    - configure price quote
+    - quoting
+    - price books
+    - proposals
+  category: Enterprise
+  group: Customers and sales
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Configures what is being sold, prices it with the discounts sales is allowed, and produces the quote. Hands a closed deal to billing.
+  providers:
+    SaaS: Salesforce Revenue Cloud, Oracle CPQ or DealHub
+  defaults:
+    network_zone: Public
+
+- component_type_id: loyalty
+  name: Loyalty program
+  aliases:
+    - loyalty scheme
+    - points program
+    - membership levels
+    - member benefits
+    - loyalty points
+  category: Enterprise
+  group: Customers and sales
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Members, their levels, points earned and points spent, and the partners who honor them. A liability on the balance sheet as much as a program.
+  providers:
+    SaaS: Antavo, Talon.One or Salesforce Loyalty Management
+  defaults:
+    network_zone: Public
+
+- component_type_id: booking
+  name: Booking and appointments
+  aliases:
+    - reservations
+    - appointment scheduling
+    - online booking
+    - booking engine
+    - availability calendar
+  category: Enterprise
+  group: Customers and sales
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    The slots, the bookings and the reminders: a table, a room, a clinic appointment or an engineer's call-out. What customers book themselves, and change at the last minute.
+  providers:
+    SaaS: Calendly, Mindbody or SimplyBook.me
+  defaults:
+    network_zone: Public
+
+- component_type_id: contact-center
+  name: Contact center platform
+  aliases:
+    - call center
+    - IVR
+    - telephony
+    - omnichannel contact
+    - customer contact
+  category: Enterprise
+  group: Customer service
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Routing, queues, telephony and agent desktops for customer contact across channels.
+  providers:
+    AWS: Amazon Connect
+    Azure: Dynamics 365 Contact Center
+    GCP: Customer Engagement Suite
+    SaaS: Genesys Cloud or NICE CXone
+  defaults:
+    network_zone: Public
+
+- component_type_id: support-desk
+  name: Customer support desk
+  aliases:
+    - help desk
+    - ticketing
+    - support tickets
+    - customer support
+    - case queue
+  category: Enterprise
+  group: Customer service
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Customers' questions and complaints as tickets, with who has each one and how long it has waited. Where a complaint becomes a regulatory record.
+  providers:
+    SaaS: Zendesk, Salesforce Service Cloud or Freshdesk
+    Azure: Dynamics 365 Customer Service
+  defaults:
+    network_zone: Public
+
+- component_type_id: field-service
+  name: Field service management
+  aliases:
+    - field engineers
+    - dispatch
+    - work orders
+    - on-site jobs
+    - technician scheduling
+  category: Enterprise
+  group: Customer service
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Sends a person to a place: the work order, the schedule, the route, the parts and the signature at the end.
+  providers:
+    SaaS: Salesforce Field Service, ServiceNow Field Service or IFS
+    Azure: Dynamics 365 Field Service
+  defaults:
+    network_zone: Public
+
+- component_type_id: order-management
+  name: Order management
+  aliases:
+    - OMS
+    - order processing
+    - order orchestration
+    - order to cash
+    - returns
+  category: Enterprise
+  group: Operations and supply chain
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Every order from basket to doorstep and back, across channels and warehouses: the one place an order's state can be trusted.
+  providers:
+    SaaS: Manhattan Active Omni, Salesforce Order Management or IBM Sterling Order Management
+  defaults:
+    network_zone: Public
+
+- component_type_id: warehouse-management
+  name: Inventory and warehouse
+  aliases:
+    - WMS
+    - inventory management
+    - stock control
+    - warehouse operations
+    - picking and packing
+  category: Enterprise
+  group: Operations and supply chain
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    What is in stock, where it sits and what moves next: receiving, picking, packing and shipping.
+  providers:
+    SaaS: Manhattan Active Warehouse Management, Blue Yonder or SAP Extended Warehouse Management
+  defaults:
+    network_zone: Public
+
+- component_type_id: transport-management
+  name: Transportation management
+  aliases:
+    - TMS
+    - logistics
+    - shipping
+    - freight
+    - carrier management
+  category: Enterprise
+  group: Operations and supply chain
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Gets goods from here to there: carriers, routes, loads, freight costs and where the shipment is now.
+  providers:
+    SaaS: Oracle Transportation Management, Blue Yonder or MercuryGate
+  defaults:
+    network_zone: Public
+
+- component_type_id: plm
+  name: Product lifecycle management
+  aliases:
+    - PLM
+    - product structure
+    - bill of materials
+    - engineering change
+    - product design
+  category: Enterprise
+  group: Operations and supply chain
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Designs, parts, bills of materials and every engineering change, from idea to end of life. The last word on what the product is.
+  providers:
+    SaaS: Siemens Teamcenter, PTC Windchill or Dassault 3DEXPERIENCE
+  defaults:
+    network_zone: Public
+
+- component_type_id: mes
+  name: Manufacturing execution
+  aliases:
+    - MES
+    - shop floor
+    - production tracking
+    - plant operations
+    - work in progress
+  category: Enterprise
+  group: Operations and supply chain
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Runs the shop floor: what is being made on which line, by whom, to which spec, with the quality record of each batch. Sits next to machines that cannot be patched on a whim.
+  providers:
+    SaaS: Siemens Opcenter, Rockwell FactoryTalk or SAP Digital Manufacturing
+  defaults:
+    network_zone: On-prem
+
+- component_type_id: asset-maintenance
+  name: Asset maintenance
+  aliases:
+    - EAM
+    - enterprise asset management
+    - maintenance management
+    - CMMS
+    - preventive maintenance
+  category: Enterprise
+  group: Operations and supply chain
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    The organization's physical assets and their upkeep: inspections, planned maintenance, breakdowns and spares. What keeps the plant, the fleet or the buildings running.
+  providers:
+    SaaS: IBM Maximo, IFS or SAP Asset Management
+  defaults:
+    network_zone: Public
+
+- component_type_id: point-of-sale
+  name: Point of sale
+  aliases:
+    - POS
+    - till
+    - checkout terminal
+    - in-store checkout
+    - cash register
+  category: Enterprise
+  group: Operations and supply chain
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    The till: in-store sales, returns and the cash drawer, working offline when the store's link is down.
+  providers:
+    SaaS: Square, Lightspeed or Oracle Retail Xstore
+  defaults:
+    network_zone: Edge
+
+- component_type_id: grc
+  name: Governance, risk and compliance
+  aliases:
+    - risk management
+    - compliance management
+    - audit management
+    - policy management
+    - IRM
+  category: Enterprise
+  group: Risk and legal
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Risks, controls, policies, audits and issues. The system the controls in this model should reconcile to.
+  providers:
+    SaaS: ServiceNow IRM, Archer or OneTrust
+  defaults:
+    network_zone: Public
+
+- component_type_id: contract-management
+  name: Contract management
+  aliases:
+    - CLM
+    - contract lifecycle management
+    - contract repository
+    - legal agreements
+    - obligations
+  category: Enterprise
+  group: Risk and legal
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Every contract, its terms, its renewal date and what it obliges us to. Where the terms a supplier agreed to can be found.
+  providers:
+    SaaS: Ironclad, Icertis or DocuSign CLM
+  defaults:
+    network_zone: Public
+
+- component_type_id: privacy-management
+  name: Privacy and consent
+  aliases:
+    - consent management
+    - cookie consent
+    - subject access requests
+    - privacy requests
+    - preference center
+  category: Enterprise
+  group: Risk and legal
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    What each person agreed to, and the requests to see or erase what is held on them, with the clock each request runs on.
+  providers:
+    SaaS: OneTrust, TrustArc or Osano
+  defaults:
+    network_zone: Public
+
+- component_type_id: fraud-detection
+  name: Fraud detection
+  aliases:
+    - fraud checks
+    - transaction monitoring
+    - fraud scoring
+    - anti-fraud
+    - suspicious activity
+  category: Enterprise
+  group: Risk and legal
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Scores applications and transactions for fraud as they happen, and queues the doubtful ones for a person. Fast enough to sit in line, explainable enough to decline on.
+  providers:
+    SaaS: Feedzai, Featurespace or SAS Fraud Management
+  defaults:
+    network_zone: Public
+
+- component_type_id: identity-verification
+  name: Identity verification
+  aliases:
+    - KYC
+    - know your customer
+    - ID checks
+    - onboarding checks
+    - proof of identity
+  category: Enterprise
+  group: Risk and legal
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Checks that a person is who they say they are, from a document, a selfie or the bureaus, before an account is opened, and keeps the evidence for the regulator.
+  providers:
+    SaaS: Onfido, Jumio or Socure
   defaults:
     network_zone: Public
 
@@ -72,8 +763,10 @@
     - task management
     - change tracking
   category: Enterprise
+  group: Work and collaboration
   applies_to: systems
   shape: round-tag
+  subnet: false
   description: >
     Issues, backlogs and boards. Where delivery work is planned and where an audit asks for the trail.
   providers:
@@ -87,11 +780,12 @@
   aliases:
     - wiki
     - documentation
-    - intranet
     - knowledge management
   category: Enterprise
+  group: Work and collaboration
   applies_to: systems
   shape: round-tag
+  subnet: false
   description: >
     Pages, runbooks and decisions. Where the architecture that is not in this model is written down.
   providers:
@@ -108,8 +802,10 @@
     - email and calendar
     - office applications
   category: Enterprise
+  group: Work and collaboration
   applies_to: systems
   shape: round-tag
+  subnet: false
   description: >
     Mail, calendar, documents and the identity most staff sign in with. The largest data boundary most organizations have.
   providers:
@@ -126,8 +822,10 @@
     - video conferencing
     - team chat
   category: Enterprise
+  group: Work and collaboration
   applies_to: systems
   shape: round-tag
+  subnet: false
   description: >
     Chat, calls and meetings. Also, in practice, where incidents are run and where decisions get made without a record.
   providers:
@@ -146,8 +844,10 @@
     - document archive
     - file sharing
   category: Enterprise
+  group: Work and collaboration
   applies_to: systems
   shape: round-tag
+  subnet: false
   description: >
     Stored documents with retention, versioning and access control. Where regulated records live, as opposed to a shared drive.
   providers:
@@ -164,8 +864,10 @@
     - electronic signing
     - esign
   category: Enterprise
+  group: Work and collaboration
   applies_to: systems
   shape: round-tag
+  subnet: false
   description: >
     Agreements signed and evidenced. A small system that a surprising number of processes stop without.
   providers:
@@ -173,42 +875,43 @@
   defaults:
     network_zone: Public
 
-- component_type_id: contact-center
-  name: Contact center platform
+- component_type_id: intranet
+  name: Intranet
   aliases:
-    - call center
-    - IVR
-    - telephony
-    - omnichannel contact
-    - customer contact
+    - staff news
+    - employee communications
+    - staff site
+    - employee home page
   category: Enterprise
+  group: Work and collaboration
   applies_to: systems
   shape: round-tag
+  subnet: false
   description: >
-    Routing, queues, telephony and agent desktops for customer contact across channels.
+    News, policies and links for staff. Where the policy a control points at is posted for everyone to read.
   providers:
-    AWS: Amazon Connect
-    Azure: Dynamics 365 Contact Center
-    GCP: Customer Engagement Suite
-    SaaS: Genesys Cloud or NICE CXone
+    SaaS: Staffbase or Simpplr
+    Azure: SharePoint and Viva Connections
   defaults:
     network_zone: Public
 
-- component_type_id: grc
-  name: Governance, risk and compliance
+- component_type_id: portfolio-management
+  name: Project portfolio management
   aliases:
-    - risk management
-    - compliance management
-    - audit management
-    - policy management
-    - IRM
+    - PPM
+    - project portfolio
+    - demand management
+    - resource planning
+    - investment planning
   category: Enterprise
+  group: Work and collaboration
   applies_to: systems
   shape: round-tag
+  subnet: false
   description: >
-    Risks, controls, policies, audits and issues. The system the controls in this model should reconcile to.
+    Which projects are funded, who works on them and whether they deliver. Where a roadmap in this model would be planned, if anyone kept the two in step.
   providers:
-    SaaS: ServiceNow IRM, Archer or OneTrust
+    SaaS: Planview, Clarity or ServiceNow Strategic Portfolio Management
   defaults:
     network_zone: Public
 
@@ -219,6 +922,7 @@
     - app builder
     - no-code
   category: Enterprise
+  group: Automation
   applies_to: tech_services
   shape: rectangle
   description: >
@@ -239,6 +943,7 @@
     - bots
     - workflow automation
   category: Enterprise
+  group: Automation
   applies_to: tech_services
   shape: rectangle
   description: >
@@ -250,20 +955,82 @@
     service_category: Enterprise
     network_zone: Private-App
 
-- component_type_id: procurement
-  name: Procurement and spend
+- component_type_id: loan-origination
+  name: Loan origination
   aliases:
-    - purchasing
-    - spend management
-    - sourcing
-    - supplier management
-    - source to pay
+    - LOS
+    - loan applications
+    - credit applications
+    - mortgage origination
+    - underwriting workflow
   category: Enterprise
+  group: Industry
   applies_to: systems
   shape: round-tag
+  subnet: false
   description: >
-    Sourcing, purchasing and supplier management. Where a vendor in this model first became a vendor.
+    Takes a loan from application to funded: the application, the checks, the decision, the documents and the signature.
   providers:
-    SaaS: Coupa or SAP Ariba
+    SaaS: nCino, Finastra or Temenos
+  defaults:
+    network_zone: Public
+
+- component_type_id: ehr
+  name: Electronic health record
+  aliases:
+    - EHR
+    - EMR
+    - charting
+    - care documentation
+    - order entry
+  category: Enterprise
+  group: Industry
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Orders, results, notes and medications: where care is written down, and down for no one.
+  providers:
+    SaaS: Epic, Oracle Health or MEDITECH
+  defaults:
+    network_zone: Public
+
+- component_type_id: policy-administration
+  name: Policy administration
+  aliases:
+    - policy admin
+    - insurance policies
+    - underwriting
+    - quote and bind
+    - renewals
+  category: Enterprise
+  group: Industry
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    Insurance policies from quote to renewal: products, rating, endorsements and cancellations. The system of record for what is covered.
+  providers:
+    SaaS: Guidewire PolicyCenter, Duck Creek or Majesco
+  defaults:
+    network_zone: Public
+
+- component_type_id: claims-management
+  name: Claims management
+  aliases:
+    - claims handling
+    - claims processing
+    - first notice of loss
+    - adjusting
+    - claims workflow
+  category: Enterprise
+  group: Industry
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+  description: >
+    A claim from first notice to payment: the cover check, the adjuster's work, the reserve and the settlement.
+  providers:
+    SaaS: Guidewire ClaimCenter, Duck Creek Claims or Snapsheet
   defaults:
     network_zone: Public

@@ -1,0 +1,50 @@
+@startuml
+' Process acquiring chargeback — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Process acquiring chargeback — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_MERCH_05, "Acquiring Chargeback Processing", "Work chargebacks from the acquiring side: represent on behalf of merchants and pass losses to the right party.", $tags="capabilities")
+  ' aac CAP_MERCH_05: company_domain="Merchant Services"
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_MERCHANT, "Merchant master and underwriting file", "Merchant identity, beneficial owners, underwriting decision, limits, pricing and screening results.", $tags="data_assets")
+  ' aac DA_MERCHANT: company_domain=""
+  SystemDb(DA_MERCH_SETTLE, "Merchant settlement and reserve ledger", "Daily merchant volume, fees, chargebacks, funding and reserve balances.", $tags="data_assets")
+  ' aac DA_MERCH_SETTLE: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_MERCHANT_008, "Process acquiring chargeback", "Receive chargebacks from the networks against merchants, debit the merchant or its reserve, collect the merchant's evidence and represent within the reason code's window, and absorb the loss when the merchant cannot pay. Chargebacks a merchant cannot cover fall on the bank as its sponsor.", $tags="processes")
+  ' aac P_MERCHANT_008: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+  System_Ext(SYS_MERCH_ACQ, "Merchant acquiring platform", "Processor platform for merchant boarding, clearing, settlement, reserves, fees and statements. Built with external.", $tags="systems")
+  ' aac SYS_MERCH_ACQ: company_domain=""; hosting="External"; technology="external"
+  System(SYS_MERCHANT_WEB, "Merchant Portal Web", "Customer-facing front end for Merchant Portal. Built with AKS.", $tags="systems")
+  ' aac SYS_MERCHANT_WEB: company_domain="Payments"; hosting="Azure"; technology="AKS"
+}
+
+Rel(P_MERCHANT_008, SYS_MERCH_ACQ, "Primary")
+' aac rel: source="P_MERCHANT_008"; target="SYS_MERCH_ACQ"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_MERCHANT_008, SYS_MERCHANT_WEB, "Supporting")
+' aac rel: source="P_MERCHANT_008"; target="SYS_MERCHANT_WEB"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_MERCHANT_008, SYS_DOC, "Supporting")
+' aac rel: source="P_MERCHANT_008"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_MERCHANT_008, DA_MERCH_SETTLE, "Write")
+' aac rel: source="P_MERCHANT_008"; target="DA_MERCH_SETTLE"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_MERCHANT_008, DA_MERCHANT, "Read")
+' aac rel: source="P_MERCHANT_008"; target="DA_MERCHANT"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_MERCHANT_008, CAP_MERCH_05, "supports")
+' aac rel: source="P_MERCHANT_008"; target="CAP_MERCH_05"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

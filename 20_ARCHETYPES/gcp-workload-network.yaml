@@ -1,0 +1,73 @@
+archetype_id: gcp-workload-network
+title: GCP workload network
+version: 1.0.0
+applies_to: tech_services
+description: >
+  An account's network on GCP, made once and landed on by every product
+  in the account. The instance is the VPC network itself, a technology service in
+  the account; what it makes is the subnets for each tier, regional subnetworks, the NAT
+  gateways, its attachment to the landing zone's transit hub and its link
+  to the landing zone's resolver. Products do not make networks: their
+  systems are placed in these subnets by account and network zone.
+
+parameters:
+  - name: slug
+    required: true
+    description: Short token for the network's ids, e.g. gcp-cards
+  - name: network_name
+    required: true
+    description: What the network is called before its parts' names, e.g. Cards
+  - name: account
+    required: true
+    description: The project the network belongs to, e.g. gcp-cards-prod
+  - name: region
+    default: europe-west2
+  - name: platform_org
+    estate: true
+    description: The org unit that runs the estate's network
+  # The standard layout, three tiers, each a regional subnetwork: a network made with
+  # nothing said about its subnets has these, and one that needs fewer or
+  # more says so.
+  - name: subnets
+    description: The subnets, as `workload-network` asks for them
+    default:
+      - {id: PUB, name: Public Subnet, zone: Public, az: regional}
+      - {id: APP, name: App Subnet, zone: Private-App, az: regional}
+      - {id: DATA, name: Data Subnet, zone: Private-Data, az: regional}
+  - name: nat_gateways
+    default:
+      - {id: NAT, name: Cloud NAT, az: regional}
+
+# The instance: the VPC network itself, in the account it was made for.
+defaults:
+  component_type: vpc
+  cloud_account: "{account}"
+  region: "{region}"
+  owner_org_id: "{platform_org}"
+  service_name: VPC network
+  network_zone: Private-App
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Network
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+
+provider: GCP
+
+entity_defaults:
+  all:
+    status: "{status}"
+  tech_services:
+    tags: [network-fabric]
+    owner_org_id: "{platform_org}"
+    provider: Google Cloud
+    cloud_provider: GCP
+    cloud_account: "{account}"
+    region: "{region}"
+    service_category: Network
+    togaf_layer: Technology
+    architecture_domain: Technology
+
+modules:
+  - module: workload-network

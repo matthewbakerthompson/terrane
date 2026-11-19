@@ -19,7 +19,6 @@ its staging folder gone after.
 from __future__ import annotations
 
 import base64
-import shutil
 import sys
 import tempfile
 import unittest
@@ -32,7 +31,7 @@ from terrane.loader import read_data_file  # noqa: E402
 from terrane.query import load_views  # noqa: E402
 from terrane.render_excel import workbook_bytes  # noqa: E402
 
-from _fixture import REPO, Sandbox  # noqa: E402
+from _fixture import REPO, Sandbox, remove_scratch  # noqa: E402
 
 SAMPLE = REPO / "60_SOURCES" / "inventory"
 PORTFOLIO = (SAMPLE / "application_portfolio.csv").read_bytes()
@@ -150,6 +149,30 @@ class TestWords(unittest.TestCase):
                                  "Vendor Hosted": (2, "")})
         owner = got["refs"][0]
         self.assertEqual((owner["field"], owner["found"], len(owner["missing"])), ("owner_org_id", 0, 5))
+        # The record each missing name reads like, offered where one does at
+        # 0.7 or more and no second is as near: Underwriting Technology is
+        # read as Technology; Finance Technology reads as near Technology as
+        # Finance, and is the person's to choose; Distribution Technology,
+        # at 0.60, reads like nothing.
+        self.assertEqual(owner["near"]["Underwriting Technology"]["id"], "ORG-TECH")
+        self.assertIn("technology", owner["near"]["Underwriting Technology"]["reasons"])
+        self.assertNotIn("Finance Technology", owner["near"])
+        self.assertNotIn("Distribution Technology", owner["near"])
+        self.assertEqual({n["name"]: n["rows"] for n in owner["names"]}["Underwriting Technology"], 2)
+        self.assertIn({"id": "ORG-FINANCE", "name": "Finance"}, owner["records"])
+        self.assertEqual(len(owner["records"]), len(_SHARED["model"].all_of("org_units")))
+
+    def test_the_quick_inventorys_owners_and_the_one_offered(self) -> None:
+        table = sources.read_table("sample-inventory.csv", (REPO / "90_EXAMPLE" / "quick" / "sample-inventory.csv").read_bytes())
+        got = sources.words_needed(table, "systems", {"Owner": ["owner_org_id"]}, _SHARED["model"])
+        owner = got["refs"][0]
+        names = {n["name"]: (n["rows"], n["id"]) for n in owner["names"]}
+        self.assertEqual(names["Payments platform"], (2, ""))
+        self.assertEqual(names["Partnerships"][1], "ORG-PARTNERSHIPS")
+        self.assertEqual(len(owner["missing"]), 6)
+        self.assertEqual(sorted(owner["near"]), ["Finance operations"])
+        self.assertEqual((owner["near"]["Finance operations"]["id"], owner["near"]["Finance operations"]["reasons"]),
+                         ("ORG-FINANCE", ["finance"]))
 
 
 class TestMapping(unittest.TestCase):
@@ -178,13 +201,13 @@ class TestMapping(unittest.TestCase):
             self.assertEqual(loaded["systems"].values["status"], {"yes": "Active", "01": "Planned"})
             self.assertEqual(sources.choice_of(read_data_file(path))["columns"], {"Name": ["name"], "Status": ["status"]})
         finally:
-            shutil.rmtree(tmp)
+            remove_scratch(tmp, "terrane-map-")
 
 
 class TestPreview(unittest.TestCase):
     def _folder(self) -> Path:
         tmp = Path(tempfile.mkdtemp(prefix="terrane-src-"))
-        self.addCleanup(shutil.rmtree, tmp)
+        self.addCleanup(remove_scratch, tmp, "terrane-src-")
         (tmp / "application_portfolio.csv").write_bytes(PORTFOLIO)
         return tmp
 
@@ -216,7 +239,7 @@ class TestPreview(unittest.TestCase):
 class TestKeeping(unittest.TestCase):
     def test_a_source_is_a_folder_of_its_own(self) -> None:
         tmp = Path(tempfile.mkdtemp(prefix="terrane-keep-"))
-        self.addCleanup(shutil.rmtree, tmp)
+        self.addCleanup(remove_scratch, tmp, "terrane-keep-")
         table = sources.read_table("application_portfolio.csv", PORTFOLIO)
         data = _portfolio_mapping(table)
         # A folder holding files and no note of whose they are, the shipped
@@ -247,7 +270,7 @@ class TestKeeping(unittest.TestCase):
 class TestWorkbooks(unittest.TestCase):
     def test_the_mapping_engine_reads_a_sheet_as_it_reads_a_csv(self) -> None:
         tmp = Path(tempfile.mkdtemp(prefix="terrane-xlsx-"))
-        self.addCleanup(shutil.rmtree, tmp)
+        self.addCleanup(remove_scratch, tmp, "terrane-xlsx-")
         owner = sorted(r["org_unit_id"] for r in _SHARED["model"].all_of("org_units"))[0]
         rows = [line.split(",") for line in ["Application Name,Lifecycle Status,Owning Department,Business Criticality",
                                               "Ledger,In Production,%s,Tier 1" % owner]]

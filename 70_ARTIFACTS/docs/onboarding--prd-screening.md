@@ -61,6 +61,11 @@ flowchart TB
     end
   end
 
+  SYS_DEPOSIT["Deposit platform"]
+  SYS_MERCH_RISK["Merchant risk monitoring"]
+
+  SYS_MERCH_RISK -->|"HTTPS"| SYS_SCREENING_GATEWAY
+  SYS_DEPOSIT -->|"HTTPS"| SYS_SCREENING_GATEWAY
   SYS_AUTH_SWITCH -->|"HTTPS"| SYS_SCREENING_GATEWAY
   SYS_SCREENING_FEDERATION -->|"SAML"| SYS_SCREENING_VENDOR
   SYS_SCREENING_VENDOR -->|"HTTPS"| SYS_SIEM
@@ -68,11 +73,13 @@ flowchart TB
   SYS_SCREENING_EGRESS -->|"PrivateLink"| SYS_SCREENING_VENDOR
   SYS_SCREENING_VENDOR -->|"SFTP"| SYS_DATA_INGEST
 
+  classDef s_systems__default fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__edge fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__on_prem fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__private_app fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__private_data fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__shared_services fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  class SYS_DEPOSIT,SYS_MERCH_RISK s_systems__default;
   class SYS_SCREENING_VENDOR,SYS_SIEM s_systems__edge;
   class SYS_AUTH_SWITCH s_systems__on_prem;
   class SYS_SCREENING_GATEWAY s_systems__private_app;
@@ -139,4 +146,4 @@ Each flow is a recorded sequence of interfaces. The steps drawn on this diagram 
 3. NICE Actimize Screening Private Egress → NICE Actimize Screening (PrivateLink)
 4. Authorization Switch → Core Card Ledger (MQ) — not on this diagram
 
-7 entities, 6 relationships. Generated from the model; edit the model, not this file.
+9 entities, 8 relationships. Generated from the model; edit the model, not this file.

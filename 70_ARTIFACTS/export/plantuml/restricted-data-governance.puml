@@ -25,6 +25,8 @@ Boundary(b_Control, "Control") {
   ' aac CTL_RETENTION: company_domain=""
 }
 Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_AUTH_LOG, "Authorization log", "Every authorization request and response, with the decision, the reason and whether stand-in answered.", $tags="data_assets")
+  ' aac DA_AUTH_LOG: company_domain=""
   SystemDb(DA_CARD_ACCOUNT, "Card account master", "Account, balance, limit and status records for every card account.", $tags="data_assets")
   ' aac DA_CARD_ACCOUNT: company_domain="Card Issuing"
   SystemDb(DA_CARDSVC_OPERATIONAL, "Card Servicing operational data", "Operational records held by Card Servicing.", $tags="data_assets")
@@ -41,10 +43,14 @@ Boundary(b_Data_Asset, "Data Asset") {
   ' aac DA_CUST360_CURATED: company_domain="Data and Analytics"
   SystemDb(DA_CUSTOMER_PROFILE, "Customer profile", "Contact details, preferences and servicing history.", $tags="data_assets")
   ' aac DA_CUSTOMER_PROFILE: company_domain="Servicing"
+  SystemDb(DA_DEPOSIT_ACCOUNT, "Deposit account and CD record", "Depositor identity and ownership category, account terms, rate, interest accrued, maturity and instructions.", $tags="data_assets")
+  ' aac DA_DEPOSIT_ACCOUNT: company_domain=""
   SystemDb(DA_DISPUTES_VENDOR_FEED, "Dispute Management Platform vendor feed", "Landed vendor extract from Pegasystems.", $tags="data_assets")
   ' aac DA_DISPUTES_VENDOR_FEED: company_domain="Servicing"
   SystemDb(DA_LENDING_OPERATIONAL, "Installment Lending operational data", "Operational records held by Installment Lending.", $tags="data_assets")
   ' aac DA_LENDING_OPERATIONAL: company_domain="Lending"
+  SystemDb(DA_LOAN_ACCOUNT, "Installment loan account", "Loan terms, payment schedule, balances, payment history and status for each installment loan.", $tags="data_assets")
+  ' aac DA_LOAN_ACCOUNT: company_domain=""
   SystemDb(DA_SCREENING_OUTCOMES, "NICE Actimize Screening outcomes", "What the vendor decided and why, landed our side. Held because a decision we cannot explain is a decision we cannot defend.", $tags="data_assets")
   ' aac DA_SCREENING_OUTCOMES: company_domain="Risk and Compliance"
   SystemDb(DA_PAYMENT_INSTR, "Payment instructions", "Cardholder payment methods and instructions: ACH details, scheduled payments.", $tags="data_assets")
@@ -71,10 +77,14 @@ Boundary(b_System, "System") {
   ' aac SYS_BUREAU_GW: company_domain=""
   System(SYS_CUST360_PIPELINE, "Customer 360 Pipeline", "Ingestion and curation jobs building Customer 360. Built with Snowflake Data Cloud +1.", $tags="systems")
   ' aac SYS_CUST360_PIPELINE: company_domain="Data and Analytics"; hosting="Azure"; technology="Snowflake Data Cloud +1"
+  System(SYS_DEPOSIT, "Deposit platform", "System of record for CDs and savings: opening, interest accrual, maturities, early withdrawal and tax reporting.", $tags="systems")
+  ' aac SYS_DEPOSIT: company_domain=""
   System_Ext(SYS_CRM, "Dynamics 365 Customer Service", "Contact center desktop and case management for servicing agents. Built with Microsoft.", $tags="systems")
   ' aac SYS_CRM: company_domain="Servicing"; hosting="SaaS"; technology="Microsoft"
   System(SYS_LENDING_DB, "Installment Lending Database", "Relational database for Installment Lending, encrypted with a customer managed key. Built with RDS.", $tags="systems")
   ' aac SYS_LENDING_DB: company_domain="Lending"; hosting="AWS"; technology="RDS"
+  System(SYS_LOAN_SVC, "Installment loan servicing platform", "System of record for installment loans: boarding, billing, payment posting, payoff quotes, deferrals and ancillary product refunds.", $tags="systems")
+  ' aac SYS_LOAN_SVC: company_domain=""
   System_Ext(SYS_SCREENING_VENDOR, "NICE Actimize Screening", "Financial Crime Screening, operated by NICE Actimize in their own tenancy. Contractually pinned to EU processing; the DPA restricts sub-processors and sets a 90-day retention ceiling. Built with NICE Actimize.", $tags="systems")
   ' aac SYS_SCREENING_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="NICE Actimize"
   System(SYS_ORIG_DECISION, "Originations decision engine", "Application processing and credit decision execution.", $tags="systems")
@@ -93,8 +103,14 @@ Rel(SYS_AUTH_SWITCH, DA_TRANSACTION, "masters")
 ' aac rel: source="SYS_AUTH_SWITCH"; target="DA_TRANSACTION"; label="masters"; field="source_of_truth"
 Rel(SYS_ORIG_DECISION, DA_APPLICATION, "masters")
 ' aac rel: source="SYS_ORIG_DECISION"; target="DA_APPLICATION"; label="masters"; field="source_of_truth"
+Rel(SYS_AUTH_SWITCH, DA_AUTH_LOG, "masters")
+' aac rel: source="SYS_AUTH_SWITCH"; target="DA_AUTH_LOG"; label="masters"; field="source_of_truth"
 Rel(SYS_BUREAU_GW, DA_BUREAU_FILE, "masters")
 ' aac rel: source="SYS_BUREAU_GW"; target="DA_BUREAU_FILE"; label="masters"; field="source_of_truth"
+Rel(SYS_DEPOSIT, DA_DEPOSIT_ACCOUNT, "masters")
+' aac rel: source="SYS_DEPOSIT"; target="DA_DEPOSIT_ACCOUNT"; label="masters"; field="source_of_truth"
+Rel(SYS_LOAN_SVC, DA_LOAN_ACCOUNT, "masters")
+' aac rel: source="SYS_LOAN_SVC"; target="DA_LOAN_ACCOUNT"; label="masters"; field="source_of_truth"
 Rel(SYS_PAYMENT_GW, DA_PAYMENT_INSTR, "masters")
 ' aac rel: source="SYS_PAYMENT_GW"; target="DA_PAYMENT_INSTR"; label="masters"; field="source_of_truth"
 Rel(SYS_CARDSVC_STORE, DA_CARDSVC_OPERATIONAL, "masters")

@@ -119,17 +119,26 @@ def cmd_validate(args: argparse.Namespace) -> int:
 
 
 def cmd_render(args: argparse.Namespace) -> int:
+    # A run for one format writes that format and nothing else. The docs,
+    # the library pages and the index carry a picture line only when the
+    # SVG is drawn in the same run, so `--format structurizr` rewrote the
+    # committed docs without theirs; those go to a scratch folder now, and
+    # the folder goes when the run ends, where every such run left one.
+    if args.format == "all":
+        return _render(args, None)
+    with tempfile.TemporaryDirectory(prefix="aac-docs-", ignore_cleanup_errors=True) as scratch:
+        return _render(args, Path(scratch))
+
+
+def _render(args: argparse.Namespace, scratch: Optional[Path]) -> int:
+    """`terrane render`, the docs written to `scratch` when one is given."""
     root, model, views = _load(args)
     selected = _select_views(views, args.view)
     palette = Palette(model.config.get("palette"))
     out_dir = Path(args.out) if args.out else root / "70_ARTIFACTS"
     mermaid_dir = out_dir / "mermaid"
-    # A run for one format writes that format and nothing else. The docs,
-    # the library pages and the index carry a picture line only when the
-    # SVG is drawn in the same run, so `--format structurizr` rewrote the
-    # committed docs without theirs; those go to a scratch folder now.
-    want_docs = args.format == "all"
-    docs_dir = out_dir / "docs" if want_docs else Path(tempfile.mkdtemp(prefix="aac-docs-"))
+    want_docs = scratch is None
+    docs_dir = out_dir / "docs" if scratch is None else scratch
     svg_dir = out_dir / "svg"
     png_dir = out_dir / "png"
     mermaid_dir.mkdir(parents=True, exist_ok=True)
@@ -930,33 +939,21 @@ def cmd_diff(args: argparse.Namespace) -> int:
     return 0
 
 
-#: The kinds of record a `component_type` is set on.
-TYPED = (("systems", "systems"), ("tech_services", "technology services"))
-
-
 def _needs_types(root: Path, model, name: str) -> int:
     """What each record with no `component_type` probably is, by the
     library's own words (`terrane.match.suggest_types`), grouped by the
     likeliest kind, the next two beside each; nothing is written."""
-    from .match import TypeRanker
+    from .match import TYPED, kind_groups
 
     library = load_components(root)
     total = sum(len([r for r in model.all_of(t) if not r.get("component_type")]) for t, _w in TYPED)
     print("%s: %d records have no component_type. What each probably is, by the library's own words; "
           "nothing is set." % (name, total))
-    for type_name, words in TYPED:
-        bare = [r for r in model.all_of(type_name) if not r.get("component_type")]
-        if not bare:
-            continue
-        ranker = TypeRanker(library, type_name)
+    for type_name, groups in kind_groups(model, library):
+        words = dict(TYPED)[type_name]
         pk = "system_id" if type_name == "systems" else "tech_service_id"
-        groups: Dict[str, List[tuple]] = {}
-        for record in bare:
-            got = ranker.rank(record)
-            key = got[0].component_type_id if got else ""
-            groups.setdefault(key, []).append((record, got))
         print("")
-        print("%s, %d" % (words.capitalize(), len(bare)))
+        print("%s, %d" % (words.capitalize(), sum(len(rows) for rows in groups.values())))
         for key in sorted(groups, key=lambda k: (k == "", -len(groups[k]), k)):
             rows = groups[key]
             kind = library.get(key)

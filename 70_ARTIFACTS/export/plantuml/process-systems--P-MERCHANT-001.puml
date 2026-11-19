@@ -1,0 +1,53 @@
+@startuml
+' Onboard and oversee ISO or agent — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Onboard and oversee ISO or agent — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_MERCH_01, "ISO & Agent Program Management", "Recruit, contract, and oversee ISOs and agents who bring merchant volume; manage program economics and liability.", $tags="capabilities")
+  ' aac CAP_MERCH_01: company_domain="Merchant Services"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_TPRM_DD, "Third-party due diligence before onboarding", "No supplier processes cardholder data before risk-tiered due diligence is complete and accepted.", $tags="controls")
+  ' aac CTL_TPRM_DD: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_MERCHANT, "Merchant master and underwriting file", "Merchant identity, beneficial owners, underwriting decision, limits, pricing and screening results.", $tags="data_assets")
+  ' aac DA_MERCHANT: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_MERCHANT_001, "Onboard and oversee ISO or agent", "Diligence and contract an independent sales organization or agent, register it with the networks, and review its portfolio quality, complaints and residuals each month. The bank sponsors the ISO's merchants into the networks and carries their liability, so an ISO's underwriting shortcuts become the bank's chargeback losses.", $tags="processes")
+  ' aac P_MERCHANT_001: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+  System(SYS_GRC, "Governance, risk and compliance platform", "Policy, control, issue, and risk register management.", $tags="systems")
+  ' aac SYS_GRC: company_domain=""
+  System_Ext(SYS_MERCH_ACQ, "Merchant acquiring platform", "Processor platform for merchant boarding, clearing, settlement, reserves, fees and statements. Built with external.", $tags="systems")
+  ' aac SYS_MERCH_ACQ: company_domain=""; hosting="External"; technology="external"
+}
+
+Rel(P_MERCHANT_001, SYS_MERCH_ACQ, "Primary")
+' aac rel: source="P_MERCHANT_001"; target="SYS_MERCH_ACQ"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_MERCHANT_001, SYS_GRC, "Supporting")
+' aac rel: source="P_MERCHANT_001"; target="SYS_GRC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_MERCHANT_001, SYS_DOC, "Supporting")
+' aac rel: source="P_MERCHANT_001"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_MERCHANT_001, DA_MERCHANT, "Read")
+' aac rel: source="P_MERCHANT_001"; target="DA_MERCHANT"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_MERCHANT_001, CTL_TPRM_DD, "governed by")
+' aac rel: source="P_MERCHANT_001"; target="CTL_TPRM_DD"; label="governed by"; relation="process_governed_by_control"
+Rel(P_MERCHANT_001, CAP_MERCH_01, "supports")
+' aac rel: source="P_MERCHANT_001"; target="CAP_MERCH_01"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

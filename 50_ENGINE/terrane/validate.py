@@ -964,7 +964,7 @@ def _check_library(model: Model) -> List[Finding]:
     # it is told before it starts. A warning: a gap in a landing zone is a
     # fact about the estate, not a fault in the library, and a shape that
     # binds the kind by hand composes fine and is named as where the fix is.
-    for gap in landing_zone_gaps(modules, model.archetypes.values(), landing):
+    for gap in landing_zone_gaps(modules, model.archetypes.values(), landing, kinds=components):
         askers = _spoken("%s (%s)" % pair for pair in gap.asked_by)
         by_hand = ""
         if gap.bound_by:
@@ -1116,9 +1116,22 @@ def _check_estate(model: Model) -> List[Finding]:
     return [Finding("error", code, message, "10_MODEL/model.yaml") for code, message in problems(model.root)]
 
 
+def _check_estate_styles(model: Model) -> List[Finding]:
+    """The looks the estate keeps for every diagram (`saved_styles` in
+    model.yaml), each a look the canvas can draw."""
+    from .annotations import AnnotationError, estate_styles
+
+    try:
+        estate_styles(model.config)
+    except AnnotationError as error:
+        return [Finding("error", "styles.estate", str(error), "10_MODEL/model.yaml")]
+    return []
+
+
 def run(model: Model, views: Optional[Sequence[View]] = None) -> Report:
     findings: List[Finding] = []
     findings.extend(_check_estate(model))
+    findings.extend(_check_estate_styles(model))
     findings.extend(_check_ids(model))
     findings.extend(_check_fields(model))
     findings.extend(_check_references(model))

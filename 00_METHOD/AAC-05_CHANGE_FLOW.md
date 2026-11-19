@@ -119,7 +119,7 @@ cd 50_ENGINE
 python -m terrane validate
 python -m terrane --root ../90_EXAMPLE/thurman-health validate
 python -m terrane refresh            # then git status: nothing left to commit
-python -m unittest discover -s tests
+python tools/run_tests.py            # or python -m unittest discover -s tests, one file after another
 ```
 
 None of them needs GitHub.

@@ -12,6 +12,8 @@ AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor=
 Boundary(b_Capability, "Capability") {
   System(CAP_SERV_02, "Account Maintenance & Servicing Requests", "Execute cardholder-requested account changes.", $tags="capabilities")
   ' aac CAP_SERV_02: company_domain="Servicing"
+  System(CAP_SERV_02_01, "General Account Maintenance", "Change addresses, due dates, authorized users and other account details on request.", $tags="capabilities")
+  ' aac CAP_SERV_02_01: company_domain="Servicing"
 }
 Boundary(b_Process, "Process") {
   System(P_SERVICING_004, "Execute account maintenance request", "Execute a cardholder-requested change to account details or preferences. Maintenance changes execute after authentication with an audit trail; address changes get extra scrutiny because they precede takeover fraud.", $tags="processes")
@@ -34,6 +36,8 @@ Rel(P_SERVICING_004, SYS_CONTACT, "Supporting")
 ' aac rel: source="P_SERVICING_004"; target="SYS_CONTACT"; label="Supporting"; relation="process_uses_system"; role="Supporting"
 Rel(P_SERVICING_004, CAP_SERV_02, "supports")
 ' aac rel: source="P_SERVICING_004"; target="CAP_SERV_02"; label="supports"; relation="process_supports_capability"
+Rel(P_SERVICING_004, CAP_SERV_02_01, "supports")
+' aac rel: source="P_SERVICING_004"; target="CAP_SERV_02_01"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

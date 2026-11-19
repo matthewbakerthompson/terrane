@@ -23,6 +23,11 @@ flowchart LR
     SYS_DISPUTES_SAAS["Pega Smart Dispute<br/>[Pegasystems]"]
   end
 
+  subgraph grp_workload_network["workload-network"]
+    direction LR
+    TS_NET_SUB_AZ_CARDS_APP[/"Cards App Subnet<br/>[Subnet]"/]
+  end
+
   TS_AZURE_APIM[/"Azure API Management<br/>[API gateway]"/]
   TS_AZURE_KEYVAULT[/"Azure Key Vault<br/>[Secrets manager]"/]
   TS_AZURE_AKS[/"Azure Kubernetes Service<br/>[Container platform]"/]
@@ -31,6 +36,7 @@ flowchart LR
   SYS_DISPUTES_GATEWAY -.->|"runs on"| TS_AZURE_AKS
   SYS_DISPUTES_GATEWAY -.->|"runs on"| TS_AZURE_APIM
   SYS_DISPUTES_GATEWAY -.->|"runs on"| TS_AZURE_KEYVAULT
+  SYS_DISPUTES_GATEWAY -.->|"runs on"| TS_NET_SUB_AZ_CARDS_APP
   SYS_DISPUTES_SAAS -->|"Write"| DA_DISPUTES_VENDOR_FEED
 
   classDef s_data_assets__data_assets fill:#a7f3d0,stroke:#047857,color:#0f172a,stroke-width:1.4px;
@@ -38,9 +44,9 @@ flowchart LR
   classDef s_tech_services__tech_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
   class DA_DISPUTES_VENDOR_FEED s_data_assets__data_assets;
   class SYS_DISPUTES_GATEWAY,SYS_DISPUTES_SAAS s_systems__systems;
-  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT s_tech_services__tech_services;
+  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT,TS_NET_SUB_AZ_CARDS_APP s_tech_services__tech_services;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
-  class grp_api_outbound,grp_sftp_return_feed,grp_vendor_tenancy boundary1;
+  class grp_api_outbound,grp_sftp_return_feed,grp_vendor_tenancy,grp_workload_network boundary1;
 ```
 
 The same view as the app draws it, written beside the Mermaid by `terrane render`:
@@ -66,4 +72,4 @@ Each flow is a recorded sequence of interfaces. The steps drawn on this diagram 
 3. Dispute Management Platform Integration Gateway → Pega Smart Dispute (HTTPS)
 4. Pega Smart Dispute → Enterprise Data Ingestion Hub (SFTP) — not on this diagram
 
-6 entities, 5 relationships. Generated from the model; edit the model, not this file.
+7 entities, 6 relationships. Generated from the model; edit the model, not this file.

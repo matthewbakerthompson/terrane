@@ -10,6 +10,7 @@ flowchart LR
     CAP_ORIG_01{{"Application Capture"}}
     CAP_ORIG_03{{"Application Fraud<br/>Screening"}}
     CAP_CRED_03{{"Credit Line Assignment &<br/>Management"}}
+    CAP_CRED_03_01{{"Credit Line Increase"}}
     CAP_CRED_01{{"Credit Strategy &<br/>Scorecard Management"}}
     CAP_RGOV_07{{"Financial Crimes & BSA/AML<br/>Compliance"}}
     CAP_ORIG_02{{"Identity Verification &<br/>KYC/CIP"}}
@@ -59,11 +60,12 @@ flowchart LR
   P_CREDIT_001 -->|"supports"| CAP_CRED_01
   P_CREDIT_003 -->|"supports"| CAP_CRED_03
   P_PRODUCT_003 -->|"supports"| CAP_PROD_05
+  P_CREDIT_003 -->|"supports"| CAP_CRED_03_01
 
   classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
   classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
-  class CAP_CRED_01,CAP_CRED_03,CAP_ORIG_01,CAP_ORIG_02,CAP_ORIG_03,CAP_ORIG_04,CAP_ORIG_05,CAP_ORIG_06,CAP_PROD_05,CAP_RGOV_07 s_capabilities__capabilities;
+  class CAP_CRED_01,CAP_CRED_03,CAP_CRED_03_01,CAP_ORIG_01,CAP_ORIG_02,CAP_ORIG_03,CAP_ORIG_04,CAP_ORIG_05,CAP_ORIG_06,CAP_PROD_05,CAP_RGOV_07 s_capabilities__capabilities;
   class P_CREDIT_001,P_CREDIT_003,P_ORIG_001,P_ORIG_002,P_ORIG_003,P_ORIG_004,P_ORIG_005,P_ORIG_006,P_ORIG_009,P_PRODUCT_003 s_processes__processes;
   class SYS_ORIG_DECISION s_systems__systems;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;

@@ -10,6 +10,10 @@ AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColo
 AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
 
 Boundary(b_Capability, "Capability") {
+  System(CAP_DEP_03, "Brokered CD Program Management", "Issue and administer CDs through broker-dealer networks: allocations, settlement, and broker relationships. A primary funding channel.", $tags="capabilities")
+  ' aac CAP_DEP_03: company_domain="Deposits"
+  System(CAP_DEP_03_02, "Brokered CD Settlement & Record Keeping", "Settle issues through the depository, keep the position, and keep the pass-through records insurance coverage depends on.", $tags="capabilities")
+  ' aac CAP_DEP_03_02: company_domain="Deposits"
   System(CAP_FIN_06, "Cash & Settlement Reconciliation", "Reconcile cash and settlement positions daily.", $tags="capabilities")
   ' aac CAP_FIN_06: company_domain="Cross-Functional Services"
   System(CAP_DATA_02, "Data Sourcing & Integration", "Acquire and integrate internal and third-party data.", $tags="capabilities")
@@ -18,10 +22,18 @@ Boundary(b_Capability, "Capability") {
   ' aac CAP_FIN_01: company_domain="Cross-Functional Services"
   System(CAP_FIN_02, "Interchange & Revenue Accounting", "Account for interchange, fees, and servicing revenue.", $tags="capabilities")
   ' aac CAP_FIN_02: company_domain="Cross-Functional Services"
+  System(CAP_MERCH_04_01, "Merchant Funding", "Net fees, chargebacks and holds from the day's volume, and fund each merchant.", $tags="capabilities")
+  ' aac CAP_MERCH_04_01: company_domain="Merchant Services"
+  System(CAP_MERCH_04, "Merchant Settlement & Funding", "Clear and settle merchant card volume and fund merchant accounts daily, with reserves where risk requires them.", $tags="capabilities")
+  ' aac CAP_MERCH_04: company_domain="Merchant Services"
   System(CAP_PAY_06, "Network & Merchant Reconciliation", "Reconcile network, processor, and internal ledgers.", $tags="capabilities")
   ' aac CAP_PAY_06: company_domain="Servicing"
   System(CAP_PAY_05, "Network Settlement & Interchange", "Settle positions with networks and account for interchange.", $tags="capabilities")
   ' aac CAP_PAY_05: company_domain="Servicing"
+  System(CAP_PAY_03, "Payment Capture & Application", "Accept and apply cardholder payments across all channels.", $tags="capabilities")
+  ' aac CAP_PAY_03: company_domain="Servicing"
+  System(CAP_PAY_03_01, "Payment Channel Capture", "Take payments by ACH, debit card, check, lockbox and automatic payment.", $tags="capabilities")
+  ' aac CAP_PAY_03_01: company_domain="Servicing"
   System(CAP_TPS_02, "Portfolio Conversion & Deconversion", "Convert client portfolios onto and off the servicing platform.", $tags="capabilities")
   ' aac CAP_TPS_02: company_domain="Cross-Functional Services"
   System(CAP_BILL_04, "Rewards Earn, Accrual & Redemption", "Operate the rewards ledger, accrual, and redemption.", $tags="capabilities")
@@ -36,12 +48,18 @@ Boundary(b_Process, "Process") {
   ' aac P_SETTLEMENT_003: company_domain=""
   System(P_SETTLEMENT_004, "Monitor and optimize interchange qualification", "Monitor interchange qualification rates, identify downgrades, and drive corrections in processing configuration.", $tags="processes")
   ' aac P_SETTLEMENT_004: company_domain=""
+  System(P_PAYMENTS_009, "Process lockbox and check payments", "Receive mailed checks through the lockbox, match each to an account by coupon or by research, post it the day it arrives, and work the exceptions. A payment received by the cutoff must be credited that day, so unmatched items are researched before they age.", $tags="processes")
+  ' aac P_PAYMENTS_009: company_domain=""
   System(P_SETTLEMENT_002, "Reconcile cash and suspense accounts", "Reconcile cash and suspense account positions and clear aged items. Cash and suspense reconcile daily with aging visible; suspense is a control account, and items that age past threshold escalate to investigation.", $tags="processes")
   ' aac P_SETTLEMENT_002: company_domain=""
   System(P_NETWORK_RECON_001, "Reconcile network settlement", "Reconcile network settlement files against internal transaction and ledger positions and resolve breaks.", $tags="processes")
   ' aac P_NETWORK_RECON_001: company_domain=""
   System(P_REWARDS_003, "Reconcile rewards liability", "Reconcile the rewards ledger to the recorded liability and resolve differences. The rewards liability reconciliation catches earn, redemption, and expiry drift between the ledger and finance; differences are investigated, not plugged.", $tags="processes")
   ' aac P_REWARDS_003: company_domain=""
+  System(P_MERCHANT_006, "Settle and fund merchants", "Clear the day's card volume, net out fees, chargebacks and reserve holds, and fund each merchant's bank account by ACH, reconciling network settlement to merchant funding. Funding a merchant that should have been held is exactly the loss the reserve was meant to cover.", $tags="processes")
+  ' aac P_MERCHANT_006: company_domain=""
+  System(P_DEPOSITS_004, "Settle brokered CDs and keep the position", "Settle each brokered issue through the depository against the brokers' allocations, record the CD position, and pay interest and maturities through the same channel, reconciling to the brokers' records. The underlying depositors are the brokers' customers, so their insurance coverage depends on the pass-through records kept here.", $tags="processes")
+  ' aac P_DEPOSITS_004: company_domain=""
 }
 Boundary(b_System, "System") {
   System(SYS_RECON, "Reconciliation platform", "Automated reconciliation and exception management.", $tags="systems")
@@ -62,6 +80,12 @@ Rel(P_GL_CLOSE_001, SYS_RECON, "Supporting")
 ' aac rel: source="P_GL_CLOSE_001"; target="SYS_RECON"; label="Supporting"; relation="process_uses_system"; role="Supporting"
 Rel(P_SETTLEMENT_004, SYS_RECON, "Supporting")
 ' aac rel: source="P_SETTLEMENT_004"; target="SYS_RECON"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_MERCHANT_006, SYS_RECON, "Supporting")
+' aac rel: source="P_MERCHANT_006"; target="SYS_RECON"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DEPOSITS_004, SYS_RECON, "Supporting")
+' aac rel: source="P_DEPOSITS_004"; target="SYS_RECON"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PAYMENTS_009, SYS_RECON, "Supporting")
+' aac rel: source="P_PAYMENTS_009"; target="SYS_RECON"; label="Supporting"; relation="process_uses_system"; role="Supporting"
 Rel(P_NETWORK_RECON_001, CAP_PAY_06, "supports")
 ' aac rel: source="P_NETWORK_RECON_001"; target="CAP_PAY_06"; label="supports"; relation="process_supports_capability"
 Rel(P_SETTLEMENT_002, CAP_FIN_06, "supports")
@@ -82,6 +106,18 @@ Rel(P_SETTLEMENT_004, CAP_PAY_05, "supports")
 ' aac rel: source="P_SETTLEMENT_004"; target="CAP_PAY_05"; label="supports"; relation="process_supports_capability"
 Rel(P_SETTLEMENT_004, CAP_FIN_02, "supports")
 ' aac rel: source="P_SETTLEMENT_004"; target="CAP_FIN_02"; label="supports"; relation="process_supports_capability"
+Rel(P_MERCHANT_006, CAP_MERCH_04_01, "supports")
+' aac rel: source="P_MERCHANT_006"; target="CAP_MERCH_04_01"; label="supports"; relation="process_supports_capability"
+Rel(P_DEPOSITS_004, CAP_DEP_03_02, "supports")
+' aac rel: source="P_DEPOSITS_004"; target="CAP_DEP_03_02"; label="supports"; relation="process_supports_capability"
+Rel(P_PAYMENTS_009, CAP_PAY_03_01, "supports")
+' aac rel: source="P_PAYMENTS_009"; target="CAP_PAY_03_01"; label="supports"; relation="process_supports_capability"
+Rel(P_PAYMENTS_009, CAP_PAY_03, "supports")
+' aac rel: source="P_PAYMENTS_009"; target="CAP_PAY_03"; label="supports"; relation="process_supports_capability"
+Rel(P_MERCHANT_006, CAP_MERCH_04, "supports")
+' aac rel: source="P_MERCHANT_006"; target="CAP_MERCH_04"; label="supports"; relation="process_supports_capability"
+Rel(P_DEPOSITS_004, CAP_DEP_03, "supports")
+' aac rel: source="P_DEPOSITS_004"; target="CAP_DEP_03"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

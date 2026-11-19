@@ -15,12 +15,21 @@ flowchart LR
 
   subgraph grp_Organization["Organization"]
     direction LR
+    ACT_COBRAND_PARTNER(["Co-Brand Partner"])
+    ACT_COLLECTION_AGENCY(["Collection Agency"])
+    ACT_DEALER(["Dealer"])
+    ACT_DEBT_BUYER(["Debt Buyer"])
+    ACT_DEPOSIT_BROKER(["Deposit Broker"])
+    ACT_ISO(["Independent Sales<br/>Organization"])
     ACT_MERCHANT(["Merchant"])
+    ACT_SERVICING_CLIENT(["Servicing Client"])
   end
 
   subgraph grp_Person["Person"]
     direction LR
+    ACT_BORROWER(["Borrower"])
     ACT_CARDHOLDER(["Cardholder"])
+    ACT_DEPOSITOR(["Depositor"])
     ACT_APPLICANT(["Loan Applicant"])
   end
 
@@ -33,22 +42,33 @@ flowchart LR
     direction LR
     ACT_COLLECTIONS_AGENT(["Collections Agent"])
     ACT_UNDERWRITER(["Credit Underwriter"])
+    ACT_FUNDING_ANALYST(["Funding Analyst"])
     ACT_SERVICING_AGENT(["Servicing Agent"])
   end
 
   SYS_AUTH_SWITCH["Authorization Switch"]
+  SYS_BROKER_GW["Brokered deposit<br/>settlement gateway"]
   SYS_CARDSVC_WEB["Card Servicing Web<br/>[AKS]"]
   SYS_MOBILE["Cardholder mobile<br/>application"]
+  SYS_COLLECT_API["Collections Workspace<br/>Service<br/>[AKS · Collections Workspace Cache]"]
   SYS_COLLECT_WEB["Collections Workspace Web<br/>[AKS]"]
   SYS_CONTACT["Contact center platform"]
   SYS_CREDIT_DATA["Credit data and<br/>decisioning environment<br/>[Snowflake Data Cloud]"]
+  SYS_DEALER_PORTAL["Dealer portal<br/>[SaaS]"]
+  SYS_DEPOSIT["Deposit platform"]
+  SYS_DOC["Document management and<br/>archive"]
   SYS_CRM["Dynamics 365 Customer<br/>Service<br/>[Microsoft]"]
+  SYS_LOS["Indirect loan origination<br/>system"]
   SYS_LENDING_WEB["Installment Lending Web<br/>[EKS]"]
+  SYS_LOAN_SVC["Installment loan servicing<br/>platform"]
   SYS_IVR["IVR and self-service voice"]
+  SYS_MERCHANT_WEB["Merchant Portal Web<br/>[AKS]"]
   SYS_ORIG_DECISION["Originations decision<br/>engine"]
   SYS_DIALER["Outbound contact platform"]
+  SYS_PAYMENT_GW["Payment capture gateway"]
   SYS_DISPUTES_SAAS["Pega Smart Dispute<br/>[Pegasystems]"]
   SYS_REG_REPORTING["Regulatory Reporting<br/>Engine<br/>[AKS · Snowflake Data Cloud]"]
+  SYS_CLIENT_PORTAL["Servicing client portal"]
   SYS_STATEMENTS["Statement Generation"]
 
   ACT_APPLICANT -->|"Applies"| SYS_LENDING_WEB
@@ -67,6 +87,19 @@ flowchart LR
   ACT_COLLECTIONS_AGENT -->|"Outbound campaigns"| SYS_DIALER
   ACT_UNDERWRITER -->|"Manual review queue"| SYS_ORIG_DECISION
   ACT_UNDERWRITER -->|"Strategy analysis"| SYS_CREDIT_DATA
+  ACT_DEALER -->|"Submits applications an…"| SYS_DEALER_PORTAL
+  ACT_BORROWER -->|"Pays the loan"| SYS_PAYMENT_GW
+  ACT_BORROWER -->|"Calls about the loan"| SYS_CONTACT
+  ACT_FUNDING_ANALYST -->|"Clears stipulations and…"| SYS_LOS
+  ACT_FUNDING_ANALYST -->|"Boards loans"| SYS_LOAN_SVC
+  ACT_UNDERWRITER -->|"Reviews referred dealer…"| SYS_LOS
+  ACT_ISO -->|"Submits merchant applic…"| SYS_MERCHANT_WEB
+  ACT_DEPOSITOR -->|"Opens and manages CDs a…"| SYS_DEPOSIT
+  ACT_DEPOSIT_BROKER -->|"Exchanges allocation an…"| SYS_BROKER_GW
+  ACT_SERVICING_CLIENT -->|"Receives reports and da…"| SYS_CLIENT_PORTAL
+  ACT_COBRAND_PARTNER -->|"Receives program perfor…"| SYS_CLIENT_PORTAL
+  ACT_COLLECTION_AGENCY -->|"Receives placements and…"| SYS_COLLECT_API
+  ACT_DEBT_BUYER -->|"Receives account docume…"| SYS_DOC
 
   classDef s_actors__external_system fill:#fde68a,stroke:#b45309,color:#0f172a,stroke-width:1.4px;
   classDef s_actors__organization fill:#fde68a,stroke:#b45309,color:#0f172a,stroke-width:1.4px;
@@ -75,11 +108,11 @@ flowchart LR
   classDef s_actors__role fill:#fde68a,stroke:#b45309,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__default fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   class ACT_CARD_SCHEME s_actors__external_system;
-  class ACT_MERCHANT s_actors__organization;
-  class ACT_APPLICANT,ACT_CARDHOLDER s_actors__person;
+  class ACT_COBRAND_PARTNER,ACT_COLLECTION_AGENCY,ACT_DEALER,ACT_DEBT_BUYER,ACT_DEPOSIT_BROKER,ACT_ISO,ACT_MERCHANT,ACT_SERVICING_CLIENT s_actors__organization;
+  class ACT_APPLICANT,ACT_BORROWER,ACT_CARDHOLDER,ACT_DEPOSITOR s_actors__person;
   class ACT_REGULATOR s_actors__regulator;
-  class ACT_COLLECTIONS_AGENT,ACT_SERVICING_AGENT,ACT_UNDERWRITER s_actors__role;
-  class SYS_AUTH_SWITCH,SYS_CARDSVC_WEB,SYS_COLLECT_WEB,SYS_CONTACT,SYS_CREDIT_DATA,SYS_CRM,SYS_DIALER,SYS_DISPUTES_SAAS,SYS_IVR,SYS_LENDING_WEB,SYS_MOBILE,SYS_ORIG_DECISION,SYS_REG_REPORTING,SYS_STATEMENTS s_systems__default;
+  class ACT_COLLECTIONS_AGENT,ACT_FUNDING_ANALYST,ACT_SERVICING_AGENT,ACT_UNDERWRITER s_actors__role;
+  class SYS_AUTH_SWITCH,SYS_BROKER_GW,SYS_CARDSVC_WEB,SYS_CLIENT_PORTAL,SYS_COLLECT_API,SYS_COLLECT_WEB,SYS_CONTACT,SYS_CREDIT_DATA,SYS_CRM,SYS_DEALER_PORTAL,SYS_DEPOSIT,SYS_DIALER,SYS_DISPUTES_SAAS,SYS_DOC,SYS_IVR,SYS_LENDING_WEB,SYS_LOAN_SVC,SYS_LOS,SYS_MERCHANT_WEB,SYS_MOBILE,SYS_ORIG_DECISION,SYS_PAYMENT_GW,SYS_REG_REPORTING,SYS_STATEMENTS s_systems__default;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_External_system,grp_Organization,grp_Person,grp_Regulator,grp_Role boundary1;
 ```
@@ -97,4 +130,6 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 
 **actor kind** is the boundary each node sits in.
 
-22 entities, 16 relationships. Generated from the model; edit the model, not this file.
+42 entities, 29 relationships. Generated from the model; edit the model, not this file.
+
+> 42 entities on an architecture diagram. Past about 40 this has become a landscape: narrow the scope, or mark it `kind: map`.

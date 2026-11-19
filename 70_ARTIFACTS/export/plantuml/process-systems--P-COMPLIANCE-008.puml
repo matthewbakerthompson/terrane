@@ -1,0 +1,61 @@
+@startuml
+' Screen transactions and parties against sanctions in line — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Screen transactions and parties against sanctions in line — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_RGOV_07, "Financial Crimes & BSA/AML Compliance", "Operate the KYC/CIP program, transaction monitoring, sanctions screening, and regulatory filing.", $tags="capabilities")
+  ' aac CAP_RGOV_07: company_domain="Cross-Functional Services"
+  System(CAP_RGOV_07_01, "Sanctions Screening", "Screen customers, merchants and transactions against sanctions lists and watchlists.", $tags="capabilities")
+  ' aac CAP_RGOV_07_01: company_domain="Cross-Functional Services"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_SANCTIONS, "Sanctions and watchlist screening", "Parties are screened at onboarding and on list updates; hits are dispositioned before processing continues.", $tags="controls")
+  ' aac CTL_SANCTIONS: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_AUTH_LOG, "Authorization log", "Every authorization request and response, with the decision, the reason and whether stand-in answered.", $tags="data_assets")
+  ' aac DA_AUTH_LOG: company_domain=""
+  SystemDb(DA_CUSTOMER_PROFILE, "Customer profile", "Contact details, preferences and servicing history.", $tags="data_assets")
+  ' aac DA_CUSTOMER_PROFILE: company_domain="Servicing"
+}
+Boundary(b_Process, "Process") {
+  System(P_COMPLIANCE_008, "Screen transactions and parties against sanctions in line", "Screen card transactions in the authorization path, and customers and counterparties nightly, against sanctions, politically exposed person and adverse media lists, and hold or block the true matches. A missed sanctions match is a strict-liability violation, so list updates are applied the day they are published.", $tags="processes")
+  ' aac P_COMPLIANCE_008: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_AUTH_SWITCH, "Authorization Switch", "Real-time card authorization switch connected to the scheme networks.", $tags="systems")
+  ' aac SYS_AUTH_SWITCH: company_domain="Payments"; hosting="On-prem"
+  System(SYS_AML, "Financial crimes platform", "Sanctions screening, transaction monitoring, and case management.", $tags="systems")
+  ' aac SYS_AML: company_domain=""
+  System_Ext(SYS_SCREENING_VENDOR, "NICE Actimize Screening", "Financial Crime Screening, operated by NICE Actimize in their own tenancy. Contractually pinned to EU processing; the DPA restricts sub-processors and sets a 90-day retention ceiling. Built with NICE Actimize.", $tags="systems")
+  ' aac SYS_SCREENING_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="NICE Actimize"
+}
+
+Rel(P_COMPLIANCE_008, SYS_SCREENING_VENDOR, "Primary")
+' aac rel: source="P_COMPLIANCE_008"; target="SYS_SCREENING_VENDOR"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_COMPLIANCE_008, SYS_AUTH_SWITCH, "Supporting")
+' aac rel: source="P_COMPLIANCE_008"; target="SYS_AUTH_SWITCH"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COMPLIANCE_008, SYS_AML, "Supporting")
+' aac rel: source="P_COMPLIANCE_008"; target="SYS_AML"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COMPLIANCE_008, DA_AUTH_LOG, "Read")
+' aac rel: source="P_COMPLIANCE_008"; target="DA_AUTH_LOG"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_COMPLIANCE_008, DA_CUSTOMER_PROFILE, "Read")
+' aac rel: source="P_COMPLIANCE_008"; target="DA_CUSTOMER_PROFILE"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_COMPLIANCE_008, CTL_SANCTIONS, "governed by")
+' aac rel: source="P_COMPLIANCE_008"; target="CTL_SANCTIONS"; label="governed by"; relation="process_governed_by_control"
+Rel(P_COMPLIANCE_008, CAP_RGOV_07_01, "supports")
+' aac rel: source="P_COMPLIANCE_008"; target="CAP_RGOV_07_01"; label="supports"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_008, CAP_RGOV_07, "supports")
+' aac rel: source="P_COMPLIANCE_008"; target="CAP_RGOV_07"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

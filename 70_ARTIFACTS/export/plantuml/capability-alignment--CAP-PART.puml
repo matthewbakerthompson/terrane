@@ -6,6 +6,7 @@
 title Partner & Client Relationship Management — Frameworks, Controls, Systems
 
 AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
 AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
 AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
 AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
@@ -24,6 +25,14 @@ Boundary(b_Capability, "Capability") {
   System(CAP_PART_03, "Servicing Client Origination & Contracting", "Win and contract third-party servicing engagements.", $tags="capabilities")
   ' aac CAP_PART_03: company_domain="Cross-Functional Services"
 }
+Boundary(b_Control, "Control") {
+  System(CTL_CLIENT_SLA, "Client reporting and feed monitoring", "Contracted client reporting and data feeds are monitored to schedule and specification; misses alert before the client notices and count against the SLA.", $tags="controls")
+  ' aac CTL_CLIENT_SLA: company_domain=""
+  System(CTL_CLOSE_SIGNOFF, "Close reconciliation sign-off", "Period-end reconciliations and journal approvals complete with segregation of duties before financial sign-off.", $tags="controls")
+  ' aac CTL_CLOSE_SIGNOFF: company_domain=""
+  System(CTL_MKT_REVIEW, "Marketing material compliance review", "No creative or offer reaches market without documented compliance sign-off.", $tags="controls")
+  ' aac CTL_MKT_REVIEW: company_domain=""
+}
 Boundary(b_Framework, "Framework") {
   System(FW_APQC, "APQC Process Classification Framework", "A cross-industry process taxonomy. Used here for the enabling tier, where a card-specific name adds nothing: finance, HR and corporate services look much the same in any industry, and inventing local names for them costs comparability for no benefit.", $tags="frameworks")
   ' aac FW_APQC: company_domain=""
@@ -31,16 +40,28 @@ Boundary(b_Framework, "Framework") {
   ' aac FW_BIAN: company_domain=""
 }
 Boundary(b_Process, "Process") {
+  System(P_PARTNERSHIPS_003, "Calculate and settle partner revenue share", "Calculate each partner's share of interchange, interest and fees, its bounties for new accounts and its rewards funding under the agreement, settle the net amount, and reconcile it to the ledger. Revenue share is the partner's view of the program's health, so a disputed calculation sours the relationship as well as the books.", $tags="processes")
+  ' aac P_PARTNERSHIPS_003: company_domain=""
   System(P_PARTNERSHIPS_001, "Fulfill issuing bank oversight obligations", "Produce contracted reporting, respond to oversight requests, and manage obligations under the issuing bank agreement.", $tags="processes")
   ' aac P_PARTNERSHIPS_001: company_domain=""
   System(P_PAYMENTS_005, "Implement network mandate release", "Assess and implement network mandate and release changes by the required date. Network mandates carry hard effective dates and fines for misses; assessment, build, and attestation are tracked per mandate from bulletin to production.", $tags="processes")
   ' aac P_PAYMENTS_005: company_domain=""
+  System(P_PARTNERSHIPS_002, "Manage co-brand program agreement", "Negotiate and amend a co-brand or affinity agreement, track the partner's obligations on marketing, data sharing and approval of card terms, and hold the quarterly program review. The partner's brand is on the card but the bank is the lender, so marketing and terms the partner proposes still pass the bank's compliance review.", $tags="processes")
+  ' aac P_PARTNERSHIPS_002: company_domain=""
+  System(P_CLIENTMGMT_001, "Qualify, price, and contract servicing client", "Qualify a lender that wants its card portfolio serviced, price the work from the portfolio's size and the services chosen, answer the client's own diligence of the bank, and sign the servicing agreement and service levels. The agreement sets the reporting, service levels and change process every later step is held to.", $tags="processes")
+  ' aac P_CLIENTMGMT_001: company_domain=""
+  System(P_CLIENTMGMT_002, "Review client service levels and performance", "Report each client's service levels, portfolio performance and open issues, hold the monthly service review, and agree remediation and credits where a service level was missed. Missed service levels carry contractual credits, and a run of them can end a client relationship.", $tags="processes")
+  ' aac P_CLIENTMGMT_002: company_domain=""
 }
 Boundary(b_System, "System") {
   System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
   ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_GL, "General ledger", "General ledger and financial accounting.", $tags="systems")
+  ' aac SYS_GL: company_domain=""
   System(SYS_GRC, "Governance, risk and compliance platform", "Policy, control, issue, and risk register management.", $tags="systems")
   ' aac SYS_GRC: company_domain=""
+  System(SYS_CLIENT_PORTAL, "Servicing client portal", "Client reporting, data exchange, and interaction.", $tags="systems")
+  ' aac SYS_CLIENT_PORTAL: company_domain=""
 }
 
 Rel(CAP_PART_01, CAP_PART, "part of")
@@ -62,10 +83,38 @@ Rel(P_PAYMENTS_005, CAP_PART_02, "supported by")
 ' aac rel: source="P_PAYMENTS_005"; target="CAP_PART_02"; label="supported by"; relation="process_supports_capability"
 Rel(P_PARTNERSHIPS_001, CAP_PART_01, "supported by")
 ' aac rel: source="P_PARTNERSHIPS_001"; target="CAP_PART_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_CLIENTMGMT_001, CAP_PART_03, "supported by")
+' aac rel: source="P_CLIENTMGMT_001"; target="CAP_PART_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_CLIENTMGMT_002, CAP_PART_04, "supported by")
+' aac rel: source="P_CLIENTMGMT_002"; target="CAP_PART_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_PARTNERSHIPS_002, CAP_PART_05, "supported by")
+' aac rel: source="P_PARTNERSHIPS_002"; target="CAP_PART_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_PARTNERSHIPS_003, CAP_PART_05, "supported by")
+' aac rel: source="P_PARTNERSHIPS_003"; target="CAP_PART_05"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_PART, CTL_CLIENT_SLA, "governed by")
+' aac rel: source="CAP_PART"; target="CTL_CLIENT_SLA"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_PART, CTL_CLOSE_SIGNOFF, "governed by")
+' aac rel: source="CAP_PART"; target="CTL_CLOSE_SIGNOFF"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_PART, CTL_MKT_REVIEW, "governed by")
+' aac rel: source="CAP_PART"; target="CTL_MKT_REVIEW"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_PART_04, CTL_CLIENT_SLA, "governed by")
+' aac rel: source="CAP_PART_04"; target="CTL_CLIENT_SLA"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_PART_05, CTL_CLOSE_SIGNOFF, "governed by")
+' aac rel: source="CAP_PART_05"; target="CTL_CLOSE_SIGNOFF"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_PART_05, CTL_MKT_REVIEW, "governed by")
+' aac rel: source="CAP_PART_05"; target="CTL_MKT_REVIEW"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(SYS_CLIENT_PORTAL, CAP_PART_03, "realizes")
+' aac rel: source="SYS_CLIENT_PORTAL"; target="CAP_PART_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CLIENT_PORTAL, CAP_PART_04, "realizes")
+' aac rel: source="SYS_CLIENT_PORTAL"; target="CAP_PART_04"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_CORE_LEDGER, CAP_PART_02, "realizes")
 ' aac rel: source="SYS_CORE_LEDGER"; target="CAP_PART_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_GL, CAP_PART_05, "realizes")
+' aac rel: source="SYS_GL"; target="CAP_PART_05"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_GRC, CAP_PART_01, "realizes")
 ' aac rel: source="SYS_GRC"; target="CAP_PART_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_GRC, CAP_PART_05, "realizes")
+' aac rel: source="SYS_GRC"; target="CAP_PART_05"; label="realizes"; relation="system_realizes_capability"
 
 SHOW_LEGEND()
 @enduml

@@ -8,6 +8,12 @@
 system_realizes_capability:
   - system_id: SYS-AML
     capability_id: CAP-RGOV-07
+  - system_id: SYS-AML
+    capability_id: CAP-RGOV-07-01
+  - system_id: SYS-AML
+    capability_id: CAP-RGOV-07-02
+  - system_id: SYS-APPFRAUD
+    capability_id: CAP-FRAUD-08
   - system_id: SYS-APPFRAUD
     capability_id: CAP-ORIG-03
   - system_id: SYS-ARCHREPO
@@ -28,10 +34,22 @@ system_realizes_capability:
     capability_id: CAP-TECH-07
   - system_id: SYS-ARCHREPO
     capability_id: CAP-TPRM-01
+  - system_id: SYS-AUTH-SWITCH
+    capability_id: CAP-PAY-01
+  - system_id: SYS-AUTH-SWITCH
+    capability_id: CAP-PAY-01-04
+  - system_id: SYS-AUTH-SWITCH
+    capability_id: CAP-PAY-01-05
+  - system_id: SYS-BROKER-GW
+    capability_id: CAP-DEP-03
+  - system_id: SYS-BROKER-GW
+    capability_id: CAP-DEP-03-01
   - system_id: SYS-BUREAU-GW
     capability_id: CAP-COLL-08
   - system_id: SYS-CARD-FULFILL
     capability_id: CAP-ORIG-07
+  - system_id: SYS-CARDSVC-API
+    capability_id: CAP-SERV-09
   - system_id: SYS-CARDSVC-WEB
     capability_id: CAP-SERV-03
   - system_id: SYS-CATALOG
@@ -41,21 +59,45 @@ system_realizes_capability:
   - system_id: SYS-CLIENT-PORTAL
     capability_id: CAP-DATA-02
   - system_id: SYS-CLIENT-PORTAL
+    capability_id: CAP-PART-03
+  - system_id: SYS-CLIENT-PORTAL
+    capability_id: CAP-PART-04
+  - system_id: SYS-CLIENT-PORTAL
     capability_id: CAP-TPS-03
   - system_id: SYS-COLLECT-API
     capability_id: CAP-COLL-01
   - system_id: SYS-COLLECT-API
+    capability_id: CAP-COLL-02
+  - system_id: SYS-COLLECT-API
+    capability_id: CAP-COLL-02-01
+  - system_id: SYS-COLLECT-API
+    capability_id: CAP-COLL-02-02
+  - system_id: SYS-COLLECT-API
     capability_id: CAP-COLL-03
+  - system_id: SYS-COLLECT-API
+    capability_id: CAP-COLL-03-01
+  - system_id: SYS-COLLECT-API
+    capability_id: CAP-COLL-03-02
   - system_id: SYS-COLLECT-API
     capability_id: CAP-COLL-05
   - system_id: SYS-COLLECT-API
     capability_id: CAP-COLL-06
   - system_id: SYS-COLLECT-API
+    capability_id: CAP-COLL-06-01
+  - system_id: SYS-COLLECT-API
+    capability_id: CAP-COLL-06-02
+  - system_id: SYS-COLLECT-API
     capability_id: CAP-FIN-02
+  - system_id: SYS-COLLECT-API
+    capability_id: CAP-LEND-05
   - system_id: SYS-COLLECT-API
     capability_id: CAP-SERV-07
   - system_id: SYS-CONTACT
     capability_id: CAP-SERV-01
+  - system_id: SYS-CONTACT
+    capability_id: CAP-SERV-01-01
+  - system_id: SYS-CONTACT
+    capability_id: CAP-SERV-01-02
   - system_id: SYS-CONTACT
     capability_id: CAP-SERV-02
   - system_id: SYS-CONTACT
@@ -69,11 +111,17 @@ system_realizes_capability:
   - system_id: SYS-CORE-LEDGER
     capability_id: CAP-BILL-05
   - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-BILL-06
+  - system_id: SYS-CORE-LEDGER
     capability_id: CAP-COLL-01
   - system_id: SYS-CORE-LEDGER
     capability_id: CAP-COLL-04
   - system_id: SYS-CORE-LEDGER
     capability_id: CAP-CRED-03
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-CRED-03-01
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-CRED-03-02
   - system_id: SYS-CORE-LEDGER
     capability_id: CAP-CRED-06
   - system_id: SYS-CORE-LEDGER
@@ -95,7 +143,19 @@ system_realizes_capability:
   - system_id: SYS-CORE-LEDGER
     capability_id: CAP-PAY-01
   - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-PAY-01-01
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-PAY-01-02
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-PAY-01-03
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-PAY-01-05
+  - system_id: SYS-CORE-LEDGER
     capability_id: CAP-PAY-02
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-PAY-03
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-PAY-03-02
   - system_id: SYS-CORE-LEDGER
     capability_id: CAP-PAY-05
   - system_id: SYS-CORE-LEDGER
@@ -107,21 +167,35 @@ system_realizes_capability:
   - system_id: SYS-CORE-LEDGER
     capability_id: CAP-SERV-02
   - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-SERV-02-01
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-SERV-02-02
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-SERV-02-03
+  - system_id: SYS-CORE-LEDGER
+    capability_id: CAP-SERV-09
+  - system_id: SYS-CORE-LEDGER
     capability_id: CAP-TPS-01
   - system_id: SYS-CORE-LEDGER
     capability_id: CAP-TPS-02
   - system_id: SYS-CREDIT-DATA
     capability_id: CAP-ACQ-02
   - system_id: SYS-CREDIT-DATA
+    capability_id: CAP-ACQ-02-01
+  - system_id: SYS-CREDIT-DATA
     capability_id: CAP-ACQ-04
   - system_id: SYS-CREDIT-DATA
     capability_id: CAP-CRED-04
+  - system_id: SYS-CREDIT-DATA
+    capability_id: CAP-RGOV-09
   - system_id: SYS-CRM
     capability_id: CAP-RGOV-06
   - system_id: SYS-CRM
     capability_id: CAP-SERV-05
   - system_id: SYS-CRM
     capability_id: CAP-SERV-06
+  - system_id: SYS-CRM
+    capability_id: CAP-SERV-09
   - system_id: SYS-DATA-INGEST
     capability_id: CAP-ACQ-05
   - system_id: SYS-DATA-INGEST
@@ -138,8 +212,28 @@ system_realizes_capability:
     capability_id: CAP-PAY-05
   - system_id: SYS-DATA-INGEST
     capability_id: CAP-STRAT-05
+  - system_id: SYS-DEALER-PORTAL
+    capability_id: CAP-LEND-01
+  - system_id: SYS-DEPOSIT
+    capability_id: CAP-DEP-01
+  - system_id: SYS-DEPOSIT
+    capability_id: CAP-DEP-02
+  - system_id: SYS-DEPOSIT
+    capability_id: CAP-DEP-03
+  - system_id: SYS-DEPOSIT
+    capability_id: CAP-DEP-03-02
+  - system_id: SYS-DEPOSIT
+    capability_id: CAP-DEP-04
+  - system_id: SYS-DEPOSIT
+    capability_id: CAP-DEP-04-01
+  - system_id: SYS-DEPOSIT
+    capability_id: CAP-DEP-04-02
+  - system_id: SYS-DEPOSIT
+    capability_id: CAP-DEP-05
   - system_id: SYS-DIALER
     capability_id: CAP-COLL-02
+  - system_id: SYS-DIALER
+    capability_id: CAP-COLL-02-01
   - system_id: SYS-DIALER
     capability_id: CAP-COLL-07
   - system_id: SYS-DISPUTES-SAAS
@@ -148,6 +242,10 @@ system_realizes_capability:
     capability_id: CAP-FRAUD-03
   - system_id: SYS-DISPUTES-SAAS
     capability_id: CAP-FRAUD-04
+  - system_id: SYS-DISPUTES-SAAS
+    capability_id: CAP-FRAUD-04-01
+  - system_id: SYS-DISPUTES-SAAS
+    capability_id: CAP-FRAUD-04-02
   - system_id: SYS-DISPUTES-SAAS
     capability_id: CAP-FRAUD-05
   - system_id: SYS-DISPUTES-SAAS
@@ -168,6 +266,10 @@ system_realizes_capability:
     capability_id: CAP-SERV-04
   - system_id: SYS-FRAUD-DETECT
     capability_id: CAP-FRAUD-01
+  - system_id: SYS-FRAUD-DETECT
+    capability_id: CAP-FRAUD-08
+  - system_id: SYS-FRAUD-DETECT
+    capability_id: CAP-PAY-01-02
   - system_id: SYS-GL
     capability_id: CAP-FIN-01
   - system_id: SYS-GL
@@ -175,9 +277,17 @@ system_realizes_capability:
   - system_id: SYS-GL
     capability_id: CAP-FIN-05
   - system_id: SYS-GL
+    capability_id: CAP-PART-05
+  - system_id: SYS-GL
+    capability_id: CAP-PART-05-02
+  - system_id: SYS-GL
     capability_id: CAP-TPS-04
   - system_id: SYS-GRC
     capability_id: CAP-PART-01
+  - system_id: SYS-GRC
+    capability_id: CAP-PART-05
+  - system_id: SYS-GRC
+    capability_id: CAP-PART-05-01
   - system_id: SYS-GRC
     capability_id: CAP-RGOV-02
   - system_id: SYS-GRC
@@ -222,8 +332,56 @@ system_realizes_capability:
     capability_id: CAP-ORIG-02
   - system_id: SYS-KYC
     capability_id: CAP-RGOV-07
+  - system_id: SYS-LEGAL-MATTER
+    capability_id: CAP-COLL-06
+  - system_id: SYS-LEGAL-MATTER
+    capability_id: CAP-COLL-06-03
+  - system_id: SYS-LENDING-API
+    capability_id: CAP-LEND-05
+  - system_id: SYS-LENDPERF-SEMANTIC
+    capability_id: CAP-LEND-01
+  - system_id: SYS-LOAN-SVC
+    capability_id: CAP-LEND-03
+  - system_id: SYS-LOAN-SVC
+    capability_id: CAP-LEND-05
+  - system_id: SYS-LOAN-SVC
+    capability_id: CAP-LEND-07
+  - system_id: SYS-LOS
+    capability_id: CAP-LEND-02
+  - system_id: SYS-LOS
+    capability_id: CAP-LEND-02-01
+  - system_id: SYS-LOS
+    capability_id: CAP-LEND-02-02
+  - system_id: SYS-LOS
+    capability_id: CAP-LEND-03
   - system_id: SYS-MARKETING
     capability_id: CAP-ACQ-03
+  - system_id: SYS-MERCH-ACQ
+    capability_id: CAP-MERCH-01
+  - system_id: SYS-MERCH-ACQ
+    capability_id: CAP-MERCH-03
+  - system_id: SYS-MERCH-ACQ
+    capability_id: CAP-MERCH-04
+  - system_id: SYS-MERCH-ACQ
+    capability_id: CAP-MERCH-04-01
+  - system_id: SYS-MERCH-ACQ
+    capability_id: CAP-MERCH-05
+  - system_id: SYS-MERCH-RISK
+    capability_id: CAP-MERCH-02
+  - system_id: SYS-MERCH-RISK
+    capability_id: CAP-MERCH-02-01
+  - system_id: SYS-MERCH-RISK
+    capability_id: CAP-MERCH-04
+  - system_id: SYS-MERCH-RISK
+    capability_id: CAP-MERCH-04-02
+  - system_id: SYS-MERCH-RISK
+    capability_id: CAP-MERCH-06
+  - system_id: SYS-MERCHANT-WEB
+    capability_id: CAP-MERCH-02
+  - system_id: SYS-MERCHANT-WEB
+    capability_id: CAP-MERCH-02-01
+  - system_id: SYS-MERCHANT-WEB
+    capability_id: CAP-MERCH-07
   - system_id: SYS-MODEL
     capability_id: CAP-CRED-02
   - system_id: SYS-MODEL
@@ -247,23 +405,59 @@ system_realizes_capability:
   - system_id: SYS-PAYMENT-GW
     capability_id: CAP-PAY-03
   - system_id: SYS-PAYMENT-GW
+    capability_id: CAP-PAY-03-01
+  - system_id: SYS-PAYMENT-GW
     capability_id: CAP-PAY-04
+  - system_id: SYS-POSFIN-API
+    capability_id: CAP-LEND-02
+  - system_id: SYS-POSFIN-API
+    capability_id: CAP-LEND-02-01
+  - system_id: SYS-POSFIN-API
+    capability_id: CAP-LEND-02-02
   - system_id: SYS-PROSPECT-DATA
     capability_id: CAP-ACQ-01
   - system_id: SYS-RECON
     capability_id: CAP-FIN-06
   - system_id: SYS-RECON
     capability_id: CAP-PAY-06
+  - system_id: SYS-REG-REPORTING
+    capability_id: CAP-FIN-04
+  - system_id: SYS-REMARKET
+    capability_id: CAP-LEND-06
+  - system_id: SYS-REMARKET
+    capability_id: CAP-LEND-06-01
+  - system_id: SYS-REMARKET
+    capability_id: CAP-LEND-06-02
   - system_id: SYS-REWARDS
     capability_id: CAP-BILL-04
   - system_id: SYS-REWARDS
+    capability_id: CAP-BILL-04-01
+  - system_id: SYS-REWARDS
+    capability_id: CAP-BILL-04-02
+  - system_id: SYS-REWARDS
     capability_id: CAP-FIN-02
+  - system_id: SYS-REWARDS
+    capability_id: CAP-PROD-04
+  - system_id: SYS-REWARDS-API
+    capability_id: CAP-BILL-04
+  - system_id: SYS-REWARDS-API
+    capability_id: CAP-BILL-04-02
+  - system_id: SYS-REWARDS-API
+    capability_id: CAP-BILL-04-03
   - system_id: SYS-SCM
     capability_id: CAP-SEC-03
   - system_id: SYS-SCM
     capability_id: CAP-TECH-01
   - system_id: SYS-SCM
     capability_id: CAP-TECH-04
+  - system_id: SYS-SCREENING-VENDOR
+    capability_id: CAP-MERCH-02
+  - system_id: SYS-SCREENING-VENDOR
+    capability_id: CAP-MERCH-02-02
+  - system_id: SYS-SCREENING-VENDOR
+    capability_id: CAP-RGOV-07
+  - system_id: SYS-SCREENING-VENDOR
+    capability_id: CAP-RGOV-07-01
   - system_id: SYS-STATEMENTS
     capability_id: CAP-BILL-03
   - system_id: SYS-TESTMGMT
@@ -274,6 +468,12 @@ system_realizes_capability:
     capability_id: CAP-TECH-04
   - system_id: SYS-TESTMGMT
     capability_id: CAP-TECH-08
+  - system_id: SYS-TITLE
+    capability_id: CAP-LEND-04
+  - system_id: SYS-TITLE
+    capability_id: CAP-LEND-04-01
+  - system_id: SYS-TITLE
+    capability_id: CAP-LEND-04-02
   - system_id: SYS-TOKEN
     capability_id: CAP-ORIG-08
   - system_id: SYS-TOKEN

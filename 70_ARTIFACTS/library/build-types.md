@@ -4,19 +4,49 @@ The kinds of thing the organization builds, and the standard build of each: the 
 
 | Type | Requires | Includes | Offers | Shapes | Products |
 |---|---:|---:|---:|---|---:|
+| [AI agent](#ai-agent) | 1 | 0 | 5 | none | 0 |
+| [AI assistant](#ai-assistant) | 1 | 0 | 5 | none | 0 |
 | [AI inference service](#ai-service) | 1 | 0 | 5 | none | 0 |
 | [Batch application](#batch-application) | 1 | 0 | 4 | none | 0 |
 | [Batch data product](#data-product) | 0 | 0 | 1 | GCP: `batch-data-product-gcp`, any: `batch-data-product` | 2 |
 | [Bought SaaS capability](#bought-saas) | 1 | 0 | 12 | AWS: `saas-onboarding`, Azure: `vendor-saas-service`, GCP: `vendor-saas-service-gcp` | 4 |
-| [Customer-facing digital product](#digital-product) | 1 | 2 | 15 | AWS: `aws-product-onboarding`, Azure: `azure-digital-product`, GCP: `gcp-digital-product` | 6 |
+| [Customer portal](#customer-portal) | 1 | 0 | 11 | none | 0 |
+| [Customer-facing digital product](#digital-product) | 1 | 2 | 19 | AWS: `aws-product-onboarding`, Azure: `azure-digital-product`, GCP: `gcp-digital-product` | 6 |
 | [Event-driven service](#event-driven-service) | 1 | 0 | 4 | none | 0 |
 | [Integration adapter](#integration-adapter) | 1 | 0 | 3 | none | 0 |
-| [Internal platform service](#platform-service) | 0 | 0 | 11 | Azure: `core-platform-service` | 1 |
-| [Internal tool](#internal-tool) | 1 | 0 | 8 | none | 0 |
-| [Mobile application](#mobile-application) | 1 | 0 | 7 | none | 0 |
+| [Internal platform service](#platform-service) | 0 | 0 | 13 | Azure: `core-platform-service` | 1 |
+| [Internal tool](#internal-tool) | 1 | 0 | 9 | none | 0 |
+| [Mobile application](#mobile-application) | 1 | 0 | 10 | none | 0 |
+| [Partner API](#partner-facing-api) | 1 | 0 | 7 | none | 0 |
 | [Reporting application](#reporting-application) | 1 | 0 | 3 | none | 0 |
 | [Shared hub](#shared-hub) | 0 | 0 | 5 | none | 0 |
-| [Web application](#web-application) | 1 | 0 | 11 | none | 0 |
+| [Web application](#web-application) | 1 | 0 | 15 | none | 0 |
+
+<a id="ai-agent"></a>
+## AI agent
+
+`ai-agent`
+
+An agent that does work through other systems' APIs on someone's behalf, every action logged and the ones that need it approved by a person first.
+
+**Requires.** `ai-agent-baseline`.
+**Includes.** nothing beyond what it requires.
+**Offers.** `notification-service`, `operator-role`, `operator-access`, `event-consumer`, `scheduled-job`.
+**Shapes.** None: assembled from its parts against the landing zone.
+**Products.** None yet.
+
+<a id="ai-assistant"></a>
+## AI assistant
+
+`ai-assistant`
+
+An assistant people ask in a chat, answering from the organization's own documents through a retrieval index, every model call through the landing zone's AI gateway and every conversation kept.
+
+**Requires.** `ai-assistant-baseline`.
+**Includes.** nothing beyond what it requires.
+**Offers.** `notification-service`, `event-publisher`, `object-store`, `scheduled-job`, `operator-access`.
+**Shapes.** None: assembled from its parts against the landing zone.
+**Products.** None yet.
 
 <a id="ai-service"></a>
 ## AI inference service
@@ -70,6 +100,19 @@ A capability bought from a vendor and run in the vendor's own tenancy. What we b
 **Shapes.** AWS: `saas-onboarding` (SaaS onboarding), Azure: `vendor-saas-service` (Vendor SaaS service), GCP: `vendor-saas-service-gcp` (Vendor SaaS service on Google Cloud).
 **Products.** Dispute Management (`PRD-DISPUTES`); Identity Document Verification (`PRD-IDV`); NICE Actimize Screening (`PRD-SCREENING`); Open Banking Affordability (`PRD-OB-AFFORDABILITY`).
 
+<a id="customer-portal"></a>
+## Customer portal
+
+`customer-portal`
+
+A web application customers sign in to with accounts of their own, on the landing zone's customer identity service, behind the public front door, with its own database and the notifications it sends them.
+
+**Requires.** `customer-portal-baseline`.
+**Includes.** nothing beyond what it requires.
+**Offers.** `mobile-channel`, `admin-console`, `scheduled-job`, `event-publisher`, `async-worker`, `search-index`, `report-service`, `object-store`, `analytics-feed`, `partner-api`, `document-intake`.
+**Shapes.** None: assembled from its parts against the landing zone.
+**Products.** None yet.
+
 <a id="digital-product"></a>
 ## Customer-facing digital product
 
@@ -79,7 +122,7 @@ A product customers use directly: a web or mobile front end, the API behind it, 
 
 **Requires.** `api-service`.
 **Includes.** `web-channel`, `relational-datastore`.
-**Offers.** `event-publisher`, `public-web-entry`, `async-worker`, `object-store`, `operator-role`, `operator-access`, `mobile-channel`, `admin-console`, `scheduled-job`, `event-consumer`, `notification-service`, `search-index`, `partner-adapter`, `report-service`, `ml-inference-service`.
+**Offers.** `event-publisher`, `public-web-entry`, `async-worker`, `object-store`, `operator-role`, `operator-access`, `mobile-channel`, `admin-console`, `scheduled-job`, `event-consumer`, `notification-service`, `search-index`, `partner-adapter`, `report-service`, `ml-inference-service`, `customer-sign-in`, `analytics-feed`, `partner-api`, `document-intake`.
 **Shapes.** AWS: `aws-product-onboarding` (AWS product onboarding), Azure: `azure-digital-product` (Azure digital product), GCP: `gcp-digital-product` (Google Cloud digital product).
 **Products.** Card Servicing (`PRD-CARD-SERVICING`); Collections Workspace (`PRD-COLLECTIONS-WORKSPACE`); Installment Lending (`PRD-INSTALLMENT-LENDING`), with integration-hub; Merchant Portal (`PRD-MERCHANT-PORTAL`); Point-of-Sale Finance (`PRD-POS-FINANCE`); Rewards Redemption (`PRD-REWARDS`).
 
@@ -118,7 +161,7 @@ A shared service other products call through the API gateway. It has no channel 
 
 **Requires.** nothing.
 **Includes.** nothing beyond what it requires.
-**Offers.** `api-service`, `relational-datastore`, `event-publisher`, `async-worker`, `operator-role`, `admin-console`, `scheduled-job`, `event-consumer`, `notification-service`, `partner-adapter`, `ml-inference-service`.
+**Offers.** `api-service`, `relational-datastore`, `event-publisher`, `async-worker`, `operator-role`, `admin-console`, `scheduled-job`, `event-consumer`, `notification-service`, `partner-adapter`, `ml-inference-service`, `partner-api`, `analytics-feed`.
 **Shapes.** Azure: `core-platform-service` (Core platform service).
 **Products.** Customer Identity Service (`PRD-IDENTITY`).
 
@@ -131,7 +174,7 @@ A web application staff use to operate something, behind workforce sign-on rathe
 
 **Requires.** `internal-tool-baseline`.
 **Includes.** nothing beyond what it requires.
-**Offers.** `scheduled-job`, `report-service`, `event-publisher`, `notification-service`, `search-index`, `object-store`, `operator-role`, `operator-access`.
+**Offers.** `scheduled-job`, `report-service`, `event-publisher`, `notification-service`, `search-index`, `object-store`, `operator-role`, `operator-access`, `document-intake`.
 **Shapes.** None: assembled from its parts against the landing zone.
 **Products.** None yet.
 
@@ -144,7 +187,20 @@ A product whose channel is an app in the stores, calling its API through the sha
 
 **Requires.** `mobile-app-baseline`.
 **Includes.** nothing beyond what it requires.
-**Offers.** `web-channel`, `public-web-entry`, `event-publisher`, `async-worker`, `notification-service`, `search-index`, `object-store`.
+**Offers.** `web-channel`, `public-web-entry`, `event-publisher`, `async-worker`, `notification-service`, `search-index`, `object-store`, `customer-sign-in`, `analytics-feed`, `partner-api`.
+**Shapes.** None: assembled from its parts against the landing zone.
+**Products.** None yet.
+
+<a id="partner-facing-api"></a>
+## Partner API
+
+`partner-facing-api`
+
+An API offered to partners outside the estate through the landing zone's API gateway, each partner a client with its own credentials and quota, over the service's own database.
+
+**Requires.** `partner-api-baseline`.
+**Includes.** nothing beyond what it requires.
+**Offers.** `event-publisher`, `async-worker`, `notification-service`, `admin-console`, `report-service`, `object-store`, `analytics-feed`.
 **Shapes.** None: assembled from its parts against the landing zone.
 **Products.** None yet.
 
@@ -183,6 +239,6 @@ A browser front end behind the public front door, the API behind it, and its own
 
 **Requires.** `web-app-baseline`.
 **Includes.** nothing beyond what it requires.
-**Offers.** `mobile-channel`, `admin-console`, `scheduled-job`, `event-publisher`, `async-worker`, `notification-service`, `search-index`, `report-service`, `object-store`, `operator-role`, `operator-access`.
+**Offers.** `mobile-channel`, `admin-console`, `scheduled-job`, `event-publisher`, `async-worker`, `notification-service`, `search-index`, `report-service`, `object-store`, `operator-role`, `operator-access`, `customer-sign-in`, `analytics-feed`, `partner-api`, `document-intake`.
 **Shapes.** None: assembled from its parts against the landing zone.
 **Products.** None yet.

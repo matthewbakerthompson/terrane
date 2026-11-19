@@ -67,7 +67,7 @@ which of the two is the obligation.
 ## Following is said at level 0
 
 A level-1 capability inside Payments follows PCI DSS because Payments does.
-Repeating the link on all 136 level-1 capabilities would make a copy on each
+Repeating the link on all 142 level-1 capabilities would make a copy on each
 to keep in step, and a child updated without the rest would disagree with its
 domain.
 
@@ -96,7 +96,7 @@ the records disagree, the place most of them give wins.
 
 | View | What it answers |
 |---|---|
-| `capability-map` | The whole map on one page: the 136 level-1 capabilities in their 22 domains and three tiers. Choose a framework above it and the capabilities placed in it are marked |
+| `capability-map` | The whole map on one page: the 142 level-1 capabilities in their 22 domains and three tiers. Choose a framework above it and the capabilities placed in it are marked |
 | `frameworks` | Every framework against every domain, in one grid: a ring for how firmly the domain follows it, a number for how many of its capabilities are placed in it |
 | `framework-landscape` | One framework's own shape, with the capabilities placed in it. Drawn for every framework something is placed in, an organization's own included |
 | `capability-alignment` | One domain: what it follows, where its capabilities are placed, and the controls, processes and systems around it |

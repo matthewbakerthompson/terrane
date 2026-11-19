@@ -13,7 +13,7 @@
   requires: [internal-tool-baseline]
   includes: []
   offers: [scheduled-job, report-service, event-publisher, notification-service, search-index,
-           object-store, operator-role, operator-access]
+           object-store, operator-role, operator-access, document-intake]
 
 - build_type_id: mobile-application
   name: Mobile application
@@ -23,7 +23,7 @@
   requires: [mobile-app-baseline]
   includes: []
   offers: [web-channel, public-web-entry, event-publisher, async-worker, notification-service,
-           search-index, object-store]
+           search-index, object-store, customer-sign-in, analytics-feed, partner-api]
 
 - build_type_id: event-driven-service
   name: Event-driven service
@@ -62,6 +62,26 @@
   includes: []
   offers: [event-consumer, async-worker, relational-datastore, object-store, search-index]
 
+- build_type_id: ai-assistant
+  name: AI assistant
+  description: >
+    An assistant people ask in a chat, answering from the organization's
+    own documents through a retrieval index, every model call through the
+    landing zone's AI gateway and every conversation kept.
+  requires: [ai-assistant-baseline]
+  includes: []
+  offers: [notification-service, event-publisher, object-store, scheduled-job, operator-access]
+
+- build_type_id: ai-agent
+  name: AI agent
+  description: >
+    An agent that does work through other systems' APIs on someone's
+    behalf, every action logged and the ones that need it approved by a
+    person first.
+  requires: [ai-agent-baseline]
+  includes: []
+  offers: [notification-service, operator-role, operator-access, event-consumer, scheduled-job]
+
 - build_type_id: reporting-application
   name: Reporting application
   description: >
@@ -79,4 +99,27 @@
   requires: [web-app-baseline]
   includes: []
   offers: [mobile-channel, admin-console, scheduled-job, event-publisher, async-worker,
-           notification-service, search-index, report-service, object-store, operator-role, operator-access]
+           notification-service, search-index, report-service, object-store, operator-role, operator-access,
+           customer-sign-in, analytics-feed, partner-api, document-intake]
+
+- build_type_id: customer-portal
+  name: Customer portal
+  description: >
+    A web application customers sign in to with accounts of their own, on
+    the landing zone's customer identity service, behind the public front
+    door, with its own database and the notifications it sends them.
+  requires: [customer-portal-baseline]
+  includes: []
+  offers: [mobile-channel, admin-console, scheduled-job, event-publisher, async-worker, search-index,
+           report-service, object-store, analytics-feed, partner-api, document-intake]
+
+- build_type_id: partner-facing-api
+  name: Partner API
+  description: >
+    An API offered to partners outside the estate through the landing
+    zone's API gateway, each partner a client with its own credentials and
+    quota, over the service's own database.
+  requires: [partner-api-baseline]
+  includes: []
+  offers: [event-publisher, async-worker, notification-service, admin-console, report-service,
+           object-store, analytics-feed]

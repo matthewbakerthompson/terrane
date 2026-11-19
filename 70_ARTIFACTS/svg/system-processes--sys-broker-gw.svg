@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="647.7" viewBox="0 0 1100 647.7" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Brokered deposit settlement gateway — Processes and Capabilities</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Brokered deposit settlement gateway — Processes and Capabilities</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   6 nodes · 6 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One system, every process that uses it and in what role, and the capabilities those processes support. This shows the business impact of changing the system. A</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">long list against a low criticality rating is worth a second look.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(169.72 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="271.92" y="98.3" width="212.16" height="295.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="313.92" y="115.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.87" y="126.26" width="212.27" height="207.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.72" y="143.67" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="529.3" y="24.3" width="221.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="559.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-DEPOSITS-003::SYS-BROKER-GW">
+<title>Primary</title>
+<path d="M196 169 L225 169 L233 169 A8 8 0 0 0 241 161 L241 77.01 A10 10 0 0 1 251.01 67.01 L525.99 67.33 A10 10 0 0 0 526.01 67.33 L551.48 67.33" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 67.33 L545.43 72.12 L545.43 62.55 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-DEPOSITS-003::SYS-BROKER-GW">
+<rect x="354.32" y="44.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="56.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-DEPOSITS-004::SYS-BROKER-GW">
+<title>Supporting</title>
+<path d="M196 291 L225 291 L233 291 A8 8 0 0 1 241 299 L241 400 A10 10 0 0 0 251 410 L488 410 A10 10 0 0 0 498 400 L498 94.88 A10 10 0 0 1 507.88 84.88 L525.94 84.67 A10 10 0 0 1 526.06 84.67 L551.48 84.67" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 84.67 L545.43 89.45 L545.43 79.88 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-DEPOSITS-004::SYS-BROKER-GW">
+<rect x="346.46" y="416.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="428.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-DEPOSITS-003::CAP-DEP-03-01">
+<title>supports</title>
+<path d="M196 186 L225 186 L241 186 A10 10 0 0 0 251 176 L251 167 A9 9 0 0 1 260 158 L269 158 L294.48 158" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M298 158 L288.43 162.78 L288.43 153.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e3::P-DEPOSITS-004::CAP-DEP-03-02">
+<title>supports</title>
+<path d="M196 274 L225 274 L241 274 A10 10 0 0 1 251 284 L251 325 A9 9 0 0 0 260 334 L269 334 L294.48 334" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M298 334 L288.43 338.79 L288.43 329.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e4::P-DEPOSITS-003::CAP-DEP-03">
+<title>supports</title>
+<path d="M196 203 L225 203 L233 203 A8 8 0 0 1 241 211 L241 224.88 A10 10 0 0 0 251.12 234.88 L268.94 234.67 A10 10 0 0 1 269.06 234.67 L294.48 234.67" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M298 234.67 L288.43 239.45 L288.43 229.88 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e5::P-DEPOSITS-004::CAP-DEP-03">
+<title>supports</title>
+<path d="M196 257 L224.96 257 A10 10 0 0 1 225.04 257 L268.96 257.33 A10 10 0 0 0 269.04 257.33 L294.48 257.33" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M298 257.33 L288.43 262.12 L288.43 252.55 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-DEP-03" data-type="capabilities">
+<title>Brokered CD Program Management</title>
+<path d="M338 212 L298 246 L338 280 L418 280 L458 246 L418 212 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="378" y="244.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Brokered CD Program</text>
+<text x="378" y="256.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+</g>
+<g class="node" data-id="CAP-DEP-03-01" data-type="capabilities">
+<title>Broker Network &amp; Issuance</title>
+<path d="M338 124 L298 158 L338 192 L418 192 L458 158 L418 124 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="378" y="156.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Broker Network &amp;</text>
+<text x="378" y="168.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Issuance</text>
+</g>
+<g class="node" data-id="CAP-DEP-03-02" data-type="capabilities">
+<title>Brokered CD Settlement &amp; Record Keeping</title>
+<path d="M338 300 L298 334 L338 368 L418 368 L458 334 L418 300 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="378" y="326.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Brokered CD</text>
+<text x="378" y="338.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Settlement &amp; Record</text>
+<text x="378" y="350.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Keeping</text>
+</g>
+<g class="node" data-id="P-DEPOSITS-003" data-type="processes">
+<title>Issue brokered CDs through the broker network</title>
+<path d="M116 152 L36 177.97 L66.56 220 L165.44 220 L196 177.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="178.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Issue brokered CDs</text>
+<text x="116" y="190.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">through the broker</text>
+<text x="116" y="202.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">network</text>
+</g>
+<g class="node" data-id="P-DEPOSITS-004" data-type="processes">
+<title>Settle brokered CDs and keep the position</title>
+<path d="M116 240 L36 265.97 L66.56 308 L165.44 308 L196 265.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="272.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Settle brokered CDs</text>
+<text x="116" y="284.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and keep the position</text>
+</g>
+<g class="node" data-id="SYS-BROKER-GW" data-type="systems">
+<title>Brokered deposit settlement gateway</title>
+<rect x="555" y="50" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="636" y="74.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Brokered deposit</text>
+<text x="636" y="86.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">settlement gateway</text>
+<svg x="707" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="545.7" x2="1072" y2="545.7" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="569.7" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 558.7)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="569.7" font-size="12" font-weight="400" fill="#343d50">capability · 3</text>
+<g transform="translate(180.25 558.7)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="206.25" y="569.7" font-size="12" font-weight="400" fill="#343d50">process · 2</text>
+<g transform="translate(283.34 558.7)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="309.34" y="569.7" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
+<text x="28" y="591.7" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 580.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="591.7" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 580.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="591.7" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="625.7" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-processes--sys-broker-gw · edit the model, not the picture</text></g>
+</svg>

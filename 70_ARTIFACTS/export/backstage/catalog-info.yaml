@@ -25,6 +25,17 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "Group"
 metadata:
+  name: "org-asset-recovery"
+  title: "Asset Recovery"
+  description: "Manages repossession agents, the notices state law requires, and the auction and remarketing of recovered collateral."
+  annotations:
+    architecture-as-code/id: "ORG-ASSET-RECOVERY"
+spec:
+  type: "team"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Group"
+metadata:
   name: "org-audit"
   title: "Internal Audit"
   description: "Internal Audit organizational unit."
@@ -36,11 +47,66 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "Group"
 metadata:
+  name: "org-auth-ops"
+  title: "Authorization Operations"
+  description: "Runs the authorization switch's parameters, stand-in limits and network connectivity."
+  annotations:
+    architecture-as-code/id: "ORG-AUTH-OPS"
+spec:
+  type: "team"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Group"
+metadata:
+  name: "org-brokered"
+  title: "Brokered Deposits"
+  description: "Places brokered CD issues through the broker-dealer network and manages the brokered funding channel with Treasury."
+  annotations:
+    architecture-as-code/id: "ORG-BROKERED"
+spec:
+  type: "team"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Group"
+metadata:
+  name: "org-chargeback"
+  title: "Chargeback Operations"
+  description: "Works issuer-side chargebacks, representments and arbitration through the network cycles."
+  annotations:
+    architecture-as-code/id: "ORG-CHARGEBACK"
+spec:
+  type: "team"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Group"
+metadata:
+  name: "org-client-coll"
+  title: "Client Portfolio Collections"
+  description: "Collects delinquent accounts on servicing clients' portfolios to each client's own strategy and in its name."
+  annotations:
+    architecture-as-code/id: "ORG-CLIENT-COLL"
+spec:
+  type: "team"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Group"
+metadata:
   name: "org-clientmgmt"
   title: "Client Management"
   description: "Client Management organizational unit."
   annotations:
     architecture-as-code/id: "ORG-CLIENTMGMT"
+spec:
+  type: "team"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Group"
+metadata:
+  name: "org-cobrand"
+  title: "Co-Brand Programs"
+  description: "Negotiates and governs co-brand and affinity card programs with their partners."
+  annotations:
+    architecture-as-code/id: "ORG-COBRAND"
 spec:
   type: "team"
 ---
@@ -113,6 +179,17 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "Group"
 metadata:
+  name: "org-dealer-svc"
+  title: "Dealer Services"
+  description: "Recruits, contracts and supports the dealers that originate recreation loans, and watches their performance and program compliance."
+  annotations:
+    architecture-as-code/id: "ORG-DEALER-SVC"
+spec:
+  type: "team"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Group"
+metadata:
   name: "org-deposits"
   title: "Deposit Operations"
   description: "Consumer deposit products: CDs and savings, direct and brokered, opening through maturity."
@@ -168,6 +245,28 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "Group"
 metadata:
+  name: "org-fair-lending"
+  title: "Fair Lending"
+  description: "Tests credit decisions, pricing, dealer markup and collections for disparities, and leads remediation."
+  annotations:
+    architecture-as-code/id: "ORG-FAIR-LENDING"
+spec:
+  type: "team"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Group"
+metadata:
+  name: "org-fin-crimes"
+  title: "Financial Crimes"
+  description: "Runs sanctions screening, transaction monitoring and suspicious activity investigation and reporting."
+  annotations:
+    architecture-as-code/id: "ORG-FIN-CRIMES"
+spec:
+  type: "team"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Group"
+metadata:
   name: "org-finance"
   title: "Finance"
   description: "Finance organizational unit."
@@ -212,6 +311,17 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "Group"
 metadata:
+  name: "org-iso-mgmt"
+  title: "ISO and Agent Management"
+  description: "Contracts and oversees the independent sales organizations and agents that bring merchants, and pays their residuals."
+  annotations:
+    architecture-as-code/id: "ORG-ISO-MGMT"
+spec:
+  type: "team"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Group"
+metadata:
   name: "org-legal"
   title: "Legal"
   description: "Legal organizational unit."
@@ -234,11 +344,33 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "Group"
 metadata:
+  name: "org-loan-ops"
+  title: "Loan Operations"
+  description: "Reviews contract packages, clears stipulations, boards and funds loans, and services installment loans through to payoff."
+  annotations:
+    architecture-as-code/id: "ORG-LOAN-OPS"
+spec:
+  type: "team"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Group"
+metadata:
   name: "org-marketing"
   title: "Marketing"
   description: "Marketing organizational unit."
   annotations:
     architecture-as-code/id: "ORG-MARKETING"
+spec:
+  type: "team"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Group"
+metadata:
+  name: "org-merch-risk"
+  title: "Merchant Risk"
+  description: "Underwrites merchants, sets their reserves, monitors exposure and terminates merchants that breach appetite."
+  annotations:
+    architecture-as-code/id: "ORG-MERCH-RISK"
 spec:
   type: "team"
 ---
@@ -404,6 +536,17 @@ metadata:
   description: "Technology organizational unit."
   annotations:
     architecture-as-code/id: "ORG-TECH"
+spec:
+  type: "team"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Group"
+metadata:
+  name: "org-title"
+  title: "Title and Lien"
+  description: "Perfects, tracks and releases liens on financed vehicles and boats across the titling states, with an outsourced title servicer."
+  annotations:
+    architecture-as-code/id: "ORG-TITLE"
 spec:
   type: "team"
 ---
@@ -628,6 +771,20 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
 metadata:
+  name: "sys-broker-gw"
+  title: "Brokered deposit settlement gateway"
+  description: "Exchanges brokered CD issuance, allocation and position files with the broker-dealers and the depository."
+  tags:
+    - "criticality-medium"
+  annotations:
+    architecture-as-code/id: "SYS-BROKER-GW"
+spec:
+  owner: "org-brokered"
+  lifecycle: "proposed"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
   name: "sys-bureau-gw"
   title: "Credit bureau gateway"
   description: "Credit bureau furnishing and consumer dispute exchange."
@@ -707,6 +864,34 @@ metadata:
     architecture-as-code/id: "SYS-CREDIT-DATA"
 spec:
   owner: "org-credit"
+  lifecycle: "proposed"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
+  name: "sys-dealer-portal"
+  title: "Dealer portal"
+  description: "Where dealers submit applications, see decisions and stipulations, upload contracts, and track funding and reserve."
+  tags:
+    - "criticality-medium"
+  annotations:
+    architecture-as-code/id: "SYS-DEALER-PORTAL"
+spec:
+  owner: "org-dealer-svc"
+  lifecycle: "proposed"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
+  name: "sys-deposit"
+  title: "Deposit platform"
+  description: "System of record for CDs and savings: opening, interest accrual, maturities, early withdrawal and tax reporting."
+  tags:
+    - "criticality-medium"
+  annotations:
+    architecture-as-code/id: "SYS-DEPOSIT"
+spec:
+  owner: "org-deposits"
   lifecycle: "proposed"
 ---
 apiVersion: "backstage.io/v1alpha1"
@@ -852,6 +1037,48 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
 metadata:
+  name: "sys-legal-matter"
+  title: "Legal matter management"
+  description: "Tracks litigation, outside counsel, filings, judgments and legal placements."
+  tags:
+    - "criticality-medium"
+  annotations:
+    architecture-as-code/id: "SYS-LEGAL-MATTER"
+spec:
+  owner: "org-legal"
+  lifecycle: "proposed"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
+  name: "sys-loan-svc"
+  title: "Installment loan servicing platform"
+  description: "System of record for installment loans: boarding, billing, payment posting, payoff quotes, deferrals and ancillary product refunds."
+  tags:
+    - "criticality-medium"
+  annotations:
+    architecture-as-code/id: "SYS-LOAN-SVC"
+spec:
+  owner: "org-loan-ops"
+  lifecycle: "proposed"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
+  name: "sys-los"
+  title: "Indirect loan origination system"
+  description: "Takes dealer applications, runs the credit decision and counteroffers, and carries the contract package to funding."
+  tags:
+    - "criticality-medium"
+  annotations:
+    architecture-as-code/id: "SYS-LOS"
+spec:
+  owner: "org-lending"
+  lifecycle: "proposed"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
   name: "sys-marketing"
   title: "Campaign management"
   description: "Campaign management and execution."
@@ -861,6 +1088,34 @@ metadata:
     architecture-as-code/id: "SYS-MARKETING"
 spec:
   owner: "org-marketing"
+  lifecycle: "proposed"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
+  name: "sys-merch-acq"
+  title: "Merchant acquiring platform"
+  description: "Processor platform for merchant boarding, clearing, settlement, reserves, fees and statements."
+  tags:
+    - "criticality-medium"
+  annotations:
+    architecture-as-code/id: "SYS-MERCH-ACQ"
+spec:
+  owner: "org-merchant"
+  lifecycle: "proposed"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
+  name: "sys-merch-risk"
+  title: "Merchant risk monitoring"
+  description: "Monitors merchant volume, chargeback ratios and exposure, and checks merchants against the networks' terminated-merchant file."
+  tags:
+    - "criticality-medium"
+  annotations:
+    architecture-as-code/id: "SYS-MERCH-RISK"
+spec:
+  owner: "org-merch-risk"
   lifecycle: "proposed"
 ---
 apiVersion: "backstage.io/v1alpha1"
@@ -964,6 +1219,20 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
 metadata:
+  name: "sys-remarket"
+  title: "Repossession and remarketing management"
+  description: "Assigns repossession agents, tracks condition reports and notices, and runs auction and retail remarketing."
+  tags:
+    - "criticality-medium"
+  annotations:
+    architecture-as-code/id: "SYS-REMARKET"
+spec:
+  owner: "org-asset-recovery"
+  lifecycle: "proposed"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
   name: "sys-rewards"
   title: "Rewards ledger"
   description: "Rewards accrual ledger and redemption."
@@ -1001,6 +1270,20 @@ metadata:
     architecture-as-code/id: "SYS-TESTMGMT"
 spec:
   owner: "org-qe"
+  lifecycle: "proposed"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
+  name: "sys-title"
+  title: "Title and lien management"
+  description: "Electronic lien and title tracking across the titling states, title custody, and release on payoff."
+  tags:
+    - "criticality-medium"
+  annotations:
+    architecture-as-code/id: "SYS-TITLE"
+spec:
+  owner: "org-title"
   lifecycle: "proposed"
 ---
 apiVersion: "backstage.io/v1alpha1"
@@ -2888,6 +3171,336 @@ spec:
   lifecycle: "proposed"
   system: "sys-itsm"
   definition: "The configuration management database's view of the estate, imported daily so the architecture repository and the CMDB disagree in a report rather than in a meeting. This model's own `cmdb_ci_sys_id` fields are this interface's product.\n"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-dealer-portal-los"
+  title: "Dealer Portal to Indirect Loan Origination"
+  description: "Applications and contract packages the dealer submits, and the decisions, counteroffers and stipulations sent back while the buyer waits."
+  annotations:
+    architecture-as-code/id: "INT-DEALER-PORTAL-LOS"
+spec:
+  type: "https"
+  owner: "org-dealer-svc"
+  lifecycle: "proposed"
+  system: "sys-dealer-portal"
+  definition: "Applications and contract packages the dealer submits, and the decisions, counteroffers and stipulations sent back while the buyer waits."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-los-bureau-gw"
+  title: "Indirect Loan Origination to Credit Bureau Gateway"
+  description: "The bureau pull inside the dealer decision, against the point-of-sale time budget."
+  annotations:
+    architecture-as-code/id: "INT-LOS-BUREAU-GW"
+spec:
+  type: "https"
+  owner: "org-credit"
+  lifecycle: "proposed"
+  system: "sys-los"
+  definition: "The bureau pull inside the dealer decision, against the point-of-sale time budget."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-los-kyc"
+  title: "Indirect Loan Origination to Identity Verification"
+  description: "Identity verification of the applicant before the dealer application is decided."
+  annotations:
+    architecture-as-code/id: "INT-LOS-KYC"
+spec:
+  type: "https"
+  owner: "org-dealer-svc"
+  lifecycle: "proposed"
+  system: "sys-los"
+  definition: "Identity verification of the applicant before the dealer application is decided."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-los-appfraud"
+  title: "Indirect Loan Origination to Application Fraud Screening"
+  description: "Application fraud and synthetic identity scoring of the dealer application."
+  annotations:
+    architecture-as-code/id: "INT-LOS-APPFRAUD"
+spec:
+  type: "https"
+  owner: "org-fraud"
+  lifecycle: "proposed"
+  system: "sys-los"
+  definition: "Application fraud and synthetic identity scoring of the dealer application."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-los-loan-svc-board"
+  title: "Indirect Loan Origination to Loan Servicing"
+  description: "Funded contracts boarded as loans, with their terms, schedule and collateral, in the nightly window."
+  annotations:
+    architecture-as-code/id: "INT-LOS-LOAN-SVC-BOARD"
+spec:
+  type: "filetransfer"
+  owner: "org-loan-ops"
+  lifecycle: "proposed"
+  system: "sys-los"
+  definition: "Funded contracts boarded as loans, with their terms, schedule and collateral, in the nightly window."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-loan-svc-title"
+  title: "Loan Servicing to Title and Lien Management"
+  description: "Lien filings for new loans and release requests on payoff, exchanged with the outsourced title servicer."
+  annotations:
+    architecture-as-code/id: "INT-LOAN-SVC-TITLE"
+spec:
+  type: "filetransfer"
+  owner: "org-title"
+  lifecycle: "proposed"
+  system: "sys-loan-svc"
+  definition: "Lien filings for new loans and release requests on payoff, exchanged with the outsourced title servicer."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-payment-gw-loan-svc"
+  title: "Payment Capture Gateway to Loan Servicing"
+  description: "Installment loan payments taken by ACH, debit card, check and automatic payment, for posting."
+  annotations:
+    architecture-as-code/id: "INT-PAYMENT-GW-LOAN-SVC"
+spec:
+  type: "filetransfer"
+  owner: "org-payments"
+  lifecycle: "proposed"
+  system: "sys-payment-gw"
+  definition: "Installment loan payments taken by ACH, debit card, check and automatic payment, for posting."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-loan-svc-gl"
+  title: "Loan Servicing to General Ledger"
+  description: "The day's loan fundings, payments, interest, fees, reserve and charge-offs as ledger entries."
+  annotations:
+    architecture-as-code/id: "INT-LOAN-SVC-GL"
+spec:
+  type: "filetransfer"
+  owner: "org-finance"
+  lifecycle: "proposed"
+  system: "sys-loan-svc"
+  definition: "The day's loan fundings, payments, interest, fees, reserve and charge-offs as ledger entries."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-loan-svc-collect"
+  title: "Loan Servicing to Collections Platform"
+  description: "Past-due installment loans handed to collections each night, with promises and arrangements sent back."
+  annotations:
+    architecture-as-code/id: "INT-LOAN-SVC-COLLECT"
+spec:
+  type: "filetransfer"
+  owner: "org-collections"
+  lifecycle: "proposed"
+  system: "sys-loan-svc"
+  definition: "Past-due installment loans handed to collections each night, with promises and arrangements sent back."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-loan-svc-bureau-gw"
+  title: "Loan Servicing to Credit Bureau Gateway"
+  description: "Monthly furnishing of installment loan status and balances to the bureaus."
+  annotations:
+    architecture-as-code/id: "INT-LOAN-SVC-BUREAU-GW"
+spec:
+  type: "filetransfer"
+  owner: "org-collections"
+  lifecycle: "proposed"
+  system: "sys-loan-svc"
+  definition: "Monthly furnishing of installment loan status and balances to the bureaus."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-loan-svc-remarket"
+  title: "Loan Servicing to Repossession and Remarketing"
+  description: "Repossession assignments out; recoveries, condition reports and sale proceeds back."
+  annotations:
+    architecture-as-code/id: "INT-LOAN-SVC-REMARKET"
+spec:
+  type: "filetransfer"
+  owner: "org-asset-recovery"
+  lifecycle: "proposed"
+  system: "sys-loan-svc"
+  definition: "Repossession assignments out; recoveries, condition reports and sale proceeds back."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-merchant-api-acq"
+  title: "Merchant Portal Service to Merchant Acquiring Platform"
+  description: "Merchant applications passed to boarding, and settlements, chargebacks and statements read back for the portal."
+  annotations:
+    architecture-as-code/id: "INT-MERCHANT-API-ACQ"
+spec:
+  type: "https"
+  owner: "org-merchant"
+  lifecycle: "proposed"
+  system: "sys-merchant-api"
+  definition: "Merchant applications passed to boarding, and settlements, chargebacks and statements read back for the portal."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-merch-acq-risk"
+  title: "Merchant Acquiring Platform to Merchant Risk Monitoring"
+  description: "The day's merchant volume, refunds and chargebacks, for exposure monitoring."
+  annotations:
+    architecture-as-code/id: "INT-MERCH-ACQ-RISK"
+spec:
+  type: "filetransfer"
+  owner: "org-merch-risk"
+  lifecycle: "proposed"
+  system: "sys-merch-acq"
+  definition: "The day's merchant volume, refunds and chargebacks, for exposure monitoring."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-merch-risk-screening"
+  title: "Merchant Risk Monitoring to Screening Gateway"
+  description: "Merchants and their owners screened against sanctions before boarding, through the screening product's gateway."
+  annotations:
+    architecture-as-code/id: "INT-MERCH-RISK-SCREENING"
+spec:
+  type: "https"
+  owner: "org-fin-crimes"
+  lifecycle: "proposed"
+  system: "sys-merch-risk"
+  definition: "Merchants and their owners screened against sanctions before boarding, through the screening product's gateway."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-merch-acq-gl"
+  title: "Merchant Acquiring Platform to General Ledger"
+  description: "Merchant settlement, fees, reserves and chargeback losses as ledger entries."
+  annotations:
+    architecture-as-code/id: "INT-MERCH-ACQ-GL"
+spec:
+  type: "filetransfer"
+  owner: "org-finance"
+  lifecycle: "proposed"
+  system: "sys-merch-acq"
+  definition: "Merchant settlement, fees, reserves and chargeback losses as ledger entries."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-merch-acq-recon"
+  title: "Merchant Acquiring Platform to Reconciliation"
+  description: "Network settlement and merchant funding, reconciled to each other every day."
+  annotations:
+    architecture-as-code/id: "INT-MERCH-ACQ-RECON"
+spec:
+  type: "filetransfer"
+  owner: "org-settlement"
+  lifecycle: "proposed"
+  system: "sys-merch-acq"
+  definition: "Network settlement and merchant funding, reconciled to each other every day."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-deposit-kyc"
+  title: "Deposit Platform to Identity Verification"
+  description: "Identity verification of a depositor opening an account directly."
+  annotations:
+    architecture-as-code/id: "INT-DEPOSIT-KYC"
+spec:
+  type: "https"
+  owner: "org-deposits"
+  lifecycle: "proposed"
+  system: "sys-deposit"
+  definition: "Identity verification of a depositor opening an account directly."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-deposit-screening"
+  title: "Deposit Platform to Screening Gateway"
+  description: "Sanctions screening of a new depositor before the account goes live."
+  annotations:
+    architecture-as-code/id: "INT-DEPOSIT-SCREENING"
+spec:
+  type: "https"
+  owner: "org-fin-crimes"
+  lifecycle: "proposed"
+  system: "sys-deposit"
+  definition: "Sanctions screening of a new depositor before the account goes live."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-broker-gw-deposit"
+  title: "Brokered Deposit Gateway to Deposit Platform"
+  description: "Brokered CD allocations and positions as settled through the depository, recorded as the bank's CDs."
+  annotations:
+    architecture-as-code/id: "INT-BROKER-GW-DEPOSIT"
+spec:
+  type: "filetransfer"
+  owner: "org-brokered"
+  lifecycle: "proposed"
+  system: "sys-broker-gw"
+  definition: "Brokered CD allocations and positions as settled through the depository, recorded as the bank's CDs."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-deposit-gl"
+  title: "Deposit Platform to General Ledger"
+  description: "Deposit balances, interest expense, maturities and penalties as ledger entries."
+  annotations:
+    architecture-as-code/id: "INT-DEPOSIT-GL"
+spec:
+  type: "filetransfer"
+  owner: "org-finance"
+  lifecycle: "proposed"
+  system: "sys-deposit"
+  definition: "Deposit balances, interest expense, maturities and penalties as ledger entries."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-deposit-treasury"
+  title: "Deposit Platform to Treasury Management"
+  description: "Deposit balances and the maturity ladder, for the daily funding position."
+  annotations:
+    architecture-as-code/id: "INT-DEPOSIT-TREASURY"
+spec:
+  type: "filetransfer"
+  owner: "org-treasury"
+  lifecycle: "proposed"
+  system: "sys-deposit"
+  definition: "Deposit balances and the maturity ladder, for the daily funding position."
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "int-collect-legal"
+  title: "Collections Platform to Legal Matter Management"
+  description: "Accounts placed for suit with their documents, and filings, judgments and recoveries sent back."
+  annotations:
+    architecture-as-code/id: "INT-COLLECT-LEGAL"
+spec:
+  type: "filetransfer"
+  owner: "org-legal"
+  lifecycle: "proposed"
+  system: "sys-collect-api"
+  definition: "Accounts placed for suit with their documents, and filings, judgments and recoveries sent back."
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "API"

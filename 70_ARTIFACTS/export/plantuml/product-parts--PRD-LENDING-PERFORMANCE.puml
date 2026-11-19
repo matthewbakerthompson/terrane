@@ -10,6 +10,9 @@ AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor=
 AddElementTag("tech_services", $bgColor="#fed7aa", $borderColor="#c2410c", $fontColor="#0f172a", $legendText="technology service")
 AddRelTag("pipeline-load", $legendText="Pipeline load")
 
+Deployment_Node(TS_GCPNET_SUB_ANALYTICS_DATA, "Analytics Data Subnetwork", "Subnet", "The analytics project's one subnetwork, for the Dataflow workers and the Composer environment; BigQuery and Pub/Sub are reached over Private Google Access rather than through it.", $tags="tech_services") {
+  ' aac TS_GCPNET_SUB_ANALYTICS_DATA: company_domain="Data and Analytics"; technology="Subnet"
+}
 Deployment_Node(TS_GCP_BIGQUERY, "BigQuery", "Data warehouse", "Serverless warehouse; one dataset per data product, customer-managed keys, authorized views for the semantic layer.", $tags="tech_services") {
   ' aac TS_GCP_BIGQUERY: company_domain="Enterprise Platform"; technology="Data warehouse"
 }
@@ -22,6 +25,10 @@ Deployment_Node(TS_COLLIBRA, "Collibra", "Data catalog", "Governance catalog and
 Deployment_Node(TS_GCP_DATAFLOW, "Dataflow", "Data pipeline", "Managed batch and streaming jobs, the curation engine of a data product on this side.", $tags="tech_services") {
   ' aac TS_GCP_DATAFLOW: company_domain="Enterprise Platform"; technology="Data pipeline"
 }
+SystemDb(DA_DEALER, "Dealer master and agreement", "Dealer identity, licensing, ownership, program terms, reserve rules and performance history.", $tags="data_assets")
+' aac DA_DEALER: company_domain=""
+SystemDb(DA_LOAN_ACCOUNT, "Installment loan account", "Loan terms, payment schedule, balances, payment history and status for each installment loan.", $tags="data_assets")
+' aac DA_LOAN_ACCOUNT: company_domain=""
 SystemDb(DA_LENDPERF_CURATED, "Lending Portfolio Performance curated dataset", "Curated, governed dataset produced by Lending Portfolio Performance, held in BigQuery.", $tags="data_assets")
 ' aac DA_LENDPERF_CURATED: company_domain="Lending"
 System(SYS_LENDPERF_PIPELINE, "Lending Portfolio Performance Pipeline", "Dataflow jobs on a Composer schedule, ingesting the source events of Lending Portfolio Performance from Pub/Sub and curating them into BigQuery. Built with BigQuery · Dataflow +3.", $tags="systems")
@@ -51,10 +58,16 @@ Rel(SYS_LENDPERF_SEMANTIC, TS_GCP_BIGQUERY, "runs on")
 ' aac rel: source="SYS_LENDPERF_SEMANTIC"; target="TS_GCP_BIGQUERY"; label="runs on"; relation="system_uses_tech_service"
 Rel(SYS_LENDPERF_SEMANTIC, TS_GCP_LOOKER, "runs on")
 ' aac rel: source="SYS_LENDPERF_SEMANTIC"; target="TS_GCP_LOOKER"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_LENDPERF_PIPELINE, TS_GCPNET_SUB_ANALYTICS_DATA, "runs on")
+' aac rel: source="SYS_LENDPERF_PIPELINE"; target="TS_GCPNET_SUB_ANALYTICS_DATA"; label="runs on"; relation="system_uses_tech_service"
 Rel(SYS_LENDPERF_PIPELINE, DA_LENDPERF_CURATED, "Write")
 ' aac rel: source="SYS_LENDPERF_PIPELINE"; target="DA_LENDPERF_CURATED"; label="Write"; relation="system_reads_writes"; operation="Write"
 Rel(SYS_LENDPERF_SEMANTIC, DA_LENDPERF_CURATED, "Read")
 ' aac rel: source="SYS_LENDPERF_SEMANTIC"; target="DA_LENDPERF_CURATED"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_LENDPERF_SEMANTIC, DA_LOAN_ACCOUNT, "Read")
+' aac rel: source="SYS_LENDPERF_SEMANTIC"; target="DA_LOAN_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_LENDPERF_SEMANTIC, DA_DEALER, "Read")
+' aac rel: source="SYS_LENDPERF_SEMANTIC"; target="DA_DEALER"; label="Read"; relation="system_reads_writes"; operation="Read"
 
 SHOW_LEGEND()
 @enduml

@@ -31,7 +31,7 @@ from typing import Callable, Dict, List, NamedTuple, Optional, Sequence, Tuple
 from . import validate
 from .blocks import load_components
 from .draw import Undrawable, drawing_mode, render_sequence_svg, render_svg, render_timeline_svg
-from .draw.dml import slide_shapes
+from .draw.dml import scene_links, slide_shapes
 from .draw.table import pages, render_table_svg
 from .draw.elk import open_runner
 from .draw.raster import NoRasterizer, open_rasterizer
@@ -325,6 +325,7 @@ def _picture_slide(deck: Deck, entry: Entry) -> None:
     slide.text(0.5, 0.9, 12.3, 0.95, " ".join(entry.description.split()), size=10.5, color=INK_2, shrink=True)
     if entry.scene is not None:
         slide.shapes_xml(slide_shapes(entry.scene, PICTURE_BOX, slide.next_id))
+        slide.hyperlinks(scene_links(entry.scene))
     else:
         x, y, w, h = fitted(png_size(entry.png), PICTURE_BOX)
         slide.image(entry.png, x, y, w, h)

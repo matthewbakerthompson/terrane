@@ -35,6 +35,10 @@
   service_category: Integration
   service_name: APIM
   component_type: api-gateway
+  # Its AI gateway is the one every model call on Azure goes through: the
+  # token limits, the content safety and the model routing are policies on
+  # it, so it answers for `ai-gateway` too.
+  answers_for: [ai-gateway]
   tags: [landing-zone]
 
 - tech_service_id: TS-AZURE-KEYVAULT
@@ -205,4 +209,44 @@
   service_category: Network
   service_name: Virtual WAN
   component_type: transit-gateway
+  cloud_account: azure-connectivity-prod
+  region: uksouth
+  network_zone: Shared-Services
+  tags: [landing-zone, network-fabric]
+
+- tech_service_id: TS-AZURE-PRIVATE-DNS
+  name: Azure Private DNS Resolver
+  description: The resolver every virtual network takes its names from, and the forwarding back to the data center.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Network
+  service_name: Private DNS Resolver
+  component_type: dns
+  cloud_account: azure-connectivity-prod
+  region: uksouth
+  network_zone: Shared-Services
+  tags: [landing-zone, network-fabric]
+
+# The object store a product on Azure keeps its files in. Missing until a
+# part that stores documents was assembled on Azure and refused: the object
+# store part asks for the kind by default, which the gap check now reads.
+- tech_service_id: TS-AZURE-BLOB
+  name: Azure Blob Storage
+  description: Object storage for every product's documents and extracts, encrypted with the customer managed key.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Storage
+  service_name: Blob Storage
+  component_type: object-store
+  network_zone: Private-Data
   tags: [landing-zone]

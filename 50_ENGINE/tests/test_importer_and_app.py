@@ -334,6 +334,8 @@ class TestStaticSiteExport(unittest.TestCase):
             export_site.bake_api(out)
 
             overview = json.loads((out / "api" / "overview.json").read_text(encoding="utf-8"))
+            # Names that read alike, which Checks asks for beside the rules.
+            self.assertIn("groups", json.loads((out / "api" / "checks" / "alike.json").read_text(encoding="utf-8")))
             for view in overview["views"]:
                 self.assertTrue(
                     (out / "api" / "graph" / ("%s.json" % view["viewId"])).exists(),

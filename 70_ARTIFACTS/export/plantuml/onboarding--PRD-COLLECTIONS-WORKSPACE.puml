@@ -49,6 +49,10 @@ Boundary(b_On_prem, "On-prem") {
 }
 System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
 ' aac SYS_DOC: company_domain=""
+System(SYS_LOAN_SVC, "Installment loan servicing platform", "System of record for installment loans: boarding, billing, payment posting, payoff quotes, deferrals and ancillary product refunds.", $tags="systems")
+' aac SYS_LOAN_SVC: company_domain=""
+System_Ext(SYS_LEGAL_MATTER, "Legal matter management", "Tracks litigation, outside counsel, filings, judgments and legal placements. Built with SaaS.", $tags="systems")
+' aac SYS_LEGAL_MATTER: company_domain=""; hosting="SaaS"; technology="SaaS"
 System(SYS_DIALER, "Outbound contact platform", "Outbound dialer and contact campaign execution.", $tags="systems")
 ' aac SYS_DIALER: company_domain=""
 
@@ -60,6 +64,10 @@ Rel(SYS_COLLECT_API, SYS_DOC, "Collections Platform to Document Management", "AM
 ' aac rel: source="SYS_COLLECT_API"; target="SYS_DOC"; label="Collections Platform to Document Management"; interface_id="INT-COLLECT-DOC"; kind="event"; integration_style="Event"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="customer-communication-archive"
 Rel(SYS_CORE_LEDGER, SYS_DOC, "Core Card Ledger to Document Management", "FileTransfer", $tags="scheduled-file")
 ' aac rel: source="SYS_CORE_LEDGER"; target="SYS_DOC"; label="Core Card Ledger to Document Management"; interface_id="INT-LEDGER-DOC"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="customer-communication-archive"
+Rel(SYS_LOAN_SVC, SYS_COLLECT_API, "Loan Servicing to Collections Platform", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_LOAN_SVC"; target="SYS_COLLECT_API"; label="Loan Servicing to Collections Platform"; interface_id="INT-LOAN-SVC-COLLECT"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="windowed-batch"
+Rel(SYS_COLLECT_API, SYS_LEGAL_MATTER, "Collections Platform to Legal Matter Management", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_COLLECT_API"; target="SYS_LEGAL_MATTER"; label="Collections Platform to Legal Matter Management"; interface_id="INT-COLLECT-LEGAL"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Weekly"; direction="Outbound"; patterns="windowed-batch"
 Rel(SYS_COLLECT_API, OI_IDENTITY_API, "Collections Service to Identity Service", "HTTPS", $tags="api-call")
 ' aac rel: source="SYS_COLLECT_API"; target="OI_IDENTITY_API"; label="Collections Service to Identity Service"; interface_id="INT-COLLECT-API-IDENTITY"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-IDENTITY-API"
 Rel(SYS_COLLECT_API, OI_LEDGER_QUEUE, "Collections Service to Core Ledger", "MQ", $tags="queued-request")

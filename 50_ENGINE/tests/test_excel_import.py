@@ -15,7 +15,7 @@ from terrane.quick import check_sketch, read_any, render_sketch, sketch_from_inv
 from terrane.render_excel import sketch_sheets, workbook_bytes
 from terrane.schema import ENTITY_TYPES
 
-from _fixture import REPO
+from _fixture import REPO, remove_scratch
 
 XLSX = REPO / "90_EXAMPLE" / "quick" / "sample-inventory.xlsx"
 #: What a page says that the views sheet carries; styling and limits are the defaults either way.
@@ -108,6 +108,7 @@ class TestSketch(unittest.TestCase):
         import tempfile
         from pathlib import Path
         folder = Path(tempfile.mkdtemp(prefix="aac-xlsx-"))
+        self.addCleanup(remove_scratch, folder, "aac-xlsx-")
         target = folder / "inventory.xlsx"
         target.write_bytes(XLSX.read_bytes())
         sketch, notes = sketch_from_inventory_file(target)

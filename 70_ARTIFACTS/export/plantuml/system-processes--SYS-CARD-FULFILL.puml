@@ -12,10 +12,14 @@ AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor=
 Boundary(b_Capability, "Capability") {
   System(CAP_ORIG_07, "Card Production & Fulfillment", "Produce, personalize, and deliver physical and digital cards.", $tags="capabilities")
   ' aac CAP_ORIG_07: company_domain="Originations"
+  System(CAP_SERV_09, "Retention, Product Change & Account Closure", "Keep customers who ask to leave, move accounts between products, and close accounts with balances, rewards and notices settled.", $tags="capabilities")
+  ' aac CAP_SERV_09: company_domain="Servicing"
 }
 Boundary(b_Process, "Process") {
   System(P_ORIG_007, "Manage card production and fulfillment", "Oversee vendor-executed card personalization, production, and delivery, including inventory, service levels, and exception handling.", $tags="processes")
   ' aac P_ORIG_007: company_domain=""
+  System(P_SERVICING_013, "Process product change or upgrade", "Move an account to another card product at the cardholder's request or by invitation, carrying over the balance, history and rewards as the program rules say, and issue the new card and terms. A product change that resets the account's age or loses rewards is a complaint and, if terms worsen without notice, a disclosure failure.", $tags="processes")
+  ' aac P_SERVICING_013: company_domain=""
 }
 Boundary(b_System, "System") {
   System_Ext(SYS_CARD_FULFILL, "Card production and fulfillment", "Card production, personalization, and fulfillment. Built with external.", $tags="systems")
@@ -24,8 +28,12 @@ Boundary(b_System, "System") {
 
 Rel(P_ORIG_007, SYS_CARD_FULFILL, "Primary")
 ' aac rel: source="P_ORIG_007"; target="SYS_CARD_FULFILL"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_SERVICING_013, SYS_CARD_FULFILL, "Supporting")
+' aac rel: source="P_SERVICING_013"; target="SYS_CARD_FULFILL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
 Rel(P_ORIG_007, CAP_ORIG_07, "supports")
 ' aac rel: source="P_ORIG_007"; target="CAP_ORIG_07"; label="supports"; relation="process_supports_capability"
+Rel(P_SERVICING_013, CAP_SERV_09, "supports")
+' aac rel: source="P_SERVICING_013"; target="CAP_SERV_09"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

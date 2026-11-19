@@ -1,0 +1,53 @@
+@startuml
+' Set deposit rates and product terms — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Set deposit rates and product terms — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_DEP_01, "Deposit Product Management", "Define and price CD and savings products: terms, rates, disclosures, and the rate sheet cadence.", $tags="capabilities")
+  ' aac CAP_DEP_01: company_domain="Deposits"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_MKT_REVIEW, "Marketing material compliance review", "No creative or offer reaches market without documented compliance sign-off.", $tags="controls")
+  ' aac CTL_MKT_REVIEW: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_DEPOSIT_ACCOUNT, "Deposit account and CD record", "Depositor identity and ownership category, account terms, rate, interest accrued, maturity and instructions.", $tags="data_assets")
+  ' aac DA_DEPOSIT_ACCOUNT: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_DEPOSITS_001, "Set deposit rates and product terms", "Set the rate sheet for CDs and savings against funding needs and the market, approve term and early withdrawal penalty changes, and publish the disclosures that must match. Rates are the funding cost of every loan the bank makes, and a published rate that differs from the booked one is a disclosure error.", $tags="processes")
+  ' aac P_DEPOSITS_001: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_DEPOSIT, "Deposit platform", "System of record for CDs and savings: opening, interest accrual, maturities, early withdrawal and tax reporting.", $tags="systems")
+  ' aac SYS_DEPOSIT: company_domain=""
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+  System(SYS_TREASURY, "Treasury management", "Treasury, funding, and liquidity management.", $tags="systems")
+  ' aac SYS_TREASURY: company_domain=""
+}
+
+Rel(P_DEPOSITS_001, SYS_DEPOSIT, "Primary")
+' aac rel: source="P_DEPOSITS_001"; target="SYS_DEPOSIT"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_DEPOSITS_001, SYS_TREASURY, "Supporting")
+' aac rel: source="P_DEPOSITS_001"; target="SYS_TREASURY"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DEPOSITS_001, SYS_DOC, "Supporting")
+' aac rel: source="P_DEPOSITS_001"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DEPOSITS_001, DA_DEPOSIT_ACCOUNT, "Read")
+' aac rel: source="P_DEPOSITS_001"; target="DA_DEPOSIT_ACCOUNT"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_DEPOSITS_001, CTL_MKT_REVIEW, "governed by")
+' aac rel: source="P_DEPOSITS_001"; target="CTL_MKT_REVIEW"; label="governed by"; relation="process_governed_by_control"
+Rel(P_DEPOSITS_001, CAP_DEP_01, "supports")
+' aac rel: source="P_DEPOSITS_001"; target="CAP_DEP_01"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

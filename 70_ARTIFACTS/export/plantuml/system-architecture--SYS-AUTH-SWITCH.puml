@@ -13,6 +13,8 @@ AddRelTag("api-call", $legendText="API call")
 AddRelTag("queued-request", $legendText="Request on a queue")
 
 Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_AUTH_LOG, "Authorization log", "Every authorization request and response, with the decision, the reason and whether stand-in answered.", $tags="data_assets")
+  ' aac DA_AUTH_LOG: company_domain=""
   SystemDb(DA_CARD_ACCOUNT, "Card account master", "Account, balance, limit and status records for every card account.", $tags="data_assets")
   ' aac DA_CARD_ACCOUNT: company_domain="Card Issuing"
   SystemDb(DA_TRANSACTION, "Card transaction history", "Authorized, cleared and settled card transactions.", $tags="data_assets")
@@ -87,6 +89,10 @@ Rel(SYS_CORE_LEDGER, DA_PAYMENT_INSTR, "Read")
 ' aac rel: source="SYS_CORE_LEDGER"; target="DA_PAYMENT_INSTR"; label="Read"; relation="system_reads_writes"; operation="Read"
 Rel(SYS_TOKEN, DA_CARD_ACCOUNT, "Read")
 ' aac rel: source="SYS_TOKEN"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_AUTH_SWITCH, DA_AUTH_LOG, "ReadWrite")
+' aac rel: source="SYS_AUTH_SWITCH"; target="DA_AUTH_LOG"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_FRAUD_DETECT, DA_AUTH_LOG, "Read")
+' aac rel: source="SYS_FRAUD_DETECT"; target="DA_AUTH_LOG"; label="Read"; relation="system_reads_writes"; operation="Read"
 Rel(SYS_AUTH_SWITCH, DA_CARD_ACCOUNT, "Read")
 ' aac rel: source="SYS_AUTH_SWITCH"; target="DA_CARD_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
 Rel(SYS_AUTH_SWITCH, DA_TRANSACTION, "ReadWrite")

@@ -13,6 +13,7 @@ flowchart LR
     DA_BUREAU_FILE[("Credit bureau furnishing<br/>file")]
     DA_DISPUTE_CASE[("Dispute case file")]
     DA_LENDING_OPERATIONAL[("Installment Lending<br/>operational data")]
+    DA_LOAN_ACCOUNT[("Installment loan account")]
   end
 
   subgraph grp_System["System"]
@@ -44,15 +45,18 @@ flowchart LR
   SYS_LENDING_API -.->|"runs on"| TS_AWS_PRIVATELINK
   SYS_LENDING_API -.->|"runs on"| TS_NET_SUB_LEND_APP_A
   SYS_LENDING_API -.->|"runs on"| TS_NET_SUB_LEND_APP_B
+  SYS_LENDING_HUB -.->|"runs on"| TS_NET_SUB_LEND_APP_A
+  SYS_LENDING_HUB -.->|"runs on"| TS_NET_SUB_LEND_APP_B
   SYS_LENDING_API -->|"ReadWrite"| DA_LENDING_OPERATIONAL
   SYS_BUREAU_GW -->|"ReadWrite"| DA_BUREAU_FILE
   SYS_BUREAU_GW -->|"Read"| DA_DISPUTE_CASE
   SYS_CREDIT_BUREAU -->|"Read"| DA_BUREAU_FILE
+  SYS_BUREAU_GW -->|"Read"| DA_LOAN_ACCOUNT
 
   classDef s_data_assets__data_assets fill:#a7f3d0,stroke:#047857,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   classDef s_tech_services__tech_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
-  class DA_BUREAU_FILE,DA_DISPUTE_CASE,DA_LENDING_OPERATIONAL s_data_assets__data_assets;
+  class DA_BUREAU_FILE,DA_DISPUTE_CASE,DA_LENDING_OPERATIONAL,DA_LOAN_ACCOUNT s_data_assets__data_assets;
   class SYS_BUREAU_GW,SYS_CREDIT_BUREAU,SYS_LENDING_API,SYS_LENDING_HUB s_systems__systems;
   class TS_AWS_CLOUDWATCH,TS_AWS_EKS,TS_AWS_PRIVATELINK,TS_AWS_SECRETS,TS_LENDING_CACHE,TS_NET_SUB_LEND_APP_A,TS_NET_SUB_LEND_APP_B s_tech_services__tech_services;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
@@ -86,4 +90,4 @@ Each flow is a recorded sequence of interfaces. The steps drawn on this diagram 
 7. Installment Lending Service → Core Card Ledger (MQ) — not on this diagram
 8. Installment Lending Service → Installment Lending Async Worker (Kafka) — not on this diagram
 
-14 entities, 14 relationships. Generated from the model; edit the model, not this file.
+15 entities, 17 relationships. Generated from the model; edit the model, not this file.

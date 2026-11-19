@@ -123,7 +123,7 @@ answers. The library, from the vocabulary up:
 
 | Layer | Folder | What it is |
 |---|---|---|
-| **Component types** (109) | `25_COMPONENTS/` | *A load balancer.* A category, a shape on the drawing, and what each cloud calls it |
+| **Component types** (159) | `25_COMPONENTS/` | *A load balancer.* A category, a shape on the drawing, and what each cloud calls it |
 | **Building blocks** (23) | `26_BLOCKS/` | *A public web tier.* Components that always arrive together |
 | **Patterns** (23) | `27_PATTERNS/` | *Public web entry.* A block plus the decision: what it is for, what it costs, when not to use it, and its status |
 | **Parts** (45) | `28_MODULES/` | *An outbound API gateway. A return feed. SSO federation.* The systems, interfaces, data, people, controls and pattern that arrive together, with parameters. Nine are kits of other parts |
@@ -295,9 +295,10 @@ it.
 
 ## The sample estates
 
-The repository ships with a made-up card issuer: 88 systems, 13 products, 48
-views, four transaction flows, a business layer of 194 capabilities and 149
-processes, and a governance register of 40 controls and 10 policies. Every
+The repository ships with a made-up card issuer and lender: 98 systems, 13
+products, 48 views, four transaction flows, a business layer of 230
+capabilities and 210 processes, and a governance register of 53 controls and
+12 policies. Every
 product is on one of the library's nine shapes or assembled from its parts
 ([90_EXAMPLE](90_EXAMPLE/README.md)).
 
@@ -374,9 +375,11 @@ here.
 ## Tests
 
 ```bash
-cd 50_ENGINE && python -m unittest discover -s tests
+cd 50_ENGINE && python tools/run_tests.py
 ```
 
+That runs each test file in a process of its own across the machine's cores;
+`python -m unittest discover -s tests` runs the same tests one after another.
 The suite includes a parity test that parses every YAML file in the repository
 with both PyYAML and the bundled reader and requires identical results,
 regression tests on every path that deletes a file, and guards on the library:

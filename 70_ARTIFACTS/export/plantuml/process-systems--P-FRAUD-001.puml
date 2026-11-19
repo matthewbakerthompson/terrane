@@ -12,6 +12,8 @@ AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColo
 AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
 
 Boundary(b_Capability, "Capability") {
+  System(CAP_PAY_01_02, "Authorization Fraud Screening", "Real-time fraud scoring inside the authorization decision.", $tags="capabilities")
+  ' aac CAP_PAY_01_02: company_domain="Servicing"
   System(CAP_FRAUD_01, "Transaction Fraud Detection & Strategy", "Detect fraudulent transactions in flight and set detection strategy.", $tags="capabilities")
   ' aac CAP_FRAUD_01: company_domain="Servicing"
 }
@@ -60,6 +62,8 @@ Rel(P_FRAUD_001, CTL_FRAUD_SLA, "governed by")
 ' aac rel: source="P_FRAUD_001"; target="CTL_FRAUD_SLA"; label="governed by"; relation="process_governed_by_control"
 Rel(P_FRAUD_001, CAP_FRAUD_01, "supports")
 ' aac rel: source="P_FRAUD_001"; target="CAP_FRAUD_01"; label="supports"; relation="process_supports_capability"
+Rel(P_FRAUD_001, CAP_PAY_01_02, "supports")
+' aac rel: source="P_FRAUD_001"; target="CAP_PAY_01_02"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

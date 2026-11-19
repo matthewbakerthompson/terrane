@@ -23,7 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import terrane  # noqa: E402
 from terrane import cli  # noqa: E402
 from terrane.quick import EXAMPLE, Drawing, Drawings, QuickError  # noqa: E402
-from _fixture import REPO, Sandbox  # noqa: E402
+from _fixture import REPO, Sandbox, remove_scratch  # noqa: E402
 
 
 def _ids(svg: str, cls: str):
@@ -73,6 +73,7 @@ class TestDraw(unittest.TestCase):
 
     def test_the_door_and_the_command_agree(self) -> None:
         out = Path(tempfile.mkdtemp(prefix="aac-api-"))
+        self.addCleanup(remove_scratch, out, "aac-api-")
         with redirect_stdout(io.StringIO()):
             code = cli.main(["draw", str(EXAMPLE), "--out", str(out)])
         self.assertEqual(code, 0)
@@ -83,6 +84,7 @@ class TestDraw(unittest.TestCase):
 
     def test_saving(self) -> None:
         folder = Path(tempfile.mkdtemp(prefix="aac-api-"))
+        self.addCleanup(remove_scratch, folder, "aac-api-")
         pictures = terrane.diagrams(SKETCH, mermaid=True)
         picture = pictures["application-landscape"]
         self.assertIsNotNone(picture.mermaid)

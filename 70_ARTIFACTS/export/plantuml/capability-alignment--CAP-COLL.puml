@@ -36,6 +36,8 @@ Boundary(b_Control, "Control") {
   ' aac CTL_BUREAU_ACC: company_domain=""
   System(CTL_CHARGEOFF_TIME, "Charge-off timing to policy", "Charge-off executes at the policy timing aligned to regulatory guidance, with exceptions approved and documented.", $tags="controls")
   ' aac CTL_CHARGEOFF_TIME: company_domain=""
+  System(CTL_CLIENT_SLA, "Client reporting and feed monitoring", "Contracted client reporting and data feeds are monitored to schedule and specification; misses alert before the client notices and count against the SLA.", $tags="controls")
+  ' aac CTL_CLIENT_SLA: company_domain=""
   System(CTL_CONTACT_LIM, "Collections contact limits", "Outbound contact respects time-of-day, frequency, and channel-consent constraints; blocked numbers and cease requests are honored.", $tags="controls")
   ' aac CTL_CONTACT_LIM: company_domain=""
   System(CTL_METRO2_RECON, "Furnishing and bucketing reconciliation", "Delinquency bucketing and bureau furnishing reconcile to the system of record each cycle; unexplained movement blocks the file.", $tags="controls")
@@ -52,6 +54,10 @@ Boundary(b_Framework, "Framework") {
 Boundary(b_Process, "Process") {
   System(P_COLLECTIONS_001, "Assign delinquency treatment strategy", "Segment delinquent accounts and assign the contact and treatment strategy. Runs nightly after delinquency bucketing; the strategy drives queue, channel, intensity, and hardship routing, and a wrong assignment is a conduct risk as much as a loss risk.", $tags="processes")
   ' aac P_COLLECTIONS_001: company_domain=""
+  System(P_LENDING_011, "Collect delinquent installment loan", "Work past-due installment loans through calls, letters and digital contact, take promises and arrangements, and decide when a loan goes to repossession. Recreation loans are secured and seasonal, so treatment weighs the collateral and the season as well as the days past due; the contact limits that apply to cards apply here too.", $tags="processes")
+  ' aac P_LENDING_011: company_domain=""
+  System(P_COLLECTIONS_010, "Collect serviced client portfolio to client strategy", "Work delinquent accounts on a client's portfolio to the client's own treatment strategy, scripts and settlement authority, in the client's name, and report results back under the servicing agreement. Collecting another lender's accounts brings third-party collector rules into play, so contact and notice rules can differ from those on the bank's own portfolio.", $tags="processes")
+  ' aac P_COLLECTIONS_010: company_domain=""
   System(P_DELQ_001, "Detect and bucket delinquent account", "Identify accounts that have missed a payment and assign them to the correct delinquency bucket. Bucketing runs in the nightly cycle and is the trigger for every downstream collections treatment; a bucketing error propagates into contact, reporting, and accounting.", $tags="processes")
   ' aac P_DELQ_001: company_domain=""
   System(P_COLLECTIONS_004, "Execute charge-off", "Execute charge-off on policy timing and record the accounting effect. Timing follows the charge-off policy aligned to regulatory guidance; the entry moves the balance to charged-off status and hands the account to recovery placement.", $tags="processes")
@@ -70,12 +76,18 @@ Boundary(b_Process, "Process") {
   ' aac P_RECOVERY_004: company_domain=""
   System(P_COLLECTIONS_007, "Issue debt validation notice", "Generate and deliver the required validation notice within the prescribed period. The validation notice is a statutory precondition to continued collection on affected accounts; timing and content mistakes surface directly as regulatory findings.", $tags="processes")
   ' aac P_COLLECTIONS_007: company_domain=""
+  System(P_COLLECTIONS_009, "Locate unreachable borrower", "When contact details fail, search consumer reporting and public data for new phone numbers and addresses, verify them, and return the account to treatment. Location data is consumer report information used under a permissible purpose, and a wrong-party contact discloses the debt to someone else.", $tags="processes")
+  ' aac P_COLLECTIONS_009: company_domain=""
   System(P_COLLECTIONS_003, "Negotiate and administer payment arrangement", "Agree, document, and administer a payment arrangement or settlement. Covers promises to pay, long-term arrangements, and settlements; terms must fit the approved matrix, and the arrangement drives bucket movement and interest treatment downstream.", $tags="processes")
   ' aac P_COLLECTIONS_003: company_domain=""
+  System(P_COLLECTIONS_008, "Negotiate settlement offer", "Offer a reduced lump-sum or short-term settlement within the approved matrix, put the terms in writing before payment, and on completion close the account and update the bureaus as settled. A settlement outside the matrix, or without written terms, is the account a regulator samples first.", $tags="processes")
+  ' aac P_COLLECTIONS_008: company_domain=""
   System(P_RECOVERY_001, "Place account with collection agency", "Select, place, and monitor charged-off accounts with an external collection agency. Agency placement follows the approved network with performance and conduct oversight; the agency acts in the bank's name, so its conduct is the bank's risk.", $tags="processes")
   ' aac P_RECOVERY_001: company_domain=""
   System(P_RECOVERY_005, "Post recovery and account for proceeds", "Post recoveries and account for proceeds from agency, legal, and sale channels. Proceeds post against charged-off balances with channel attribution; recoveries feed the loss forecast, so mis-posting distorts the allowance.", $tags="processes")
   ' aac P_RECOVERY_005: company_domain=""
+  System(P_RECOVERY_006, "Refer account to legal and manage litigation", "Choose accounts for suit under the legal placement strategy, place them with outside counsel, track filings, judgments and garnishments, and post the recoveries. Every account sued needs the documents to prove the debt, and a suit on a time-barred or disputed account is a conduct finding.", $tags="processes")
+  ' aac P_RECOVERY_006: company_domain=""
 }
 Boundary(b_System, "System") {
   System(SYS_COLLECT_API, "Collections Workspace Service", "The service behind the Collections Workspace API, backing the channel. Built with AKS · Collections Workspace Cache.", $tags="systems")
@@ -88,6 +100,8 @@ Boundary(b_System, "System") {
   ' aac SYS_BUREAU_GW: company_domain=""
   System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
   ' aac SYS_DOC: company_domain=""
+  System_Ext(SYS_LEGAL_MATTER, "Legal matter management", "Tracks litigation, outside counsel, filings, judgments and legal placements. Built with SaaS.", $tags="systems")
+  ' aac SYS_LEGAL_MATTER: company_domain=""; hosting="SaaS"; technology="SaaS"
   System(SYS_DIALER, "Outbound contact platform", "Outbound dialer and contact campaign execution.", $tags="systems")
   ' aac SYS_DIALER: company_domain=""
 }
@@ -146,10 +160,22 @@ Rel(P_RECOVERY_004, CAP_COLL_06, "supported by")
 ' aac rel: source="P_RECOVERY_004"; target="CAP_COLL_06"; label="supported by"; relation="process_supports_capability"
 Rel(P_RECOVERY_005, CAP_COLL_05, "supported by")
 ' aac rel: source="P_RECOVERY_005"; target="CAP_COLL_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_008, CAP_COLL_03, "supported by")
+' aac rel: source="P_COLLECTIONS_008"; target="CAP_COLL_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_009, CAP_COLL_02, "supported by")
+' aac rel: source="P_COLLECTIONS_009"; target="CAP_COLL_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_010, CAP_COLL_02, "supported by")
+' aac rel: source="P_COLLECTIONS_010"; target="CAP_COLL_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_RECOVERY_006, CAP_COLL_06, "supported by")
+' aac rel: source="P_RECOVERY_006"; target="CAP_COLL_06"; label="supported by"; relation="process_supports_capability"
+Rel(P_LENDING_011, CAP_COLL_02, "supported by")
+' aac rel: source="P_LENDING_011"; target="CAP_COLL_02"; label="supported by"; relation="process_supports_capability"
 Rel(CAP_COLL, CTL_BUREAU_ACC, "governed by")
 ' aac rel: source="CAP_COLL"; target="CTL_BUREAU_ACC"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
 Rel(CAP_COLL, CTL_CHARGEOFF_TIME, "governed by")
 ' aac rel: source="CAP_COLL"; target="CTL_CHARGEOFF_TIME"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_COLL, CTL_CLIENT_SLA, "governed by")
+' aac rel: source="CAP_COLL"; target="CTL_CLIENT_SLA"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
 Rel(CAP_COLL, CTL_CONTACT_LIM, "governed by")
 ' aac rel: source="CAP_COLL"; target="CTL_CONTACT_LIM"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
 Rel(CAP_COLL, CTL_FDCPA_NOTICE, "governed by")
@@ -162,8 +188,14 @@ Rel(CAP_COLL_01, CTL_METRO2_RECON, "governed by")
 ' aac rel: source="CAP_COLL_01"; target="CTL_METRO2_RECON"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
 Rel(CAP_COLL_01, CTL_TREATMENT_APPR, "governed by")
 ' aac rel: source="CAP_COLL_01"; target="CTL_TREATMENT_APPR"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_COLL_02, CTL_CLIENT_SLA, "governed by")
+' aac rel: source="CAP_COLL_02"; target="CTL_CLIENT_SLA"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
 Rel(CAP_COLL_02, CTL_CONTACT_LIM, "governed by")
 ' aac rel: source="CAP_COLL_02"; target="CTL_CONTACT_LIM"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_COLL_02, CTL_FDCPA_NOTICE, "governed by")
+' aac rel: source="CAP_COLL_02"; target="CTL_FDCPA_NOTICE"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_COLL_03, CTL_TREATMENT_APPR, "governed by")
+' aac rel: source="CAP_COLL_03"; target="CTL_TREATMENT_APPR"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
 Rel(CAP_COLL_04, CTL_CHARGEOFF_TIME, "governed by")
 ' aac rel: source="CAP_COLL_04"; target="CTL_CHARGEOFF_TIME"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
 Rel(CAP_COLL_06, CTL_FDCPA_NOTICE, "governed by")
@@ -184,6 +216,8 @@ Rel(SYS_BUREAU_GW, CAP_COLL_08, "realizes")
 ' aac rel: source="SYS_BUREAU_GW"; target="CAP_COLL_08"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_COLLECT_API, CAP_COLL_01, "realizes")
 ' aac rel: source="SYS_COLLECT_API"; target="CAP_COLL_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_COLLECT_API, CAP_COLL_02, "realizes")
+' aac rel: source="SYS_COLLECT_API"; target="CAP_COLL_02"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_COLLECT_API, CAP_COLL_03, "realizes")
 ' aac rel: source="SYS_COLLECT_API"; target="CAP_COLL_03"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_COLLECT_API, CAP_COLL_05, "realizes")
@@ -200,6 +234,8 @@ Rel(SYS_DIALER, CAP_COLL_07, "realizes")
 ' aac rel: source="SYS_DIALER"; target="CAP_COLL_07"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_DOC, CAP_COLL_07, "realizes")
 ' aac rel: source="SYS_DOC"; target="CAP_COLL_07"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_LEGAL_MATTER, CAP_COLL_06, "realizes")
+' aac rel: source="SYS_LEGAL_MATTER"; target="CAP_COLL_06"; label="realizes"; relation="system_realizes_capability"
 
 SHOW_LEGEND()
 @enduml

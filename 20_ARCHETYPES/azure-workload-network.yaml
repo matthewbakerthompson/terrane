@@ -1,0 +1,73 @@
+archetype_id: azure-workload-network
+title: Azure workload network
+version: 1.0.0
+applies_to: tech_services
+description: >
+  An account's network on Azure, made once and landed on by every product
+  in the account. The instance is the virtual network itself, a technology service in
+  the account; what it makes is the subnets for each tier, which span the region's zones, the NAT
+  gateways, its attachment to the landing zone's transit hub and its link
+  to the landing zone's resolver. Products do not make networks: their
+  systems are placed in these subnets by account and network zone.
+
+parameters:
+  - name: slug
+    required: true
+    description: Short token for the network's ids, e.g. az-cards
+  - name: network_name
+    required: true
+    description: What the network is called before its parts' names, e.g. Cards
+  - name: account
+    required: true
+    description: The subscription the network belongs to, e.g. azure-cards-prod
+  - name: region
+    default: uksouth
+  - name: platform_org
+    estate: true
+    description: The org unit that runs the estate's network
+  # The standard layout, three tiers, each spanning the region's zones: a network made with
+  # nothing said about its subnets has these, and one that needs fewer or
+  # more says so.
+  - name: subnets
+    description: The subnets, as `workload-network` asks for them
+    default:
+      - {id: PUB, name: Public Subnet, zone: Public, az: zone-redundant}
+      - {id: APP, name: App Subnet, zone: Private-App, az: zone-redundant}
+      - {id: DATA, name: Data Subnet, zone: Private-Data, az: zone-redundant}
+  - name: nat_gateways
+    default:
+      - {id: NAT, name: NAT Gateway, az: zone-redundant}
+
+# The instance: the virtual network itself, in the account it was made for.
+defaults:
+  component_type: vpc
+  cloud_account: "{account}"
+  region: "{region}"
+  owner_org_id: "{platform_org}"
+  service_name: Virtual Network
+  network_zone: Private-App
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Network
+  togaf_layer: Technology
+  architecture_domain: Technology
+  tags: [network-fabric]
+
+provider: Azure
+
+entity_defaults:
+  all:
+    status: "{status}"
+  tech_services:
+    tags: [network-fabric]
+    owner_org_id: "{platform_org}"
+    provider: Microsoft Azure
+    cloud_provider: Azure
+    cloud_account: "{account}"
+    region: "{region}"
+    service_category: Network
+    togaf_layer: Technology
+    architecture_domain: Technology
+
+modules:
+  - module: workload-network

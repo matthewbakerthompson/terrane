@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="762.13" viewBox="0 0 1100 762.13" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Authorization log — Where It Lives and Who Uses It</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Authorization log — Where It Lives and Who Uses It</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   6 nodes · 6 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One data asset in full: the system that masters it, the systems that read or write it, the processes that use it, the controls that govern it and the policies it is subject</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">to. The page a privacy or audit question starts from.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(241.53 99.08)">
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="399.9" y="202.7" width="206.6" height="124.6" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="441.9" y="220.1" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="20.11" y="24.42" width="211.78" height="295.13" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="52.96" y="41.83" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="10.45" y="348.45" width="221.1" height="175.1" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="40.25" y="365.85" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::SYS-AUTH-SWITCH::DA-AUTH-LOG">
+<title>masters</title>
+<path d="M206 391.33 L234.94 391 A10 10 0 0 1 235.06 391 L312.1 391 L351.2 391 A10 10 0 0 0 361.2 381 L361.2 280.04 A10 10 0 0 1 371.24 270.04 L397.18 270.14 A10 10 0 0 0 397.22 270.14 L422.68 270.14" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M426.2 270.14 L416.63 274.93 L416.63 265.36 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e1::SYS-AUTH-SWITCH::DA-AUTH-LOG">
+<title>ReadWrite</title>
+<path d="M206 408.67 L234.94 409 A10 10 0 0 0 235.06 409 L361.2 409 A10 10 0 0 0 371.2 399 L371.2 290.17 A10 10 0 0 1 381.36 280.17 L397.12 280.43 A10 10 0 0 0 397.28 280.43 L422.68 280.43" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M426.2 280.43 L416.63 285.21 L416.63 275.64 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::SYS-AUTH-SWITCH::DA-AUTH-LOG">
+<rect x="284.71" y="415.5" width="54.78" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="427.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">ReadWrite</text>
+</g>
+<g class="edge" data-id="e2::SYS-FRAUD-DETECT::DA-AUTH-LOG">
+<title>Read</title>
+<path d="M206 472 L235 472 L371.2 472 A10 10 0 0 0 381.2 462 L381.2 299 A8.15 8.15 0 0 1 389.2 290.86 L397.11 290.72 A10 10 0 0 1 397.29 290.71 L422.68 290.71" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M426.2 290.71 L416.63 295.5 L416.63 285.93 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::SYS-FRAUD-DETECT::DA-AUTH-LOG">
+<rect x="297.06" y="478.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="490.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e3::P-PAYMENTS-006::DA-AUTH-LOG">
+<title>Both</title>
+<path d="M206 260 L235 260 A10 10 0 0 0 235 260 L397.2 259.86 A10 10 0 0 1 397.2 259.86 L422.68 259.86" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M426.2 259.86 L416.63 264.64 L416.63 255.07 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::P-PAYMENTS-006::DA-AUTH-LOG">
+<rect x="297.95" y="266.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="278.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e4::P-PAYMENTS-007::DA-AUTH-LOG">
+<title>Read</title>
+<path d="M206 84 L235 84 L361.2 84 A10 10 0 0 1 371.2 94 L371.2 229.11 A10 10 0 0 0 381.09 239.11 L397.15 239.29 A10 10 0 0 0 397.25 239.29 L422.68 239.29" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M426.2 239.29 L416.63 244.07 L416.63 234.5 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::P-PAYMENTS-007::DA-AUTH-LOG">
+<rect x="297.06" y="90.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="102.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e5::P-COMPLIANCE-008::DA-AUTH-LOG">
+<title>Read</title>
+<path d="M206 172 L235 172 L351.2 172 A10 10 0 0 1 361.2 182 L361.2 239.88 A10 10 0 0 0 371.32 249.88 L397.14 249.57 A10 10 0 0 1 397.26 249.57 L422.68 249.57" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M426.2 249.57 L416.63 254.36 L416.63 244.79 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e5::P-COMPLIANCE-008::DA-AUTH-LOG">
+<rect x="297.06" y="178.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="190.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="node" data-id="DA-AUTH-LOG" data-type="data_assets">
+<title>Authorization log</title>
+<path d="M426.2 232.6 Q433.9 229 464.7 229 L541.7 229 Q572.5 229 580.2 232.6 L580.2 297.4 Q572.5 301 541.7 301 L464.7 301 Q433.9 301 426.2 297.4 Z" fill="#70c9a7" stroke="#047857" stroke-width="2.6"/>
+<text x="499.2" y="269.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Authorization log</text>
+<svg x="562.2" y="234" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-COMPLIANCE-008" data-type="processes">
+<title>Screen transactions and parties against sanctions in line</title>
+<path d="M126 138 L46 163.97 L76.56 206 L175.44 206 L206 163.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="126" y="164.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Screen transactions</text>
+<text x="126" y="176.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and parties against</text>
+<text x="126" y="188.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">sanctions in line</text>
+</g>
+<g class="node" data-id="P-PAYMENTS-006" data-type="processes">
+<title>Operate stand-in authorization during a host outage</title>
+<path d="M126 226 L46 251.97 L76.56 294 L175.44 294 L206 251.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="126" y="252.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Operate stand-in</text>
+<text x="126" y="264.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">authorization during a</text>
+<text x="126" y="276.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">host outage</text>
+</g>
+<g class="node" data-id="P-PAYMENTS-007" data-type="processes">
+<title>Maintain authorization routing and network connectivity</title>
+<path d="M126 50 L46 75.97 L76.56 118 L175.44 118 L206 75.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="126" y="76.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Maintain authorization</text>
+<text x="126" y="88.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">routing and network</text>
+<text x="126" y="100.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">connectivity</text>
+</g>
+<g class="node" data-id="SYS-AUTH-SWITCH" data-type="systems">
+<title>Authorization Switch</title>
+<rect x="36" y="374" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="117" y="404.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Authorization Switch</text>
+<svg x="188" y="379" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-FRAUD-DETECT" data-type="systems">
+<title>Transaction fraud detection</title>
+<rect x="36" y="446" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="117" y="470.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Transaction fraud</text>
+<text x="117" y="482.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">detection</text>
+<svg x="188" y="451" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="638.13" x2="1072" y2="638.13" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="662.13" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 651.13)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="93.2" y="662.13" font-size="12" font-weight="400" fill="#343d50">data asset · 1</text>
+<g transform="translate(181.3 651.13)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="207.3" y="662.13" font-size="12" font-weight="400" fill="#343d50">process · 3</text>
+<g transform="translate(284.32 651.13)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="310.32" y="662.13" font-size="12" font-weight="400" fill="#343d50">system · 2</text>
+<text x="28" y="684.13" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">CLASSIFICATION</text>
+<g transform="translate(130.2 673.13)" fill="#70c9a7" stroke="#047857" stroke-width="2.6"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="156.2" y="684.13" font-size="12" font-weight="400" fill="#343d50">Restricted · 1</text>
+<g transform="translate(243.85 673.13)" fill="#a7f3d0" stroke="#047857" stroke-width="1.1"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="269.85" y="684.13" font-size="12" font-weight="400" fill="#343d50">not recorded · 5</text>
+<text x="28" y="706.13" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 695.13)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="706.13" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<g transform="translate(143.25 695.13)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="169.25" y="706.13" font-size="12" font-weight="400" fill="#343d50">masters</text>
+<g transform="translate(231.51 695.13)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="257.51" y="706.13" font-size="12" font-weight="400" fill="#343d50">reads / writes</text>
+<text x="28" y="740.13" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · data-asset-context--da-auth-log · edit the model, not the picture</text></g>
+</svg>

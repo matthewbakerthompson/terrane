@@ -29,12 +29,16 @@ flowchart LR
   end
 
   SYS_DOC["Document management and<br/>archive"]
+  SYS_LOAN_SVC["Installment loan servicing<br/>platform"]
+  SYS_LEGAL_MATTER["Legal matter management<br/>[SaaS]"]
   SYS_DIALER["Outbound contact platform"]
 
   SYS_COLLECT_API -->|"FileTransfer"| SYS_DIALER
   SYS_DIALER -->|"AMQP"| SYS_COLLECT_API
   SYS_COLLECT_API -->|"AMQP"| SYS_DOC
   SYS_CORE_LEDGER -->|"FileTransfer"| SYS_DOC
+  SYS_LOAN_SVC -->|"FileTransfer"| SYS_COLLECT_API
+  SYS_COLLECT_API -->|"FileTransfer"| SYS_LEGAL_MATTER
   SYS_COLLECT_API --> OI_IDENTITY_API
   SYS_COLLECT_API --> OI_LEDGER_QUEUE
   SYS_COLLECT_WEB --> OI_COLLECT_API
@@ -50,7 +54,7 @@ flowchart LR
   class OI_IDENTITY_API,OI_LEDGER_QUEUE s_offered_interfaces__high;
   class OI_COLLECT_API s_offered_interfaces__medium;
   class SYS_CORE_LEDGER,SYS_IDENTITY_SVC s_systems__high;
-  class SYS_COLLECT_API,SYS_COLLECT_STORE,SYS_COLLECT_WEB,SYS_DIALER,SYS_DOC s_systems__medium;
+  class SYS_COLLECT_API,SYS_COLLECT_STORE,SYS_COLLECT_WEB,SYS_DIALER,SYS_DOC,SYS_LEGAL_MATTER,SYS_LOAN_SVC s_systems__medium;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Card_Issuing,grp_Collections,grp_Enterprise_Platform boundary1;
 ```
@@ -73,4 +77,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | 2.6px | High |
 | 1.4px | Medium |
 
-10 entities, 11 relationships. Generated from the model; edit the model, not this file.
+12 entities, 13 relationships. Generated from the model; edit the model, not this file.

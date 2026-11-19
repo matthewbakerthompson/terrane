@@ -1,0 +1,50 @@
+@startuml
+' Accrue and pay deposit interest — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Accrue and pay deposit interest — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_DEP_04, "Deposit Servicing, Interest & Maturities", "Accrue and pay interest, process maturities and renewals, and handle early withdrawal within terms.", $tags="capabilities")
+  ' aac CAP_DEP_04: company_domain="Deposits"
+  System(CAP_DEP_04_01, "Interest Accrual & Tax Reporting", "Accrue and pay interest, and produce year-end tax reporting.", $tags="capabilities")
+  ' aac CAP_DEP_04_01: company_domain="Deposits"
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_DEPOSIT_ACCOUNT, "Deposit account and CD record", "Depositor identity and ownership category, account terms, rate, interest accrued, maturity and instructions.", $tags="data_assets")
+  ' aac DA_DEPOSIT_ACCOUNT: company_domain=""
+  SystemDb(DA_GL, "General ledger entries", "Posted financial entries, settlement and reconciliation balances.", $tags="data_assets")
+  ' aac DA_GL: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_DEPOSITS_005, "Accrue and pay deposit interest", "Accrue interest daily on every CD and savings account at its contract rate, credit or pay it on schedule, and post the expense to the ledger. An accrual error repeats across every account on the same rate, so the daily accrual is reconciled to the ledger before close.", $tags="processes")
+  ' aac P_DEPOSITS_005: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_DEPOSIT, "Deposit platform", "System of record for CDs and savings: opening, interest accrual, maturities, early withdrawal and tax reporting.", $tags="systems")
+  ' aac SYS_DEPOSIT: company_domain=""
+  System(SYS_GL, "General ledger", "General ledger and financial accounting.", $tags="systems")
+  ' aac SYS_GL: company_domain=""
+}
+
+Rel(P_DEPOSITS_005, SYS_DEPOSIT, "Primary")
+' aac rel: source="P_DEPOSITS_005"; target="SYS_DEPOSIT"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_DEPOSITS_005, SYS_GL, "Supporting")
+' aac rel: source="P_DEPOSITS_005"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DEPOSITS_005, DA_DEPOSIT_ACCOUNT, "Both")
+' aac rel: source="P_DEPOSITS_005"; target="DA_DEPOSIT_ACCOUNT"; label="Both"; relation="process_uses_data_asset"; access="Both"
+Rel(P_DEPOSITS_005, DA_GL, "Write")
+' aac rel: source="P_DEPOSITS_005"; target="DA_GL"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_DEPOSITS_005, CAP_DEP_04_01, "supports")
+' aac rel: source="P_DEPOSITS_005"; target="CAP_DEP_04_01"; label="supports"; relation="process_supports_capability"
+Rel(P_DEPOSITS_005, CAP_DEP_04, "supports")
+' aac rel: source="P_DEPOSITS_005"; target="CAP_DEP_04"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

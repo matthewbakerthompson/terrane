@@ -31,7 +31,11 @@ Boundary(b_Azure, "Azure") {
     }
   }
 }
+System_Ext(SYS_MERCH_ACQ, "Merchant acquiring platform", "Processor platform for merchant boarding, clearing, settlement, reserves, fees and statements. Built with external.", $tags="systems")
+' aac SYS_MERCH_ACQ: company_domain=""; hosting="External"; technology="external"
 
+Rel(SYS_MERCHANT_API, SYS_MERCH_ACQ, "Merchant Portal Service to Merchant Acquiring Platform", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_MERCHANT_API"; target="SYS_MERCH_ACQ"; label="Merchant Portal Service to Merchant Acquiring Platform"; interface_id="INT-MERCHANT-API-ACQ"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="api-front-door"
 Rel(SYS_MERCHANT_WEB, OI_MERCHANT_API, "Merchant Portal Web to API", "HTTPS", $tags="api-call")
 ' aac rel: source="SYS_MERCHANT_WEB"; target="OI_MERCHANT_API"; label="Merchant Portal Web to API"; interface_id="INT-MERCHANT-WEB-API"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-MERCHANT-API"
 Rel(SYS_MERCHANT_API, SYS_MERCHANT_STORE, "Merchant Portal Service to Database", "TDS", $tags="own-datastore")

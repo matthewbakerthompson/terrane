@@ -23,7 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from terrane import cli  # noqa: E402
 from terrane.quick import EXAMPLE, QuickError, draw_sketch, fill_defaults, read_sketch  # noqa: E402
 
-from _fixture import REPO  # noqa: E402
+from _fixture import REPO, remove_scratch  # noqa: E402
 
 
 def _ids(svg: str, cls: str):
@@ -34,6 +34,7 @@ def _ids(svg: str, cls: str):
 class TestExample(unittest.TestCase):
     def test_the_example_draws_its_views_and_its_flow(self) -> None:
         out = Path(tempfile.mkdtemp(prefix="aac-quick-"))
+        self.addCleanup(remove_scratch, out, "aac-quick-")
         written, notes = draw_sketch(EXAMPLE, out, mermaid=True)
         names = sorted(p.name for p in written)
         self.assertIn("payments--system-context.svg", names)
@@ -49,7 +50,10 @@ class TestExample(unittest.TestCase):
         self.assertTrue({"ACT-CARDHOLDER", "ACT-MERCHANT"} <= _ids(context, "node"))
 
     def test_same_bytes_twice(self) -> None:
-        a, b = Path(tempfile.mkdtemp(prefix="aac-quick-")), Path(tempfile.mkdtemp(prefix="aac-quick-"))
+        a = Path(tempfile.mkdtemp(prefix="aac-quick-"))
+        self.addCleanup(remove_scratch, a, "aac-quick-")
+        b = Path(tempfile.mkdtemp(prefix="aac-quick-"))
+        self.addCleanup(remove_scratch, b, "aac-quick-")
         draw_sketch(EXAMPLE, a)
         draw_sketch(EXAMPLE, b)
         for path in sorted(a.glob("*.svg")):
@@ -57,6 +61,7 @@ class TestExample(unittest.TestCase):
 
     def test_the_command_prints_what_it_drew_and_the_example(self) -> None:
         out = Path(tempfile.mkdtemp(prefix="aac-quick-"))
+        self.addCleanup(remove_scratch, out, "aac-quick-")
         text = io.StringIO()
         with redirect_stdout(text):
             code = cli.main(["draw", str(EXAMPLE), "--out", str(out)])
@@ -88,6 +93,7 @@ class TestPresets(unittest.TestCase):
 
     def test_a_product_on_a_shipped_shape(self) -> None:
         out = Path(tempfile.mkdtemp(prefix="aac-quick-"))
+        self.addCleanup(remove_scratch, out, "aac-quick-")
         written, notes = draw_sketch(EXAMPLE.parent / "on-a-shape.yaml", out)
         self.assertEqual(sorted(p.name for p in written),
                          ["on-a-shape--onboarding--PRD-REWARDS.svg", "on-a-shape--product-architecture--PRD-REWARDS.svg",
@@ -111,6 +117,7 @@ class TestPresets(unittest.TestCase):
 
     def test_a_product_from_parts(self) -> None:
         out = Path(tempfile.mkdtemp(prefix="aac-quick-"))
+        self.addCleanup(remove_scratch, out, "aac-quick-")
         written, notes = draw_sketch(EXAMPLE.parent / "from-parts.yaml", out)
         self.assertEqual(sorted(p.name for p in written),
                          ["from-parts--product-architecture--PRD-PORTAL.svg", "from-parts--product-parts--PRD-PORTAL.svg"])
@@ -125,7 +132,9 @@ class TestPresets(unittest.TestCase):
         self.assertFalse(any(n.startswith("validate: ERROR") for n in notes), notes)
 
     def test_a_sketch_with_its_own_tech_services_keeps_them(self) -> None:
-        path = Path(tempfile.mkdtemp(prefix="aac-quick-")) / "mine.yaml"
+        folder = Path(tempfile.mkdtemp(prefix="aac-quick-"))
+        self.addCleanup(remove_scratch, folder, "aac-quick-")
+        path = folder / "mine.yaml"
         path.write_text(
             "tech_services:\n  - tech_service_id: TS-MINE\n    name: My platform\n"
             "products:\n  - product_id: PRD-X\n    name: X\n"
@@ -138,7 +147,9 @@ class TestPresets(unittest.TestCase):
         self.assertTrue(any("shipped landing zones stand in" in n for n in notes), notes)
 
     def test_a_sketch_names_its_own_landing_zone_in_a_few_words(self) -> None:
-        path = Path(tempfile.mkdtemp(prefix="aac-quick-")) / "zone.yaml"
+        folder = Path(tempfile.mkdtemp(prefix="aac-quick-"))
+        self.addCleanup(remove_scratch, folder, "aac-quick-")
+        path = folder / "zone.yaml"
         path.write_text(
             "landing_zone:\n  provider: Azure\n  services:\n    message-queue: Our Service Bus\n"
             "    secrets-manager: Our Vault\n"
@@ -194,7 +205,9 @@ class TestPresets(unittest.TestCase):
 
 class TestDefaults(unittest.TestCase):
     def _write(self, text: str) -> Path:
-        path = Path(tempfile.mkdtemp(prefix="aac-quick-")) / "sketch.yaml"
+        folder = Path(tempfile.mkdtemp(prefix="aac-quick-"))
+        self.addCleanup(remove_scratch, folder, "aac-quick-")
+        path = folder / "sketch.yaml"
         path.write_text(text, encoding="utf-8")
         return path
 
@@ -256,6 +269,7 @@ class TestReadingForAnEstate(unittest.TestCase):
 
         thurman = REPO / "90_EXAMPLE" / "thurman-health"
         folder = Path(tempfile.mkdtemp(prefix="aac-kinds-"))
+        self.addCleanup(remove_scratch, folder, "aac-kinds-")
         source = folder / "feeds.mmd"
         source.write_text("flowchart LR\n  ehr[EHR] -->|HL7 v2 feed| lab[Lab system]\n", encoding="utf-8")
         # Drawn alone, the words are a name: the shipped kinds have no HL7 feed.

@@ -1,0 +1,46 @@
+@startuml
+' Service point-of-sale installment loan — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Service point-of-sale installment loan — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_LEND_05, "Installment Loan Servicing", "Bill, post, and service fixed-term installment loans: payments, payoffs, extensions, and customer contact.", $tags="capabilities")
+  ' aac CAP_LEND_05: company_domain="Lending"
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_PAYMENT_INSTR, "Payment instructions", "Cardholder payment methods and instructions: ACH details, scheduled payments.", $tags="data_assets")
+  ' aac DA_PAYMENT_INSTR: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_LENDING_017, "Service point-of-sale installment loan", "Collect the scheduled installments on point-of-sale loans, handle early settlement and missed payments, and keep the shopper informed by message and statement. These loans repay over months rather than years and are serviced on the installment lending platform, not on the recreation loan system.", $tags="processes")
+  ' aac P_LENDING_017: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_LENDING_API, "Installment Lending Service", "Domain service for Installment Lending, behind the Installment Lending API. Built with EKS · Installment Lending Cache.", $tags="systems")
+  ' aac SYS_LENDING_API: company_domain="Lending"; hosting="AWS"; technology="EKS · Installment Lending Cache"
+  System(SYS_LENDPERF_SEMANTIC, "Lending Portfolio Performance Semantic Layer", "Governed models and metrics exposed to analysts for Lending Portfolio Performance, served from BigQuery through Looker. Built with BigQuery · Looker.", $tags="systems")
+  ' aac SYS_LENDPERF_SEMANTIC: company_domain="Lending"; hosting="GCP"; technology="BigQuery · Looker"
+  System(SYS_PAYMENT_GW, "Payment capture gateway", "Payment capture across ACH, debit, lockbox, and wallet channels.", $tags="systems")
+  ' aac SYS_PAYMENT_GW: company_domain=""
+}
+
+Rel(P_LENDING_017, SYS_LENDING_API, "Primary")
+' aac rel: source="P_LENDING_017"; target="SYS_LENDING_API"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_LENDING_017, SYS_PAYMENT_GW, "Supporting")
+' aac rel: source="P_LENDING_017"; target="SYS_PAYMENT_GW"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_017, SYS_LENDPERF_SEMANTIC, "Supporting")
+' aac rel: source="P_LENDING_017"; target="SYS_LENDPERF_SEMANTIC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_017, DA_PAYMENT_INSTR, "Read")
+' aac rel: source="P_LENDING_017"; target="DA_PAYMENT_INSTR"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_LENDING_017, CAP_LEND_05, "supports")
+' aac rel: source="P_LENDING_017"; target="CAP_LEND_05"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

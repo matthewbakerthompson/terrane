@@ -41,9 +41,9 @@ flowchart LR
   SYS_LENDING_API -.->|"runs on"| TS_AWS_PRIVATELINK
   SYS_LENDING_BUCKET -.->|"runs on"| TS_AWS_S3
   SYS_LENDING_BUCKET -.->|"runs on"| TS_AWS_KMS
+  SYS_LENDING_BUCKET -.->|"runs on"| TS_NET_SUB_LEND_DATA_A
   SYS_LENDING_API -.->|"runs on"| TS_NET_SUB_LEND_APP_A
   SYS_LENDING_API -.->|"runs on"| TS_NET_SUB_LEND_APP_B
-  SYS_LENDING_BUCKET -.->|"runs on"| TS_NET_SUB_LEND_DATA_A
   SYS_LENDING_API -->|"ReadWrite"| DA_LENDING_OPERATIONAL
 
   classDef s_data_assets__data_assets fill:#a7f3d0,stroke:#047857,color:#0f172a,stroke-width:1.4px;

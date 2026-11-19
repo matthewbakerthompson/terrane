@@ -1,0 +1,53 @@
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Issue brokered CDs through the broker network — Systems, Data and Controls
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Capability["Capability"]
+    direction LR
+    CAP_DEP_03_01{{"Broker Network & Issuance"}}
+    CAP_DEP_03{{"Brokered CD Program<br/>Management"}}
+  end
+
+  subgraph grp_Control["Control"]
+    direction LR
+    CTL_BROKERED_RECON[["Brokered deposit position<br/>reconciliation"]]
+  end
+
+  subgraph grp_Data_Asset["Data Asset"]
+    direction LR
+    DA_DEPOSIT_ACCOUNT[("Deposit account and CD<br/>record")]
+  end
+
+  subgraph grp_Process["Process"]
+    direction LR
+    P_DEPOSITS_003[\"Issue brokered CDs through<br/>the broker network"/]
+  end
+
+  subgraph grp_System["System"]
+    direction LR
+    SYS_BROKER_GW["Brokered deposit<br/>settlement gateway"]
+    SYS_DEPOSIT["Deposit platform"]
+    SYS_TREASURY["Treasury management"]
+  end
+
+  P_DEPOSITS_003 -->|"Primary"| SYS_BROKER_GW
+  P_DEPOSITS_003 -->|"Supporting"| SYS_TREASURY
+  P_DEPOSITS_003 -->|"Supporting"| SYS_DEPOSIT
+  P_DEPOSITS_003 -->|"Write"| DA_DEPOSIT_ACCOUNT
+  P_DEPOSITS_003 -->|"governed by"| CTL_BROKERED_RECON
+  P_DEPOSITS_003 -->|"supports"| CAP_DEP_03_01
+  P_DEPOSITS_003 -->|"supports"| CAP_DEP_03
+
+  classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
+  classDef s_controls__controls fill:#fca5a5,stroke:#b91c1c,color:#0f172a,stroke-width:1.4px;
+  classDef s_data_assets__data_assets fill:#a7f3d0,stroke:#047857,color:#0f172a,stroke-width:1.4px;
+  classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  class CAP_DEP_03,CAP_DEP_03_01 s_capabilities__capabilities;
+  class CTL_BROKERED_RECON s_controls__controls;
+  class DA_DEPOSIT_ACCOUNT s_data_assets__data_assets;
+  class P_DEPOSITS_003 s_processes__processes;
+  class SYS_BROKER_GW,SYS_DEPOSIT,SYS_TREASURY s_systems__systems;
+  classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_Capability,grp_Control,grp_Data_Asset,grp_Process,grp_System boundary1;

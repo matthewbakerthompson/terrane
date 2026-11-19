@@ -58,6 +58,9 @@ Boundary(b_GCP, "GCP") {
       ' aac SYS_OBAFF_WEBHOOKS: company_domain="Lending"; hosting="GCP"; technology="GKE"
     }
     Boundary(b_GCP__gcp_lending_prod__Private_App, "Private-App") {
+      Deployment_Node(TS_GCPNET_SUB_LEND_APP, "Lending App Subnetwork", "Subnet", "Where the GKE nodes land. Regional, shared to the lending project from the host project, so the zones are the cluster's to spread across.", $tags="tech_services") {
+        ' aac TS_GCPNET_SUB_LEND_APP: company_domain="Lending"; technology="Subnet"
+      }
       System(SYS_OBAFF_GATEWAY, "Open Banking Affordability Integration Gateway", "Our side of the TrueLayer integration: request mapping, retry and back-off, circuit breaking when the vendor is down, and the audit trail of what we sent them. Built with GKE.", $tags="systems")
       ' aac SYS_OBAFF_GATEWAY: company_domain="Lending"; hosting="GCP"; technology="GKE"
       System(OI_POSFIN_API, "Point-of-Sale Finance API", "The domain API Point-of-Sale Finance offers its channels, its jobs and its partners. Built with HTTPS.", $tags="offered_interfaces")
@@ -71,6 +74,9 @@ Boundary(b_GCP, "GCP") {
       ' aac SYS_POSFIN_WEB: company_domain="Lending"; hosting="GCP"; technology="GKE"
     }
     Boundary(b_GCP__gcp_lending_prod__Private_Data, "Private-Data") {
+      Deployment_Node(TS_GCPNET_SUB_LEND_DATA, "Lending Data Subnetwork", "Subnet", "Cloud SQL's private services access range and the Memorystore endpoints; no route to the internet, in or out.", $tags="tech_services") {
+        ' aac TS_GCPNET_SUB_LEND_DATA: company_domain="Lending"; technology="Subnet"
+      }
       Deployment_Node(TS_POSFIN_BACKUP, "Point-of-Sale Finance Backup and recovery", "Backup and DR Service", "Copies that survive the thing they came from. The recovery objective is a property of this, not of the database.", $tags="tech_services") {
         ' aac TS_POSFIN_BACKUP: company_domain="Lending"; technology="Backup and DR Service"
       }
@@ -135,6 +141,14 @@ Rel(SYS_POSFIN_DB, TS_GCP_KMS, "runs on")
 ' aac rel: source="SYS_POSFIN_DB"; target="TS_GCP_KMS"; label="runs on"; relation="system_uses_tech_service"
 Rel(SYS_POSFIN_EVENTS, TS_GCP_PUBSUB, "runs on")
 ' aac rel: source="SYS_POSFIN_EVENTS"; target="TS_GCP_PUBSUB"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_OBAFF_GATEWAY, TS_GCPNET_SUB_LEND_APP, "runs on")
+' aac rel: source="SYS_OBAFF_GATEWAY"; target="TS_GCPNET_SUB_LEND_APP"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_POSFIN_API, TS_GCPNET_SUB_LEND_APP, "runs on")
+' aac rel: source="SYS_POSFIN_API"; target="TS_GCPNET_SUB_LEND_APP"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_POSFIN_WEB, TS_GCPNET_SUB_LEND_APP, "runs on")
+' aac rel: source="SYS_POSFIN_WEB"; target="TS_GCPNET_SUB_LEND_APP"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_POSFIN_DB, TS_GCPNET_SUB_LEND_DATA, "runs on")
+' aac rel: source="SYS_POSFIN_DB"; target="TS_GCPNET_SUB_LEND_DATA"; label="runs on"; relation="system_uses_tech_service"
 Rel(SYS_POSFIN_API, DA_POSFIN_OPERATIONAL, "ReadWrite")
 ' aac rel: source="SYS_POSFIN_API"; target="DA_POSFIN_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
 Rel(SYS_POSFIN_DB, DA_POSFIN_OPERATIONAL, "ReadWrite")

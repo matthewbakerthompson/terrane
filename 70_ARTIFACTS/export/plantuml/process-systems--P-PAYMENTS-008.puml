@@ -1,0 +1,57 @@
+@startuml
+' Enroll and run automatic payments — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Enroll and run automatic payments — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_PAY_03, "Payment Capture & Application", "Accept and apply cardholder payments across all channels.", $tags="capabilities")
+  ' aac CAP_PAY_03: company_domain="Servicing"
+  System(CAP_PAY_03_01, "Payment Channel Capture", "Take payments by ACH, debit card, check, lockbox and automatic payment.", $tags="capabilities")
+  ' aac CAP_PAY_03_01: company_domain="Servicing"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_PMT_POSTING, "Payment posting timeliness", "Cardholder payments post as of the day of receipt per Reg Z crediting rules, with cutoff disclosures honored and exceptions reported.", $tags="controls")
+  ' aac CTL_PMT_POSTING: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_PAYMENT_INSTR, "Payment instructions", "Cardholder payment methods and instructions: ACH details, scheduled payments.", $tags="data_assets")
+  ' aac DA_PAYMENT_INSTR: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_PAYMENTS_008, "Enroll and run automatic payments", "Enroll a cardholder's bank account for recurring payments of the minimum, the statement balance or a fixed amount, verify the account, and originate the debits on schedule under the authorization the cardholder gave. Each debit needs a valid authorization, and a debit taken after it was revoked is an error claim.", $tags="processes")
+  ' aac P_PAYMENTS_008: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CARDSVC_WEB, "Card Servicing Web", "Browser front end for Card Servicing. Built with AKS.", $tags="systems")
+  ' aac SYS_CARDSVC_WEB: company_domain="Servicing"; hosting="Azure"; technology="AKS"
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_PAYMENT_GW, "Payment capture gateway", "Payment capture across ACH, debit, lockbox, and wallet channels.", $tags="systems")
+  ' aac SYS_PAYMENT_GW: company_domain=""
+}
+
+Rel(P_PAYMENTS_008, SYS_PAYMENT_GW, "Primary")
+' aac rel: source="P_PAYMENTS_008"; target="SYS_PAYMENT_GW"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_PAYMENTS_008, SYS_CORE_LEDGER, "Supporting")
+' aac rel: source="P_PAYMENTS_008"; target="SYS_CORE_LEDGER"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PAYMENTS_008, SYS_CARDSVC_WEB, "Supporting")
+' aac rel: source="P_PAYMENTS_008"; target="SYS_CARDSVC_WEB"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PAYMENTS_008, DA_PAYMENT_INSTR, "Both")
+' aac rel: source="P_PAYMENTS_008"; target="DA_PAYMENT_INSTR"; label="Both"; relation="process_uses_data_asset"; access="Both"
+Rel(P_PAYMENTS_008, CTL_PMT_POSTING, "governed by")
+' aac rel: source="P_PAYMENTS_008"; target="CTL_PMT_POSTING"; label="governed by"; relation="process_governed_by_control"
+Rel(P_PAYMENTS_008, CAP_PAY_03_01, "supports")
+' aac rel: source="P_PAYMENTS_008"; target="CAP_PAY_03_01"; label="supports"; relation="process_supports_capability"
+Rel(P_PAYMENTS_008, CAP_PAY_03, "supports")
+' aac rel: source="P_PAYMENTS_008"; target="CAP_PAY_03"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

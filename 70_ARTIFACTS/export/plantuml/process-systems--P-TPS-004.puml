@@ -1,0 +1,42 @@
+@startuml
+' Produce contracted client reporting — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Produce contracted client reporting — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_TPS_03, "Client Reporting & Data Exchange", "Deliver contracted reporting and data feeds to clients.", $tags="capabilities")
+  ' aac CAP_TPS_03: company_domain="Cross-Functional Services"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_CLIENT_SLA, "Client reporting and feed monitoring", "Contracted client reporting and data feeds are monitored to schedule and specification; misses alert before the client notices and count against the SLA.", $tags="controls")
+  ' aac CTL_CLIENT_SLA: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_TPS_004, "Produce contracted client reporting", "Produce and deliver reporting to the schedule and specification in the client contract. Contracted reporting ships to specification and schedule; late or wrong reporting is an SLA breach with credits, so production is monitored like any critical batch.", $tags="processes")
+  ' aac P_TPS_004: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_DATA_INGEST, "Enterprise Data Ingestion Hub", "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse. Built with Service Bus · Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_DATA_INGEST: company_domain="Data and Analytics"; hosting="Azure"; technology="Service Bus · Snowflake Data Cloud"
+  System(SYS_CLIENT_PORTAL, "Servicing client portal", "Client reporting, data exchange, and interaction.", $tags="systems")
+  ' aac SYS_CLIENT_PORTAL: company_domain=""
+}
+
+Rel(P_TPS_004, SYS_CLIENT_PORTAL, "Primary")
+' aac rel: source="P_TPS_004"; target="SYS_CLIENT_PORTAL"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_TPS_004, SYS_DATA_INGEST, "Supporting")
+' aac rel: source="P_TPS_004"; target="SYS_DATA_INGEST"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_TPS_004, CTL_CLIENT_SLA, "governed by")
+' aac rel: source="P_TPS_004"; target="CTL_CLIENT_SLA"; label="governed by"; relation="process_governed_by_control"
+Rel(P_TPS_004, CAP_TPS_03, "supports")
+' aac rel: source="P_TPS_004"; target="CAP_TPS_03"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

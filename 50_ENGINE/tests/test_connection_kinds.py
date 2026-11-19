@@ -17,7 +17,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from terrane import validate  # noqa: E402
 from terrane.blocks import LibraryError, load_patterns  # noqa: E402
 from terrane.connections import (  # noqa: E402
-    kind_of, load_connections, overlaps, parse_connection, sorted_by_kind,
+    DATASTORE_ENDS, data_stores, fits, kind_of, load_connections, overlaps, parse_connection, sorted_by_kind,
 )
 from terrane.render_library import render_connections  # noqa: E402
 from terrane.schema import INTEGRATION_STYLES  # noqa: E402
@@ -108,7 +108,9 @@ class TestTheGate(unittest.TestCase):
     def test_a_malformed_kind_is_refused(self) -> None:
         for data in ({"name": "No id"},
                      {"connection_id": "x", "name": "X", "integration_style": "Smoke signal", "protocols": ["a"]},
-                     {"connection_id": "x", "name": "X", "integration_style": "Event"}):
+                     {"connection_id": "x", "name": "X", "integration_style": "Event"},
+                     {"connection_id": "x", "name": "X", "integration_style": "Event", "protocols": ["a"],
+                      "datastore": "inside"}):
             with self.subTest(data=data):
                 with self.assertRaises(LibraryError):
                     parse_connection(data)
@@ -120,6 +122,45 @@ class TestTheGate(unittest.TestCase):
             shutil.rmtree(root / "24_CONNECTIONS")
             self.assertEqual(load_connections(root), {})
             self.assertEqual(self._codes(root), [])
+
+
+class TestADatabasesWaysInAndOut(unittest.TestCase):
+    """`datastore:` on a kind: which end is a data store, a component type
+    the library draws as a cylinder, where the kind is a way into one, out
+    of one or between two."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        from terrane.blocks import load_components
+
+        cls.kinds = load_connections(REPO)
+        cls.stores = data_stores(load_components(REPO))
+
+    def test_a_data_store_is_drawn_as_a_cylinder(self) -> None:
+        for kind in ("relational-db", "document-db", "cache", "warehouse", "object-store", "archive"):
+            self.assertIn(kind, self.stores)
+        for kind in ("etl", "bi", "stream-processing", "service-api", "web-app"):
+            self.assertNotIn(kind, self.stores)
+
+    def test_the_ways_in_and_out(self) -> None:
+        said = {k.connection_id: k.datastore for k in self.kinds.values() if k.datastore}
+        self.assertEqual(said, {"own-datastore": "target", "pipeline-load": "target", "change-data-capture": "source",
+                                "database-extract": "source", "database-replica": "both", "database-backup": "both"})
+        self.assertTrue(all(k.datastore in DATASTORE_ENDS + ("",) for k in self.kinds.values()))
+
+    def test_what_each_end_calls_for(self) -> None:
+        own, cdc, replica = (self.kinds[k] for k in ("own-datastore", "change-data-capture", "database-replica"))
+        # Into a store from a service; never from another store, which does
+        # not read and write it as its own.
+        self.assertEqual([fits(own, a, b) for a, b in ((False, True), (True, True), (True, False))], [True, False, False])
+        self.assertEqual([fits(cdc, a, b) for a, b in ((True, False), (True, True), (False, True))], [True, True, False])
+        self.assertEqual([fits(replica, a, b) for a, b in ((True, True), (True, False))], [True, False])
+        self.assertFalse(fits(self.kinds["api-call"], True, True))
+
+    def test_the_catalog_says_where(self) -> None:
+        text = render_connections(self.kinds, load_patterns(REPO), seeded_model())
+        self.assertIn("**Where.** Out of a data store, offered first where the source is one.", text)
+        self.assertIn("**Where.** From one data store to another, offered first where both ends are.", text)
 
 
 class TestWhatTheySay(unittest.TestCase):

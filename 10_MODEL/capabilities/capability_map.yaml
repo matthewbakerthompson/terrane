@@ -276,6 +276,22 @@
   company_subdomain: Statements
   source: Business architecture repository
 
+- capability_id: CAP-BILL-06
+  name: Credit Balance Refund & Unclaimed Property
+  description: Refund credit balances on request or after the regulatory period, and report and remit unclaimed balances to the states.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Commodity
+  parent_capability_id: CAP-BILL
+  owner_org_id: ORG-SERVICING
+  company_domain: Servicing
+  company_subdomain: Statements
+  source: Business architecture repository
+
 - capability_id: CAP-COLL
   name: Collections & Recovery
   description: Collections & Recovery. Level 0 enterprise capability domain (Core tier).
@@ -318,6 +334,38 @@
   strategic_importance: Differentiating
   parent_capability_id: CAP-COLL
   owner_org_id: ORG-COLLECTIONS
+  company_domain: Collections
+  company_subdomain: Recovery Lifecycle
+  source: Business architecture repository
+
+- capability_id: CAP-COLL-02-01
+  name: Owned-Portfolio Collections Contact
+  description: Contact delinquent borrowers on the bank's own card and loan portfolios.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-COLL-02
+  owner_org_id: ORG-COLLECTIONS
+  company_domain: Collections
+  company_subdomain: Recovery Lifecycle
+  source: Business architecture repository
+
+- capability_id: CAP-COLL-02-02
+  name: Serviced-Portfolio Collections Contact
+  description: Collect on client portfolios to each client's strategy and in its name.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-COLL-02
+  owner_org_id: ORG-CLIENT-COLL
   company_domain: Collections
   company_subdomain: Recovery Lifecycle
   source: Business architecture repository
@@ -414,6 +462,54 @@
   strategic_importance: Essential
   parent_capability_id: CAP-COLL
   owner_org_id: ORG-RECOVERY
+  company_domain: Collections
+  company_subdomain: Recovery Lifecycle
+  source: Business architecture repository
+
+- capability_id: CAP-COLL-06-01
+  name: Bankruptcy Processing
+  description: Stop collection on notice of bankruptcy, file claims, and follow the case to discharge or dismissal.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-COLL-06
+  owner_org_id: ORG-RECOVERY
+  company_domain: Collections
+  company_subdomain: Recovery Lifecycle
+  source: Business architecture repository
+
+- capability_id: CAP-COLL-06-02
+  name: Deceased Account Handling
+  description: Close the accounts of deceased borrowers and work with the estate.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-COLL-06
+  owner_org_id: ORG-RECOVERY
+  company_domain: Collections
+  company_subdomain: Recovery Lifecycle
+  source: Business architecture repository
+
+- capability_id: CAP-COLL-06-03
+  name: Legal Placement & Litigation
+  description: Sue on selected accounts through outside counsel, and manage judgments.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-COLL-06
+  owner_org_id: ORG-LEGAL
   company_domain: Collections
   company_subdomain: Recovery Lifecycle
   source: Business architecture repository
@@ -601,6 +697,38 @@
   capability_tier: Core
   strategic_importance: Differentiating
   parent_capability_id: CAP-CRED
+  owner_org_id: ORG-CREDIT
+  company_domain: Originations
+  company_subdomain: Decision
+  source: Business architecture repository
+
+- capability_id: CAP-CRED-03-01
+  name: Credit Line Increase
+  description: Offer and grant line increases, proactive and requested, within ability-to-pay rules.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-CRED-03
+  owner_org_id: ORG-CREDIT
+  company_domain: Originations
+  company_subdomain: Decision
+  source: Business architecture repository
+
+- capability_id: CAP-CRED-03-02
+  name: Credit Line Decrease & Account Action
+  description: Decrease lines and restrict accounts on risk, with the adverse action notices that requires.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-CRED-03
   owner_org_id: ORG-CREDIT
   company_domain: Originations
   company_subdomain: Decision
@@ -857,6 +985,38 @@
   company_subdomain: Brokered Funding
   source: Business architecture repository
 
+- capability_id: CAP-DEP-03-01
+  name: Broker Network & Issuance
+  description: Agree brokered CD issues with Treasury and place them through the broker-dealer network.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-DEP-03
+  owner_org_id: ORG-BROKERED
+  company_domain: Deposits
+  company_subdomain: Brokered Funding
+  source: Business architecture repository
+
+- capability_id: CAP-DEP-03-02
+  name: Brokered CD Settlement & Record Keeping
+  description: Settle issues through the depository, keep the position, and keep the pass-through records insurance coverage depends on.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-DEP-03
+  owner_org_id: ORG-DEPOSITS
+  company_domain: Deposits
+  company_subdomain: Brokered Funding
+  source: Business architecture repository
+
 - capability_id: CAP-DEP-04
   name: Deposit Servicing, Interest & Maturities
   description: Accrue and pay interest, process maturities and renewals, and handle early withdrawal within terms.
@@ -868,6 +1028,38 @@
   capability_tier: Core
   strategic_importance: Essential
   parent_capability_id: CAP-DEP
+  owner_org_id: ORG-DEPOSITS
+  company_domain: Deposits
+  company_subdomain: Servicing
+  source: Business architecture repository
+
+- capability_id: CAP-DEP-04-01
+  name: Interest Accrual & Tax Reporting
+  description: Accrue and pay interest, and produce year-end tax reporting.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-DEP-04
+  owner_org_id: ORG-DEPOSITS
+  company_domain: Deposits
+  company_subdomain: Servicing
+  source: Business architecture repository
+
+- capability_id: CAP-DEP-04-02
+  name: Maturity, Renewal & Early Withdrawal
+  description: Notify ahead of maturity, renew or pay out, and apply early withdrawal penalties.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-DEP-04
   owner_org_id: ORG-DEPOSITS
   company_domain: Deposits
   company_subdomain: Servicing
@@ -1157,6 +1349,22 @@
   company_subdomain: Disputes
   source: Business architecture repository
 
+- capability_id: CAP-FRAUD-08
+  name: First-Party Fraud & Bust-Out Management
+  description: "Detect and act on credit abuse by account holders themselves: bust-out, synthetic identities and payment fraud."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-FRAUD
+  owner_org_id: ORG-FRAUD
+  company_domain: Servicing
+  company_subdomain: Disputes
+  source: Business architecture repository
+
 - capability_id: CAP-LEND
   name: Consumer & Recreation Lending
   description: Consumer & Recreation Lending. Level 0 enterprise capability domain (Core tier). Dealer-originated RV, marine, and powersports lending plus direct consumer loans.
@@ -1202,6 +1410,38 @@
   company_subdomain: Origination
   source: Business architecture repository
 
+- capability_id: CAP-LEND-02-01
+  name: Dealer Application Intake
+  description: Take applications keyed by the dealer, check them for completeness, and verify identity before the decision.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-LEND-02
+  owner_org_id: ORG-DEALER-SVC
+  company_domain: Lending
+  company_subdomain: Origination
+  source: Business architecture repository
+
+- capability_id: CAP-LEND-02-02
+  name: Indirect Credit Decision & Counteroffer
+  description: Decide the application against credit policy and the collateral's value, and return terms or a counteroffer to the dealer.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-LEND-02
+  owner_org_id: ORG-CREDIT
+  company_domain: Lending
+  company_subdomain: Origination
+  source: Business architecture repository
+
 - capability_id: CAP-LEND-03
   name: Loan Boarding & Dealer Funding
   description: Board approved loans, verify stipulations and documentation, and fund the dealer.
@@ -1230,6 +1470,38 @@
   strategic_importance: Essential
   parent_capability_id: CAP-LEND
   owner_org_id: ORG-LENDING
+  company_domain: Lending
+  company_subdomain: Collateral
+  source: Business architecture repository
+
+- capability_id: CAP-LEND-04-01
+  name: Lien Perfection & Title Custody
+  description: Record the lien with the titling state and hold the title, through an outsourced title servicer.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-LEND-04
+  owner_org_id: ORG-TITLE
+  company_domain: Lending
+  company_subdomain: Collateral
+  source: Business architecture repository
+
+- capability_id: CAP-LEND-04-02
+  name: Payoff & Lien Release
+  description: Quote and apply payoffs, and release the lien within each state's deadline.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-LEND-04
+  owner_org_id: ORG-TITLE
   company_domain: Lending
   company_subdomain: Collateral
   source: Business architecture repository
@@ -1264,6 +1536,54 @@
   owner_org_id: ORG-LENDING
   company_domain: Lending
   company_subdomain: Recovery
+  source: Business architecture repository
+
+- capability_id: CAP-LEND-06-01
+  name: Repossession & Redemption Notices
+  description: Recover collateral through licensed agents and give the notices state law requires before sale.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-LEND-06
+  owner_org_id: ORG-ASSET-RECOVERY
+  company_domain: Lending
+  company_subdomain: Recovery
+  source: Business architecture repository
+
+- capability_id: CAP-LEND-06-02
+  name: Collateral Remarketing & Deficiency Recovery
+  description: Sell recovered collateral, and collect, place or sell the deficiency balance.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-LEND-06
+  owner_org_id: ORG-RECOVERY
+  company_domain: Lending
+  company_subdomain: Recovery
+  source: Business architecture repository
+
+- capability_id: CAP-LEND-07
+  name: Ancillary Product & Dealer Reserve Administration
+  description: Administer the dealer's reserve on each loan and the protection products sold with it, including refunds when a loan ends early.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-LEND
+  owner_org_id: ORG-LENDING
+  company_domain: Lending
+  company_subdomain: Servicing
   source: Business architecture repository
 
 - capability_id: CAP-MERCH
@@ -1311,6 +1631,38 @@
   company_subdomain: Underwriting
   source: Business architecture repository
 
+- capability_id: CAP-MERCH-02-01
+  name: Merchant Credit Underwriting
+  description: Assess a merchant's credit and chargeback exposure, and set its limits and reserve terms.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Differentiating
+  parent_capability_id: CAP-MERCH-02
+  owner_org_id: ORG-MERCH-RISK
+  company_domain: Merchant Services
+  company_subdomain: Underwriting
+  source: Business architecture repository
+
+- capability_id: CAP-MERCH-02-02
+  name: Merchant Screening & Brand Risk
+  description: Screen merchants and their owners against sanctions and the networks' terminated-merchant file, and review prohibited business types.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-MERCH-02
+  owner_org_id: ORG-FIN-CRIMES
+  company_domain: Merchant Services
+  company_subdomain: Underwriting
+  source: Business architecture repository
+
 - capability_id: CAP-MERCH-03
   name: Merchant Boarding & Network Sponsorship
   description: Board approved merchants and sponsor them into the card networks under the bank's licenses.
@@ -1339,6 +1691,38 @@
   strategic_importance: Essential
   parent_capability_id: CAP-MERCH
   owner_org_id: ORG-MERCHANT
+  company_domain: Merchant Services
+  company_subdomain: Settlement
+  source: Business architecture repository
+
+- capability_id: CAP-MERCH-04-01
+  name: Merchant Funding
+  description: Net fees, chargebacks and holds from the day's volume, and fund each merchant.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-MERCH-04
+  owner_org_id: ORG-SETTLEMENT
+  company_domain: Merchant Services
+  company_subdomain: Settlement
+  source: Business architecture repository
+
+- capability_id: CAP-MERCH-04-02
+  name: Merchant Reserve Management
+  description: Set, adjust and release the reserves merchants carry against future chargebacks.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-MERCH-04
+  owner_org_id: ORG-MERCH-RISK
   company_domain: Merchant Services
   company_subdomain: Settlement
   source: Business architecture repository
@@ -1373,6 +1757,22 @@
   owner_org_id: ORG-MERCHANT
   company_domain: Merchant Services
   company_subdomain: Risk
+  source: Business architecture repository
+
+- capability_id: CAP-MERCH-07
+  name: Merchant Servicing & Billing
+  description: Bill merchant fees, deliver statements, pay ISO residuals and answer merchant and ISO questions.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-MERCH
+  owner_org_id: ORG-MERCHANT
+  company_domain: Merchant Services
+  company_subdomain: Servicing
   source: Business architecture repository
 
 - capability_id: CAP-ORIG
@@ -1611,6 +2011,38 @@
   company_subdomain: Partnerships
   source: Business architecture repository
 
+- capability_id: CAP-PART-05-01
+  name: Partner Agreement & Program Governance
+  description: Negotiate co-brand and affinity agreements, and govern the partner's obligations.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-PART-05
+  owner_org_id: ORG-COBRAND
+  company_domain: Cross-Functional Services
+  company_subdomain: Partnerships
+  source: Business architecture repository
+
+- capability_id: CAP-PART-05-02
+  name: Partner Revenue Share Settlement
+  description: Calculate and settle the partner's share of program revenue and its rewards funding.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-PART-05
+  owner_org_id: ORG-FINANCE
+  company_domain: Cross-Functional Services
+  company_subdomain: Partnerships
+  source: Business architecture repository
+
 - capability_id: CAP-PAY
   name: Payments & Transaction Processing
   description: Payments & Transaction Processing. Level 0 enterprise capability domain (Core tier).
@@ -1748,6 +2180,38 @@
   capability_tier: Core
   strategic_importance: Essential
   parent_capability_id: CAP-PAY
+  owner_org_id: ORG-PAYMENTS
+  company_domain: Servicing
+  company_subdomain: Payments
+  source: Business architecture repository
+
+- capability_id: CAP-PAY-03-01
+  name: Payment Channel Capture
+  description: Take payments by ACH, debit card, check, lockbox and automatic payment.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-PAY-03
+  owner_org_id: ORG-PAYMENTS
+  company_domain: Servicing
+  company_subdomain: Payments
+  source: Business architecture repository
+
+- capability_id: CAP-PAY-03-02
+  name: Payment Allocation & Posting
+  description: Allocate payments across balances as the card rules require, and post them on the day received.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-PAY-03
   owner_org_id: ORG-PAYMENTS
   company_domain: Servicing
   company_subdomain: Payments
@@ -2037,6 +2501,38 @@
   company_subdomain: Risk & Compliance
   source: Business architecture repository
 
+- capability_id: CAP-RGOV-07-01
+  name: Sanctions Screening
+  description: Screen customers, merchants and transactions against sanctions lists and watchlists.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-RGOV-07
+  owner_org_id: ORG-FIN-CRIMES
+  company_domain: Cross-Functional Services
+  company_subdomain: Risk & Compliance
+  source: Business architecture repository
+
+- capability_id: CAP-RGOV-07-02
+  name: Transaction Monitoring & Suspicious Activity Reporting
+  description: Monitor activity for suspicious patterns, investigate alerts, and file reports.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-RGOV-07
+  owner_org_id: ORG-FIN-CRIMES
+  company_domain: Cross-Functional Services
+  company_subdomain: Risk & Compliance
+  source: Business architecture repository
+
 - capability_id: CAP-RGOV-08
   name: Model Risk Governance
   description: Independently validate and monitor models in production use.
@@ -2049,6 +2545,22 @@
   strategic_importance: Essential
   parent_capability_id: CAP-RGOV
   owner_org_id: ORG-RISK
+  company_domain: Cross-Functional Services
+  company_subdomain: Risk & Compliance
+  source: Business architecture repository
+
+- capability_id: CAP-RGOV-09
+  name: Fair Lending Monitoring
+  description: Test credit decisions, pricing and dealer markup for disparities, and remediate what the testing finds.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Direct
+  strategic_importance: Essential
+  parent_capability_id: CAP-RGOV
+  owner_org_id: ORG-COMPLIANCE
   company_domain: Cross-Functional Services
   company_subdomain: Risk & Compliance
   source: Business architecture repository
@@ -2321,6 +2833,54 @@
   company_subdomain: Live Agent Customer Service
   source: Business architecture repository
 
+- capability_id: CAP-SERV-02-01
+  name: General Account Maintenance
+  description: Change addresses, due dates, authorized users and other account details on request.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Commodity
+  parent_capability_id: CAP-SERV-02
+  owner_org_id: ORG-SERVICING
+  company_domain: Servicing
+  company_subdomain: Live Agent Customer Service
+  source: Business architecture repository
+
+- capability_id: CAP-SERV-02-02
+  name: Servicemember Protections
+  description: Identify covered borrowers, and apply the rate, fee and collection protections they are owed.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-SERV-02
+  owner_org_id: ORG-SERVICING
+  company_domain: Servicing
+  company_subdomain: Live Agent Customer Service
+  source: Business architecture repository
+
+- capability_id: CAP-SERV-02-03
+  name: Secured Card Collateral Administration
+  description: Hold, adjust and return the deposits that secure secured cards.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L2
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-SERV-02
+  owner_org_id: ORG-SERVICING
+  company_domain: Servicing
+  company_subdomain: Live Agent Customer Service
+  source: Business architecture repository
+
 - capability_id: CAP-SERV-03
   name: Digital Self-Service
   description: Enable cardholders to self-serve in web and mobile channels.
@@ -2404,6 +2964,22 @@
 - capability_id: CAP-SERV-08
   name: Servicing Quality Monitoring
   description: Monitor and score servicing interactions for quality and compliance.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  capability_level: L1
+  capability_tier: Core
+  strategic_importance: Essential
+  parent_capability_id: CAP-SERV
+  owner_org_id: ORG-SERVICING
+  company_domain: Servicing
+  company_subdomain: Live Agent Customer Service
+  source: Business architecture repository
+
+- capability_id: CAP-SERV-09
+  name: Retention, Product Change & Account Closure
+  description: Keep customers who ask to leave, move accounts between products, and close accounts with balances, rewards and notices settled.
   status: Proposed
   togaf_layer: Business
   architecture_domain: Business

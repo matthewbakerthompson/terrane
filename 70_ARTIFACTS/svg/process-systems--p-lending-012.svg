@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="937.4" viewBox="0 0 1100 937.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Assign repossession and send required notices — Systems, Data and Controls</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Assign repossession and send required notices — Systems, Data and Controls</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   9 nodes · 8 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(155.66 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="299.72" y="545.3" width="212.57" height="175.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="341.72" y="562.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Control">
+<rect x="300.3" y="413.3" width="211.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="333.15" y="430.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Control</text>
+</g>
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="557.3" y="381.3" width="221.4" height="175.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="599.3" y="398.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.98" y="282.25" width="212.03" height="135.45" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.83" y="299.65" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="557.3" y="24.3" width="221.4" height="328.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="587.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-LENDING-012::SYS-REMARKET">
+<title>Primary</title>
+<path d="M196 317.33 L244.97 317 A10 10 0 0 1 245.03 317 L253 317 A8 8 0 0 0 261 309 L261 99.98 A10 10 0 0 1 270.98 89.98 L553.99 89.5 A10 10 0 0 1 554.01 89.5 L579.48 89.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M583 89.5 L573.43 94.28 L573.43 84.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-LENDING-012::SYS-REMARKET">
+<rect x="382.32" y="96.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="403.5" y="108.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-LENDING-012::SYS-LOAN-SVC">
+<title>Supporting</title>
+<path d="M196 326.67 L205.67 326.67 A0.33 0.33 0 0 1 206 327 L206 327 A0.33 0.33 0 0 0 206.33 327.33 L244.96 327 A10 10 0 0 1 245.04 327 L261 327 A10 10 0 0 0 271 317 L271 198.98 A10 10 0 0 1 280.98 188.98 L553.99 188.5 A10 10 0 0 1 554.01 188.5 L579.48 188.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M583 188.5 L573.43 193.28 L573.43 183.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-LENDING-012::SYS-LOAN-SVC">
+<rect x="374.46" y="195.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="403.5" y="207.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-LENDING-012::SYS-DOC">
+<title>Supporting</title>
+<path d="M196 336 L205.33 336 A0.67 0.67 0 0 1 206 336.67 L206 336.67 A0.66 0.66 0 0 0 206.67 337.33 L244.96 337 A10 10 0 0 1 245.04 337 L271 337 A10 10 0 0 0 281 327 L281 297.98 A10 10 0 0 1 290.98 287.98 L553.99 287.5 A10 10 0 0 1 554.01 287.5 L579.48 287.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M583 287.5 L573.43 292.29 L573.43 282.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-LENDING-012::SYS-DOC">
+<rect x="374.46" y="294.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="403.5" y="306.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e3::P-LENDING-012::DA-COLLATERAL">
+<title>Both</title>
+<path d="M196 345.33 L205 345.33 A1 1 0 0 1 206 346.33 L206 346.33 A0.99 0.99 0 0 0 207 347.32 L244.96 347 A10 10 0 0 1 245.04 347 L526 347 A10 10 0 0 1 536 357 L536 424 A9 9 0 0 0 545 433 L554 433 L579.48 433" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M583 433 L573.43 437.79 L573.43 428.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::P-LENDING-012::DA-COLLATERAL">
+<rect x="389.35" y="324.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="403.5" y="336.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e4::P-LENDING-012::DA-LOAN-ACCOUNT">
+<title>Read</title>
+<path d="M196 354.67 L204.67 354.67 A1.33 1.33 0 0 1 206 356 L206 356 A1.32 1.32 0 0 0 207.33 357.32 L244.96 357 A10 10 0 0 1 245.04 357 L260.5 357 A0.5 0.5 0 0 1 261 357.5 L261 357.5 A0.5 0.5 0 0 0 261.5 358 L516 358 A10 10 0 0 1 526 368 L526 495 A10 10 0 0 0 536 505 L554 505 L579.48 505" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M583 505 L573.43 509.79 L573.43 500.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::P-LENDING-012::DA-LOAN-ACCOUNT">
+<rect x="388.45" y="364.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="403.5" y="376.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e5::P-LENDING-012::CTL-REPO-NOTICE">
+<title>governed by</title>
+<path d="M196 364 L204.33 364 A1.67 1.67 0 0 1 206 365.67 L206 365.67 A1.65 1.65 0 0 0 207.67 367.32 L244.96 367 A10 10 0 0 1 245.04 367 L271 367 A10 10 0 0 1 281 377 L281 457 A8 8 0 0 0 289 465 L297 465 L322.48 465" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M326 465 L316.43 469.79 L316.43 460.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e6::P-LENDING-012::CAP-LEND-06-01">
+<title>supports</title>
+<path d="M196 373.33 L204 373.33 A2 2 0 0 1 206 375.33 L206 375.33 A1.98 1.98 0 0 0 208 377.32 L244.96 377 A10 10 0 0 1 245.04 377 L261 377 A10 10 0 0 1 271 387 L271 587 A10 10 0 0 0 281 597 L297 597 L322.48 597" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M326 597 L316.43 601.78 L316.43 592.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e7::P-LENDING-012::CAP-LEND-06">
+<title>supports</title>
+<path d="M196 382.67 L203.67 382.67 A2.33 2.33 0 0 1 206 385 L206 385 A2.31 2.31 0 0 0 208.33 387.31 L244.96 387 A10 10 0 0 1 245.04 387 L253 387 A8 8 0 0 1 261 395 L261 659 A10 10 0 0 0 271 669 L297 669 L322.48 669" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M326 669 L316.43 673.78 L316.43 664.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-LEND-06" data-type="capabilities">
+<title>Repossession &amp; Asset Remarketing</title>
+<path d="M366 643 L326 669 L366 695 L446 695 L486 669 L446 643 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="406" y="667.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Repossession &amp; Asset</text>
+<text x="406" y="679.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Remarketing</text>
+</g>
+<g class="node" data-id="CAP-LEND-06-01" data-type="capabilities">
+<title>Repossession &amp; Redemption Notices</title>
+<path d="M366 571 L326 597 L366 623 L446 623 L486 597 L446 571 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="406" y="595.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Repossession &amp;</text>
+<text x="406" y="607.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Redemption Notices</text>
+</g>
+<g class="node" data-id="CTL-REPO-NOTICE" data-type="controls">
+<title>Repossession and disposition notices</title>
+<path d="M372.86 439 L326 454.23 L326 475.77 L372.86 491 L439.14 491 L486 475.77 L486 454.23 L439.14 439 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="406" y="463.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Repossession and</text>
+<text x="406" y="475.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">disposition notices</text>
+</g>
+<g class="node" data-id="DA-COLLATERAL" data-type="data_assets">
+<title>Collateral, title and lien record</title>
+<path d="M583 409.6 Q591.5 407 625.5 407 L710.5 407 Q744.5 407 753 409.6 L753 456.4 Q744.5 459 710.5 459 L625.5 459 Q591.5 459 583 456.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="664" y="431.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Collateral, title and</text>
+<text x="664" y="443.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">lien record</text>
+<svg x="735" y="412" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-LOAN-ACCOUNT" data-type="data_assets">
+<title>Installment loan account</title>
+<path d="M583 481.6 Q591.5 479 625.5 479 L710.5 479 Q744.5 479 753 481.6 L753 528.4 Q744.5 531 710.5 531 L625.5 531 Q591.5 531 583 528.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="664" y="503.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment loan</text>
+<text x="664" y="515.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">account</text>
+<svg x="735" y="484" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-LENDING-012" data-type="processes">
+<title>Assign repossession and send required notices</title>
+<path d="M116 308 L36 340.09 L66.56 392 L165.44 392 L196 340.09 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="342.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Assign repossession</text>
+<text x="116" y="354.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and send required</text>
+<text x="116" y="366.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">notices</text>
+</g>
+<g class="node" data-id="SYS-DOC" data-type="systems">
+<title>Document management and archive</title>
+<rect x="583" y="248" width="170" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="664" y="279.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Document</text>
+<text x="664" y="291.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">management and</text>
+<text x="664" y="303.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">archive</text>
+<svg x="735" y="253" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-LOAN-SVC" data-type="systems">
+<title>Installment loan servicing platform</title>
+<rect x="583" y="149" width="170" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="664" y="186.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment loan</text>
+<text x="664" y="198.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">servicing platform</text>
+<svg x="735" y="154" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-REMARKET" data-type="systems">
+<title>Repossession and remarketing management</title>
+<rect x="583" y="50" width="170" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="664" y="76.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Repossession and</text>
+<text x="664" y="88.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">remarketing</text>
+<text x="664" y="100.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">management</text>
+<text x="668" y="123.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">external</text>
+<svg x="735" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="835.4" x2="1072" y2="835.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="859.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 848.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="859.4" font-size="12" font-weight="400" fill="#343d50">capability · 2</text>
+<g transform="translate(180.32 848.4)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="206.32" y="859.4" font-size="12" font-weight="400" fill="#343d50">control · 1</text>
+<g transform="translate(275.87 848.4)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="301.87" y="859.4" font-size="12" font-weight="400" fill="#343d50">data asset · 2</text>
+<g transform="translate(392.8 848.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="418.8" y="859.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(493.06 848.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="519.06" y="859.4" font-size="12" font-weight="400" fill="#343d50">system · 3</text>
+<text x="28" y="881.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 870.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="881.4" font-size="12" font-weight="400" fill="#343d50">governed by</text>
+<g transform="translate(184.75 870.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="210.75" y="881.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(277.26 870.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="303.26" y="881.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="915.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-lending-012 · edit the model, not the picture</text></g>
+</svg>

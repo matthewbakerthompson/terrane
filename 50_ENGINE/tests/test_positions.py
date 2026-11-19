@@ -18,7 +18,6 @@ box moves, and a key a reader would take apart quoted.
 
 from __future__ import annotations
 
-import shutil
 import sys
 import tempfile
 import unittest
@@ -39,7 +38,7 @@ from terrane.payload import graph_payload  # noqa: E402
 from terrane.query import ViewError, load_views, parse_view, position_key  # noqa: E402
 from terrane.sketch import dump_yaml  # noqa: E402
 
-from _fixture import REPO, Sandbox, seeded_model, seeded_root, setup_shared, teardown_shared  # noqa: E402
+from _fixture import REPO, Sandbox, remove_scratch, seeded_model, seeded_root, setup_shared, teardown_shared  # noqa: E402
 
 NETWORK = (REPO / "30_VIEWS" / "network-topology.view.yaml").read_text(encoding="utf-8")
 
@@ -117,7 +116,7 @@ class TestTheDiagramsOwn(unittest.TestCase):
         (self.folder / "lending.view.yaml").write_text(text, encoding="utf-8")
 
     def tearDown(self) -> None:
-        shutil.rmtree(self.folder)
+        remove_scratch(self.folder, "aac-positions-")
 
     def test_positions_survive_the_merge_and_are_never_the_placed_views(self) -> None:
         views = {v.view_id: v for v in load_views(self.folder)}

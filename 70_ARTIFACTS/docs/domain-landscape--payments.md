@@ -29,11 +29,13 @@ flowchart LR
     SYS_SCREENING_GATEWAY["NICE Actimize Screening<br/>Integration Gateway<br/>[EKS]"]
   end
 
+  SYS_MERCH_ACQ["Merchant acquiring<br/>platform<br/>[external]"]
   SYS_TOKEN["Tokenization and<br/>credential management"]
   SYS_FRAUD_DETECT["Transaction fraud<br/>detection"]
 
   SYS_AUTH_SWITCH -->|"ISO8583"| SYS_FRAUD_DETECT
   SYS_AUTH_SWITCH -->|"HTTPS"| SYS_TOKEN
+  SYS_MERCHANT_API -->|"HTTPS"| SYS_MERCH_ACQ
   SYS_AUTH_SWITCH --> OI_LEDGER_QUEUE
   SYS_MERCHANT_WEB --> OI_MERCHANT_API
   SYS_MERCHANT_API -->|"TDS"| SYS_MERCHANT_STORE
@@ -49,7 +51,7 @@ flowchart LR
   class OI_LEDGER_QUEUE s_offered_interfaces__high;
   class OI_MERCHANT_API s_offered_interfaces__medium;
   class SYS_AUTH_SWITCH,SYS_CORE_LEDGER,SYS_SCREENING_GATEWAY s_systems__high;
-  class SYS_FRAUD_DETECT,SYS_MERCHANT_API,SYS_MERCHANT_EVENTS,SYS_MERCHANT_STORE,SYS_MERCHANT_WEB,SYS_TOKEN s_systems__medium;
+  class SYS_FRAUD_DETECT,SYS_MERCH_ACQ,SYS_MERCHANT_API,SYS_MERCHANT_EVENTS,SYS_MERCHANT_STORE,SYS_MERCHANT_WEB,SYS_TOKEN s_systems__medium;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Card_Issuing,grp_Payments,grp_Risk_and_Compliance boundary1;
 ```
@@ -83,4 +85,4 @@ Each flow is a recorded sequence of interfaces. The steps drawn on this diagram 
 3. NICE Actimize Screening Private Egress → NICE Actimize Screening (PrivateLink) — not on this diagram
 4. Authorization Switch → Core Card Ledger (MQ)
 
-11 entities, 9 relationships. Generated from the model; edit the model, not this file.
+12 entities, 10 relationships. Generated from the model; edit the model, not this file.

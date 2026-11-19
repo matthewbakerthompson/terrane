@@ -1,6 +1,26 @@
 # Optional verification tools
 
-The engine itself has no dependencies. These do, and they are optional.
+The engine itself has no dependencies. These do, and they are optional; the
+test runner is the exception, and needs nothing past the standard library.
+
+## `run_tests.py`
+
+The full suite across the machine's cores: each test file in a process of
+its own, as many at a time as `--jobs` says (the core count unless told), one
+summary at the end with unittest's own `Ran N tests` line, OK or every
+failure's output, and the slowest files.
+
+```bash
+cd 50_ENGINE && python tools/run_tests.py
+cd 50_ENGINE && python tools/run_tests.py test_style.py test_checklist.py
+```
+
+`python -m unittest discover -s tests` runs the same tests one after
+another in one process and stays the fallback; the two counts agree. A file
+that alone would outlast the rest is split by test class (`SPLIT`), and a
+file that cannot share the machine runs alone after the others (`SERIAL`).
+The longest go first, by the last run's times, kept in the temporary folder
+as `terrane-test-times.json`.
 
 ## `mermaid_parse_check.mjs`
 

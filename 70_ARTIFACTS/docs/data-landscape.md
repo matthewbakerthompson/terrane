@@ -49,12 +49,20 @@ flowchart TB
     DA_DISPUTES_VENDOR_FEED[("Dispute Management<br/>Platform vendor feed")]
   end
 
+  DA_AUTH_LOG[("Authorization log")]
+  DA_COLLATERAL[("Collateral, title and lien<br/>record")]
   DA_COLLECT_ACT[("Collections activity<br/>record")]
   DA_APPLICATION[("Credit application record")]
   DA_BUREAU_FILE[("Credit bureau furnishing<br/>file")]
+  DA_DEALER[("Dealer master and<br/>agreement")]
+  DA_DEPOSIT_ACCOUNT[("Deposit account and CD<br/>record")]
   DA_DISPUTE_CASE[("Dispute case file")]
   DA_GL[("General ledger entries")]
+  DA_LOAN_ACCOUNT[("Installment loan account")]
+  DA_MERCHANT[("Merchant master and<br/>underwriting file")]
+  DA_MERCH_SETTLE[("Merchant settlement and<br/>reserve ledger")]
   DA_MODEL_FEAT[("Model feature store")]
+  DA_PARTNER_PROGRAM[("Partner program terms and<br/>economics")]
   DA_PAYMENT_INSTR[("Payment instructions")]
   DA_PROSPECT[("Prospect marketing list")]
   DA_CLIENT_SERV[("Servicing client program<br/>data")]
@@ -64,9 +72,9 @@ flowchart TB
   classDef s_data_assets__confidential fill:#8addba,stroke:#047857,color:#0f172a,stroke-width:1.9px;
   classDef s_data_assets__internal fill:#a7f3d0,stroke:#047857,color:#0f172a,stroke-width:1.1px;
   classDef s_data_assets__restricted fill:#70c9a7,stroke:#047857,color:#0f172a,stroke-width:2.6px;
-  class DA_CLIENT_SERV,DA_COLLECT_ACT,DA_DISPUTE_CASE,DA_LENDPERF_CURATED,DA_MERCHANT_OPERATIONAL,DA_MODEL_FEAT,DA_POSFIN_OPERATIONAL,DA_PROSPECT,DA_REWARDS_OPERATIONAL,DA_STATEMENTS s_data_assets__confidential;
+  class DA_CLIENT_SERV,DA_COLLATERAL,DA_COLLECT_ACT,DA_DEALER,DA_DISPUTE_CASE,DA_LENDPERF_CURATED,DA_MERCH_SETTLE,DA_MERCHANT,DA_MERCHANT_OPERATIONAL,DA_MODEL_FEAT,DA_PARTNER_PROGRAM,DA_POSFIN_OPERATIONAL,DA_PROSPECT,DA_REWARDS_OPERATIONAL,DA_STATEMENTS s_data_assets__confidential;
   class DA_GL s_data_assets__internal;
-  class DA_APPLICATION,DA_BUREAU_FILE,DA_CARD_ACCOUNT,DA_CARDSVC_OPERATIONAL,DA_COLLECT_OPERATIONAL,DA_CUST360_CURATED,DA_CUSTOMER_PROFILE,DA_DISPUTES_VENDOR_FEED,DA_LENDING_OPERATIONAL,DA_PAYMENT_INSTR,DA_SCREENING_OUTCOMES,DA_TRANSACTION s_data_assets__restricted;
+  class DA_APPLICATION,DA_AUTH_LOG,DA_BUREAU_FILE,DA_CARD_ACCOUNT,DA_CARDSVC_OPERATIONAL,DA_COLLECT_OPERATIONAL,DA_CUST360_CURATED,DA_CUSTOMER_PROFILE,DA_DEPOSIT_ACCOUNT,DA_DISPUTES_VENDOR_FEED,DA_LENDING_OPERATIONAL,DA_LOAN_ACCOUNT,DA_PAYMENT_INSTR,DA_SCREENING_OUTCOMES,DA_TRANSACTION s_data_assets__restricted;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Card_Issuing,grp_Collections,grp_Data_and_Analytics,grp_Lending,grp_Payments,grp_Risk_and_Compliance,grp_Servicing boundary1;
 ```
@@ -83,6 +91,6 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | 1.9px | Confidential |
 | 1.1px | Internal |
 
-23 entities, 0 relationships. Generated from the model; edit the model, not this file.
+31 entities, 0 relationships. Generated from the model; edit the model, not this file.
 
 > No edges connected the selected entities.

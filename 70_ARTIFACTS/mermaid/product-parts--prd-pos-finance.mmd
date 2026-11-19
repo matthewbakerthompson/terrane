@@ -30,6 +30,8 @@ flowchart LR
   TS_GCP_MONITORING[/"Cloud Monitoring<br/>[Observability]"/]
   TS_GCP_CLOUD_SQL[/"Cloud SQL for PostgreSQL<br/>[Relational database]"/]
   TS_GCP_GKE[/"Google Kubernetes Engine<br/>[Container platform]"/]
+  TS_GCPNET_SUB_LEND_APP[/"Lending App Subnetwork<br/>[Subnet]"/]
+  TS_GCPNET_SUB_LEND_DATA[/"Lending Data Subnetwork<br/>[Subnet]"/]
   TS_ENTRA_ID[/"Microsoft Entra ID<br/>[Identity provider]"/]
   TS_POSFIN_BACKUP[/"Point-of-Sale Finance<br/>Backup and recovery<br/>[Backup and DR Service]"/]
   TS_POSFIN_CACHE[/"Point-of-Sale Finance<br/>Cache<br/>[Memorystore]"/]
@@ -54,6 +56,9 @@ flowchart LR
   SYS_POSFIN_DB -.->|"runs on"| TS_POSFIN_BACKUP
   SYS_POSFIN_DB -.->|"runs on"| TS_GCP_KMS
   SYS_POSFIN_EVENTS -.->|"runs on"| TS_GCP_PUBSUB
+  SYS_POSFIN_API -.->|"runs on"| TS_GCPNET_SUB_LEND_APP
+  SYS_POSFIN_WEB -.->|"runs on"| TS_GCPNET_SUB_LEND_APP
+  SYS_POSFIN_DB -.->|"runs on"| TS_GCPNET_SUB_LEND_DATA
   SYS_POSFIN_API -->|"ReadWrite"| DA_POSFIN_OPERATIONAL
   SYS_POSFIN_DB -->|"ReadWrite"| DA_POSFIN_OPERATIONAL
   OI_POSFIN_API --- SYS_POSFIN_API
@@ -65,6 +70,6 @@ flowchart LR
   class DA_POSFIN_OPERATIONAL s_data_assets__data_assets;
   class OI_POSFIN_API s_offered_interfaces__offered_interfaces;
   class SYS_POSFIN_API,SYS_POSFIN_DB,SYS_POSFIN_EVENTS,SYS_POSFIN_WEB s_systems__systems;
-  class TS_ENTRA_ID,TS_GCP_APIGEE,TS_GCP_CLOUD_SQL,TS_GCP_GKE,TS_GCP_KMS,TS_GCP_MONITORING,TS_GCP_PUBSUB,TS_GCP_SECRET_MANAGER,TS_POSFIN_BACKUP,TS_POSFIN_CACHE,TS_POSFIN_DNS,TS_POSFIN_WAF s_tech_services__tech_services;
+  class TS_ENTRA_ID,TS_GCP_APIGEE,TS_GCP_CLOUD_SQL,TS_GCP_GKE,TS_GCP_KMS,TS_GCP_MONITORING,TS_GCP_PUBSUB,TS_GCP_SECRET_MANAGER,TS_GCPNET_SUB_LEND_APP,TS_GCPNET_SUB_LEND_DATA,TS_POSFIN_BACKUP,TS_POSFIN_CACHE,TS_POSFIN_DNS,TS_POSFIN_WAF s_tech_services__tech_services;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_api_service,grp_event_publisher,grp_relational_datastore,grp_web_channel boundary1;

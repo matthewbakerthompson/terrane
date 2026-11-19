@@ -29,6 +29,9 @@ flowchart TB
     end
   end
 
+  SYS_MERCH_ACQ["Merchant acquiring<br/>platform<br/>[external]"]
+
+  SYS_MERCHANT_API -->|"HTTPS"| SYS_MERCH_ACQ
   SYS_MERCHANT_WEB --> OI_MERCHANT_API
   SYS_MERCHANT_API -->|"TDS"| SYS_MERCHANT_STORE
   SYS_MERCHANT_API -->|"AMQP"| SYS_MERCHANT_EVENTS
@@ -39,7 +42,7 @@ flowchart TB
   classDef s_systems__private_app fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__private_data fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   class OI_MERCHANT_API s_offered_interfaces__private_app;
-  class SYS_MERCHANT_EVENTS s_systems__default;
+  class SYS_MERCH_ACQ,SYS_MERCHANT_EVENTS s_systems__default;
   class SYS_MERCHANT_API,SYS_MERCHANT_WEB s_systems__private_app;
   class SYS_MERCHANT_STORE s_systems__private_data;
   classDef boundary1 fill:#f1f6fb,stroke:#5b9bd5,color:#2f5d8a;
@@ -74,4 +77,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | dotted `#7a8699` | Azure region |
 | solid `#5b9bd5` | Azure subnet |
 
-5 entities, 4 relationships. Generated from the model; edit the model, not this file.
+6 entities, 5 relationships. Generated from the model; edit the model, not this file.

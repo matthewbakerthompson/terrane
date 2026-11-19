@@ -1,0 +1,57 @@
+@startuml
+' Set and adjust merchant reserve — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Set and adjust merchant reserve — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_MERCH_04_02, "Merchant Reserve Management", "Set, adjust and release the reserves merchants carry against future chargebacks.", $tags="capabilities")
+  ' aac CAP_MERCH_04_02: company_domain="Merchant Services"
+  System(CAP_MERCH_04, "Merchant Settlement & Funding", "Clear and settle merchant card volume and fund merchant accounts daily, with reserves where risk requires them.", $tags="capabilities")
+  ' aac CAP_MERCH_04: company_domain="Merchant Services"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_MERCH_EXPOSURE, "Merchant exposure limit monitoring", "Merchant volume, chargeback ratios and future delivery exposure are checked daily against approved limits, with breaches actioned.", $tags="controls")
+  ' aac CTL_MERCH_EXPOSURE: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_MERCHANT, "Merchant master and underwriting file", "Merchant identity, beneficial owners, underwriting decision, limits, pricing and screening results.", $tags="data_assets")
+  ' aac DA_MERCHANT: company_domain=""
+  SystemDb(DA_MERCH_SETTLE, "Merchant settlement and reserve ledger", "Daily merchant volume, fees, chargebacks, funding and reserve balances.", $tags="data_assets")
+  ' aac DA_MERCH_SETTLE: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_MERCHANT_007, "Set and adjust merchant reserve", "Set the reserve or delayed funding a merchant must carry, raise it when chargebacks, refunds or delivery risk grow, and release it when exposure ends after the merchant leaves. Reserves are held merchant money, so each change is evidenced against the merchant agreement.", $tags="processes")
+  ' aac P_MERCHANT_007: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_MERCH_ACQ, "Merchant acquiring platform", "Processor platform for merchant boarding, clearing, settlement, reserves, fees and statements. Built with external.", $tags="systems")
+  ' aac SYS_MERCH_ACQ: company_domain=""; hosting="External"; technology="external"
+  System(SYS_MERCH_RISK, "Merchant risk monitoring", "Monitors merchant volume, chargeback ratios and exposure, and checks merchants against the networks' terminated-merchant file.", $tags="systems")
+  ' aac SYS_MERCH_RISK: company_domain=""
+}
+
+Rel(P_MERCHANT_007, SYS_MERCH_RISK, "Primary")
+' aac rel: source="P_MERCHANT_007"; target="SYS_MERCH_RISK"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_MERCHANT_007, SYS_MERCH_ACQ, "Supporting")
+' aac rel: source="P_MERCHANT_007"; target="SYS_MERCH_ACQ"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_MERCHANT_007, DA_MERCH_SETTLE, "Both")
+' aac rel: source="P_MERCHANT_007"; target="DA_MERCH_SETTLE"; label="Both"; relation="process_uses_data_asset"; access="Both"
+Rel(P_MERCHANT_007, DA_MERCHANT, "Read")
+' aac rel: source="P_MERCHANT_007"; target="DA_MERCHANT"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_MERCHANT_007, CTL_MERCH_EXPOSURE, "governed by")
+' aac rel: source="P_MERCHANT_007"; target="CTL_MERCH_EXPOSURE"; label="governed by"; relation="process_governed_by_control"
+Rel(P_MERCHANT_007, CAP_MERCH_04_02, "supports")
+' aac rel: source="P_MERCHANT_007"; target="CAP_MERCH_04_02"; label="supports"; relation="process_supports_capability"
+Rel(P_MERCHANT_007, CAP_MERCH_04, "supports")
+' aac rel: source="P_MERCHANT_007"; target="CAP_MERCH_04"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

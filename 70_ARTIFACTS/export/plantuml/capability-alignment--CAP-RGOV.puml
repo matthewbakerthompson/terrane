@@ -16,6 +16,8 @@ Boundary(b_Capability, "Capability") {
   ' aac CAP_RGOV_06: company_domain="Cross-Functional Services"
   System(CAP_RGOV_03, "Compliance Monitoring & Testing", "Test whether controls operate as designed and report the result.", $tags="capabilities")
   ' aac CAP_RGOV_03: company_domain="Cross-Functional Services"
+  System(CAP_RGOV_09, "Fair Lending Monitoring", "Test credit decisions, pricing and dealer markup for disparities, and remediate what the testing finds.", $tags="capabilities")
+  ' aac CAP_RGOV_09: company_domain="Cross-Functional Services"
   System(CAP_RGOV_07, "Financial Crimes & BSA/AML Compliance", "Operate the KYC/CIP program, transaction monitoring, sanctions screening, and regulatory filing.", $tags="capabilities")
   ' aac CAP_RGOV_07: company_domain="Cross-Functional Services"
   System(CAP_RGOV_05, "Internal Audit & Examination Management", "Coordinate internal audits and regulatory examinations.", $tags="capabilities")
@@ -34,6 +36,8 @@ Boundary(b_Capability, "Capability") {
 Boundary(b_Control, "Control") {
   System(CTL_COMPLAINT_REG, "Complaint regulatory routing", "Complaints are classified to taxonomy, resolved to SLA, and routed to regulators where required; executive and regulator complaints carry expedited handling.", $tags="controls")
   ' aac CTL_COMPLAINT_REG: company_domain=""
+  System(CTL_FAIR_LEND_TEST, "Fair lending testing", "Approvals, lines, pricing, markup and treatment are tested quarterly for disparities, and findings go to remediation.", $tags="controls")
+  ' aac CTL_FAIR_LEND_TEST: company_domain=""
   System(CTL_REGCHANGE_TRACK, "Regulatory change implementation tracking", "Applicability decisions and implementation actions for regulatory changes are tracked to evidenced completion with compliance sign-off.", $tags="controls")
   ' aac CTL_REGCHANGE_TRACK: company_domain=""
   System(CTL_REGRPT_CERT, "Regulatory report certification", "Regulatory submissions reconcile to the ledger and prior filings and carry a named officer certification before transmission.", $tags="controls")
@@ -68,8 +72,14 @@ Boundary(b_Process, "Process") {
   ' aac P_COMPLIANCE_004: company_domain=""
   System(P_RISK_001, "Manage issue and remediation to closure", "Track an identified issue through remediation to evidenced closure. Issues from any source (audit, compliance, self-identified, exam) run one lifecycle: owner, action plan, dates, and evidenced closure that survives challenge.", $tags="processes")
   ' aac P_RISK_001: company_domain=""
+  System(P_COMPLIANCE_007, "Monitor transactions for suspicious activity", "Run monitoring scenarios over card, loan, deposit and merchant activity, triage the alerts, and escalate unusual activity to investigation, tuning the scenarios to the bank's risk assessment. Alerts aged past the review window put suspicious activity report deadlines at risk.", $tags="processes")
+  ' aac P_COMPLIANCE_007: company_domain=""
   System(P_COMPLIANCE_003, "Screen for sanctions and watchlists", "Screen parties and transactions against sanctions and watchlists and adjudicate hits. Screening runs at onboarding and on list updates across cardholders, clients, and suppliers; a hit blocks processing until dispositioned, and the disposition is retained as evidence.", $tags="processes")
   ' aac P_COMPLIANCE_003: company_domain=""
+  System(P_COMPLIANCE_008, "Screen transactions and parties against sanctions in line", "Screen card transactions in the authorization path, and customers and counterparties nightly, against sanctions, politically exposed person and adverse media lists, and hold or block the true matches. A missed sanctions match is a strict-liability violation, so list updates are applied the day they are published.", $tags="processes")
+  ' aac P_COMPLIANCE_008: company_domain=""
+  System(P_COMPLIANCE_006, "Test credit decisions and pricing for fair lending", "Test approvals, lines, pricing, dealer markup and collections treatment for disparities across protected classes, using proxy methods where the data is not collected, and investigate and remediate what the testing finds. Fair lending findings lead to restitution and consent orders, and discretionary dealer markup is the classic exposure.", $tags="processes")
+  ' aac P_COMPLIANCE_006: company_domain=""
   System(P_RISK_002, "Validate model independently", "Perform independent validation of a model and record the outcome and conditions. Independent validation is organizationally separate from development; findings condition or block production use, and revalidation triggers are set at approval.", $tags="processes")
   ' aac P_RISK_002: company_domain=""
   System(P_ORIG_002, "Verify applicant identity and satisfy CIP", "Verify the applicant's identity and record evidence satisfying customer identification obligations. CIP evidence is retained per BSA requirements; verification failures route to document request rather than automatic decline, and synthetic identity signals feed fraud screening.", $tags="processes")
@@ -78,6 +88,8 @@ Boundary(b_Process, "Process") {
 Boundary(b_System, "System") {
   System_Ext(SYS_ARCHREPO, "Architecture repository", "Architecture models, standards, decisions, and the application inventory. Built with SaaS.", $tags="systems")
   ' aac SYS_ARCHREPO: company_domain=""; hosting="SaaS"; technology="SaaS"
+  System(SYS_CREDIT_DATA, "Credit data and decisioning environment", "Credit data, analytics, and decisioning environment. Built with Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_CREDIT_DATA: company_domain=""; technology="Snowflake Data Cloud"
   System_Ext(SYS_CRM, "Dynamics 365 Customer Service", "Contact center desktop and case management for servicing agents. Built with Microsoft.", $tags="systems")
   ' aac SYS_CRM: company_domain="Servicing"; hosting="SaaS"; technology="Microsoft"
   System(SYS_AML, "Financial crimes platform", "Sanctions screening, transaction monitoring, and case management.", $tags="systems")
@@ -88,6 +100,8 @@ Boundary(b_System, "System") {
   ' aac SYS_KYC: company_domain=""
   System(SYS_MODEL, "Model platform", "Model development, deployment, and monitoring.", $tags="systems")
   ' aac SYS_MODEL: company_domain=""
+  System_Ext(SYS_SCREENING_VENDOR, "NICE Actimize Screening", "Financial Crime Screening, operated by NICE Actimize in their own tenancy. Contractually pinned to EU processing; the DPA restricts sub-processors and sets a 90-day retention ceiling. Built with NICE Actimize.", $tags="systems")
+  ' aac SYS_SCREENING_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="NICE Actimize"
 }
 
 Rel(CAP_RGOV_01, CAP_RGOV, "part of")
@@ -98,6 +112,7 @@ Rel(CAP_RGOV_05, CAP_RGOV, "part of")
 Rel(CAP_RGOV_06, CAP_RGOV, "part of")
 Rel(CAP_RGOV_07, CAP_RGOV, "part of")
 Rel(CAP_RGOV_08, CAP_RGOV, "part of")
+Rel(CAP_RGOV_09, CAP_RGOV, "part of")
 Rel(CAP_RGOV, FW_COBIT, "Aligned to")
 ' aac rel: source="CAP_RGOV"; target="FW_COBIT"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
 Rel(CAP_RGOV_01, FW_BIAN, "Risk and Compliance > Regulations and Compliance > Guideline Compliance")
@@ -116,6 +131,8 @@ Rel(CAP_RGOV_07, FW_BIAN, "Risk and Compliance > Regulations and Compliance > Re
 ' aac rel: source="CAP_RGOV_07"; target="FW_BIAN"; label="Risk and Compliance > Regulations and Compliance > Regulatory Compliance"; relation="capability_references_framework"; ref="Risk and Compliance > Regulations and Compliance > Regulatory Compliance"
 Rel(CAP_RGOV_08, FW_BIAN, "Risk and Compliance > Models > Credit Risk Models")
 ' aac rel: source="CAP_RGOV_08"; target="FW_BIAN"; label="Risk and Compliance > Models > Credit Risk Models"; relation="capability_references_framework"; ref="Risk and Compliance > Models > Credit Risk Models"
+Rel(CAP_RGOV_09, FW_BIAN, "Risk and Compliance > Regulations and Compliance > Compliance Reporting / Compliance Assessment")
+' aac rel: source="CAP_RGOV_09"; target="FW_BIAN"; label="Risk and Compliance > Regulations and Compliance > Compliance Reporting / Compliance Assessment"; relation="capability_references_framework"; ref="Risk and Compliance > Regulations and Compliance > Compliance Reporting / Compliance Assessment"
 Rel(P_ORIG_002, CAP_RGOV_07, "supported by")
 ' aac rel: source="P_ORIG_002"; target="CAP_RGOV_07"; label="supported by"; relation="process_supports_capability"
 Rel(P_CREDIT_002, CAP_RGOV_08, "supported by")
@@ -140,8 +157,16 @@ Rel(P_RISK_003, CAP_RGOV_05, "supported by")
 ' aac rel: source="P_RISK_003"; target="CAP_RGOV_05"; label="supported by"; relation="process_supports_capability"
 Rel(P_EA_003, CAP_RGOV_04, "supported by")
 ' aac rel: source="P_EA_003"; target="CAP_RGOV_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_006, CAP_RGOV_09, "supported by")
+' aac rel: source="P_COMPLIANCE_006"; target="CAP_RGOV_09"; label="supported by"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_007, CAP_RGOV_07, "supported by")
+' aac rel: source="P_COMPLIANCE_007"; target="CAP_RGOV_07"; label="supported by"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_008, CAP_RGOV_07, "supported by")
+' aac rel: source="P_COMPLIANCE_008"; target="CAP_RGOV_07"; label="supported by"; relation="process_supports_capability"
 Rel(CAP_RGOV, CTL_COMPLAINT_REG, "governed by")
 ' aac rel: source="CAP_RGOV"; target="CTL_COMPLAINT_REG"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_RGOV, CTL_FAIR_LEND_TEST, "governed by")
+' aac rel: source="CAP_RGOV"; target="CTL_FAIR_LEND_TEST"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
 Rel(CAP_RGOV, CTL_REGCHANGE_TRACK, "governed by")
 ' aac rel: source="CAP_RGOV"; target="CTL_REGCHANGE_TRACK"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
 Rel(CAP_RGOV, CTL_REGRPT_CERT, "governed by")
@@ -160,10 +185,14 @@ Rel(CAP_RGOV_07, CTL_SANCTIONS, "governed by")
 ' aac rel: source="CAP_RGOV_07"; target="CTL_SANCTIONS"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
 Rel(CAP_RGOV_07, CTL_SAR_FILING, "governed by")
 ' aac rel: source="CAP_RGOV_07"; target="CTL_SAR_FILING"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_RGOV_09, CTL_FAIR_LEND_TEST, "governed by")
+' aac rel: source="CAP_RGOV_09"; target="CTL_FAIR_LEND_TEST"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
 Rel(SYS_AML, CAP_RGOV_07, "realizes")
 ' aac rel: source="SYS_AML"; target="CAP_RGOV_07"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_ARCHREPO, CAP_RGOV_04, "realizes")
 ' aac rel: source="SYS_ARCHREPO"; target="CAP_RGOV_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CREDIT_DATA, CAP_RGOV_09, "realizes")
+' aac rel: source="SYS_CREDIT_DATA"; target="CAP_RGOV_09"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_CRM, CAP_RGOV_06, "realizes")
 ' aac rel: source="SYS_CRM"; target="CAP_RGOV_06"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_GRC, CAP_RGOV_02, "realizes")
@@ -180,6 +209,8 @@ Rel(SYS_KYC, CAP_RGOV_07, "realizes")
 ' aac rel: source="SYS_KYC"; target="CAP_RGOV_07"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_MODEL, CAP_RGOV_08, "realizes")
 ' aac rel: source="SYS_MODEL"; target="CAP_RGOV_08"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_SCREENING_VENDOR, CAP_RGOV_07, "realizes")
+' aac rel: source="SYS_SCREENING_VENDOR"; target="CAP_RGOV_07"; label="realizes"; relation="system_realizes_capability"
 
 SHOW_LEGEND()
 @enduml

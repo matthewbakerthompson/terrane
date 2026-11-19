@@ -91,6 +91,9 @@ def _own_label(o: Own) -> str:
     bold, and the rest a caption two sizes down; anything else's as they
     are."""
     lines = [p for p in o.label.split("\n") if p.strip()]
+    if o.listed:
+        # A list's lines, each after its bullet.
+        return _html("\n".join("• " + p if p.strip() else p for p in o.label.split("\n")))
     if o.role != "shape" or len(lines) < 2:
         return _html(o.label)
     return "<b>%s</b>" % escape(lines[0]) + "".join(
@@ -169,6 +172,13 @@ def own_style(o: Own) -> str:
     # kind's, so they win.
     corners = ("rounded=1;absoluteArcSize=1;arcSize=%s;" % _f(2 * o.corners) if o.corners
                else "rounded=0;" if o.corners == 0 else "")
+    # How its words are set, as draw.io's fontStyle bits (bold 1, italic 2,
+    # underline 4, struck 8; a frame's name is bold already) and its align,
+    # later in the style than its kind's, so they win.
+    bits = ((1 if o.bold or o.role == "frame" else 0) | (2 if o.italic else 0) | (4 if o.underline else 0)
+            | (8 if o.strike else 0))
+    words = (("fontStyle=%d;" % bits if bits and (bits != 1 or o.role != "frame") else "")
+             + ("align=%s;" % o.align if o.align and not o.listed and o.role != "frame" else ""))
     if o.role == "frame":
         look = ("rounded=1;absoluteArcSize=1;arcSize=12;container=1;collapsible=0;align=left;verticalAlign=top;"
                 "spacing=0;spacingLeft=12;spacingTop=8;spacingRight=12;fontStyle=1;")
@@ -185,25 +195,38 @@ def own_style(o: Own) -> str:
         # ends on it.
         return ("rounded=1;absoluteArcSize=1;arcSize=%s;fillColor=%s;gradientColor=%s;gradientDirection=south;"
                 "strokeColor=none;verticalLabelPosition=bottom;verticalAlign=top;labelPosition=center;align=center;"
-                "spacingTop=%s;whiteSpace=wrap;html=1;fontSize=%s;fontColor=%s;%s%s"
+                "spacingTop=%s;whiteSpace=wrap;html=1;fontSize=%s;fontColor=%s;%s%s%s"
                 % (_f(2 * (o.corners if o.corners is not None else 12)), o.tint[0], o.tint[1], _f(TILE_GAP),
-                   _f(o.size), o.words, "fillOpacity=%d;" % round(o.opacity * 100) if o.opacity < 1 else "", turn))
-    return (look + "whiteSpace=wrap;html=1;" + paint + ("dashed=1;dashPattern=6 4;" if o.dashed else "") + corners
-            + turn)
+                   _f(o.size), o.words, "fillOpacity=%d;" % round(o.opacity * 100) if o.opacity < 1 else "",
+                   words.replace("align=%s;" % o.align, ""), turn))
+    return (look + "whiteSpace=wrap;html=1;" + paint + (("dashed=1;dashPattern=%s;" % ("2 3" if o.dotted else "6 4"))
+                                                        if o.dashed else "") + corners
+            + words + turn)
+
+
+#: Each head (V16) as draw.io's own marker draws it nearest, and whether
+#: the marker is filled.
+DRAWIO_HEADS = {"arrow": ("block", 1), "open-arrow": ("open", 0), "dot": ("oval", 1), "inherits": ("block", 0),
+                "made-of": ("diamond", 1), "has": ("diamond", 0), "depends-on": ("open", 0),
+                "one": ("ERmandOne", 0), "many": ("ERmany", 0), "one-or-many": ("ERoneToMany", 0),
+                "none-or-one": ("ERzeroToOne", 0), "none-or-many": ("ERzeroToMany", 0), "serving": ("open", 0),
+                "triggering": ("block", 1), "flow": ("block", 1), "realization": ("block", 0),
+                "assignment": ("block", 1), "access": ("openThin", 0)}
 
 
 def own_line_style(o: Own) -> str:
     """A line of the diagram's own: straight, square through its turns, or
     curved through them, with its heads."""
-    route = {"square": "edgeStyle=orthogonalEdgeStyle;rounded=0;", "curved": "curved=1;"}.get(o.route, "")
-    end = "endArrow=none;" if o.ends == "none" else "endArrow=block;endFill=1;"
-    start = "startArrow=block;startFill=1;" if o.ends == "both" else "startArrow=none;"
+    route = {"square": "edgeStyle=orthogonalEdgeStyle;rounded=%d;" % (1 if o.turns == "rounded" else 0),
+             "curved": "curved=1;"}.get(o.route, "rounded=1;" if o.turns == "rounded" else "")
+    start, end = (("%sArrow=%s;%sFill=%d;" % (k, DRAWIO_HEADS[h][0], k, DRAWIO_HEADS[h][1]))
+                  if h in DRAWIO_HEADS else "%sArrow=none;" % k for k, h in zip(("start", "end"), o.heads))
     # An end held at a point of its box, as draw.io holds a joined end: a
     # share to the hundredth, which _f's tenth would have made 0.25 into 0.2.
     held = "".join("%sX=%s;%sY=%s;%sPerimeter=0;" % (k, format(round(v[0], 2), "g"), k, format(round(v[1], 2), "g"), k)
                    for k, v in (("exit", o.from_at), ("entry", o.to_at)) if v)
-    return "".join([route, held, "html=1;strokeColor=%s;strokeWidth=1.5;" % o.edge, end, start,
-                    "dashed=1;dashPattern=6 4;" if o.dashed else "",
+    return "".join([route, held, "html=1;strokeColor=%s;strokeWidth=%s;" % (o.edge, _f(o.weight)), end, start,
+                    ("dashed=1;dashPattern=%s;" % ("2 3" if o.dotted else "6 4")) if o.dashed else "",
                     "fontSize=%s;fontColor=%s;labelBackgroundColor=#fffdf8;labelBorderColor=#2e2a25;" % (
                         _f(o.size), OWN_INK)])
 
@@ -387,8 +410,10 @@ def diagram_xml(scene: Scene, kinds: Optional[Dict[str, str]] = None,
             else:
                 parent_id, (px, py) = parent_of(parent), origin(parent)
             x1, y1, x2, y2 = tile_box(o.box) if o.look == "tiles" and o.role == "shape" else o.box
-            out.append('    <UserObject id=%s label=%s aac_own=%s>' % (
-                quoteattr(own_cell_id[o.key]), quoteattr(_own_label(o)), quoteattr(o.role)))
+            # A link is draw.io's own, which it opens and marks itself.
+            out.append('    <UserObject id=%s label=%s aac_own=%s%s>' % (
+                quoteattr(own_cell_id[o.key]), quoteattr(_own_label(o)), quoteattr(o.role),
+                " link=%s" % quoteattr(o.link) if o.link else ""))
             out.append('      <mxCell style=%s vertex="1" parent=%s>' % (quoteattr(own_style(o)), quoteattr(parent_id)))
             out.append('        <mxGeometry x="%s" y="%s" width="%s" height="%s" as="geometry"/>' % (
                 _f(ox + x1 - px), _f(oy + y1 - py), _f(x2 - x1), _f(y2 - y1)))
@@ -420,6 +445,18 @@ def diagram_xml(scene: Scene, kinds: Optional[Dict[str, str]] = None,
             out.append("        </mxGeometry>")
             out.append("      </mxCell>")
             out.append("    </UserObject>")
+            # Its words at its start and its end, as draw.io labels an edge
+            # more than once: a label of its own riding on it, a share in
+            # from each end as the canvas places them.
+            for place, words in o.labels:
+                out.append('    <mxCell id=%s value=%s style=%s vertex="1" connectable="0" parent=%s>' % (
+                    quoteattr("%s~%s" % (own_cell_id[o.key], place)), quoteattr(_html(words)),
+                    quoteattr("edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=%s;"
+                              "fontColor=%s;labelBackgroundColor=#fffdf8;labelBorderColor=#2e2a25;" % (_f(o.size), OWN_INK)),
+                    quoteattr(own_cell_id[o.key])))
+                out.append('      <mxGeometry x="%s" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>'
+                           % ("-0.7" if place == "start" else "0.7"))
+                out.append("    </mxCell>")
 
     own_cells("under", "1")
     for index, b in enumerate(scene.boundaries):

@@ -1,0 +1,53 @@
+@startuml
+' Maintain authorization routing and network connectivity — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Maintain authorization routing and network connectivity — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_PAY_01, "Authorization Processing", "Decision and respond to real-time authorization requests.", $tags="capabilities")
+  ' aac CAP_PAY_01: company_domain="Servicing"
+  System(CAP_PAY_01_05, "Transaction Switching", "Route authorization traffic between networks and the host.", $tags="capabilities")
+  ' aac CAP_PAY_01_05: company_domain="Servicing"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_CHG_APPROVAL, "Production change approval", "No change reaches production without an approved change record, test evidence, and a rollback plan; emergency changes are reviewed after the fact.", $tags="controls")
+  ' aac CTL_CHG_APPROVAL: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_AUTH_LOG, "Authorization log", "Every authorization request and response, with the decision, the reason and whether stand-in answered.", $tags="data_assets")
+  ' aac DA_AUTH_LOG: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_PAYMENTS_007, "Maintain authorization routing and network connectivity", "Maintain the switch's routing tables, network keys and message specifications, apply the networks' release changes, and test connectivity with each network. A routing or key error declines every transaction on that path until it is fixed.", $tags="processes")
+  ' aac P_PAYMENTS_007: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_AUTH_SWITCH, "Authorization Switch", "Real-time card authorization switch connected to the scheme networks.", $tags="systems")
+  ' aac SYS_AUTH_SWITCH: company_domain="Payments"; hosting="On-prem"
+  System_Ext(SYS_ITSM, "IT service management", "Incident, change, and service management. Built with SaaS.", $tags="systems")
+  ' aac SYS_ITSM: company_domain=""; hosting="SaaS"; technology="SaaS"
+}
+
+Rel(P_PAYMENTS_007, SYS_AUTH_SWITCH, "Primary")
+' aac rel: source="P_PAYMENTS_007"; target="SYS_AUTH_SWITCH"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_PAYMENTS_007, SYS_ITSM, "Supporting")
+' aac rel: source="P_PAYMENTS_007"; target="SYS_ITSM"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PAYMENTS_007, DA_AUTH_LOG, "Read")
+' aac rel: source="P_PAYMENTS_007"; target="DA_AUTH_LOG"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_PAYMENTS_007, CTL_CHG_APPROVAL, "governed by")
+' aac rel: source="P_PAYMENTS_007"; target="CTL_CHG_APPROVAL"; label="governed by"; relation="process_governed_by_control"
+Rel(P_PAYMENTS_007, CAP_PAY_01_05, "supports")
+' aac rel: source="P_PAYMENTS_007"; target="CAP_PAY_01_05"; label="supports"; relation="process_supports_capability"
+Rel(P_PAYMENTS_007, CAP_PAY_01, "supports")
+' aac rel: source="P_PAYMENTS_007"; target="CAP_PAY_01"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

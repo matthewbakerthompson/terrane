@@ -19,6 +19,21 @@ systems:
   SYS-COLLECT: SYS-COLLECT-API       # the collections platform
   SYS-DW: SYS-DATA-INGEST            # the enterprise data platform
   SYS-WEB: SYS-CARDSVC-WEB           # cardholder web servicing
+  # The business layer named these roles when its lending, merchant and
+  # compliance processes were drawn, after the estate had built or bought the
+  # thing that plays each one. Mapped, so the products realize what their
+  # processes support instead of arriving twice under the layer's names.
+  SYS-AUTH: SYS-AUTH-SWITCH          # the authorization switch
+  SYS-REDEEM: SYS-REWARDS-API        # the rewards redemption product's service
+  SYS-SCREENING: SYS-SCREENING-VENDOR  # the bought sanctions screening
+  SYS-IDV: SYS-IDV-VENDOR            # the bought identity document checks
+  SYS-AFFORD: SYS-OBAFF-VENDOR       # the bought open banking affordability check
+  SYS-POS-FIN: SYS-POSFIN-API        # the point-of-sale finance product's service
+  SYS-INSTALL: SYS-LENDING-API       # the installment lending product's service
+  SYS-LENDPERF: SYS-LENDPERF-SEMANTIC  # the lending performance data product
+  SYS-CARDSVC: SYS-CARDSVC-API       # the card servicing product's service
+  SYS-MERCH-PORTAL: SYS-MERCHANT-WEB   # where merchants and ISOs apply and see statements
+  SYS-REG-RPT: SYS-REG-REPORTING     # the regulatory reporting engine
 
 data_assets:
   DA-CARDHOLDER: DA-CUSTOMER-PROFILE

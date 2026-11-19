@@ -178,6 +178,33 @@
       }
     }
     mg.ShapeRegistry.add("own-tile", Tile);
+    // A swimlane's pool: its paper, and the band its name sits in across
+    // its top; and a lane: its outline, and the column at its left or the
+    // band at its top that its name sits in (swim_parts in the picture).
+    class Pool extends mg.ActorShape {
+      paintVertexShape(c, x, y, w, h) {
+        var k = this.scale || 1;
+        c.setFillColor(PAPER);
+        c.rect(x, y, w, h);
+        c.fillAndStroke();
+        c.setFillColor(BAND);
+        c.rect(x, y, w, Math.min(POOL_TITLE * k, h));
+        c.fillAndStroke();
+      }
+    }
+    mg.ShapeRegistry.add("own-pool", Pool);
+    class Lane extends mg.ActorShape {
+      paintVertexShape(c, x, y, w, h) {
+        var k = this.scale || 1;
+        c.rect(x, y, w, h);
+        c.stroke();
+        c.setFillColor(BAND);
+        if (this.style.terraneNames === "top") c.rect(x, y, w, Math.min(LANE_BAND * k, h));
+        else c.rect(x, y, Math.min(LANE_COLUMN * k, w), h);
+        c.fillAndStroke();
+      }
+    }
+    mg.ShapeRegistry.add("own-lane", Lane);
     // A line joined to a tile ends on the tile, not on the box round it.
     mg.PerimeterRegistry.add("tilePerimeter", function (bounds, vertex, next, orthogonal) {
       var k = vertex && vertex.view ? vertex.view.scale : 1;
@@ -240,6 +267,10 @@
     // point it was left at.
     // ... around the boxes in its way, routed in the drawing's units as the
     // picture routes it (detour), then put back on the screen.
+    // Each head (V16) a marker of maxGraph's, drawn as the picture draws it.
+    Object.keys(HEAD_GLYPHS).forEach(function (name) {
+      if (name !== "none") mg.EdgeMarkerRegistry.add("terrane-" + name, headMarker(HEAD_GLYPHS[name]));
+    });
     mg.EdgeStyleRegistry.add("terrane-square", function (state, source, target, points, result) {
       var pts = state.absolutePoints || [], view = state.view, k = view.scale, tr = view.translate;
       var box = function (st, at) {
@@ -261,12 +292,34 @@
       var sb = target ? stub(pts[pts.length - 1], style.entryX, style.entryY) : null;
       var a = sa ? dot(sa.out || sa.pin) : box(source, pts[0]), b = sb ? dot(sb.out || sb.pin) : box(target, pts[pts.length - 1]);
       if (!a || !b) return;
-      var plain = squareTurns(a, b).map(function (p) { return [p.x, p.y]; });
-      var turns = detour([a.x1, a.y1, a.x2, a.y2], [b.x1, b.y1, b.x2, b.y2], walls(view), plain);
+      // Its stretches moved by hand (V16), it keeps the turns in its
+      // points and goes around nothing: where it runs is the person's. Its
+      // points are the model's, put on the screen first as maxGraph's own
+      // styles do (read as the screen's, every kept turn sat off by the
+      // sheet's offset from its boxes).
+      var kept = (points || []).filter(Boolean).map(function (p) {
+        var q = view.transformControlPoint(state, p);
+        return [q.x / k - tr.x, q.y / k - tr.y];
+      });
+      var turns = kept.length ? keptTurns(a, b, kept) : detour([a.x1, a.y1, a.x2, a.y2], [b.x1, b.y1, b.x2, b.y2],
+        walls(view), squareTurns(a, b).map(function (p) { return [p.x, p.y]; }));
       if (sa && sa.out) turns.unshift(sa.out);
       if (sb && sb.out) turns.push(sb.out);
       turns.forEach(function (p) { result.push(new mg.Point((p[0] + tr.x) * k, (p[1] + tr.y) * k)); });
     }, { isOrthogonal: true });
+  }
+
+  /* A square or curved line's turns where its stretches were moved by
+   * hand, from its points: through them, each end leaving its box square
+   * toward the first or the last, with a turn of its own where the box
+   * faces neither across nor down to it (kept_turns in the picture). */
+  function keptTurns(a, b, kept) {
+    var turns = kept.slice(), f = turns[0], last = turns[turns.length - 1];
+    if (!(a.x1 <= f[0] && f[0] <= a.x2) && !(a.y1 <= f[1] && f[1] <= a.y2)) turns.unshift([f[0], (a.y1 + a.y2) / 2]);
+    if (!(b.x1 <= last[0] && last[0] <= b.x2) && !(b.y1 <= last[1] && last[1] <= b.y2)) {
+      turns.push([last[0], (b.y1 + b.y2) / 2]);
+    }
+    return turns;
   }
 
   /* ---- line jumps
@@ -663,6 +716,85 @@
   var MARK = new RegExp("^(?:" + MARK_SETS.map(function (s) { return s[0]; }).join("|") + ")/[a-z0-9-]+$");
   //: The size a tool draws at when the sheet is clicked rather than dragged.
   var DEFAULT_SIZE = { shape: [120, 64], note: [184, 96], text: [200, 44], frame: [360, 240] };
+  //: How heavy a line is drawn, by its look's weight (LINE_WEIGHTS in
+  //: annotations.py); the dashes of a dashed outline and a dotted one; and
+  //: where a line's words at its start and its end ride, along it from its
+  //: middle (END_LABELS_AT in the picture, one less twice this).
+  var LINE_WEIGHTS = { s: 1, m: 1.5, l: 2.5 }, DASHES = { dashed: "6 4", dotted: "2 3" }, END_LABEL_AT = 0.7;
+  //: Each head an end of a line may have (V16), as the picture draws it
+  //: (HEAD_GLYPHS in annotations.py, held equal by a test): how far back
+  //: from its tip the line stops, and its parts, back along the line and
+  //: across it.
+  var HEAD_GLYPHS = {
+    "none": {"stop": 0, "parts": []},
+    "arrow": {"stop": 7, "parts": [["fill", [0, 0, 7, 3.5, 7, -3.5]]]},
+    "open-arrow": {"stop": 0, "parts": [["line", [7, 4, 0, 0, 7, -4]]]},
+    "dot": {"stop": 6, "parts": [["dot", [3, 3]]]},
+    "inherits": {"stop": 9, "parts": [["hollow", [0, 0, 9, 4.5, 9, -4.5]]]},
+    "made-of": {"stop": 12, "parts": [["fill", [0, 0, 6, 3.5, 12, 0, 6, -3.5]]]},
+    "has": {"stop": 12, "parts": [["hollow", [0, 0, 6, 3.5, 12, 0, 6, -3.5]]]},
+    "depends-on": {"stop": 0, "parts": [["line", [7, 4, 0, 0, 7, -4]]]},
+    "one": {"stop": 0, "parts": [["line", [4, 4.5, 4, -4.5]], ["line", [8, 4.5, 8, -4.5]]]},
+    "many": {"stop": 0, "parts": [["line", [0, 4.5, 8, 0, 0, -4.5]]]},
+    "one-or-many": {"stop": 0, "parts": [["line", [11, 4.5, 11, -4.5]], ["line", [0, 4.5, 8, 0, 0, -4.5]]]},
+    "none-or-one": {"stop": 15, "parts": [["line", [10, 0, 0, 0]], ["line", [5, 4.5, 5, -4.5]], ["ring", [12.5, 2.5]]]},
+    "none-or-many": {"stop": 17, "parts": [["line", [12, 0, 0, 0]], ["line", [0, 4.5, 8, 0, 0, -4.5]], ["ring", [14.5, 2.5]]]},
+    "serving": {"stop": 0, "parts": [["line", [7, 4, 0, 0, 7, -4]]]},
+    "triggering": {"stop": 7, "parts": [["fill", [0, 0, 7, 3.5, 7, -3.5]]]},
+    "flow": {"stop": 7, "parts": [["fill", [0, 0, 7, 3.5, 7, -3.5]]]},
+    "realization": {"stop": 9, "parts": [["hollow", [0, 0, 9, 4.5, 9, -4.5]]]},
+    "assignment": {"stop": 7, "parts": [["fill", [0, 0, 7, 3.5, 7, -3.5]]]},
+    "access": {"stop": 0, "parts": [["line", [5, 3, 0, 0, 5, -3]]]}
+  };
+
+  // A line's heads at its start and its end: its `heads`, an end they do
+  // not name having none, or else its `ends` (heads_of in annotations.py).
+  function headsOf(item) {
+    if (item.heads) return [item.heads.start || "none", item.heads.end || "none"];
+    return [item.ends === "both" ? "arrow" : "none", item.ends === "none" ? "none" : "arrow"];
+  }
+
+  function markerOf(head) { return head && head !== "none" && HEAD_GLYPHS[head] ? "terrane-" + head : "none"; }
+
+  // A head as a marker of maxGraph's: the line stopped at its stop, then
+  // its parts from its tip, as the picture draws them, round at the joins
+  // and, as maxGraph draws a marker, never dashed. maxGraph points the
+  // unit toward the tip; the glyph's `a` runs back from it.
+  function headMarker(g) {
+    return function (c, shape, type, pe, unitX, unitY) {
+      var tx = pe.x, ty = pe.y, ux = -unitX, uy = -unitY;
+      var at = function (a, b) { return [tx + ux * a - uy * b, ty + uy * a + ux * b]; };
+      pe.x = tx + ux * g.stop;
+      pe.y = ty + uy * g.stop;
+      return function () {
+        c.setLineJoin("round");
+        c.setLineCap("round");
+        g.parts.forEach(function (part) {
+          var kind = part[0], v = part[1];
+          if (kind === "dot" || kind === "ring") {
+            var m = at(v[0], 0);
+            c.ellipse(m[0] - v[1], m[1] - v[1], v[1] * 2, v[1] * 2);
+          } else {
+            c.begin();
+            for (var i = 0; i < v.length; i += 2) {
+              var p = at(v[i], v[i + 1]);
+              if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]);
+            }
+            if (kind !== "line") c.close();
+          }
+          if (kind === "fill" || kind === "dot") c.fill(); else c.stroke();
+        });
+      };
+    };
+  }
+  //: A swimlane (V16): the band its pool's name sits in across its top, the
+  //: column at a lane's left or the band at its top that the lane's name
+  //: sits in, and their paint (POOL_TITLE and the rest in annotations.py);
+  //: the least a lane is deep, and a lane's depth as a click draws three.
+  var POOL_TITLE = 34, LANE_COLUMN = 130, LANE_BAND = 40, BAND = "#f3eee5", LANE_LEAST = 60, LANE_DEEP = 160;
+  var SWIMLANE_SIZE = [720, POOL_TITLE + 3 * LANE_DEEP];
+  //: What holds what is drawn in it: a frame, a swimlane's pool, a lane.
+  var HOLDS = { frame: true, pool: true, lane: true };
 
   // What maxGraph's handle may turn: not a frame, since what sits in it
   // would turn too (terrane.annotations.TURNS).
@@ -700,9 +832,14 @@
       var routed = item.route === "square" || item.route === "curved";
       var line = {
         curved: item.route === "curved",
-        strokeColor: LOOK === "tiles" ? TILE_LINE : LINE_INK, strokeWidth: 1.5, dashed: look.line === "dashed", dashPattern: "6 4",
-        endArrow: item.ends === "none" ? "none" : "block", endSize: 7, endFill: true,
-        startArrow: item.ends === "both" ? "block" : "none", startSize: 7, startFill: true,
+        strokeColor: LOOK === "tiles" ? TILE_LINE : LINE_INK, strokeWidth: LINE_WEIGHTS[look.weight] || LINE_WEIGHTS.m,
+        dashed: !!DASHES[look.line], dashPattern: DASHES[look.line] || DASHES.dashed,
+        // A square line's turns rounded as the picture rounds them (ROUND_TURN).
+        rounded: item.turns === "rounded",
+        // Each end's head (V16), drawn from HEAD_GLYPHS; the size is only
+        // the room maxGraph leaves round the line for it.
+        endArrow: markerOf(headsOf(item)[1]), endSize: 18, endFill: true,
+        startArrow: markerOf(headsOf(item)[0]), startSize: 18, startFill: true,
         fontFamily: FACE, fontSize: TEXT_SIZES[look.text || "s"], fontColor: LOOK === "tiles" ? TILE_CAPTION : INK, html: true,
         labelBackgroundColor: LOOK === "tiles" ? "#ffffff" : PAPER, labelBorderColor: LOOK === "tiles" ? "none" : INK,
         spacing: 3,
@@ -717,6 +854,7 @@
       if (held(item.to_at)) Object.assign(line, { entryX: item.to_at[0], entryY: item.to_at[1], entryPerimeter: false });
       return line;
     }
+    if (role === "pool" || role === "lane") return swimStyle(item);
     if (LOOK === "tiles") return tilesStyle(item);
     var fill = ownFill(item);
     var stroke = role === "text" || look.line === "none" ? "none" : INK;
@@ -724,7 +862,7 @@
     var style = {
       fillColor: fill ? FILLS[fill] : "none", strokeColor: stroke, strokeWidth: weightOf(item),
       fillOpacity: fillOpacityOf(item),
-      dashed: look.line === "dashed", dashPattern: "6 4",
+      dashed: !!DASHES[look.line], dashPattern: DASHES[look.line] || DASHES.dashed,
       fontFamily: FACE, fontSize: size, fontColor: WORDS_ON[fill] || INK, html: true, whiteSpace: "wrap",
       overflow: "hidden", shadow: castsShadow(item),
       editable: false, rotatable: TURNS[role] === true, cloneable: false, foldable: false,
@@ -739,9 +877,10 @@
         spacingRight: 12, overflow: "visible", whiteSpace: "nowrap" });
     } else if (role === "note") {
       Object.assign(style, { shape: "rectangle", rounded: cornersOf(item) > 0, absoluteArcSize: true,
-        arcSize: cornersOf(item) * 2, align: "left", verticalAlign: "top", spacing: 10 });
+        arcSize: cornersOf(item) * 2, align: alignOf(item), verticalAlign: "top", spacing: 10 });
     } else if (role === "text") {
-      Object.assign(style, { shape: "rectangle", align: "left", verticalAlign: "top", spacing: 2, fontColor: "#3b4049" });
+      Object.assign(style, { shape: "rectangle", align: alignOf(item), verticalAlign: "top", spacing: 2,
+        fontColor: "#3b4049" });
     } else {
       var shape = (OWN_PATHS[item.shape] || item.shape === "rounded") ? item.shape : "rectangle";
       // A box with its corners rounded is maxGraph's own rounded rectangle,
@@ -754,9 +893,23 @@
       // on the box around it; the picture clips it the same way.
       if (shape === "ellipse") style.perimeter = "ellipsePerimeter";
       if (shape === "diamond") style.perimeter = "rhombusPerimeter";
-      Object.assign(style, { align: "center", verticalAlign: "middle", spacing: 8 });
+      Object.assign(style, { align: alignOf(item), verticalAlign: "middle", spacing: 8 });
     }
     return style;
+  }
+
+  // A swimlane's pool or lane, drawn one way whatever the diagram's look,
+  // its name where swim_parts sets it.
+  function swimStyle(item) {
+    var size = TEXT_SIZES[(item.look || {}).text] || 13, top = item._names === "top";
+    var style = { fillColor: item.role === "pool" ? PAPER : "none", strokeColor: INK, strokeWidth: WEIGHTS.m,
+      fontFamily: FACE, fontSize: size, fontColor: INK, html: true, align: "left", verticalAlign: "top",
+      spacing: 0, spacingLeft: 12, spacingRight: 12, overflow: "hidden", whiteSpace: "wrap",
+      editable: false, rotatable: false, cloneable: false, foldable: false };
+    if (item.role === "pool") {
+      return Object.assign(style, { shape: "own-pool", spacingTop: (POOL_TITLE - size * 1.32) / 2, whiteSpace: "nowrap" });
+    }
+    return Object.assign(style, { shape: "own-lane", terraneNames: top ? "top" : "left", spacingTop: top ? 5 : 10 });
   }
 
   // The fill it is drawn in: its own, or the one its kind starts with; a
@@ -781,10 +934,10 @@
   function tilesStyle(item) {
     var look = item.look || {}, role = item.role, fill = ownFill(item);
     var size = TEXT_SIZES[look.text] || (role === "frame" ? 12 : 13);
-    var dashed = look.line === "dashed";
+    var dashed = !!DASHES[look.line];
     var style = {
       fontFamily: FACE, fontSize: size, html: true, shadow: false, strokeWidth: weightOf(item), dashed: dashed,
-      dashPattern: "6 4", fillOpacity: fillOpacityOf(item),
+      dashPattern: DASHES[look.line] || DASHES.dashed, fillOpacity: fillOpacityOf(item),
       editable: false, rotatable: TURNS[role] === true, cloneable: false, foldable: false,
     };
     if (item.rotate) style.rotation = item.rotate;
@@ -804,10 +957,11 @@
     }
     if (role === "note") {
       return Object.assign(style, { shape: "rectangle", rounded: cornersOf(item) > 0, absoluteArcSize: true,
-        arcSize: cornersOf(item) * 2, fillColor: FILLS[fill || "yellow"], strokeColor: dashed ? TILE_FRAME_INK : "none", align: "left",
+        arcSize: cornersOf(item) * 2, fillColor: FILLS[fill || "yellow"], strokeColor: dashed ? TILE_FRAME_INK : "none",
+        align: alignOf(item),
         verticalAlign: "top", spacing: 10, overflow: "hidden", whiteSpace: "wrap", fontColor: WORDS_ON[fill] || INK });
     }
-    return Object.assign(style, { shape: "rectangle", fillColor: "none", strokeColor: "none", align: "left",
+    return Object.assign(style, { shape: "rectangle", fillColor: "none", strokeColor: "none", align: alignOf(item),
       verticalAlign: "top", spacing: 2, overflow: "hidden", whiteSpace: "wrap", fontColor: INK });
   }
 
@@ -841,12 +995,13 @@
     var lines = String(value || "").split("\n"), words = "";
     if (lines[0].trim()) {
       words += '<div style="font-family:' + FACE + ";font-weight:600;font-size:" + size + "px;line-height:1.32;color:" +
-        TILE_INK + '">' + escapeText(lines[0]) + "</div>";
+        TILE_INK + ";" + dressOf(item) + '">' + escapeText(lines[0]) + "</div>";
     }
     lines.slice(1).forEach(function (p) {
       if (!p.trim()) return;
-      words += '<div style="font-family:' + FACE + ";font-weight:400;font-size:" + (size - CAPTION_STEP) +
-        "px;line-height:1.32;color:" + TILE_CAPTION + '">' + escapeText(p) + "</div>";
+      words += '<div style="font-family:' + FACE + ";font-weight:" + (look.bold ? 600 : 400) + ";font-size:" +
+        (size - CAPTION_STEP) + "px;line-height:1.32;color:" + TILE_CAPTION + ";" + dressOf(item) + '">' + escapeText(p) +
+        "</div>";
     });
     if (words) {
       // On a patch of what lies under them (tile_ground): a line leaving
@@ -865,6 +1020,8 @@
   // as Icon tiles fill one, else the sheet (tile_ground).
   function tileGround(cell) {
     for (var c = cell.parent; c && c.terraneOwn; c = c.parent) {
+      // A swimlane's lane lies on its pool's paper.
+      if (c.terraneOwn.role === "lane" || c.terraneOwn.role === "pool") return PAPER;
       if (c.terraneOwn.role === "frame") {
         var f = ownFill(c.terraneOwn);
         return f ? FILLS[f] : TILE_FRAME;
@@ -892,17 +1049,55 @@
     var look = item.look || {}, size = TEXT_SIZES[look.text] || 13, fill = ownFill(item);
     var words = WORDS_ON[fill] || INK;
     var caption = WORDS_ON[fill] ? "color:" + words + ";opacity:.75" : "color:" + CAPTION_INK;
-    var lines = value.split("\n"), out = "";
+    var lines = value.split("\n"), out = "", dress = dressOf(item);
     if (lines[0].trim()) {
       out += '<div style="font-family:' + NAME_FACE + ";font-weight:700;font-size:" + size + "px;line-height:1.32;color:" +
-        words + '">' + escapeText(lines[0]) + "</div>";
+        words + ";" + dress + '">' + escapeText(lines[0]) + "</div>";
     }
     lines.slice(1).forEach(function (p) {
       if (!p.trim()) return;
-      out += '<div style="font-family:' + FACE + ";font-weight:400;font-size:" + (size - CAPTION_STEP) +
-        "px;line-height:1.32;" + caption + '">' + escapeText(p) + "</div>";
+      out += '<div style="font-family:' + FACE + ";font-weight:" + (look.bold ? 600 : 400) + ";font-size:" +
+        (size - CAPTION_STEP) + "px;line-height:1.32;" + caption + ";" + dress + '">' + escapeText(p) + "</div>";
     });
     return out;
+  }
+
+  // How its words are set (V16's words toolbar), as CSS (_dress in the
+  // picture). The face has no italic of its own, and the browser slants the
+  // upright one, as it does the picture's, so a line measures the same.
+  function dressOf(item) {
+    var look = item.look || {}, deco = [];
+    if (look.underline) deco.push("underline");
+    if (look.strike) deco.push("line-through");
+    return (look.italic ? "font-style:italic;" : "") + (deco.length ? "text-decoration:" + deco.join(" ") + ";" : "");
+  }
+
+  // Where its words sit: the look's, else a shape's in the middle and the
+  // rest's at the left; a list's always at the left.
+  function alignOf(item) {
+    var look = item.look || {};
+    if (look.list) return "left";
+    return look.align || (item.role === "shape" ? "center" : "left");
+  }
+
+  // A note's or text's words: bold and dressed as the look says, or as a
+  // list, each line after a bullet a font size wide and wrapping past it
+  // (_words in the picture).
+  function wordsLabel(item, value, weight) {
+    var look = item.look || {}, dress = dressOf(item);
+    weight = weight || (look.bold ? 600 : 400);
+    // A label as wide as its words cut an italic's last letter, which
+    // leans past them: room for the lean.
+    if (look.italic) dress += "padding-right:.15em;";
+    if (!look.list) {
+      return '<div style="font-weight:' + weight + ";line-height:1.32;" + dress + '">' + escapeText(value) + "</div>";
+    }
+    var size = TEXT_SIZES[look.text] || 13;
+    return value.split("\n").map(function (p) {
+      if (!p.trim()) return '<div style="height:' + size * 1.32 + 'px"></div>';
+      return '<div style="display:flex;font-weight:' + weight + ';line-height:1.32"><span style="flex:none;width:' + size +
+        'px">\u2022</span><span style="min-width:0;' + dress + '">' + escapeText(p) + "</span></div>";
+    }).join("");
   }
 
   // A frame's name on its ink tab, cut short with an ellipsis where it would
@@ -913,7 +1108,34 @@
     return '<span style="display:inline-block;box-sizing:border-box;max-width:' + room + "px;overflow:hidden;" +
       "text-overflow:ellipsis;white-space:nowrap;vertical-align:top;background:" + INK + ";color:" + PAPER +
       ";font-family:" + FACE + ";font-weight:600;font-size:" + size + "px;line-height:1.32;padding:2px " + TAB_PAD +
-      'px;border-radius:3px">' + escapeText(value.split("\n")[0]) + "</span>";
+      "px;border-radius:3px;" + dressOf(cell.terraneOwn) + '">' + escapeText(value.split("\n")[0]) + "</span>";
+  }
+
+  // A swimlane's name, on one line in its band.
+  function poolLabel(cell, value) {
+    var size = TEXT_SIZES[(cell.terraneOwn.look || {}).text] || 13;
+    var room = Math.max(1, (cell.geometry ? cell.geometry.width : 200) - 24);
+    return '<span style="display:inline-block;max-width:' + room + "px;overflow:hidden;text-overflow:ellipsis;" +
+      "white-space:nowrap;vertical-align:top;font-family:" + FACE + ";font-weight:600;font-size:" + size +
+      "px;line-height:1.32;color:" + INK + '">' + escapeText(String(value || "").split("\n")[0]) + "</span>";
+  }
+
+  // A lane's name in its column or band, wrapped as swim_parts wraps it, and
+  // under it the id of the record it stands for, whose name it then is.
+  function laneLabel(cell, value) {
+    var item = cell.terraneOwn, size = TEXT_SIZES[(item.look || {}).text] || 13, top = item._names === "top";
+    var w = top ? Math.max(1, (cell.geometry ? cell.geometry.width : 200) - 24) : LANE_COLUMN - 24;
+    var name = (item.stands_for && Canvas.recordName ? Canvas.recordName(item.stands_for) : "") ||
+      String(value || "").split("\n")[0];
+    var line = top ? "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" : "";
+    var out = name.trim() ? '<div style="width:' + w + "px;" + line + "font-family:" + FACE + ";font-weight:600;font-size:" +
+      size + "px;line-height:1.32;color:" + INK + '">' + escapeText(name) + "</div>" : "";
+    if (item.stands_for) {
+      out += '<div style="width:' + w + "px;margin-top:" + (out ? (top ? 1 : 4) : 0) + "px;white-space:nowrap;" +
+        "overflow:hidden;text-overflow:ellipsis;font-family:" + FACE + ";font-size:" + (size - CAPTION_STEP) +
+        "px;line-height:1.32;color:" + CAPTION_INK + '">' + escapeText(item.stands_for) + "</div>";
+    }
+    return out;
   }
 
   function escapeText(value) {
@@ -1086,14 +1308,17 @@
     // pressed inside, it is sheet to drag across (takePointer).
     var mine = function (cell) {
       if (!(cell && cell.terraneOwn) || s.tool || s.readOnly) return false;
-      if (cell.terraneOwn.role === "frame" && s.pressAt && !graph.isCellSelected(cell) && !onFrameEdge(cell, s.pressAt)) return false;
+      if (HOLDS[cell.terraneOwn.role] && s.pressAt && !graph.isCellSelected(cell) && !onFrameEdge(cell, s.pressAt)) return false;
+      if (s.layering && s.layering.locked[layerOfCell(cell)]) return false;
       return true;
     };
     // A shape locked on this diagram is picked, to be unlocked, and not
     // carried or resized.
     var lockedCell = function (cell) { return !!(cell && cell.terraneOwn && s.locked && s.locked[cell.terraneOwn.key]); };
     graph.isCellSelectable = mine;
-    graph.isCellMovable = function (cell) { return mine(cell) && !lockedCell(cell); };
+    // A lane stays in its swimlane: the swimlane moves, and a lane is
+    // reordered from the panel.
+    graph.isCellMovable = function (cell) { return mine(cell) && !lockedCell(cell) && cell.terraneOwn.role !== "lane"; };
     graph.isCellResizable = function (cell) { return mine(cell) && cell.isVertex() && !lockedCell(cell); };
     // Turned by its handle as it is resized: not a frame, nor what is locked.
     graph.isCellRotatable = function (cell) {
@@ -1139,7 +1364,10 @@
     };
     graph.isCellsCloneable = function () { return false; };
     graph.isValidDropTarget = function (cell, cells) {
-      if (!cell || !cell.terraneOwn || cell.terraneOwn.role !== "frame" || !cells) return false;
+      // A frame, or a swimlane's lane: never the pool, which holds its lanes.
+      if (!cell || !cell.terraneOwn || (cell.terraneOwn.role !== "frame" && cell.terraneOwn.role !== "lane") || !cells) {
+        return false;
+      }
       // Not into itself, nor into a frame it holds.
       for (var c = cell; c; c = c.parent) if (cells.indexOf(c) !== -1) return false;
       return cells.every(function (m) { return m.isVertex(); });
@@ -1147,16 +1375,17 @@
     graph.getLabel = function (cell) {
       if (cell && cell.terraneOwn) {
         var v = String(cell.value || "");
+        if (cell.terraneOwn.role === "lane") return laneLabel(cell, v);
+        if (cell.terraneOwn.role === "pool") return poolLabel(cell, v);
         if (LOOK === "tiles" && cell.terraneOwn.role === "shape") return tileLabel(cell, v);
         if (!v.trim()) return "";
         if (LOOK === "tiles") {
-          var weight = cell.terraneOwn.role === "frame" ? 600 : 400;
-          return '<div style="font-weight:' + weight + ';line-height:1.32">' + escapeText(cell.terraneOwn.role === "frame"
-            ? v.split("\n")[0] : v) + "</div>";
+          if (cell.terraneOwn.role === "frame") return wordsLabel(cell.terraneOwn, v.split("\n")[0], 600);
+          return wordsLabel(cell.terraneOwn, v);
         }
         if (cell.terraneOwn.role === "frame") return frameTab(cell, v);
         if (cell.terraneOwn.role === "shape") return namedLabel(cell.terraneOwn, v);
-        return '<div style="font-weight:400;line-height:1.32">' + escapeText(v) + "</div>";
+        return wordsLabel(cell.terraneOwn, v);
       }
       return typeof cell.value === "string" ? cell.value : "";
     };
@@ -1296,6 +1525,8 @@
       reroute(s);
       rehop(s);
       changed();
+      linkMarks(s);
+      stretches();
     });
     // A frame moved takes the records it was drawn round with it, as it
     // takes what of its own sits in it: each record wholly inside its box
@@ -1308,7 +1539,7 @@
       if (!dx && !dy) return;
       var held = [];
       (evt.getProperty("cells") || []).forEach(function (cell) {
-        if (!cell.terraneOwn || cell.terraneOwn.role !== "frame" || !cell.geometry) return;
+        if (!cell.terraneOwn || (cell.terraneOwn.role !== "frame" && cell.terraneOwn.role !== "pool") || !cell.geometry) return;
         var at = absolute(cell);
         held.push({ x1: at.x - dx, y1: at.y - dy, x2: at.x - dx + cell.geometry.width,
           y2: at.y - dy + cell.geometry.height });
@@ -1322,18 +1553,35 @@
       }).map(function (n) { return n.id(); });
       if (ids.length) window.setTimeout(function () { if (surface === s) Canvas.recordsMoved(ids, dx, dy); }, 0);
     });
+    // A swimlane or a lane resized: its lanes laid out again in the same
+    // step, a lane's new depth its own and its new length the swimlane's.
+    graph.addListener(mg.InternalEvent.RESIZE_CELLS, function (sender, evt) {
+      if (s.syncing || surface !== s) return;
+      (evt.getProperty("cells") || []).forEach(function (cell) {
+        var mine2 = cell.terraneOwn;
+        if (mine2 && mine2.role === "pool") tileLanes(cell, { fill: true });
+        else if (mine2 && mine2.role === "lane" && cell.parent && cell.parent.terraneOwn) tileLanes(cell.parent, { grown: cell });
+      });
+    });
     graph.getSelectionModel().addListener(mg.InternalEvent.CHANGE, function () {
       if (surface !== s || s.picking) return;
       // Whether the press that picked it held Shift, so the records picked
       // beside it stay picked.
       if (Canvas.ownSelected) Canvas.ownSelected(selected(), !!s.shiftPress);
+      stretches();
     });
+    // Heard on the way down: maxGraph's own double-click on a shape or
+    // its words stops the event there, and this, listening on the way up,
+    // opened the words only on an empty spot, where there were none.
     s.div.addEventListener("dblclick", function (ev) {
       if (s.readOnly) return;
       var r = s.div.getBoundingClientRect();
       var cell = ownAt({ x: ev.clientX - r.left, y: ev.clientY - r.top });
-      if (cell) { ev.preventDefault(); editText(cell); }
-    });
+      if (!cell) return;
+      ev.preventDefault();
+      if (Canvas.goIn && Canvas.goIn(cell.terraneOwn.key)) return;
+      editText(cell);
+    }, true);
   }
 
   // Cytoscape puts a model point at model * zoom + pan; maxGraph at
@@ -1687,7 +1935,7 @@
 
   // A straight line with bends: a square or curved one turns by itself.
   function bent(a) {
-    return Array.isArray(a.via) && a.via.length > 0 && (!a.route || a.route === "straight");
+    return Array.isArray(a.via) && a.via.length > 0;
   }
 
   /* The diagram's own drawn from its list, all of it, as the engine keeping
@@ -1704,6 +1952,7 @@
     closeEditor(true);
     list = Array.isArray(list) ? list : [];
     var byKey = {}, orphans = [], placed = [];
+    s.layering = s.readOnly ? null : layering(Canvas.cv ? Canvas.cv.data.layers : null);
     quiet(function () {
       graph.removeCells(ownCells(s), true);
       var boxes = list.filter(function (a) { return a && a.role !== "line" && a.key; });
@@ -1711,7 +1960,11 @@
       boxes.sort(function (a, b) { return ((a.in || []).length) - ((b.in || []).length); });
       boxes.forEach(function (a) {
         var inside = (a.in || []).length ? byKey[a.in[a.in.length - 1]] : null;
-        var parent = inside || (a.role === "frame" ? s.layers.under : s.layers.over);
+        // On a drawing only read, what its drawing layers put under the
+        // estate's records the payload says (`_under`).
+        var parent = inside || (HOLDS[a.role] || a._under ? s.layers.under : s.layers.over);
+        // A lane draws its name where its swimlane says.
+        if (a.role === "lane") a = Object.assign({}, a, { _names: inside && inside.terraneOwn.names === "top" ? "top" : "left" });
         // A frame goes to the layer its place says once it is on the sheet.
         var p = a.at || [0, 0], z = a.size || DEFAULT_SIZE[a.role] || [120, 64];
         var x = Number(p[0]) + (inside ? 0 : at.x), y = Number(p[1]) + (inside ? 0 : at.y);
@@ -1732,6 +1985,7 @@
         if (bent(a)) g.points = a.via.map(function (p) { return new mg.Point(Number(p[0]) + at.x, Number(p[1]) + at.y); });
         s.model.setGeometry(edge, g);
         edge.terraneOwn = copy(a);
+        endLabels(edge, a);
         byKey[a.key] = edge;
         placed.push(a.key);
       });
@@ -1744,8 +1998,10 @@
     });
     s.orphans = orphans;
     restack();
+    applyLayers();
     s.own = serialize();
     s.drawnOwn = true;
+    linkMarks(s);
     if (keys.length) select(keys.filter(function (k) { return placed.indexOf(k) !== -1; }));
   }
 
@@ -1770,7 +2026,9 @@
   function restack() {
     var s = surface;
     if (!s) return;
-    var frames = ownCells(s).filter(function (c) { return c.terraneOwn.role === "frame" && c.geometry && c.isVertex(); });
+    var frames = ownCells(s).filter(function (c) {
+      return (c.terraneOwn.role === "frame" || c.terraneOwn.role === "pool") && c.geometry && c.isVertex();
+    });
     var moves = [];
     frames.forEach(function (c) {
       var d = holderDepth(s, c.geometry);
@@ -1825,11 +2083,19 @@
           if (turn > 180) turn -= 360;
           if (turn <= -180) turn += 360;
           if (turn && TURNS[a.role]) { a.rotate = turn; item.rotate = turn; } else delete a.rotate;
+          if (a.link) item.link = a.link;
+          if (a.group) item.group = a.group;
+          if (a.role === "pool" && a.runs === "down") item.runs = "down";
+          if (a.role === "pool" && a.names === "top") item.names = "top";
+          if (a.role === "lane" && a.stands_for) item.stands_for = a.stands_for;
         } else {
           item.from = endOf(c, true, at);
           item.to = endOf(c, false, at);
-          if (a.ends && a.ends !== "end") item.ends = a.ends;
+          if (a.heads) item.heads = copy(a.heads);
+          else if (a.ends && a.ends !== "end") item.ends = a.ends;
           if (a.route && a.route !== "straight") item.route = a.route;
+          if (a.turns === "rounded") item.turns = "rounded";
+          if (a.labels && Object.keys(a.labels).length) item.labels = copy(a.labels);
           // Where maxGraph holds each end on its box, if it does: a share of
           // the box, to the hundredth.
           [["from_at", true, "exitX", "exitY"], ["to_at", false, "entryX", "entryY"]].forEach(function (e) {
@@ -1840,13 +2106,16 @@
             } else delete a[e[0]];
           });
           // Where maxGraph's handles bent it, from the sheet's corner.
+          // A straight line's bends, or a square or curved one's turns
+          // kept where its stretches were moved by hand.
           var bends = (c.geometry.points || []).filter(Boolean);
-          if (bends.length && (!a.route || a.route === "straight")) {
+          if (bends.length) {
             item.via = bends.map(function (p) { return [round(p.x - at.x), round(p.y - at.y)]; });
             a.via = item.via;
           } else delete a.via;
         }
         if (a.look && Object.keys(a.look).length) item.look = copy(a.look);
+        if (a.layer) item.layer = a.layer;
         out.push(item);
         if (c.isVertex()) walk(c, path.concat([a.key]));
       });
@@ -1876,9 +2145,21 @@
 
   // Each a little below and right of the one it copies, in the same frame,
   // all of them one step for Undo; the copies are selected.
+  // A copy in a group goes in the copy of that group, which the canvas makes
+  // the first time a duplicate or a paste asks; out of any, with no canvas.
+  function regroup(a) {
+    var g = a.group && Canvas.groupKeyFor ? Canvas.groupKeyFor(a.group) : null;
+    if (g) a.group = g; else delete a.group;
+  }
+
   function copyOwn(keys) {
     var s = surface;
     if (!s) return [];
+    // A swimlane is copied whole, lanes, what is in them and all, and a lane
+    // as its swimlane: it cannot stand outside one.
+    if (keys.some(function (k) { var c = s.model.getCell(idOf(k)); return c && c.terraneOwn && (c.terraneOwn.role === "pool" || c.terraneOwn.role === "lane"); })) {
+      return pasteOwn(clipOwn(keys), 16, 16);
+    }
     var made = [];
     s.graph.batchUpdate(function () {
       keys.forEach(function (k) {
@@ -1887,6 +2168,7 @@
         var a = copy(cell.terraneOwn), o = absolute(cell);
         delete a.key;
         delete a.in;
+        regroup(a);
         a.label = String(cell.value || "");
         a.box = { x: o.x + 16, y: o.y + 16, w: cell.geometry.width, h: cell.geometry.height };
         made.push(add(a, cell.parent && cell.parent.terraneOwn ? cell.parent.terraneOwn.key : null));
@@ -1905,6 +2187,7 @@
     if (!s) return null;
     var taken = {}, cells = [];
     function take(cell) {
+      if (cell && cell.terraneOwn && cell.terraneOwn.role === "lane") cell = cell.parent;
       if (!cell || !cell.terraneOwn || taken[cell.terraneOwn.key]) return;
       taken[cell.terraneOwn.key] = true;
       cells.push(cell);
@@ -1961,6 +2244,7 @@
         var spec = copy(a);
         delete spec.key;
         delete spec.within;
+        regroup(spec);
         spec.box = { x: a.box.x + dx, y: a.box.y + dy, w: a.box.w, h: a.box.h };
         var key = add(spec, a.within ? keys[a.within] : null);
         keys[a.key] = key;
@@ -1997,7 +2281,7 @@
     // is the engine's own keeping in step, after the person's change.
     if (!s.restacking) {
       s.restacking = true;
-      window.setTimeout(function () { s.restacking = false; if (surface === s) restack(); }, 0);
+      window.setTimeout(function () { s.restacking = false; if (surface === s) { restack(); applyLayers(); } }, 0);
     }
     s.own = serialize();
     if (Canvas.ownChanged) Canvas.ownChanged(copy(s.own));
@@ -2038,6 +2322,10 @@
       if (patch.look) Object.keys(a.look).forEach(function (k) { if (a.look[k] == null) delete a.look[k]; });
       if (patch.shape) a.shape = patch.shape;
       if (patch.ends) a.ends = patch.ends;
+      // Each end's head (V16), said in place of its ends.
+      if (patch.heads !== undefined) {
+        if (patch.heads) { a.heads = patch.heads; delete a.ends; } else delete a.heads;
+      }
       if (patch.route) a.route = patch.route;
       // Its bends taken out, or a line made square or curved, which turns
       // by itself.
@@ -2046,6 +2334,13 @@
         bare.points = [];
         s.model.setGeometry(cell, bare);
         delete a.via;
+      }
+      // Its turns kept where a stretch was carried, from the sheet's corner.
+      if (Array.isArray(patch.via) && patch.via.length && cell.isEdge()) {
+        var kept = cell.geometry.clone(), o0 = origin();
+        kept.points = patch.via.map(function (p) { return new s.mg.Point(o0.x + Number(p[0]), o0.y + Number(p[1])); });
+        s.model.setGeometry(cell, kept);
+        a.via = patch.via;
       }
       if (patch.rotate !== undefined) { if (patch.rotate) a.rotate = patch.rotate; else delete a.rotate; }
       // Its size, typed in the Arrange tab, as a corner dragged would set it,
@@ -2057,8 +2352,31 @@
         sized.height = Math.min(MOST_SIZE, Math.max(8, Math.round(Number(patch.size[1]) || sized.height)));
         s.model.setGeometry(cell, sized);
       }
-      if (patch.look || patch.shape || patch.ends || patch.route || patch.rotate !== undefined) {
+      // Its place, typed in the Arrange tab: its corner in the frame it
+      // sits in, or on the sheet from the drawing's corner, as `at` is kept.
+      if (patch.at && cell.isVertex()) {
+        var top = !(cell.parent && cell.parent.terraneOwn), o = top ? origin() : { x: 0, y: 0 };
+        var placed = cell.geometry.clone();
+        placed.x = Math.round(Number(patch.at[0]) || 0) + o.x;
+        placed.y = Math.round(Number(patch.at[1]) || 0) + o.y;
+        s.model.setGeometry(cell, placed);
+      }
+      if (patch.link !== undefined) { if (patch.link) a.link = patch.link; else delete a.link; }
+      if (patch.group !== undefined) { if (patch.group) a.group = patch.group; else delete a.group; }
+      if (patch.stands_for !== undefined) { if (patch.stands_for) a.stands_for = patch.stands_for; else delete a.stands_for; }
+      if (patch.layer !== undefined) { if (patch.layer) a.layer = patch.layer; else delete a.layer; }
+      if (patch.turns !== undefined) { if (patch.turns === "rounded") a.turns = "rounded"; else delete a.turns; }
+      if (patch.labels !== undefined) {
+        if (patch.labels && Object.keys(patch.labels).length) a.labels = patch.labels; else delete a.labels;
+      }
+      // A link changes no style, but the style set again is the change
+      // maxGraph says, which saves it and makes it a step for Undo.
+      if (patch.look || patch.shape || patch.ends || patch.heads !== undefined || patch.route || patch.rotate !== undefined ||
+          patch.link !== undefined || patch.group !== undefined || patch.stands_for !== undefined ||
+          patch.layer !== undefined || patch.turns !== undefined || patch.labels !== undefined) {
         s.model.setStyle(cell, ownStyle(a));
+        // Its words at its start and its end, in the line's look.
+        if (cell.isEdge()) endLabels(cell, a);
         // As tiles, what a frame holds sets its words on the frame's fill.
         if (LOOK === "tiles" && a.role === "frame" && patch.look) s.graph.refresh(cell);
       }
@@ -2069,10 +2387,527 @@
     var s = surface;
     if (!s) return;
     var cells = keys.map(function (k) { return s.model.getCell(idOf(k)); }).filter(Boolean);
-    if (cells.length) s.graph.removeCells(cells, true);
+    // A lane deleted keeps what it held, in the lane above it, unless its
+    // swimlane goes too; a swimlane's last lane stays.
+    var lanes = cells.filter(function (c) { return c.terraneOwn && c.terraneOwn.role === "lane" && cells.indexOf(c.parent) === -1; });
+    var rest = cells.filter(function (c) { return lanes.indexOf(c) === -1; });
+    s.graph.batchUpdate(function () {
+      lanes.forEach(dropLane);
+      if (rest.length) s.graph.removeCells(rest, true);
+    });
+  }
+
+  /* What is picked turned as one about the middle of all of it, `degrees`
+   * clockwise: each box's middle carried round that point, and each shape,
+   * note or text turned by as much itself; a frame and a swimlane keep
+   * upright, being what is not turned, and a line follows its ends. One
+   * step for Undo; what is locked stays. */
+  function turnTogether(keys, degrees) {
+    var s = surface;
+    if (!s || !degrees) return;
+    var picked = keys.map(function (k) { return s.model.getCell(idOf(k)); }).filter(function (c) {
+      return c && c.isVertex() && c.terraneOwn && !(s.locked && s.locked[c.terraneOwn.key]);
+    });
+    // What sits in something picked goes with it.
+    picked = picked.filter(function (c) {
+      for (var p = c.parent; p && p.terraneOwn; p = p.parent) if (picked.indexOf(p) !== -1) return false;
+      return true;
+    });
+    if (!picked.length) return;
+    var boxes = picked.map(function (c) {
+      var o = absolute(c);
+      return { c: c, x1: o.x, y1: o.y, x2: o.x + c.geometry.width, y2: o.y + c.geometry.height };
+    });
+    var cx = (Math.min.apply(null, boxes.map(function (b) { return b.x1; })) +
+      Math.max.apply(null, boxes.map(function (b) { return b.x2; }))) / 2;
+    var cy = (Math.min.apply(null, boxes.map(function (b) { return b.y1; })) +
+      Math.max.apply(null, boxes.map(function (b) { return b.y2; }))) / 2;
+    var r = degrees * Math.PI / 180, cos = Math.cos(r), sin = Math.sin(r);
+    s.graph.batchUpdate(function () {
+      boxes.forEach(function (b) {
+        var mx = (b.x1 + b.x2) / 2, my = (b.y1 + b.y2) / 2, dx = mx - cx, dy = my - cy;
+        var g = b.c.geometry.clone();
+        g.x += Math.round(cx + dx * cos - dy * sin - mx);
+        g.y += Math.round(cy + dx * sin + dy * cos - my);
+        s.model.setGeometry(b.c, g);
+        if (TURNS[b.c.terraneOwn.role]) {
+          var turn = Math.round((Number(b.c.style && b.c.style.rotation) || 0) + degrees) % 360;
+          if (turn > 180) turn -= 360;
+          if (turn <= -180) turn += 360;
+          s.model.setStyle(b.c, Object.assign({}, b.c.style, { rotation: turn }));
+        }
+      });
+    });
+  }
+
+  /* A line's words at its start and its end (V16), each a label of its own
+   * riding on the line, as maxGraph labels an edge more than once: a cell
+   * in the line, a share of the way from its middle to the end, that
+   * nothing picks; its middle's words are the line's own label. Kept in the
+   * line's `labels`, never in the file as cells. */
+  function endLabels(edge, a) {
+    var s = surface, look = a.look || {};
+    edge.getChildren().slice().forEach(function (c) { if (c.terraneLabel) s.model.remove(c); });
+    ["start", "end"].forEach(function (place) {
+      var words = (a.labels || {})[place];
+      if (!words) return;
+      var c = s.graph.insertVertex({ parent: edge, value: String(words), position: [place === "start" ? -END_LABEL_AT : END_LABEL_AT, 0],
+        size: [0, 0], relative: true, style: {
+          shape: "rectangle", fillColor: "none", strokeColor: "none", fontFamily: FACE, fontSize: TEXT_SIZES[look.text || "s"],
+          fontColor: LOOK === "tiles" ? TILE_CAPTION : INK, labelBackgroundColor: LOOK === "tiles" ? "#ffffff" : PAPER,
+          labelBorderColor: LOOK === "tiles" ? "none" : INK, spacing: 3, html: false, editable: false, movable: false,
+          resizable: false, rotatable: false, cloneable: false, deletable: false, foldable: false } });
+      c.terraneLabel = place;
+    });
+  }
+
+  /* A square or curved line of its own, picked alone, has a handle on each
+   * stretch (V16): carried across it, the stretch moves, and the turns at
+   * its ends with it, and the line keeps the turns it then has. A handle is
+   * the page's, over the drawing, as the bar over several is; maxGraph's
+   * own bends are a straight line's. */
+  function stretches() {
+    var s = surface;
+    if (!s || !s.div) return;
+    // A handle taken away under the pointer says nothing as it goes.
+    if (s.stretchTip) stretchTip(null);
+    (s.stretchHandles || []).forEach(function (h) { if (h.parentNode) h.parentNode.removeChild(h); });
+    s.stretchHandles = [];
+    if (s.readOnly || s.tool || s.stretching) return;
+    var picked = s.graph.getSelectionCells();
+    if (picked.length !== 1) return;
+    var cell = picked[0], a = cell.terraneOwn;
+    if (!a || !cell.isEdge() || (a.route !== "square" && a.route !== "curved") || (s.locked && s.locked[a.key])) return;
+    var st = s.graph.view.getState(cell);
+    var pts = st && st.absolutePoints ? st.absolutePoints.filter(Boolean) : [];
+    for (var i = 0; i < pts.length - 1; i += 1) {
+      var p = pts[i], q = pts[i + 1], upright = Math.abs(p.x - q.x) < 0.5, flat = Math.abs(p.y - q.y) < 0.5;
+      if ((!upright && !flat) || Math.hypot(q.x - p.x, q.y - p.y) < 18) continue;
+      var h = document.createElement("div");
+      h.className = "mg-stretch" + (upright ? " is-upright" : "");
+      h.setAttribute("aria-label", "Drag a stretch to move it");
+      h.addEventListener("pointerenter", function (ev) { if (!surface.stretching) stretchTip(ev.currentTarget); });
+      h.addEventListener("pointerleave", function () { stretchTip(null); });
+      var at = besideWords(st, p, q, upright);
+      h.style.left = Math.round(at.x) + "px";
+      h.style.top = Math.round(at.y) + "px";
+      h.addEventListener("pointerdown", stretchDrag(cell, i, upright));
+      s.div.appendChild(h);
+      s.stretchHandles.push(h);
+    }
+  }
+
+  // A stretch's handle at its middle, or along it to just beside the
+  // line's words where they sit there: over them it hid their middle
+  // letters. Where the stretch is too short for that, its middle.
+  function besideWords(st, p, q, upright) {
+    var m = { x: (p.x + q.x) / 2, y: (p.y + q.y) / 2 }, bb = st.text && st.text.boundingBox;
+    if (!bb || !bb.width) return m;
+    var along = upright ? "y" : "x", across = upright ? "x" : "y";
+    var b1 = upright ? bb.y : bb.x, b2 = upright ? bb.y + bb.height : bb.x + bb.width;
+    var c1 = upright ? bb.x : bb.y, c2 = upright ? bb.x + bb.width : bb.y + bb.height;
+    if (m[along] < b1 - 6 || m[along] > b2 + 6 || m[across] < c1 - 6 || m[across] > c2 + 6) return m;
+    var lo = Math.min(p[along], q[along]) + 8, hi = Math.max(p[along], q[along]) - 8, best = null;
+    [b1 - 10, b2 + 10].forEach(function (v) {
+      if (v >= lo && v <= hi && (best === null || Math.abs(v - m[along]) < Math.abs(best - m[along]))) best = v;
+    });
+    if (best !== null) m[along] = best;
+    return m;
+  }
+
+  // V16's tip beside a stretch's handle, in the canvas's own tip, as
+  // the drop and the snap say theirs: the browser's title came late and
+  // small, and over the drawing.
+  function stretchTip(h) {
+    var tip = document.getElementById("cvTip");
+    surface.stretchTip = !!h;
+    if (!tip) return;
+    if (!h) { tip.hidden = true; return; }
+    var r = h.getBoundingClientRect();
+    tip.textContent = "Drag a stretch to move it";
+    tip.hidden = false;
+    tip.style.left = Math.min(r.right + 8, window.innerWidth - tip.offsetWidth - 8) + "px";
+    tip.style.top = Math.round(r.top + r.height / 2 - tip.offsetHeight / 2) + "px";
+  }
+
+  function stretchDrag(cell, i, upright) {
+    return function (ev) {
+      var s = surface, h = ev.currentTarget;
+      ev.preventDefault();
+      ev.stopPropagation();
+      stretchTip(null);
+      h.setPointerCapture(ev.pointerId);
+      var start = { x: ev.clientX, y: ev.clientY }, left = parseFloat(h.style.left), top = parseFloat(h.style.top);
+      s.stretching = true;
+      function move(e) {
+        if (upright) h.style.left = (left + e.clientX - start.x) + "px";
+        else h.style.top = (top + e.clientY - start.y) + "px";
+      }
+      function up(e) {
+        h.removeEventListener("pointermove", move);
+        h.removeEventListener("pointerup", up);
+        s.stretching = false;
+        var d = (upright ? e.clientX - start.x : e.clientY - start.y) / s.graph.view.scale;
+        if (Math.abs(d) >= 1) moveStretch(cell, i, upright, d);
+        stretches();
+      }
+      h.addEventListener("pointermove", move);
+      h.addEventListener("pointerup", up);
+    };
+  }
+
+  // The line's turns as they are now, from end to end in the drawing's
+  // units, stretch `i` carried `d` across itself: the turns at its ends go
+  // with it, an end's own point being where the line meets its box. A line
+  // with no turn at all takes one in its middle, where it now runs.
+  function moveStretch(cell, i, upright, d) {
+    var s = surface, v = s.graph.view, st = v.getState(cell), at = origin(), axis = upright ? 0 : 1;
+    var pts = st.absolutePoints.filter(Boolean).map(function (p) { return [p.x / v.scale - v.translate.x, p.y / v.scale - v.translate.y]; });
+    if (i > 0) pts[i][axis] += d;
+    if (i + 1 < pts.length - 1) pts[i + 1][axis] += d;
+    var turns = pts.slice(1, -1);
+    if (!turns.length) {
+      var m = [(pts[0][0] + pts[1][0]) / 2, (pts[0][1] + pts[1][1]) / 2];
+      m[axis] += d;
+      turns = [m];
+    }
+    update(cell.terraneOwn.key, { via: turns.map(function (p) { return [Math.round(p[0] - at.x), Math.round(p[1] - at.y)]; }) });
+  }
+
+  /* ---- drawing layers (V16) ----
+   * The diagram's own drawn on layers the person names, listed top first,
+   * the estate's records among them as `{key: estate}`. A layer above the
+   * estate draws its shapes, notes, text and lines over the records, one
+   * under it draws them under; frames and swimlanes keep under the records
+   * whichever it is, so none hides one. A hidden layer is not drawn, which
+   * leaves it out of the export too, and a locked one is not picked. What
+   * names no layer is on the one just above the estate (layer_home), where
+   * the canvas always drew it. by_layer in annotations.py draws the same. */
+  var ESTATE = "estate";
+
+  function layering(list) {
+    var order = (list || []).map(function (l) { return l.key; });
+    var drawing = order.filter(function (k) { return k !== ESTATE; });
+    if (!drawing.length) return null;
+    if (order.indexOf(ESTATE) === -1) order.push(ESTATE);
+    var estate = order.indexOf(ESTATE), hidden = {}, locked = {};
+    (list || []).forEach(function (l) { if (l.hidden) hidden[l.key] = true; if (l.locked) locked[l.key] = true; });
+    return { order: order, estate: estate, home: estate > 0 ? order[estate - 1] : drawing[0], hidden: hidden, locked: locked };
+  }
+
+  // The layer one of its own is on: its own, or that of the outermost
+  // frame or swimlane it sits in.
+  function layerOfCell(cell) {
+    var L = surface && surface.layering;
+    if (!L || !cell || !cell.terraneOwn) return null;
+    var top = cell;
+    while (top.parent && top.parent.terraneOwn) top = top.parent;
+    var k = top.terraneOwn.layer;
+    return k && k !== ESTATE && L.order.indexOf(k) !== -1 ? k : L.home;
+  }
+
+  // The layers changed in the panel: drawn again as they say.
+  function setLayers(list) {
+    var s = surface;
+    if (!s || s.readOnly) return;
+    s.layering = layering(list);
+    applyLayers();
+    s.graph.clearSelection();
+  }
+
+  /* Each of its own where its layer puts it: over or under the estate,
+   * the bottom layer's first among what shares that place, a hidden one's
+   * not drawn. The engine keeping in step, so no step for Undo. */
+  function applyLayers() {
+    var s = surface;
+    if (!s) return;
+    var L = s.layering;
+    quiet(function () {
+      ownCells(s).forEach(function (c) {
+        var k = layerOfCell(c);
+        var shown = !(L && L.hidden[k]);
+        if (c.isVisible() !== shown) s.model.setVisible(c, shown);
+        if (!L || HOLDS[c.terraneOwn.role] || c.isEdge()) return;
+        var under = L.order.indexOf(k) > L.estate, want = under ? s.layers.under : s.layers.over;
+        if (c.parent !== want && (c.parent === s.layers.under || c.parent === s.layers.over)) s.model.add(want, c);
+      });
+      if (!L) return;
+      [s.layers.under, s.layers.over].forEach(function (layer) {
+        var kids = layer.getChildren().filter(function (c) { return !!c.terraneOwn; });
+        var rank = function (c) {
+          // As tiles, the lines go under the shapes whatever their layer.
+          if (LOOK === "tiles" && c.isEdge()) return Infinity;
+          return L.order.indexOf(layerOfCell(c));
+        };
+        var sorted = kids.map(function (c, i) { return [c, i]; })
+          .sort(function (p, q) { return rank(q[0]) - rank(p[0]) || p[1] - q[1]; }).map(function (p) { return p[0]; });
+        if (sorted.every(function (c, i) { return c === kids[i]; })) return;
+        var first = layer.getChildren().indexOf(kids[0]);
+        sorted.forEach(function (c, i) { s.model.add(layer, c, first + i); });
+      });
+    });
+  }
+
+  /* ---- swimlanes (V16) ----
+   * A pool and its lanes, cells of maxGraph's as a frame and what is in it
+   * are: a lane the pool's child, what is drawn in a lane the lane's. The
+   * lanes are the pool's children in their order, and tileLanes lays them
+   * out from that order whenever anything changes their sizes. */
+  function lanesOf(pool) {
+    return pool.getChildren().filter(function (c) { return c.terraneOwn && c.terraneOwn.role === "lane" && c.geometry; });
+  }
+
+  // A cell's box on the sheet, for the records it is drawn round.
+  function sheetBox(cell) {
+    var o = absolute(cell);
+    return { x1: o.x, y1: o.y, x2: o.x + cell.geometry.width, y2: o.y + cell.geometry.height };
+  }
+
+  /* A swimlane's lanes laid out in it: stacked across under its name, or
+   * side by side down it, each as deep as it is and as long as the
+   * swimlane, which is as big as its lanes. `grown` is a lane resized, whose
+   * length the swimlane takes; `fill` a swimlane resized, whose last lane
+   * takes what it grew or shrank by; `length` one said outright. The
+   * estate's records drawn wholly inside a lane go where it goes. */
+  function tileLanes(pool, how) {
+    var s = surface, model = s.model, lanes = lanesOf(pool), down = pool.terraneOwn.runs === "down";
+    how = how || {};
+    if (!lanes.length) return;
+    var pg = pool.geometry.clone();
+    var length = how.length || (how.grown ? (down ? how.grown.geometry.height : how.grown.geometry.width)
+      : (down ? pg.height - POOL_TITLE : pg.width));
+    length = Math.max(2 * LANE_LEAST, Math.round(length));
+    var deep = lanes.map(function (l) { return Math.max(LANE_LEAST, Math.round(down ? l.geometry.width : l.geometry.height)); });
+    if (how.fill) {
+      var room = Math.round(down ? pg.width : pg.height - POOL_TITLE), sum = deep.reduce(function (a, b) { return a + b; }, 0);
+      deep[deep.length - 1] = Math.max(LANE_LEAST, deep[deep.length - 1] + room - sum);
+    }
+    var before = lanes.map(sheetBox), at = down ? 0 : POOL_TITLE;
+    s.graph.batchUpdate(function () {
+      lanes.forEach(function (l, i) {
+        var g = l.geometry.clone();
+        if (down) { g.x = at; g.y = POOL_TITLE; g.width = deep[i]; g.height = length; }
+        else { g.x = 0; g.y = at; g.width = length; g.height = deep[i]; }
+        at += deep[i];
+        if (g.x !== l.geometry.x || g.y !== l.geometry.y || g.width !== l.geometry.width || g.height !== l.geometry.height) {
+          model.setGeometry(l, g);
+        }
+      });
+      if (down) { pg.width = at; pg.height = POOL_TITLE + length; } else { pg.width = length; pg.height = at; }
+      if (pg.width !== pool.geometry.width || pg.height !== pool.geometry.height) model.setGeometry(pool, pg);
+    });
+    carryRecords(before, lanes.map(sheetBox));
+  }
+
+  // The estate's records drawn wholly inside each box, carried as far as
+  // it moved, where the canvas keeps them, after the change that moved it.
+  function carryRecords(before, after) {
+    var s = surface;
+    if (!s.cy || s.readOnly || !Canvas.recordsMoved) return;
+    var picked = Canvas.pickedIds ? Canvas.pickedIds() : [], moves = [];
+    before.forEach(function (b, i) {
+      var dx = after[i].x1 - b.x1, dy = after[i].y1 - b.y1;
+      if (!dx && !dy) return;
+      var ids = s.cy.nodes().filter(function (n) {
+        if (n.isParent() || picked.indexOf(n.id()) !== -1) return false;
+        var nb = n.boundingBox({ includeLabels: false });
+        return nb.x1 >= b.x1 && nb.y1 >= b.y1 && nb.x2 <= b.x2 && nb.y2 <= b.y2;
+      }).map(function (n) { return n.id(); });
+      if (ids.length) moves.push([ids, dx, dy]);
+    });
+    if (moves.length) {
+      window.setTimeout(function () {
+        if (surface === s) moves.forEach(function (m) { Canvas.recordsMoved(m[0], m[1], m[2]); });
+      }, 0);
+    }
+  }
+
+  // A lane deleted: what it held moved into the lane above it, the first
+  // lane's into the one below, where it is on the sheet, that lane as deep
+  // as the two were; nothing on the sheet moves.
+  function dropLane(lane) {
+    var s = surface, model = s.model, pool = lane.parent, lanes = lanesOf(pool), i = lanes.indexOf(lane);
+    if (lanes.length < 2 || i < 0) return;
+    var down = pool.terraneOwn.runs === "down", into = lanes[i > 0 ? i - 1 : 1];
+    var lg = lane.geometry, g = into.geometry.clone();
+    var shift = i > 0 ? { x: lg.x - g.x, y: lg.y - g.y } : { x: 0, y: 0 };
+    s.graph.batchUpdate(function () {
+      if (i === 0) {
+        // The lane below grows up into the first lane's place: what it
+        // holds already stays where it is on the sheet.
+        into.getChildren().slice().forEach(function (c) {
+          if (!c.geometry || !c.isVertex()) return;
+          var cg = c.geometry.clone();
+          cg.x += g.x - lg.x;
+          cg.y += g.y - lg.y;
+          model.setGeometry(c, cg);
+        });
+        g.x = lg.x;
+        g.y = lg.y;
+      }
+      if (down) g.width += lg.width; else g.height += lg.height;
+      model.setGeometry(into, g);
+      lane.getChildren().slice().forEach(function (c) {
+        if (!c.isVertex() || !c.geometry) return;
+        var cg = c.geometry.clone();
+        cg.x += shift.x;
+        cg.y += shift.y;
+        model.add(into, c);
+        model.setGeometry(c, cg);
+      });
+      s.graph.removeCells([lane], true);
+      tileLanes(pool);
+    });
+  }
+
+  // The lanes of a swimlane, in order, as the panel lists them.
+  function lanes(poolKey) {
+    var s = surface, pool = s && s.model.getCell(idOf(poolKey));
+    if (!pool || !pool.terraneOwn || pool.terraneOwn.role !== "pool") return [];
+    return lanesOf(pool).map(function (l) {
+      return { key: l.terraneOwn.key, label: String(l.value || ""), stands_for: l.terraneOwn.stands_for || "" };
+    });
+  }
+
+  // One more lane at the end, as deep as the last; picked.
+  function addLane(poolKey) {
+    var s = surface, pool = s && s.model.getCell(idOf(poolKey));
+    if (!pool || !pool.terraneOwn || pool.terraneOwn.role !== "pool") return null;
+    var all = lanesOf(pool), last = all[all.length - 1], down = pool.terraneOwn.runs === "down";
+    var deep = last ? (down ? last.geometry.width : last.geometry.height) : LANE_DEEP;
+    var a = { key: freeKey("lane"), role: "lane", _names: pool.terraneOwn.names === "top" ? "top" : "left" };
+    var cell;
+    s.graph.batchUpdate(function () {
+      cell = s.graph.insertVertex({ parent: pool, id: idOf(a.key), value: "Lane " + (all.length + 1),
+        position: [0, 0], size: [down ? deep : 100, down ? 100 : deep], style: ownStyle(a) });
+      cell.terraneOwn = a;
+      tileLanes(pool);
+    });
+    s.graph.setSelectionCell(cell);
+    return a.key;
+  }
+
+  // A lane put at another place among its swimlane's lanes.
+  function moveLane(key, index) {
+    var s = surface, lane = s && s.model.getCell(idOf(key));
+    if (!lane || !lane.terraneOwn || lane.terraneOwn.role !== "lane") return;
+    var pool = lane.parent, all = lanesOf(pool), from = all.indexOf(lane);
+    index = Math.max(0, Math.min(all.length - 1, index));
+    if (from === index) return;
+    var order = all.slice();
+    order.splice(from, 1);
+    order.splice(index, 0, lane);
+    s.graph.batchUpdate(function () {
+      // Each put at its place in turn: the ones before it are placed already.
+      order.forEach(function (l, i) { if (pool.getIndex(l) !== i) s.model.add(pool, l, i); });
+      tileLanes(pool);
+    });
+  }
+
+  /* A swimlane's lanes turned to run the other way: each as deep as it
+   * was, as long as the swimlane was, its name put where that way has it
+   * (at the top of a lane down, at the left of one across), and what is in
+   * it turned with it, its place along the lane and across it kept. */
+  function swimRuns(poolKey, runs) {
+    var s = surface, pool = s && s.model.getCell(idOf(poolKey));
+    if (!pool || !pool.terraneOwn || pool.terraneOwn.role !== "pool") return;
+    var a = pool.terraneOwn, down = a.runs === "down";
+    if ((runs === "down") === down) return;
+    var length = down ? pool.geometry.height - POOL_TITLE : pool.geometry.width;
+    s.graph.batchUpdate(function () {
+      if (runs === "down") a.runs = "down"; else delete a.runs;
+      if (runs === "down") a.names = "top"; else delete a.names;
+      lanesOf(pool).forEach(function (l) {
+        var g = l.geometry.clone(), w = g.width;
+        g.width = g.height;
+        g.height = w;
+        s.model.setGeometry(l, g);
+        l.getChildren().forEach(function (c) {
+          if (!c.isVertex() || !c.geometry) return;
+          var cg = c.geometry.clone(), x = cg.x;
+          cg.x = cg.y;
+          cg.y = x;
+          s.model.setGeometry(c, cg);
+        });
+        l.terraneOwn._names = a.names === "top" ? "top" : "left";
+        s.model.setStyle(l, ownStyle(l.terraneOwn));
+      });
+      s.model.setStyle(pool, ownStyle(a));
+      tileLanes(pool, { length: length });
+    });
+  }
+
+  // Each of a swimlane's lanes with its name at its left, or at its top.
+  function swimNames(poolKey, names) {
+    var s = surface, pool = s && s.model.getCell(idOf(poolKey));
+    if (!pool || !pool.terraneOwn || pool.terraneOwn.role !== "pool") return;
+    var a = pool.terraneOwn;
+    if ((a.names === "top") === (names === "top")) return;
+    s.graph.batchUpdate(function () {
+      if (names === "top") a.names = "top"; else delete a.names;
+      lanesOf(pool).forEach(function (l) {
+        l.terraneOwn._names = a.names === "top" ? "top" : "left";
+        s.model.setStyle(l, ownStyle(l.terraneOwn));
+      });
+      s.model.setStyle(pool, ownStyle(a));
+    });
+  }
+
+  // A swimlane drawn from Shapes: its name, and three lanes; picked.
+  function addSwimlane(box, within) {
+    var s = surface;
+    if (!s) return null;
+    var key = null;
+    s.graph.batchUpdate(function () {
+      key = add({ role: "pool", label: "Who does what", box: box }, within);
+      var pool = key && s.model.getCell(idOf(key));
+      if (!pool) return;
+      var deep = Math.max(LANE_LEAST, Math.round((box.h - POOL_TITLE) / 3));
+      for (var i = 0; i < 3; i += 1) {
+        var a = { key: freeKey("lane"), role: "lane", _names: "left" };
+        var cell = s.graph.insertVertex({ parent: pool, id: idOf(a.key), value: "Lane " + (i + 1),
+          position: [0, POOL_TITLE + i * deep], size: [box.w, deep], style: ownStyle(a) });
+        cell.terraneOwn = a;
+      }
+      tileLanes(pool, { fill: true });
+    });
+    if (key) s.graph.setSelectionCell(s.model.getCell(idOf(key)));
+    return key;
   }
 
   // Brought forward or sent back among what shares its frame or layer.
+  /* A link on one of its own (`link:`), shown by a mark at its corner that
+   * opens it in a new tab and says where on hover. The mark is maxGraph's
+   * overlay, drawn over the drawing for the person as the handles are,
+   * which the picture and the export leave out; the picture, the deck and
+   * draw.io make the shape itself open the link. As tiles it sits at the
+   * tile's corner, not the wider box's. */
+  var LINK_MARK = "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="18" ' +
+    'height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="8.25" fill="' + PAPER + '" stroke="' + INK +
+    '" stroke-width="1.25"/><g transform="translate(4 4) scale(.4167)" fill="none" stroke="' + INK + '" ' +
+    'stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-' +
+    '7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></g></svg>');
+  function linkMarks(s) {
+    var mg = s.mg, graph = s.graph;
+    s.model.getRoot().filterDescendants(function (c) {
+      if (!c.terraneOwn || !c.isVertex()) return false;
+      var link = c.terraneOwn.link, g = c.geometry;
+      if ((c.overlays || []).length || link) graph.removeCellOverlays(c);
+      if (!link || !g) return false;
+      var dx = -11, dy = 11;
+      if (LOOK === "tiles" && c.terraneOwn.role === "shape") {
+        var side = Math.min(g.width, g.height, TILE);
+        dx -= (g.width - side) / 2;
+        dy += (g.height - side) / 2;
+      }
+      var mark = new mg.CellOverlay(new mg.ImageBox(LINK_MARK, 18, 18), link, "right", "top", new mg.Point(dx, dy),
+        "pointer");
+      mark.addListener(mg.InternalEvent.CLICK, function () { window.open(link, "_blank", "noopener"); });
+      graph.addCellOverlay(c, mark);
+      return false;
+    });
+  }
+
   // Several changes as one step, for Undo: a look painted onto several.
   function together(fn) {
     var s = surface;
@@ -2094,7 +2929,9 @@
   function freeKey(role) {
     var s = surface, used = {};
     s.own.concat(s.orphans).forEach(function (a) { used[a.key] = true; });
-    for (var n = 1; ; n += 1) if (!used[role + "-" + n]) return role + "-" + n;
+    // What a batch has added so far is in the model, not yet in `s.own`:
+    // Ctrl+D on several gave each copy the same key, and the file was refused.
+    for (var n = 1; ; n += 1) if (!used[role + "-" + n] && !s.model.getCell(idOf(role + "-" + n))) return role + "-" + n;
   }
 
   /* A new item of the diagram's own, by a tool or a copy: put in the model
@@ -2104,6 +2941,10 @@
     if (!s) return null;
     var mg = s.mg, graph = s.graph, a = copy(spec), cell;
     a.key = a.key && !s.model.getCell(idOf(a.key)) ? a.key : freeKey(a.role);
+    // Drawn on the sheet, it goes on the drawing layer marked; in a frame,
+    // the frame's.
+    var mark = s.layering && !within && a.layer === undefined && Canvas.drawLayer;
+    if (mark && mark !== s.layering.home && s.layering.order.indexOf(mark) !== -1 && mark !== ESTATE) a.layer = mark;
     var frame = within ? s.model.getCell(idOf(within)) : null;
     graph.batchUpdate(function () {
       if (a.role === "line") {
@@ -2126,7 +2967,7 @@
         delete a.fromAt;
         delete a.toAt;
       } else {
-        var parent = frame || (a.role === "frame" ? s.layers.under : s.layers.over);
+        var parent = frame || (HOLDS[a.role] ? s.layers.under : s.layers.over);
         var x = a.box.x, y = a.box.y;
         if (frame) {
           var o = absolute(frame);
@@ -2138,8 +2979,10 @@
         delete a.box;
       }
       cell.terraneOwn = a;
+      if (cell && cell.isEdge()) endLabels(cell, a);
     });
     if (!cell) return null;
+    applyLayers();
     graph.setSelectionCell(cell);
     return a.key;
   }
@@ -2201,6 +3044,8 @@
   function editText(cell) {
     var s = surface;
     if (!s || !cell || !cell.terraneOwn) return;
+    // A lane that stands for a record is named as the record is.
+    if (cell.terraneOwn.role === "lane" && cell.terraneOwn.stands_for) return;
     closeEditor(true);
     var box = document.createElement("textarea");
     box.className = "mg-edit is-" + cell.terraneOwn.role;
@@ -2273,13 +3118,16 @@
   function ownAt(p) {
     var s = surface;
     var cell = s.graph.getCellAt(p.x, p.y, null, true, true);
+    if (cell && !cell.terraneOwn && cell.terraneLabel && cell.parent && cell.parent.terraneOwn) return cell.parent;
     return cell && cell.terraneOwn ? cell : null;
   }
 
   // The frame a point on the sheet is in, innermost first: where a tool
   // drawing there puts what it draws.
   function frameAt(p) {
-    var s = surface, skip = function (st) { return !st.cell.terraneOwn || st.cell.terraneOwn.role !== "frame"; };
+    var s = surface, skip = function (st) {
+      return !st.cell.terraneOwn || (st.cell.terraneOwn.role !== "frame" && st.cell.terraneOwn.role !== "lane");
+    };
     return s.graph.getCellAt(p.x, p.y, s.layers.bounds, true, false, skip)
       || s.graph.getCellAt(p.x, p.y, s.layers.under, true, false, skip) || null;
   }
@@ -2288,13 +3136,22 @@
   //: a press picks it up; and the strip its name sits in, at full size.
   var EDGE = 12, NAME = 26;
 
-  function nearEdge(st, p) {
+  function nearEdge(st, p, strip) {
     if (!st) return true;
-    var top = Math.max(EDGE, NAME * surface.graph.view.scale);
+    var top = Math.max(EDGE, (strip === undefined ? NAME : strip) * surface.graph.view.scale);
     return p.x - st.x < EDGE || st.x + st.width - p.x < EDGE || p.y - st.y < top || st.y + st.height - p.y < EDGE;
   }
 
-  function onFrameEdge(cell, p) { return nearEdge(surface.graph.view.getState(cell), p); }
+  // Where a frame is picked up: its edge or its name; a swimlane's by its
+  // band, and a lane's by its name's column or band, or its edge.
+  function onFrameEdge(cell, p) {
+    var st = surface.graph.view.getState(cell), own = cell.terraneOwn || {}, k = surface.graph.view.scale;
+    if (own.role === "lane" && st) {
+      var named = own._names === "top" ? p.y - st.y < LANE_BAND * k : p.x - st.x < LANE_COLUMN * k;
+      return named || nearEdge(st, p, 0);
+    }
+    return nearEdge(st, p, own.role === "pool" ? POOL_TITLE : NAME);
+  }
 
   function toModel(p) {
     var v = surface.graph.view;
@@ -2459,7 +3316,7 @@
       // a press on one is a press on the sheet. A frame not yet picked,
       // pressed inside, is sheet to drag across, and a click there picks it.
       var mineAt = !s.readOnly ? ownAt(p) : null;
-      if (mineAt && !(mineAt.terraneOwn.role === "frame" && !s.graph.isCellSelected(mineAt) && !onFrameEdge(mineAt, p))) {
+      if (mineAt && !(HOLDS[mineAt.terraneOwn.role] && !s.graph.isCellSelected(mineAt) && !onFrameEdge(mineAt, p))) {
         hover(null);
         return;
       }
@@ -2674,8 +3531,12 @@
     var cell = s && s.model.getCell(idOf(key));
     if (!cell) return null;
     if (cell.isVertex()) {
-      var o = absolute(cell), g = cell.geometry;
-      return { x1: o.x, y1: o.y, x2: o.x + g.width, y2: o.y + g.height };
+      var o = absolute(cell), g = cell.geometry, turn = Number(cell.style && cell.style.rotation) || 0;
+      if (!turn) return { x1: o.x, y1: o.y, x2: o.x + g.width, y2: o.y + g.height };
+      var r = turn * Math.PI / 180, cos = Math.abs(Math.cos(r)), sin = Math.abs(Math.sin(r));
+      var w = g.width * cos + g.height * sin, h = g.width * sin + g.height * cos;
+      var mx = o.x + g.width / 2, my = o.y + g.height / 2;
+      return { x1: mx - w / 2, y1: my - h / 2, x2: mx + w / 2, y2: my + h / 2 };
     }
     var st = s.graph.view.getState(cell), v = s.graph.view;
     if (!st) return null;
@@ -2791,7 +3652,8 @@
       spec.toAt = b;
       key = add(spec);
     } else {
-      var size = DEFAULT_SIZE[d.tool];
+      var swimlane = d.tool === "shape" && s.toolShape === "swimlane";
+      var size = swimlane ? SWIMLANE_SIZE : DEFAULT_SIZE[d.tool];
       var box = moved
         ? { x: Math.min(a.x, b.x), y: Math.min(a.y, b.y), w: Math.max(24, Math.abs(b.x - a.x)), h: Math.max(20, Math.abs(b.y - a.y)) }
         : { x: a.x - size[0] / 2, y: a.y - size[1] / 2, w: size[0], h: size[1] };
@@ -2804,9 +3666,17 @@
           w: Math.max(step, Math.round(box.w / step) * step), h: Math.max(step, Math.round(box.h / step) * step) };
       }
       var frame = d.tool === "frame" ? null : frameAt(d.start);
-      var spec2 = { role: d.tool, box: box, label: d.tool === "frame" ? "Frame" : "" };
-      if (d.tool === "shape") spec2.shape = s.toolShape;
-      key = add(spec2, frame ? frame.terraneOwn.key : null);
+      // A swimlane goes in a frame, never in another swimlane's lane.
+      if (swimlane && frame && frame.terraneOwn.role === "lane") frame = null;
+      if (swimlane) {
+        box.w = Math.max(box.w, 4 * LANE_LEAST);
+        box.h = Math.max(box.h, POOL_TITLE + 3 * LANE_LEAST);
+        key = addSwimlane(box, frame ? frame.terraneOwn.key : null);
+      } else {
+        var spec2 = { role: d.tool, box: box, label: d.tool === "frame" ? "Frame" : "" };
+        if (d.tool === "shape") spec2.shape = s.toolShape;
+        key = add(spec2, frame ? frame.terraneOwn.key : null);
+      }
     }
     if (Canvas.ownDrawn) Canvas.ownDrawn(key, d.tool);
     var cell = s.model.getCell(idOf(key));
@@ -3062,6 +3932,11 @@
       rehop(surface, true);
     },
     where: where, moveEach: moveEach, boxOf: boxOf, frameAround: frameAround,
+    lanes: lanes, addLane: addLane, moveLane: moveLane, swimRuns: swimRuns, swimNames: swimNames,
+    setLayers: setLayers, turnTogether: turnTogether, stretches: function () { stretches(); },
+    // The layer one of its own is on, by its key.
+    layerOf: function (key) { return surface ? layerOfCell(surface.model.getCell(idOf(key))) : null; },
+    addSwimlane: addSwimlane,
     select: select, selected: selected, item: item, edit: function (key) {
       if (surface) editText(surface.model.getCell(idOf(key)));
     },
@@ -3069,5 +3944,6 @@
     SHAPES: OWN_SHAPES, FILLS: FILLS, FILL_ORDER: FILL_ORDER, INK: INK, TILE_FILLS: TILE_FILLS, KIND_ICONS: KIND_ICONS,
     MARK_SETS: MARK_SETS, WEIGHTS: WEIGHTS, cornersOf: cornersOf, together: together,
     setLook: setLook, look: function () { return LOOK; }, pathData: pathData, ROUTES: OWN_ROUTES,
+    HEAD_GLYPHS: HEAD_GLYPHS, headsOf: headsOf,
   };
 })(window.TerraneApp);

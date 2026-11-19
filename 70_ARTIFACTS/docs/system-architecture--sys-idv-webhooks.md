@@ -22,6 +22,8 @@ flowchart LR
     TS_AZURE_AKS[/"Azure Kubernetes Service<br/>[Container platform]"/]
     TS_IDENTITY_DNS[/"Customer Identity Service<br/>DNS<br/>[Azure DNS]"/]
     TS_IDENTITY_WAF[/"Customer Identity Service<br/>Web application firewall<br/>[Azure WAF]"/]
+    TS_NET_SUB_AZ_PLATFORM_SHARED[/"Platform Shared Services<br/>Subnet<br/>[Subnet]"/]
+    TS_NET_SUB_AZ_RISK_PUB[/"Risk Public Subnet<br/>[Subnet]"/]
   end
 
   SYS_IDV_VENDOR -->|"HTTPS"| SYS_IDV_WEBHOOKS
@@ -33,11 +35,13 @@ flowchart LR
   SYS_IDENTITY_SVC -.->|"runs on"| TS_AZURE_KEYVAULT
   SYS_IDV_WEBHOOKS -.->|"runs on"| TS_AZURE_APIM
   SYS_IDV_WEBHOOKS -.->|"runs on"| TS_AZURE_AKS
+  SYS_IDENTITY_SVC -.->|"runs on"| TS_NET_SUB_AZ_PLATFORM_SHARED
+  SYS_IDV_WEBHOOKS -.->|"runs on"| TS_NET_SUB_AZ_RISK_PUB
 
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   classDef s_tech_services__tech_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
   class SYS_IDENTITY_SVC,SYS_IDV_VENDOR,SYS_IDV_WEBHOOKS s_systems__systems;
-  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT,TS_IDENTITY_DNS,TS_IDENTITY_WAF s_tech_services__tech_services;
+  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT,TS_IDENTITY_DNS,TS_IDENTITY_WAF,TS_NET_SUB_AZ_PLATFORM_SHARED,TS_NET_SUB_AZ_RISK_PUB s_tech_services__tech_services;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_System,grp_Technology_Service boundary1;
 ```
@@ -53,4 +57,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#4338ca` | systems |
 | `#c2410c` | tech services |
 
-8 entities, 9 relationships. Generated from the model; edit the model, not this file.
+10 entities, 11 relationships. Generated from the model; edit the model, not this file.

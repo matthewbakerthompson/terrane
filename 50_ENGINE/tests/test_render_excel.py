@@ -13,7 +13,7 @@ from terrane.excel_import import sheets, sketch_from_excel
 from terrane.render_excel import estate_sheets, export_excel, sheet_name, workbook_bytes
 from terrane.schema import ENTITY_TYPES
 
-from _fixture import REPO, seeded_model, setup_shared, teardown_shared
+from _fixture import REPO, remove_scratch, seeded_model, setup_shared, teardown_shared
 
 
 def setUpModule() -> None:
@@ -95,7 +95,9 @@ class TestEstate(unittest.TestCase):
         self.assertGreater(sum(1 for k in said.values() if k), len(said) // 2)
 
     def test_the_workbook_reads_back_as_the_inventory_and_opens_the_same_twice(self) -> None:
-        out = Path(tempfile.mkdtemp(prefix="aac-xlsx-")) / "estate.xlsx"
+        folder = Path(tempfile.mkdtemp(prefix="aac-xlsx-"))
+        self.addCleanup(remove_scratch, folder, "aac-xlsx-")
+        out = folder / "estate.xlsx"
         path = export_excel(self.model, out)
         first = path.read_bytes()
         read = sheets(first)
@@ -112,7 +114,9 @@ class TestEstate(unittest.TestCase):
         self.assertEqual(export_excel(self.model, out).read_bytes(), first)
 
     def test_the_door(self) -> None:
-        out = Path(tempfile.mkdtemp(prefix="aac-xlsx-")) / "e.xlsx"
+        folder = Path(tempfile.mkdtemp(prefix="aac-xlsx-"))
+        self.addCleanup(remove_scratch, folder, "aac-xlsx-")
+        out = folder / "e.xlsx"
         path = terrane.export_excel(REPO, out)
         self.assertTrue(path.is_file())
         self.assertGreater(len(sheets(path.read_bytes())), 10)
@@ -138,7 +142,9 @@ class TestSketchWorkbook(unittest.TestCase):
 
     def test_the_visio_sample_in_and_an_inventory_out(self) -> None:
         drawings = terrane.diagrams(str(REPO / "90_EXAMPLE" / "quick" / "sample.vsdx"), date="2026-10-17")
-        out = Path(tempfile.mkdtemp(prefix="aac-xlsx-")) / "visio.xlsx"
+        folder = Path(tempfile.mkdtemp(prefix="aac-xlsx-"))
+        self.addCleanup(remove_scratch, folder, "aac-xlsx-")
+        out = folder / "visio.xlsx"
         drawings.excel(out)
         read = dict(sheets(out.read_bytes()))
         self.assertEqual(read["systems"][0][:2], ["system_id", "name"])
@@ -159,6 +165,7 @@ class TestSketchWorkbook(unittest.TestCase):
         from terrane import cli
 
         folder = Path(tempfile.mkdtemp(prefix="aac-xlsx-"))
+        self.addCleanup(remove_scratch, folder, "aac-xlsx-")
         source = folder / "sample.vsdx"
         source.write_bytes((REPO / "90_EXAMPLE" / "quick" / "sample.vsdx").read_bytes())
         with redirect_stdout(io.StringIO()):

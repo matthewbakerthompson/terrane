@@ -1,0 +1,67 @@
+# Networks: what the landing zone vends once per account, and every product in
+# the account lands in. A product never makes one. Its systems are placed in
+# their account's subnets by network zone (terrane/model.py, `place_by_zone`),
+# so a network is made once and used by every product after it; the lending
+# product's subnets were written by hand and the Azure accounts had none.
+
+- module_id: workload-network
+  name: Workload network
+  category: Network
+  needs: [slug, network_name, tech_service_id]
+  description: >
+    An account's network: its subnets, one for each tier in each zone, the
+    NAT gateways its private tiers leave through, its attachment to the
+    landing zone's transit hub and its link to the landing zone's resolver.
+    Made once for each account by whoever runs the network; every product in
+    the account lands in it by zone, and none makes its own.
+  parameters:
+    - name: subnets
+      required: true
+      description: >
+        The subnets, as a list of mappings: `id`, a short token (APP-A);
+        `name` (App Subnet A); `zone`, the network zone whose systems land
+        in it (Private-App); and `az`, its availability zone after
+        `az_prefix` (a, on AWS), or zone-redundant where the cloud's subnets
+        span the region.
+    - name: nat_gateways
+      default: []
+      description: The NAT gateways, as a list of mappings with `id`, `name` and `az`.
+    - name: az_prefix
+      default: ""
+      description: What every `az` is written after, the region on AWS, where a zone is the region and a letter
+    - name: transit
+      component: transit-gateway
+      description: The landing zone's transit hub the network attaches to
+    - name: dns
+      component: dns
+      description: The landing zone's resolver the network's names come from
+  provides:
+    tech_services:
+      - each: "{subnets}"
+        tech_service_id: "TS-NET-SUB-{slug|upper}-{id}"
+        name: "{network_name} {name}"
+        component_type: subnet
+        network_zone: "{zone}"
+        availability_zone: "{az_prefix}{az}"
+      - each: "{nat_gateways}"
+        tech_service_id: "TS-NET-NAT-{slug|upper}-{id}"
+        name: "{network_name} {name}"
+        component_type: nat-gateway
+        network_zone: Public
+        availability_zone: "{az_prefix}{az}"
+  relations:
+    tech_service_connects_to:
+      - from_tech_service_id: "{transit}"
+        to_tech_service_id: "{tech_service_id}"
+        connection: network attachment
+      - from_tech_service_id: "{tech_service_id}"
+        to_tech_service_id: "{dns}"
+        connection: resolver
+      - each: "{subnets}"
+        from_tech_service_id: "{tech_service_id}"
+        to_tech_service_id: "TS-NET-SUB-{slug|upper}-{id}"
+        connection: subnet
+      - each: "{nat_gateways}"
+        from_tech_service_id: "{tech_service_id}"
+        to_tech_service_id: "TS-NET-NAT-{slug|upper}-{id}"
+        connection: egress route

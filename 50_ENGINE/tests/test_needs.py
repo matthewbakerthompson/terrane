@@ -458,6 +458,23 @@ class TestTheApp(_Estate):
             server.api_records_set({}, {"type": "systems", "field": "network_zone", "value": "DMZ", "ids": ["SYS-CRM"]})
         self.assertIn("not one of", refused.exception.message)
 
+    def test_the_kinds_listed_set_and_put_back(self) -> None:
+        server = _server(self.root)
+        listed = server.api_needs_kinds({}, {})
+        self.assertEqual(listed["types"], [{"type": "systems", "lacking": 5}])
+        self.assertEqual(listed["kinds"], len(server.load_components(self.root)))
+        rows = {r["id"]: (g, r) for g in listed["groups"] for r in g["records"]}
+        rows.update({r["id"]: (None, r) for r in listed["nothing"]})
+        self.assertEqual(sorted(rows), ["SYS-CRM", "SYS-GATEWAY", "SYS-LEDGER", "SYS-OLD", "SYS-PORTAL"])
+        group, crm = rows["SYS-CRM"]
+        self.assertEqual((group["kind"], crm["editable"], crm["words"][:1]), ("crm", True, ["crm"]))
+        done = server.api_records_set({}, {"type": "systems", "field": "component_type", "value": "crm",
+                                           "ids": ["SYS-CRM"]})
+        self.assertEqual((done["changed"], done["errors"]), (["SYS-CRM"], []))
+        self.assertNotIn("SYS-CRM", [r["id"] for g in server.api_needs_kinds({}, {})["groups"] for r in g["records"]])
+        self.assertEqual(server.api_records_undo({}, {"token": done["undo"]})["restored"], 1)
+        self.assertIn("SYS-CRM", [r["id"] for g in server.api_needs_kinds({}, {})["groups"] for r in g["records"]])
+
     def test_an_estate_started_and_opened_from_the_app(self) -> None:
         server = _server(self.root)
         other = Path(tempfile.mkdtemp(prefix=PREFIX))

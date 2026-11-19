@@ -12,14 +12,32 @@ AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor=
 Boundary(b_Capability, "Capability") {
   System(CAP_SERV_02, "Account Maintenance & Servicing Requests", "Execute cardholder-requested account changes.", $tags="capabilities")
   ' aac CAP_SERV_02: company_domain="Servicing"
+  System(CAP_LEND_02_01, "Dealer Application Intake", "Take applications keyed by the dealer, check them for completeness, and verify identity before the decision.", $tags="capabilities")
+  ' aac CAP_LEND_02_01: company_domain="Lending"
+  System(CAP_DEP_02, "Deposit Account Opening", "Open and fund consumer deposit accounts directly: identity, disclosures, initial funding.", $tags="capabilities")
+  ' aac CAP_DEP_02: company_domain="Deposits"
   System(CAP_RGOV_07, "Financial Crimes & BSA/AML Compliance", "Operate the KYC/CIP program, transaction monitoring, sanctions screening, and regulatory filing.", $tags="capabilities")
   ' aac CAP_RGOV_07: company_domain="Cross-Functional Services"
+  System(CAP_FRAUD_08, "First-Party Fraud & Bust-Out Management", "Detect and act on credit abuse by account holders themselves: bust-out, synthetic identities and payment fraud.", $tags="capabilities")
+  ' aac CAP_FRAUD_08: company_domain="Servicing"
   System(CAP_ORIG_02, "Identity Verification & KYC/CIP", "Verify applicant identity and satisfy customer identification obligations.", $tags="capabilities")
   ' aac CAP_ORIG_02: company_domain="Originations"
+  System(CAP_LEND_02, "Indirect Application & Underwriting", "Receive applications through dealers, decision them against credit policy, and return terms while the buyer is at the point of sale.", $tags="capabilities")
+  ' aac CAP_LEND_02: company_domain="Lending"
+  System(CAP_RGOV_07_01, "Sanctions Screening", "Screen customers, merchants and transactions against sanctions lists and watchlists.", $tags="capabilities")
+  ' aac CAP_RGOV_07_01: company_domain="Cross-Functional Services"
+  System(CAP_SERV_02_02, "Servicemember Protections", "Identify covered borrowers, and apply the rate, fee and collection protections they are owed.", $tags="capabilities")
+  ' aac CAP_SERV_02_02: company_domain="Servicing"
 }
 Boundary(b_Process, "Process") {
   System(P_SERVICING_012, "Apply servicemember and military lending protections", "Identify covered borrowers, apply the required rate and fee protections, and evidence compliance for servicemember accounts.", $tags="processes")
   ' aac P_SERVICING_012: company_domain=""
+  System(P_FRAUD_008, "Investigate synthetic identity", "Investigate identities built from real and invented data, often seasoned for months before they bust out, by linking shared phones, addresses and devices across applications and accounts; close the linked accounts and feed the pattern back to application screening. A synthetic identity has no victim to complain, so it is found only by looking.", $tags="processes")
+  ' aac P_FRAUD_008: company_domain=""
+  System(P_DEPOSITS_002, "Open and fund direct deposit account", "Open a CD or savings account applied for online, verify the depositor's identity and screen for sanctions, deliver the account disclosures, and take the opening deposit by ACH or wire. Deposit accounts are an entry point for fraud and money laundering, so identity and the source of funds are checked before the account goes live.", $tags="processes")
+  ' aac P_DEPOSITS_002: company_domain=""
+  System(P_LENDING_003, "Receive and validate dealer-submitted application", "Accept a credit application keyed by the dealer's finance office, check it is complete, verify the applicant's identity and screen it for application fraud before it reaches the decision. The buyer is at the dealership, so intake runs against a point-of-sale clock; an incomplete or unverified application that slips through becomes a funding exception later.", $tags="processes")
+  ' aac P_LENDING_003: company_domain=""
   System(P_COMPLIANCE_003, "Screen for sanctions and watchlists", "Screen parties and transactions against sanctions and watchlists and adjudicate hits. Screening runs at onboarding and on list updates across cardholders, clients, and suppliers; a hit blocks processing until dispositioned, and the disposition is retained as evidence.", $tags="processes")
   ' aac P_COMPLIANCE_003: company_domain=""
   System(P_ORIG_002, "Verify applicant identity and satisfy CIP", "Verify the applicant's identity and record evidence satisfying customer identification obligations. CIP evidence is retained per BSA requirements; verification failures route to document request rather than automatic decline, and synthetic identity signals feed fraud screening.", $tags="processes")
@@ -36,6 +54,12 @@ Rel(P_COMPLIANCE_003, SYS_KYC, "Supporting")
 ' aac rel: source="P_COMPLIANCE_003"; target="SYS_KYC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
 Rel(P_SERVICING_012, SYS_KYC, "Supporting")
 ' aac rel: source="P_SERVICING_012"; target="SYS_KYC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_003, SYS_KYC, "Supporting")
+' aac rel: source="P_LENDING_003"; target="SYS_KYC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DEPOSITS_002, SYS_KYC, "Supporting")
+' aac rel: source="P_DEPOSITS_002"; target="SYS_KYC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_FRAUD_008, SYS_KYC, "Supporting")
+' aac rel: source="P_FRAUD_008"; target="SYS_KYC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
 Rel(P_ORIG_002, CAP_ORIG_02, "supports")
 ' aac rel: source="P_ORIG_002"; target="CAP_ORIG_02"; label="supports"; relation="process_supports_capability"
 Rel(P_ORIG_002, CAP_RGOV_07, "supports")
@@ -44,6 +68,18 @@ Rel(P_COMPLIANCE_003, CAP_RGOV_07, "supports")
 ' aac rel: source="P_COMPLIANCE_003"; target="CAP_RGOV_07"; label="supports"; relation="process_supports_capability"
 Rel(P_SERVICING_012, CAP_SERV_02, "supports")
 ' aac rel: source="P_SERVICING_012"; target="CAP_SERV_02"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_003, CAP_LEND_02_01, "supports")
+' aac rel: source="P_LENDING_003"; target="CAP_LEND_02_01"; label="supports"; relation="process_supports_capability"
+Rel(P_DEPOSITS_002, CAP_DEP_02, "supports")
+' aac rel: source="P_DEPOSITS_002"; target="CAP_DEP_02"; label="supports"; relation="process_supports_capability"
+Rel(P_FRAUD_008, CAP_FRAUD_08, "supports")
+' aac rel: source="P_FRAUD_008"; target="CAP_FRAUD_08"; label="supports"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_003, CAP_RGOV_07_01, "supports")
+' aac rel: source="P_COMPLIANCE_003"; target="CAP_RGOV_07_01"; label="supports"; relation="process_supports_capability"
+Rel(P_SERVICING_012, CAP_SERV_02_02, "supports")
+' aac rel: source="P_SERVICING_012"; target="CAP_SERV_02_02"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_003, CAP_LEND_02, "supports")
+' aac rel: source="P_LENDING_003"; target="CAP_LEND_02"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

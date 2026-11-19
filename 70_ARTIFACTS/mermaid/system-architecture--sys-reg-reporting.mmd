@@ -6,6 +6,8 @@ flowchart LR
   subgraph grp_Data_Asset["Data Asset"]
     direction LR
     DA_CUST360_CURATED[("Customer 360 curated<br/>dataset")]
+    DA_DEALER[("Dealer master and<br/>agreement")]
+    DA_LOAN_ACCOUNT[("Installment loan account")]
     DA_LENDPERF_CURATED[("Lending Portfolio<br/>Performance curated<br/>dataset")]
   end
 
@@ -21,6 +23,7 @@ flowchart LR
     TS_AZURE_AKS[/"Azure Kubernetes Service<br/>[Container platform]"/]
     TS_GCP_BIGQUERY[/"BigQuery<br/>[Data warehouse]"/]
     TS_GCP_LOOKER[/"Looker<br/>[Business intelligence]"/]
+    TS_NET_SUB_AZ_RISK_APP[/"Risk App Subnet<br/>[Subnet]"/]
     TS_SNOWFLAKE[/"Snowflake<br/>[Data warehouse]"/]
   end
 
@@ -31,16 +34,19 @@ flowchart LR
   SYS_LENDPERF_SEMANTIC -.->|"runs on"| TS_GCP_LOOKER
   SYS_REG_REPORTING -.->|"runs on"| TS_AZURE_AKS
   SYS_REG_REPORTING -.->|"runs on"| TS_SNOWFLAKE
+  SYS_REG_REPORTING -.->|"runs on"| TS_NET_SUB_AZ_RISK_APP
   SYS_CUST360_SEMANTIC -->|"Read"| DA_CUST360_CURATED
   SYS_LENDPERF_SEMANTIC -->|"Read"| DA_LENDPERF_CURATED
   SYS_REG_REPORTING -->|"Read"| DA_LENDPERF_CURATED
+  SYS_LENDPERF_SEMANTIC -->|"Read"| DA_LOAN_ACCOUNT
+  SYS_LENDPERF_SEMANTIC -->|"Read"| DA_DEALER
   SYS_REG_REPORTING -->|"Read"| DA_CUST360_CURATED
 
   classDef s_data_assets__data_assets fill:#a7f3d0,stroke:#047857,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   classDef s_tech_services__tech_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
-  class DA_CUST360_CURATED,DA_LENDPERF_CURATED s_data_assets__data_assets;
+  class DA_CUST360_CURATED,DA_DEALER,DA_LENDPERF_CURATED,DA_LOAN_ACCOUNT s_data_assets__data_assets;
   class SYS_CUST360_SEMANTIC,SYS_LENDPERF_SEMANTIC,SYS_REG_REPORTING s_systems__systems;
-  class TS_AZURE_AKS,TS_GCP_BIGQUERY,TS_GCP_LOOKER,TS_SNOWFLAKE s_tech_services__tech_services;
+  class TS_AZURE_AKS,TS_GCP_BIGQUERY,TS_GCP_LOOKER,TS_NET_SUB_AZ_RISK_APP,TS_SNOWFLAKE s_tech_services__tech_services;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Data_Asset,grp_System,grp_Technology_Service boundary1;

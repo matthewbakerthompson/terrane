@@ -30,6 +30,12 @@ flowchart LR
     SYS_CARDSVC_WEB["Card Servicing Web<br/>[AKS]"]
   end
 
+  subgraph grp_workload_network["workload-network"]
+    direction LR
+    TS_NET_SUB_AZ_CARDS_APP[/"Cards App Subnet<br/>[Subnet]"/]
+    TS_NET_SUB_AZ_CARDS_DATA[/"Cards Data Subnet<br/>[Subnet]"/]
+  end
+
   TS_AZURE_APIM[/"Azure API Management<br/>[API gateway]"/]
   TS_AZURE_KEYVAULT[/"Azure Key Vault<br/>[Secrets manager]"/]
   TS_AZURE_AKS[/"Azure Kubernetes Service<br/>[Container platform]"/]
@@ -60,6 +66,9 @@ flowchart LR
   SYS_CARDSVC_STORE -.->|"runs on"| TS_CARDSVC_BACKUP
   SYS_CARDSVC_STORE -.->|"runs on"| TS_AZURE_KEYVAULT
   SYS_CARDSVC_EVENTS -.->|"runs on"| TS_AZURE_SERVICEBUS
+  SYS_CARDSVC_API -.->|"runs on"| TS_NET_SUB_AZ_CARDS_APP
+  SYS_CARDSVC_WEB -.->|"runs on"| TS_NET_SUB_AZ_CARDS_APP
+  SYS_CARDSVC_STORE -.->|"runs on"| TS_NET_SUB_AZ_CARDS_DATA
   SYS_CARDSVC_API -->|"ReadWrite"| DA_CARDSVC_OPERATIONAL
   SYS_CARDSVC_STORE -->|"ReadWrite"| DA_CARDSVC_OPERATIONAL
   SYS_CARDSVC_API -->|"Read"| DA_CARD_ACCOUNT
@@ -73,9 +82,9 @@ flowchart LR
   class DA_CARD_ACCOUNT,DA_CARDSVC_OPERATIONAL,DA_TRANSACTION s_data_assets__data_assets;
   class OI_CARDSVC_API s_offered_interfaces__offered_interfaces;
   class SYS_CARDSVC_API,SYS_CARDSVC_EVENTS,SYS_CARDSVC_STORE,SYS_CARDSVC_WEB s_systems__systems;
-  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT,TS_AZURE_MONITOR,TS_AZURE_SERVICEBUS,TS_AZURE_SQL,TS_CARDSVC_BACKUP,TS_CARDSVC_CACHE,TS_CARDSVC_DNS,TS_CARDSVC_WAF,TS_ENTRA_ID s_tech_services__tech_services;
+  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT,TS_AZURE_MONITOR,TS_AZURE_SERVICEBUS,TS_AZURE_SQL,TS_CARDSVC_BACKUP,TS_CARDSVC_CACHE,TS_CARDSVC_DNS,TS_CARDSVC_WAF,TS_ENTRA_ID,TS_NET_SUB_AZ_CARDS_APP,TS_NET_SUB_AZ_CARDS_DATA s_tech_services__tech_services;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
-  class grp_api_service,grp_event_publisher,grp_relational_datastore,grp_web_channel boundary1;
+  class grp_api_service,grp_event_publisher,grp_relational_datastore,grp_web_channel,grp_workload_network boundary1;
 ```
 
 The same view as the app draws it, written beside the Mermaid by `terrane render`:
@@ -91,4 +100,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#4338ca` | systems |
 | `#c2410c` | tech services |
 
-19 entities, 21 relationships. Generated from the model; edit the model, not this file.
+21 entities, 24 relationships. Generated from the model; edit the model, not this file.

@@ -29,7 +29,7 @@ from terrane.pictures import (Pictures, _reason, render_pictures, requires_of, s
                           sample_instance, sample_part)
 from terrane.render_library import render_modules, render_shapes  # noqa: E402
 
-from _fixture import REPO, seeded_model, seeded_root, seeded_views, setup_shared, teardown_shared  # noqa: E402
+from _fixture import REPO, remove_scratch, seeded_model, seeded_root, seeded_views, setup_shared, teardown_shared  # noqa: E402
 
 
 def setUpModule() -> None:
@@ -54,6 +54,7 @@ class TestPictures(unittest.TestCase):
         web = web_dir(cls.root)
         cls.icons = IconMap(web if web else REPO / "80_APP" / "web")
         cls.out = Path(tempfile.mkdtemp(prefix="aac-pictures-"))
+        cls.addClassCleanup(remove_scratch, cls.out, "aac-pictures-")
         cls.before = {t: set(v) for t, v in cls.model.entities.items()}
         cls.pictures = render_pictures(cls.model, cls.views, cls.shapes, cls.modules, cls.palette, cls.icons,
                                        cls.components, cls.blocks, cls.out, "Test", cls.root)
@@ -101,6 +102,16 @@ class TestPictures(unittest.TestCase):
             with self.subTest(shape=archetype.archetype_id):
                 text = (self.out / ("shape--%s.svg" % archetype.archetype_id)).read_text(encoding="utf-8")
                 root = ET.fromstring(text)
+                if archetype.applies_to != "products":
+                    # A network shape: the sample network and what it made,
+                    # beside the landing zone's hub and resolver.
+                    services = {el.get("data-id") for el in root.iter()
+                                if el.get("class") == "node" and el.get("data-type") == "tech_services"}
+                    own = {s for s in services if "SAMPLE" in s}
+                    self.assertGreater(len(own), 1, sorted(services))
+                    self.assertEqual(services - own - set(self.model.entities["tech_services"]), set())
+                    self.assertIn("as the shape makes it", text)
+                    continue
                 systems = {el.get("data-id") for el in root.iter()
                            if el.get("class") == "node" and el.get("data-type") == "systems"}
                 own = {s for s in systems if s.startswith("SYS-SAMPLE")}
@@ -115,6 +126,7 @@ class TestPictures(unittest.TestCase):
 
     def test_same_bytes_twice(self) -> None:
         again = Path(tempfile.mkdtemp(prefix="aac-pictures-"))
+        self.addCleanup(remove_scratch, again, "aac-pictures-")
         render_pictures(self.model, self.views, self.shapes, self.modules, self.palette, self.icons,
                         self.components, self.blocks, again, "Test", self.root)
         for path in self.pictures.written:

@@ -12,6 +12,7 @@ flowchart LR
     direction LR
     CAP_ACQ_04{{"Marketing Compliance &<br/>Disclosure Review"}}
     CAP_ACQ_02{{"Offer & Pre-Screen<br/>Management"}}
+    CAP_ACQ_02_01{{"Offer Construction"}}
     CAP_ACQ_01{{"Prospect Data & List<br/>Management"}}
   end
 
@@ -31,11 +32,12 @@ flowchart LR
   P_MARKETING_001 -->|"supports"| CAP_ACQ_01
   P_MARKETING_002 -->|"supports"| CAP_ACQ_02
   P_MARKETING_002 -->|"supports"| CAP_ACQ_04
+  P_MARKETING_002 -->|"supports"| CAP_ACQ_02_01
 
   classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
   classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
-  class CAP_ACQ_01,CAP_ACQ_02,CAP_ACQ_04 s_capabilities__capabilities;
+  class CAP_ACQ_01,CAP_ACQ_02,CAP_ACQ_02_01,CAP_ACQ_04 s_capabilities__capabilities;
   class P_MARKETING_001,P_MARKETING_002 s_processes__processes;
   class SYS_PROSPECT_DATA s_systems__systems;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
@@ -54,4 +56,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#0369a1` | processes |
 | `#4338ca` | systems |
 
-6 entities, 5 relationships. Generated from the model; edit the model, not this file.
+7 entities, 6 relationships. Generated from the model; edit the model, not this file.

@@ -1,123 +1,400 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="678.7" viewBox="0 0 1100 678.7" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="1857.5" viewBox="0 0 1100 1857.5" font-family="Geist, system-ui, sans-serif" data-layout="elk">
 <title>Payment capture gateway — Processes and Capabilities</title>
 <rect width="100%" height="100%" fill="#ffffff"/>
 <g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Payment capture gateway — Processes and Capabilities</text>
-<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   7 nodes · 6 edges</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   26 nodes · 31 edges</text>
 <text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One system, every process that uses it and in what role, and the capabilities those processes support. This shows the business impact of changing the system. A</text>
 <text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">long list against a low criticality rating is worth a second look.</text>
 <line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
-<g class="drawing" transform="translate(155.72 99.2)">
+<g class="drawing" transform="translate(61.72 110)">
 <g class="boundary" data-id="grp::Capability">
-<rect x="299.92" y="129.3" width="212.16" height="295.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
-<text x="341.92" y="146.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+<rect x="379.92" y="242.3" width="212.16" height="1175.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="421.92" y="259.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
 </g>
 <g class="boundary" data-id="grp::Process">
-<rect x="9.87" y="42.26" width="212.27" height="295.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
-<text x="42.72" y="59.67" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+<rect x="9.87" y="308.26" width="212.27" height="1087.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.72" y="325.67" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
 </g>
 <g class="boundary" data-id="grp::System">
-<rect x="557.3" y="24.3" width="221.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
-<text x="587.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+<rect x="745.3" y="122.53" width="221.4" height="135.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="775.1" y="139.94" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
 </g>
 <g class="edge" data-id="e0::P-CARD-PMT-001::SYS-PAYMENT-GW">
 <title>Primary</title>
-<path d="M196 178.67 L244.97 179 A10 10 0 0 0 245.03 179 L261 179 A10 10 0 0 0 271 169 L271 84 A10 10 0 0 1 281 74 L525 74 A1 1 0 0 1 526 75 L526 75 A1 1 0 0 0 527 76 L554 76 L579.48 76" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M583 76 L573.43 80.78 L573.43 71.22 Z" fill="#7b8798"/>
+<path d="M196 615 L225 615 L261 615 A10 10 0 0 0 271 605 L271 127 A10 10 0 0 1 281 117 L606 117 A10 10 0 0 1 616 127 L616 157 A10 10 0 0 0 626 167 L672 167 L717.46 167 A3.54 3.54 0 0 1 721 170.54 L721 170.54 A3.54 3.54 0 0 0 724.54 174.08 L767.48 174.08" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M771 174.08 L761.43 178.86 L761.43 169.29 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e0::P-CARD-PMT-001::SYS-PAYMENT-GW">
-<rect x="382.32" y="80.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="403.5" y="92.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+<rect x="442.32" y="123.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="463.5" y="135.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
 </g>
 <g class="edge" data-id="e1::P-PAYMENTS-003::SYS-PAYMENT-GW">
 <title>Primary</title>
-<path d="M196 289.33 L244.97 289 A10 10 0 0 1 245.03 289 L253 289 A8 8 0 0 1 261 297 L261 431 A10 10 0 0 0 271 441 L516 441 A10 10 0 0 0 526 431 L526 99 A10 10 0 0 1 536 89 L554 89 L579.48 89" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M583 89 L573.43 93.78 L573.43 84.22 Z" fill="#7b8798"/>
+<path d="M196 444.67 L224.94 445 A10 10 0 0 0 225.06 445 L241 445 A10 10 0 0 0 251 435 L251 57 A10 10 0 0 1 261 47 L626 47 A10 10 0 0 1 636 57 L636 137 A10 10 0 0 0 646 147 L672 147 L733.92 147 A7.08 7.08 0 0 1 741 154.08 L741 154.08 A7.08 7.08 0 0 0 748.08 161.15 L767.48 161.15" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M771 161.15 L761.43 165.94 L761.43 156.37 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e1::P-PAYMENTS-003::SYS-PAYMENT-GW">
-<rect x="382.32" y="447.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="403.5" y="459.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+<rect x="442.32" y="53.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="463.5" y="65.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
 </g>
 <g class="edge" data-id="e2::P-SERVICING-011::SYS-PAYMENT-GW">
 <title>Supporting</title>
-<path d="M196 90.67 L244.97 91 A10 10 0 0 0 245.03 91 L253 91 A8 8 0 0 0 261 83 L261 73 A10 10 0 0 1 271 63 L554 63 L579.48 63" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M583 63 L573.43 67.78 L573.43 58.22 Z" fill="#7b8798"/>
+<path d="M196 385 L225 385 L233 385 A8 8 0 0 0 241 377 L241 22 A10 10 0 0 1 251 12 L636 12 A10 10 0 0 1 646 22 L646 127 A10 10 0 0 0 656 137 L672 137 L742.15 137 A8.85 8.85 0 0 1 751 145.85 L751 146.45 A8.24 8.24 0 0 0 759.24 154.69 L767.48 154.69" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M771 154.69 L761.43 159.48 L761.43 149.91 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e2::P-SERVICING-011::SYS-PAYMENT-GW">
-<rect x="374.46" y="40.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="403.5" y="52.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+<rect x="434.46" y="18.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="463.5" y="30.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
 </g>
-<g class="edge" data-id="e3::P-CARD-PMT-001::CAP-PAY-03">
-<title>supports</title>
-<path d="M196 201.33 L244.97 201 A10 10 0 0 1 245.03 201 L271 201 A10 10 0 0 1 281 211 L281 269 A8 8 0 0 0 289 277 L297 277 L322.48 277" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M326 277 L316.43 281.79 L316.43 272.21 Z" fill="#7b8798"/>
+<g class="edge" data-id="e3::P-LENDING-008::SYS-PAYMENT-GW">
+<title>Supporting</title>
+<path d="M196 1231 L225 1231 L241 1231 A10 10 0 0 1 251 1241 L251 1564 A10 10 0 0 0 261 1574 L636 1574 A10 10 0 0 0 646 1564 L646 247 A10 10 0 0 1 656 237 L672 237 L742.15 237 A8.85 8.85 0 0 0 751 228.15 L751 227.55 A8.24 8.24 0 0 1 759.24 219.31 L767.48 219.31" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M771 219.31 L761.43 224.09 L761.43 214.52 Z" fill="#7b8798"/>
 </g>
-<g class="edge" data-id="e4::P-PAYMENTS-003::CAP-PAY-04">
-<title>supports</title>
-<path d="M196 266.67 L244.97 267 A10 10 0 0 0 245.03 267 L261 267 A10 10 0 0 1 271 277 L271 355 A10 10 0 0 0 281 365 L297 365 L322.48 365" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M326 365 L316.43 369.79 L316.43 360.21 Z" fill="#7b8798"/>
+<g class="edge-label" data-edge="e3::P-LENDING-008::SYS-PAYMENT-GW">
+<rect x="434.46" y="1580.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="463.5" y="1592.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
 </g>
-<g class="edge" data-id="e5::P-SERVICING-011::CAP-SERV-02">
+<g class="edge" data-id="e4::P-LENDING-009::SYS-PAYMENT-GW">
+<title>Supporting</title>
+<path d="M196 907.33 L224.94 907 A10 10 0 0 1 225.06 907 L311 907 A10 10 0 0 1 321 917 L321 1424 A10 10 0 0 0 331 1434 L596 1434 A10 10 0 0 0 606 1424 L606 207 A10 10 0 0 1 616 197 L672 197 L709.23 197 A1.77 1.77 0 0 0 711 195.23 L711 195.23 A1.77 1.77 0 0 1 712.77 193.46 L767.48 193.46" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M771 193.46 L761.43 198.25 L761.43 188.68 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::P-LENDING-009::SYS-PAYMENT-GW">
+<rect x="434.46" y="1440.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="463.5" y="1452.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e5::P-LENDING-017::SYS-PAYMENT-GW">
+<title>Supporting</title>
+<path d="M196 796.67 L224.94 797 A10 10 0 0 0 225.06 797 L291 797 A10 10 0 0 0 301 787 L301 197 A10 10 0 0 1 311 187 L672 187 L767.48 187" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M771 187 L761.43 191.78 L761.43 182.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e5::P-LENDING-017::SYS-PAYMENT-GW">
+<rect x="434.46" y="193.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="463.5" y="205.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e6::P-DEPOSITS-002::SYS-PAYMENT-GW">
+<title>Supporting</title>
+<path d="M196 1060.67 L224.94 1061 A10 10 0 0 0 225.06 1061 L271 1061 A10 10 0 0 1 281 1071 L281 1494 A10 10 0 0 0 291 1504 L616 1504 A10 10 0 0 0 626 1494 L626 227 A10 10 0 0 1 636 217 L672 217 L725.69 217 A5.31 5.31 0 0 0 731 211.69 L731 211.69 A5.31 5.31 0 0 1 736.31 206.38 L767.48 206.38" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M771 206.38 L761.43 211.17 L761.43 201.6 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e6::P-DEPOSITS-002::SYS-PAYMENT-GW">
+<rect x="434.46" y="1510.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="463.5" y="1522.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e7::P-DEPOSITS-007::SYS-PAYMENT-GW">
+<title>Supporting</title>
+<path d="M196 1143 L225 1143 L251 1143 A10 10 0 0 1 261 1153 L261 1529 A10 10 0 0 0 271 1539 L626 1539 A10 10 0 0 0 636 1529 L636 237 A10 10 0 0 1 646 227 L672 227 L733.92 227 A7.08 7.08 0 0 0 741 219.92 L741 219.92 A7.08 7.08 0 0 1 748.08 212.85 L767.48 212.85" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M771 212.85 L761.43 217.63 L761.43 208.06 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e7::P-DEPOSITS-007::SYS-PAYMENT-GW">
+<rect x="434.46" y="1545.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="463.5" y="1557.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e8::P-SERVICING-016::SYS-PAYMENT-GW">
+<title>Supporting</title>
+<path d="M196 1347.33 L224.94 1347 A10 10 0 0 1 225.06 1347 L233 1347 A8 8 0 0 1 241 1355 L241 1599 A10 10 0 0 0 251 1609 L646 1609 A10 10 0 0 0 656 1599 L656 255 A8 8 0 0 1 664 247 L672 247 L751 247 A10 10 0 0 0 761 237 L761 229.01 A3.24 3.24 0 0 1 764.24 225.77 L767.48 225.77" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M771 225.77 L761.43 230.55 L761.43 220.98 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e8::P-SERVICING-016::SYS-PAYMENT-GW">
+<rect x="434.46" y="1615.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="463.5" y="1627.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e9::P-PAYMENTS-008::SYS-PAYMENT-GW">
+<title>Primary</title>
+<path d="M196 967 L225 967 L291 967 A10 10 0 0 1 301 977 L301 1459 A10 10 0 0 0 311 1469 L606 1469 A10 10 0 0 0 616 1459 L616 217 A10 10 0 0 1 626 207 L672 207 L717.46 207 A3.54 3.54 0 0 0 721 203.46 L721 203.46 A3.54 3.54 0 0 1 724.54 199.92 L767.48 199.92" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M771 199.92 L761.43 204.71 L761.43 195.14 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e9::P-PAYMENTS-008::SYS-PAYMENT-GW">
+<rect x="442.32" y="1475.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="463.5" y="1487.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e10::P-PAYMENTS-009::SYS-PAYMENT-GW">
+<title>Primary</title>
+<path d="M196 703 L225 703 L271 703 A10 10 0 0 0 281 693 L281 162 A10 10 0 0 1 291 152 L596 152 A10 10 0 0 1 606 162 L606 167 A10 10 0 0 0 616 177 L672 177 L709.23 177 A1.77 1.77 0 0 1 711 178.77 L711 178.77 A1.77 1.77 0 0 0 712.77 180.54 L767.48 180.54" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M771 180.54 L761.43 185.32 L761.43 175.75 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e10::P-PAYMENTS-009::SYS-PAYMENT-GW">
+<rect x="442.32" y="158.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="463.5" y="170.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e11::P-PAYMENTS-010::SYS-PAYMENT-GW">
+<title>Supporting</title>
+<path d="M196 561 L225 561 L251 561 A10 10 0 0 0 261 551 L261 92 A10 10 0 0 1 271 82 L616 82 A10 10 0 0 1 626 92 L626 147 A10 10 0 0 0 636 157 L672 157 L725.69 157 A5.31 5.31 0 0 1 731 162.31 L731 162.31 A5.31 5.31 0 0 0 736.31 167.62 L767.48 167.62" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M771 167.62 L761.43 172.4 L761.43 162.83 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e11::P-PAYMENTS-010::SYS-PAYMENT-GW">
+<rect x="434.46" y="88.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="463.5" y="100.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e12::P-CARD-PMT-001::CAP-PAY-03">
 <title>supports</title>
-<path d="M196 113.33 L201 113.33 A5 5 0 0 1 206 118.33 L206 178.75 A10 10 0 0 0 215.91 188.75 L244.96 189 A10 10 0 0 0 245.04 189 L297 189 L322.48 189" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M326 189 L316.43 193.78 L316.43 184.22 Z" fill="#7b8798"/>
+<path d="M196 632 L225 632 L243.5 632 A7.5 7.5 0 0 1 251 639.5 L251 639.5 A7.52 7.52 0 0 0 258.5 647.02 L336.99 647.2 A10 10 0 0 0 337.01 647.2 L402.48 647.2" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M406 647.2 L396.43 651.99 L396.43 642.42 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e13::P-PAYMENTS-003::CAP-PAY-04">
+<title>supports</title>
+<path d="M196 467.33 L224.94 467 A10 10 0 0 1 225.06 467 L305.5 467 A5.5 5.5 0 0 1 311 472.5 L311 472.5 A5.5 5.5 0 0 0 316.5 478 L337 478 L402.48 478" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M406 478 L396.43 482.79 L396.43 473.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e14::P-SERVICING-011::CAP-SERV-02">
+<title>supports</title>
+<path d="M196 351 L225 351 L301 351 A10 10 0 0 0 311 341 L311 312 A10 10 0 0 1 321 302 L337 302 L402.48 302" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M406 302 L396.43 306.79 L396.43 297.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e15::P-LENDING-008::CAP-LEND-04-02">
+<title>supports</title>
+<path d="M196 1265 L225 1265 L308.5 1265 A2.5 2.5 0 0 1 311 1267.5 L311 1267.5 A2.5 2.5 0 0 0 313.5 1270 L337 1270 L402.48 1270" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M406 1270 L396.43 1274.79 L396.43 1265.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e16::P-LENDING-009::CAP-LEND-05">
+<title>supports</title>
+<path d="M196 884.67 L224.94 885 A10 10 0 0 0 225.06 885 L233 885 A8 8 0 0 0 241 877 L241 851.03 A10 10 0 0 1 251.03 841.03 L336.98 841.33 A10 10 0 0 0 337.02 841.33 L402.48 841.33" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M406 841.33 L396.43 846.12 L396.43 836.55 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e17::P-LENDING-017::CAP-LEND-05">
+<title>supports</title>
+<path d="M196 819.33 L224.96 819 A10 10 0 0 1 225.04 819 L336.99 818.67 A10 10 0 0 1 337.01 818.67 L402.48 818.67" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M406 818.67 L396.43 823.45 L396.43 813.88 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e18::P-DEPOSITS-002::CAP-DEP-02">
+<title>supports</title>
+<path d="M196 1083.33 L224.94 1083 A10 10 0 0 1 225.06 1083 L261 1083 A10 10 0 0 0 271 1073 L271 928 A10 10 0 0 1 281 918 L337 918 L402.48 918" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M406 918 L396.43 922.78 L396.43 913.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e19::P-DEPOSITS-007::CAP-DEP-04-02">
+<title>supports</title>
+<path d="M196 1177 L225 1177 L301 1177 A10 10 0 0 0 311 1167 L311 1104 A10 10 0 0 1 321 1094 L337 1094 L402.48 1094" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M406 1094 L396.43 1098.79 L396.43 1089.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e20::P-SERVICING-016::CAP-BILL-06">
+<title>supports</title>
+<path d="M196 1324.67 L224.94 1325 A10 10 0 0 0 225.06 1325 L301 1325 A10 10 0 0 1 311 1335 L311 1348 A10 10 0 0 0 321 1358 L337 1358 L402.48 1358" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M406 1358 L396.43 1362.79 L396.43 1353.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e21::P-PAYMENTS-008::CAP-PAY-03-01">
+<title>supports</title>
+<path d="M196 1001 L225 1001 L251 1001 A10 10 0 0 0 261 991 L261 871.04 A10 10 0 0 1 271.04 861.04 L336.98 861.33 A10 10 0 0 0 337.02 861.33 L386 861.33 A10 10 0 0 0 396 851.33 L396 762.24 A3.24 3.24 0 0 1 399.24 759 L402.48 759" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M406 759 L396.43 763.78 L396.43 754.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e22::P-PAYMENTS-009::CAP-PAY-03-01">
+<title>supports</title>
+<path d="M196 737 L225 737 L308.5 737 A2.5 2.5 0 0 1 311 739.5 L311 739.5 A2.5 2.5 0 0 0 313.5 742 L337 742 L402.48 742" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M406 742 L396.43 746.78 L396.43 737.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e23::P-PAYMENTS-010::CAP-PAY-03-02">
+<title>supports</title>
+<path d="M196 527 L225 527 L301 527 A10 10 0 0 1 311 537 L311 556 A10 10 0 0 0 321 566 L337 566 L402.48 566" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M406 566 L396.43 570.78 L396.43 561.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e24::P-CARD-PMT-001::CAP-PAY-03-01">
+<title>supports</title>
+<path d="M196 649 L225 649 L237 649 A4 4 0 0 1 241 653 L241 653 A4.01 4.01 0 0 0 245 657.01 L336.99 657.2 A10 10 0 0 0 337.01 657.2 L366 657.2 A10 10 0 0 1 376 667.2 L376 715 A10 10 0 0 0 386 725 L402.48 725" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M406 725 L396.43 729.78 L396.43 720.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e25::P-SERVICING-011::CAP-SERV-02-03">
+<title>supports</title>
+<path d="M196 368 L225 368 L301 368 A10 10 0 0 1 311 378 L311 380 A10 10 0 0 0 321 390 L337 390 L402.48 390" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M406 390 L396.43 394.79 L396.43 385.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e26::P-PAYMENTS-008::CAP-PAY-03">
+<title>supports</title>
+<path d="M196 984 L225 984 L241 984 A10 10 0 0 0 251 974 L251 861.04 A10 10 0 0 1 261.04 851.04 L336.98 851.33 A10 10 0 0 0 337.02 851.33 L376 851.33 A10 10 0 0 0 386 841.33 L386 682.64 A8.24 8.24 0 0 1 394.24 674.4 L402.48 674.4" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M406 674.4 L396.43 679.18 L396.43 669.62 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e27::P-PAYMENTS-009::CAP-PAY-03">
+<title>supports</title>
+<path d="M196 720 L225 720 L301 720 A10 10 0 0 0 311 710 L311 677.08 A10 10 0 0 1 321.08 667.08 L336.96 667.2 A10 10 0 0 0 337.04 667.2 L382.8 667.2 A3.2 3.2 0 0 0 386 664 L386 664 A3.2 3.2 0 0 1 389.2 660.8 L402.48 660.8" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M406 660.8 L396.43 665.58 L396.43 656.01 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e28::P-PAYMENTS-010::CAP-PAY-03">
+<title>supports</title>
+<path d="M196 544 L225 544 L281 544 A10 10 0 0 1 291 554 L291 623.91 A10 10 0 0 0 301.09 633.91 L336.96 633.6 A10 10 0 0 1 337.04 633.6 L402.48 633.6" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M406 633.6 L396.43 638.38 L396.43 628.82 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e29::P-LENDING-008::CAP-LEND-04">
+<title>supports</title>
+<path d="M196 1248 L225 1248 L301 1248 A10 10 0 0 0 311 1238 L311 1192 A10 10 0 0 1 321 1182 L337 1182 L402.48 1182" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M406 1182 L396.43 1186.79 L396.43 1177.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e30::P-DEPOSITS-007::CAP-DEP-04">
+<title>supports</title>
+<path d="M196 1160 L225 1160 L281 1160 A10 10 0 0 0 291 1150 L291 1016 A10 10 0 0 1 301 1006 L337 1006 L402.48 1006" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M406 1006 L396.43 1010.78 L396.43 1001.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-BILL-06" data-type="capabilities">
+<title>Credit Balance Refund &amp; Unclaimed Property</title>
+<path d="M446 1324 L406 1358 L446 1392 L526 1392 L566 1358 L526 1324 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="486" y="1356.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit Balance Refund</text>
+<text x="486" y="1368.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">&amp; Unclaimed Property</text>
+</g>
+<g class="node" data-id="CAP-DEP-02" data-type="capabilities">
+<title>Deposit Account Opening</title>
+<path d="M446 884 L406 918 L446 952 L526 952 L566 918 L526 884 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="486" y="916.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Deposit Account</text>
+<text x="486" y="928.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Opening</text>
+</g>
+<g class="node" data-id="CAP-DEP-04" data-type="capabilities">
+<title>Deposit Servicing, Interest &amp; Maturities</title>
+<path d="M446 972 L406 1006 L446 1040 L526 1040 L566 1006 L526 972 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="486" y="1004.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Deposit Servicing,</text>
+<text x="486" y="1016.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Interest &amp; Maturities</text>
+</g>
+<g class="node" data-id="CAP-DEP-04-02" data-type="capabilities">
+<title>Maturity, Renewal &amp; Early Withdrawal</title>
+<path d="M446 1060 L406 1094 L446 1128 L526 1128 L566 1094 L526 1060 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="486" y="1092.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Maturity, Renewal &amp;</text>
+<text x="486" y="1104.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Early Withdrawal</text>
+</g>
+<g class="node" data-id="CAP-LEND-04" data-type="capabilities">
+<title>Collateral, Title &amp; Lien Management</title>
+<path d="M446 1148 L406 1182 L446 1216 L526 1216 L566 1182 L526 1148 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="486" y="1180.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Collateral, Title &amp; Lien</text>
+<text x="486" y="1192.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Management</text>
+</g>
+<g class="node" data-id="CAP-LEND-04-02" data-type="capabilities">
+<title>Payoff &amp; Lien Release</title>
+<path d="M446 1236 L406 1270 L446 1304 L526 1304 L566 1270 L526 1236 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="486" y="1274.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Payoff &amp; Lien Release</text>
+</g>
+<g class="node" data-id="CAP-LEND-05" data-type="capabilities">
+<title>Installment Loan Servicing</title>
+<path d="M446 796 L406 830 L446 864 L526 864 L566 830 L526 796 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="486" y="828.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Installment Loan</text>
+<text x="486" y="840.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Servicing</text>
 </g>
 <g class="node" data-id="CAP-PAY-03" data-type="capabilities">
 <title>Payment Capture &amp; Application</title>
-<path d="M366 243 L326 277 L366 311 L446 311 L486 277 L446 243 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
-<text x="406" y="275.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Payment Capture &amp;</text>
-<text x="406" y="287.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Application</text>
+<path d="M446 620 L406 654 L446 688 L526 688 L566 654 L526 620 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="486" y="652.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Payment Capture &amp;</text>
+<text x="486" y="664.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Application</text>
+</g>
+<g class="node" data-id="CAP-PAY-03-01" data-type="capabilities">
+<title>Payment Channel Capture</title>
+<path d="M446 708 L406 742 L446 776 L526 776 L566 742 L526 708 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="486" y="740.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Payment Channel</text>
+<text x="486" y="752.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Capture</text>
+</g>
+<g class="node" data-id="CAP-PAY-03-02" data-type="capabilities">
+<title>Payment Allocation &amp; Posting</title>
+<path d="M446 532 L406 566 L446 600 L526 600 L566 566 L526 532 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="486" y="564.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Payment Allocation &amp;</text>
+<text x="486" y="576.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Posting</text>
 </g>
 <g class="node" data-id="CAP-PAY-04" data-type="capabilities">
 <title>Returned Payment &amp; NSF Handling</title>
-<path d="M366 331 L326 365 L366 399 L446 399 L486 365 L446 331 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
-<text x="406" y="363.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Returned Payment &amp;</text>
-<text x="406" y="375.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">NSF Handling</text>
+<path d="M446 444 L406 478 L446 512 L526 512 L566 478 L526 444 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="486" y="476.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Returned Payment &amp;</text>
+<text x="486" y="488.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">NSF Handling</text>
 </g>
 <g class="node" data-id="CAP-SERV-02" data-type="capabilities">
 <title>Account Maintenance &amp; Servicing Requests</title>
-<path d="M366 155 L326 189 L366 223 L446 223 L486 189 L446 155 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
-<text x="406" y="187.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Account Maintenance</text>
-<text x="406" y="199.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">&amp; Servicing Requests</text>
+<path d="M446 268 L406 302 L446 336 L526 336 L566 302 L526 268 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="486" y="300.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Account Maintenance</text>
+<text x="486" y="312.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">&amp; Servicing Requests</text>
+</g>
+<g class="node" data-id="CAP-SERV-02-03" data-type="capabilities">
+<title>Secured Card Collateral Administration</title>
+<path d="M446 356 L406 390 L446 424 L526 424 L566 390 L526 356 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="486" y="382.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Secured Card</text>
+<text x="486" y="394.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Collateral</text>
+<text x="486" y="406.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Administration</text>
 </g>
 <g class="node" data-id="P-CARD-PMT-001" data-type="processes">
 <title>Capture and apply cardholder payment</title>
-<path d="M116 156 L36 181.97 L66.56 224 L165.44 224 L196 181.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
-<text x="116" y="188.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Capture and apply</text>
-<text x="116" y="200.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">cardholder payment</text>
+<path d="M116 598 L36 623.97 L66.56 666 L165.44 666 L196 623.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="630.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Capture and apply</text>
+<text x="116" y="642.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">cardholder payment</text>
+</g>
+<g class="node" data-id="P-DEPOSITS-002" data-type="processes">
+<title>Open and fund direct deposit account</title>
+<path d="M116 1038 L36 1063.97 L66.56 1106 L165.44 1106 L196 1063.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="1070.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Open and fund direct</text>
+<text x="116" y="1082.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">deposit account</text>
+</g>
+<g class="node" data-id="P-DEPOSITS-007" data-type="processes">
+<title>Process CD maturity, renewal, and early withdrawal</title>
+<path d="M116 1126 L36 1151.97 L66.56 1194 L165.44 1194 L196 1151.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="1152.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Process CD maturity,</text>
+<text x="116" y="1164.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">renewal, and early</text>
+<text x="116" y="1176.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">withdrawal</text>
+</g>
+<g class="node" data-id="P-LENDING-008" data-type="processes">
+<title>Quote payoff and release title</title>
+<path d="M116 1214 L36 1239.97 L66.56 1282 L165.44 1282 L196 1239.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="1246.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Quote payoff and</text>
+<text x="116" y="1258.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">release title</text>
+</g>
+<g class="node" data-id="P-LENDING-009" data-type="processes">
+<title>Bill installment loan and post payments</title>
+<path d="M116 862 L36 887.97 L66.56 930 L165.44 930 L196 887.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="894.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Bill installment loan</text>
+<text x="116" y="906.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and post payments</text>
+</g>
+<g class="node" data-id="P-LENDING-017" data-type="processes">
+<title>Service point-of-sale installment loan</title>
+<path d="M116 774 L36 799.97 L66.56 842 L165.44 842 L196 799.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="806.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Service point-of-sale</text>
+<text x="116" y="818.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">installment loan</text>
 </g>
 <g class="node" data-id="P-PAYMENTS-003" data-type="processes">
 <title>Process returned payment and assess NSF</title>
-<path d="M116 244 L36 269.97 L66.56 312 L165.44 312 L196 269.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
-<text x="116" y="270.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Process returned</text>
-<text x="116" y="282.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">payment and assess</text>
-<text x="116" y="294.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">NSF</text>
+<path d="M116 422 L36 447.97 L66.56 490 L165.44 490 L196 447.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="448.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Process returned</text>
+<text x="116" y="460.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">payment and assess</text>
+<text x="116" y="472.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">NSF</text>
+</g>
+<g class="node" data-id="P-PAYMENTS-008" data-type="processes">
+<title>Enroll and run automatic payments</title>
+<path d="M116 950 L36 975.97 L66.56 1018 L165.44 1018 L196 975.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="982.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Enroll and run</text>
+<text x="116" y="994.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">automatic payments</text>
+</g>
+<g class="node" data-id="P-PAYMENTS-009" data-type="processes">
+<title>Process lockbox and check payments</title>
+<path d="M116 686 L36 711.97 L66.56 754 L165.44 754 L196 711.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="718.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Process lockbox and</text>
+<text x="116" y="730.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">check payments</text>
+</g>
+<g class="node" data-id="P-PAYMENTS-010" data-type="processes">
+<title>Allocate payment across balances</title>
+<path d="M116 510 L36 535.97 L66.56 578 L165.44 578 L196 535.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="542.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Allocate payment</text>
+<text x="116" y="554.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">across balances</text>
 </g>
 <g class="node" data-id="P-SERVICING-011" data-type="processes">
 <title>Administer secured card deposit lifecycle</title>
-<path d="M116 68 L36 93.97 L66.56 136 L165.44 136 L196 93.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
-<text x="116" y="100.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Administer secured</text>
-<text x="116" y="112.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">card deposit lifecycle</text>
+<path d="M116 334 L36 359.97 L66.56 402 L165.44 402 L196 359.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="366.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Administer secured</text>
+<text x="116" y="378.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">card deposit lifecycle</text>
+</g>
+<g class="node" data-id="P-SERVICING-016" data-type="processes">
+<title>Refund credit balance and report unclaimed property</title>
+<path d="M116 1302 L36 1327.97 L66.56 1370 L165.44 1370 L196 1327.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="1328.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Refund credit balance</text>
+<text x="116" y="1340.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and report unclaimed</text>
+<text x="116" y="1352.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">property</text>
 </g>
 <g class="node" data-id="SYS-PAYMENT-GW" data-type="systems">
 <title>Payment capture gateway</title>
-<rect x="583" y="50" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
-<text x="664" y="74.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Payment capture</text>
-<text x="664" y="86.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">gateway</text>
-<svg x="735" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+<rect x="771" y="148.23" width="170" height="84" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="852" y="188.49" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Payment capture</text>
+<text x="852" y="200.49" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">gateway</text>
+<svg x="923" y="153.23" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
 </g>
 </g>
-<g class="foot"><line x1="28" y1="576.7" x2="1072" y2="576.7" stroke="#d2dae5" stroke-width="1"/>
-<text x="28" y="600.7" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
-<g transform="translate(67.2 589.7)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
-<text x="93.2" y="600.7" font-size="12" font-weight="400" fill="#343d50">capability · 3</text>
-<g transform="translate(180.25 589.7)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
-<text x="206.25" y="600.7" font-size="12" font-weight="400" fill="#343d50">process · 3</text>
-<g transform="translate(283.26 589.7)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
-<text x="309.26" y="600.7" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
-<text x="28" y="622.7" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
-<g transform="translate(73.5 611.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
-<text x="99.5" y="622.7" font-size="12" font-weight="400" fill="#343d50">supports</text>
-<g transform="translate(166.02 611.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
-<text x="192.02" y="622.7" font-size="12" font-weight="400" fill="#343d50">uses</text>
-<text x="28" y="656.7" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-processes--sys-payment-gw · edit the model, not the picture</text></g>
+<g class="foot"><line x1="28" y1="1755.5" x2="1072" y2="1755.5" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="1779.5" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 1768.5)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="1779.5" font-size="12" font-weight="400" fill="#343d50">capability · 13</text>
+<g transform="translate(184.86 1768.5)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="210.86" y="1779.5" font-size="12" font-weight="400" fill="#343d50">process · 12</text>
+<g transform="translate(292.43 1768.5)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="318.43" y="1779.5" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
+<text x="28" y="1801.5" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 1790.5)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="1801.5" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 1790.5)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="1801.5" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="1835.5" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-processes--sys-payment-gw · edit the model, not the picture</text></g>
 </svg>

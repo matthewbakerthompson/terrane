@@ -48,6 +48,9 @@ Boundary(b_Azure, "Azure") {
       }
     }
     Boundary(b_Azure__azure_cards_prod__Private_App, "Private-App") {
+      Deployment_Node(TS_NET_SUB_AZ_CARDS_APP, "Cards App Subnet", "Subnet", $tags="tech_services") {
+        ' aac TS_NET_SUB_AZ_CARDS_APP: company_domain=""; technology="Subnet"
+      }
       System(OI_REWARDS_API, "Rewards Redemption API", "The domain API Rewards Redemption offers its channels, its jobs and its partners. Built with HTTPS.", $tags="offered_interfaces")
       ' aac OI_REWARDS_API: company_domain="Card Issuing"; technology="HTTPS"
       System(SYS_REWARDS_WORKER, "Rewards Redemption Async Worker", "Consumes redemption events and fulfills them: statement credits posted to the ledger, gift-card orders placed with the fulfillment partner. Built with AKS · Event Hubs.", $tags="systems")
@@ -61,6 +64,9 @@ Boundary(b_Azure, "Azure") {
       ' aac SYS_REWARDS_WEB: company_domain="Card Issuing"; hosting="Azure"; technology="AKS"
     }
     Boundary(b_Azure__azure_cards_prod__Private_Data, "Private-Data") {
+      Deployment_Node(TS_NET_SUB_AZ_CARDS_DATA, "Cards Data Subnet", "Subnet", $tags="tech_services") {
+        ' aac TS_NET_SUB_AZ_CARDS_DATA: company_domain=""; technology="Subnet"
+      }
       Deployment_Node(TS_REWARDS_BACKUP, "Rewards Redemption Backup and recovery", "Azure Backup", "Copies that survive the thing they came from. The recovery objective is a property of this, not of the database.", $tags="tech_services") {
         ' aac TS_REWARDS_BACKUP: company_domain="Card Issuing"; technology="Azure Backup"
       }
@@ -123,6 +129,14 @@ Rel(SYS_REWARDS_WORKER, TS_AZURE_MONITOR, "runs on")
 ' aac rel: source="SYS_REWARDS_WORKER"; target="TS_AZURE_MONITOR"; label="runs on"; relation="system_uses_tech_service"
 Rel(SYS_REWARDS_WORKER, TS_AZURE_EVENTHUBS, "runs on")
 ' aac rel: source="SYS_REWARDS_WORKER"; target="TS_AZURE_EVENTHUBS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_REWARDS_API, TS_NET_SUB_AZ_CARDS_APP, "runs on")
+' aac rel: source="SYS_REWARDS_API"; target="TS_NET_SUB_AZ_CARDS_APP"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_REWARDS_WEB, TS_NET_SUB_AZ_CARDS_APP, "runs on")
+' aac rel: source="SYS_REWARDS_WEB"; target="TS_NET_SUB_AZ_CARDS_APP"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_REWARDS_STORE, TS_NET_SUB_AZ_CARDS_DATA, "runs on")
+' aac rel: source="SYS_REWARDS_STORE"; target="TS_NET_SUB_AZ_CARDS_DATA"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_REWARDS_WORKER, TS_NET_SUB_AZ_CARDS_APP, "runs on")
+' aac rel: source="SYS_REWARDS_WORKER"; target="TS_NET_SUB_AZ_CARDS_APP"; label="runs on"; relation="system_uses_tech_service"
 Rel(SYS_REWARDS_API, DA_REWARDS_OPERATIONAL, "ReadWrite")
 ' aac rel: source="SYS_REWARDS_API"; target="DA_REWARDS_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
 Rel(SYS_REWARDS_STORE, DA_REWARDS_OPERATIONAL, "ReadWrite")

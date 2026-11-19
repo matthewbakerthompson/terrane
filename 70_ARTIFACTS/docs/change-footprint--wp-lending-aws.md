@@ -8,9 +8,22 @@ flowchart LR
   %% Build installment lending on AWS — Footprint
   %% Generated from the model by `terrane render`. Do not edit by hand.
 
+  subgraph grp_Capability["Capability"]
+    direction LR
+    CAP_LEND_05{{"Installment Loan Servicing"}}
+  end
+
   subgraph grp_Data_Asset["Data Asset"]
     direction LR
     DA_LENDING_OPERATIONAL[("Installment Lending<br/>operational data")]
+  end
+
+  subgraph grp_Process["Process"]
+    direction LR
+    P_LENDING_009[\"Bill installment loan and<br/>post payments"/]
+    P_LENDING_011[\"Collect delinquent<br/>installment loan"/]
+    P_LENDING_010[\"Service installment loan<br/>account requests"/]
+    P_LENDING_017[\"Service point-of-sale<br/>installment loan"/]
   end
 
   subgraph grp_System["System"]
@@ -40,15 +53,24 @@ flowchart LR
   WP_LENDING_AWS -->|"Builds"| SYS_LENDING_HUB
   SYS_LENDING_API -->|"ReadWrite"| DA_LENDING_OPERATIONAL
   SYS_LENDING_WORKER -->|"Read"| DA_LENDING_OPERATIONAL
+  SYS_LENDING_API -->|"realizes"| CAP_LEND_05
+  P_LENDING_009 -->|"supports"| CAP_LEND_05
+  P_LENDING_010 -->|"supports"| CAP_LEND_05
+  P_LENDING_011 -->|"supports"| CAP_LEND_05
+  P_LENDING_017 -->|"supports"| CAP_LEND_05
 
+  classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
   classDef s_data_assets__data_assets fill:#a7f3d0,stroke:#047857,color:#0f172a,stroke-width:1.4px;
+  classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   classDef s_work_packages__work_packages fill:#ccfbf1,stroke:#0d9488,color:#0f172a,stroke-width:1.4px;
+  class CAP_LEND_05 s_capabilities__capabilities;
   class DA_LENDING_OPERATIONAL s_data_assets__data_assets;
+  class P_LENDING_009,P_LENDING_010,P_LENDING_011,P_LENDING_017 s_processes__processes;
   class SYS_LENDING_ALB,SYS_LENDING_API,SYS_LENDING_BUCKET,SYS_LENDING_DB,SYS_LENDING_EDGE,SYS_LENDING_HUB,SYS_LENDING_WEB,SYS_LENDING_WORKER s_systems__systems;
   class WP_LENDING_AWS s_work_packages__work_packages;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
-  class grp_Data_Asset,grp_System,grp_Work_Package boundary1;
+  class grp_Capability,grp_Data_Asset,grp_Process,grp_System,grp_Work_Package boundary1;
 ```
 
 The same view as the app draws it, written beside the Mermaid by `terrane render`:
@@ -59,8 +81,10 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 
 | | Entity type |
 |---|---|
+| `#6d28d9` | capabilities |
 | `#047857` | data assets |
+| `#0369a1` | processes |
 | `#4338ca` | systems |
 | `#0d9488` | work packages |
 
-10 entities, 10 relationships. Generated from the model; edit the model, not this file.
+15 entities, 15 relationships. Generated from the model; edit the model, not this file.

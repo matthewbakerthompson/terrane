@@ -25,6 +25,12 @@ flowchart LR
     SYS_COLLECT_WEB["Collections Workspace Web<br/>[AKS]"]
   end
 
+  subgraph grp_workload_network["workload-network"]
+    direction LR
+    TS_NET_SUB_AZ_CARDS_APP[/"Cards App Subnet<br/>[Subnet]"/]
+    TS_NET_SUB_AZ_CARDS_DATA[/"Cards Data Subnet<br/>[Subnet]"/]
+  end
+
   TS_AZURE_APIM[/"Azure API Management<br/>[API gateway]"/]
   TS_AZURE_KEYVAULT[/"Azure Key Vault<br/>[Secrets manager]"/]
   TS_AZURE_AKS[/"Azure Kubernetes Service<br/>[Container platform]"/]
@@ -36,6 +42,7 @@ flowchart LR
   TS_COLLECT_CACHE[/"Collections Workspace<br/>Cache<br/>[Azure Cache for Redis]"/]
   TS_COLLECT_DNS[/"Collections Workspace DNS<br/>[Azure DNS]"/]
   TS_COLLECT_WAF[/"Collections Workspace Web<br/>application firewall<br/>[Azure WAF]"/]
+  DA_LOAN_ACCOUNT[("Installment loan account")]
   TS_ENTRA_ID[/"Microsoft Entra ID<br/>[Identity provider]"/]
 
   SYS_COLLECT_WEB --> OI_COLLECT_API
@@ -52,9 +59,13 @@ flowchart LR
   SYS_COLLECT_STORE -.->|"runs on"| TS_AZURE_SQL
   SYS_COLLECT_STORE -.->|"runs on"| TS_COLLECT_BACKUP
   SYS_COLLECT_STORE -.->|"runs on"| TS_AZURE_KEYVAULT
+  SYS_COLLECT_API -.->|"runs on"| TS_NET_SUB_AZ_CARDS_APP
+  SYS_COLLECT_WEB -.->|"runs on"| TS_NET_SUB_AZ_CARDS_APP
+  SYS_COLLECT_STORE -.->|"runs on"| TS_NET_SUB_AZ_CARDS_DATA
   SYS_COLLECT_API -->|"ReadWrite"| DA_COLLECT_OPERATIONAL
   SYS_COLLECT_STORE -->|"ReadWrite"| DA_COLLECT_OPERATIONAL
   SYS_COLLECT_API -->|"ReadWrite"| DA_COLLECT_ACT
+  SYS_COLLECT_API -->|"Read"| DA_LOAN_ACCOUNT
   SYS_COLLECT_API -->|"Read"| DA_CARD_ACCOUNT
   OI_COLLECT_API --- SYS_COLLECT_API
 
@@ -62,12 +73,12 @@ flowchart LR
   classDef s_offered_interfaces__offered_interfaces fill:#e6ecff,stroke:#6366f1,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   classDef s_tech_services__tech_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
-  class DA_CARD_ACCOUNT,DA_COLLECT_ACT,DA_COLLECT_OPERATIONAL s_data_assets__data_assets;
+  class DA_CARD_ACCOUNT,DA_COLLECT_ACT,DA_COLLECT_OPERATIONAL,DA_LOAN_ACCOUNT s_data_assets__data_assets;
   class OI_COLLECT_API s_offered_interfaces__offered_interfaces;
   class SYS_COLLECT_API,SYS_COLLECT_STORE,SYS_COLLECT_WEB s_systems__systems;
-  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT,TS_AZURE_MONITOR,TS_AZURE_SQL,TS_COLLECT_BACKUP,TS_COLLECT_CACHE,TS_COLLECT_DNS,TS_COLLECT_WAF,TS_ENTRA_ID s_tech_services__tech_services;
+  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT,TS_AZURE_MONITOR,TS_AZURE_SQL,TS_COLLECT_BACKUP,TS_COLLECT_CACHE,TS_COLLECT_DNS,TS_COLLECT_WAF,TS_ENTRA_ID,TS_NET_SUB_AZ_CARDS_APP,TS_NET_SUB_AZ_CARDS_DATA s_tech_services__tech_services;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
-  class grp_api_service,grp_relational_datastore,grp_web_channel boundary1;
+  class grp_api_service,grp_relational_datastore,grp_web_channel,grp_workload_network boundary1;
 ```
 
 The same view as the app draws it, written beside the Mermaid by `terrane render`:
@@ -83,4 +94,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#4338ca` | systems |
 | `#c2410c` | tech services |
 
-17 entities, 19 relationships. Generated from the model; edit the model, not this file.
+20 entities, 23 relationships. Generated from the model; edit the model, not this file.

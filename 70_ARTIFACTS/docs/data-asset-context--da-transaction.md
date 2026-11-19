@@ -26,11 +26,14 @@ flowchart LR
 
   subgraph grp_Process["Process"]
     direction LR
+    P_PAYMENTS_010[\"Allocate payment across<br/>balances"/]
     P_SERVICING_001[\"Assess interest, fees, and<br/>minimum payment"/]
     P_TPS_002[\"Convert client portfolio"/]
     P_STMT_GEN_001[\"Cut cycle and generate<br/>statement"/]
+    P_FRAUD_007[\"Detect and act on<br/>first-party fraud and<br/>bust-out"/]
     P_FRAUD_001[\"Detect and action<br/>transaction fraud alert"/]
     P_PAYMENTS_002[\"Ingest clearing file and<br/>post transactions"/]
+    P_COMPLIANCE_007[\"Monitor transactions for<br/>suspicious activity"/]
     P_PAYMENTS_001[\"Process authorization<br/>request"/]
     P_DISPUTE_001[\"Process cardholder dispute<br/>claim"/]
     P_NETWORK_RECON_001[\"Reconcile network<br/>settlement"/]
@@ -67,6 +70,9 @@ flowchart LR
   P_STMT_GEN_001 -->|"Reads"| DA_TRANSACTION
   P_FRAUD_001 -->|"Reads"| DA_TRANSACTION
   P_TPS_002 -->|"Writes"| DA_TRANSACTION
+  P_PAYMENTS_010 -->|"Write"| DA_TRANSACTION
+  P_FRAUD_007 -->|"Read"| DA_TRANSACTION
+  P_COMPLIANCE_007 -->|"Read"| DA_TRANSACTION
   DA_TRANSACTION -->|"governed by"| CTL_DAILY_RECON
   DA_TRANSACTION -->|"governed by"| CTL_PCI_EVIDENCE
   DA_TRANSACTION -->|"subject to"| POL_RECORDS
@@ -79,7 +85,7 @@ flowchart LR
   class CTL_DAILY_RECON,CTL_PCI_EVIDENCE s_controls__default;
   class DA_TRANSACTION s_data_assets__restricted;
   class POL_RECORDS s_policies__default;
-  class P_DISPUTE_001,P_FRAUD_001,P_NETWORK_RECON_001,P_PAYMENTS_001,P_PAYMENTS_002,P_SERVICING_001,P_STMT_GEN_001,P_TPS_002 s_processes__default;
+  class P_COMPLIANCE_007,P_DISPUTE_001,P_FRAUD_001,P_FRAUD_007,P_NETWORK_RECON_001,P_PAYMENTS_001,P_PAYMENTS_002,P_PAYMENTS_010,P_SERVICING_001,P_STMT_GEN_001,P_TPS_002 s_processes__default;
   class SYS_AML,SYS_AUTH_SWITCH,SYS_CARDSVC_API,SYS_CREDIT_DATA,SYS_CUST360_PIPELINE,SYS_FRAUD_DETECT,SYS_MOBILE,SYS_RECON,SYS_STATEMENTS s_systems__default;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Control,grp_Data_Asset,grp_Policy,grp_Process,grp_System boundary1;
@@ -106,4 +112,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | 2.6px | Restricted |
 | 1.1px | default |
 
-21 entities, 21 relationships. Generated from the model; edit the model, not this file.
+24 entities, 24 relationships. Generated from the model; edit the model, not this file.

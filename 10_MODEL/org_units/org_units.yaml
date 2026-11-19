@@ -23,6 +23,16 @@
   parent_org_unit_id: ORG-TECH
   source: Business architecture repository
 
+- org_unit_id: ORG-ASSET-RECOVERY
+  name: Asset Recovery
+  description: Manages repossession agents, the notices state law requires, and the auction and remarketing of recovered collateral.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-LENDING
+  source: Business architecture repository
+
 - org_unit_id: ORG-AUDIT
   name: Internal Audit
   description: Internal Audit organizational unit.
@@ -30,6 +40,46 @@
   togaf_layer: Business
   architecture_domain: Business
   abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-AUTH-OPS
+  name: Authorization Operations
+  description: Runs the authorization switch's parameters, stand-in limits and network connectivity.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-PAYMENTS
+  source: Business architecture repository
+
+- org_unit_id: ORG-BROKERED
+  name: Brokered Deposits
+  description: Places brokered CD issues through the broker-dealer network and manages the brokered funding channel with Treasury.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-TREASURY
+  source: Business architecture repository
+
+- org_unit_id: ORG-CHARGEBACK
+  name: Chargeback Operations
+  description: Works issuer-side chargebacks, representments and arbitration through the network cycles.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-DISPUTE
+  source: Business architecture repository
+
+- org_unit_id: ORG-CLIENT-COLL
+  name: Client Portfolio Collections
+  description: Collects delinquent accounts on servicing clients' portfolios to each client's own strategy and in its name.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-COLLECTIONS
   source: Business architecture repository
 
 - org_unit_id: ORG-CLIENTMGMT
@@ -40,6 +90,16 @@
   architecture_domain: Business
   abstraction_level: Conceptual
   parent_org_unit_id: ORG-TPS
+  source: Business architecture repository
+
+- org_unit_id: ORG-COBRAND
+  name: Co-Brand Programs
+  description: Negotiates and governs co-brand and affinity card programs with their partners.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-PARTNERSHIPS
   source: Business architecture repository
 
 - org_unit_id: ORG-COLLECTIONS
@@ -99,6 +159,16 @@
   abstraction_level: Conceptual
   source: Business architecture repository
 
+- org_unit_id: ORG-DEALER-SVC
+  name: Dealer Services
+  description: Recruits, contracts and supports the dealers that originate recreation loans, and watches their performance and program compliance.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-LENDING
+  source: Business architecture repository
+
 - org_unit_id: ORG-DEPOSITS
   name: Deposit Operations
   description: "Consumer deposit products: CDs and savings, direct and brokered, opening through maturity."
@@ -148,6 +218,26 @@
   parent_org_unit_id: ORG-HR
   source: Business architecture repository
 
+- org_unit_id: ORG-FAIR-LENDING
+  name: Fair Lending
+  description: Tests credit decisions, pricing, dealer markup and collections for disparities, and leads remediation.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-COMPLIANCE
+  source: Business architecture repository
+
+- org_unit_id: ORG-FIN-CRIMES
+  name: Financial Crimes
+  description: Runs sanctions screening, transaction monitoring and suspicious activity investigation and reporting.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-COMPLIANCE
+  source: Business architecture repository
+
 - org_unit_id: ORG-FINANCE
   name: Finance
   description: Finance organizational unit.
@@ -185,6 +275,16 @@
   parent_org_unit_id: ORG-TECH
   source: Business architecture repository
 
+- org_unit_id: ORG-ISO-MGMT
+  name: ISO and Agent Management
+  description: Contracts and oversees the independent sales organizations and agents that bring merchants, and pays their residuals.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-MERCHANT
+  source: Business architecture repository
+
 - org_unit_id: ORG-LEGAL
   name: Legal
   description: Legal organizational unit.
@@ -203,6 +303,16 @@
   abstraction_level: Conceptual
   source: Business architecture repository
 
+- org_unit_id: ORG-LOAN-OPS
+  name: Loan Operations
+  description: Reviews contract packages, clears stipulations, boards and funds loans, and services installment loans through to payoff.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-LENDING
+  source: Business architecture repository
+
 - org_unit_id: ORG-MARKETING
   name: Marketing
   description: Marketing organizational unit.
@@ -210,6 +320,16 @@
   togaf_layer: Business
   architecture_domain: Business
   abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-MERCH-RISK
+  name: Merchant Risk
+  description: Underwrites merchants, sets their reserves, monitors exposure and terminates merchants that breach appetite.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-MERCHANT
   source: Business architecture repository
 
 - org_unit_id: ORG-MERCHANT
@@ -350,6 +470,16 @@
   togaf_layer: Business
   architecture_domain: Business
   abstraction_level: Conceptual
+  source: Business architecture repository
+
+- org_unit_id: ORG-TITLE
+  name: Title and Lien
+  description: Perfects, tracks and releases liens on financed vehicles and boats across the titling states, with an outsourced title servicer.
+  status: Active
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Conceptual
+  parent_org_unit_id: ORG-LENDING
   source: Business architecture repository
 
 - org_unit_id: ORG-TPS

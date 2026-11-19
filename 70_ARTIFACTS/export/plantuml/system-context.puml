@@ -13,12 +13,30 @@ Boundary(b_External_system, "External system") {
   ' aac ACT_CARD_SCHEME: company_domain="Payments"; actor_kind="External system"; internal="No"
 }
 Boundary(b_Organization, "Organization") {
+  Person_Ext(ACT_COBRAND_PARTNER, "Co-Brand Partner", "A retailer, travel brand or affinity group whose name is on the card. Shares the program's revenue and funds part of its rewards.", $tags="actors")
+  ' aac ACT_COBRAND_PARTNER: company_domain="Card Issuing"; actor_kind="Organization"; internal="No"
+  Person_Ext(ACT_COLLECTION_AGENCY, "Collection Agency", "Works charged-off accounts placed with it under the bank's conduct requirements, and remits what it collects.", $tags="actors")
+  ' aac ACT_COLLECTION_AGENCY: company_domain="Collections"; actor_kind="Organization"; internal="No"
+  Person_Ext(ACT_DEALER, "Dealer", "A dealership selling RVs, boats and powersports vehicles that takes the buyer's loan application and submits it. The bank's point of sale, and a third party it vets, monitors and pays a reserve to.", $tags="actors")
+  ' aac ACT_DEALER: company_domain="Lending"; actor_kind="Organization"; internal="No"
+  Person_Ext(ACT_DEBT_BUYER, "Debt Buyer", "Buys charged-off accounts in portfolio sales and takes over collecting them.", $tags="actors")
+  ' aac ACT_DEBT_BUYER: company_domain="Collections"; actor_kind="Organization"; internal="No"
+  Person_Ext(ACT_DEPOSIT_BROKER, "Deposit Broker", "A broker-dealer that sells the bank's brokered CDs to its own customers and settles them through the depository.", $tags="actors")
+  ' aac ACT_DEPOSIT_BROKER: company_domain="Deposits"; actor_kind="Organization"; internal="No"
+  Person_Ext(ACT_ISO, "Independent Sales Organization", "Brings merchants to the bank and submits their applications. The bank sponsors those merchants into the networks and carries their liability.", $tags="actors")
+  ' aac ACT_ISO: company_domain="Payments"; actor_kind="Organization"; internal="No"
   Person_Ext(ACT_MERCHANT, "Merchant", "Accepts the card at point of sale. Reached through the scheme, never directly.", $tags="actors")
   ' aac ACT_MERCHANT: company_domain="Payments"; actor_kind="Organization"; internal="No"
+  Person_Ext(ACT_SERVICING_CLIENT, "Servicing Client", "A lender whose card portfolio the bank services under contract. Sets the strategies, receives the reports and audits the work.", $tags="actors")
+  ' aac ACT_SERVICING_CLIENT: company_domain="Servicing"; actor_kind="Organization"; internal="No"
 }
 Boundary(b_Person, "Person") {
+  Person_Ext(ACT_BORROWER, "Borrower", "A customer repaying an installment loan: pays, asks for payoffs and deferrals, and gets the title back at the end.", $tags="actors")
+  ' aac ACT_BORROWER: company_domain="Lending"; actor_kind="Person"; internal="No"
   Person_Ext(ACT_CARDHOLDER, "Cardholder", "The customer. Uses the self-service channels, and is the reason the authorization path has a latency budget rather than a throughput one.", $tags="actors")
   ' aac ACT_CARDHOLDER: company_domain="Servicing"; actor_kind="Person"; internal="No"
+  Person_Ext(ACT_DEPOSITOR, "Depositor", "A saver holding a CD or savings account opened directly with the bank.", $tags="actors")
+  ' aac ACT_DEPOSITOR: company_domain="Deposits"; actor_kind="Person"; internal="No"
   Person_Ext(ACT_APPLICANT, "Loan Applicant", "A prospect applying for installment credit, not yet a customer.", $tags="actors")
   ' aac ACT_APPLICANT: company_domain="Lending"; actor_kind="Person"; internal="No"
 }
@@ -31,35 +49,57 @@ Boundary(b_Role, "Role") {
   ' aac ACT_COLLECTIONS_AGENT: company_domain="Collections"; actor_kind="Role"; internal="Yes"
   Person(ACT_UNDERWRITER, "Credit Underwriter", "Reviews referred applications the automated decision would not take.", $tags="actors")
   ' aac ACT_UNDERWRITER: company_domain="Risk and Compliance"; actor_kind="Role"; internal="Yes"
+  Person(ACT_FUNDING_ANALYST, "Funding Analyst", "Reviews contract packages, clears stipulations and releases dealer funding.", $tags="actors")
+  ' aac ACT_FUNDING_ANALYST: company_domain="Lending"; actor_kind="Role"; internal="Yes"
   Person(ACT_SERVICING_AGENT, "Servicing Agent", "Contact center staff handling balance, dispute and account queries.", $tags="actors")
   ' aac ACT_SERVICING_AGENT: company_domain="Servicing"; actor_kind="Role"; internal="Yes"
 }
 System(SYS_AUTH_SWITCH, "Authorization Switch", "Real-time card authorization switch connected to the scheme networks.", $tags="systems")
 ' aac SYS_AUTH_SWITCH: company_domain="Payments"; hosting="On-prem"
+System(SYS_BROKER_GW, "Brokered deposit settlement gateway", "Exchanges brokered CD issuance, allocation and position files with the broker-dealers and the depository.", $tags="systems")
+' aac SYS_BROKER_GW: company_domain=""
 System(SYS_CARDSVC_WEB, "Card Servicing Web", "Browser front end for Card Servicing. Built with AKS.", $tags="systems")
 ' aac SYS_CARDSVC_WEB: company_domain="Servicing"; hosting="Azure"; technology="AKS"
 System(SYS_MOBILE, "Cardholder mobile application", "Cardholder mobile self-service.", $tags="systems")
 ' aac SYS_MOBILE: company_domain=""
+System(SYS_COLLECT_API, "Collections Workspace Service", "The service behind the Collections Workspace API, backing the channel. Built with AKS · Collections Workspace Cache.", $tags="systems")
+' aac SYS_COLLECT_API: company_domain="Collections"; hosting="Azure"; technology="AKS · Collections Workspace Cache"
 System(SYS_COLLECT_WEB, "Collections Workspace Web", "Browser front end for Collections Workspace. Built with AKS.", $tags="systems")
 ' aac SYS_COLLECT_WEB: company_domain="Collections"; hosting="Azure"; technology="AKS"
 System(SYS_CONTACT, "Contact center platform", "Contact center routing, voice, and digital channels.", $tags="systems")
 ' aac SYS_CONTACT: company_domain=""
 System(SYS_CREDIT_DATA, "Credit data and decisioning environment", "Credit data, analytics, and decisioning environment. Built with Snowflake Data Cloud.", $tags="systems")
 ' aac SYS_CREDIT_DATA: company_domain=""; technology="Snowflake Data Cloud"
+System_Ext(SYS_DEALER_PORTAL, "Dealer portal", "Where dealers submit applications, see decisions and stipulations, upload contracts, and track funding and reserve. Built with SaaS.", $tags="systems")
+' aac SYS_DEALER_PORTAL: company_domain=""; hosting="SaaS"; technology="SaaS"
+System(SYS_DEPOSIT, "Deposit platform", "System of record for CDs and savings: opening, interest accrual, maturities, early withdrawal and tax reporting.", $tags="systems")
+' aac SYS_DEPOSIT: company_domain=""
+System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+' aac SYS_DOC: company_domain=""
 System_Ext(SYS_CRM, "Dynamics 365 Customer Service", "Contact center desktop and case management for servicing agents. Built with Microsoft.", $tags="systems")
 ' aac SYS_CRM: company_domain="Servicing"; hosting="SaaS"; technology="Microsoft"
+System(SYS_LOS, "Indirect loan origination system", "Takes dealer applications, runs the credit decision and counteroffers, and carries the contract package to funding.", $tags="systems")
+' aac SYS_LOS: company_domain=""
 System(SYS_LENDING_WEB, "Installment Lending Web", "Customer-facing front end for Installment Lending. Built with EKS.", $tags="systems")
 ' aac SYS_LENDING_WEB: company_domain="Lending"; hosting="AWS"; technology="EKS"
+System(SYS_LOAN_SVC, "Installment loan servicing platform", "System of record for installment loans: boarding, billing, payment posting, payoff quotes, deferrals and ancillary product refunds.", $tags="systems")
+' aac SYS_LOAN_SVC: company_domain=""
 System(SYS_IVR, "IVR and self-service voice", "Interactive voice response and voice self-service.", $tags="systems")
 ' aac SYS_IVR: company_domain=""
+System(SYS_MERCHANT_WEB, "Merchant Portal Web", "Customer-facing front end for Merchant Portal. Built with AKS.", $tags="systems")
+' aac SYS_MERCHANT_WEB: company_domain="Payments"; hosting="Azure"; technology="AKS"
 System(SYS_ORIG_DECISION, "Originations decision engine", "Application processing and credit decision execution.", $tags="systems")
 ' aac SYS_ORIG_DECISION: company_domain=""
 System(SYS_DIALER, "Outbound contact platform", "Outbound dialer and contact campaign execution.", $tags="systems")
 ' aac SYS_DIALER: company_domain=""
+System(SYS_PAYMENT_GW, "Payment capture gateway", "Payment capture across ACH, debit, lockbox, and wallet channels.", $tags="systems")
+' aac SYS_PAYMENT_GW: company_domain=""
 System_Ext(SYS_DISPUTES_SAAS, "Pega Smart Dispute", "Dispute Management Platform, provided by Pegasystems and running in the vendor tenancy. Built with Pegasystems.", $tags="systems")
 ' aac SYS_DISPUTES_SAAS: company_domain="Servicing"; hosting="SaaS"; technology="Pegasystems"
 System(SYS_REG_REPORTING, "Regulatory Reporting Engine", "Planned replacement for the spreadsheet-based regulatory reporting process, sourcing from the warehouse rather than from the ledger directly. Built with AKS · Snowflake Data Cloud.", $tags="systems")
 ' aac SYS_REG_REPORTING: company_domain="Risk and Compliance"; hosting="Azure"; technology="AKS · Snowflake Data Cloud"
+System(SYS_CLIENT_PORTAL, "Servicing client portal", "Client reporting, data exchange, and interaction.", $tags="systems")
+' aac SYS_CLIENT_PORTAL: company_domain=""
 System(SYS_STATEMENTS, "Statement Generation", "Composes, renders and dispatches customer statements.", $tags="systems")
 ' aac SYS_STATEMENTS: company_domain="Servicing"; hosting="On-prem"
 
@@ -95,6 +135,32 @@ Rel(ACT_UNDERWRITER, SYS_ORIG_DECISION, "Manual review queue")
 ' aac rel: source="ACT_UNDERWRITER"; target="SYS_ORIG_DECISION"; label="Manual review queue"; relation="actor_uses_system"; interaction="Manual review queue"
 Rel(ACT_UNDERWRITER, SYS_CREDIT_DATA, "Strategy analysis")
 ' aac rel: source="ACT_UNDERWRITER"; target="SYS_CREDIT_DATA"; label="Strategy analysis"; relation="actor_uses_system"; interaction="Strategy analysis"
+Rel(ACT_DEALER, SYS_DEALER_PORTAL, "Submits applications and contracts")
+' aac rel: source="ACT_DEALER"; target="SYS_DEALER_PORTAL"; label="Submits applications and contracts"; relation="actor_uses_system"; interaction="Submits applications and contracts"
+Rel(ACT_BORROWER, SYS_PAYMENT_GW, "Pays the loan")
+' aac rel: source="ACT_BORROWER"; target="SYS_PAYMENT_GW"; label="Pays the loan"; relation="actor_uses_system"; interaction="Pays the loan"
+Rel(ACT_BORROWER, SYS_CONTACT, "Calls about the loan")
+' aac rel: source="ACT_BORROWER"; target="SYS_CONTACT"; label="Calls about the loan"; relation="actor_uses_system"; interaction="Calls about the loan"
+Rel(ACT_FUNDING_ANALYST, SYS_LOS, "Clears stipulations and funds")
+' aac rel: source="ACT_FUNDING_ANALYST"; target="SYS_LOS"; label="Clears stipulations and funds"; relation="actor_uses_system"; interaction="Clears stipulations and funds"
+Rel(ACT_FUNDING_ANALYST, SYS_LOAN_SVC, "Boards loans")
+' aac rel: source="ACT_FUNDING_ANALYST"; target="SYS_LOAN_SVC"; label="Boards loans"; relation="actor_uses_system"; interaction="Boards loans"
+Rel(ACT_UNDERWRITER, SYS_LOS, "Reviews referred dealer applications")
+' aac rel: source="ACT_UNDERWRITER"; target="SYS_LOS"; label="Reviews referred dealer applications"; relation="actor_uses_system"; interaction="Reviews referred dealer applications"
+Rel(ACT_ISO, SYS_MERCHANT_WEB, "Submits merchant applications")
+' aac rel: source="ACT_ISO"; target="SYS_MERCHANT_WEB"; label="Submits merchant applications"; relation="actor_uses_system"; interaction="Submits merchant applications"
+Rel(ACT_DEPOSITOR, SYS_DEPOSIT, "Opens and manages CDs and savings")
+' aac rel: source="ACT_DEPOSITOR"; target="SYS_DEPOSIT"; label="Opens and manages CDs and savings"; relation="actor_uses_system"; interaction="Opens and manages CDs and savings"
+Rel(ACT_DEPOSIT_BROKER, SYS_BROKER_GW, "Exchanges allocation and position files")
+' aac rel: source="ACT_DEPOSIT_BROKER"; target="SYS_BROKER_GW"; label="Exchanges allocation and position files"; relation="actor_uses_system"; interaction="Exchanges allocation and position files"
+Rel(ACT_SERVICING_CLIENT, SYS_CLIENT_PORTAL, "Receives reports and data feeds")
+' aac rel: source="ACT_SERVICING_CLIENT"; target="SYS_CLIENT_PORTAL"; label="Receives reports and data feeds"; relation="actor_uses_system"; interaction="Receives reports and data feeds"
+Rel(ACT_COBRAND_PARTNER, SYS_CLIENT_PORTAL, "Receives program performance reports")
+' aac rel: source="ACT_COBRAND_PARTNER"; target="SYS_CLIENT_PORTAL"; label="Receives program performance reports"; relation="actor_uses_system"; interaction="Receives program performance reports"
+Rel(ACT_COLLECTION_AGENCY, SYS_COLLECT_API, "Receives placements and returns payments")
+' aac rel: source="ACT_COLLECTION_AGENCY"; target="SYS_COLLECT_API"; label="Receives placements and returns payments"; relation="actor_uses_system"; interaction="Receives placements and returns payments"
+Rel(ACT_DEBT_BUYER, SYS_DOC, "Receives account documents after a sale")
+' aac rel: source="ACT_DEBT_BUYER"; target="SYS_DOC"; label="Receives account documents after a sale"; relation="actor_uses_system"; interaction="Receives account documents after a sale"
 
 SHOW_LEGEND()
 @enduml

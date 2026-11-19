@@ -1,0 +1,75 @@
+@startuml
+' Indirect loan origination system — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Indirect loan origination system — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_LEND_02_01, "Dealer Application Intake", "Take applications keyed by the dealer, check them for completeness, and verify identity before the decision.", $tags="capabilities")
+  ' aac CAP_LEND_02_01: company_domain="Lending"
+  System(CAP_LEND_01, "Dealer Network & Program Management", "Recruit, contract, monitor, and manage the dealer network that originates recreation loans, including program terms and dealer performance.", $tags="capabilities")
+  ' aac CAP_LEND_01: company_domain="Lending"
+  System(CAP_RGOV_09, "Fair Lending Monitoring", "Test credit decisions, pricing and dealer markup for disparities, and remediate what the testing finds.", $tags="capabilities")
+  ' aac CAP_RGOV_09: company_domain="Cross-Functional Services"
+  System(CAP_LEND_02, "Indirect Application & Underwriting", "Receive applications through dealers, decision them against credit policy, and return terms while the buyer is at the point of sale.", $tags="capabilities")
+  ' aac CAP_LEND_02: company_domain="Lending"
+  System(CAP_LEND_02_02, "Indirect Credit Decision & Counteroffer", "Decide the application against credit policy and the collateral's value, and return terms or a counteroffer to the dealer.", $tags="capabilities")
+  ' aac CAP_LEND_02_02: company_domain="Lending"
+  System(CAP_LEND_03, "Loan Boarding & Dealer Funding", "Board approved loans, verify stipulations and documentation, and fund the dealer.", $tags="capabilities")
+  ' aac CAP_LEND_03: company_domain="Lending"
+}
+Boundary(b_Process, "Process") {
+  System(P_LENDING_006, "Board loan and fund dealer", "Create the loan on the servicing platform with its terms, payment schedule and collateral, pay the dealer the amount financed with its reserve, and post the entries. Boarding errors surface months later as wrong payment amounts or payoff quotes, and a funding paid twice or to the wrong dealer is cash out of the door.", $tags="processes")
+  ' aac P_LENDING_006: company_domain=""
+  System(P_LENDING_004, "Decide indirect loan and return terms", "Score the application against the recreation lending credit policy, price it, and return an approval, a counteroffer with conditions, or a decline to the dealer while the buyer waits. Counteroffers and declines carry adverse action obligations, and the collateral's value sets the advance, so the decision reads the asset's value guide as well as the bureau.", $tags="processes")
+  ' aac P_LENDING_004: company_domain=""
+  System(P_LENDING_002, "Monitor dealer performance and program compliance", "Review each dealer's volume, early payment defaults, funding exceptions, complaints and rate markup against program limits, and put dealers on watch, retrain or end them. Dealer markup is where indirect lending meets fair lending exposure, so the review evidences the markup cap as well as credit quality.", $tags="processes")
+  ' aac P_LENDING_002: company_domain=""
+  System(P_LENDING_003, "Receive and validate dealer-submitted application", "Accept a credit application keyed by the dealer's finance office, check it is complete, verify the applicant's identity and screen it for application fraud before it reaches the decision. The buyer is at the dealership, so intake runs against a point-of-sale clock; an incomplete or unverified application that slips through becomes a funding exception later.", $tags="processes")
+  ' aac P_LENDING_003: company_domain=""
+  System(P_LENDING_005, "Review contract package and clear stipulations", "Check the signed retail installment contract, the title application and the proofs of income, insurance and identity the approval was conditioned on, and send back what is missing or wrong. A contract funded with an open stipulation is a loan the bank may not be able to enforce or perfect, which is why funding waits on this review.", $tags="processes")
+  ' aac P_LENDING_005: company_domain=""
+  System(P_COMPLIANCE_006, "Test credit decisions and pricing for fair lending", "Test approvals, lines, pricing, dealer markup and collections treatment for disparities across protected classes, using proxy methods where the data is not collected, and investigate and remediate what the testing finds. Fair lending findings lead to restitution and consent orders, and discretionary dealer markup is the classic exposure.", $tags="processes")
+  ' aac P_COMPLIANCE_006: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_LOS, "Indirect loan origination system", "Takes dealer applications, runs the credit decision and counteroffers, and carries the contract package to funding.", $tags="systems")
+  ' aac SYS_LOS: company_domain=""
+}
+
+Rel(P_LENDING_002, SYS_LOS, "Supporting")
+' aac rel: source="P_LENDING_002"; target="SYS_LOS"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_003, SYS_LOS, "Primary")
+' aac rel: source="P_LENDING_003"; target="SYS_LOS"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_LENDING_004, SYS_LOS, "Primary")
+' aac rel: source="P_LENDING_004"; target="SYS_LOS"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_LENDING_005, SYS_LOS, "Primary")
+' aac rel: source="P_LENDING_005"; target="SYS_LOS"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_LENDING_006, SYS_LOS, "Supporting")
+' aac rel: source="P_LENDING_006"; target="SYS_LOS"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COMPLIANCE_006, SYS_LOS, "Supporting")
+' aac rel: source="P_COMPLIANCE_006"; target="SYS_LOS"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_002, CAP_LEND_01, "supports")
+' aac rel: source="P_LENDING_002"; target="CAP_LEND_01"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_003, CAP_LEND_02_01, "supports")
+' aac rel: source="P_LENDING_003"; target="CAP_LEND_02_01"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_004, CAP_LEND_02_02, "supports")
+' aac rel: source="P_LENDING_004"; target="CAP_LEND_02_02"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_005, CAP_LEND_03, "supports")
+' aac rel: source="P_LENDING_005"; target="CAP_LEND_03"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_006, CAP_LEND_03, "supports")
+' aac rel: source="P_LENDING_006"; target="CAP_LEND_03"; label="supports"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_006, CAP_RGOV_09, "supports")
+' aac rel: source="P_COMPLIANCE_006"; target="CAP_RGOV_09"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_003, CAP_LEND_02, "supports")
+' aac rel: source="P_LENDING_003"; target="CAP_LEND_02"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_004, CAP_LEND_02, "supports")
+' aac rel: source="P_LENDING_004"; target="CAP_LEND_02"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

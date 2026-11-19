@@ -43,6 +43,7 @@ flowchart LR
         direction LR
         OI_IDENTITY_API("Customer Identity API<br/>[HTTPS]")
         SYS_IDENTITY_SVC["Customer Identity Service<br/>[AKS]"]
+        TS_NET_SUB_AZ_PLATFORM_SHARED[/"Platform Shared Services<br/>Subnet<br/>[Subnet]"/]
       end
     end
     subgraph grp_Azure__azure_risk_prod["subscription azure-risk-prod"]
@@ -79,6 +80,7 @@ flowchart LR
   SYS_IDV_WEBHOOKS -.->|"runs on"| TS_AZURE_APIM
   SYS_IDV_WEBHOOKS -.->|"runs on"| TS_AZURE_AKS
   SYS_IDV_GATEWAY -.->|"runs on"| TS_AZURE_KEYVAULT
+  SYS_IDENTITY_SVC -.->|"runs on"| TS_NET_SUB_AZ_PLATFORM_SHARED
   OI_IDENTITY_API --- SYS_IDENTITY_SVC
 
   classDef s_offered_interfaces__offered_interfaces fill:#e6ecff,stroke:#6366f1,color:#0f172a,stroke-width:1.4px;
@@ -86,7 +88,7 @@ flowchart LR
   classDef s_tech_services__tech_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
   class OI_IDENTITY_API s_offered_interfaces__offered_interfaces;
   class SYS_CARDSVC_API,SYS_COLLECT_API,SYS_IDENTITY_SVC,SYS_IDV_GATEWAY,SYS_IDV_WEBHOOKS,SYS_LENDING_API s_systems__systems;
-  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT,TS_IDENTITY_DNS,TS_IDENTITY_WAF s_tech_services__tech_services;
+  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT,TS_IDENTITY_DNS,TS_IDENTITY_WAF,TS_NET_SUB_AZ_PLATFORM_SHARED s_tech_services__tech_services;
   classDef boundary1 fill:#eef5fb,stroke:#147eba,color:#0f5f8c;
   class grp_AWS__prod_lending__Private_App boundary1;
   classDef boundary2 fill:#f1f6fb,stroke:#5b9bd5,color:#2f5d8a;
@@ -139,4 +141,4 @@ Each flow is a recorded sequence of interfaces. The steps drawn on this diagram 
 7. Installment Lending Service → Core Card Ledger (MQ) — not on this diagram
 8. Installment Lending Service → Installment Lending Async Worker (Kafka) — not on this diagram
 
-12 entities, 22 relationships. Generated from the model; edit the model, not this file.
+13 entities, 23 relationships. Generated from the model; edit the model, not this file.

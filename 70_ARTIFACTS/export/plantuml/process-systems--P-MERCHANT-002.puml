@@ -1,0 +1,50 @@
+@startuml
+' Capture merchant application — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Capture merchant application — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_MERCH_02_01, "Merchant Credit Underwriting", "Assess a merchant's credit and chargeback exposure, and set its limits and reserve terms.", $tags="capabilities")
+  ' aac CAP_MERCH_02_01: company_domain="Merchant Services"
+  System(CAP_MERCH_02, "Merchant Underwriting & Risk Vetting", "Underwrite merchants against credit and brand risk appetite — the specialty-vertical appetite is the differentiator.", $tags="capabilities")
+  ' aac CAP_MERCH_02: company_domain="Merchant Services"
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_MERCHANT, "Merchant master and underwriting file", "Merchant identity, beneficial owners, underwriting decision, limits, pricing and screening results.", $tags="data_assets")
+  ' aac DA_MERCHANT: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_MERCHANT_002, "Capture merchant application", "Take a merchant's application, sent by an ISO or made directly in the merchant portal, with its owners, processing history, business model and bank account, and check it is complete before underwriting. Beneficial ownership is collected here because sanctions screening and the network's terminated-merchant check both read it.", $tags="processes")
+  ' aac P_MERCHANT_002: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+  System_Ext(SYS_MERCH_ACQ, "Merchant acquiring platform", "Processor platform for merchant boarding, clearing, settlement, reserves, fees and statements. Built with external.", $tags="systems")
+  ' aac SYS_MERCH_ACQ: company_domain=""; hosting="External"; technology="external"
+  System(SYS_MERCHANT_WEB, "Merchant Portal Web", "Customer-facing front end for Merchant Portal. Built with AKS.", $tags="systems")
+  ' aac SYS_MERCHANT_WEB: company_domain="Payments"; hosting="Azure"; technology="AKS"
+}
+
+Rel(P_MERCHANT_002, SYS_MERCHANT_WEB, "Primary")
+' aac rel: source="P_MERCHANT_002"; target="SYS_MERCHANT_WEB"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_MERCHANT_002, SYS_MERCH_ACQ, "Supporting")
+' aac rel: source="P_MERCHANT_002"; target="SYS_MERCH_ACQ"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_MERCHANT_002, SYS_DOC, "Supporting")
+' aac rel: source="P_MERCHANT_002"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_MERCHANT_002, DA_MERCHANT, "Write")
+' aac rel: source="P_MERCHANT_002"; target="DA_MERCHANT"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_MERCHANT_002, CAP_MERCH_02_01, "supports")
+' aac rel: source="P_MERCHANT_002"; target="CAP_MERCH_02_01"; label="supports"; relation="process_supports_capability"
+Rel(P_MERCHANT_002, CAP_MERCH_02, "supports")
+' aac rel: source="P_MERCHANT_002"; target="CAP_MERCH_02"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

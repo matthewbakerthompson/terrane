@@ -5,6 +5,15 @@ workspace "Architecture Model" "The application, data and technology landscape. 
 
     model {
         group "Card Issuing" {
+            act_cobrand_partner = softwareSystem "Co-Brand Partner" "A retailer, travel brand or affinity group whose name is on the card. Shares the program's revenue and funds part of its rewards." "Element,Active" {
+                properties {
+                    "aac.type" "actors"
+                    "aac.id" "ACT-COBRAND-PARTNER"
+                    "aac.company_domain" "Card Issuing"
+                    "aac.actor_kind" "Organization"
+                    "aac.internal" "No"
+                }
+            }
             oi_ledger_queue = softwareSystem "Core Ledger request queue" "Postings, holds and balance requests put on the ledger's MQ request queue, answered on the reply queue in the order they arrived." "Element,Active" {
                 properties {
                     "aac.type" "offered_interfaces"
@@ -21,6 +30,15 @@ workspace "Architecture Model" "The application, data and technology landscape. 
             }
         }
         group "Collections" {
+            act_collection_agency = softwareSystem "Collection Agency" "Works charged-off accounts placed with it under the bank's conduct requirements, and remits what it collects." "Element,Active" {
+                properties {
+                    "aac.type" "actors"
+                    "aac.id" "ACT-COLLECTION-AGENCY"
+                    "aac.company_domain" "Collections"
+                    "aac.actor_kind" "Organization"
+                    "aac.internal" "No"
+                }
+            }
             act_collections_agent = softwareSystem "Collections Agent" "Handles arrears treatment and payment arrangements." "Element,Active" {
                 properties {
                     "aac.type" "actors"
@@ -28,6 +46,15 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                     "aac.company_domain" "Collections"
                     "aac.actor_kind" "Role"
                     "aac.internal" "Yes"
+                }
+            }
+            act_debt_buyer = softwareSystem "Debt Buyer" "Buys charged-off accounts in portfolio sales and takes over collecting them." "Element,Active" {
+                properties {
+                    "aac.type" "actors"
+                    "aac.id" "ACT-DEBT-BUYER"
+                    "aac.company_domain" "Collections"
+                    "aac.actor_kind" "Organization"
+                    "aac.internal" "No"
                 }
             }
             oi_collect_api = softwareSystem "Collections Workspace API" "The domain API Collections Workspace offers its channels, its jobs and its partners." "Element,Active" {
@@ -53,6 +80,26 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                     "aac.id" "SYS-CUST360-SEMANTIC"
                     "aac.company_domain" "Data and Analytics"
                     "aac.hosting" "SaaS"
+                }
+            }
+        }
+        group "Deposits" {
+            act_deposit_broker = softwareSystem "Deposit Broker" "A broker-dealer that sells the bank's brokered CDs to its own customers and settles them through the depository." "Element,Active" {
+                properties {
+                    "aac.type" "actors"
+                    "aac.id" "ACT-DEPOSIT-BROKER"
+                    "aac.company_domain" "Deposits"
+                    "aac.actor_kind" "Organization"
+                    "aac.internal" "No"
+                }
+            }
+            act_depositor = softwareSystem "Depositor" "A saver holding a CD or savings account opened directly with the bank." "Element,Active" {
+                properties {
+                    "aac.type" "actors"
+                    "aac.id" "ACT-DEPOSITOR"
+                    "aac.company_domain" "Deposits"
+                    "aac.actor_kind" "Person"
+                    "aac.internal" "No"
                 }
             }
         }
@@ -99,6 +146,33 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                     "aac.company_domain" "Lending"
                     "aac.actor_kind" "Person"
                     "aac.internal" "No"
+                }
+            }
+            act_borrower = softwareSystem "Borrower" "A customer repaying an installment loan: pays, asks for payoffs and deferrals, and gets the title back at the end." "Element,Active" {
+                properties {
+                    "aac.type" "actors"
+                    "aac.id" "ACT-BORROWER"
+                    "aac.company_domain" "Lending"
+                    "aac.actor_kind" "Person"
+                    "aac.internal" "No"
+                }
+            }
+            act_dealer = softwareSystem "Dealer" "A dealership selling RVs, boats and powersports vehicles that takes the buyer's loan application and submits it. The bank's point of sale, and a third party it vets, monitors and pays a reserve to." "Element,Active" {
+                properties {
+                    "aac.type" "actors"
+                    "aac.id" "ACT-DEALER"
+                    "aac.company_domain" "Lending"
+                    "aac.actor_kind" "Organization"
+                    "aac.internal" "No"
+                }
+            }
+            act_funding_analyst = softwareSystem "Funding Analyst" "Reviews contract packages, clears stipulations and releases dealer funding." "Element,Active" {
+                properties {
+                    "aac.type" "actors"
+                    "aac.id" "ACT-FUNDING-ANALYST"
+                    "aac.company_domain" "Lending"
+                    "aac.actor_kind" "Role"
+                    "aac.internal" "Yes"
                 }
             }
             oi_lending_api = softwareSystem "Installment Lending API" "The domain API Installment Lending offers its channels, its jobs and its partners." "Element,Planned" {
@@ -159,6 +233,15 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                     "aac.internal" "No"
                 }
             }
+            act_iso = softwareSystem "Independent Sales Organization" "Brings merchants to the bank and submits their applications. The bank sponsors those merchants into the networks and carries their liability." "Element,Active" {
+                properties {
+                    "aac.type" "actors"
+                    "aac.id" "ACT-ISO"
+                    "aac.company_domain" "Payments"
+                    "aac.actor_kind" "Organization"
+                    "aac.internal" "No"
+                }
+            }
             act_merchant = softwareSystem "Merchant" "Accepts the card at point of sale. Reached through the scheme, never directly." "Element,Active" {
                 properties {
                     "aac.type" "actors"
@@ -215,6 +298,15 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                     "aac.internal" "Yes"
                 }
             }
+            act_servicing_client = softwareSystem "Servicing Client" "A lender whose card portfolio the bank services under contract. Sets the strategies, receives the reports and audits the work." "Element,Active" {
+                properties {
+                    "aac.type" "actors"
+                    "aac.id" "ACT-SERVICING-CLIENT"
+                    "aac.company_domain" "Servicing"
+                    "aac.actor_kind" "Organization"
+                    "aac.internal" "No"
+                }
+            }
             oi_cardsvc_api = softwareSystem "Card Servicing API" "The domain API Card Servicing offers its channels, its jobs and its partners." "Element,Active" {
                 properties {
                     "aac.type" "offered_interfaces"
@@ -231,6 +323,20 @@ workspace "Architecture Model" "The application, data and technology landscape. 
             }
         }
         group "Unassigned" {
+            sys_broker_gw = softwareSystem "Brokered deposit settlement gateway" "Exchanges brokered CD issuance, allocation and position files with the broker-dealers and the depository." "System,Medium,Proposed" {
+                properties {
+                    "aac.type" "systems"
+                    "aac.id" "SYS-BROKER-GW"
+                    "aac.company_domain" ""
+                }
+            }
+            sys_client_portal = softwareSystem "Servicing client portal" "Client reporting, data exchange, and interaction." "System,Medium,Proposed" {
+                properties {
+                    "aac.type" "systems"
+                    "aac.id" "SYS-CLIENT-PORTAL"
+                    "aac.company_domain" ""
+                }
+            }
             sys_contact = softwareSystem "Contact center platform" "Contact center routing, voice, and digital channels." "System,Medium,Proposed" {
                 properties {
                     "aac.type" "systems"
@@ -242,6 +348,21 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                 properties {
                     "aac.type" "systems"
                     "aac.id" "SYS-CREDIT-DATA"
+                    "aac.company_domain" ""
+                }
+            }
+            sys_dealer_portal = softwareSystem "Dealer portal" "Where dealers submit applications, see decisions and stipulations, upload contracts, and track funding and reserve." "System,Medium,Proposed,SaaS" {
+                properties {
+                    "aac.type" "systems"
+                    "aac.id" "SYS-DEALER-PORTAL"
+                    "aac.company_domain" ""
+                    "aac.hosting" "SaaS"
+                }
+            }
+            sys_deposit = softwareSystem "Deposit platform" "System of record for CDs and savings: opening, interest accrual, maturities, early withdrawal and tax reporting." "System,Medium,Proposed" {
+                properties {
+                    "aac.type" "systems"
+                    "aac.id" "SYS-DEPOSIT"
                     "aac.company_domain" ""
                 }
             }
@@ -266,6 +387,43 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                     "aac.company_domain" ""
                 }
             }
+            sys_legal_matter = softwareSystem "Legal matter management" "Tracks litigation, outside counsel, filings, judgments and legal placements." "System,Medium,Proposed,SaaS" {
+                properties {
+                    "aac.type" "systems"
+                    "aac.id" "SYS-LEGAL-MATTER"
+                    "aac.company_domain" ""
+                    "aac.hosting" "SaaS"
+                }
+            }
+            sys_loan_svc = softwareSystem "Installment loan servicing platform" "System of record for installment loans: boarding, billing, payment posting, payoff quotes, deferrals and ancillary product refunds." "System,Medium,Proposed" {
+                properties {
+                    "aac.type" "systems"
+                    "aac.id" "SYS-LOAN-SVC"
+                    "aac.company_domain" ""
+                }
+            }
+            sys_los = softwareSystem "Indirect loan origination system" "Takes dealer applications, runs the credit decision and counteroffers, and carries the contract package to funding." "System,Medium,Proposed" {
+                properties {
+                    "aac.type" "systems"
+                    "aac.id" "SYS-LOS"
+                    "aac.company_domain" ""
+                }
+            }
+            sys_merch_acq = softwareSystem "Merchant acquiring platform" "Processor platform for merchant boarding, clearing, settlement, reserves, fees and statements." "System,Medium,Proposed,External" {
+                properties {
+                    "aac.type" "systems"
+                    "aac.id" "SYS-MERCH-ACQ"
+                    "aac.company_domain" ""
+                    "aac.hosting" "External"
+                }
+            }
+            sys_merch_risk = softwareSystem "Merchant risk monitoring" "Monitors merchant volume, chargeback ratios and exposure, and checks merchants against the networks' terminated-merchant file." "System,Medium,Proposed" {
+                properties {
+                    "aac.type" "systems"
+                    "aac.id" "SYS-MERCH-RISK"
+                    "aac.company_domain" ""
+                }
+            }
             sys_mobile = softwareSystem "Cardholder mobile application" "Cardholder mobile self-service." "System,Medium,Proposed" {
                 properties {
                     "aac.type" "systems"
@@ -277,6 +435,13 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                 properties {
                     "aac.type" "systems"
                     "aac.id" "SYS-ORIG-DECISION"
+                    "aac.company_domain" ""
+                }
+            }
+            sys_payment_gw = softwareSystem "Payment capture gateway" "Payment capture across ACH, debit, lockbox, and wallet channels." "System,Medium,Proposed" {
+                properties {
+                    "aac.type" "systems"
+                    "aac.id" "SYS-PAYMENT-GW"
                     "aac.company_domain" ""
                 }
             }
@@ -364,6 +529,20 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                     "aac.hosting" "Azure"
                 }
             }
+            ts_net_sub_az_cards_app = softwareSystem "Cards App Subnet" "" "Technology Service,Active" {
+                properties {
+                    "aac.type" "tech_services"
+                    "aac.id" "TS-NET-SUB-AZ-CARDS-APP"
+                    "aac.company_domain" ""
+                }
+            }
+            ts_net_vnet_az_cards = softwareSystem "Cards Virtual Network" "The cards subscription's network, which card servicing, rewards and the merchant portal land in." "Technology Service,Active" {
+                properties {
+                    "aac.type" "tech_services"
+                    "aac.id" "TS-NET-VNET-AZ-CARDS"
+                    "aac.company_domain" "Enterprise Platform"
+                }
+            }
         }
         group "azure-cards-prod / uksouth / Private-Data" {
             sys_cardsvc_store = softwareSystem "Card Servicing Datastore" "Operational datastore owned by Card Servicing." "System,High,Active,Azure" {
@@ -390,6 +569,47 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                     "aac.hosting" "Azure"
                 }
             }
+            ts_net_sub_az_cards_data = softwareSystem "Cards Data Subnet" "" "Technology Service,Active" {
+                properties {
+                    "aac.type" "tech_services"
+                    "aac.id" "TS-NET-SUB-AZ-CARDS-DATA"
+                    "aac.company_domain" ""
+                }
+            }
+        }
+        group "azure-cards-prod / uksouth / Public" {
+            ts_net_nat_az_cards_nat = softwareSystem "Cards NAT Gateway" "" "Technology Service,Active" {
+                properties {
+                    "aac.type" "tech_services"
+                    "aac.id" "TS-NET-NAT-AZ-CARDS-NAT"
+                    "aac.company_domain" ""
+                }
+            }
+        }
+        group "azure-connectivity-prod / uksouth / Shared-Services" {
+            ts_azure_private_dns = softwareSystem "Azure Private DNS Resolver" "The resolver every virtual network takes its names from, and the forwarding back to the data center." "Technology Service,Active" {
+                properties {
+                    "aac.type" "tech_services"
+                    "aac.id" "TS-AZURE-PRIVATE-DNS"
+                    "aac.company_domain" "Enterprise Platform"
+                }
+            }
+            ts_azure_vwan = softwareSystem "Azure Virtual WAN hub" "The hub every virtual network attaches to, and the route back to the data center." "Technology Service,Active" {
+                properties {
+                    "aac.type" "tech_services"
+                    "aac.id" "TS-AZURE-VWAN"
+                    "aac.company_domain" "Enterprise Platform"
+                }
+            }
+        }
+        group "azure-data-prod / uksouth / Private-App" {
+            ts_net_vnet_az_data = softwareSystem "Data Virtual Network" "The data subscription's network, private data tier only." "Technology Service,Active" {
+                properties {
+                    "aac.type" "tech_services"
+                    "aac.id" "TS-NET-VNET-AZ-DATA"
+                    "aac.company_domain" "Enterprise Platform"
+                }
+            }
         }
         group "azure-data-prod / uksouth / Private-Data" {
             sys_data_ingest = softwareSystem "Enterprise Data Ingestion Hub" "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse." "System,Medium,Active,Azure" {
@@ -398,6 +618,13 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                     "aac.id" "SYS-DATA-INGEST"
                     "aac.company_domain" "Data and Analytics"
                     "aac.hosting" "Azure"
+                }
+            }
+            ts_net_sub_az_data_data = softwareSystem "Data Data Subnet" "" "Technology Service,Active" {
+                properties {
+                    "aac.type" "tech_services"
+                    "aac.id" "TS-NET-SUB-AZ-DATA-DATA"
+                    "aac.company_domain" ""
                 }
             }
         }
@@ -428,6 +655,20 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                     "aac.hosting" "Azure"
                 }
             }
+            ts_net_sub_az_payments_app = softwareSystem "Payments App Subnet" "" "Technology Service,Active" {
+                properties {
+                    "aac.type" "tech_services"
+                    "aac.id" "TS-NET-SUB-AZ-PAYMENTS-APP"
+                    "aac.company_domain" ""
+                }
+            }
+            ts_net_vnet_az_payments = softwareSystem "Payments Virtual Network" "The payments subscription's network." "Technology Service,Active" {
+                properties {
+                    "aac.type" "tech_services"
+                    "aac.id" "TS-NET-VNET-AZ-PAYMENTS"
+                    "aac.company_domain" "Enterprise Platform"
+                }
+            }
         }
         group "azure-payments-prod / uksouth / Private-Data" {
             sys_merchant_store = softwareSystem "Merchant Portal Database" "Relational database for Merchant Portal, encrypted with a customer managed key." "System,Medium,Planned,Azure" {
@@ -438,6 +679,31 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                     "aac.hosting" "Azure"
                 }
             }
+            ts_net_sub_az_payments_data = softwareSystem "Payments Data Subnet" "" "Technology Service,Active" {
+                properties {
+                    "aac.type" "tech_services"
+                    "aac.id" "TS-NET-SUB-AZ-PAYMENTS-DATA"
+                    "aac.company_domain" ""
+                }
+            }
+        }
+        group "azure-payments-prod / uksouth / Public" {
+            ts_net_nat_az_payments_nat = softwareSystem "Payments NAT Gateway" "" "Technology Service,Active" {
+                properties {
+                    "aac.type" "tech_services"
+                    "aac.id" "TS-NET-NAT-AZ-PAYMENTS-NAT"
+                    "aac.company_domain" ""
+                }
+            }
+        }
+        group "azure-platform-prod / uksouth / Private-App" {
+            ts_net_vnet_az_platform = softwareSystem "Platform Virtual Network" "The platform subscription's network, for shared services." "Technology Service,Active" {
+                properties {
+                    "aac.type" "tech_services"
+                    "aac.id" "TS-NET-VNET-AZ-PLATFORM"
+                    "aac.company_domain" "Enterprise Platform"
+                }
+            }
         }
         group "azure-platform-prod / uksouth / Shared-Services" {
             sys_identity_svc = softwareSystem "Customer Identity Service" "Shared platform service: Customer Identity Service." "System,High,Active,Azure" {
@@ -446,6 +712,13 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                     "aac.id" "SYS-IDENTITY-SVC"
                     "aac.company_domain" "Enterprise Platform"
                     "aac.hosting" "Azure"
+                }
+            }
+            ts_net_sub_az_platform_shared = softwareSystem "Platform Shared Services Subnet" "" "Technology Service,Active" {
+                properties {
+                    "aac.type" "tech_services"
+                    "aac.id" "TS-NET-SUB-AZ-PLATFORM-SHARED"
+                    "aac.company_domain" ""
                 }
             }
         }
@@ -466,6 +739,20 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                     "aac.hosting" "Azure"
                 }
             }
+            ts_net_sub_az_risk_app = softwareSystem "Risk App Subnet" "" "Technology Service,Active" {
+                properties {
+                    "aac.type" "tech_services"
+                    "aac.id" "TS-NET-SUB-AZ-RISK-APP"
+                    "aac.company_domain" ""
+                }
+            }
+            ts_net_vnet_az_risk = softwareSystem "Risk Virtual Network" "The risk subscription's network, which decisioning and collections land in." "Technology Service,Active" {
+                properties {
+                    "aac.type" "tech_services"
+                    "aac.id" "TS-NET-VNET-AZ-RISK"
+                    "aac.company_domain" "Enterprise Platform"
+                }
+            }
         }
         group "azure-risk-prod / uksouth / Public" {
             sys_idv_webhooks = softwareSystem "Identity Document Verification Webhook Listener" "Receives Onfido callbacks, verifies their signature, and forwards the event. Public by necessity, small by design." "System,High,Planned,Azure" {
@@ -476,6 +763,20 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                     "aac.hosting" "Azure"
                 }
             }
+            ts_net_nat_az_risk_nat = softwareSystem "Risk NAT Gateway" "" "Technology Service,Active" {
+                properties {
+                    "aac.type" "tech_services"
+                    "aac.id" "TS-NET-NAT-AZ-RISK-NAT"
+                    "aac.company_domain" ""
+                }
+            }
+            ts_net_sub_az_risk_pub = softwareSystem "Risk Public Subnet" "" "Technology Service,Active" {
+                properties {
+                    "aac.type" "tech_services"
+                    "aac.id" "TS-NET-SUB-AZ-RISK-PUB"
+                    "aac.company_domain" ""
+                }
+            }
         }
         group "azure-risk-prod / uksouth / Shared-Services" {
             sys_idv_egress = softwareSystem "Identity Document Verification Private Egress" "PrivateLink endpoint and egress allow-list for Onfido. The control that keeps regulated data off the public internet, and the thing a security review asks to see first." "System,High,Planned,Azure" {
@@ -484,6 +785,13 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                     "aac.id" "SYS-IDV-EGRESS"
                     "aac.company_domain" "Enterprise Platform"
                     "aac.hosting" "Azure"
+                }
+            }
+            ts_net_sub_az_risk_shared = softwareSystem "Risk Shared Services Subnet" "" "Technology Service,Active" {
+                properties {
+                    "aac.type" "tech_services"
+                    "aac.id" "TS-NET-SUB-AZ-RISK-SHARED"
+                    "aac.company_domain" ""
                 }
             }
         }
@@ -979,6 +1287,18 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                 "aac.patterns" "customer-communication-archive"
             }
         }
+        sys_payment_gw -> sys_core_ledger "Payment Capture Gateway to Core Card Ledger" "MQ" "queued-request" {
+            properties {
+                "aac.interface_id" "INT-PAYMENT-GW-LEDGER"
+                "aac.kind" "queued-request"
+                "aac.integration_style" "Request-response"
+                "aac.auth_method" "MutualTLS"
+                "aac.frequency" "Realtime"
+                "aac.direction" "Outbound"
+                "aac.patterns" "payment-capture-and-posting"
+                "aac.offered_interface_id" "OI-LEDGER-QUEUE"
+            }
+        }
         sys_mobile -> sys_cardsvc_api "Cardholder Mobile to Card Servicing API" "HTTPS" "api-call" {
             properties {
                 "aac.interface_id" "INT-MOBILE-CARDSVC"
@@ -1046,6 +1366,28 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                 "aac.patterns" "customer-communication-archive"
             }
         }
+        sys_client_portal -> sys_doc "Document Management to Servicing Client Portal" "HTTPS" "api-call" {
+            properties {
+                "aac.interface_id" "INT-DOC-CLIENT-PORTAL"
+                "aac.kind" "api-call"
+                "aac.integration_style" "Request-response"
+                "aac.auth_method" "OAuth2"
+                "aac.frequency" "Realtime"
+                "aac.direction" "Outbound"
+                "aac.patterns" "api-front-door"
+            }
+        }
+        sys_core_ledger -> sys_client_portal "Core Card Ledger to Servicing Client Portal" "FileTransfer" "scheduled-file" {
+            properties {
+                "aac.interface_id" "INT-LEDGER-CLIENT-PORTAL"
+                "aac.kind" "scheduled-file"
+                "aac.integration_style" "Batch"
+                "aac.auth_method" "MutualTLS"
+                "aac.frequency" "Daily"
+                "aac.direction" "Outbound"
+                "aac.patterns" "windowed-batch"
+            }
+        }
         sys_contact -> sys_crm "Contact Center Platform to CRM" "HTTPS" "api-call" {
             properties {
                 "aac.interface_id" "INT-CONTACT-CRM"
@@ -1099,6 +1441,116 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                 "aac.frequency" "Daily"
                 "aac.direction" "Outbound"
                 "aac.patterns" "analytics-landing-zone"
+            }
+        }
+        sys_dealer_portal -> sys_los "Dealer Portal to Indirect Loan Origination" "HTTPS" "api-call" {
+            properties {
+                "aac.interface_id" "INT-DEALER-PORTAL-LOS"
+                "aac.kind" "api-call"
+                "aac.integration_style" "Request-response"
+                "aac.auth_method" "OAuth2"
+                "aac.frequency" "Realtime"
+                "aac.direction" "Outbound"
+                "aac.patterns" "api-front-door"
+            }
+        }
+        sys_los -> sys_loan_svc "Indirect Loan Origination to Loan Servicing" "FileTransfer" "scheduled-file" {
+            properties {
+                "aac.interface_id" "INT-LOS-LOAN-SVC-BOARD"
+                "aac.kind" "scheduled-file"
+                "aac.integration_style" "Batch"
+                "aac.auth_method" "MutualTLS"
+                "aac.frequency" "Daily"
+                "aac.direction" "Outbound"
+                "aac.patterns" "windowed-batch"
+            }
+        }
+        sys_payment_gw -> sys_loan_svc "Payment Capture Gateway to Loan Servicing" "FileTransfer" "scheduled-file" {
+            properties {
+                "aac.interface_id" "INT-PAYMENT-GW-LOAN-SVC"
+                "aac.kind" "scheduled-file"
+                "aac.integration_style" "Batch"
+                "aac.auth_method" "MutualTLS"
+                "aac.frequency" "Daily"
+                "aac.direction" "Outbound"
+                "aac.patterns" "payment-capture-and-posting"
+            }
+        }
+        sys_loan_svc -> sys_collect_api "Loan Servicing to Collections Platform" "FileTransfer" "scheduled-file" {
+            properties {
+                "aac.interface_id" "INT-LOAN-SVC-COLLECT"
+                "aac.kind" "scheduled-file"
+                "aac.integration_style" "Batch"
+                "aac.auth_method" "MutualTLS"
+                "aac.frequency" "Daily"
+                "aac.direction" "Outbound"
+                "aac.patterns" "windowed-batch"
+            }
+        }
+        sys_merchant_api -> sys_merch_acq "Merchant Portal Service to Merchant Acquiring Platform" "HTTPS" "api-call" {
+            properties {
+                "aac.interface_id" "INT-MERCHANT-API-ACQ"
+                "aac.kind" "api-call"
+                "aac.integration_style" "Request-response"
+                "aac.auth_method" "OAuth2"
+                "aac.frequency" "Realtime"
+                "aac.direction" "Outbound"
+                "aac.patterns" "api-front-door"
+            }
+        }
+        sys_merch_acq -> sys_merch_risk "Merchant Acquiring Platform to Merchant Risk Monitoring" "FileTransfer" "scheduled-file" {
+            properties {
+                "aac.interface_id" "INT-MERCH-ACQ-RISK"
+                "aac.kind" "scheduled-file"
+                "aac.integration_style" "Batch"
+                "aac.auth_method" "MutualTLS"
+                "aac.frequency" "Daily"
+                "aac.direction" "Outbound"
+                "aac.patterns" "windowed-batch"
+            }
+        }
+        sys_merch_risk -> sys_screening_gateway "Merchant Risk Monitoring to Screening Gateway" "HTTPS" "api-call" {
+            properties {
+                "aac.interface_id" "INT-MERCH-RISK-SCREENING"
+                "aac.kind" "api-call"
+                "aac.integration_style" "Request-response"
+                "aac.auth_method" "OAuth2"
+                "aac.frequency" "Realtime"
+                "aac.direction" "Outbound"
+                "aac.patterns" "inline-risk-decision"
+            }
+        }
+        sys_deposit -> sys_screening_gateway "Deposit Platform to Screening Gateway" "HTTPS" "api-call" {
+            properties {
+                "aac.interface_id" "INT-DEPOSIT-SCREENING"
+                "aac.kind" "api-call"
+                "aac.integration_style" "Request-response"
+                "aac.auth_method" "OAuth2"
+                "aac.frequency" "Realtime"
+                "aac.direction" "Outbound"
+                "aac.patterns" "inline-risk-decision"
+            }
+        }
+        sys_broker_gw -> sys_deposit "Brokered Deposit Gateway to Deposit Platform" "FileTransfer" "scheduled-file" {
+            properties {
+                "aac.interface_id" "INT-BROKER-GW-DEPOSIT"
+                "aac.kind" "scheduled-file"
+                "aac.integration_style" "Batch"
+                "aac.auth_method" "MutualTLS"
+                "aac.frequency" "Daily"
+                "aac.direction" "Outbound"
+                "aac.patterns" "windowed-batch"
+            }
+        }
+        sys_collect_api -> sys_legal_matter "Collections Platform to Legal Matter Management" "FileTransfer" "scheduled-file" {
+            properties {
+                "aac.interface_id" "INT-COLLECT-LEGAL"
+                "aac.kind" "scheduled-file"
+                "aac.integration_style" "Batch"
+                "aac.auth_method" "MutualTLS"
+                "aac.frequency" "Weekly"
+                "aac.direction" "Outbound"
+                "aac.patterns" "windowed-batch"
             }
         }
         sys_auth_switch -> sys_core_ledger "Authorization Switch to Core Ledger" "MQ" "queued-request" {
@@ -1742,6 +2194,11 @@ workspace "Architecture Model" "The application, data and technology landscape. 
                 "aac.direction" "Inbound"
             }
         }
+        sys_idv_egress -> ts_azure_vwan "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
         sys_lending_api -> ts_aws_privatelink "system uses tech service" {
             properties {
                 "aac.relation" "system_uses_tech_service"
@@ -1758,56 +2215,6 @@ workspace "Architecture Model" "The application, data and technology landscape. 
             }
         }
         sys_screening_egress -> ts_aws_tgw "system uses tech service" {
-            properties {
-                "aac.relation" "system_uses_tech_service"
-            }
-        }
-        sys_lending_alb -> ts_net_sub_lend_pub_a "system uses tech service" {
-            properties {
-                "aac.relation" "system_uses_tech_service"
-            }
-        }
-        sys_lending_alb -> ts_net_sub_lend_pub_b "system uses tech service" {
-            properties {
-                "aac.relation" "system_uses_tech_service"
-            }
-        }
-        sys_lending_web -> ts_net_sub_lend_app_a "system uses tech service" {
-            properties {
-                "aac.relation" "system_uses_tech_service"
-            }
-        }
-        sys_lending_web -> ts_net_sub_lend_app_b "system uses tech service" {
-            properties {
-                "aac.relation" "system_uses_tech_service"
-            }
-        }
-        sys_lending_api -> ts_net_sub_lend_app_a "system uses tech service" {
-            properties {
-                "aac.relation" "system_uses_tech_service"
-            }
-        }
-        sys_lending_api -> ts_net_sub_lend_app_b "system uses tech service" {
-            properties {
-                "aac.relation" "system_uses_tech_service"
-            }
-        }
-        sys_lending_worker -> ts_net_sub_lend_app_a "system uses tech service" {
-            properties {
-                "aac.relation" "system_uses_tech_service"
-            }
-        }
-        sys_lending_worker -> ts_net_sub_lend_app_b "system uses tech service" {
-            properties {
-                "aac.relation" "system_uses_tech_service"
-            }
-        }
-        sys_lending_db -> ts_net_sub_lend_data_a "system uses tech service" {
-            properties {
-                "aac.relation" "system_uses_tech_service"
-            }
-        }
-        sys_lending_db -> ts_net_sub_lend_data_b "system uses tech service" {
             properties {
                 "aac.relation" "system_uses_tech_service"
             }
@@ -1838,6 +2245,196 @@ workspace "Architecture Model" "The application, data and technology landscape. 
             }
         }
         sys_statements -> ts_onprem_dc "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_data_ingest -> ts_net_sub_az_data_data "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_reg_reporting -> ts_net_sub_az_risk_app "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_cardsvc_api -> ts_net_sub_az_cards_app "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_cardsvc_web -> ts_net_sub_az_cards_app "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_cardsvc_store -> ts_net_sub_az_cards_data "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_collect_api -> ts_net_sub_az_cards_app "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_collect_web -> ts_net_sub_az_cards_app "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_collect_store -> ts_net_sub_az_cards_data "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_disputes_gateway -> ts_net_sub_az_cards_app "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_identity_svc -> ts_net_sub_az_platform_shared "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_idv_gateway -> ts_net_sub_az_risk_app "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_idv_egress -> ts_net_sub_az_risk_shared "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_idv_webhooks -> ts_net_sub_az_risk_pub "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_lending_api -> ts_net_sub_lend_app_a "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_lending_api -> ts_net_sub_lend_app_b "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_lending_web -> ts_net_sub_lend_app_a "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_lending_web -> ts_net_sub_lend_app_b "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_lending_alb -> ts_net_sub_lend_pub_a "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_lending_alb -> ts_net_sub_lend_pub_b "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_lending_worker -> ts_net_sub_lend_app_a "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_lending_worker -> ts_net_sub_lend_app_b "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_lending_db -> ts_net_sub_lend_data_a "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_lending_db -> ts_net_sub_lend_data_b "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_lending_hub -> ts_net_sub_lend_app_a "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_lending_hub -> ts_net_sub_lend_app_b "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_lendperf_pipeline -> ts_gcpnet_sub_analytics_data "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_merchant_api -> ts_net_sub_az_payments_app "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_merchant_web -> ts_net_sub_az_payments_app "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_merchant_store -> ts_net_sub_az_payments_data "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_obaff_gateway -> ts_gcpnet_sub_lend_app "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_obaff_webhooks -> ts_gcpnet_proxy_sub_lend "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_posfin_api -> ts_gcpnet_sub_lend_app "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_posfin_web -> ts_gcpnet_sub_lend_app "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_posfin_db -> ts_gcpnet_sub_lend_data "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_rewards_api -> ts_net_sub_az_cards_app "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_rewards_web -> ts_net_sub_az_cards_app "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_rewards_store -> ts_net_sub_az_cards_data "system uses tech service" {
+            properties {
+                "aac.relation" "system_uses_tech_service"
+            }
+        }
+        sys_rewards_worker -> ts_net_sub_az_cards_app "system uses tech service" {
             properties {
                 "aac.relation" "system_uses_tech_service"
             }
@@ -1956,6 +2553,216 @@ workspace "Architecture Model" "The application, data and technology landscape. 
             properties {
                 "aac.relation" "actor_uses_system"
                 "aac.interaction" "Strategy analysis"
+            }
+        }
+        act_dealer -> sys_dealer_portal "actor uses system" {
+            properties {
+                "aac.relation" "actor_uses_system"
+                "aac.interaction" "Submits applications and contracts"
+            }
+        }
+        act_borrower -> sys_payment_gw "actor uses system" {
+            properties {
+                "aac.relation" "actor_uses_system"
+                "aac.interaction" "Pays the loan"
+            }
+        }
+        act_borrower -> sys_contact "actor uses system" {
+            properties {
+                "aac.relation" "actor_uses_system"
+                "aac.interaction" "Calls about the loan"
+            }
+        }
+        act_funding_analyst -> sys_los "actor uses system" {
+            properties {
+                "aac.relation" "actor_uses_system"
+                "aac.interaction" "Clears stipulations and funds"
+            }
+        }
+        act_funding_analyst -> sys_loan_svc "actor uses system" {
+            properties {
+                "aac.relation" "actor_uses_system"
+                "aac.interaction" "Boards loans"
+            }
+        }
+        act_underwriter -> sys_los "actor uses system" {
+            properties {
+                "aac.relation" "actor_uses_system"
+                "aac.interaction" "Reviews referred dealer applications"
+            }
+        }
+        act_iso -> sys_merchant_web "actor uses system" {
+            properties {
+                "aac.relation" "actor_uses_system"
+                "aac.interaction" "Submits merchant applications"
+            }
+        }
+        act_depositor -> sys_deposit "actor uses system" {
+            properties {
+                "aac.relation" "actor_uses_system"
+                "aac.interaction" "Opens and manages CDs and savings"
+            }
+        }
+        act_deposit_broker -> sys_broker_gw "actor uses system" {
+            properties {
+                "aac.relation" "actor_uses_system"
+                "aac.interaction" "Exchanges allocation and position files"
+            }
+        }
+        act_servicing_client -> sys_client_portal "actor uses system" {
+            properties {
+                "aac.relation" "actor_uses_system"
+                "aac.interaction" "Receives reports and data feeds"
+            }
+        }
+        act_cobrand_partner -> sys_client_portal "actor uses system" {
+            properties {
+                "aac.relation" "actor_uses_system"
+                "aac.interaction" "Receives program performance reports"
+            }
+        }
+        act_collection_agency -> sys_collect_api "actor uses system" {
+            properties {
+                "aac.relation" "actor_uses_system"
+                "aac.interaction" "Receives placements and returns payments"
+            }
+        }
+        act_debt_buyer -> sys_doc "actor uses system" {
+            properties {
+                "aac.relation" "actor_uses_system"
+                "aac.interaction" "Receives account documents after a sale"
+            }
+        }
+        ts_azure_vwan -> ts_net_vnet_az_cards "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "network attachment"
+            }
+        }
+        ts_net_vnet_az_cards -> ts_azure_private_dns "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "resolver"
+            }
+        }
+        ts_net_vnet_az_cards -> ts_net_sub_az_cards_app "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "subnet"
+            }
+        }
+        ts_net_vnet_az_cards -> ts_net_sub_az_cards_data "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "subnet"
+            }
+        }
+        ts_net_vnet_az_cards -> ts_net_nat_az_cards_nat "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "egress route"
+            }
+        }
+        ts_azure_vwan -> ts_net_vnet_az_risk "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "network attachment"
+            }
+        }
+        ts_net_vnet_az_risk -> ts_azure_private_dns "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "resolver"
+            }
+        }
+        ts_net_vnet_az_risk -> ts_net_sub_az_risk_pub "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "subnet"
+            }
+        }
+        ts_net_vnet_az_risk -> ts_net_sub_az_risk_app "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "subnet"
+            }
+        }
+        ts_net_vnet_az_risk -> ts_net_sub_az_risk_shared "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "subnet"
+            }
+        }
+        ts_net_vnet_az_risk -> ts_net_nat_az_risk_nat "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "egress route"
+            }
+        }
+        ts_azure_vwan -> ts_net_vnet_az_payments "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "network attachment"
+            }
+        }
+        ts_net_vnet_az_payments -> ts_azure_private_dns "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "resolver"
+            }
+        }
+        ts_net_vnet_az_payments -> ts_net_sub_az_payments_app "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "subnet"
+            }
+        }
+        ts_net_vnet_az_payments -> ts_net_sub_az_payments_data "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "subnet"
+            }
+        }
+        ts_net_vnet_az_payments -> ts_net_nat_az_payments_nat "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "egress route"
+            }
+        }
+        ts_azure_vwan -> ts_net_vnet_az_data "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "network attachment"
+            }
+        }
+        ts_net_vnet_az_data -> ts_azure_private_dns "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "resolver"
+            }
+        }
+        ts_net_vnet_az_data -> ts_net_sub_az_data_data "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "subnet"
+            }
+        }
+        ts_azure_vwan -> ts_net_vnet_az_platform "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "network attachment"
+            }
+        }
+        ts_net_vnet_az_platform -> ts_azure_private_dns "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "resolver"
+            }
+        }
+        ts_net_vnet_az_platform -> ts_net_sub_az_platform_shared "tech service connects to" {
+            properties {
+                "aac.relation" "tech_service_connects_to"
+                "aac.connection" "subnet"
             }
         }
         ts_net_dx -> ts_onprem_dc "tech service connects to" {
@@ -2245,25 +3052,45 @@ workspace "Architecture Model" "The application, data and technology landscape. 
             title "System Context"
             description "External actors and the systems they use, and nothing else. Internal systems are left out on purpose, so the diagram stays small."
             include act_applicant
+            include act_borrower
             include act_card_scheme
             include act_cardholder
+            include act_cobrand_partner
+            include act_collection_agency
             include act_collections_agent
+            include act_dealer
+            include act_debt_buyer
+            include act_deposit_broker
+            include act_depositor
+            include act_funding_analyst
+            include act_iso
             include act_merchant
             include act_regulator
             include act_servicing_agent
+            include act_servicing_client
             include act_underwriter
             include sys_auth_switch
+            include sys_broker_gw
             include sys_cardsvc_web
+            include sys_client_portal
+            include sys_collect_api
             include sys_collect_web
             include sys_contact
             include sys_credit_data
             include sys_crm
+            include sys_dealer_portal
+            include sys_deposit
             include sys_dialer
             include sys_disputes_saas
+            include sys_doc
             include sys_ivr
             include sys_lending_web
+            include sys_loan_svc
+            include sys_los
+            include sys_merchant_web
             include sys_mobile
             include sys_orig_decision
+            include sys_payment_gw
             include sys_reg_reporting
             include sys_statements
             autoLayout lr
@@ -2389,6 +3216,7 @@ workspace "Architecture Model" "The application, data and technology landscape. 
             include sys_lending_api
             include sys_lending_bucket
             include sys_lending_db
+            include sys_lending_hub
             include sys_lending_web
             include sys_lending_worker
             include ts_net_nat_lend_a
@@ -2407,6 +3235,8 @@ workspace "Architecture Model" "The application, data and technology landscape. 
             description "The network layer: VPCs, subnets, gateways and the connections back to the data center, grouped by cloud account and region. The transit hub is shown between the workload accounts."
             include ts_aws_privatelink
             include ts_aws_tgw
+            include ts_azure_private_dns
+            include ts_azure_vwan
             include ts_gcp_cloud_dns
             include ts_gcp_interconnect
             include ts_gcp_ncc
@@ -2423,15 +3253,32 @@ workspace "Architecture Model" "The application, data and technology landscape. 
             include ts_gcpnet_sub_lend_data
             include ts_net_dx
             include ts_net_igw_lending
+            include ts_net_nat_az_cards_nat
+            include ts_net_nat_az_payments_nat
+            include ts_net_nat_az_risk_nat
             include ts_net_nat_lend_a
             include ts_net_nat_lend_b
             include ts_net_route53
+            include ts_net_sub_az_cards_app
+            include ts_net_sub_az_cards_data
+            include ts_net_sub_az_data_data
+            include ts_net_sub_az_payments_app
+            include ts_net_sub_az_payments_data
+            include ts_net_sub_az_platform_shared
+            include ts_net_sub_az_risk_app
+            include ts_net_sub_az_risk_pub
+            include ts_net_sub_az_risk_shared
             include ts_net_sub_lend_app_a
             include ts_net_sub_lend_app_b
             include ts_net_sub_lend_data_a
             include ts_net_sub_lend_data_b
             include ts_net_sub_lend_pub_a
             include ts_net_sub_lend_pub_b
+            include ts_net_vnet_az_cards
+            include ts_net_vnet_az_data
+            include ts_net_vnet_az_payments
+            include ts_net_vnet_az_platform
+            include ts_net_vnet_az_risk
             include ts_net_vpc_lending
             include ts_net_vpc_lending_dr
             include ts_net_vpc_riskops
@@ -2596,6 +3443,8 @@ workspace "Architecture Model" "The application, data and technology landscape. 
             include sys_dialer
             include sys_doc
             include sys_identity_svc
+            include sys_legal_matter
+            include sys_loan_svc
             autoLayout tb
         }
 
@@ -2680,6 +3529,7 @@ workspace "Architecture Model" "The application, data and technology landscape. 
             title "Merchant Portal — Onboarding"
             description "What onboarding this product creates, nested by account, region and network tier. Everything inside the boundaries comes from the product's shape; the systems outside are the ones it must connect to, which are usually the long- lead items. For a bought product, the vendor's environment sits outside our accounts."
             include oi_merchant_api
+            include sys_merch_acq
             include sys_merchant_api
             include sys_merchant_events
             include sys_merchant_store
@@ -2731,6 +3581,8 @@ workspace "Architecture Model" "The application, data and technology landscape. 
             description "What onboarding this product creates, nested by account, region and network tier. Everything inside the boundaries comes from the product's shape; the systems outside are the ones it must connect to, which are usually the long- lead items. For a bought product, the vendor's environment sits outside our accounts."
             include sys_auth_switch
             include sys_data_ingest
+            include sys_deposit
+            include sys_merch_risk
             include sys_screening_egress
             include sys_screening_federation
             include sys_screening_gateway

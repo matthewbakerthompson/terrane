@@ -8,21 +8,21 @@ Every framework the model maps to, against every capability domain, in one grid.
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | **Direct** | | | | | | | | | | | | |
 | Enterprise Strategy & Planning | 2 |  | 1 | 3 |  |  |  | Informed by |  |  | Informed by | 6 |
-| Partner & Client Relationship Management | 2 |  |  | 3 |  |  |  |  |  |  |  | 5 |
+| Partner & Client Relationship Management | 3 |  |  | 4 |  |  |  |  |  |  |  | 7 |
 | Product Management & Pricing | Aligned to · 5 |  |  |  |  |  |  |  |  |  |  | 5 |
-| Risk Governance & Compliance Management | 8 |  |  |  |  |  | Aligned to |  |  |  |  | 8 |
+| Risk Governance & Compliance Management | 11 |  |  |  |  |  | Aligned to |  |  |  |  | 11 |
 | **Core** | | | | | | | | | | | | |
-| Billing, Statements & Rewards | Aligned to · 8 |  |  |  |  |  |  |  |  |  |  | 8 |
-| Collections & Recovery | Aligned to · 10 |  |  |  |  |  |  |  |  |  |  | 10 |
-| Consumer & Recreation Lending | Aligned to · 6 |  |  |  |  |  |  |  |  |  |  | 6 |
-| Credit Decisioning & Portfolio Management | Aligned to · 7 |  |  |  |  |  |  |  |  |  |  | 7 |
+| Billing, Statements & Rewards | Aligned to · 9 |  |  |  |  |  |  |  |  |  |  | 9 |
+| Collections & Recovery | Aligned to · 15 |  |  |  |  |  |  |  |  |  |  | 15 |
+| Consumer & Recreation Lending | Aligned to · 13 |  |  |  |  |  |  |  |  |  |  | 13 |
+| Credit Decisioning & Portfolio Management | Aligned to · 9 |  |  |  |  |  |  |  |  |  |  | 9 |
 | Customer Acquisition & Marketing | Informed by · 7 |  |  |  |  |  |  |  |  |  |  | 7 |
-| Customer Servicing & Care | Aligned to · 10 |  |  |  |  |  |  |  |  |  |  | 10 |
-| Deposit Products & Funding | Aligned to · 4 | 1 |  |  |  |  |  |  |  |  |  | 5 |
-| Fraud, Disputes & Chargeback Management | Aligned to · 9 |  |  |  |  | Governed by |  |  |  |  |  | 9 |
-| Merchant Acquiring & Sponsorship | Aligned to · 6 |  |  |  |  | Governed by |  |  |  |  |  | 6 |
+| Customer Servicing & Care | Aligned to · 14 |  |  |  |  |  |  |  |  |  |  | 14 |
+| Deposit Products & Funding | Aligned to · 8 | 1 |  |  |  |  |  |  |  |  |  | 9 |
+| Fraud, Disputes & Chargeback Management | Aligned to · 10 |  |  |  |  | Governed by |  |  |  |  |  | 10 |
+| Merchant Acquiring & Sponsorship | Aligned to · 11 |  |  |  |  | Governed by |  |  |  |  |  | 11 |
 | Originations & Account Opening | Aligned to · 8 |  |  |  |  |  |  |  |  |  |  | 8 |
-| Payments & Transaction Processing | Aligned to · 12 | 1 |  |  |  | Governed by |  |  |  |  |  | 13 |
+| Payments & Transaction Processing | Aligned to · 14 | 1 |  |  |  | Governed by |  |  |  |  |  | 15 |
 | Third-Party Servicing Delivery | Informed by · 4 |  | 1 |  | 1 |  |  |  |  |  |  | 6 |
 | **Enable** | | | | | | | | | | | | |
 | Data & Analytics Management | 2 |  |  |  | Aligned to · 6 |  |  |  |  |  |  | 8 |
@@ -31,6 +31,6 @@ Every framework the model maps to, against every capability domain, in one grid.
 | People, Legal & Corporate Services |  |  |  | Aligned to · 5 |  |  |  |  |  |  |  | 5 |
 | Technology & Platform Operations |  | 3 | Aligned to · 19 |  |  |  | Informed by |  |  |  |  | 22 |
 | Third-Party & Vendor Management | 1 | 6 |  | Informed by |  |  |  |  |  |  |  | 7 |
-| Placed in each | 116 | 22 | 21 | 12 | 7 |  |  |  |  |  |  | |
+| Placed in each | 151 | 22 | 21 | 13 | 7 |  |  |  |  |  |  | |
 
 A word is how firmly the domain follows the framework (capability aligns to framework). A number is how many capabilities under the domain are placed in it (capability references framework).

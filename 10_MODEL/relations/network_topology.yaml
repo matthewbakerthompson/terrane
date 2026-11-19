@@ -84,9 +84,13 @@ tech_service_connects_to:
     to_tech_service_id: TS-NET-VPC-LENDING-DR
     connection: cross-region replication
 
-# Which subnet each system actually sits in. This is what lets a multi-AZ
-# diagram be drawn without cloning every system once per zone: the zones live
-# on the subnets, and systems attach to both.
+# Which subnet each system sits in is not written here: a system in a cloud
+# account and a network zone lands in that account's subnets for the zone
+# (terrane/model.py, `place_by_zone`), so a network made once is used by every
+# product in its account. That is what lets a multi-AZ diagram be drawn
+# without cloning every system once per zone: the zones live on the subnets,
+# and systems attach to both. The rows below are the exceptions, each a
+# placement the account and zone would not make.
 
   # --- Google Cloud: the same two paths to the data center, a hub every
   # spoke attaches to, and one global VPC whose tiers are regional subnetworks
@@ -144,26 +148,8 @@ tech_service_connects_to:
     connection: subnetwork (DR)
 
 system_uses_tech_service:
-  - system_id: SYS-LENDING-ALB
-    tech_service_id: TS-NET-SUB-LEND-PUB-A
-  - system_id: SYS-LENDING-ALB
-    tech_service_id: TS-NET-SUB-LEND-PUB-B
-  - system_id: SYS-LENDING-WEB
-    tech_service_id: TS-NET-SUB-LEND-APP-A
-  - system_id: SYS-LENDING-WEB
-    tech_service_id: TS-NET-SUB-LEND-APP-B
-  - system_id: SYS-LENDING-API
-    tech_service_id: TS-NET-SUB-LEND-APP-A
-  - system_id: SYS-LENDING-API
-    tech_service_id: TS-NET-SUB-LEND-APP-B
-  - system_id: SYS-LENDING-WORKER
-    tech_service_id: TS-NET-SUB-LEND-APP-A
-  - system_id: SYS-LENDING-WORKER
-    tech_service_id: TS-NET-SUB-LEND-APP-B
-  - system_id: SYS-LENDING-DB
-    tech_service_id: TS-NET-SUB-LEND-DATA-A
-  - system_id: SYS-LENDING-DB
-    tech_service_id: TS-NET-SUB-LEND-DATA-B
+  # An object store sits in no subnet; the bucket is drawn in the one data
+  # subnet its gateway endpoint is in.
   - system_id: SYS-LENDING-BUCKET
     tech_service_id: TS-NET-SUB-LEND-DATA-A
   - system_id: SYS-SCREENING-GATEWAY

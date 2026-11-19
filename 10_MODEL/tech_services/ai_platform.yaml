@@ -32,6 +32,8 @@
   service_category: AI
   service_name: Foundry
   component_type: foundation-model-service
+  # Its agent service is where agents run on Azure.
+  answers_for: [agent-platform]
   tags: [landing-zone]
 
 - tech_service_id: TS-GCP-GEMINI-PLATFORM
@@ -47,4 +49,206 @@
   service_category: AI
   service_name: Gemini Enterprise Agent Platform
   component_type: foundation-model-service
+  # The agent platform is the model platform's own.
+  answers_for: [agent-platform]
+  tags: [landing-zone]
+
+# What an assistant asks of each landing zone besides the model: the AI
+# gateway every model call goes through, and the vector database an index is
+# kept on. Azure's AI gateway is its API Management's, said there.
+
+- tech_service_id: TS-AWS-BEDROCK-GUARDRAILS
+  name: Amazon Bedrock Guardrails
+  description: The content filters, personal data redaction and denied topics every model call in the account goes through.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: AWS
+  cloud_provider: AWS
+  service_category: AI
+  service_name: Bedrock Guardrails
+  component_type: ai-gateway
+  network_zone: Shared-Services
+  tags: [landing-zone]
+
+- tech_service_id: TS-GCP-MODEL-ARMOR
+  name: Model Armor
+  description: The prompt and response screening every model call in the project goes through.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: AI
+  service_name: Model Armor
+  component_type: ai-gateway
+  network_zone: Shared-Services
+  tags: [landing-zone]
+
+- tech_service_id: TS-AWS-OPENSEARCH
+  name: Amazon OpenSearch Service
+  description: Managed search with vector indexes, where a product's retrieval index is kept.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: AWS
+  cloud_provider: AWS
+  service_category: AI
+  service_name: OpenSearch Service
+  component_type: vector-database
+  network_zone: Private-Data
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-AI-SEARCH
+  name: Azure AI Search
+  description: Managed search with vector indexes, where a product's retrieval index is kept, and the organization's search across its documents.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: AI
+  service_name: AI Search
+  component_type: vector-database
+  answers_for: [enterprise-search]
+  network_zone: Private-Data
+  tags: [landing-zone]
+
+- tech_service_id: TS-GCP-VECTOR-SEARCH
+  name: Vector Search
+  description: Managed vector indexes, where a product's retrieval index is kept.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: AI
+  service_name: Vector Search
+  component_type: vector-database
+  network_zone: Private-Data
+  tags: [landing-zone]
+
+# What the other parts organizations build again and again ask of each
+# landing zone: an agent platform, customer identity and document processing.
+
+- tech_service_id: TS-AWS-AGENTCORE
+  name: Amazon Bedrock AgentCore
+  description: Where agents run, with their tools, memory and identity, inside the account.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: AWS
+  cloud_provider: AWS
+  service_category: AI
+  service_name: Bedrock AgentCore
+  component_type: agent-platform
+  network_zone: Private-App
+  tags: [landing-zone]
+
+- tech_service_id: TS-AWS-COGNITO
+  name: Amazon Cognito
+  description: Customer sign-up and sign-in for every product's customers.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: AWS
+  cloud_provider: AWS
+  service_category: Security
+  service_name: Cognito
+  component_type: customer-identity
+  network_zone: Shared-Services
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-EXTERNAL-ID
+  name: Microsoft Entra External ID
+  description: Customer sign-up and sign-in for every product's customers.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Security
+  service_name: Entra External ID
+  component_type: customer-identity
+  network_zone: Shared-Services
+  tags: [landing-zone]
+
+- tech_service_id: TS-GCP-IDENTITY-PLATFORM
+  name: Identity Platform
+  description: Customer sign-up and sign-in for every product's customers.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: Security
+  service_name: Identity Platform
+  component_type: customer-identity
+  network_zone: Shared-Services
+  tags: [landing-zone]
+
+- tech_service_id: TS-AWS-TEXTRACT
+  name: Amazon Textract
+  description: Reads documents into text, forms and tables.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: AWS
+  cloud_provider: AWS
+  service_category: AI
+  service_name: Textract
+  component_type: document-ai
+  network_zone: Private-App
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-DOC-INTELLIGENCE
+  name: Azure AI Document Intelligence
+  description: Reads documents into text, forms and tables.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: AI
+  service_name: Document Intelligence
+  component_type: document-ai
+  network_zone: Private-App
+  tags: [landing-zone]
+
+- tech_service_id: TS-GCP-DOCUMENT-AI
+  name: Document AI
+  description: Reads documents into text, forms and tables.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-TECH
+  provider: Google Cloud
+  cloud_provider: GCP
+  service_category: AI
+  service_name: Document AI
+  component_type: document-ai
+  network_zone: Private-App
   tags: [landing-zone]

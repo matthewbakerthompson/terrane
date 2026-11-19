@@ -17,6 +17,7 @@
   category: AI
   applies_to: tech_services
   shape: rectangle
+  subnet: false
   description: >
     A managed gateway to hosted foundation models, with the model catalog, tenancy, billing and data handling of the cloud it runs in. What an application calls instead of a model vendor directly.
   providers:
@@ -37,6 +38,7 @@
   category: AI
   applies_to: tech_services
   shape: rectangle
+  subnet: false
   description: >
     A model family served through a foundation model service. Recorded as a service so a product can say which model it depends on, and so a model retirement has a list of what it breaks.
   providers:
@@ -101,6 +103,7 @@
   category: AI
   applies_to: tech_services
   shape: hexagon
+  subnet: false
   description: >
     The control point between applications and models: routing, quotas, prompt and output filtering, and the log of what was asked. Where an AI usage policy is enforced rather than hoped for.
   providers:
@@ -142,6 +145,7 @@
   category: AI
   applies_to: tech_services
   shape: rectangle
+  subnet: false
   description: >
     Search across the organization's documents and systems with semantic retrieval, usually the ground an assistant answers from.
   providers:
@@ -161,8 +165,10 @@
     - generative AI assistant
     - enterprise assistant
   category: AI
+  group: Work and collaboration
   applies_to: systems
   shape: round-tag
+  subnet: false
   description: >
     An assistant employees use over the organization's own documents and systems. A system with users and a data boundary, not a platform service.
   providers:

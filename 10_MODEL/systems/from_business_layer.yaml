@@ -52,6 +52,19 @@
   data_classification_supported: Internal
   source: Business architecture repository
 
+- system_id: SYS-BROKER-GW
+  name: Brokered deposit settlement gateway
+  description: Exchanges brokered CD issuance, allocation and position files with the broker-dealers and the depository.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-BROKERED
+  criticality: Medium
+  service_tier: Tier 2
+  data_classification_supported: Confidential
+  source: Business architecture repository
+
 - system_id: SYS-BUREAU-GW
   name: Credit bureau gateway
   description: Credit bureau furnishing and consumer dispute exchange.
@@ -128,6 +141,33 @@
   owner_org_id: ORG-CREDIT
   criticality: Medium
   service_tier: Tier 2
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-DEALER-PORTAL
+  name: Dealer portal
+  description: Where dealers submit applications, see decisions and stipulations, upload contracts, and track funding and reserve.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-DEALER-SVC
+  criticality: Medium
+  hosting: SaaS
+  service_tier: Tier 1
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-DEPOSIT
+  name: Deposit platform
+  description: "System of record for CDs and savings: opening, interest accrual, maturities, early withdrawal and tax reporting."
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-DEPOSITS
+  criticality: Medium
+  service_tier: Tier 1
   data_classification_supported: Restricted
   source: Business architecture repository
 
@@ -262,6 +302,46 @@
   data_classification_supported: Restricted
   source: Business architecture repository
 
+- system_id: SYS-LEGAL-MATTER
+  name: Legal matter management
+  description: Tracks litigation, outside counsel, filings, judgments and legal placements.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-LEGAL
+  criticality: Medium
+  hosting: SaaS
+  service_tier: Tier 3
+  data_classification_supported: Confidential
+  source: Business architecture repository
+
+- system_id: SYS-LOAN-SVC
+  name: Installment loan servicing platform
+  description: "System of record for installment loans: boarding, billing, payment posting, payoff quotes, deferrals and ancillary product refunds."
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-LOAN-OPS
+  criticality: Medium
+  service_tier: Tier 1
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-LOS
+  name: Indirect loan origination system
+  description: Takes dealer applications, runs the credit decision and counteroffers, and carries the contract package to funding.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-LENDING
+  criticality: Medium
+  service_tier: Tier 1
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
 - system_id: SYS-MARKETING
   name: Campaign management
   description: Campaign management and execution.
@@ -272,6 +352,33 @@
   owner_org_id: ORG-MARKETING
   criticality: Medium
   service_tier: Tier 3
+  data_classification_supported: Confidential
+  source: Business architecture repository
+
+- system_id: SYS-MERCH-ACQ
+  name: Merchant acquiring platform
+  description: Processor platform for merchant boarding, clearing, settlement, reserves, fees and statements.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-MERCHANT
+  criticality: Medium
+  hosting: External
+  service_tier: Tier 1
+  data_classification_supported: Restricted
+  source: Business architecture repository
+
+- system_id: SYS-MERCH-RISK
+  name: Merchant risk monitoring
+  description: Monitors merchant volume, chargeback ratios and exposure, and checks merchants against the networks' terminated-merchant file.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-MERCH-RISK
+  criticality: Medium
+  service_tier: Tier 2
   data_classification_supported: Confidential
   source: Business architecture repository
 
@@ -367,6 +474,20 @@
   data_classification_supported: Confidential
   source: Business architecture repository
 
+- system_id: SYS-REMARKET
+  name: Repossession and remarketing management
+  description: Assigns repossession agents, tracks condition reports and notices, and runs auction and retail remarketing.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-ASSET-RECOVERY
+  criticality: Medium
+  hosting: External
+  service_tier: Tier 3
+  data_classification_supported: Confidential
+  source: Business architecture repository
+
 - system_id: SYS-REWARDS
   name: Rewards ledger
   description: Rewards accrual ledger and redemption.
@@ -406,6 +527,20 @@
   hosting: SaaS
   service_tier: Tier 3
   data_classification_supported: Internal
+  source: Business architecture repository
+
+- system_id: SYS-TITLE
+  name: Title and lien management
+  description: Electronic lien and title tracking across the titling states, title custody, and release on payoff.
+  status: Proposed
+  togaf_layer: Application
+  architecture_domain: Application
+  abstraction_level: Logical
+  owner_org_id: ORG-TITLE
+  criticality: Medium
+  hosting: External
+  service_tier: Tier 2
+  data_classification_supported: Confidential
   source: Business architecture repository
 
 - system_id: SYS-TOKEN

@@ -78,10 +78,14 @@ flowchart LR
     end
   end
 
+  SYS_DEPOSIT["Deposit platform"]
+  SYS_MERCH_RISK["Merchant risk monitoring"]
   TS_ENTRA_ID[/"Microsoft Entra ID<br/>[Identity provider]"/]
   DA_SCREENING_OUTCOMES[("NICE Actimize Screening<br/>outcomes")]
   ACT_SCREENING_ANALYST(["Screening Analyst"])
 
+  SYS_MERCH_RISK -->|"HTTPS"| SYS_SCREENING_GATEWAY
+  SYS_DEPOSIT -->|"HTTPS"| SYS_SCREENING_GATEWAY
   SYS_AUTH_SWITCH -->|"HTTPS"| SYS_SCREENING_GATEWAY
   SYS_SCREENING_FEDERATION -->|"SAML"| SYS_SCREENING_VENDOR
   SYS_SCREENING_VENDOR -->|"HTTPS"| SYS_SIEM
@@ -107,7 +111,7 @@ flowchart LR
   classDef s_tech_services__tech_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
   class ACT_SCREENING_ANALYST s_actors__actors;
   class DA_SCREENING_OUTCOMES s_data_assets__data_assets;
-  class SYS_AUTH_SWITCH,SYS_DATA_INGEST,SYS_SCREENING_EGRESS,SYS_SCREENING_FEDERATION,SYS_SCREENING_GATEWAY,SYS_SCREENING_VENDOR,SYS_SIEM s_systems__systems;
+  class SYS_AUTH_SWITCH,SYS_DATA_INGEST,SYS_DEPOSIT,SYS_MERCH_RISK,SYS_SCREENING_EGRESS,SYS_SCREENING_FEDERATION,SYS_SCREENING_GATEWAY,SYS_SCREENING_VENDOR,SYS_SIEM s_systems__systems;
   class TS_AWS_APIGW,TS_AWS_CLOUDWATCH,TS_AWS_EKS,TS_AWS_PRIVATELINK,TS_AWS_SECRETS,TS_AWS_TGW,TS_ENTRA_ID,TS_NET_VPC_RISKOPS,TS_NET_VPC_SHARED s_tech_services__tech_services;
   classDef boundary1 fill:#eef5fb,stroke:#147eba,color:#0f5f8c;
   class grp_AWS__Private_App,grp_AWS__prod_riskops__Private_App boundary1;
@@ -171,4 +175,4 @@ Each flow is a recorded sequence of interfaces. The steps drawn on this diagram 
 3. NICE Actimize Screening Private Egress → NICE Actimize Screening (PrivateLink)
 4. Authorization Switch → Core Card Ledger (MQ) — not on this diagram
 
-18 entities, 18 relationships. Generated from the model; edit the model, not this file.
+20 entities, 20 relationships. Generated from the model; edit the model, not this file.

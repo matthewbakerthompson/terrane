@@ -12,45 +12,58 @@ The parts a shape is composed from: what each provides, what it needs from the s
 
 | Part | Category | Provides | Needs | Kinds | Used by |
 |---|---|---|---|---|---|
-| [Inference service](#ml-inference-service) | AI | 1 interfaces, 1 systems | `product_name`, `slug` | `foundation-model-service` | kit ml-service-baseline, type AI inference service, type Customer-facing digital product, type Internal platform service |
-| [Reporting service](#report-service) | Analytics | 1 interfaces, 1 systems | `product_name`, `slug` | — | kit reporting-baseline, type Internal tool, type Batch application, type Reporting application, type Web application, type Customer-facing digital product |
+| [Agent](#agent-service) | AI | 1 data assets, 3 interfaces, 2 systems | `product_name`, `slug`, `classification`, `owner_org` | `agent-platform`, `ai-gateway`, `foundation-model-service` | kit ai-agent-baseline, type AI agent |
+| [Document intake](#document-intake) | AI | 1 data assets, 2 interfaces, 1 systems | `product_name`, `slug`, `classification`, `owner_org` | `document-ai` | type Internal tool, type Web application, type Customer portal, type Customer-facing digital product |
+| [Inference service](#ml-inference-service) | AI | 1 interfaces, 1 systems | `product_name`, `slug` | `ai-gateway`, `foundation-model-service` | kit ml-service-baseline, kit ai-assistant-baseline, type AI inference service, type AI assistant, type Customer-facing digital product, type Internal platform service |
+| [Retrieval index](#retrieval-index) | AI | 1 data assets, 3 interfaces, 2 systems | `product_name`, `slug`, `classification`, `owner_org` | `foundation-model-service`, `vector-database` | kit ai-assistant-baseline, type AI assistant |
+| [Reporting service](#report-service) | Analytics | 1 interfaces, 1 systems | `product_name`, `slug` | — | kit reporting-baseline, type Internal tool, type Batch application, type Reporting application, type Web application, type Customer portal, type Partner API, type Customer-facing digital product |
+| [AI agent](#ai-agent-baseline) *(kit)* | Application | 1 data assets, 3 interfaces, 1 offered interfaces, 3 systems | — | — | type AI agent |
+| [AI assistant](#ai-assistant-baseline) *(kit)* | Application | 2 data assets, 6 interfaces, 1 offered interfaces, 6 systems | — | — | type AI assistant |
 | [AI inference service](#ml-service-baseline) *(kit)* | Application | 1 interfaces, 1 offered interfaces, 2 systems | — | — | type AI inference service |
-| [Async worker](#async-worker) | Application | 1 interfaces, 1 systems | `product_name`, `slug` | `event-stream` | kit event-service-baseline, AWS product onboarding, type Mobile application, type Event-driven service, type AI inference service, type Web application, type Customer-facing digital product, type Internal platform service |
+| [Async worker](#async-worker) | Application | 1 interfaces, 1 systems | `product_name`, `slug` | `event-stream` | kit event-service-baseline, AWS product onboarding, type Mobile application, type Event-driven service, type AI inference service, type Web application, type Customer portal, type Partner API, type Customer-facing digital product, type Internal platform service |
 | [Batch application](#batch-app-baseline) *(kit)* | Application | 1 data assets, 2 interfaces, 1 offered interfaces, 3 systems | — | — | type Batch application |
+| [Customer portal](#customer-portal-baseline) *(kit)* | Application | 1 data assets, 5 interfaces, 1 offered interfaces, 6 systems | — | — | type Customer portal |
 | [Event-driven service](#event-service-baseline) *(kit)* | Application | 4 interfaces, 1 offered interfaces, 4 systems | — | — | type Event-driven service |
 | [Integration adapter](#adapter-baseline) *(kit)* | Application | 2 interfaces, 1 offered interfaces, 2 systems | — | — | type Integration adapter |
 | [Internal tool](#internal-tool-baseline) *(kit)* | Application | 1 data assets, 2 interfaces, 1 offered interfaces, 3 systems | — | — | type Internal tool |
 | [Mobile application](#mobile-app-baseline) *(kit)* | Application | 1 data assets, 2 interfaces, 1 offered interfaces, 3 systems | — | — | type Mobile application |
-| [Product service](#api-service) | Application | 1 offered interfaces, 1 systems | `product_name`, `slug` | — | kit web-app-baseline, kit mobile-app-baseline, kit internal-tool-baseline, kit event-service-baseline, kit batch-app-baseline, kit adapter-baseline, kit ml-service-baseline, kit reporting-baseline, AWS product onboarding, Azure digital product, Google Cloud digital product, Merchant Portal (assembled), type Internal tool, type Mobile application, type Event-driven service, type Batch application, type Integration adapter, type AI inference service, type Reporting application, type Web application, type Customer-facing digital product, type Internal platform service |
+| [Partner API](#partner-api-baseline) *(kit)* | Application | 1 data assets, 2 interfaces, 2 offered interfaces, 2 systems | — | — | type Partner API |
+| [Product service](#api-service) | Application | 1 offered interfaces, 1 systems | `product_name`, `slug` | — | kit web-app-baseline, kit mobile-app-baseline, kit internal-tool-baseline, kit event-service-baseline, kit batch-app-baseline, kit adapter-baseline, kit ml-service-baseline, kit ai-assistant-baseline, kit ai-agent-baseline, kit customer-portal-baseline, kit partner-api-baseline, kit reporting-baseline, AWS product onboarding, Azure digital product, Google Cloud digital product, Merchant Portal (assembled), type Internal tool, type Mobile application, type Event-driven service, type Batch application, type Integration adapter, type AI inference service, type AI assistant, type AI agent, type Reporting application, type Web application, type Customer portal, type Partner API, type Customer-facing digital product, type Internal platform service |
 | [Reporting application](#reporting-baseline) *(kit)* | Application | 1 data assets, 2 interfaces, 1 offered interfaces, 3 systems | — | — | type Reporting application |
-| [Scheduled jobs](#scheduled-job) | Application | 1 interfaces, 1 systems | `product_name`, `slug` | — | kit batch-app-baseline, type Internal tool, type Event-driven service, type Batch application, type Integration adapter, type Reporting application, type Web application, type Customer-facing digital product, type Internal platform service |
+| [Scheduled jobs](#scheduled-job) | Application | 1 interfaces, 1 systems | `product_name`, `slug` | — | kit batch-app-baseline, type Internal tool, type Event-driven service, type Batch application, type Integration adapter, type AI assistant, type AI agent, type Reporting application, type Web application, type Customer portal, type Customer-facing digital product, type Internal platform service |
 | [Web application](#web-app-baseline) *(kit)* | Application | 1 data assets, 4 interfaces, 1 offered interfaces, 5 systems | — | — | type Web application |
-| [A role the product creates](#operator-role) | Business | 1 actors | `owner_org` | — | Merchant Portal (assembled), type Internal tool, type Web application, type Customer-facing digital product, type Internal platform service, type Bought SaaS capability |
-| [Who operates it](#operator-access) | Business | — | `slug` | — | type Internal tool, type Web application, type Customer-facing digital product, type Bought SaaS capability |
-| [Admin console](#admin-console) | Channel | 1 interfaces, 1 systems | `product_name`, `slug` | `identity-provider` | kit internal-tool-baseline, type Internal tool, type Reporting application, type Web application, type Customer-facing digital product, type Internal platform service |
-| [Mobile channel](#mobile-channel) | Channel | 1 interfaces, 1 systems | `product_name`, `slug` | `api-gateway` | kit mobile-app-baseline, type Mobile application, type Web application, type Customer-facing digital product |
+| [A role the product creates](#operator-role) | Business | 1 actors | `owner_org` | — | Merchant Portal (assembled), type Internal tool, type AI agent, type Web application, type Customer-facing digital product, type Internal platform service, type Bought SaaS capability |
+| [Who operates it](#operator-access) | Business | — | `slug` | — | type Internal tool, type AI assistant, type AI agent, type Web application, type Customer-facing digital product, type Bought SaaS capability |
+| [Admin console](#admin-console) | Channel | 1 interfaces, 1 systems | `product_name`, `slug` | `identity-provider` | kit internal-tool-baseline, type Internal tool, type Reporting application, type Web application, type Customer portal, type Partner API, type Customer-facing digital product, type Internal platform service |
+| [Assistant chat](#assistant-chat) | Channel | 1 interfaces, 1 systems | `product_name`, `slug` | `identity-provider` | kit ai-assistant-baseline, type AI assistant |
+| [Mobile channel](#mobile-channel) | Channel | 1 interfaces, 1 systems | `product_name`, `slug` | `api-gateway` | kit mobile-app-baseline, type Mobile application, type Web application, type Customer portal, type Customer-facing digital product |
 | [Vendor UI inside our channel](#embedded-ui) | Channel | 1 interfaces | `product_name`, `slug` | — | type Bought SaaS capability |
-| [Web channel](#web-channel) | Channel | 1 interfaces, 1 systems | `product_name`, `slug` | — | kit web-app-baseline, AWS product onboarding, Azure digital product, Google Cloud digital product, Merchant Portal (assembled), type Mobile application, type Web application, type Customer-facing digital product |
+| [Web channel](#web-channel) | Channel | 1 interfaces, 1 systems | `product_name`, `slug` | — | kit web-app-baseline, kit customer-portal-baseline, AWS product onboarding, Azure digital product, Google Cloud digital product, Merchant Portal (assembled), type Mobile application, type Web application, type Customer portal, type Customer-facing digital product |
+| [Analytics feed](#analytics-feed) | Data | 1 interfaces | `product_name`, `slug`, `classification` | — | type Mobile application, type Web application, type Customer portal, type Partner API, type Customer-facing digital product, type Internal platform service |
+| [Conversation history](#conversation-history) | Data | 1 data assets, 1 interfaces, 1 systems | `product_name`, `slug`, `classification`, `owner_org` | — | kit ai-assistant-baseline, type AI assistant |
 | [Data hub](#data-hub) | Data | 1 data assets, 1 interfaces, 1 systems | `classification`, `owner_org`, `product_name`, `slug` | — | type Batch data product, type Shared hub |
-| [Object store](#object-store) | Data | 1 interfaces, 1 systems | `product_name`, `slug` | — | AWS product onboarding, type Internal tool, type Mobile application, type Batch application, type AI inference service, type Web application, type Customer-facing digital product |
-| [Relational datastore](#relational-datastore) | Data | 1 data assets, 1 interfaces, 1 systems | `classification`, `owner_org`, `product_name`, `slug` | — | kit web-app-baseline, kit mobile-app-baseline, kit internal-tool-baseline, kit batch-app-baseline, kit reporting-baseline, AWS product onboarding, Azure digital product, Google Cloud digital product, Merchant Portal (assembled), type Internal tool, type Mobile application, type Event-driven service, type Batch application, type Integration adapter, type AI inference service, type Reporting application, type Web application, type Customer-facing digital product, type Internal platform service |
+| [Object store](#object-store) | Data | 1 interfaces, 1 systems | `product_name`, `slug` | — | AWS product onboarding, type Internal tool, type Mobile application, type Batch application, type AI inference service, type AI assistant, type Web application, type Customer portal, type Partner API, type Customer-facing digital product |
+| [Relational datastore](#relational-datastore) | Data | 1 data assets, 1 interfaces, 1 systems | `classification`, `owner_org`, `product_name`, `slug` | — | kit web-app-baseline, kit mobile-app-baseline, kit internal-tool-baseline, kit batch-app-baseline, kit customer-portal-baseline, kit partner-api-baseline, kit reporting-baseline, AWS product onboarding, Azure digital product, Google Cloud digital product, Merchant Portal (assembled), type Internal tool, type Mobile application, type Event-driven service, type Batch application, type Integration adapter, type AI inference service, type Reporting application, type Web application, type Customer portal, type Partner API, type Customer-facing digital product, type Internal platform service |
 | [Return feed by file](#sftp-return-feed) | Data | 1 data assets, 1 interfaces | `classification`, `owner_org`, `product_name`, `slug`, `vendor` | — | SaaS onboarding (slot return), Vendor SaaS service on Google Cloud (slot return), Vendor SaaS service (slot return), type Bought SaaS capability |
-| [Search index](#search-index) | Data | 1 interfaces, 1 systems | `product_name`, `slug` | — | type Internal tool, type Mobile application, type Event-driven service, type AI inference service, type Reporting application, type Web application, type Customer-facing digital product |
-| [Public front door](#public-web-entry) | Edge | 2 interfaces, 2 systems | `product_name`, `slug` | — | kit web-app-baseline, AWS product onboarding, type Mobile application, type Web application, type Customer-facing digital product |
+| [Search index](#search-index) | Data | 1 interfaces, 1 systems | `product_name`, `slug` | — | type Internal tool, type Mobile application, type Event-driven service, type AI inference service, type Reporting application, type Web application, type Customer portal, type Customer-facing digital product |
+| [Public front door](#public-web-entry) | Edge | 2 interfaces, 2 systems | `product_name`, `slug` | — | kit web-app-baseline, kit customer-portal-baseline, AWS product onboarding, type Mobile application, type Web application, type Customer portal, type Customer-facing digital product |
+| [Customer sign-in](#customer-sign-in) | Identity | — | `product_name`, `slug` | `customer-identity` | kit customer-portal-baseline, type Mobile application, type Web application, type Customer portal, type Customer-facing digital product |
 | [Identity hub](#identity-hub) | Identity | 1 interfaces, 1 systems | `product_name`, `slug` | `identity-provider` | type Shared hub |
 | [Single sign-on into the vendor](#sso-federation) | Identity | 1 interfaces, 1 systems | `product_name`, `slug`, `vendor` | `identity-provider` | SaaS onboarding, type Bought SaaS capability |
 | [User provisioning into the vendor](#scim-provisioning) | Identity | 1 interfaces | `slug`, `vendor` | — | type Bought SaaS capability |
-| [Event consumer](#event-consumer) | Integration | 2 interfaces, 1 systems | `product_name`, `slug` | `message-queue` | kit event-service-baseline, type Event-driven service, type AI inference service, type Customer-facing digital product, type Internal platform service |
+| [Event consumer](#event-consumer) | Integration | 2 interfaces, 1 systems | `product_name`, `slug` | `message-queue` | kit event-service-baseline, type Event-driven service, type AI inference service, type AI agent, type Customer-facing digital product, type Internal platform service |
 | [Event hub](#event-hub) | Integration | 2 interfaces, 1 systems | `product_name`, `slug` | `message-queue` | type Shared hub |
-| [Event publisher](#event-publisher) | Integration | 1 interfaces, 1 systems | `product_name`, `slug` | `message-queue` | kit event-service-baseline, Azure digital product, Google Cloud digital product, Merchant Portal (assembled), type Internal tool, type Mobile application, type Event-driven service, type Batch application, type Integration adapter, type Web application, type Customer-facing digital product, type Internal platform service |
+| [Event publisher](#event-publisher) | Integration | 1 interfaces, 1 systems | `product_name`, `slug` | `message-queue` | kit event-service-baseline, Azure digital product, Google Cloud digital product, Merchant Portal (assembled), type Internal tool, type Mobile application, type Event-driven service, type Batch application, type Integration adapter, type AI assistant, type Web application, type Customer portal, type Partner API, type Customer-facing digital product, type Internal platform service |
 | [Integration hub](#integration-hub) | Integration | 1 interfaces, 1 systems | `product_name`, `slug` | — | type Shared hub |
-| [Notification service](#notification-service) | Integration | 1 interfaces, 1 systems | `product_name`, `slug` | `message-queue` | type Internal tool, type Mobile application, type Event-driven service, type Batch application, type Web application, type Customer-facing digital product, type Internal platform service |
+| [Notification service](#notification-service) | Integration | 1 interfaces, 1 systems | `product_name`, `slug` | `message-queue` | kit customer-portal-baseline, type Internal tool, type Mobile application, type Event-driven service, type Batch application, type AI assistant, type AI agent, type Web application, type Customer portal, type Partner API, type Customer-facing digital product, type Internal platform service |
 | [Outbound API gateway](#api-outbound) | Integration | 1 interfaces, 1 systems | `product_name`, `slug`, `vendor` | `api-gateway`, `container-platform` | kit vendor-baseline, SaaS onboarding, Vendor SaaS service on Google Cloud, Vendor SaaS service, type Bought SaaS capability |
 | [Partner adapter](#partner-adapter) | Integration | 2 interfaces, 1 systems | `product_name`, `slug` | `secrets-manager` | kit adapter-baseline, type Integration adapter, type Customer-facing digital product, type Internal platform service |
+| [Partner API](#partner-api) | Integration | 1 interfaces, 1 offered interfaces | `product_name`, `slug` | `api-gateway` | kit partner-api-baseline, type Mobile application, type Web application, type Customer portal, type Partner API, type Customer-facing digital product, type Internal platform service |
 | [Webhooks from the vendor](#webhook-inbound) | Integration | 2 interfaces, 1 systems | `product_name`, `slug`, `vendor` | `api-gateway`, `container-platform` | SaaS onboarding (slot return), Vendor SaaS service on Google Cloud (slot return), Vendor SaaS service (slot return), type Bought SaaS capability |
 | [Network hub](#network-hub) | Network | 1 tech services | `product_name`, `slug` | — | type Shared hub |
 | [Private egress to the vendor](#private-egress) | Network | 2 interfaces, 1 systems | `product_name`, `slug`, `vendor` | `private-egress`, `transit-gateway` | SaaS onboarding (slot reach), Vendor SaaS service on Google Cloud (slot reach), Vendor SaaS service (slot reach), type Bought SaaS capability |
 | [Public path to the vendor](#public-call) | Network | 1 interfaces | `product_name`, `slug`, `vendor` | — | SaaS onboarding (slot reach), Vendor SaaS service on Google Cloud (slot reach), Vendor SaaS service (slot reach), type Bought SaaS capability |
+| [Workload network](#workload-network) | Network | 2 tech services | `slug`, `network_name`, `tech_service_id` | `dns`, `transit-gateway` | AWS workload network, Azure workload network, GCP workload network |
 | [Availability monitoring](#vendor-monitoring) | Operations | — | `slug` | `observability` | SaaS onboarding, type Bought SaaS capability |
 | [Audit trail into the SIEM](#audit-forwarding) | Security | 1 interfaces | `slug`, `vendor` | — | SaaS onboarding, type Bought SaaS capability |
 | [Our keys in the vendor](#byok-encryption) | Security | — | `slug` | `kms` | type Bought SaaS capability |
@@ -58,12 +71,48 @@ The parts a shape is composed from: what each provides, what it needs from the s
 | [Vendor baseline](#vendor-baseline) *(kit)* | Vendor | 1 interfaces, 2 systems | — | — | SaaS onboarding, Vendor SaaS service on Google Cloud, Vendor SaaS service, type Bought SaaS capability |
 | [Vendor tenancy](#vendor-tenancy) | Vendor | 1 systems | `product_name`, `slug` | — | kit vendor-baseline, SaaS onboarding, Vendor SaaS service on Google Cloud, Vendor SaaS service, type Bought SaaS capability |
 
+<a id="agent-service"></a>
+## Agent
+
+`agent-service` · AI · optional
+
+An agent that acts, not only answers: it plans with the landing zone's foundation model, through its AI gateway, on the landing zone's agent platform, and acts through the APIs of the systems it is given as tools, with its own credentials and no more than those. Every action it takes is written to its action log before it is taken, so what it did can be shown and, where a person must approve it, held until they do.
+
+![Agent, with what it requires](svg/part--agent-service.svg)
+
+*A sample product assembled from this part and the parts it requires, drawn by the product architecture view; the names are placeholders. With `api-service`.*
+
+**Provides.** 1 data assets, 3 interfaces, 2 systems.
+**Needs from the shape.** `product_name`, `slug`, `classification`, `owner_org`.
+**Kinds.** `platform` is of kind `agent-platform`; `models` is of kind `foundation-model-service`; `gateway` is of kind `ai-gateway`.
+**Parameters.** `runs_on` (default `['stateless-service.observability']`); `tools` (default `[]`); `data_org` (the estate's answer).
+**Requires.** `api-service`.
+**Used by.** kit ai-agent-baseline, type AI agent.
+
+<a id="document-intake"></a>
+## Document intake
+
+`document-intake` · AI · optional
+
+Documents people send in, read: each file lands in the product's object store, a worker has the landing zone's document processing service read it into fields, and the fields go to the product's API for a person to check where the reading is unsure. Claims, applications, invoices and identity documents all come in this way.
+
+![Document intake, with what it requires](svg/part--document-intake.svg)
+
+*A sample product assembled from this part and the parts it requires, drawn by the product architecture view; the names are placeholders. With `api-service`, `object-store`.*
+
+**Provides.** 1 data assets, 2 interfaces, 1 systems.
+**Needs from the shape.** `product_name`, `slug`, `classification`, `owner_org`.
+**Kinds.** `reader` is of kind `document-ai`.
+**Parameters.** `runs_on` (default `['stateless-service.container-platform', 'stateless-service.observability']`); `data_org` (the estate's answer).
+**Requires.** `api-service`, `object-store`.
+**Used by.** type Internal tool, type Web application, type Customer portal, type Customer-facing digital product.
+
 <a id="ml-inference-service"></a>
 ## Inference service
 
 `ml-inference-service` · AI · optional
 
-The service that calls a model on the product's behalf: prompt assembly, retrieval, guardrails and the log of what was asked, in one place rather than in every caller. Runs against the landing zone's foundation model service.
+The service that calls a model on the product's behalf: prompt assembly, retrieval, guardrails and the log of what was asked, in one place rather than in every caller. Runs against the landing zone's foundation model service, reached through the landing zone's AI gateway, where the content filters, the personal data redaction and the spending limits are: a model is never called around it.
 
 ![Inference service, with what it requires](svg/part--ml-inference-service.svg)
 
@@ -71,10 +120,28 @@ The service that calls a model on the product's behalf: prompt assembly, retriev
 
 **Provides.** 1 interfaces, 1 systems.
 **Needs from the shape.** `product_name`, `slug`.
-**Kinds.** `models` is of kind `foundation-model-service`.
+**Kinds.** `models` is of kind `foundation-model-service`; `gateway` is of kind `ai-gateway`.
 **Parameters.** `runs_on` (default `['stateless-service.container-platform', 'stateless-service.observability']`).
 **Requires.** `api-service`.
-**Used by.** kit ml-service-baseline, type AI inference service, type Customer-facing digital product, type Internal platform service.
+**Used by.** kit ml-service-baseline, kit ai-assistant-baseline, type AI inference service, type AI assistant, type Customer-facing digital product, type Internal platform service.
+
+<a id="retrieval-index"></a>
+## Retrieval index
+
+`retrieval-index` · AI · optional
+
+What an assistant answers from: the organization's documents read by an ingestion worker, split into passages, embedded with the landing zone's foundation model service and written to an index on the landing zone's vector database, which the inference service searches before it asks the model. The sources are named on the product; the index holds copies of what they hold, at their classification.
+
+![Retrieval index, with what it requires](svg/part--retrieval-index.svg)
+
+*A sample product assembled from this part and the parts it requires, drawn by the product architecture view; the names are placeholders. With `ml-inference-service`.*
+
+**Provides.** 1 data assets, 3 interfaces, 2 systems.
+**Needs from the shape.** `product_name`, `slug`, `classification`, `owner_org`.
+**Kinds.** `vectors` is of kind `vector-database`; `models` is of kind `foundation-model-service`.
+**Parameters.** `runs_on` (default `['stateless-service.container-platform', 'stateless-service.observability']`); `sources` (default `[]`); `contains_pii` (default `Yes`); `data_org` (the estate's answer).
+**Requires.** `ml-inference-service`.
+**Used by.** kit ai-assistant-baseline, type AI assistant.
 
 <a id="report-service"></a>
 ## Reporting service
@@ -91,7 +158,37 @@ The product's own reports and extracts, read from its operational data. Separate
 **Needs from the shape.** `product_name`, `slug`.
 **Parameters.** `runs_on` (default `['stateless-service.container-platform', 'stateless-service.observability']`).
 **Requires.** `api-service`, `relational-datastore`.
-**Used by.** kit reporting-baseline, type Internal tool, type Batch application, type Reporting application, type Web application, type Customer-facing digital product.
+**Used by.** kit reporting-baseline, type Internal tool, type Batch application, type Reporting application, type Web application, type Customer portal, type Partner API, type Customer-facing digital product.
+
+<a id="ai-agent-baseline"></a>
+## AI agent
+
+`ai-agent-baseline` · Application · optional · kit of `api-service`, `agent-service`
+
+The standard AI agent: the API work is asked of, and an agent on the landing zone's agent platform that plans with its model through its AI gateway and acts through the APIs of the systems it is given as tools, every action written to its action log first. The tools are named on the product.
+
+![AI agent assembled on AWS](svg/kit--ai-agent-baseline--aws.svg)
+
+*A sample product assembled from the kit on AWS, drawn by the product architecture view; the names are placeholders. Also on [Azure](svg/kit--ai-agent-baseline--azure.svg) and [GCP](svg/kit--ai-agent-baseline--gcp.svg).*
+
+**Provides.** 1 data assets, 3 interfaces, 1 offered interfaces, 3 systems.
+**Parameters.** `tools` (default `[]`).
+**Used by.** type AI agent.
+
+<a id="ai-assistant-baseline"></a>
+## AI assistant
+
+`ai-assistant-baseline` · Application · optional · kit of `api-service`, `assistant-chat`, `ml-inference-service`, `retrieval-index`, `conversation-history`
+
+The standard AI assistant, built: a chat behind workforce sign-on, the API behind it, the inference service that assembles each prompt and calls the landing zone's foundation model through its AI gateway, the retrieval index the organization's documents are loaded into, and the history of what was asked and answered. One component on the canvas, and never one box: an assistant bought whole is a vendor, on the vendor shapes.
+
+![AI assistant assembled on AWS](svg/kit--ai-assistant-baseline--aws.svg)
+
+*A sample product assembled from the kit on AWS, drawn by the product architecture view; the names are placeholders. Also on [Azure](svg/kit--ai-assistant-baseline--azure.svg) and [GCP](svg/kit--ai-assistant-baseline--gcp.svg).*
+
+**Provides.** 2 data assets, 6 interfaces, 1 offered interfaces, 6 systems.
+**Parameters.** `sources` (default `[]`).
+**Used by.** type AI assistant.
 
 <a id="ml-service-baseline"></a>
 ## AI inference service
@@ -124,7 +221,7 @@ Consumes the product's domain events and drives the long-running work a request 
 **Parameters.** `runs_on` (default `['stateless-service.container-platform', 'stateless-service.observability']`); `protocol` (default `Kafka`).
 **Requires.** `api-service`.
 **Applies.** `event-fanout`.
-**Used by.** kit event-service-baseline, AWS product onboarding, type Mobile application, type Event-driven service, type AI inference service, type Web application, type Customer-facing digital product, type Internal platform service.
+**Used by.** kit event-service-baseline, AWS product onboarding, type Mobile application, type Event-driven service, type AI inference service, type Web application, type Customer portal, type Partner API, type Customer-facing digital product, type Internal platform service.
 
 <a id="batch-app-baseline"></a>
 ## Batch application
@@ -139,6 +236,20 @@ The standard batch application: scheduled jobs with a window, the API they call,
 
 **Provides.** 1 data assets, 2 interfaces, 1 offered interfaces, 3 systems.
 **Used by.** type Batch application.
+
+<a id="customer-portal-baseline"></a>
+## Customer portal
+
+`customer-portal-baseline` · Application · optional · kit of `api-service`, `web-channel`, `public-web-entry`, `customer-sign-in`, `relational-datastore`, `notification-service`
+
+The standard customer portal: a web front end behind the public front door that customers sign in to with accounts of their own, the API behind it, the operational database, and the notifications it sends them. What a customer-facing web application becomes once it has customers who log in.
+
+![Customer portal assembled on AWS](svg/kit--customer-portal-baseline--aws.svg)
+
+*A sample product assembled from the kit on AWS, drawn by the product architecture view; the names are placeholders. Also on [Azure](svg/kit--customer-portal-baseline--azure.svg) and [GCP](svg/kit--customer-portal-baseline--gcp.svg).*
+
+**Provides.** 1 data assets, 5 interfaces, 1 offered interfaces, 6 systems.
+**Used by.** type Customer portal.
 
 <a id="event-service-baseline"></a>
 ## Event-driven service
@@ -198,6 +309,21 @@ The standard mobile application: the app in the stores, the API it calls through
 **Provides.** 1 data assets, 2 interfaces, 1 offered interfaces, 3 systems.
 **Used by.** type Mobile application.
 
+<a id="partner-api-baseline"></a>
+## Partner API
+
+`partner-api-baseline` · Application · optional · kit of `api-service`, `partner-api`, `relational-datastore`
+
+The standard API offered to partners: the service and its database, published through the landing zone's API gateway, each partner a client with its own credentials and quota. The partners are named on the product, and each gets a line of its own to the API.
+
+![Partner API assembled on AWS](svg/kit--partner-api-baseline--aws.svg)
+
+*A sample product assembled from the kit on AWS, drawn by the product architecture view; the names are placeholders. Also on [Azure](svg/kit--partner-api-baseline--azure.svg) and [GCP](svg/kit--partner-api-baseline--gcp.svg).*
+
+**Provides.** 1 data assets, 2 interfaces, 2 offered interfaces, 2 systems.
+**Parameters.** `partners` (default `[]`).
+**Used by.** type Partner API.
+
 <a id="api-service"></a>
 ## Product service
 
@@ -212,7 +338,7 @@ The domain service the product is built around, and the API it offers. Every oth
 **Provides.** 1 offered interfaces, 1 systems.
 **Needs from the shape.** `product_name`, `slug`.
 **Parameters.** `runs_on` (default `['stateless-service']`); `uses` (default `[]`).
-**Used by.** kit web-app-baseline, kit mobile-app-baseline, kit internal-tool-baseline, kit event-service-baseline, kit batch-app-baseline, kit adapter-baseline, kit ml-service-baseline, kit reporting-baseline, AWS product onboarding, Azure digital product, Google Cloud digital product, Merchant Portal (assembled), type Internal tool, type Mobile application, type Event-driven service, type Batch application, type Integration adapter, type AI inference service, type Reporting application, type Web application, type Customer-facing digital product, type Internal platform service.
+**Used by.** kit web-app-baseline, kit mobile-app-baseline, kit internal-tool-baseline, kit event-service-baseline, kit batch-app-baseline, kit adapter-baseline, kit ml-service-baseline, kit ai-assistant-baseline, kit ai-agent-baseline, kit customer-portal-baseline, kit partner-api-baseline, kit reporting-baseline, AWS product onboarding, Azure digital product, Google Cloud digital product, Merchant Portal (assembled), type Internal tool, type Mobile application, type Event-driven service, type Batch application, type Integration adapter, type AI inference service, type AI assistant, type AI agent, type Reporting application, type Web application, type Customer portal, type Partner API, type Customer-facing digital product, type Internal platform service.
 
 <a id="reporting-baseline"></a>
 ## Reporting application
@@ -243,7 +369,7 @@ The product's batch work: the nightly run, the month-end extract, the retry swee
 **Needs from the shape.** `product_name`, `slug`.
 **Parameters.** `runs_on` (default `['stateless-service.container-platform', 'stateless-service.observability']`); `schedule` (default `daily`).
 **Requires.** `api-service`.
-**Used by.** kit batch-app-baseline, type Internal tool, type Event-driven service, type Batch application, type Integration adapter, type Reporting application, type Web application, type Customer-facing digital product, type Internal platform service.
+**Used by.** kit batch-app-baseline, type Internal tool, type Event-driven service, type Batch application, type Integration adapter, type AI assistant, type AI agent, type Reporting application, type Web application, type Customer portal, type Customer-facing digital product, type Internal platform service.
 
 <a id="web-app-baseline"></a>
 ## Web application
@@ -271,7 +397,7 @@ An operating role that exists because the product does. Most operators are alrea
 **Provides.** 1 actors.
 **Needs from the shape.** `owner_org`.
 **Parameters.** `roles` (required); `system` (required).
-**Used by.** Merchant Portal (assembled), type Internal tool, type Web application, type Customer-facing digital product, type Internal platform service, type Bought SaaS capability.
+**Used by.** Merchant Portal (assembled), type Internal tool, type AI agent, type Web application, type Customer-facing digital product, type Internal platform service, type Bought SaaS capability.
 
 <a id="operator-access"></a>
 ## Who operates it
@@ -285,7 +411,7 @@ The people who work in the vendor's system, so it appears on the system context 
 **Provides.** —.
 **Needs from the shape.** `slug`.
 **Parameters.** `actor` (required); `interaction` (default `Operates`); `system` (default `SYS-{slug|upper}-VENDOR`).
-**Used by.** type Internal tool, type Web application, type Customer-facing digital product, type Bought SaaS capability.
+**Used by.** type Internal tool, type AI assistant, type AI agent, type Web application, type Customer-facing digital product, type Bought SaaS capability.
 
 <a id="admin-console"></a>
 ## Admin console
@@ -303,7 +429,25 @@ The internal web application staff use to operate the product, behind the workfo
 **Kinds.** `idp` is of kind `identity-provider`.
 **Parameters.** `runs_on` (default `['stateless-service.container-platform', 'stateless-service.observability']`).
 **Requires.** `api-service`.
-**Used by.** kit internal-tool-baseline, type Internal tool, type Reporting application, type Web application, type Customer-facing digital product, type Internal platform service.
+**Used by.** kit internal-tool-baseline, type Internal tool, type Reporting application, type Web application, type Customer portal, type Partner API, type Customer-facing digital product, type Internal platform service.
+
+<a id="assistant-chat"></a>
+## Assistant chat
+
+`assistant-chat` · Channel · optional
+
+The chat people ask the assistant in: a web front end behind the workforce identity provider, calling the assistant's API. Who may ask is who may sign in, and the passages an answer is drawn from are the ones the person asking may read.
+
+![Assistant chat, with what it requires](svg/part--assistant-chat.svg)
+
+*A sample product assembled from this part and the parts it requires, drawn by the product architecture view; the names are placeholders. With `api-service`.*
+
+**Provides.** 1 interfaces, 1 systems.
+**Needs from the shape.** `product_name`, `slug`.
+**Kinds.** `idp` is of kind `identity-provider`.
+**Parameters.** `runs_on` (default `['stateless-service.container-platform', 'stateless-service.observability']`).
+**Requires.** `api-service`.
+**Used by.** kit ai-assistant-baseline, type AI assistant.
 
 <a id="mobile-channel"></a>
 ## Mobile channel
@@ -320,7 +464,7 @@ The product's mobile app, calling the product API through the shared API gateway
 **Needs from the shape.** `product_name`, `slug`.
 **Kinds.** `front_door` is of kind `api-gateway`.
 **Requires.** `api-service`.
-**Used by.** kit mobile-app-baseline, type Mobile application, type Web application, type Customer-facing digital product.
+**Used by.** kit mobile-app-baseline, type Mobile application, type Web application, type Customer portal, type Customer-facing digital product.
 
 <a id="embedded-ui"></a>
 ## Vendor UI inside our channel
@@ -354,7 +498,41 @@ The customer-facing front end, calling the product API. Drop it for a product wi
 **Needs from the shape.** `product_name`, `slug`.
 **Parameters.** `runs_on` (default `['stateless-service.container-platform', 'stateless-service.observability']`); `uses` (default `[]`).
 **Requires.** `api-service`.
-**Used by.** kit web-app-baseline, AWS product onboarding, Azure digital product, Google Cloud digital product, Merchant Portal (assembled), type Mobile application, type Web application, type Customer-facing digital product.
+**Used by.** kit web-app-baseline, kit customer-portal-baseline, AWS product onboarding, Azure digital product, Google Cloud digital product, Merchant Portal (assembled), type Mobile application, type Web application, type Customer portal, type Customer-facing digital product.
+
+<a id="analytics-feed"></a>
+## Analytics feed
+
+`analytics-feed` · Data · optional
+
+The product's data, out to analytics as it changes: a change data capture feed off its own database into the estate's ingestion, so reports and data products read a copy and never the product's database. The way out of a database that leaves it the product's own.
+
+![Analytics feed, with what it requires](svg/part--analytics-feed.svg)
+
+*A sample product assembled from this part and the parts it requires, drawn by the product architecture view; the names are placeholders. With `relational-datastore`.*
+
+**Provides.** 1 interfaces.
+**Needs from the shape.** `product_name`, `slug`, `classification`.
+**Parameters.** `system_suffix` (default `DB`); `ingest_system` (the estate's answer).
+**Requires.** `relational-datastore`.
+**Used by.** type Mobile application, type Web application, type Customer portal, type Partner API, type Customer-facing digital product, type Internal platform service.
+
+<a id="conversation-history"></a>
+## Conversation history
+
+`conversation-history` · Data · optional
+
+What was asked and answered, kept: each conversation, the passages it was answered from and what the person said of the answer. The record an assistant is reviewed by and the set it is evaluated against. Runs on the transactional store, as a product's own database does.
+
+![Conversation history, with what it requires](svg/part--conversation-history.svg)
+
+*A sample product assembled from this part and the parts it requires, drawn by the product architecture view; the names are placeholders. With `ml-inference-service`.*
+
+**Provides.** 1 data assets, 1 interfaces, 1 systems.
+**Needs from the shape.** `product_name`, `slug`, `classification`, `owner_org`.
+**Parameters.** `runs_on` (default `['transactional-store']`); `protocol` (default `PostgreSQL`); `data_org` (the estate's answer).
+**Requires.** `ml-inference-service`.
+**Used by.** kit ai-assistant-baseline, type AI assistant.
 
 <a id="data-hub"></a>
 ## Data hub
@@ -387,7 +565,7 @@ A bucket of the product's own, for documents and extracts, encrypted with the cu
 **Needs from the shape.** `product_name`, `slug`.
 **Parameters.** `uses` (default `['object-store', 'kms']`).
 **Requires.** `api-service`.
-**Used by.** AWS product onboarding, type Internal tool, type Mobile application, type Batch application, type AI inference service, type Web application, type Customer-facing digital product.
+**Used by.** AWS product onboarding, type Internal tool, type Mobile application, type Batch application, type AI inference service, type AI assistant, type Web application, type Customer portal, type Partner API, type Customer-facing digital product.
 
 <a id="relational-datastore"></a>
 ## Relational datastore
@@ -405,7 +583,7 @@ The product's operational database and the data asset it masters, with the API r
 **Parameters.** `runs_on` (default `['transactional-store']`); `protocol` (default `PostgreSQL`); `system_suffix` (default `DB`); `risk_level` (default `High`); `data_org` (the estate's answer).
 **Requires.** `api-service`.
 **Applies.** `stateless-request-service`.
-**Used by.** kit web-app-baseline, kit mobile-app-baseline, kit internal-tool-baseline, kit batch-app-baseline, kit reporting-baseline, AWS product onboarding, Azure digital product, Google Cloud digital product, Merchant Portal (assembled), type Internal tool, type Mobile application, type Event-driven service, type Batch application, type Integration adapter, type AI inference service, type Reporting application, type Web application, type Customer-facing digital product, type Internal platform service.
+**Used by.** kit web-app-baseline, kit mobile-app-baseline, kit internal-tool-baseline, kit batch-app-baseline, kit customer-portal-baseline, kit partner-api-baseline, kit reporting-baseline, AWS product onboarding, Azure digital product, Google Cloud digital product, Merchant Portal (assembled), type Internal tool, type Mobile application, type Event-driven service, type Batch application, type Integration adapter, type AI inference service, type Reporting application, type Web application, type Customer portal, type Partner API, type Customer-facing digital product, type Internal platform service.
 
 <a id="sftp-return-feed"></a>
 ## Return feed by file
@@ -440,7 +618,7 @@ A search index over the product's records, fed from the API and read by it. An i
 **Needs from the shape.** `product_name`, `slug`.
 **Parameters.** `runs_on` (default `['stateless-service.container-platform']`).
 **Requires.** `api-service`.
-**Used by.** type Internal tool, type Mobile application, type Event-driven service, type AI inference service, type Reporting application, type Web application, type Customer-facing digital product.
+**Used by.** type Internal tool, type Mobile application, type Event-driven service, type AI inference service, type Reporting application, type Web application, type Customer portal, type Customer-facing digital product.
 
 <a id="public-web-entry"></a>
 ## Public front door
@@ -457,7 +635,24 @@ The edge in front of a public web channel: a CDN distribution with a WAF ruleset
 **Needs from the shape.** `product_name`, `slug`.
 **Requires.** `web-channel`.
 **Applies.** `public-web-entry`.
-**Used by.** kit web-app-baseline, AWS product onboarding, type Mobile application, type Web application, type Customer-facing digital product.
+**Used by.** kit web-app-baseline, kit customer-portal-baseline, AWS product onboarding, type Mobile application, type Web application, type Customer portal, type Customer-facing digital product.
+
+<a id="customer-sign-in"></a>
+## Customer sign-in
+
+`customer-sign-in` · Identity · optional
+
+Customers signing in to the product's front end with an account of their own, on the landing zone's customer identity service rather than a password table of the product's: sign-up, sign-in, multi-factor and account recovery once, for every product. The API trusts the tokens it issues.
+
+![Customer sign-in, with what it requires](svg/part--customer-sign-in.svg)
+
+*A sample product assembled from this part and the parts it requires, drawn by the product architecture view; the names are placeholders. With `web-channel`.*
+
+**Provides.** —.
+**Needs from the shape.** `product_name`, `slug`.
+**Kinds.** `ciam` is of kind `customer-identity`.
+**Requires.** `web-channel`.
+**Used by.** kit customer-portal-baseline, type Mobile application, type Web application, type Customer portal, type Customer-facing digital product.
 
 <a id="identity-hub"></a>
 ## Identity hub
@@ -528,7 +723,7 @@ Consumes another system's events from the enterprise bus and hands them to the p
 **Parameters.** `source_system` (required); `runs_on` (default `['stateless-service.container-platform', 'stateless-service.observability']`); `protocol` (default `AMQP`).
 **Requires.** `api-service`.
 **Applies.** `event-fanout`.
-**Used by.** kit event-service-baseline, type Event-driven service, type AI inference service, type Customer-facing digital product, type Internal platform service.
+**Used by.** kit event-service-baseline, type Event-driven service, type AI inference service, type AI agent, type Customer-facing digital product, type Internal platform service.
 
 <a id="event-hub"></a>
 ## Event hub
@@ -564,7 +759,7 @@ Publishes the product's domain events onto the enterprise bus for whoever subscr
 **Parameters.** `protocol` (default `AMQP`).
 **Requires.** `api-service`.
 **Applies.** `event-fanout`.
-**Used by.** kit event-service-baseline, Azure digital product, Google Cloud digital product, Merchant Portal (assembled), type Internal tool, type Mobile application, type Event-driven service, type Batch application, type Integration adapter, type Web application, type Customer-facing digital product, type Internal platform service.
+**Used by.** kit event-service-baseline, Azure digital product, Google Cloud digital product, Merchant Portal (assembled), type Internal tool, type Mobile application, type Event-driven service, type Batch application, type Integration adapter, type AI assistant, type Web application, type Customer portal, type Partner API, type Customer-facing digital product, type Internal platform service.
 
 <a id="integration-hub"></a>
 ## Integration hub
@@ -598,7 +793,7 @@ Turns the product's events into email, text and push messages to the people who 
 **Kinds.** `bus` is of kind `message-queue`.
 **Parameters.** `runs_on` (default `['stateless-service.container-platform', 'stateless-service.observability']`); `protocol` (default `AMQP`).
 **Requires.** `api-service`.
-**Used by.** type Internal tool, type Mobile application, type Event-driven service, type Batch application, type Web application, type Customer-facing digital product, type Internal platform service.
+**Used by.** kit customer-portal-baseline, type Internal tool, type Mobile application, type Event-driven service, type Batch application, type AI assistant, type AI agent, type Web application, type Customer portal, type Partner API, type Customer-facing digital product, type Internal platform service.
 
 <a id="api-outbound"></a>
 ## Outbound API gateway
@@ -635,6 +830,24 @@ Our side of an integration with a system we do not run and did not buy as a prod
 **Parameters.** `partner` (required); `target_system` (required); `adapter_suffix` (default `ADAPTER`); `runs_on` (default `['stateless-service.container-platform', 'stateless-service.observability']`).
 **Requires.** `api-service`.
 **Used by.** kit adapter-baseline, type Integration adapter, type Customer-facing digital product, type Internal platform service.
+
+<a id="partner-api"></a>
+## Partner API
+
+`partner-api` · Integration · optional
+
+The product's API offered to partners outside the estate, published through the landing zone's API gateway with its developer portal: each partner registered as a client, with its own credentials, quota and version, and none reaching the service but through the gateway. The partners are named on the product.
+
+![Partner API, with what it requires](svg/part--partner-api.svg)
+
+*A sample product assembled from this part and the parts it requires, drawn by the product architecture view; the names are placeholders. With `api-service`.*
+
+**Provides.** 1 interfaces, 1 offered interfaces.
+**Needs from the shape.** `product_name`, `slug`.
+**Kinds.** `front_door` is of kind `api-gateway`.
+**Parameters.** `partners` (default `[]`).
+**Requires.** `api-service`.
+**Used by.** kit partner-api-baseline, type Mobile application, type Web application, type Customer portal, type Partner API, type Customer-facing digital product, type Internal platform service.
 
 <a id="webhook-inbound"></a>
 ## Webhooks from the vendor
@@ -702,6 +915,23 @@ The gateway calls the vendor over the public internet, with mutual TLS and an al
 **Needs from the shape.** `product_name`, `slug`, `vendor`.
 **Requires.** `vendor-tenancy`, `api-outbound`.
 **Used by.** SaaS onboarding (slot reach), Vendor SaaS service on Google Cloud (slot reach), Vendor SaaS service (slot reach), type Bought SaaS capability.
+
+<a id="workload-network"></a>
+## Workload network
+
+`workload-network` · Network · optional
+
+An account's network: its subnets, one for each tier in each zone, the NAT gateways its private tiers leave through, its attachment to the landing zone's transit hub and its link to the landing zone's resolver. Made once for each account by whoever runs the network; every product in the account lands in it by zone, and none makes its own.
+
+![Workload network, with what it requires](svg/part--workload-network.svg)
+
+*A sample product assembled from this part and the parts it requires, drawn by the product architecture view; the names are placeholders.*
+
+**Provides.** 2 tech services.
+**Needs from the shape.** `slug`, `network_name`, `tech_service_id`.
+**Kinds.** `transit` is of kind `transit-gateway`; `dns` is of kind `dns`.
+**Parameters.** `subnets` (required); `nat_gateways` (default `[]`); `az_prefix` (default ``).
+**Used by.** AWS workload network, Azure workload network, GCP workload network.
 
 <a id="vendor-monitoring"></a>
 ## Availability monitoring

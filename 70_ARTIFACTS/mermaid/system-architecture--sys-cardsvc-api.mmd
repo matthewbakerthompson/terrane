@@ -38,9 +38,12 @@ flowchart LR
     TS_CARDSVC_CACHE[/"Card Servicing Cache<br/>[Azure Cache for Redis]"/]
     TS_CARDSVC_DNS[/"Card Servicing DNS<br/>[Azure DNS]"/]
     TS_CARDSVC_WAF[/"Card Servicing Web<br/>application firewall<br/>[Azure WAF]"/]
+    TS_NET_SUB_AZ_CARDS_APP[/"Cards App Subnet<br/>[Subnet]"/]
+    TS_NET_SUB_AZ_CARDS_DATA[/"Cards Data Subnet<br/>[Subnet]"/]
     TS_IDENTITY_DNS[/"Customer Identity Service<br/>DNS<br/>[Azure DNS]"/]
     TS_IDENTITY_WAF[/"Customer Identity Service<br/>Web application firewall<br/>[Azure WAF]"/]
     TS_ENTRA_ID[/"Microsoft Entra ID<br/>[Identity provider]"/]
+    TS_NET_SUB_AZ_PLATFORM_SHARED[/"Platform Shared Services<br/>Subnet<br/>[Subnet]"/]
     TS_ONPREM_DC[/"Primary Data Center<br/>[Virtual network]"/]
   end
 
@@ -70,6 +73,10 @@ flowchart LR
   SYS_IDENTITY_SVC -.->|"runs on"| TS_AZURE_AKS
   SYS_IDENTITY_SVC -.->|"runs on"| TS_AZURE_KEYVAULT
   SYS_CORE_LEDGER -.->|"runs on"| TS_ONPREM_DC
+  SYS_CARDSVC_API -.->|"runs on"| TS_NET_SUB_AZ_CARDS_APP
+  SYS_CARDSVC_WEB -.->|"runs on"| TS_NET_SUB_AZ_CARDS_APP
+  SYS_CARDSVC_STORE -.->|"runs on"| TS_NET_SUB_AZ_CARDS_DATA
+  SYS_IDENTITY_SVC -.->|"runs on"| TS_NET_SUB_AZ_PLATFORM_SHARED
   SYS_CARDSVC_API -->|"ReadWrite"| DA_CARDSVC_OPERATIONAL
   SYS_CARDSVC_STORE -->|"ReadWrite"| DA_CARDSVC_OPERATIONAL
   SYS_CORE_LEDGER -->|"Read"| DA_PAYMENT_INSTR
@@ -90,6 +97,6 @@ flowchart LR
   class DA_CARD_ACCOUNT,DA_CARDSVC_OPERATIONAL,DA_PAYMENT_INSTR,DA_TRANSACTION s_data_assets__data_assets;
   class OI_CARDSVC_API,OI_IDENTITY_API,OI_LEDGER_QUEUE s_offered_interfaces__offered_interfaces;
   class SYS_CARDSVC_API,SYS_CARDSVC_EVENTS,SYS_CARDSVC_STORE,SYS_CARDSVC_WEB,SYS_CORE_LEDGER,SYS_IDENTITY_SVC,SYS_IVR,SYS_MOBILE s_systems__systems;
-  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT,TS_AZURE_MONITOR,TS_AZURE_SERVICEBUS,TS_AZURE_SQL,TS_CARDSVC_BACKUP,TS_CARDSVC_CACHE,TS_CARDSVC_DNS,TS_CARDSVC_WAF,TS_ENTRA_ID,TS_IDENTITY_DNS,TS_IDENTITY_WAF,TS_ONPREM_DC s_tech_services__tech_services;
+  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT,TS_AZURE_MONITOR,TS_AZURE_SERVICEBUS,TS_AZURE_SQL,TS_CARDSVC_BACKUP,TS_CARDSVC_CACHE,TS_CARDSVC_DNS,TS_CARDSVC_WAF,TS_ENTRA_ID,TS_IDENTITY_DNS,TS_IDENTITY_WAF,TS_NET_SUB_AZ_CARDS_APP,TS_NET_SUB_AZ_CARDS_DATA,TS_NET_SUB_AZ_PLATFORM_SHARED,TS_ONPREM_DC s_tech_services__tech_services;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Data_Asset,grp_System,grp_Technology_Service boundary1;

@@ -33,7 +33,7 @@ from terrane.payload import graph_payload  # noqa: E402
 from terrane.query import resolve  # noqa: E402
 from terrane.render_sequence import all_flows, participants, steps_for  # noqa: E402
 
-from _fixture import REPO, seeded_model, seeded_root, seeded_views, setup_shared, teardown_shared  # noqa: E402
+from _fixture import REPO, remove_scratch, seeded_model, seeded_root, seeded_views, setup_shared, teardown_shared  # noqa: E402
 
 
 def setUpModule() -> None:
@@ -154,6 +154,7 @@ class TestRenderWritesThem(unittest.TestCase):
     def test_the_timeline_and_the_flows_land_beside_the_mermaid(self) -> None:
         root = seeded_root()
         out = Path(tempfile.mkdtemp(prefix="aac-tl-"))
+        self.addCleanup(remove_scratch, out, "aac-tl-")
         timeline = next(v for v in seeded_views() if v.kind == "timeline")
         text = io.StringIO()
         with redirect_stdout(text):

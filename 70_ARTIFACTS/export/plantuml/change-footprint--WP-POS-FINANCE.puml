@@ -5,13 +5,31 @@
 
 title Land point-of-sale finance on Google Cloud — Footprint
 
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
 AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
 AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
 AddElementTag("work_packages", $bgColor="#ccfbf1", $borderColor="#0d9488", $fontColor="#0f172a", $legendText="work package")
 
+Boundary(b_Capability, "Capability") {
+  System(CAP_LEND_02_01, "Dealer Application Intake", "Take applications keyed by the dealer, check them for completeness, and verify identity before the decision.", $tags="capabilities")
+  ' aac CAP_LEND_02_01: company_domain="Lending"
+  System(CAP_LEND_02, "Indirect Application & Underwriting", "Receive applications through dealers, decision them against credit policy, and return terms while the buyer is at the point of sale.", $tags="capabilities")
+  ' aac CAP_LEND_02: company_domain="Lending"
+  System(CAP_LEND_02_02, "Indirect Credit Decision & Counteroffer", "Decide the application against credit policy and the collateral's value, and return terms or a counteroffer to the dealer.", $tags="capabilities")
+  ' aac CAP_LEND_02_02: company_domain="Lending"
+}
 Boundary(b_Data_Asset, "Data Asset") {
   SystemDb(DA_POSFIN_OPERATIONAL, "Point-of-Sale Finance operational data", "Operational records held by Point-of-Sale Finance.", $tags="data_assets")
   ' aac DA_POSFIN_OPERATIONAL: company_domain="Lending"
+}
+Boundary(b_Process, "Process") {
+  System(P_LENDING_004, "Decide indirect loan and return terms", "Score the application against the recreation lending credit policy, price it, and return an approval, a counteroffer with conditions, or a decline to the dealer while the buyer waits. Counteroffers and declines carry adverse action obligations, and the collateral's value sets the advance, so the decision reads the asset's value guide as well as the bureau.", $tags="processes")
+  ' aac P_LENDING_004: company_domain=""
+  System(P_LENDING_016, "Originate point-of-sale installment loan", "Take a financing application started in a retailer's checkout, check affordability from the shopper's bank data with consent, decide it, and book the installment loan with disbursement through the card ledger. The point-of-sale products run on platforms of their own, apart from the dealer channel, and share its credit policy and adverse action rules.", $tags="processes")
+  ' aac P_LENDING_016: company_domain=""
+  System(P_LENDING_003, "Receive and validate dealer-submitted application", "Accept a credit application keyed by the dealer's finance office, check it is complete, verify the applicant's identity and screen it for application fraud before it reaches the decision. The buyer is at the dealership, so intake runs against a point-of-sale clock; an incomplete or unverified application that slips through becomes a funding exception later.", $tags="processes")
+  ' aac P_LENDING_003: company_domain=""
 }
 Boundary(b_System, "System") {
   System(SYS_POSFIN_DB, "Point-of-Sale Finance Database", "Relational database for Point-of-Sale Finance, encrypted with a customer managed key. Built with Cloud SQL.", $tags="systems")
@@ -40,6 +58,26 @@ Rel(SYS_POSFIN_API, DA_POSFIN_OPERATIONAL, "ReadWrite")
 ' aac rel: source="SYS_POSFIN_API"; target="DA_POSFIN_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
 Rel(SYS_POSFIN_DB, DA_POSFIN_OPERATIONAL, "ReadWrite")
 ' aac rel: source="SYS_POSFIN_DB"; target="DA_POSFIN_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_POSFIN_API, CAP_LEND_02, "realizes")
+' aac rel: source="SYS_POSFIN_API"; target="CAP_LEND_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_POSFIN_API, CAP_LEND_02_01, "realizes")
+' aac rel: source="SYS_POSFIN_API"; target="CAP_LEND_02_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_POSFIN_API, CAP_LEND_02_02, "realizes")
+' aac rel: source="SYS_POSFIN_API"; target="CAP_LEND_02_02"; label="realizes"; relation="system_realizes_capability"
+Rel(P_LENDING_003, CAP_LEND_02_01, "supports")
+' aac rel: source="P_LENDING_003"; target="CAP_LEND_02_01"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_004, CAP_LEND_02_02, "supports")
+' aac rel: source="P_LENDING_004"; target="CAP_LEND_02_02"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_016, CAP_LEND_02_01, "supports")
+' aac rel: source="P_LENDING_016"; target="CAP_LEND_02_01"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_016, CAP_LEND_02_02, "supports")
+' aac rel: source="P_LENDING_016"; target="CAP_LEND_02_02"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_003, CAP_LEND_02, "supports")
+' aac rel: source="P_LENDING_003"; target="CAP_LEND_02"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_004, CAP_LEND_02, "supports")
+' aac rel: source="P_LENDING_004"; target="CAP_LEND_02"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_016, CAP_LEND_02, "supports")
+' aac rel: source="P_LENDING_016"; target="CAP_LEND_02"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

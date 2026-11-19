@@ -10,6 +10,8 @@ AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColo
 AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
 
 Boundary(b_Capability, "Capability") {
+  System(CAP_FRAUD_04_02, "Arbitration & Pre-Arbitration", "Pursue contested cases through the network's arbitration cycle.", $tags="capabilities")
+  ' aac CAP_FRAUD_04_02: company_domain="Servicing"
   System(CAP_FRAUD_04, "Chargeback & Representment Processing", "Execute network chargeback and representment cycles.", $tags="capabilities")
   ' aac CAP_FRAUD_04: company_domain="Servicing"
 }
@@ -30,6 +32,8 @@ Rel(P_DISPUTE_003, SYS_CORE_LEDGER, "Supporting")
 ' aac rel: source="P_DISPUTE_003"; target="SYS_CORE_LEDGER"; label="Supporting"; relation="process_uses_system"; role="Supporting"
 Rel(P_DISPUTE_003, CAP_FRAUD_04, "supports")
 ' aac rel: source="P_DISPUTE_003"; target="CAP_FRAUD_04"; label="supports"; relation="process_supports_capability"
+Rel(P_DISPUTE_003, CAP_FRAUD_04_02, "supports")
+' aac rel: source="P_DISPUTE_003"; target="CAP_FRAUD_04_02"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

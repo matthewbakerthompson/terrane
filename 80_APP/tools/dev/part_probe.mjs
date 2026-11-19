@@ -1,8 +1,8 @@
 // Does Add find a part by what each cloud calls it, and does a part placed
 // in an account of a cloud come out as that cloud's product? On the canvas
 // of lending-onboarding (arrange_probe.mjs makes it): Add's search for
-// "EC2", "Compute Engine" and a former name, each row named for what was
-// asked; the EC2 row dragged into zone eu-west-2a, the AWS zone, and the
+// "EC2", "Compute Engine" and a former name, each row the kind with the
+// product asked for beside it (V18); the EC2 row dragged into zone eu-west-2a, the AWS zone, and the
 // name it is asked for given as Amazon EC2, with what AWS calls it offered;
 // then placed, the record's product Amazon EC2 and its mark EC2's.
 //
@@ -48,16 +48,17 @@ async function search(q) {
   await page.type("#cvPicker .cv-search", q);
   await pause(200);
   return page.$$eval("#cvPicker .cv-row", (rows) => rows.slice(0, 3).map((r) => ({
-    name: r.querySelector(".cv-row-text b").textContent, sub: r.querySelector(".cv-row-text span").textContent })));
+    name: r.querySelector(".cv-row-text b").textContent,
+    sub: (r.querySelector(".cv-row-text span") || {}).textContent || "" })));
 }
 let rows = await search("EC2");
-check("EC2 finds the virtual machine, named for what was asked", rows[0] && rows[0].name === "Amazon EC2"
-  && /Virtual machine · AWS/.test(rows[0].sub), JSON.stringify(rows[0]));
+check("EC2 finds the virtual machine, the product beside it", rows[0] && rows[0].name === "Virtual machine"
+  && rows[0].sub === "Amazon EC2 · AWS", JSON.stringify(rows[0]));
 rows = await search("Compute Engine");
-check("Compute Engine finds it on Google Cloud", rows.some((r) => r.name === "Compute Engine" && /GCP/.test(r.sub)),
+check("Compute Engine finds it on Google Cloud", rows.some((r) => r.name === "Virtual machine" && r.sub === "Compute Engine · GCP"),
   JSON.stringify(rows));
 rows = await search("Azure OpenAI");
-check("a former name finds the product it is now", rows.some((r) => r.name === "Microsoft Foundry Models"),
+check("a former name finds the product it is now", rows.some((r) => /^Microsoft Foundry Models · Azure$/.test(r.sub)),
   JSON.stringify(rows));
 rows = await search("EC2");
 await page.screenshot({ path: `${OUT}/part-search.png` });

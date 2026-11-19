@@ -8,24 +8,24 @@ The last column is the adoption report. It is read off the `patterns` field of e
 |---|---|---|---|---|---|
 | [Hybrid return path](#hybrid-return-path) | Candidate | Landing zone | `hybrid-connectivity` | `CTL-DR-TEST` | — |
 | [Analytics landing zone](#analytics-landing-zone) | Approved | Data | `analytics-platform`, `data-governance` | `CTL-DQ-GATE`, `CTL-MASK-NONPROD`, `CTL-RETENTION` | Customer 360, Lending Portfolio Performance, 3 interfaces |
-| [API front door](#api-front-door) | Approved | Edge | `public-api-tier` | `CTL-AUTH-POLICY` | Card Servicing, Collections Workspace, Customer Identity Service, Point-of-Sale Finance, Rewards Redemption, 6 interfaces |
+| [API front door](#api-front-door) | Approved | Edge | `public-api-tier` | `CTL-AUTH-POLICY` | Card Servicing, Collections Workspace, Customer Identity Service, Point-of-Sale Finance, Rewards Redemption, 8 interfaces |
 | [Change evidence read off the systems](#change-evidence-chain) | Approved | Governance | `change-evidence` | `CTL-CHG-APPROVAL`, `CTL-REGCHANGE-TRACK` | Installment Lending, 6 interfaces |
 | [Contact center through the servicing gateway](#contact-center-integration) | Approved | Communications | `contact-channel` | `CTL-CONTACT-LIM`, `CTL-COMPLAINT-REG`, `CTL-AUTH-POLICY` | Collections Workspace, 5 interfaces |
 | [Customer communications through one archive](#customer-communication-archive) | Approved | Communications | `document-services` | `CTL-NOTICE-CONTENT`, `CTL-FDCPA-NOTICE`, `CTL-RETENTION` | Collections Workspace, Dispute Management, 4 interfaces |
 | [Event fan-out](#event-fanout) | Approved | Integration | `event-tier` | — | Card Servicing, Installment Lending, Merchant Portal, Point-of-Sale Finance, Rewards Redemption, 4 interfaces |
 | [Governed model lifecycle](#governed-model-lifecycle) | Approved | Decisioning | `model-platform`, `data-governance` | `CTL-ADVERSE-ACT`, `CTL-TREATMENT-APPR`, `CTL-DQ-GATE` | 3 interfaces |
-| [Inline risk decision in the transaction path](#inline-risk-decision) | Approved | Decisioning | `realtime-decision` | `CTL-FRAUD-SLA`, `CTL-AUTH-AVAIL` | 2 interfaces |
+| [Inline risk decision in the transaction path](#inline-risk-decision) | Approved | Decisioning | `realtime-decision` | `CTL-FRAUD-SLA`, `CTL-AUTH-AVAIL` | 8 interfaces |
 | [Observed service](#observed-service) | Approved | Operations | `observability-stack` | `CTL-IR-PLAYBOOK`, `CTL-AUTH-AVAIL`, `CTL-DR-TEST` | Card Servicing, Customer Identity Service, 3 interfaces |
-| [Partner file exchange](#partner-file-exchange) | Approved | Integration | `file-exchange` | `CTL-CLIENT-SLA` | Dispute Management, NICE Actimize Screening, 1 interface |
-| [Payment capture and same-day posting](#payment-capture-and-posting) | Approved | Payments | `payment-capture`, `transactional-store` | `CTL-PMT-POSTING`, `CTL-FUNDING-CONF`, `CTL-DAILY-RECON` | 2 interfaces |
+| [Partner file exchange](#partner-file-exchange) | Approved | Integration | `file-exchange` | `CTL-CLIENT-SLA` | Dispute Management, NICE Actimize Screening, 3 interfaces |
+| [Payment capture and same-day posting](#payment-capture-and-posting) | Approved | Payments | `payment-capture`, `transactional-store` | `CTL-PMT-POSTING`, `CTL-FUNDING-CONF`, `CTL-DAILY-RECON` | 3 interfaces |
 | [Private egress to a bought service](#private-egress-to-saas) | Approved | Integration | `private-egress-to-saas` | `CTL-TPRM-DD`, `CTL-SANCTIONS` | Identity Document Verification, NICE Actimize Screening, Open Banking Affordability, 1 interface |
 | [Public web entry](#public-web-entry) | Approved | Edge | `public-web-tier` | `CTL-PCI-EVIDENCE` | Installment Lending |
-| [Regulatory file furnishing with reconciliation](#regulatory-file-furnishing) | Approved | Integration | `file-exchange`, `batch-tier` | `CTL-METRO2-RECON`, `CTL-BUREAU-ACC`, `CTL-REGE-ACK` | 3 interfaces |
+| [Regulatory file furnishing with reconciliation](#regulatory-file-furnishing) | Approved | Integration | `file-exchange`, `batch-tier` | `CTL-METRO2-RECON`, `CTL-BUREAU-ACC`, `CTL-REGE-ACK` | 4 interfaces |
 | [Secrets and keys from the baseline](#secrets-and-keys) | Approved | Security | `security-baseline` | `CTL-PCI-EVIDENCE` | Customer Identity Service |
 | [Stateless request service](#stateless-request-service) | Approved | Compute | `stateless-service`, `transactional-store` | — | Card Servicing, Collections Workspace, Installment Lending, Merchant Portal, Point-of-Sale Finance, Rewards Redemption |
 | [Strangler facade over a system being replaced](#strangler-facade) | Approved | Compute | `public-api-tier`, `stateless-service` | `CTL-CHG-APPROVAL`, `CTL-CONV-VERIFY` | Card Servicing |
 | [Tokenized card data](#tokenized-card-data) | Approved | Security | `token-vault` | `CTL-PCI-EVIDENCE`, `CTL-AUTH-AVAIL` | 2 interfaces |
-| [Windowed batch](#windowed-batch) | Approved | Compute | `batch-tier` | `CTL-DAILY-RECON` | Customer 360, Lending Portfolio Performance, 8 interfaces |
+| [Windowed batch](#windowed-batch) | Approved | Compute | `batch-tier` | `CTL-DAILY-RECON` | Customer 360, Lending Portfolio Performance, 18 interfaces |
 | [Workforce identity from the people system](#workforce-identity-lifecycle) | Approved | Security | `identity-governance` | `CTL-ACCESS-CERT`, `CTL-IR-PLAYBOOK` | 4 interfaces |
 | [Workload account baseline](#workload-account-baseline) | Approved | Landing zone | `account-baseline`, `security-baseline`, `delivery-pipeline` | `CTL-CHG-APPROVAL`, `CTL-ACCESS-CERT`, `CTL-VULN-SLA` | Installment Lending |
 | [Shared database integration](#shared-database-integration) | Deprecated | Integration | `transactional-store` | — | Collections Workspace |
@@ -99,7 +99,7 @@ The last column is the adoption report. It is read off the `patterns` field of e
 
 **Applied by.** Card Servicing (`PRD-CARD-SERVICING`), Collections Workspace (`PRD-COLLECTIONS-WORKSPACE`), Customer Identity Service (`PRD-IDENTITY`), Point-of-Sale Finance (`PRD-POS-FINANCE`), Rewards Redemption (`PRD-REWARDS`).
 
-**On interfaces.** Cardholder Mobile to Card Servicing API (`INT-MOBILE-CARDSVC`), Cardholder Mobile to Tokenization Service (`INT-MOBILE-TOKEN`), Document Management to Servicing Client Portal (`INT-DOC-CLIENT-PORTAL`), IVR to Card Servicing API (`INT-IVR-CARDSVC`), Originations Decision Engine to Credit Data Environment (`INT-ORIG-CREDIT-DATA`), Originations Decision Engine to Identity Verification (`INT-ORIG-KYC`).
+**On interfaces.** Cardholder Mobile to Card Servicing API (`INT-MOBILE-CARDSVC`), Cardholder Mobile to Tokenization Service (`INT-MOBILE-TOKEN`), Dealer Portal to Indirect Loan Origination (`INT-DEALER-PORTAL-LOS`), Document Management to Servicing Client Portal (`INT-DOC-CLIENT-PORTAL`), IVR to Card Servicing API (`INT-IVR-CARDSVC`), Merchant Portal Service to Merchant Acquiring Platform (`INT-MERCHANT-API-ACQ`), Originations Decision Engine to Credit Data Environment (`INT-ORIG-CREDIT-DATA`), Originations Decision Engine to Identity Verification (`INT-ORIG-KYC`).
 
 <a id="change-evidence-chain"></a>
 ## Change evidence read off the systems
@@ -235,7 +235,7 @@ The last column is the adoption report. It is read off the `patterns` field of e
 
 **Satisfies.** Fraud alert handling service level (`CTL-FRAUD-SLA`), Authorization availability and stand-in (`CTL-AUTH-AVAIL`).
 
-**On interfaces.** Authorization Switch to Transaction Fraud Detection (`INT-AUTH-FRAUD`), Originations Decision Engine to Application Fraud Screening (`INT-ORIG-APPFRAUD`).
+**On interfaces.** Authorization Switch to Transaction Fraud Detection (`INT-AUTH-FRAUD`), Deposit Platform to Identity Verification (`INT-DEPOSIT-KYC`), Deposit Platform to Screening Gateway (`INT-DEPOSIT-SCREENING`), Indirect Loan Origination to Application Fraud Screening (`INT-LOS-APPFRAUD`), Indirect Loan Origination to Credit Bureau Gateway (`INT-LOS-BUREAU-GW`), Indirect Loan Origination to Identity Verification (`INT-LOS-KYC`), Merchant Risk Monitoring to Screening Gateway (`INT-MERCH-RISK-SCREENING`), Originations Decision Engine to Application Fraud Screening (`INT-ORIG-APPFRAUD`).
 
 <a id="observed-service"></a>
 ## Observed service
@@ -281,7 +281,7 @@ The last column is the adoption report. It is read off the `patterns` field of e
 
 **Applied by.** Dispute Management (`PRD-DISPUTES`), NICE Actimize Screening (`PRD-SCREENING`).
 
-**On interfaces.** Core Card Ledger to Card Production (`INT-LEDGER-CARD-FULFILL`).
+**On interfaces.** Core Card Ledger to Card Production (`INT-LEDGER-CARD-FULFILL`), Loan Servicing to Repossession and Remarketing (`INT-LOAN-SVC-REMARKET`), Loan Servicing to Title and Lien Management (`INT-LOAN-SVC-TITLE`).
 
 <a id="payment-capture-and-posting"></a>
 ## Payment capture and same-day posting
@@ -306,7 +306,7 @@ The last column is the adoption report. It is read off the `patterns` field of e
 
 **Satisfies.** Payment posting timeliness (`CTL-PMT-POSTING`), Settlement funding confirmation (`CTL-FUNDING-CONF`), Daily settlement and clearing reconciliation (`CTL-DAILY-RECON`).
 
-**On interfaces.** Payment Capture Gateway to Core Card Ledger (`INT-PAYMENT-GW-LEDGER`), Payment Capture Gateway to General Ledger (`INT-PAYMENT-GW-GL`).
+**On interfaces.** Payment Capture Gateway to Core Card Ledger (`INT-PAYMENT-GW-LEDGER`), Payment Capture Gateway to General Ledger (`INT-PAYMENT-GW-GL`), Payment Capture Gateway to Loan Servicing (`INT-PAYMENT-GW-LOAN-SVC`).
 
 <a id="private-egress-to-saas"></a>
 ## Private egress to a bought service
@@ -375,7 +375,7 @@ The last column is the adoption report. It is read off the `patterns` field of e
 
 **Satisfies.** Furnishing and bucketing reconciliation (`CTL-METRO2-RECON`), Bureau furnishing accuracy (`CTL-BUREAU-ACC`), Dispute acknowledgment timeliness (`CTL-REGE-ACK`).
 
-**On interfaces.** Core Card Ledger to Credit Bureau Gateway (`INT-LEDGER-BUREAU-GW`), Credit Bureau Gateway to Credit Bureau (`INT-BUREAU-GW-BUREAU`), Credit Bureau Gateway to CRM (`INT-BUREAU-GW-CRM`).
+**On interfaces.** Core Card Ledger to Credit Bureau Gateway (`INT-LEDGER-BUREAU-GW`), Credit Bureau Gateway to Credit Bureau (`INT-BUREAU-GW-BUREAU`), Credit Bureau Gateway to CRM (`INT-BUREAU-GW-CRM`), Loan Servicing to Credit Bureau Gateway (`INT-LOAN-SVC-BUREAU-GW`).
 
 <a id="secrets-and-keys"></a>
 ## Secrets and keys from the baseline
@@ -488,7 +488,7 @@ The last column is the adoption report. It is read off the `patterns` field of e
 
 **Applied by.** Customer 360 (`PRD-CUSTOMER-360`), Lending Portfolio Performance (`PRD-LENDING-PERFORMANCE`).
 
-**On interfaces.** Core Card Ledger to Financial Crimes Platform (`INT-LEDGER-AML`), Core Card Ledger to General Ledger (`INT-LEDGER-GL`), Core Card Ledger to Reconciliation Platform (`INT-LEDGER-RECON`), Core Card Ledger to Servicing Client Portal (`INT-LEDGER-CLIENT-PORTAL`), General Ledger to Reconciliation Platform (`INT-GL-RECON`), General Ledger to Treasury Management (`INT-GL-TREASURY`), Originations Decision Engine to Core Card Ledger (`INT-ORIG-LEDGER-BOARD`), Prospect Data Services to Campaign Management (`INT-PROSPECT-MARKETING`).
+**On interfaces.** Brokered Deposit Gateway to Deposit Platform (`INT-BROKER-GW-DEPOSIT`), Collections Platform to Legal Matter Management (`INT-COLLECT-LEGAL`), Core Card Ledger to Financial Crimes Platform (`INT-LEDGER-AML`), Core Card Ledger to General Ledger (`INT-LEDGER-GL`), Core Card Ledger to Reconciliation Platform (`INT-LEDGER-RECON`), Core Card Ledger to Servicing Client Portal (`INT-LEDGER-CLIENT-PORTAL`), Deposit Platform to General Ledger (`INT-DEPOSIT-GL`), Deposit Platform to Treasury Management (`INT-DEPOSIT-TREASURY`), General Ledger to Reconciliation Platform (`INT-GL-RECON`), General Ledger to Treasury Management (`INT-GL-TREASURY`), Indirect Loan Origination to Loan Servicing (`INT-LOS-LOAN-SVC-BOARD`), Loan Servicing to Collections Platform (`INT-LOAN-SVC-COLLECT`), Loan Servicing to General Ledger (`INT-LOAN-SVC-GL`), Merchant Acquiring Platform to General Ledger (`INT-MERCH-ACQ-GL`), Merchant Acquiring Platform to Merchant Risk Monitoring (`INT-MERCH-ACQ-RISK`), Merchant Acquiring Platform to Reconciliation (`INT-MERCH-ACQ-RECON`), Originations Decision Engine to Core Card Ledger (`INT-ORIG-LEDGER-BOARD`), Prospect Data Services to Campaign Management (`INT-PROSPECT-MARKETING`).
 
 <a id="workforce-identity-lifecycle"></a>
 ## Workforce identity from the people system

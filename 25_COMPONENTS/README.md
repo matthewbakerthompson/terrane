@@ -32,9 +32,11 @@ It carries four things a bare name cannot:
 
 ## What it is not
 
-It is not an icon set and it is not exhaustive. A hundred and nine types cover what
-turns up in most estates, the AI services, the security tooling and the
-enterprise applications included; the moment you need one that is not here, add it —
+It is not an icon set and it is not exhaustive. A hundred and fifty-nine types cover
+what turns up in most estates: the parts a system we build is made of (a front
+end, a service, a worker, an event processor, a decision service), the business
+systems an organization runs (finance, people, customers and sales, operations,
+risk), the AI services and the security tooling; the moment you need one that is not here, add it —
 the file is the interface. A library that tries to name every managed service
 of every cloud goes stale in a quarter and nobody maintains it.
 
@@ -65,3 +67,29 @@ describes the shape.
     service_category: Storage
     network_zone: Private-Data
 ```
+
+## Groups
+
+Sixty-nine of the kinds are for systems, and fifty business systems in one
+list read as a list. A kind may say the heading it is listed under within its
+category, `group`, and every kind for a system does: the ones we build under
+Front ends, Services and workers, AI and Platforms; the ones an organization
+runs under Finance, People, Customers and sales, Customer service, Operations
+and supply chain, Risk and legal, Work and collaboration, and Industry. A kind
+with no group, as most technology services are, is listed under its category.
+
+```yaml
+- component_type_id: billing
+  name: Billing and invoicing
+  category: Enterprise
+  group: Finance
+  applies_to: systems
+  shape: round-tag
+  subnet: false
+```
+
+What a kind is called matters past its name: `terrane needs --types` and the
+Checks page suggest a kind for a record that has none by the words they share
+(`terrane.match`), so an alias that is another kind's everyday word ("tier",
+"patient", "merchant" here) makes this kind a wrong first answer for records
+that are not it. `tests/test_match.py` holds the rates on both estates.

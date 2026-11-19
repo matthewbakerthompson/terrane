@@ -12,8 +12,12 @@ AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor=
 Boundary(b_Capability, "Capability") {
   System(CAP_SERV_02, "Account Maintenance & Servicing Requests", "Execute cardholder-requested account changes.", $tags="capabilities")
   ' aac CAP_SERV_02: company_domain="Servicing"
+  System(CAP_SERV_01_01, "Contact Center Operations", "Run the daily contact center: staffing, queues, quality.", $tags="capabilities")
+  ' aac CAP_SERV_01_01: company_domain="Servicing"
   System(CAP_SERV_01, "Contact Handling & Routing", "Receive and route contacts across voice, chat, and messaging.", $tags="capabilities")
   ' aac CAP_SERV_01: company_domain="Servicing"
+  System(CAP_SERV_01_02, "Contact Routing", "Route contacts to the right queue and skill.", $tags="capabilities")
+  ' aac CAP_SERV_01_02: company_domain="Servicing"
 }
 Boundary(b_Process, "Process") {
   System(P_CUST_INQ_001, "Handle cardholder inquiry", "Receive, understand, and resolve a cardholder inquiry across any servicing channel. First-contact resolution is the design goal across phone, chat, and secure message; anything unresolved routes to a case with ownership and a promise date.", $tags="processes")
@@ -42,6 +46,10 @@ Rel(P_CUST_INQ_001, CAP_SERV_01, "supports")
 ' aac rel: source="P_CUST_INQ_001"; target="CAP_SERV_01"; label="supports"; relation="process_supports_capability"
 Rel(P_CUST_INQ_001, CAP_SERV_02, "supports")
 ' aac rel: source="P_CUST_INQ_001"; target="CAP_SERV_02"; label="supports"; relation="process_supports_capability"
+Rel(P_CUST_INQ_001, CAP_SERV_01_01, "supports")
+' aac rel: source="P_CUST_INQ_001"; target="CAP_SERV_01_01"; label="supports"; relation="process_supports_capability"
+Rel(P_CUST_INQ_001, CAP_SERV_01_02, "supports")
+' aac rel: source="P_CUST_INQ_001"; target="CAP_SERV_01_02"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

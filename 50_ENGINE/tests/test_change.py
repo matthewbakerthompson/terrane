@@ -142,7 +142,13 @@ class TestSeededEstate(unittest.TestCase):
         """What a work package touches in the business is derived, not
         declared: the screening onboarding changes the auth switch, the
         switch writes the transaction record, and eight processes read it.
-        No row says the onboarding touches a process; the estate does."""
+        No row says the onboarding touches a process; the estate does.
+        Since the business layer named the switch and the screening product
+        in its own processes (2026-11-18), the footprint reaches further the
+        same way: through the authorization log the switch writes, and
+        through what the two now realize, sanctions and merchant screening,
+        authorization and its stand-in. Twenty processes, none of them
+        named by the work package."""
         view = next(v for v in seeded_views() if v.view_id == "change-footprint")
         # One per work package with a footprint: the merchant portal's is the
         # sixth, the first package for a product assembled from parts; the
@@ -157,13 +163,21 @@ class TestSeededEstate(unittest.TestCase):
             ids.setdefault(node.entity_type, set()).add(str(node.record.get(pk)))
         self.assertIn("SYS-AUTH-SWITCH", ids["systems"])
         self.assertIn("DA-TRANSACTION", ids["data_assets"])
-        self.assertEqual(len(ids["processes"]), 8)
+        self.assertIn("DA-AUTH-LOG", ids["data_assets"])
+        self.assertEqual(len(ids["processes"]), 20)
+        # The eight that only read what the switch writes, as before.
+        readers = {"P-DISPUTE-001", "P-FRAUD-001", "P-NETWORK-RECON-001", "P-PAYMENTS-002", "P-SERVICING-001",
+                   "P-STMT-GEN-001", "P-TPS-002", "P-PAYMENTS-001"}
+        self.assertLessEqual(readers, ids["processes"])
+        # Merchant screening arrives through the capability the bought
+        # screening realizes, not through any data it holds.
+        self.assertIn("P-MERCHANT-004", ids["processes"])
+        self.assertIn("CAP-MERCH-02-02", ids["capabilities"])
         self.assertNotIn("tech_services", ids)  # a footprint, not a topology
-        self.assertLessEqual({"Builds", "Changes"}, {edge.label for edge in graph.edges})
-        self.assertFalse([
-            row for row in self.model.relation_rows("process_uses_system")
-            if row.get("system_id") == "SYS-AUTH-SWITCH"
-        ])
+        self.assertLessEqual({"Builds", "Changes", "realizes", "supports"}, {edge.label for edge in graph.edges})
+        self.assertFalse([row for row in self.model.relation_rows("work_package_affects_system")
+                          if row.get("work_package_id") == "WP-SCREENING-ONBOARD"
+                          and not row.get("system_id", "").startswith(("SYS-SCREENING-", "SYS-AUTH-SWITCH"))])
 
     def test_the_effect_qualifier_distinguishes_a_build_from_a_release(self) -> None:
         """A work package that only builds new systems can slip; one that

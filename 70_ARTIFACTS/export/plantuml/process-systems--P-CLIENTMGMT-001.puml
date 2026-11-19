@@ -1,0 +1,46 @@
+@startuml
+' Qualify, price, and contract servicing client — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Qualify, price, and contract servicing client — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_PART_03, "Servicing Client Origination & Contracting", "Win and contract third-party servicing engagements.", $tags="capabilities")
+  ' aac CAP_PART_03: company_domain="Cross-Functional Services"
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_CLIENT_SERV, "Servicing client program data", "Client program configuration, SLAs, and reporting extracts for serviced portfolios.", $tags="data_assets")
+  ' aac DA_CLIENT_SERV: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_CLIENTMGMT_001, "Qualify, price, and contract servicing client", "Qualify a lender that wants its card portfolio serviced, price the work from the portfolio's size and the services chosen, answer the client's own diligence of the bank, and sign the servicing agreement and service levels. The agreement sets the reporting, service levels and change process every later step is held to.", $tags="processes")
+  ' aac P_CLIENTMGMT_001: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+  System(SYS_GRC, "Governance, risk and compliance platform", "Policy, control, issue, and risk register management.", $tags="systems")
+  ' aac SYS_GRC: company_domain=""
+  System(SYS_CLIENT_PORTAL, "Servicing client portal", "Client reporting, data exchange, and interaction.", $tags="systems")
+  ' aac SYS_CLIENT_PORTAL: company_domain=""
+}
+
+Rel(P_CLIENTMGMT_001, SYS_CLIENT_PORTAL, "Primary")
+' aac rel: source="P_CLIENTMGMT_001"; target="SYS_CLIENT_PORTAL"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_CLIENTMGMT_001, SYS_DOC, "Supporting")
+' aac rel: source="P_CLIENTMGMT_001"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_CLIENTMGMT_001, SYS_GRC, "Supporting")
+' aac rel: source="P_CLIENTMGMT_001"; target="SYS_GRC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_CLIENTMGMT_001, DA_CLIENT_SERV, "Write")
+' aac rel: source="P_CLIENTMGMT_001"; target="DA_CLIENT_SERV"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_CLIENTMGMT_001, CAP_PART_03, "supports")
+' aac rel: source="P_CLIENTMGMT_001"; target="CAP_PART_03"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

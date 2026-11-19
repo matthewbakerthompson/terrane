@@ -75,12 +75,12 @@ against in workshops, and what each process touches.
 
 | | |
 |---|---|
-| Processes | 149, every one Proposed, with its value stream, owner, criticality, trigger and frequency. The steps, the flows and the BPMN stay in the business repository |
-| Harvested systems | 33 that this estate did not hold, Proposed and Medium until someone who owns one says otherwise. Six more are the same thing under another id and are mapped instead |
-| Harvested data assets | 10, each naming the system that is its source of truth |
-| What a process touches | 713 rows: the capabilities it supports, the systems it uses and in what role, the data it uses and how, the controls and policies on it |
-| Realizations | 142 derived: a system a process uses in the Primary role realizes what that process supports |
-| Framework placements | 221: where in BIAN, ITIL, CRI, DMBOK or APQC each capability sits, as a path in the framework's own terms |
+| Processes | 210, every one Proposed, with its value stream, owner, criticality, trigger and frequency. The steps, the flows and the BPMN stay in the business repository |
+| Harvested systems | 43 that this estate did not hold, Proposed and Medium until someone who owns one says otherwise. Seventeen more are the same thing under another id and are mapped instead, eleven of them roles the layer named for a product the estate had already built or bought |
+| Harvested data assets | 18, each naming the system that is its source of truth |
+| What a process touches | 1,227 rows: the capabilities it supports, the systems it uses and in what role, the data it uses and how, the controls and policies on it |
+| Realizations | 242 derived: a system a process uses in the Primary role realizes what that process supports |
+| Framework placements | 259: where in BIAN, ITIL, CRI, DMBOK or APQC each capability sits, as a path in the framework's own terms |
 
 Two rules apply. **Aliases, not duplicates:** where the two
 repositories name the same system differently, `60_SOURCES/business_layer/aliases.yaml`
@@ -140,7 +140,7 @@ drafted for a workshop, and no assessment has been made of either.
 
 | View | What it answers |
 |---|---|
-| `capability-map` | All 136 level-1 capabilities in their 22 domains, banded Direct / Core / Enable, on one page |
+| `capability-map` | All 142 level-1 capabilities in their 22 domains, banded Direct / Core / Enable, on one page |
 | `frameworks` | Every framework against every domain: how firmly each domain follows it, and how many of its capabilities are placed in it |
 | `value-streams` | The nine streams and their stages, in order, each with its exit criterion |
 | `value-stream-capabilities` | One stream, its stages, and what each stage depends on |

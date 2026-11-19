@@ -48,6 +48,12 @@ Deployment_Node(TS_GCP_CLOUD_SQL, "Cloud SQL for PostgreSQL", "Relational databa
 Deployment_Node(TS_GCP_GKE, "Google Kubernetes Engine", "Container platform", "Managed Kubernetes for the containerized estate on Google Cloud, an Autopilot cluster per workload project.", $tags="tech_services") {
   ' aac TS_GCP_GKE: company_domain="Enterprise Platform"; technology="Container platform"
 }
+Deployment_Node(TS_GCPNET_SUB_LEND_APP, "Lending App Subnetwork", "Subnet", "Where the GKE nodes land. Regional, shared to the lending project from the host project, so the zones are the cluster's to spread across.", $tags="tech_services") {
+  ' aac TS_GCPNET_SUB_LEND_APP: company_domain="Lending"; technology="Subnet"
+}
+Deployment_Node(TS_GCPNET_SUB_LEND_DATA, "Lending Data Subnetwork", "Subnet", "Cloud SQL's private services access range and the Memorystore endpoints; no route to the internet, in or out.", $tags="tech_services") {
+  ' aac TS_GCPNET_SUB_LEND_DATA: company_domain="Lending"; technology="Subnet"
+}
 Deployment_Node(TS_ENTRA_ID, "Microsoft Entra ID", "Identity provider", "Workforce and customer identity provider.", $tags="tech_services") {
   ' aac TS_ENTRA_ID: company_domain="Enterprise Platform"; technology="Identity provider"
 }
@@ -102,6 +108,12 @@ Rel(SYS_POSFIN_DB, TS_GCP_KMS, "runs on")
 ' aac rel: source="SYS_POSFIN_DB"; target="TS_GCP_KMS"; label="runs on"; relation="system_uses_tech_service"
 Rel(SYS_POSFIN_EVENTS, TS_GCP_PUBSUB, "runs on")
 ' aac rel: source="SYS_POSFIN_EVENTS"; target="TS_GCP_PUBSUB"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_POSFIN_API, TS_GCPNET_SUB_LEND_APP, "runs on")
+' aac rel: source="SYS_POSFIN_API"; target="TS_GCPNET_SUB_LEND_APP"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_POSFIN_WEB, TS_GCPNET_SUB_LEND_APP, "runs on")
+' aac rel: source="SYS_POSFIN_WEB"; target="TS_GCPNET_SUB_LEND_APP"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_POSFIN_DB, TS_GCPNET_SUB_LEND_DATA, "runs on")
+' aac rel: source="SYS_POSFIN_DB"; target="TS_GCPNET_SUB_LEND_DATA"; label="runs on"; relation="system_uses_tech_service"
 Rel(SYS_POSFIN_API, DA_POSFIN_OPERATIONAL, "ReadWrite")
 ' aac rel: source="SYS_POSFIN_API"; target="DA_POSFIN_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
 Rel(SYS_POSFIN_DB, DA_POSFIN_OPERATIONAL, "ReadWrite")

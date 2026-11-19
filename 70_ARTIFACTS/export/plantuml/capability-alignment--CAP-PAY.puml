@@ -34,8 +34,14 @@ Boundary(b_Control, "Control") {
   ' aac CTL_AUTH_AVAIL: company_domain=""
   System(CTL_DAILY_RECON, "Daily settlement and clearing reconciliation", "Network settlement, clearing files, and interchange postings reconcile to network totals daily; unreconciled variances stop downstream posting.", $tags="controls")
   ' aac CTL_DAILY_RECON: company_domain=""
+  System(CTL_FRAUD_SLA, "Fraud alert handling service level", "Fraud alerts are actioned within the loss-budget SLA with disposition quality sampling; Reg E liability decisions are documented per case.", $tags="controls")
+  ' aac CTL_FRAUD_SLA: company_domain=""
+  System(CTL_PMT_ALLOC, "Payment allocation to rule", "Payments above the minimum go to the highest-rate balance first; allocation is sampled daily across accounts with more than one balance.", $tags="controls")
+  ' aac CTL_PMT_ALLOC: company_domain=""
   System(CTL_PMT_POSTING, "Payment posting timeliness", "Cardholder payments post as of the day of receipt per Reg Z crediting rules, with cutoff disclosures honored and exceptions reported.", $tags="controls")
   ' aac CTL_PMT_POSTING: company_domain=""
+  System(CTL_CHG_APPROVAL, "Production change approval", "No change reaches production without an approved change record, test evidence, and a rollback plan; emergency changes are reviewed after the fact.", $tags="controls")
+  ' aac CTL_CHG_APPROVAL: company_domain=""
 }
 Boundary(b_Framework, "Framework") {
   System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
@@ -46,22 +52,32 @@ Boundary(b_Framework, "Framework") {
   ' aac FW_PCI_DSS: company_domain=""
 }
 Boundary(b_Process, "Process") {
+  System(P_PAYMENTS_010, "Allocate payment across balances", "Apply each payment above the minimum to the balance with the highest rate first, as the card rules require, and treat promotional, deferred-interest and disputed balances correctly. Allocation errors overcharge interest on every account with more than one balance, which makes them a remediation, not a correction.", $tags="processes")
+  ' aac P_PAYMENTS_010: company_domain=""
   System(P_CARD_PMT_001, "Capture and apply cardholder payment", "Accept a cardholder payment through any channel and apply it to the account on the correct effective date.", $tags="processes")
   ' aac P_CARD_PMT_001: company_domain=""
+  System(P_PAYMENTS_008, "Enroll and run automatic payments", "Enroll a cardholder's bank account for recurring payments of the minimum, the statement balance or a fixed amount, verify the account, and originate the debits on schedule under the authorization the cardholder gave. Each debit needs a valid authorization, and a debit taken after it was revoked is an error claim.", $tags="processes")
+  ' aac P_PAYMENTS_008: company_domain=""
   System(P_SETTLEMENT_001, "Fund daily network settlement position", "Determine and fund the daily settlement position with the networks. The settlement position must fund by the network deadline in the settlement currency; a miss is a network compliance event, so the process carries same-day escalation.", $tags="processes")
   ' aac P_SETTLEMENT_001: company_domain=""
   System(P_PAYMENTS_002, "Ingest clearing file and post transactions", "Receive network clearing files and post transactions to cardholder accounts. Clearing ingestion matches presentments to authorizations, posts to accounts, and routes exceptions; the file must balance to network totals before posting completes.", $tags="processes")
   ' aac P_PAYMENTS_002: company_domain=""
   System(P_SETTLEMENT_003, "Investigate and clear settlement exception", "Investigate settlement breaks and exceptions and drive them to resolution. Settlement exceptions are worked to root cause across network reports, the gateway, and the ledger; recurring breaks feed a fix, not a workaround.", $tags="processes")
   ' aac P_SETTLEMENT_003: company_domain=""
+  System(P_PAYMENTS_007, "Maintain authorization routing and network connectivity", "Maintain the switch's routing tables, network keys and message specifications, apply the networks' release changes, and test connectivity with each network. A routing or key error declines every transaction on that path until it is fixed.", $tags="processes")
+  ' aac P_PAYMENTS_007: company_domain=""
   System(P_PAYMENTS_004, "Manage token and credential lifecycle", "Issue, update, suspend, and delete payment tokens and credentials. Token lifecycle events flow between networks, wallets, and the account of record; a stale token strands the cardholder's wallet, so lifecycle sync is monitored.", $tags="processes")
   ' aac P_PAYMENTS_004: company_domain=""
   System(P_SETTLEMENT_004, "Monitor and optimize interchange qualification", "Monitor interchange qualification rates, identify downgrades, and drive corrections in processing configuration.", $tags="processes")
   ' aac P_SETTLEMENT_004: company_domain=""
+  System(P_PAYMENTS_006, "Operate stand-in authorization during a host outage", "When the authorization host is slow or down, switch to stand-in so the switch or the network approves within set limits, then replay the stand-in decisions to the ledger when the host returns. Stand-in limits trade lost sales against unsecured exposure, and every stand-in approval must post or it is a balance nobody owes.", $tags="processes")
+  ' aac P_PAYMENTS_006: company_domain=""
   System(P_INTERCHANGE_POST_001, "Post interchange and settlement entries", "Calculate and post interchange and settlement accounting entries to the ledger. Interchange entries reconcile to network reports before posting; unexplained variances stop the post rather than flowing into revenue.", $tags="processes")
   ' aac P_INTERCHANGE_POST_001: company_domain=""
   System(P_PAYMENTS_001, "Process authorization request", "Receive, decision, and respond to a real-time authorization request within the network response window.", $tags="processes")
   ' aac P_PAYMENTS_001: company_domain=""
+  System(P_PAYMENTS_009, "Process lockbox and check payments", "Receive mailed checks through the lockbox, match each to an account by coupon or by research, post it the day it arrives, and work the exceptions. A payment received by the cutoff must be credited that day, so unmatched items are researched before they age.", $tags="processes")
+  ' aac P_PAYMENTS_009: company_domain=""
   System(P_PAYMENTS_003, "Process returned payment and assess NSF", "Handle returned and reversed payments and assess the associated fees. Return handling reverses the payment application, restores the balance, assesses any permitted fee, and feeds NSF patterns to risk; Reg E error claims can start here.", $tags="processes")
   ' aac P_PAYMENTS_003: company_domain=""
   System(P_ORIG_008, "Provision credential to digital wallet", "Provision the card credential into a digital wallet or tokenized environment. Wallet provisioning runs the network token flows with step-up verification where risk requires; weak provisioning is a known fraud vector the strategy watches.", $tags="processes")
@@ -133,16 +149,38 @@ Rel(P_SETTLEMENT_003, CAP_PAY_06, "supported by")
 ' aac rel: source="P_SETTLEMENT_003"; target="CAP_PAY_06"; label="supported by"; relation="process_supports_capability"
 Rel(P_SETTLEMENT_004, CAP_PAY_05, "supported by")
 ' aac rel: source="P_SETTLEMENT_004"; target="CAP_PAY_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_PAYMENTS_006, CAP_PAY_01, "supported by")
+' aac rel: source="P_PAYMENTS_006"; target="CAP_PAY_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_PAYMENTS_007, CAP_PAY_01, "supported by")
+' aac rel: source="P_PAYMENTS_007"; target="CAP_PAY_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_PAYMENTS_008, CAP_PAY_03, "supported by")
+' aac rel: source="P_PAYMENTS_008"; target="CAP_PAY_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_PAYMENTS_009, CAP_PAY_03, "supported by")
+' aac rel: source="P_PAYMENTS_009"; target="CAP_PAY_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_PAYMENTS_010, CAP_PAY_03, "supported by")
+' aac rel: source="P_PAYMENTS_010"; target="CAP_PAY_03"; label="supported by"; relation="process_supports_capability"
 Rel(CAP_PAY, CTL_AUTH_AVAIL, "governed by")
 ' aac rel: source="CAP_PAY"; target="CTL_AUTH_AVAIL"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_PAY, CTL_CHG_APPROVAL, "governed by")
+' aac rel: source="CAP_PAY"; target="CTL_CHG_APPROVAL"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
 Rel(CAP_PAY, CTL_DAILY_RECON, "governed by")
 ' aac rel: source="CAP_PAY"; target="CTL_DAILY_RECON"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_PAY, CTL_FRAUD_SLA, "governed by")
+' aac rel: source="CAP_PAY"; target="CTL_FRAUD_SLA"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_PAY, CTL_PMT_ALLOC, "governed by")
+' aac rel: source="CAP_PAY"; target="CTL_PMT_ALLOC"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
 Rel(CAP_PAY, CTL_PMT_POSTING, "governed by")
 ' aac rel: source="CAP_PAY"; target="CTL_PMT_POSTING"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
 Rel(CAP_PAY_01, CTL_AUTH_AVAIL, "governed by")
 ' aac rel: source="CAP_PAY_01"; target="CTL_AUTH_AVAIL"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_PAY_01, CTL_CHG_APPROVAL, "governed by")
+' aac rel: source="CAP_PAY_01"; target="CTL_CHG_APPROVAL"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_PAY_01, CTL_FRAUD_SLA, "governed by")
+' aac rel: source="CAP_PAY_01"; target="CTL_FRAUD_SLA"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
 Rel(CAP_PAY_02, CTL_DAILY_RECON, "governed by")
 ' aac rel: source="CAP_PAY_02"; target="CTL_DAILY_RECON"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_PAY_03, CTL_PMT_ALLOC, "governed by")
+' aac rel: source="CAP_PAY_03"; target="CTL_PMT_ALLOC"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
 Rel(CAP_PAY_03, CTL_PMT_POSTING, "governed by")
 ' aac rel: source="CAP_PAY_03"; target="CTL_PMT_POSTING"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
 Rel(CAP_PAY_05, CTL_DAILY_RECON, "governed by")
@@ -151,10 +189,14 @@ Rel(CAP_PAY_06, CTL_DAILY_RECON, "governed by")
 ' aac rel: source="CAP_PAY_06"; target="CTL_DAILY_RECON"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
 Rel(SYS_AUTH_SWITCH, CAP_PAY, "realizes")
 ' aac rel: source="SYS_AUTH_SWITCH"; target="CAP_PAY"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_AUTH_SWITCH, CAP_PAY_01, "realizes")
+' aac rel: source="SYS_AUTH_SWITCH"; target="CAP_PAY_01"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_CORE_LEDGER, CAP_PAY_01, "realizes")
 ' aac rel: source="SYS_CORE_LEDGER"; target="CAP_PAY_01"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_CORE_LEDGER, CAP_PAY_02, "realizes")
 ' aac rel: source="SYS_CORE_LEDGER"; target="CAP_PAY_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CORE_LEDGER, CAP_PAY_03, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_PAY_03"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_CORE_LEDGER, CAP_PAY_05, "realizes")
 ' aac rel: source="SYS_CORE_LEDGER"; target="CAP_PAY_05"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_DATA_INGEST, CAP_PAY_05, "realizes")

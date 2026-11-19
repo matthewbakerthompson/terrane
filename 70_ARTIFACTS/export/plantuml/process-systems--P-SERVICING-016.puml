@@ -1,0 +1,57 @@
+@startuml
+' Refund credit balance and report unclaimed property — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Refund credit balance and report unclaimed property — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_BILL_06, "Credit Balance Refund & Unclaimed Property", "Refund credit balances on request or after the regulatory period, and report and remit unclaimed balances to the states.", $tags="capabilities")
+  ' aac CAP_BILL_06: company_domain="Servicing"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_CREDIT_BAL, "Credit balance refund and escheatment", "Credit balances are refunded on request or at the regulatory age, and unreturnable balances are reported to the states on their schedules.", $tags="controls")
+  ' aac CTL_CREDIT_BAL: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_CUSTOMER_PROFILE, "Customer profile", "Contact details, preferences and servicing history.", $tags="data_assets")
+  ' aac DA_CUSTOMER_PROFILE: company_domain="Servicing"
+  SystemDb(DA_GL, "General ledger entries", "Posted financial entries, settlement and reconciliation balances.", $tags="data_assets")
+  ' aac DA_GL: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_SERVICING_016, "Refund credit balance and report unclaimed property", "Refund a credit balance when the cardholder asks or once it reaches the regulatory age, by check or deposit, and report and remit balances that cannot be returned to the states as unclaimed property. Both clocks are regulatory, and a refund check that is never cashed starts the unclaimed property clock again.", $tags="processes")
+  ' aac P_SERVICING_016: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_GL, "General ledger", "General ledger and financial accounting.", $tags="systems")
+  ' aac SYS_GL: company_domain=""
+  System(SYS_PAYMENT_GW, "Payment capture gateway", "Payment capture across ACH, debit, lockbox, and wallet channels.", $tags="systems")
+  ' aac SYS_PAYMENT_GW: company_domain=""
+}
+
+Rel(P_SERVICING_016, SYS_CORE_LEDGER, "Primary")
+' aac rel: source="P_SERVICING_016"; target="SYS_CORE_LEDGER"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_SERVICING_016, SYS_PAYMENT_GW, "Supporting")
+' aac rel: source="P_SERVICING_016"; target="SYS_PAYMENT_GW"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_016, SYS_GL, "Supporting")
+' aac rel: source="P_SERVICING_016"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_016, DA_CUSTOMER_PROFILE, "Read")
+' aac rel: source="P_SERVICING_016"; target="DA_CUSTOMER_PROFILE"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_SERVICING_016, DA_GL, "Write")
+' aac rel: source="P_SERVICING_016"; target="DA_GL"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_SERVICING_016, CTL_CREDIT_BAL, "governed by")
+' aac rel: source="P_SERVICING_016"; target="CTL_CREDIT_BAL"; label="governed by"; relation="process_governed_by_control"
+Rel(P_SERVICING_016, CAP_BILL_06, "supports")
+' aac rel: source="P_SERVICING_016"; target="CAP_BILL_06"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

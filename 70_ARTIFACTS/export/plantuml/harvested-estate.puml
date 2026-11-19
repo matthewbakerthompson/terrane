@@ -18,6 +18,8 @@ System(SYS_APPFRAUD, "Application fraud screening", "Application fraud and ident
 ' aac SYS_APPFRAUD: company_domain=""
 System(SYS_AUTH_SWITCH, "Authorization Switch", "Real-time card authorization switch connected to the scheme networks.", $tags="systems")
 ' aac SYS_AUTH_SWITCH: company_domain="Payments"; hosting="On-prem"
+System(SYS_BROKER_GW, "Brokered deposit settlement gateway", "Exchanges brokered CD issuance, allocation and position files with the broker-dealers and the depository.", $tags="systems")
+' aac SYS_BROKER_GW: company_domain=""
 System(SYS_MARKETING, "Campaign management", "Campaign management and execution.", $tags="systems")
 ' aac SYS_MARKETING: company_domain=""
 System_Ext(SYS_CARD_FULFILL, "Card production and fulfillment", "Card production, personalization, and fulfillment. Built with external.", $tags="systems")
@@ -40,6 +42,10 @@ System(SYS_BUREAU_GW, "Credit bureau gateway", "Credit bureau furnishing and con
 ' aac SYS_BUREAU_GW: company_domain=""
 System(SYS_CREDIT_DATA, "Credit data and decisioning environment", "Credit data, analytics, and decisioning environment. Built with Snowflake Data Cloud.", $tags="systems")
 ' aac SYS_CREDIT_DATA: company_domain=""; technology="Snowflake Data Cloud"
+System_Ext(SYS_DEALER_PORTAL, "Dealer portal", "Where dealers submit applications, see decisions and stipulations, upload contracts, and track funding and reserve. Built with SaaS.", $tags="systems")
+' aac SYS_DEALER_PORTAL: company_domain=""; hosting="SaaS"; technology="SaaS"
+System(SYS_DEPOSIT, "Deposit platform", "System of record for CDs and savings: opening, interest accrual, maturities, early withdrawal and tax reporting.", $tags="systems")
+' aac SYS_DEPOSIT: company_domain=""
 System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
 ' aac SYS_DOC: company_domain=""
 System_Ext(SYS_CRM, "Dynamics 365 Customer Service", "Contact center desktop and case management for servicing agents. Built with Microsoft.", $tags="systems")
@@ -56,10 +62,24 @@ System(SYS_CATALOG, "Governance catalog", "Governance catalog and metadata syste
 ' aac SYS_CATALOG: company_domain=""; technology="Collibra Data Intelligence"
 System(SYS_KYC, "Identity verification", "Identity verification and customer identification program checks.", $tags="systems")
 ' aac SYS_KYC: company_domain=""
+System(SYS_LOS, "Indirect loan origination system", "Takes dealer applications, runs the credit decision and counteroffers, and carries the contract package to funding.", $tags="systems")
+' aac SYS_LOS: company_domain=""
+System(SYS_LOAN_SVC, "Installment loan servicing platform", "System of record for installment loans: boarding, billing, payment posting, payoff quotes, deferrals and ancillary product refunds.", $tags="systems")
+' aac SYS_LOAN_SVC: company_domain=""
 System(SYS_IVR, "IVR and self-service voice", "Interactive voice response and voice self-service.", $tags="systems")
 ' aac SYS_IVR: company_domain=""
+System_Ext(SYS_LEGAL_MATTER, "Legal matter management", "Tracks litigation, outside counsel, filings, judgments and legal placements. Built with SaaS.", $tags="systems")
+' aac SYS_LEGAL_MATTER: company_domain=""; hosting="SaaS"; technology="SaaS"
+System_Ext(SYS_MERCH_ACQ, "Merchant acquiring platform", "Processor platform for merchant boarding, clearing, settlement, reserves, fees and statements. Built with external.", $tags="systems")
+' aac SYS_MERCH_ACQ: company_domain=""; hosting="External"; technology="external"
+System(SYS_MERCHANT_API, "Merchant Portal Service", "Domain API for the merchant portal: applications, settlement inquiries, chargeback responses and statement downloads. Built with AKS · Merchant Portal Cache.", $tags="systems")
+' aac SYS_MERCHANT_API: company_domain="Payments"; hosting="Azure"; technology="AKS · Merchant Portal Cache"
+System(SYS_MERCH_RISK, "Merchant risk monitoring", "Monitors merchant volume, chargeback ratios and exposure, and checks merchants against the networks' terminated-merchant file.", $tags="systems")
+' aac SYS_MERCH_RISK: company_domain=""
 System(SYS_MODEL, "Model platform", "Model development, deployment, and monitoring.", $tags="systems")
 ' aac SYS_MODEL: company_domain=""
+System(SYS_SCREENING_GATEWAY, "NICE Actimize Screening Integration Gateway", "Our side of the NICE Actimize integration: request mapping, retry and back-off, circuit breaking when the vendor is down, and the audit trail of what we sent them. Built with EKS.", $tags="systems")
+' aac SYS_SCREENING_GATEWAY: company_domain="Risk and Compliance"; hosting="AWS"; technology="EKS"
 System(SYS_ORIG_DECISION, "Originations decision engine", "Application processing and credit decision execution.", $tags="systems")
 ' aac SYS_ORIG_DECISION: company_domain=""
 System(SYS_DIALER, "Outbound contact platform", "Outbound dialer and contact campaign execution.", $tags="systems")
@@ -70,12 +90,16 @@ System(SYS_PROSPECT_DATA, "Prospect and marketing data services", "Prospect and 
 ' aac SYS_PROSPECT_DATA: company_domain=""
 System(SYS_RECON, "Reconciliation platform", "Automated reconciliation and exception management.", $tags="systems")
 ' aac SYS_RECON: company_domain=""
+System_Ext(SYS_REMARKET, "Repossession and remarketing management", "Assigns repossession agents, tracks condition reports and notices, and runs auction and retail remarketing. Built with external.", $tags="systems")
+' aac SYS_REMARKET: company_domain=""; hosting="External"; technology="external"
 System(SYS_REWARDS, "Rewards ledger", "Rewards accrual ledger and redemption.", $tags="systems")
 ' aac SYS_REWARDS: company_domain=""
 System(SYS_CLIENT_PORTAL, "Servicing client portal", "Client reporting, data exchange, and interaction.", $tags="systems")
 ' aac SYS_CLIENT_PORTAL: company_domain=""
 System(SYS_STATEMENTS, "Statement Generation", "Composes, renders and dispatches customer statements.", $tags="systems")
 ' aac SYS_STATEMENTS: company_domain="Servicing"; hosting="On-prem"
+System_Ext(SYS_TITLE, "Title and lien management", "Electronic lien and title tracking across the titling states, title custody, and release on payoff. Built with external.", $tags="systems")
+' aac SYS_TITLE: company_domain=""; hosting="External"; technology="external"
 System(SYS_TOKEN, "Tokenization and credential management", "Token and credential lifecycle management.", $tags="systems")
 ' aac SYS_TOKEN: company_domain=""
 System(SYS_FRAUD_DETECT, "Transaction fraud detection", "Real-time transaction fraud scoring and alerting.", $tags="systems")
@@ -161,6 +185,50 @@ Rel(SYS_KYC, SYS_AML, "Identity Verification to Financial Crimes Platform", "AMQ
 ' aac rel: source="SYS_KYC"; target="SYS_AML"; label="Identity Verification to Financial Crimes Platform"; interface_id="INT-KYC-AML"; kind="event"; integration_style="Event"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="event-fanout"
 Rel(SYS_CORE_LEDGER, SYS_AML, "Core Card Ledger to Financial Crimes Platform", "FileTransfer", $tags="scheduled-file")
 ' aac rel: source="SYS_CORE_LEDGER"; target="SYS_AML"; label="Core Card Ledger to Financial Crimes Platform"; interface_id="INT-LEDGER-AML"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="windowed-batch"
+Rel(SYS_DEALER_PORTAL, SYS_LOS, "Dealer Portal to Indirect Loan Origination", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_DEALER_PORTAL"; target="SYS_LOS"; label="Dealer Portal to Indirect Loan Origination"; interface_id="INT-DEALER-PORTAL-LOS"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="api-front-door"
+Rel(SYS_LOS, SYS_BUREAU_GW, "Indirect Loan Origination to Credit Bureau Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_LOS"; target="SYS_BUREAU_GW"; label="Indirect Loan Origination to Credit Bureau Gateway"; interface_id="INT-LOS-BUREAU-GW"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="inline-risk-decision"
+Rel(SYS_LOS, SYS_KYC, "Indirect Loan Origination to Identity Verification", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_LOS"; target="SYS_KYC"; label="Indirect Loan Origination to Identity Verification"; interface_id="INT-LOS-KYC"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="inline-risk-decision"
+Rel(SYS_LOS, SYS_APPFRAUD, "Indirect Loan Origination to Application Fraud Screening", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_LOS"; target="SYS_APPFRAUD"; label="Indirect Loan Origination to Application Fraud Screening"; interface_id="INT-LOS-APPFRAUD"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="inline-risk-decision"
+Rel(SYS_LOS, SYS_LOAN_SVC, "Indirect Loan Origination to Loan Servicing", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_LOS"; target="SYS_LOAN_SVC"; label="Indirect Loan Origination to Loan Servicing"; interface_id="INT-LOS-LOAN-SVC-BOARD"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="windowed-batch"
+Rel(SYS_LOAN_SVC, SYS_TITLE, "Loan Servicing to Title and Lien Management", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_LOAN_SVC"; target="SYS_TITLE"; label="Loan Servicing to Title and Lien Management"; interface_id="INT-LOAN-SVC-TITLE"; kind="scheduled-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Outbound"; patterns="partner-file-exchange"
+Rel(SYS_PAYMENT_GW, SYS_LOAN_SVC, "Payment Capture Gateway to Loan Servicing", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_PAYMENT_GW"; target="SYS_LOAN_SVC"; label="Payment Capture Gateway to Loan Servicing"; interface_id="INT-PAYMENT-GW-LOAN-SVC"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="payment-capture-and-posting"
+Rel(SYS_LOAN_SVC, SYS_GL, "Loan Servicing to General Ledger", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_LOAN_SVC"; target="SYS_GL"; label="Loan Servicing to General Ledger"; interface_id="INT-LOAN-SVC-GL"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="windowed-batch"
+Rel(SYS_LOAN_SVC, SYS_COLLECT_API, "Loan Servicing to Collections Platform", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_LOAN_SVC"; target="SYS_COLLECT_API"; label="Loan Servicing to Collections Platform"; interface_id="INT-LOAN-SVC-COLLECT"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="windowed-batch"
+Rel(SYS_LOAN_SVC, SYS_BUREAU_GW, "Loan Servicing to Credit Bureau Gateway", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_LOAN_SVC"; target="SYS_BUREAU_GW"; label="Loan Servicing to Credit Bureau Gateway"; interface_id="INT-LOAN-SVC-BUREAU-GW"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Monthly"; direction="Outbound"; patterns="regulatory-file-furnishing"
+Rel(SYS_LOAN_SVC, SYS_REMARKET, "Loan Servicing to Repossession and Remarketing", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_LOAN_SVC"; target="SYS_REMARKET"; label="Loan Servicing to Repossession and Remarketing"; interface_id="INT-LOAN-SVC-REMARKET"; kind="scheduled-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Outbound"; patterns="partner-file-exchange"
+Rel(SYS_MERCHANT_API, SYS_MERCH_ACQ, "Merchant Portal Service to Merchant Acquiring Platform", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_MERCHANT_API"; target="SYS_MERCH_ACQ"; label="Merchant Portal Service to Merchant Acquiring Platform"; interface_id="INT-MERCHANT-API-ACQ"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="api-front-door"
+Rel(SYS_MERCH_ACQ, SYS_MERCH_RISK, "Merchant Acquiring Platform to Merchant Risk Monitoring", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_MERCH_ACQ"; target="SYS_MERCH_RISK"; label="Merchant Acquiring Platform to Merchant Risk Monitoring"; interface_id="INT-MERCH-ACQ-RISK"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="windowed-batch"
+Rel(SYS_MERCH_RISK, SYS_SCREENING_GATEWAY, "Merchant Risk Monitoring to Screening Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_MERCH_RISK"; target="SYS_SCREENING_GATEWAY"; label="Merchant Risk Monitoring to Screening Gateway"; interface_id="INT-MERCH-RISK-SCREENING"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="inline-risk-decision"
+Rel(SYS_MERCH_ACQ, SYS_GL, "Merchant Acquiring Platform to General Ledger", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_MERCH_ACQ"; target="SYS_GL"; label="Merchant Acquiring Platform to General Ledger"; interface_id="INT-MERCH-ACQ-GL"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="windowed-batch"
+Rel(SYS_MERCH_ACQ, SYS_RECON, "Merchant Acquiring Platform to Reconciliation", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_MERCH_ACQ"; target="SYS_RECON"; label="Merchant Acquiring Platform to Reconciliation"; interface_id="INT-MERCH-ACQ-RECON"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="windowed-batch"
+Rel(SYS_DEPOSIT, SYS_KYC, "Deposit Platform to Identity Verification", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_DEPOSIT"; target="SYS_KYC"; label="Deposit Platform to Identity Verification"; interface_id="INT-DEPOSIT-KYC"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="inline-risk-decision"
+Rel(SYS_DEPOSIT, SYS_SCREENING_GATEWAY, "Deposit Platform to Screening Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_DEPOSIT"; target="SYS_SCREENING_GATEWAY"; label="Deposit Platform to Screening Gateway"; interface_id="INT-DEPOSIT-SCREENING"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="inline-risk-decision"
+Rel(SYS_BROKER_GW, SYS_DEPOSIT, "Brokered Deposit Gateway to Deposit Platform", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_BROKER_GW"; target="SYS_DEPOSIT"; label="Brokered Deposit Gateway to Deposit Platform"; interface_id="INT-BROKER-GW-DEPOSIT"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="windowed-batch"
+Rel(SYS_DEPOSIT, SYS_GL, "Deposit Platform to General Ledger", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_DEPOSIT"; target="SYS_GL"; label="Deposit Platform to General Ledger"; interface_id="INT-DEPOSIT-GL"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="windowed-batch"
+Rel(SYS_DEPOSIT, SYS_TREASURY, "Deposit Platform to Treasury Management", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_DEPOSIT"; target="SYS_TREASURY"; label="Deposit Platform to Treasury Management"; interface_id="INT-DEPOSIT-TREASURY"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Daily"; direction="Outbound"; patterns="windowed-batch"
+Rel(SYS_COLLECT_API, SYS_LEGAL_MATTER, "Collections Platform to Legal Matter Management", "FileTransfer", $tags="scheduled-file")
+' aac rel: source="SYS_COLLECT_API"; target="SYS_LEGAL_MATTER"; label="Collections Platform to Legal Matter Management"; interface_id="INT-COLLECT-LEGAL"; kind="scheduled-file"; integration_style="Batch"; auth_method="MutualTLS"; frequency="Weekly"; direction="Outbound"; patterns="windowed-batch"
 Rel(SYS_AUTH_SWITCH, OI_LEDGER_QUEUE, "Authorization Switch to Core Ledger", "MQ", $tags="queued-request")
 ' aac rel: source="SYS_AUTH_SWITCH"; target="OI_LEDGER_QUEUE"; label="Authorization Switch to Core Ledger"; interface_id="INT-AUTH-LEDGER"; kind="queued-request"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-LEDGER-QUEUE"
 Rel(SYS_CARDSVC_API, OI_LEDGER_QUEUE, "Card Servicing Service to Core Ledger", "MQ", $tags="queued-request")
@@ -173,6 +241,8 @@ Rel(SYS_CORE_LEDGER, SYS_DATA_INGEST, "Core Ledger to Data Ingestion Hub", "File
 ' aac rel: source="SYS_CORE_LEDGER"; target="SYS_DATA_INGEST"; label="Core Ledger to Data Ingestion Hub"; interface_id="INT-LEDGER-INGEST"; kind="scheduled-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Outbound"
 Rel(SYS_CORE_LEDGER, SYS_STATEMENTS, "Core Ledger to Statement Generation", "FileTransfer", $tags="scheduled-file")
 ' aac rel: source="SYS_CORE_LEDGER"; target="SYS_STATEMENTS"; label="Core Ledger to Statement Generation"; interface_id="INT-LEDGER-STATEMENTS"; kind="scheduled-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Monthly"; direction="Outbound"
+Rel(SYS_AUTH_SWITCH, SYS_SCREENING_GATEWAY, "SYS-AUTH-SWITCH to NICE Actimize Screening Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_AUTH_SWITCH"; target="SYS_SCREENING_GATEWAY"; label="SYS-AUTH-SWITCH to NICE Actimize Screening Gateway"; interface_id="INT-SCREENING-CALLER-GATEWAY"; kind="api-call"; integration_style="Request-response"; auth_method="MutualTLS"; frequency="Realtime"; direction="Outbound"
 Rel(OI_CARDSVC_API, SYS_CARDSVC_API, "offered by")
 ' aac rel: source="OI_CARDSVC_API"; target="SYS_CARDSVC_API"; label="offered by"; field="system_id"
 Rel(OI_LEDGER_QUEUE, SYS_CORE_LEDGER, "offered by")

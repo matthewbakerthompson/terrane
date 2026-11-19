@@ -149,6 +149,14 @@ class TestExpansion(unittest.TestCase):
             [r["tech_service_id"] for r in azure["entities"]["tech_services"]],
         )
 
+    def test_a_choice_of_products_is_its_first(self) -> None:
+        """A provider's answer of a choice, "Amazon Kinesis or MSK", is one
+        product among them, as a part placed on its own records it."""
+        out = self._expand("event-tier", provider="AWS")
+        products = {r["component_type"]: r.get("product") for r in out["entities"]["tech_services"]}
+        self.assertEqual(products["event-stream"], "Amazon Kinesis")
+        self.assertTrue(all(" or " not in p for p in products.values()))
+
     def test_no_provider_means_no_product(self) -> None:
         """The honest state for a design that has not chosen a cloud."""
         out = self._expand("public-web-tier")

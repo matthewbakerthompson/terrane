@@ -25,6 +25,8 @@ flowchart LR
     TS_AZURE_SQL[/"Azure SQL Database<br/>[Relational database]"/]
     TS_CARDSVC_BACKUP[/"Card Servicing Backup and<br/>recovery<br/>[Azure Backup]"/]
     TS_CARDSVC_CACHE[/"Card Servicing Cache<br/>[Azure Cache for Redis]"/]
+    TS_NET_SUB_AZ_CARDS_APP[/"Cards App Subnet<br/>[Subnet]"/]
+    TS_NET_SUB_AZ_CARDS_DATA[/"Cards Data Subnet<br/>[Subnet]"/]
   end
 
   SYS_CARDSVC_API -->|"TDS"| SYS_CARDSVC_STORE
@@ -36,6 +38,8 @@ flowchart LR
   SYS_CARDSVC_STORE -.->|"runs on"| TS_AZURE_SQL
   SYS_CARDSVC_STORE -.->|"runs on"| TS_CARDSVC_BACKUP
   SYS_CARDSVC_STORE -.->|"runs on"| TS_AZURE_KEYVAULT
+  SYS_CARDSVC_API -.->|"runs on"| TS_NET_SUB_AZ_CARDS_APP
+  SYS_CARDSVC_STORE -.->|"runs on"| TS_NET_SUB_AZ_CARDS_DATA
   SYS_CARDSVC_API -->|"ReadWrite"| DA_CARDSVC_OPERATIONAL
   SYS_CARDSVC_STORE -->|"ReadWrite"| DA_CARDSVC_OPERATIONAL
   SYS_CARDSVC_API -->|"Read"| DA_CARD_ACCOUNT
@@ -46,6 +50,6 @@ flowchart LR
   classDef s_tech_services__tech_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
   class DA_CARD_ACCOUNT,DA_CARDSVC_OPERATIONAL,DA_TRANSACTION s_data_assets__data_assets;
   class SYS_CARDSVC_API,SYS_CARDSVC_STORE s_systems__systems;
-  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT,TS_AZURE_MONITOR,TS_AZURE_SQL,TS_CARDSVC_BACKUP,TS_CARDSVC_CACHE s_tech_services__tech_services;
+  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT,TS_AZURE_MONITOR,TS_AZURE_SQL,TS_CARDSVC_BACKUP,TS_CARDSVC_CACHE,TS_NET_SUB_AZ_CARDS_APP,TS_NET_SUB_AZ_CARDS_DATA s_tech_services__tech_services;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Data_Asset,grp_System,grp_Technology_Service boundary1;

@@ -2,7 +2,7 @@
 
 Which products sit on a shape and how far each has moved from it, which hand-authored products have the systems a shape's parts would make and are not on one, and which fit no shape. Drift is read from each product's own file, since what a product says beyond its shape is stripped when the shape expands; a candidate is a product whose systems, by category, are the shape's required parts. Generated from `10_MODEL/products/`, `20_ARCHETYPES/` and `28_MODULES/` by `terrane render`; edit those, not this.
 
-12 products on a shape, 1 assembled from parts, 0 candidates, 0 fitting no shape.
+17 products on a shape, 1 assembled from parts, 0 candidates, 0 fitting no shape.
 
 ## Assembled from parts
 
@@ -30,6 +30,11 @@ Moves counts every way a product differs from a bare instance of its shape: an a
 | Point-of-Sale Finance (`PRD-POS-FINANCE`) | `gcp-digital-product` | — | `SYS-POSFIN-API` | — | — | — | — | — | 1 |
 | Rewards Redemption (`PRD-REWARDS`) | `azure-digital-product` | — | `SYS-REWARDS-API`, `SYS-REWARDS-WORKER` | 1 interfaces | `async-worker` | — | — | — | 4 |
 | NICE Actimize Screening (`PRD-SCREENING`) | `saas-onboarding` | — | `SYS-SCREENING-GATEWAY`, `SYS-SCREENING-VENDOR` | 3 relations | `operator-role` | — | reach: `private-egress`, return: `sftp-return-feed` | — | 6 |
+| Cards Virtual Network (`TS-NET-VNET-AZ-CARDS`) | `azure-workload-network` | `subnets` | — | — | — | — | — | — | 1 |
+| Data Virtual Network (`TS-NET-VNET-AZ-DATA`) | `azure-workload-network` | `nat_gateways`, `subnets` | — | — | — | — | — | — | 2 |
+| Payments Virtual Network (`TS-NET-VNET-AZ-PAYMENTS`) | `azure-workload-network` | `subnets` | — | — | — | — | — | — | 1 |
+| Platform Virtual Network (`TS-NET-VNET-AZ-PLATFORM`) | `azure-workload-network` | `nat_gateways`, `subnets` | — | — | — | — | — | — | 2 |
+| Risk Virtual Network (`TS-NET-VNET-AZ-RISK`) | `azure-workload-network` | `subnets` | — | — | — | — | — | — | 1 |
 
 ## Candidates
 

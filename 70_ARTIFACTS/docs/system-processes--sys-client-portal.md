@@ -13,16 +13,23 @@ flowchart LR
     CAP_TPS_05{{"Client Audit & Oversight<br/>Support"}}
     CAP_TPS_04{{"Client Billing & Revenue<br/>Management"}}
     CAP_TPS_03{{"Client Reporting & Data<br/>Exchange"}}
+    CAP_PART_04{{"Client Service Level &<br/>Performance Management"}}
     CAP_TPS_06{{"Client-Directed Change<br/>Management"}}
     CAP_DATA_02{{"Data Sourcing &<br/>Integration"}}
+    CAP_COLL_02{{"Outbound Contact<br/>Operations"}}
+    CAP_COLL_02_02{{"Serviced-Portfolio<br/>Collections Contact"}}
+    CAP_PART_03{{"Servicing Client<br/>Origination & Contracting"}}
   end
 
   subgraph grp_Process["Process"]
     direction LR
     P_TPS_006[\"Bill client servicing fees"/]
+    P_COLLECTIONS_010[\"Collect serviced client<br/>portfolio to client<br/>strategy"/]
     P_TPS_005[\"Exchange client data feed"/]
     P_TPS_008[\"Intake and deliver<br/>client-directed change"/]
     P_TPS_004[\"Produce contracted client<br/>reporting"/]
+    P_CLIENTMGMT_001[\"Qualify, price, and<br/>contract servicing client"/]
+    P_CLIENTMGMT_002[\"Review client service<br/>levels and performance"/]
     P_TPS_007[\"Support client audit or<br/>examination"/]
   end
 
@@ -36,18 +43,25 @@ flowchart LR
   P_TPS_006 -->|"Supporting"| SYS_CLIENT_PORTAL
   P_TPS_007 -->|"Supporting"| SYS_CLIENT_PORTAL
   P_TPS_008 -->|"Supporting"| SYS_CLIENT_PORTAL
+  P_COLLECTIONS_010 -->|"Supporting"| SYS_CLIENT_PORTAL
+  P_CLIENTMGMT_001 -->|"Primary"| SYS_CLIENT_PORTAL
+  P_CLIENTMGMT_002 -->|"Primary"| SYS_CLIENT_PORTAL
   P_TPS_004 -->|"supports"| CAP_TPS_03
   P_TPS_005 -->|"supports"| CAP_TPS_03
   P_TPS_005 -->|"supports"| CAP_DATA_02
   P_TPS_006 -->|"supports"| CAP_TPS_04
   P_TPS_007 -->|"supports"| CAP_TPS_05
   P_TPS_008 -->|"supports"| CAP_TPS_06
+  P_COLLECTIONS_010 -->|"supports"| CAP_COLL_02_02
+  P_CLIENTMGMT_001 -->|"supports"| CAP_PART_03
+  P_CLIENTMGMT_002 -->|"supports"| CAP_PART_04
+  P_COLLECTIONS_010 -->|"supports"| CAP_COLL_02
 
   classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
   classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
-  class CAP_DATA_02,CAP_TPS_03,CAP_TPS_04,CAP_TPS_05,CAP_TPS_06 s_capabilities__capabilities;
-  class P_TPS_004,P_TPS_005,P_TPS_006,P_TPS_007,P_TPS_008 s_processes__processes;
+  class CAP_COLL_02,CAP_COLL_02_02,CAP_DATA_02,CAP_PART_03,CAP_PART_04,CAP_TPS_03,CAP_TPS_04,CAP_TPS_05,CAP_TPS_06 s_capabilities__capabilities;
+  class P_CLIENTMGMT_001,P_CLIENTMGMT_002,P_COLLECTIONS_010,P_TPS_004,P_TPS_005,P_TPS_006,P_TPS_007,P_TPS_008 s_processes__processes;
   class SYS_CLIENT_PORTAL s_systems__systems;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Capability,grp_Process,grp_System boundary1;
@@ -65,4 +79,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#0369a1` | processes |
 | `#4338ca` | systems |
 
-11 entities, 11 relationships. Generated from the model; edit the model, not this file.
+18 entities, 18 relationships. Generated from the model; edit the model, not this file.

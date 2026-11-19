@@ -23,6 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from terrane.mermaid_import import MermaidError, sketch_from_mermaid  # noqa: E402
 from terrane.quick import draw_sketch, sketch_from_mermaid_file  # noqa: E402
+from _fixture import remove_scratch  # noqa: E402
 
 SAMPLE = Path(__file__).resolve().parents[2] / "90_EXAMPLE" / "quick" / "sample.mmd"
 C4 = SAMPLE.with_name("sample-c4.mmd")
@@ -209,6 +210,7 @@ class TestC4(unittest.TestCase):
 
     def test_the_sketch_draws(self) -> None:
         folder = Path(tempfile.mkdtemp(prefix="aac-c4-"))
+        self.addCleanup(remove_scratch, folder, "aac-c4-")
         source = folder / "sample-c4.mmd"
         source.write_text(C4.read_text(encoding="utf-8"), encoding="utf-8")
         sketch, _notes = sketch_from_mermaid_file(source)
@@ -261,6 +263,7 @@ class TestSequence(unittest.TestCase):
 
     def test_the_flow_draws_as_a_sequence_diagram(self) -> None:
         folder = Path(tempfile.mkdtemp(prefix="aac-seq-"))
+        self.addCleanup(remove_scratch, folder, "aac-seq-")
         source = folder / "sample-sequence.mmd"
         source.write_text(SEQUENCE.read_text(encoding="utf-8"), encoding="utf-8")
         sketch, _notes = sketch_from_mermaid_file(source)
@@ -329,6 +332,7 @@ class TestMarkdown(unittest.TestCase):
 
     def test_the_sketch_draws_every_view_and_the_flow(self) -> None:
         folder = Path(tempfile.mkdtemp(prefix="aac-md-"))
+        self.addCleanup(remove_scratch, folder, "aac-md-")
         source = folder / "sample.md"
         source.write_text(MARKDOWN.read_text(encoding="utf-8"), encoding="utf-8")
         sketch, _notes = sketch_from_mermaid_file(source)
@@ -342,6 +346,7 @@ class TestMarkdown(unittest.TestCase):
 class TestWriteAndDraw(unittest.TestCase):
     def test_the_sketch_written_beside_the_flowchart_draws(self) -> None:
         folder = Path(tempfile.mkdtemp(prefix="aac-mm-"))
+        self.addCleanup(remove_scratch, folder, "aac-mm-")
         source = folder / "sample.mmd"
         source.write_text(SAMPLE.read_text(encoding="utf-8"), encoding="utf-8")
         sketch, notes = sketch_from_mermaid_file(source)

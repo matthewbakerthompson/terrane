@@ -37,6 +37,7 @@ flowchart LR
 
   subgraph grp_Process["Process"]
     direction LR
+    P_FINANCE_003[\"Compile, certify, and file<br/>regulatory reports"/]
     P_COLLECTIONS_004[\"Execute charge-off"/]
     P_GL_CLOSE_001[\"Execute monthly financial<br/>close"/]
     P_SETTLEMENT_001[\"Fund daily network<br/>settlement position"/]
@@ -88,6 +89,7 @@ flowchart LR
   P_FINANCE_001 -->|"supported by"| CAP_FIN_02
   P_FINANCE_002 -->|"supported by"| CAP_FIN_05
   P_SETTLEMENT_004 -->|"supported by"| CAP_FIN_02
+  P_FINANCE_003 -->|"supported by"| CAP_FIN_04
   CAP_FIN -->|"governed by"| CTL_CHARGEOFF_TIME
   CAP_FIN -->|"governed by"| CTL_CLOSE_SIGNOFF
   CAP_FIN -->|"governed by"| CTL_DAILY_RECON
@@ -101,7 +103,6 @@ flowchart LR
   CAP_FIN_03 -->|"governed by"| CTL_FUNDING_CONF
   CAP_FIN_04 -->|"governed by"| CTL_DQ_GATE
   CAP_FIN_04 -->|"governed by"| CTL_REGRPT_CERT
-  SYS_REG_REPORTING -->|"realizes"| CAP_FIN_04
   SYS_COLLECT_API -->|"realizes"| CAP_FIN_02
   SYS_CORE_LEDGER -->|"realizes"| CAP_FIN_01
   SYS_CORE_LEDGER -->|"realizes"| CAP_FIN_02
@@ -112,6 +113,7 @@ flowchart LR
   SYS_GL -->|"realizes"| CAP_FIN_02
   SYS_GL -->|"realizes"| CAP_FIN_05
   SYS_RECON -->|"realizes"| CAP_FIN_06
+  SYS_REG_REPORTING -->|"realizes"| CAP_FIN_04
   SYS_REWARDS -->|"realizes"| CAP_FIN_02
   SYS_TREASURY -->|"realizes"| CAP_FIN_03
 
@@ -123,7 +125,7 @@ flowchart LR
   class CAP_FIN,CAP_FIN_01,CAP_FIN_02,CAP_FIN_03,CAP_FIN_04,CAP_FIN_05,CAP_FIN_06 s_capabilities__capabilities;
   class CTL_CHARGEOFF_TIME,CTL_CLOSE_SIGNOFF,CTL_DAILY_RECON,CTL_DQ_GATE,CTL_FUNDING_CONF,CTL_REGRPT_CERT s_controls__controls;
   class FW_APQC,FW_BIAN s_frameworks__frameworks;
-  class P_COLLECTIONS_004,P_FINANCE_001,P_FINANCE_002,P_FUNDING_001,P_GL_CLOSE_001,P_INTERCHANGE_POST_001,P_RECOVERY_005,P_REG_DATA_PREP_001,P_REWARDS_003,P_SETTLEMENT_001,P_SETTLEMENT_002,P_SETTLEMENT_004 s_processes__processes;
+  class P_COLLECTIONS_004,P_FINANCE_001,P_FINANCE_002,P_FINANCE_003,P_FUNDING_001,P_GL_CLOSE_001,P_INTERCHANGE_POST_001,P_RECOVERY_005,P_REG_DATA_PREP_001,P_REWARDS_003,P_SETTLEMENT_001,P_SETTLEMENT_002,P_SETTLEMENT_004 s_processes__processes;
   class SYS_COLLECT_API,SYS_CORE_LEDGER,SYS_DATA_INGEST,SYS_GL,SYS_RECON,SYS_REG_REPORTING,SYS_REWARDS,SYS_TREASURY s_systems__systems;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Capability,grp_Control,grp_Framework,grp_Process,grp_System boundary1;
@@ -143,4 +145,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#0369a1` | processes |
 | `#4338ca` | systems |
 
-35 entities, 51 relationships. Generated from the model; edit the model, not this file.
+36 entities, 52 relationships. Generated from the model; edit the model, not this file.

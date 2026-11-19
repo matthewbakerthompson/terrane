@@ -10,6 +10,8 @@ AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColo
 AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
 
 Boundary(b_Capability, "Capability") {
+  System(CAP_PAY_01, "Authorization Processing", "Decision and respond to real-time authorization requests.", $tags="capabilities")
+  ' aac CAP_PAY_01: company_domain="Servicing"
   System(CAP_TECH_02, "Platform & Infrastructure Operations", "Run the technology estate.", $tags="capabilities")
   ' aac CAP_TECH_02: company_domain="Technology"
   System(CAP_TECH_08, "Quality Engineering & Testing", "Prove that a change does what it claims before and after it reaches production: test strategy, automation, performance, acceptance, defects, and release certification.", $tags="capabilities")
@@ -20,10 +22,14 @@ Boundary(b_Capability, "Capability") {
   ' aac CAP_TECH_03: company_domain="Technology"
   System(CAP_TECH_01, "Solution Delivery & Engineering", "Build and change software.", $tags="capabilities")
   ' aac CAP_TECH_01: company_domain="Technology"
+  System(CAP_PAY_01_04, "Stand-In Processing", "Decision under network stand-in when the host is unavailable.", $tags="capabilities")
+  ' aac CAP_PAY_01_04: company_domain="Servicing"
 }
 Boundary(b_Process, "Process") {
   System(P_QE_004, "Execute performance and resilience testing", "Load, soak, and failover-test a candidate against stated capacity and recovery objectives before a material release.", $tags="processes")
   ' aac P_QE_004: company_domain=""
+  System(P_PAYMENTS_006, "Operate stand-in authorization during a host outage", "When the authorization host is slow or down, switch to stand-in so the switch or the network approves within set limits, then replay the stand-in decisions to the ledger when the host returns. Stand-in limits trade lost sales against unsecured exposure, and every stand-in approval must post or it is a balance nobody owes.", $tags="processes")
+  ' aac P_PAYMENTS_006: company_domain=""
   System(P_APPDEV_008, "Support a production application", "Diagnose and fix application defects escalated from service management, and feed root causes back into the backlog.", $tags="processes")
   ' aac P_APPDEV_008: company_domain=""
   System(P_QE_009, "Verify a release in production", "Run post-deployment checks and smoke tests in production, confirm monitoring is green, and trigger rollback if criteria fail.", $tags="processes")
@@ -40,6 +46,8 @@ Rel(P_QE_009, SYS_OBSERV, "Primary")
 ' aac rel: source="P_QE_009"; target="SYS_OBSERV"; label="Primary"; relation="process_uses_system"; role="Primary"
 Rel(P_APPDEV_008, SYS_OBSERV, "Supporting")
 ' aac rel: source="P_APPDEV_008"; target="SYS_OBSERV"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PAYMENTS_006, SYS_OBSERV, "Supporting")
+' aac rel: source="P_PAYMENTS_006"; target="SYS_OBSERV"; label="Supporting"; relation="process_uses_system"; role="Supporting"
 Rel(P_QE_004, CAP_TECH_08, "supports")
 ' aac rel: source="P_QE_004"; target="CAP_TECH_08"; label="supports"; relation="process_supports_capability"
 Rel(P_QE_004, CAP_TECH_02, "supports")
@@ -52,6 +60,10 @@ Rel(P_APPDEV_008, CAP_TECH_01, "supports")
 ' aac rel: source="P_APPDEV_008"; target="CAP_TECH_01"; label="supports"; relation="process_supports_capability"
 Rel(P_APPDEV_008, CAP_TECH_03, "supports")
 ' aac rel: source="P_APPDEV_008"; target="CAP_TECH_03"; label="supports"; relation="process_supports_capability"
+Rel(P_PAYMENTS_006, CAP_PAY_01_04, "supports")
+' aac rel: source="P_PAYMENTS_006"; target="CAP_PAY_01_04"; label="supports"; relation="process_supports_capability"
+Rel(P_PAYMENTS_006, CAP_PAY_01, "supports")
+' aac rel: source="P_PAYMENTS_006"; target="CAP_PAY_01"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

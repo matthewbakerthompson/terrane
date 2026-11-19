@@ -2397,7 +2397,7 @@
         "No diagram is drawn about one " + (data.label || "thing") + " yet. Focus draws what is around it." })]);
     }
     var kids = groups.map(function (g) {
-      return levelGroup(g.kind === "about" ? g.head : g.head + " \u00b7 " + g.name, g.items);
+      return levelGroup(g.kind === "about" || !g.name ? g.head : g.head + " \u00b7 " + g.name, g.items);
     });
     if (groups[0].kind === "about") {
       kids.push(el("p", { class: "lv-hint", text: "Double-click a box to open its first diagram." }));
@@ -6471,7 +6471,11 @@
       return nameOf(opt.from) + (opt.door.integration_style === "Event" ? " publishes to " : " calls ")
         + nameOf(opt.to) + " through " + opt.door.name;
     }
-    if (opt.kind === "interface") return a + " calls " + b;
+    // A database is read and written, and feeds what takes its data out:
+    // "calls" said a database called the pipeline that reads it.
+    if (opt.kind === "interface") {
+      return a + (opt.store === "to" ? " reads and writes " : opt.store ? " feeds " : " calls ") + b;
+    }
     if (opt.kind === "field") return a + " " + (FIELD_PHRASES[opt.field] || opt.field.replace(/_id$/, "").replace(/_/g, " ")) + " " + b;
     return a + " " + relationPhrase(opt.relation, "out") + " " + b;
   }
@@ -6534,12 +6538,7 @@
             "Nothing in the metamodel joins a " + d.from.type.replace(/_/g, " ").replace(/s$/, "")
             + " to a " + d.to.type.replace(/_/g, " ").replace(/s$/, "") + " directly." }));
         }
-        open.forEach(function (o) {
-          menu.appendChild(el("button", { type: "button", class: "connect-opt", onclick: function () { choose(o); } }, [
-            el("span", { class: "co-s", text: connectSentence(o, names) }),
-            el("span", { class: "co-h", text: connectHint(o, names) }),
-          ]));
-        });
+        open.forEach(function (o) { menu.appendChild(rankedOption(o)); });
         if (done.length || blocked.length) menu.appendChild(el("div", { class: "ctx-sep", role: "separator" }));
         done.concat(blocked).forEach(function (o) {
           menu.appendChild(el("button", { type: "button", class: "connect-opt is-done", disabled: "disabled" }, [
@@ -6557,6 +6556,40 @@
         menu.appendChild(el("div", { class: "ctx-sep", role: "separator" }));
         menu.appendChild(el("button", { type: "button", class: "connect-more", text: "Every link of " + d.from.name + "…",
           onclick: function () { closeContextMenu(); openLinkEditor(a); } }));
+      }
+      /* An option as the engine ranks it (V15): why, in the estate's own
+       * numbers, and the likeliest marked; on a likeliest call, the kinds
+       * the estate uses most, the likeliest first, each filling the form
+       * at once, and the rest a click further. Nothing is chosen. */
+      function rankedOption(o) {
+        var said = el("span", { class: "co-s" }, [connectSentence(o, names)]);
+        if (o.likeliest) said.appendChild(el("span", { class: "co-badge", text: "likeliest" }));
+        var why = el("span", { class: "co-h", text: o.reason || connectHint(o, names) });
+        var kinds = o.kinds || [];
+        if (!o.likeliest || o.kind !== "interface" || !kinds.length || (o.offered && o.offered.length)) {
+          return el("button", { type: "button", class: "connect-opt" + (o.likeliest ? " is-likeliest" : ""),
+            onclick: function () { choose(o); } }, [said, why]);
+        }
+        var first = kinds.filter(function (k) { return k.id === o.likelyKind; }).concat(
+          kinds.filter(function (k) { return k.id !== o.likelyKind; }));
+        // Into or out of a data store, its ways in or out alone (the
+        // engine's `ways`): out of a database the third chip was an API call.
+        var shown = (o.ways ? first.filter(function (k) { return o.ways.indexOf(k.id) >= 0; }) : first).slice(0, 3);
+        var chips = el("span", { class: "co-kinds" });
+        shown.forEach(function (k) {
+          chips.appendChild(el("button", { type: "button", class: "co-kind" + (k.id === o.likelyKind ? " is-likely" : ""),
+            text: k.name, title: k.description, onclick: function () {
+              if (alt && alt.chose) alt.chose(o);
+              closeContextMenu();
+              proposeInterface(o.from, o.to, function () { afterConnect(o, names); }, k);
+            } }));
+        });
+        if (first.length > shown.length) {
+          chips.appendChild(el("button", { type: "button", class: "co-more", text: "and " + (first.length - shown.length)
+            + " more " + plural(first.length - shown.length, "kind"), onclick: function () { choose(o); } }));
+        }
+        return el("div", { class: "connect-opt is-likeliest is-call", role: "group", "aria-label": connectSentence(o, names) }, [
+          el("button", { type: "button", class: "co-main", onclick: function () { choose(o); } }, [said]), chips, why]);
       }
       function choose(o) {
         if (alt && alt.chose) alt.chose(o);
@@ -13807,6 +13840,120 @@
     ]);
   }
 
+  /* ---- Names that read alike (V15) -----------------------------------------
+   * Records of one type the name matcher scores 0.85 or more against each
+   * other (match.alike_groups), grouped by why each pair is probably two
+   * things, as the records say it: a letter or a "(DR)" between the names,
+   * another cloud, an interface's two ends, another place on the map. Beside
+   * the rules and counted in neither box: as a warning it flagged only pairs
+   * that are two things (round F). Each name opens its record; nothing is
+   * changed here. */
+  var ALIKE_TITLES = {
+    copy: "A and B, or a recovery copy", cloud: "Another cloud", account: "In another account",
+    ends: "Interfaces named for their two systems",
+    elsewhere: "Elsewhere on the map", "": "Nothing on the records says why",
+  };
+  var ALIKE_PLACES = { value_stream_id: "in different value streams", company_domain: "in different domains",
+    parent_capability_id: "under different parents" };
+
+  // "technology services", "capabilities": typeWord's plural is the type's
+  // name, "tech services".
+  function typesWord(type) {
+    var one = typeWord(type);
+    if (/[^aeiou]y$/.test(one)) return one.slice(0, -1) + "ies";
+    return one + (/(s|x|ch|sh)$/.test(one) ? "es" : "s");
+  }
+
+  // A pair's line: its type, its score, the words the two share as the
+  // matcher says them ("subnetwork~subnet" is one read as the other
+  // shortened), and for a pair elsewhere on the map, where each sits:
+  // Thurman Health's two stages named Treat read "Treat, Treat" without it.
+  function alikeWhy(p) {
+    var said = [typesWord(p.type), Number(p.score).toFixed(2), p.a.name === p.b.name ? "the same name"
+      : "shares " + listed((p.reasons || []).map(function (r) { return r.split("~").join(" for "); }))];
+    if (p.reading === "elsewhere") said.push("in " + p.places[0] + " and in " + p.places[1]);
+    return said.join(" \u00b7 ");
+  }
+
+  function alikeTwo(p) { return p.a.name === p.b.name ? p.a.name : p.a.name + " and " + p.b.name; }
+
+  // A group's line: what its pairs have in common, and its first.
+  function alikeSaid(g) {
+    var pairs = g.pairs, first = pairs[0];
+    var types = pairs.map(function (p) { return p.type; }).filter(function (t, i, all) { return all.indexOf(t) === i; });
+    var whose = types.length === 1 ? typesWord(types[0]) : "records";
+    function every(key) { return pairs.every(function (p) { return String(p[key]) === String(first[key]); }); }
+    if (g.reading === "copy") {
+      var letter = pairs.some(function (p) { return p.copy === "letter"; });
+      var dr = pairs.some(function (p) { return p.copy === "recovery"; });
+      return whose + ": " + (letter && dr ? "the names differ by a letter, or one is the other's DR copy"
+        : letter ? "the names differ by a letter" : "one is the other's DR copy");
+    }
+    if (g.reading === "cloud") {
+      return "the same " + (types.length === 1 ? typeWord(types[0]) : "thing") + " "
+        + (every("clouds") ? "in " + first.clouds[0] + " and in " + first.clouds[1] : "in two clouds")
+        + ": " + alikeTwo(first);
+    }
+    if (g.reading === "account") {
+      return whose + " in different accounts: " + alikeTwo(first) + ", in " + first.accounts[0] + " and "
+        + first.accounts[1];
+    }
+    if (g.reading === "ends") {
+      var back = pairs.some(function (p) { return p.back; }), one = pairs.some(function (p) { return !p.back; });
+      return (back && one ? "one end shared, or the same two the other way round"
+        : back ? "the same two systems the other way round" : "one end shared")
+        + ": " + (first.back ? first.a.name + ", and back" : alikeTwo(first));
+    }
+    if (g.reading === "elsewhere") {
+      var where = every("place") ? ALIKE_PLACES[first.place] || "in different places" : "in different places";
+      return whose + " " + where + ": " + (first.a.name === first.b.name
+        ? first.a.name + ", in " + first.places[0] + " and in " + first.places[1] : alikeTwo(first));
+    }
+    return "nothing on the two records tells them apart but their names, so these are the ones worth a look";
+  }
+
+  function alikeName(rec) {
+    return el("button", { type: "button", class: "linkish alike-name", text: rec.name, title: rec.id,
+      onclick: function () { closeDrawer(); goToEntity(rec.id); } });
+  }
+
+  function alikeList(main, data) {
+    var n = data.pairs || 0, floor = Number(data.floor || 0.85).toFixed(2);
+    main.appendChild(el("div", { class: "alike-head" }, [
+      svgIcon("i-compare"),
+      el("h2", { text: "Names that read alike" }),
+      el("span", { class: "sb-badge alike-n", text: String(n) }),
+    ]));
+    if (!n) {
+      main.appendChild(el("p", { class: "alike-said", text: "No two records of one type have names the name matcher "
+        + "scores " + floor + " or more against each other." }));
+      return;
+    }
+    main.appendChild(el("p", { class: "alike-said", text: "Records of one type whose names the name matcher scores "
+      + floor + " or more against each other. None is a finding: each pair says why it is probably two things, "
+      + "where the records say it. Nothing changes until you change it." }));
+    (data.groups || []).forEach(function (g, i) {
+      var box = el("details", { class: "fgroup alike-group" });
+      box.open = i === 0;
+      box.appendChild(el("summary", { class: "fgroup-head" }, [
+        el("span", { class: "fg-text" }, [
+          el("span", { class: "fg-title", text: ALIKE_TITLES[g.reading] || ALIKE_TITLES[""] }),
+          el("span", { class: "fg-code", text: alikeSaid(g) }),
+        ]),
+        el("span", { class: "sb-badge alike-n", text: String(g.pairs.length) }),
+      ]));
+      var list = el("div", { class: "findings" });
+      g.pairs.forEach(function (p) {
+        list.appendChild(el("div", { class: "alike-pair" }, [
+          el("div", { class: "alike-names" }, [alikeName(p.a), svgIcon("i-arrows"), alikeName(p.b)]),
+          el("div", { class: "alike-why", text: alikeWhy(p) }),
+        ]));
+      });
+      box.appendChild(list);
+      main.appendChild(box);
+    });
+  }
+
   /* Validate, as a page: the totals and a list of rules on the left, the
    * findings grouped by rule on the right, each rule a fold with the file
    * every finding came from. A rule on the left narrows the right. */
@@ -13824,7 +13971,10 @@
     var host = el("div", { class: "chg-body" });
     panel.appendChild(host);
     host.appendChild(el("p", { class: "brief-hint", text: "Running the rules\u2026" }));
-    api("/api/validate").then(function (data) {
+    // Names that read alike come beside the rules; a server without them
+    // leaves the card out.
+    Promise.all([api("/api/validate"), api("/api/checks/alike").catch(function () { return null; })]).then(function (got) {
+      var data = got[0], alike = got[1];
       host.textContent = "";
       var errors = data.errors || [], warnings = data.warnings || [];
       var by = {};
@@ -13855,10 +14005,26 @@
       if (errors.length) ruleRow("errors", errors.length, "Errors");
       codes.forEach(function (code) { ruleRow(code, by[code].length, code); });
       side.appendChild(rules);
-      side.appendChild(el("p", { class: "brief-hint", text:
-        "Warnings do not block a merge. What to do about each is a decision, not a fix: "
-        + "a system can lack a CMDB id because the CMDB is behind, or because it is not a CI." }));
+      if (alike) {
+        var beside = el("div", { class: "home-panel checks-rules checks-beside" });
+        beside.appendChild(el("div", { class: "hp-head" }, [el("h2", { class: "hp-title", text: "Beside the rules" })]));
+        beside.appendChild(el("button", { class: "hp-row" + (filter === "alike" ? " is-on" : ""), type: "button",
+          onclick: function () { openValidate("alike"); } }, [
+          el("span", { class: "hp-text" }, [el("span", { class: "hp-desc", text: "Names that read alike" })]),
+          el("span", { class: "hp-count num", text: String(alike.pairs || 0) }),
+        ]));
+        side.appendChild(beside);
+      }
+      side.appendChild(el("p", { class: "brief-hint", text: filter === "alike"
+        ? "Not a finding, and counted in neither box: two records can be named alike and be two things. "
+          + "What the name matcher reads is shown, and nothing is changed."
+        : "Warnings do not block a merge. What to do about each is a decision, not a fix: "
+          + "a system can lack a CMDB id because the CMDB is behind, or because it is not a CI." }));
 
+      if (filter === "alike" && alike) {
+        alikeList(main, alike);
+        return;
+      }
       if (!errors.length && !warnings.length) {
         main.appendChild(el("p", { class: "brief-hint", text: "Every rule passes. Nothing to report." }));
         return;
@@ -14166,6 +14332,11 @@
       main.appendChild(el("p", { class: "nd-sum", text: "Of " + total + " diagrams, " + s.full + " draw in full, " + s.thin
         + " draw thin, " + s.empty + " have nothing to draw yet, and " + s.subject + " are drawn for one thing at a time." }));
       var readOnly = !!window.__AAC_STATIC__;
+      // What kind each record probably is (V15), first, as the frame has
+      // it; read apart, since it reads the library as well.
+      var kindsBox = el("div", { class: "nd-kinds" });
+      main.appendChild(kindsBox);
+      renderKinds(kindsBox, readOnly);
       function viewLinks(views, verb) {
         var span = el("span", { class: "nd-views" });
         views.slice(0, 3).forEach(function (v, i) {
@@ -14241,6 +14412,137 @@
           + "diagram selects, boxes or draws by." }));
       }
     }).catch(function (err) { main.textContent = ""; main.appendChild(el("p", { class: "st-hint", text: err.message })); });
+  }
+
+  /* ---- What kind each record probably is (V15) ------------------------------
+   * Each record with no component type, read against the library's kinds by
+   * their names, aliases and descriptions (terrane/match.py), grouped by the
+   * likeliest. A group opened lists each with the words that matched and the
+   * next kinds, ticked where the match is sure; nothing is set but what is
+   * ticked, on Set, and Undo puts it back. A record a part makes is shown
+   * and not offered: its kind belongs on the part. */
+  var KIND_GROUPS_SHOWN = 5;
+
+  function renderKinds(box, readOnly) {
+    api("/api/needs/kinds").then(function (d) { drawKinds(box, d, readOnly); })
+      .catch(function (err) { box.textContent = ""; box.appendChild(el("p", { class: "st-hint", text: err.message })); });
+  }
+
+  // A kind's name inside a sentence: "or relational database", an
+  // abbreviation kept as it is ("or WAF").
+  function kindWord(name) {
+    var first = String(name).split(" ")[0];
+    return first === first.toUpperCase() ? name : name.charAt(0).toLowerCase() + name.slice(1);
+  }
+
+  function drawKinds(box, d, readOnly) {
+    box.textContent = "";
+    var lacking = d.types.reduce(function (n, t) { return n + t.lacking; }, 0);
+    if (!lacking) return;
+    var ks = state.kinds || (state.kinds = { open: null, all: false, ticked: {} });
+    var key = function (g) { return g.type + ":" + g.kind; };
+    // The first group opened, until a person opens another or shuts it;
+    // one set to the last record goes, and the next is opened.
+    if (ks.open === null || (ks.open && !d.groups.some(function (g) { return key(g) === ks.open; }))) {
+      ks.open = d.groups.length ? key(d.groups[0]) : "";
+    }
+    var said = d.types.filter(function (t) { return t.lacking; }).map(function (t) {
+      return t.lacking + " " + typeWord(t.type, t.lacking !== 1);
+    }).join(" and ");
+    box.appendChild(el("div", { class: "st-sec-head row nd-head" }, [el("h2", { text: "What kind each record probably is" })]));
+    box.appendChild(el("p", { class: "nd-kinds-said", text: said + " " + (lacking === 1 ? "has" : "have")
+      + " no component type. Each is read against the library's " + d.kinds + " kinds, by their names, aliases and "
+      + "descriptions, and grouped by the likeliest. " + (readOnly ? "Setting them needs the local app."
+        : "Nothing is set until you set it, and only what is ticked.") }));
+    var many = d.types.filter(function (t) { return t.lacking; }).length > 1;
+    var shown = ks.all ? d.groups : d.groups.slice(0, KIND_GROUPS_SHOWN);
+    var redraw = function () { drawKinds(box, d, readOnly); };
+    shown.forEach(function (g) { box.appendChild(kindGroup(g, key(g), ks, many, readOnly, redraw)); });
+    var rest = d.groups.slice(shown.length), held = rest.reduce(function (n, g) { return n + g.records.length; }, 0);
+    var foot = el("p", { class: "nd-kinds-more" });
+    if (rest.length) {
+      foot.appendChild(el("button", { type: "button", class: "linkish", text: "and " + rest.length + " more "
+        + plural(rest.length, "kind") + " holding " + held + " " + plural(held, "record"),
+        onclick: function () { ks.all = true; redraw(); } }));
+    }
+    if (d.nothing.length) {
+      foot.appendChild(el("span", { title: d.nothing.map(function (r) { return r.name; }).join(", "),
+        text: (rest.length ? ", and " : "") + d.nothing.length + " that nothing in the library says" }));
+    }
+    if (!readOnly) {
+      foot.appendChild(document.createTextNode((rest.length || d.nothing.length ? " \u00b7 " : "")
+        + "Undo puts back what a Set changed, each in its own file"));
+    }
+    box.appendChild(foot);
+  }
+
+  function kindGroup(g, k, ks, many, readOnly, redraw) {
+    var open = ks.open === k;
+    var tickOf = function (r) {
+      var t = ks.ticked[g.type + ":" + r.id];
+      return r.editable && (t === undefined ? !!r.sure : t);
+    };
+    var chosen = g.records.filter(tickOf), settable = g.records.some(function (r) { return r.editable; });
+    var fold = el("button", { type: "button", class: "nd-kind-fold", "aria-expanded": String(open),
+      onclick: function () { ks.open = open ? "" : k; redraw(); } },
+      [svgIcon("i-chevron-down"), el("span", { class: "nd-kind-name", text: g.name + (many ? " \u00b7 " + typeWord(g.type, true) : "") }),
+        el("span", { class: "nd-kind-count", text: String(g.records.length) })]);
+    var head = el("div", { class: "nd-kind-head" }, [fold]);
+    // A group matched on one word alone is said to be, in its head.
+    if (g.oneWord !== null) head.appendChild(el("span", { class: "nd-kind-one", text: "each on one word" + (g.oneWord ? ": " + g.oneWord : "") }));
+    head.appendChild(el("span", { class: "grow" }));
+    if (open && !readOnly && settable) {
+      var set = el("button", { type: "button", class: "btn small primary", text: "Set " + chosen.length + " to " + g.name,
+        onclick: function () { setKind(g, chosen, ks); } });
+      set.disabled = !chosen.length;
+      head.appendChild(set);
+    } else if (open && !settable) {
+      head.appendChild(el("span", { class: "nd-kind-words", text: "made by their products' parts" }));
+    } else if (!open && g.oneWord === null) {
+      head.appendChild(el("span", { class: "nd-kind-words", text: g.words.join(", ") + (g.more ? "\u2026" : "") }));
+    }
+    var card = el("div", { class: "nd-kind" + (open ? " is-open" : "") }, [head]);
+    if (open) g.records.forEach(function (r) { card.appendChild(kindRow(g, r, tickOf(r), ks, readOnly, redraw)); });
+    return card;
+  }
+
+  function kindRow(g, r, on, ks, readOnly, redraw) {
+    var tick = el("input", { type: "checkbox", class: "nd-kind-tick", "aria-label": "Set " + r.name + " to " + g.name });
+    tick.checked = on;
+    tick.disabled = readOnly || !r.editable;
+    tick.addEventListener("change", function () { ks.ticked[g.type + ":" + r.id] = tick.checked; redraw(); });
+    var also = (r.also || []).map(function (a) { return kindWord(a.name); });
+    // A record a part makes says so where its id is: its kind belongs on
+    // the part, which makes it again.
+    var where = r.editable ? r.id : r.id + " \u00b7 " + String(r.why).split(".")[0].replace(/^Made/, "made");
+    return el("label", { class: "nd-kind-row" + (on ? "" : " is-unsure") + (r.editable ? "" : " is-made"), title: r.why || null }, [
+      tick,
+      el("span", { class: "nd-kind-rec" }, [el("strong", { text: r.name }), el("span", { text: where })]),
+      el("span", { class: "nd-kind-said", text: (r.words || []).join(", ") }),
+      el("span", { class: "nd-kind-else", text: also.length ? "or " + also.join(", ") : "" }),
+    ]);
+  }
+
+  function setKind(g, chosen, ks) {
+    var ids = chosen.map(function (r) { return r.id; });
+    if (!ids.length) return;
+    api("/api/records/set", { type: g.type, field: "component_type", value: g.kind, ids: ids }).then(function (res) {
+      var n = res.changed.length;
+      var detail = [res.moved.length ? res.moved.length + " moved into files of their own" : "",
+        res.refused.length ? res.refused.length + " left as they were" : "",
+        res.errors.length ? res.errors.length + " " + plural(res.errors.length, "error") + " in the checks" : ""]
+        .filter(Boolean).join(" \u00b7 ");
+      var undo = res.undo ? { label: "Undo", go: function () {
+        api("/api/records/undo", { token: res.undo }).then(function (u) {
+          toast("ok", "Put back", u.restored + " " + plural(u.restored, "file") + " as they were.");
+          return refresh().then(function () { openNeeds(); });
+        }).catch(fail);
+      } } : null;
+      ids.forEach(function (id) { delete ks.ticked[g.type + ":" + id]; });
+      toast(res.refused.length ? "warn" : "ok", "Set " + n + " " + oneOr(n, typeWord(g.type), typeWord(g.type, true))
+        + " to " + kindWord(g.name), detail || "Each changed in its own file.", undo);
+      return refresh().then(function () { openNeeds(); });
+    }).catch(fail);
   }
 
   /* ---- A field set on many records at once ----------------------------------
@@ -15046,7 +15348,11 @@
 
   function renderColumnsStep() {
     var src = state.src, a = src.answer, ch = src.choice, info = kindInfo();
-    var anyWords = enumTargets().length > 0;
+    // A column that names records has its names found on Words too (V15):
+    // with none of a fixed list, the step went straight on to Review.
+    var anyWords = enumTargets().length > 0 || Object.keys(ch.columns).some(function (c) {
+      return ch.columns[c].some(function (t) { return info.fields.some(function (f) { return f.name === t && f.ref; }); });
+    });
     var s = sourceShell("columns", a.rows + " " + plural(a.rows, "row") + " and " + a.columns.length + " columns"
       + (a.sheet ? ", from the sheet " + a.sheet : "") + ". Say which column is which field; the next step matches "
       + "the file's words to the model's.");
@@ -15229,6 +15535,74 @@
     });
   }
 
+  // "an org unit", "a system".
+  function aWord(word) { return (/^[aeiou]/i.test(word) ? "an " : "a ") + word; }
+
+  /* A column that names records (V15): each name with its rows, and the
+   * record it already is, or a choice of the kind's records with the one
+   * it reads like offered beside it (sources._nearest), never chosen for
+   * the person. A choice goes into the mapping's values as a word's does; a
+   * name the Columns step makes an org unit of waits for nothing. Returns
+   * the open names and the rows they hold back. */
+  function namesCard(main, r) {
+    var src = state.src, ch = src.choice;
+    var chosen = ch.values[r.field] = ch.values[r.field] || {};
+    var thing = typeWord(r.kind), many = typeWord(r.kind, true);
+    var made = r.field === "owner_org_id" && ch.unitsFrom === r.column;
+    var lacking = r.missing.length;
+    var card = el("div", { class: "word-card names-card" }, [el("div", { class: "word-head" }, [
+      el("strong", { text: capFirst(fieldWord(r.field)) }), el("span", { text: "from " + r.column }),
+      el("span", { class: "grow" }),
+      el("span", { class: "said", text: !lacking ? "every name is " + aWord(thing) + " the model holds"
+        : lacking + " of its " + r.names.length + " " + plural(r.names.length, "name") + " "
+          + (lacking === 1 ? "is not " + aWord(thing) : "are not " + many) + " in the model" }),
+    ])]);
+    var open = 0, waiting = 0;
+    r.names.forEach(function (n) {
+      var row = el("div", { class: "word-row" }, [
+        el("span", { class: "word", text: n.name }),
+        el("span", { class: "rows", text: n.rows + " " + plural(n.rows, "row") }),
+        svgIcon("i-arrow-right"),
+      ]);
+      card.appendChild(row);
+      if (n.id) { row.appendChild(el("span", { class: "same", text: "Already " + aWord(thing) })); return; }
+      if (made) { row.appendChild(el("span", { class: "same", text: "Made " + aWord(thing) + " of its own" })); return; }
+      var has = Object.prototype.hasOwnProperty.call(chosen, n.name);
+      var sel = el("select", { class: "src-select" + (has ? "" : " open"), "aria-label": "The " + thing + " " + n.name + " is" });
+      sel.appendChild(el("option", { value: "@none", text: "Choose " + aWord(thing) + "\u2026" }));
+      r.records.forEach(function (rec) {
+        sel.appendChild(el("option", { value: rec.id, text: rec.name, selected: chosen[n.name] === rec.id ? "selected" : null }));
+      });
+      sel.appendChild(el("option", { value: "", text: "Leave it empty", selected: has && chosen[n.name] === "" ? "selected" : null }));
+      sel.addEventListener("change", function () {
+        if (sel.value === "@none") delete chosen[n.name]; else chosen[n.name] = sel.value;
+        src.preview = null;
+        renderSource();
+      });
+      row.appendChild(sel);
+      if (has) return;
+      open += 1;
+      waiting += n.rows;
+      row.classList.add("open");
+      var near = (r.near || {})[n.name];
+      row.appendChild(near ? el("span", { class: "nearest" }, [
+        el("span", { class: "nearest-line" }, [el("strong", { text: "Reads like " + near.name }),
+          el("button", { type: "button", class: "linkish", text: "Use " + near.name, onclick: function () {
+            chosen[n.name] = near.id;
+            src.preview = null;
+            renderSource();
+          } })]),
+        el("span", { class: "why", text: near.id + " \u00b7 " + near.score.toFixed(2) + " \u00b7 shares " + listed(near.reasons) }),
+      ]) : el("span", { class: "same", text: "No " + thing + " reads like it" }));
+    });
+    if (r.field === "owner_org_id" && !made && lacking) {
+      card.appendChild(el("div", { class: "names-foot" }, [el("button", { type: "button", class: "linkish",
+        text: "Or make each name an org unit of its own, on Columns", onclick: function () { src.step = "columns"; renderSource(); } })]));
+    }
+    main.appendChild(card);
+    return { open: open, waiting: waiting };
+  }
+
   function renderWordsStep() {
     var src = state.src, ch = src.choice;
     if (!src.words) {
@@ -15238,12 +15612,22 @@
       needWords(renderSource);
       return;
     }
-    var s = sourceShell("words", "Which of the file's words is which of the model's. A word the model already uses "
-      + "needs nothing; one left unmatched holds its rows back, and nothing is guessed.");
+    var s = sourceShell("words", "Which of the file's words and names is which of the model's. One the model already "
+      + "holds needs nothing; one left unmatched holds its rows back, and nothing is guessed.");
     var main = el("div", { class: "st-main" }), side = el("aside", { class: "st-side" });
     s.body.appendChild(main);
     s.body.appendChild(side);
     var open = 0, waiting = 0, firstOpen = null;
+    // The names first (V15): one left holds its rows back as a word does.
+    var names = 0, namesWaiting = 0, firstName = null, anyNames = false;
+    (src.words.refs || []).forEach(function (r) {
+      if (!(r.names || []).length) return;
+      anyNames = true;
+      var got = namesCard(main, r);
+      names += got.open;
+      namesWaiting += got.waiting;
+      if (got.open && !firstName) firstName = r;
+    });
     (src.words.words || []).forEach(function (g) {
       ch.values[g.field] = ch.values[g.field] || {};
       var chosen = ch.values[g.field];
@@ -15283,10 +15667,13 @@
       });
       main.appendChild(card);
     });
-    if (!(src.words.words || []).length) {
+    if (!(src.words.words || []).length && !anyNames) {
       main.appendChild(el("p", { class: "st-hint", text: "No column this file fills has a fixed list of words." }));
     }
-    side.appendChild(el("h2", { text: open ? (open === 1 ? "One word left" : open + " words left") : "Every word has a match" }));
+    var left = [open ? (open === 1 ? "one word" : open + " words") : "", names ? (names === 1 ? "one name" : names + " names") : ""]
+      .filter(Boolean);
+    side.appendChild(el("h2", { text: left.length ? capFirst(left.join(" and ")) + " left"
+      : "Every word " + (anyNames ? "and name " : "") + "has a match" }));
     if (open && firstOpen) {
       side.appendChild(el("p", { class: "st-lede", text: "Nothing is guessed: say which of the model's words each is, "
         + "or leave the field empty for those rows." }));
@@ -15294,10 +15681,21 @@
       side.appendChild(el("div", { class: "chips" }, firstOpen.enum.map(function (e) {
         return el("span", { class: "chip-word", text: e });
       })));
+    }
+    if (names && firstName) {
+      var thing = typeWord(firstName.kind);
+      side.appendChild(el("p", { class: "st-lede", text: "A name the model does not hold holds its rows back. Say which "
+        + thing + " each is" + (firstName.field === "owner_org_id" ? ", or make them org units on Columns" : "")
+        + ". Nothing is guessed: " + aWord(thing) + " is offered only where it reads like the name, at 0.7 or more, "
+        + "with the words the two share." }));
+    }
+    if (open || names) {
+      var held = waiting + namesWaiting;
       side.appendChild(el("div", { class: "st-rule" }));
-      sideNote(side, "If you go on now", null, waiting + " " + plural(waiting, "row") + " wait until "
-        + (open === 1 ? "that word has" : "those words have") + " a match; bring the file in again after choosing, "
-        + "and only those are written.");
+      sideNote(side, "If you go on now", null, held + " " + plural(held, "row") + " wait until "
+        + (open && names ? "those have a match" : open ? (open === 1 ? "that word has a match" : "those words have a match")
+          : (names === 1 ? "that name has " : "those names have ") + aWord(typeWord(firstName.kind)))
+        + "; bring the file in again after choosing, and only those are written.");
     } else {
       side.appendChild(el("p", { class: "st-lede", text: "The next step shows every record bringing it in would write, "
         + "before anything is written." }));
@@ -15511,9 +15909,10 @@
       // A reader can take tens of seconds; past a few, the page says it is
       // still at it rather than look stuck.
       setTimeout(function () { if (drw === mine && mine.busy) { mine.slow = true; renderDrawing(); } }, 6000);
-      api("/api/adopt/read", { name: file.name, data: data }).then(function (answer) {
+      api("/api/adopt/read", { name: file.name, data: data, same: "likely" }).then(function (answer) {
         if (drw !== mine) { discardDrawing(answer.token); return; }
         mine.answer = answer;
+        mine.same = answer.taken || {};
         mine.busy = false;
         renderDrawing();
       }).catch(function (err) {
@@ -15563,9 +15962,10 @@
     var d = drw;
     d.busy = true;
     renderDrawing();
-    api("/api/adopt/read", { token: d.answer.token, owner: d.owner || null, correct: d.correct }).then(function (answer) {
+    api("/api/adopt/read", { token: d.answer.token, owner: d.owner || null, correct: d.correct, same: d.same || {} }).then(function (answer) {
       if (drw !== d) return;
       d.answer = answer;
+      d.same = answer.taken || {};
       d.busy = false;
       renderDrawing();
     }).catch(function (err) {
@@ -15692,11 +16092,17 @@
     }
     if (same + differs) {
       var differing = Object.keys(a.differs).reduce(function (out, t) { return out.concat(a.differs[t].map(function (r) { return r.name; })); }, []);
-      count(same + differs, "here already", !differs ? "left as they are"
-        : differs === 1 ? differing[0] + ", which the drawing says differently"
-        : differs + " of them the drawing says differently");
+      var renamed = (a.probable || []).filter(function (p) { return (a.taken || {})[p.id]; }).map(function (p) {
+        var c = p.candidates.filter(function (x) { return x.id === a.taken[p.id]; })[0];
+        return c ? c.name : a.taken[p.id];
+      });
+      var says = [renamed.length ? listed(renamed) + ", which the drawing calls by " + (renamed.length === 1 ? "another name" : "other names") : "",
+        !differs ? "" : differs === 1 ? differing[0] + ", which " + (renamed.length ? "it" : "the drawing") + " says differently"
+          : differs + " of them " + (renamed.length ? "it says" : "the drawing says") + " differently"].filter(Boolean);
+      count(same + differs, "here already", says.length ? says.join("; ") : "left as they are");
     }
     side.appendChild(counts);
+    if ((a.probable || []).length) side.appendChild(probableBlock(a, d));
 
     if (a.unowned) {
       var pick = el("select", { class: "st-input", "aria-label": "Who owns them" });
@@ -15732,6 +16138,53 @@
       ]));
     }
     drawingBar(bar, d);
+  }
+
+  /* What the drawing adds that reads like a record the estate has (V15):
+   * each with the estate's record it probably is, the score and the words
+   * the two share, and Same record, ticked where the engine finds it likely
+   * (`likely_same`). A box changed reads the drawing again with the choices,
+   * so the counts and the picture say what Adopt will write. */
+  function probableBlock(a, d) {
+    var n = a.probable.length;
+    var rows = a.probable.map(function (p) {
+      var chosen = (d.same || {})[p.id] || "";
+      var pick = chosen || p.candidates[0].id;
+      var cand = p.candidates.filter(function (c) { return c.id === pick; })[0] || p.candidates[0];
+      var box = el("input", { type: "checkbox", class: "adopt-same-tick", "aria-label": "Same record: " + p.name + " is "
+        + cand.name, disabled: d.busy ? "disabled" : null });
+      box.checked = !!chosen;
+      var which = null;
+      if (p.candidates.length > 1) {
+        // Two or more the estate has: the person says which one.
+        which = el("select", { class: "adopt-same-pick", "aria-label": "Which of the estate's records " + p.name + " is",
+          disabled: d.busy ? "disabled" : null });
+        p.candidates.forEach(function (c) { which.appendChild(el("option", { value: c.id, text: c.name })); });
+        which.value = pick;
+        which.addEventListener("change", function () {
+          d.same = Object.assign({}, d.same || {});
+          d.same[p.id] = which.value;
+          rereadDrawing();
+        });
+      }
+      box.addEventListener("change", function () {
+        d.same = Object.assign({}, d.same || {});
+        if (box.checked) d.same[p.id] = which ? which.value : cand.id; else delete d.same[p.id];
+        rereadDrawing();
+      });
+      return el("label", { class: "adopt-same" + (chosen ? " is-same" : "") }, [box, el("span", { class: "adopt-same-words" }, [
+        el("span", { class: "adopt-same-pair" }, [el("strong", { text: p.name }), svgIcon("i-arrow-right")]),
+        which || el("strong", { class: "adopt-same-theirs", text: cand.name }),
+        el("span", { class: "adopt-same-why", text: cand.id + " \u00b7 " + cand.score.toFixed(2)
+          + (cand.reasons.length ? " \u00b7 shares " + listed(cand.reasons) : "") }),
+      ])]);
+    });
+    return el("div", { class: "st-note-block adopt-block" }, [
+      el("h3", {}, [svgIcon("i-link"), el("span", { text: "Probably here already" })]),
+      el("p", { text: n + " " + plural(n, "record") + " the drawing adds " + (n === 1 ? "reads" : "read") + " like "
+        + (n === 1 ? "one" : "ones") + " the estate has. Same record joins the drawing's to the estate's, its lines "
+        + "with it, and writes no second one." }),
+    ].concat(rows));
   }
 
   function drawingPicture(d) {
@@ -15781,7 +16234,7 @@
     if (!d || !d.answer || d.busy) return;
     d.busy = true;
     renderDrawing();
-    api("/api/adopt/write", { token: d.answer.token, owner: d.owner || null, correct: d.correct }).then(function (res) {
+    api("/api/adopt/write", { token: d.answer.token, owner: d.owner || null, correct: d.correct, same: d.same || {} }).then(function (res) {
       // The upload is let go by the server once adopted: nothing to discard.
       drw = null;
       var total = Object.keys(res.added).reduce(function (n, k) { return n + res.added[k]; }, 0);
@@ -16143,6 +16596,7 @@
     $("cvJumps").addEventListener("click", function () { Canvas.toggleJumps(); });
     $("cvKeysBtn").addEventListener("click", function () { Canvas.toggleKeys(); });
     $("cvRedo").addEventListener("click", function () { Canvas.undo(false); });
+    $("cvLayersBtn").addEventListener("click", function () { Canvas.toggleLayers(); });
     $("cvFromLibrary").addEventListener("click", function () { Canvas.openPicker("library"); });
     $("cvFromEstate").addEventListener("click", function () { Canvas.openPicker("estate"); });
     $("cvFromDrawing").addEventListener("click", function () { chooseDrawing("canvas"); });

@@ -16,6 +16,8 @@ Boundary(b_Capability, "Capability") {
   ' aac CAP_BILL_05: company_domain="Servicing"
   System(CAP_BILL, "Billing, Statements & Rewards", "Billing, Statements & Rewards. Level 0 enterprise capability domain (Core tier).", $tags="capabilities")
   ' aac CAP_BILL: company_domain="Servicing"
+  System(CAP_BILL_06, "Credit Balance Refund & Unclaimed Property", "Refund credit balances on request or after the regulatory period, and report and remit unclaimed balances to the states.", $tags="capabilities")
+  ' aac CAP_BILL_06: company_domain="Servicing"
   System(CAP_BILL_02, "Cycle & Statement Generation", "Cut billing cycles and generate statements.", $tags="capabilities")
   ' aac CAP_BILL_02: company_domain="Servicing"
   System(CAP_BILL_01, "Interest & Fee Assessment", "Calculate interest, fees, and minimum payment.", $tags="capabilities")
@@ -26,6 +28,8 @@ Boundary(b_Capability, "Capability") {
   ' aac CAP_BILL_03: company_domain="Servicing"
 }
 Boundary(b_Control, "Control") {
+  System(CTL_CREDIT_BAL, "Credit balance refund and escheatment", "Credit balances are refunded on request or at the regulatory age, and unreturnable balances are reported to the states on their schedules.", $tags="controls")
+  ' aac CTL_CREDIT_BAL: company_domain=""
   System(CTL_CYCLE_VALID, "Cycle assessment validation", "Interest, fee, and minimum-payment computation is validated against the cardholder agreement on every pricing or product change, and sampled each cycle.", $tags="controls")
   ' aac CTL_CYCLE_VALID: company_domain=""
 }
@@ -48,12 +52,18 @@ Boundary(b_Process, "Process") {
   ' aac P_REWARDS_002: company_domain=""
   System(P_REWARDS_003, "Reconcile rewards liability", "Reconcile the rewards ledger to the recorded liability and resolve differences. The rewards liability reconciliation catches earn, redemption, and expiry drift between the ledger and finance; differences are investigated, not plugged.", $tags="processes")
   ' aac P_REWARDS_003: company_domain=""
+  System(P_SERVICING_016, "Refund credit balance and report unclaimed property", "Refund a credit balance when the cardholder asks or once it reaches the regulatory age, by check or deposit, and report and remit balances that cannot be returned to the states as unclaimed property. Both clocks are regulatory, and a refund check that is never cashed starts the unclaimed property clock again.", $tags="processes")
+  ' aac P_SERVICING_016: company_domain=""
+  System(P_REWARDS_004, "Serve redemption catalog and fulfill orders", "Serve the rewards catalog, take redemptions for statement credit, gift cards, merchandise and travel, send orders to the fulfillment partners, and reverse the points when an order fails or comes back. The rewards liability is relieved only when value is delivered, so undelivered orders are tracked until they close.", $tags="processes")
+  ' aac P_REWARDS_004: company_domain=""
 }
 Boundary(b_System, "System") {
   System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
   ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
   System(SYS_REWARDS, "Rewards ledger", "Rewards accrual ledger and redemption.", $tags="systems")
   ' aac SYS_REWARDS: company_domain=""
+  System(SYS_REWARDS_API, "Rewards Redemption Service", "Domain service for Rewards Redemption, behind the Rewards Redemption API. Built with AKS · Rewards Redemption Cache.", $tags="systems")
+  ' aac SYS_REWARDS_API: company_domain="Card Issuing"; hosting="Azure"; technology="AKS · Rewards Redemption Cache"
   System(SYS_STATEMENTS, "Statement Generation", "Composes, renders and dispatches customer statements.", $tags="systems")
   ' aac SYS_STATEMENTS: company_domain="Servicing"; hosting="On-prem"
 }
@@ -63,6 +73,7 @@ Rel(CAP_BILL_02, CAP_BILL, "part of")
 Rel(CAP_BILL_03, CAP_BILL, "part of")
 Rel(CAP_BILL_04, CAP_BILL, "part of")
 Rel(CAP_BILL_05, CAP_BILL, "part of")
+Rel(CAP_BILL_06, CAP_BILL, "part of")
 Rel(CAP_BILL, FW_BIAN, "Aligned to")
 ' aac rel: source="CAP_BILL"; target="FW_BIAN"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
 Rel(CAP_BILL_01, FW_BIAN, "Operations and Execution > Cards > Credit Card / Interest")
@@ -75,6 +86,8 @@ Rel(CAP_BILL_04, FW_BIAN, "Operations and Execution > Operational Services > Rew
 ' aac rel: source="CAP_BILL_04"; target="FW_BIAN"; label="Operations and Execution > Operational Services > Reward Points Awards And Redemption"; relation="capability_references_framework"; ref="Operations and Execution > Operational Services > Reward Points Awards And Redemption"
 Rel(CAP_BILL_05, FW_BIAN, "Operations and Execution > Operational Services > Customer Billing")
 ' aac rel: source="CAP_BILL_05"; target="FW_BIAN"; label="Operations and Execution > Operational Services > Customer Billing"; relation="capability_references_framework"; ref="Operations and Execution > Operational Services > Customer Billing"
+Rel(CAP_BILL_06, FW_BIAN, "Operations and Execution > Operational Services > Disbursement")
+' aac rel: source="CAP_BILL_06"; target="FW_BIAN"; label="Operations and Execution > Operational Services > Disbursement"; relation="capability_references_framework"; ref="Operations and Execution > Operational Services > Disbursement"
 Rel(P_SERVICING_001, CAP_BILL_01, "supported by")
 ' aac rel: source="P_SERVICING_001"; target="CAP_BILL_01"; label="supported by"; relation="process_supports_capability"
 Rel(P_STMT_GEN_001, CAP_BILL_02, "supported by")
@@ -91,6 +104,12 @@ Rel(P_REWARDS_002, CAP_BILL_04, "supported by")
 ' aac rel: source="P_REWARDS_002"; target="CAP_BILL_04"; label="supported by"; relation="process_supports_capability"
 Rel(P_REWARDS_003, CAP_BILL_04, "supported by")
 ' aac rel: source="P_REWARDS_003"; target="CAP_BILL_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_SERVICING_016, CAP_BILL_06, "supported by")
+' aac rel: source="P_SERVICING_016"; target="CAP_BILL_06"; label="supported by"; relation="process_supports_capability"
+Rel(P_REWARDS_004, CAP_BILL_04, "supported by")
+' aac rel: source="P_REWARDS_004"; target="CAP_BILL_04"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_BILL, CTL_CREDIT_BAL, "governed by")
+' aac rel: source="CAP_BILL"; target="CTL_CREDIT_BAL"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
 Rel(CAP_BILL, CTL_CYCLE_VALID, "governed by")
 ' aac rel: source="CAP_BILL"; target="CTL_CYCLE_VALID"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
 Rel(CAP_BILL_01, CTL_CYCLE_VALID, "governed by")
@@ -99,6 +118,8 @@ Rel(CAP_BILL_02, CTL_CYCLE_VALID, "governed by")
 ' aac rel: source="CAP_BILL_02"; target="CTL_CYCLE_VALID"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
 Rel(CAP_BILL_04, CTL_CYCLE_VALID, "governed by")
 ' aac rel: source="CAP_BILL_04"; target="CTL_CYCLE_VALID"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_BILL_06, CTL_CREDIT_BAL, "governed by")
+' aac rel: source="CAP_BILL_06"; target="CTL_CREDIT_BAL"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
 Rel(SYS_CORE_LEDGER, CAP_BILL_01, "realizes")
 ' aac rel: source="SYS_CORE_LEDGER"; target="CAP_BILL_01"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_CORE_LEDGER, CAP_BILL_02, "realizes")
@@ -107,8 +128,12 @@ Rel(SYS_CORE_LEDGER, CAP_BILL_04, "realizes")
 ' aac rel: source="SYS_CORE_LEDGER"; target="CAP_BILL_04"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_CORE_LEDGER, CAP_BILL_05, "realizes")
 ' aac rel: source="SYS_CORE_LEDGER"; target="CAP_BILL_05"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CORE_LEDGER, CAP_BILL_06, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_BILL_06"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_REWARDS, CAP_BILL_04, "realizes")
 ' aac rel: source="SYS_REWARDS"; target="CAP_BILL_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_REWARDS_API, CAP_BILL_04, "realizes")
+' aac rel: source="SYS_REWARDS_API"; target="CAP_BILL_04"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_STATEMENTS, CAP_BILL_03, "realizes")
 ' aac rel: source="SYS_STATEMENTS"; target="CAP_BILL_03"; label="realizes"; relation="system_realizes_capability"
 

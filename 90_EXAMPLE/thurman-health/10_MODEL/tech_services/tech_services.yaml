@@ -124,6 +124,10 @@
   service_category: Integration
   service_name: APIM
   component_type: api-gateway
+  # Its AI gateway is the one every model call on Azure goes through: the
+  # token limits, the content safety and the model routing are policies on
+  # it, so it answers for `ai-gateway` too.
+  answers_for: [ai-gateway]
   tags: [landing-zone]
 
 - tech_service_id: TS-AZURE-KEYVAULT
@@ -230,7 +234,10 @@
   service_category: Network
   service_name: Virtual WAN
   component_type: transit-gateway
-  tags: [landing-zone]
+  cloud_account: azure-connectivity-prod
+  region: eastus2
+  network_zone: Shared-Services
+  tags: [landing-zone, network-fabric]
 
 - tech_service_id: TS-AZURE-DATALAKE
   name: Azure Data Lake Storage
@@ -302,4 +309,94 @@
   service_category: Security
   service_name: Entra ID
   component_type: identity-provider
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-PRIVATE-DNS
+  name: Azure Private DNS Resolver
+  description: The resolver every virtual network takes its names from, and the forwarding back to the data center.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-INFRA
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Network
+  service_name: Private DNS Resolver
+  component_type: dns
+  cloud_account: azure-connectivity-prod
+  region: eastus2
+  network_zone: Shared-Services
+  tags: [landing-zone, network-fabric]
+
+# What an assistant asks of the Azure landing zone: the models, and the
+# vector database its index is kept on. The AI gateway is APIM's, above.
+- tech_service_id: TS-AZURE-FOUNDRY
+  name: Microsoft Foundry
+  description: Managed access to foundation models inside the health system's data boundary, under its business associate agreement.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-INFRA
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: AI
+  service_name: Foundry
+  component_type: foundation-model-service
+  # Its agent service is where agents run on Azure.
+  answers_for: [agent-platform]
+  network_zone: Shared-Services
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-AI-SEARCH
+  name: Azure AI Search
+  description: Managed search with vector indexes, where a product's retrieval index is kept.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-INFRA
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: AI
+  service_name: AI Search
+  component_type: vector-database
+  answers_for: [enterprise-search]
+  network_zone: Private-Data
+  tags: [landing-zone]
+
+# Patients signing in to the portal, and the documents the health system
+# takes in (referrals, insurance cards, consent forms), on Azure.
+
+- tech_service_id: TS-AZURE-EXTERNAL-ID
+  name: Microsoft Entra External ID
+  description: Patient sign-up and sign-in, with the identity proofing the portal asks for.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-INFRA
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: Security
+  service_name: Entra External ID
+  component_type: customer-identity
+  network_zone: Shared-Services
+  tags: [landing-zone]
+
+- tech_service_id: TS-AZURE-DOC-INTELLIGENCE
+  name: Azure AI Document Intelligence
+  description: Reads referrals, insurance cards and consent forms into fields.
+  status: Active
+  togaf_layer: Technology
+  architecture_domain: Technology
+  company_domain: Enterprise Platform
+  owner_org_id: ORG-INFRA
+  provider: Microsoft Azure
+  cloud_provider: Azure
+  service_category: AI
+  service_name: Document Intelligence
+  component_type: document-ai
+  network_zone: Private-App
   tags: [landing-zone]

@@ -14,6 +14,8 @@ AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor=
 Boundary(b_Capability, "Capability") {
   System(CAP_FRAUD_04, "Chargeback & Representment Processing", "Execute network chargeback and representment cycles.", $tags="capabilities")
   ' aac CAP_FRAUD_04: company_domain="Servicing"
+  System(CAP_FRAUD_04_01, "Chargeback Processing", "File and track network chargebacks within reason-code windows.", $tags="capabilities")
+  ' aac CAP_FRAUD_04_01: company_domain="Servicing"
 }
 Boundary(b_Control, "Control") {
   System(CTL_REGE_DETERM, "Dispute determination timeliness and notice", "Final dispute determinations, account adjustment, and the written explanation complete within the Reg E / Reg Z window; the clock is measured from claim receipt.", $tags="controls")
@@ -44,6 +46,8 @@ Rel(P_DISPUTE_002, CTL_REGE_DETERM, "governed by")
 ' aac rel: source="P_DISPUTE_002"; target="CTL_REGE_DETERM"; label="governed by"; relation="process_governed_by_control"
 Rel(P_DISPUTE_002, CAP_FRAUD_04, "supports")
 ' aac rel: source="P_DISPUTE_002"; target="CAP_FRAUD_04"; label="supports"; relation="process_supports_capability"
+Rel(P_DISPUTE_002, CAP_FRAUD_04_01, "supports")
+' aac rel: source="P_DISPUTE_002"; target="CAP_FRAUD_04_01"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

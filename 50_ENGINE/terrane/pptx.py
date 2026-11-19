@@ -64,6 +64,7 @@ class Slide:
         self.deck = deck
         self.shapes: List[str] = []
         self.images: List[bytes] = []
+        self.links: List[str] = []
         self._next_id = 2
 
     def text(self, x: float, y: float, w: float, h: float, content: Union[str, Sequence[Paragraph]], *,
@@ -121,6 +122,11 @@ class Slide:
         them from here."""
         return self._next_id
 
+    def hyperlinks(self, urls: Sequence[str]) -> None:
+        """The addresses its shapes link to, `rIdLink1` on, as
+        `dml.slide_shapes` names them."""
+        self.links = list(urls)
+
     def shapes_xml(self, elements: Sequence[str]) -> None:
         """Shapes written elsewhere (`terrane.draw.dml`), one element each,
         with ids taken from `next_id` in order."""
@@ -137,6 +143,9 @@ class Slide:
         for i in range(len(self.images)):
             rels.append('<Relationship Id="rId%d" Type="%simage" Target="../media/image%d.png"/>'
                         % (i + 2, REL, first_image + i))
+        for i, url in enumerate(self.links):
+            rels.append('<Relationship Id="rIdLink%d" Type="%shyperlink" Target="%s" TargetMode="External"/>'
+                        % (i + 1, REL, escape(url, {'"': "&quot;"})))
         return ('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Relationships '
                 'xmlns="http://schemas.openxmlformats.org/package/2006/relationships">%s</Relationships>' % "".join(rels))
 

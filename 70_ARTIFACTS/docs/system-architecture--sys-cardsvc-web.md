@@ -31,6 +31,7 @@ flowchart LR
     TS_CARDSVC_CACHE[/"Card Servicing Cache<br/>[Azure Cache for Redis]"/]
     TS_CARDSVC_DNS[/"Card Servicing DNS<br/>[Azure DNS]"/]
     TS_CARDSVC_WAF[/"Card Servicing Web<br/>application firewall<br/>[Azure WAF]"/]
+    TS_NET_SUB_AZ_CARDS_APP[/"Cards App Subnet<br/>[Subnet]"/]
     TS_ENTRA_ID[/"Microsoft Entra ID<br/>[Identity provider]"/]
   end
 
@@ -44,6 +45,8 @@ flowchart LR
   SYS_CARDSVC_WEB -.->|"runs on"| TS_CARDSVC_WAF
   SYS_CARDSVC_WEB -.->|"runs on"| TS_AZURE_AKS
   SYS_CARDSVC_WEB -.->|"runs on"| TS_ENTRA_ID
+  SYS_CARDSVC_API -.->|"runs on"| TS_NET_SUB_AZ_CARDS_APP
+  SYS_CARDSVC_WEB -.->|"runs on"| TS_NET_SUB_AZ_CARDS_APP
   SYS_CARDSVC_API -->|"ReadWrite"| DA_CARDSVC_OPERATIONAL
   SYS_CARDSVC_API -->|"Read"| DA_CARD_ACCOUNT
   SYS_CARDSVC_API -->|"Read"| DA_TRANSACTION
@@ -56,7 +59,7 @@ flowchart LR
   class DA_CARD_ACCOUNT,DA_CARDSVC_OPERATIONAL,DA_TRANSACTION s_data_assets__data_assets;
   class OI_CARDSVC_API s_offered_interfaces__offered_interfaces;
   class SYS_CARDSVC_API,SYS_CARDSVC_WEB s_systems__systems;
-  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT,TS_AZURE_MONITOR,TS_CARDSVC_CACHE,TS_CARDSVC_DNS,TS_CARDSVC_WAF,TS_ENTRA_ID s_tech_services__tech_services;
+  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT,TS_AZURE_MONITOR,TS_CARDSVC_CACHE,TS_CARDSVC_DNS,TS_CARDSVC_WAF,TS_ENTRA_ID,TS_NET_SUB_AZ_CARDS_APP s_tech_services__tech_services;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Data_Asset,grp_System,grp_Technology_Service boundary1;
 ```
@@ -74,4 +77,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#4338ca` | systems |
 | `#c2410c` | tech services |
 
-14 entities, 14 relationships. Generated from the model; edit the model, not this file.
+15 entities, 16 relationships. Generated from the model; edit the model, not this file.

@@ -6,7 +6,10 @@
 title Deposit Products & Funding — Frameworks, Controls, Systems
 
 AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
 AddElementTag("frameworks", $bgColor="#d9f99d", $borderColor="#4d7c0f", $fontColor="#0f172a", $legendText="framework")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
 
 Boundary(b_Capability, "Capability") {
   System(CAP_DEP_03, "Brokered CD Program Management", "Issue and administer CDs through broker-dealer networks: allocations, settlement, and broker relationships. A primary funding channel.", $tags="capabilities")
@@ -22,11 +25,47 @@ Boundary(b_Capability, "Capability") {
   System(CAP_DEP_04, "Deposit Servicing, Interest & Maturities", "Accrue and pay interest, process maturities and renewals, and handle early withdrawal within terms.", $tags="capabilities")
   ' aac CAP_DEP_04: company_domain="Deposits"
 }
+Boundary(b_Control, "Control") {
+  System(CTL_BROKERED_RECON, "Brokered deposit position reconciliation", "The brokered CD position is reconciled daily to the depository and the brokers' allocations, and breaks are cleared.", $tags="controls")
+  ' aac CTL_BROKERED_RECON: company_domain=""
+  System(CTL_TAX_REPORT, "Deposit interest tax reporting", "Year-end interest statements and information returns are complete, on time, and corrected where a taxpayer id is wrong.", $tags="controls")
+  ' aac CTL_TAX_REPORT: company_domain=""
+  System(CTL_MKT_REVIEW, "Marketing material compliance review", "No creative or offer reaches market without documented compliance sign-off.", $tags="controls")
+  ' aac CTL_MKT_REVIEW: company_domain=""
+  System(CTL_RETENTION, "Retention schedule enforcement", "Records are retained to schedule and destroyed on expiry with a certificate of disposition.", $tags="controls")
+  ' aac CTL_RETENTION: company_domain=""
+  System(CTL_SANCTIONS, "Sanctions and watchlist screening", "Parties are screened at onboarding and on list updates; hits are dispositioned before processing continues.", $tags="controls")
+  ' aac CTL_SANCTIONS: company_domain=""
+}
 Boundary(b_Framework, "Framework") {
   System(FW_BIAN, "BIAN", "The Banking Industry Architecture Network's service landscape. A reference model of banking service domains, organized into business areas. Strong on what a bank does and deliberately silent on how it is run.", $tags="frameworks")
   ' aac FW_BIAN: company_domain=""
   System(FW_CRI, "CRI Profile", "The Cyber Risk Institute's Profile: the financial sector's harmonization of NIST CSF, ISO 27001 and the regulators' expectations into one set of diagnostic statements. What a bank is examined against for cyber, and therefore what the security domain is governed by rather than informed by.", $tags="frameworks")
   ' aac FW_CRI: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_DEPOSITS_005, "Accrue and pay deposit interest", "Accrue interest daily on every CD and savings account at its contract rate, credit or pay it on schedule, and post the expense to the ledger. An accrual error repeats across every account on the same rate, so the daily accrual is reconciled to the ledger before close.", $tags="processes")
+  ' aac P_DEPOSITS_005: company_domain=""
+  System(P_DEPOSITS_008, "Administer deposit insurance records and escheatment", "Keep the ownership categories and records the deposit insurer needs to determine coverage, answer depositors' coverage questions, and report and remit dormant balances to the states. In a failure, coverage is determined from these records, so a record that cannot be read is a depositor who cannot be paid on time.", $tags="processes")
+  ' aac P_DEPOSITS_008: company_domain=""
+  System(P_DEPOSITS_003, "Issue brokered CDs through the broker network", "Agree the size, term and rate of a brokered CD issue with Treasury, offer it through the broker-dealer network, and confirm the allocations each broker sold. Brokered CDs are a primary funding channel, and their volume is watched against the brokered deposit limits that apply if capital weakens.", $tags="processes")
+  ' aac P_DEPOSITS_003: company_domain=""
+  System(P_DEPOSITS_002, "Open and fund direct deposit account", "Open a CD or savings account applied for online, verify the depositor's identity and screen for sanctions, deliver the account disclosures, and take the opening deposit by ACH or wire. Deposit accounts are an entry point for fraud and money laundering, so identity and the source of funds are checked before the account goes live.", $tags="processes")
+  ' aac P_DEPOSITS_002: company_domain=""
+  System(P_DEPOSITS_007, "Process CD maturity, renewal, and early withdrawal", "Send maturity notices ahead of the date, take the depositor's instruction, renew at the current rate or pay out at maturity, and calculate the penalty on an early withdrawal. A CD that renews without the required notice, or pays out to an unverified account, is both a complaint and a fraud exposure.", $tags="processes")
+  ' aac P_DEPOSITS_007: company_domain=""
+  System(P_DEPOSITS_006, "Produce deposit tax reporting", "Produce and deliver year-end interest statements to depositors and file the information returns, with corrections and backup withholding where a taxpayer id is missing or wrong. The filing deadlines are fixed, and missing or wrong forms carry penalties by the form.", $tags="processes")
+  ' aac P_DEPOSITS_006: company_domain=""
+  System(P_DEPOSITS_001, "Set deposit rates and product terms", "Set the rate sheet for CDs and savings against funding needs and the market, approve term and early withdrawal penalty changes, and publish the disclosures that must match. Rates are the funding cost of every loan the bank makes, and a published rate that differs from the booked one is a disclosure error.", $tags="processes")
+  ' aac P_DEPOSITS_001: company_domain=""
+  System(P_DEPOSITS_004, "Settle brokered CDs and keep the position", "Settle each brokered issue through the depository against the brokers' allocations, record the CD position, and pay interest and maturities through the same channel, reconciling to the brokers' records. The underlying depositors are the brokers' customers, so their insurance coverage depends on the pass-through records kept here.", $tags="processes")
+  ' aac P_DEPOSITS_004: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_BROKER_GW, "Brokered deposit settlement gateway", "Exchanges brokered CD issuance, allocation and position files with the broker-dealers and the depository.", $tags="systems")
+  ' aac SYS_BROKER_GW: company_domain=""
+  System(SYS_DEPOSIT, "Deposit platform", "System of record for CDs and savings: opening, interest accrual, maturities, early withdrawal and tax reporting.", $tags="systems")
+  ' aac SYS_DEPOSIT: company_domain=""
 }
 
 Rel(CAP_DEP_01, CAP_DEP, "part of")
@@ -46,6 +85,54 @@ Rel(CAP_DEP_04, FW_BIAN, "Operations and Execution > Loans and Deposits > Term D
 ' aac rel: source="CAP_DEP_04"; target="FW_BIAN"; label="Operations and Execution > Loans and Deposits > Term Deposit"; relation="capability_references_framework"; ref="Operations and Execution > Loans and Deposits > Term Deposit"
 Rel(CAP_DEP_05, FW_CRI, "Govern > GV.OC-03")
 ' aac rel: source="CAP_DEP_05"; target="FW_CRI"; label="Govern > GV.OC-03"; relation="capability_references_framework"; ref="Govern > GV.OC-03"
+Rel(P_DEPOSITS_001, CAP_DEP_01, "supported by")
+' aac rel: source="P_DEPOSITS_001"; target="CAP_DEP_01"; label="supported by"; relation="process_supports_capability"
+Rel(P_DEPOSITS_002, CAP_DEP_02, "supported by")
+' aac rel: source="P_DEPOSITS_002"; target="CAP_DEP_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_DEPOSITS_008, CAP_DEP_05, "supported by")
+' aac rel: source="P_DEPOSITS_008"; target="CAP_DEP_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_DEPOSITS_003, CAP_DEP_03, "supported by")
+' aac rel: source="P_DEPOSITS_003"; target="CAP_DEP_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_DEPOSITS_004, CAP_DEP_03, "supported by")
+' aac rel: source="P_DEPOSITS_004"; target="CAP_DEP_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_DEPOSITS_005, CAP_DEP_04, "supported by")
+' aac rel: source="P_DEPOSITS_005"; target="CAP_DEP_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_DEPOSITS_006, CAP_DEP_04, "supported by")
+' aac rel: source="P_DEPOSITS_006"; target="CAP_DEP_04"; label="supported by"; relation="process_supports_capability"
+Rel(P_DEPOSITS_007, CAP_DEP_04, "supported by")
+' aac rel: source="P_DEPOSITS_007"; target="CAP_DEP_04"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_DEP, CTL_BROKERED_RECON, "governed by")
+' aac rel: source="CAP_DEP"; target="CTL_BROKERED_RECON"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_DEP, CTL_MKT_REVIEW, "governed by")
+' aac rel: source="CAP_DEP"; target="CTL_MKT_REVIEW"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_DEP, CTL_RETENTION, "governed by")
+' aac rel: source="CAP_DEP"; target="CTL_RETENTION"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_DEP, CTL_SANCTIONS, "governed by")
+' aac rel: source="CAP_DEP"; target="CTL_SANCTIONS"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_DEP, CTL_TAX_REPORT, "governed by")
+' aac rel: source="CAP_DEP"; target="CTL_TAX_REPORT"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CAP_DEP_01, CTL_MKT_REVIEW, "governed by")
+' aac rel: source="CAP_DEP_01"; target="CTL_MKT_REVIEW"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_DEP_02, CTL_SANCTIONS, "governed by")
+' aac rel: source="CAP_DEP_02"; target="CTL_SANCTIONS"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_DEP_03, CTL_BROKERED_RECON, "governed by")
+' aac rel: source="CAP_DEP_03"; target="CTL_BROKERED_RECON"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_DEP_04, CTL_TAX_REPORT, "governed by")
+' aac rel: source="CAP_DEP_04"; target="CTL_TAX_REPORT"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_DEP_05, CTL_RETENTION, "governed by")
+' aac rel: source="CAP_DEP_05"; target="CTL_RETENTION"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(SYS_BROKER_GW, CAP_DEP_03, "realizes")
+' aac rel: source="SYS_BROKER_GW"; target="CAP_DEP_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DEPOSIT, CAP_DEP_01, "realizes")
+' aac rel: source="SYS_DEPOSIT"; target="CAP_DEP_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DEPOSIT, CAP_DEP_02, "realizes")
+' aac rel: source="SYS_DEPOSIT"; target="CAP_DEP_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DEPOSIT, CAP_DEP_03, "realizes")
+' aac rel: source="SYS_DEPOSIT"; target="CAP_DEP_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DEPOSIT, CAP_DEP_04, "realizes")
+' aac rel: source="SYS_DEPOSIT"; target="CAP_DEP_04"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_DEPOSIT, CAP_DEP_05, "realizes")
+' aac rel: source="SYS_DEPOSIT"; target="CAP_DEP_05"; label="realizes"; relation="system_realizes_capability"
 
 SHOW_LEGEND()
 @enduml

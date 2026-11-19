@@ -1,0 +1,57 @@
+@startuml
+' Issue brokered CDs through the broker network — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Issue brokered CDs through the broker network — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_DEP_03_01, "Broker Network & Issuance", "Agree brokered CD issues with Treasury and place them through the broker-dealer network.", $tags="capabilities")
+  ' aac CAP_DEP_03_01: company_domain="Deposits"
+  System(CAP_DEP_03, "Brokered CD Program Management", "Issue and administer CDs through broker-dealer networks: allocations, settlement, and broker relationships. A primary funding channel.", $tags="capabilities")
+  ' aac CAP_DEP_03: company_domain="Deposits"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_BROKERED_RECON, "Brokered deposit position reconciliation", "The brokered CD position is reconciled daily to the depository and the brokers' allocations, and breaks are cleared.", $tags="controls")
+  ' aac CTL_BROKERED_RECON: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_DEPOSIT_ACCOUNT, "Deposit account and CD record", "Depositor identity and ownership category, account terms, rate, interest accrued, maturity and instructions.", $tags="data_assets")
+  ' aac DA_DEPOSIT_ACCOUNT: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_DEPOSITS_003, "Issue brokered CDs through the broker network", "Agree the size, term and rate of a brokered CD issue with Treasury, offer it through the broker-dealer network, and confirm the allocations each broker sold. Brokered CDs are a primary funding channel, and their volume is watched against the brokered deposit limits that apply if capital weakens.", $tags="processes")
+  ' aac P_DEPOSITS_003: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_BROKER_GW, "Brokered deposit settlement gateway", "Exchanges brokered CD issuance, allocation and position files with the broker-dealers and the depository.", $tags="systems")
+  ' aac SYS_BROKER_GW: company_domain=""
+  System(SYS_DEPOSIT, "Deposit platform", "System of record for CDs and savings: opening, interest accrual, maturities, early withdrawal and tax reporting.", $tags="systems")
+  ' aac SYS_DEPOSIT: company_domain=""
+  System(SYS_TREASURY, "Treasury management", "Treasury, funding, and liquidity management.", $tags="systems")
+  ' aac SYS_TREASURY: company_domain=""
+}
+
+Rel(P_DEPOSITS_003, SYS_BROKER_GW, "Primary")
+' aac rel: source="P_DEPOSITS_003"; target="SYS_BROKER_GW"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_DEPOSITS_003, SYS_TREASURY, "Supporting")
+' aac rel: source="P_DEPOSITS_003"; target="SYS_TREASURY"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DEPOSITS_003, SYS_DEPOSIT, "Supporting")
+' aac rel: source="P_DEPOSITS_003"; target="SYS_DEPOSIT"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DEPOSITS_003, DA_DEPOSIT_ACCOUNT, "Write")
+' aac rel: source="P_DEPOSITS_003"; target="DA_DEPOSIT_ACCOUNT"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_DEPOSITS_003, CTL_BROKERED_RECON, "governed by")
+' aac rel: source="P_DEPOSITS_003"; target="CTL_BROKERED_RECON"; label="governed by"; relation="process_governed_by_control"
+Rel(P_DEPOSITS_003, CAP_DEP_03_01, "supports")
+' aac rel: source="P_DEPOSITS_003"; target="CAP_DEP_03_01"; label="supports"; relation="process_supports_capability"
+Rel(P_DEPOSITS_003, CAP_DEP_03, "supports")
+' aac rel: source="P_DEPOSITS_003"; target="CAP_DEP_03"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

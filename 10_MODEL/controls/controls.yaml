@@ -37,6 +37,21 @@
   last_reviewed: 2026-08-24
   source: Business architecture repository
 
+- control_id: CTL-ANCILLARY-REFUND
+  name: Ancillary product refund on early termination
+  description: When a loan ends early the protection products sold with it are canceled and the unearned part refunded, and the refunds are reconciled monthly.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Monthly
+  regulatory_framework: UDAAP; State law
+  policy_id: POL-MKT-UDAAP
+  owner_org_id: ORG-LOAN-OPS
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
 - control_id: CTL-APP-INTAKE
   name: Application completeness and disclosure
   description: Applications are complete and required disclosures delivered before decisioning; incomplete files route to cure with notice-of-incompleteness timing honored.
@@ -82,6 +97,21 @@
   owner_org_id: ORG-SERVICING
   cri_ref: PR.AA-03
   last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-BROKERED-RECON
+  name: Brokered deposit position reconciliation
+  description: The brokered CD position is reconciled daily to the depository and the brokers' allocations, and breaks are cleared.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Daily
+  regulatory_framework: Brokered deposit rules
+  policy_id: POL-RECORDS
+  owner_org_id: ORG-BROKERED
+  last_reviewed: 2026-11-18
   source: Business architecture repository
 
 - control_id: CTL-BUREAU-ACC
@@ -205,6 +235,21 @@
   last_reviewed: 2026-08-24
   source: Business architecture repository
 
+- control_id: CTL-CREDIT-BAL
+  name: Credit balance refund and escheatment
+  description: Credit balances are refunded on request or at the regulatory age, and unreturnable balances are reported to the states on their schedules.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Monthly
+  regulatory_framework: Reg Z; State unclaimed property law
+  policy_id: POL-ERROR-RES
+  owner_org_id: ORG-SERVICING
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
 - control_id: CTL-CYCLE-VALID
   name: Cycle assessment validation
   description: Interest, fee, and minimum-payment computation is validated against the cardholder agreement on every pricing or product change, and sampled each cycle.
@@ -233,6 +278,21 @@
   policy_id: POL-RECORDS
   owner_org_id: ORG-SETTLEMENT
   last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-DEALER-MON
+  name: Dealer program and markup monitoring
+  description: Dealer rate markup, early defaults, exceptions and complaints are reviewed monthly against program limits, with action recorded.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Monthly
+  regulatory_framework: ECOA; UDAAP
+  policy_id: POL-FAIR-LEND
+  owner_org_id: ORG-DEALER-SVC
+  last_reviewed: 2026-11-18
   source: Business architecture repository
 
 - control_id: CTL-DQ-GATE
@@ -266,6 +326,21 @@
   last_reviewed: 2026-08-24
   source: Business architecture repository
 
+- control_id: CTL-FAIR-LEND-TEST
+  name: Fair lending testing
+  description: Approvals, lines, pricing, markup and treatment are tested quarterly for disparities, and findings go to remediation.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Quarterly
+  regulatory_framework: ECOA; Reg B
+  policy_id: POL-FAIR-LEND
+  owner_org_id: ORG-FAIR-LENDING
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
 - control_id: CTL-FDCPA-NOTICE
   name: Statutory collections notices
   description: Validation and other statutory notices issue within the prescribed period with content owned by legal; continued collection is blocked until issued.
@@ -294,6 +369,21 @@
   policy_id: POL-ERROR-RES
   owner_org_id: ORG-FRAUD
   last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-FUND-STIPS
+  name: Stipulations cleared before funding
+  description: No dealer is funded until every stipulation on the approval is cleared and the contract package is complete and signed.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Per event
+  regulatory_framework: TILA; Credit policy
+  policy_id: POL-COLLATERAL
+  owner_org_id: ORG-LOAN-OPS
+  last_reviewed: 2026-11-18
   source: Business architecture repository
 
 - control_id: CTL-FUNDING-CONF
@@ -327,6 +417,36 @@
   last_reviewed: 2026-08-24
   source: Business architecture repository
 
+- control_id: CTL-LIEN-PERFECT
+  name: Lien perfection within policy window
+  description: Liens not perfected within the policy window are aged and chased by state and by dealer, and reported weekly.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Weekly
+  regulatory_framework: State titling law
+  policy_id: POL-COLLATERAL
+  owner_org_id: ORG-TITLE
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- control_id: CTL-LIEN-RELEASE
+  name: Title release within statutory deadline
+  description: On payoff the lien is released and the title sent within the titling state's deadline, after the payoff funds have cleared.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Per event
+  regulatory_framework: State titling law
+  policy_id: POL-COLLATERAL
+  owner_org_id: ORG-TITLE
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
 - control_id: CTL-MASK-NONPROD
   name: Masked data outside production
   description: Non-production environments carry masked or synthetic data; unmasked extracts require a time-boxed exception.
@@ -341,6 +461,36 @@
   owner_org_id: ORG-QE
   cri_ref: PR.DS-01
   last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-MERCH-EXPOSURE
+  name: Merchant exposure limit monitoring
+  description: Merchant volume, chargeback ratios and future delivery exposure are checked daily against approved limits, with breaches actioned.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Daily
+  regulatory_framework: Network rules
+  policy_id: POL-MERCHANT
+  owner_org_id: ORG-MERCH-RISK
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- control_id: CTL-MERCH-SCREEN
+  name: Merchant screening before boarding
+  description: No merchant is boarded before the business and its owners clear sanctions and the networks' terminated-merchant file.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Per event
+  regulatory_framework: Network rules; BSA/AML
+  policy_id: POL-BSA-AML
+  owner_org_id: ORG-MERCH-RISK
+  last_reviewed: 2026-11-18
   source: Business architecture repository
 
 - control_id: CTL-METRO2-RECON
@@ -402,6 +552,21 @@
   owner_org_id: ORG-INFOSEC
   cri_ref: PR.DS-01
   last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-PMT-ALLOC
+  name: Payment allocation to rule
+  description: Payments above the minimum go to the highest-rate balance first; allocation is sampled daily across accounts with more than one balance.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Daily
+  regulatory_framework: Reg Z
+  policy_id: POL-ERROR-RES
+  owner_org_id: ORG-PAYMENTS
+  last_reviewed: 2026-11-18
   source: Business architecture repository
 
 - control_id: CTL-PMT-POSTING
@@ -509,6 +674,21 @@
   last_reviewed: 2026-08-24
   source: Business architecture repository
 
+- control_id: CTL-REPO-NOTICE
+  name: Repossession and disposition notices
+  description: Notices of repossession, redemption rights and intended sale are sent in each state's form and time before collateral is sold.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Preventive
+  frequency: Per event
+  regulatory_framework: UCC Article 9; State law
+  policy_id: POL-COLLATERAL
+  owner_org_id: ORG-ASSET-RECOVERY
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
 - control_id: CTL-RETENTION
   name: Retention schedule enforcement
   description: Records are retained to schedule and destroyed on expiry with a certificate of disposition.
@@ -567,6 +747,21 @@
   policy_id: POL-FAIR-LEND
   owner_org_id: ORG-SERVICING
   last_reviewed: 2026-08-24
+  source: Business architecture repository
+
+- control_id: CTL-TAX-REPORT
+  name: Deposit interest tax reporting
+  description: Year-end interest statements and information returns are complete, on time, and corrected where a taxpayer id is wrong.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Governance
+  abstraction_level: Conceptual
+  control_type: Detective
+  frequency: Annually
+  regulatory_framework: IRS information reporting
+  policy_id: POL-RECORDS
+  owner_org_id: ORG-DEPOSITS
+  last_reviewed: 2026-11-18
   source: Business architecture repository
 
 - control_id: CTL-TPRM-DD

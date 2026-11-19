@@ -10,18 +10,42 @@ AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColo
 AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
 
 Boundary(b_Capability, "Capability") {
+  System(CAP_PART_05, "Co-Brand & Program Partner Management", "Manage co-brand and program partner economics and obligations.", $tags="capabilities")
+  ' aac CAP_PART_05: company_domain="Cross-Functional Services"
   System(CAP_FIN_02, "Interchange & Revenue Accounting", "Account for interchange, fees, and servicing revenue.", $tags="capabilities")
   ' aac CAP_FIN_02: company_domain="Cross-Functional Services"
+  System(CAP_PART_05_02, "Partner Revenue Share Settlement", "Calculate and settle the partner's share of program revenue and its rewards funding.", $tags="capabilities")
+  ' aac CAP_PART_05_02: company_domain="Cross-Functional Services"
+  System(CAP_SERV_09, "Retention, Product Change & Account Closure", "Keep customers who ask to leave, move accounts between products, and close accounts with balances, rewards and notices settled.", $tags="capabilities")
+  ' aac CAP_SERV_09: company_domain="Servicing"
+  System(CAP_BILL_04_03, "Rewards Delivery", "Deliver redeemed value to the cardholder or partner.", $tags="capabilities")
+  ' aac CAP_BILL_04_03: company_domain="Servicing"
+  System(CAP_BILL_04_01, "Rewards Earn & Accrual", "Accrue earn against qualifying activity per program terms.", $tags="capabilities")
+  ' aac CAP_BILL_04_01: company_domain="Servicing"
   System(CAP_BILL_04, "Rewards Earn, Accrual & Redemption", "Operate the rewards ledger, accrual, and redemption.", $tags="capabilities")
   ' aac CAP_BILL_04: company_domain="Servicing"
+  System(CAP_PROD_04, "Rewards Program Design", "Define earn, accrual, and redemption economics for rewards programs.", $tags="capabilities")
+  ' aac CAP_PROD_04: company_domain="Products"
+  System(CAP_BILL_04_02, "Rewards Redemption", "Execute redemptions across cash, credit, and partner channels.", $tags="capabilities")
+  ' aac CAP_BILL_04_02: company_domain="Servicing"
 }
 Boundary(b_Process, "Process") {
   System(P_REWARDS_001, "Accrue rewards earn", "Calculate and post rewards earn to the rewards ledger for qualifying activity. Earn accrues per the program terms with promotional multipliers; the accrual creates the liability finance reconciles, so earn rules and accounting stay in lockstep.", $tags="processes")
   ' aac P_REWARDS_001: company_domain=""
+  System(P_PARTNERSHIPS_003, "Calculate and settle partner revenue share", "Calculate each partner's share of interchange, interest and fees, its bounties for new accounts and its rewards funding under the agreement, settle the net amount, and reconcile it to the ledger. Revenue share is the partner's view of the program's health, so a disputed calculation sours the relationship as well as the books.", $tags="processes")
+  ' aac P_PARTNERSHIPS_003: company_domain=""
+  System(P_SERVICING_015, "Close account and settle final balance", "Close the account at the cardholder's or the bank's request, stop new charges while recurring payments and pending items clear, forfeit or pay out rewards per the terms, report the closure to the bureaus correctly, and confirm it in writing. A closed account still has a balance to bill and a bureau line to keep accurate.", $tags="processes")
+  ' aac P_SERVICING_015: company_domain=""
+  System(P_PRODUCT_005, "Design rewards program and earn structure", "Design the earn rates, categories, caps, redemption values and partner funding of a rewards program, model its cost against the revenue it should bring, and take it through legal and compliance review. Rewards terms are part of the card agreement, so changing them is a change in terms that needs notice.", $tags="processes")
+  ' aac P_PRODUCT_005: company_domain=""
+  System(P_SERVICING_013, "Process product change or upgrade", "Move an account to another card product at the cardholder's request or by invitation, carrying over the balance, history and rewards as the program rules say, and issue the new card and terms. A product change that resets the account's age or loses rewards is a complaint and, if terms worsen without notice, a disclosure failure.", $tags="processes")
+  ' aac P_SERVICING_013: company_domain=""
   System(P_REWARDS_002, "Process rewards redemption", "Execute a cardholder rewards redemption and settle the resulting obligation. Redemption executes across cash, statement credit, and partner channels; partner settlement follows the program contract, and failed redemptions reverse cleanly.", $tags="processes")
   ' aac P_REWARDS_002: company_domain=""
   System(P_REWARDS_003, "Reconcile rewards liability", "Reconcile the rewards ledger to the recorded liability and resolve differences. The rewards liability reconciliation catches earn, redemption, and expiry drift between the ledger and finance; differences are investigated, not plugged.", $tags="processes")
   ' aac P_REWARDS_003: company_domain=""
+  System(P_REWARDS_004, "Serve redemption catalog and fulfill orders", "Serve the rewards catalog, take redemptions for statement credit, gift cards, merchandise and travel, send orders to the fulfillment partners, and reverse the points when an order fails or comes back. The rewards liability is relieved only when value is delivered, so undelivered orders are tracked until they close.", $tags="processes")
+  ' aac P_REWARDS_004: company_domain=""
 }
 Boundary(b_System, "System") {
   System(SYS_REWARDS, "Rewards ledger", "Rewards accrual ledger and redemption.", $tags="systems")
@@ -34,6 +58,16 @@ Rel(P_REWARDS_002, SYS_REWARDS, "Primary")
 ' aac rel: source="P_REWARDS_002"; target="SYS_REWARDS"; label="Primary"; relation="process_uses_system"; role="Primary"
 Rel(P_REWARDS_003, SYS_REWARDS, "Primary")
 ' aac rel: source="P_REWARDS_003"; target="SYS_REWARDS"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_SERVICING_013, SYS_REWARDS, "Supporting")
+' aac rel: source="P_SERVICING_013"; target="SYS_REWARDS"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_015, SYS_REWARDS, "Supporting")
+' aac rel: source="P_SERVICING_015"; target="SYS_REWARDS"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_REWARDS_004, SYS_REWARDS, "Supporting")
+' aac rel: source="P_REWARDS_004"; target="SYS_REWARDS"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PRODUCT_005, SYS_REWARDS, "Primary")
+' aac rel: source="P_PRODUCT_005"; target="SYS_REWARDS"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_PARTNERSHIPS_003, SYS_REWARDS, "Supporting")
+' aac rel: source="P_PARTNERSHIPS_003"; target="SYS_REWARDS"; label="Supporting"; relation="process_uses_system"; role="Supporting"
 Rel(P_REWARDS_001, CAP_BILL_04, "supports")
 ' aac rel: source="P_REWARDS_001"; target="CAP_BILL_04"; label="supports"; relation="process_supports_capability"
 Rel(P_REWARDS_002, CAP_BILL_04, "supports")
@@ -42,6 +76,26 @@ Rel(P_REWARDS_003, CAP_BILL_04, "supports")
 ' aac rel: source="P_REWARDS_003"; target="CAP_BILL_04"; label="supports"; relation="process_supports_capability"
 Rel(P_REWARDS_003, CAP_FIN_02, "supports")
 ' aac rel: source="P_REWARDS_003"; target="CAP_FIN_02"; label="supports"; relation="process_supports_capability"
+Rel(P_SERVICING_013, CAP_SERV_09, "supports")
+' aac rel: source="P_SERVICING_013"; target="CAP_SERV_09"; label="supports"; relation="process_supports_capability"
+Rel(P_SERVICING_015, CAP_SERV_09, "supports")
+' aac rel: source="P_SERVICING_015"; target="CAP_SERV_09"; label="supports"; relation="process_supports_capability"
+Rel(P_REWARDS_004, CAP_BILL_04_02, "supports")
+' aac rel: source="P_REWARDS_004"; target="CAP_BILL_04_02"; label="supports"; relation="process_supports_capability"
+Rel(P_REWARDS_004, CAP_BILL_04_03, "supports")
+' aac rel: source="P_REWARDS_004"; target="CAP_BILL_04_03"; label="supports"; relation="process_supports_capability"
+Rel(P_PRODUCT_005, CAP_PROD_04, "supports")
+' aac rel: source="P_PRODUCT_005"; target="CAP_PROD_04"; label="supports"; relation="process_supports_capability"
+Rel(P_PARTNERSHIPS_003, CAP_PART_05_02, "supports")
+' aac rel: source="P_PARTNERSHIPS_003"; target="CAP_PART_05_02"; label="supports"; relation="process_supports_capability"
+Rel(P_REWARDS_001, CAP_BILL_04_01, "supports")
+' aac rel: source="P_REWARDS_001"; target="CAP_BILL_04_01"; label="supports"; relation="process_supports_capability"
+Rel(P_REWARDS_002, CAP_BILL_04_02, "supports")
+' aac rel: source="P_REWARDS_002"; target="CAP_BILL_04_02"; label="supports"; relation="process_supports_capability"
+Rel(P_REWARDS_004, CAP_BILL_04, "supports")
+' aac rel: source="P_REWARDS_004"; target="CAP_BILL_04"; label="supports"; relation="process_supports_capability"
+Rel(P_PARTNERSHIPS_003, CAP_PART_05, "supports")
+' aac rel: source="P_PARTNERSHIPS_003"; target="CAP_PART_05"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

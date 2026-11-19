@@ -57,6 +57,80 @@ flowchart TB
     end
   end
 
+  subgraph grp_Azure["Azure"]
+    direction TB
+    subgraph grp_Azure__azure_cards_prod["subscription azure-cards-prod"]
+      direction TB
+      subgraph grp_Azure__azure_cards_prod__uksouth["region uksouth"]
+        direction TB
+        TS_NET_VNET_AZ_CARDS[/"Cards Virtual Network<br/>[Virtual network]"/]
+        subgraph grp_Azure__azure_cards_prod__uksouth__zone_redundant["zone zone-redundant"]
+          direction TB
+          TS_NET_SUB_AZ_CARDS_APP[/"Cards App Subnet<br/>[Subnet]"/]
+          TS_NET_SUB_AZ_CARDS_DATA[/"Cards Data Subnet<br/>[Subnet]"/]
+          TS_NET_NAT_AZ_CARDS_NAT[/"Cards NAT Gateway<br/>[NAT gateway]"/]
+        end
+      end
+    end
+    subgraph grp_Azure__azure_connectivity_prod["subscription azure-connectivity-prod"]
+      direction TB
+      subgraph grp_Azure__azure_connectivity_prod__uksouth["region uksouth"]
+        direction TB
+        TS_AZURE_PRIVATE_DNS[/"Azure Private DNS Resolver<br/>[DNS]"/]
+        TS_AZURE_VWAN[/"Azure Virtual WAN hub<br/>[Transit hub]"/]
+      end
+    end
+    subgraph grp_Azure__azure_data_prod["subscription azure-data-prod"]
+      direction TB
+      subgraph grp_Azure__azure_data_prod__uksouth["region uksouth"]
+        direction TB
+        TS_NET_VNET_AZ_DATA[/"Data Virtual Network<br/>[Virtual network]"/]
+        subgraph grp_Azure__azure_data_prod__uksouth__zone_redundant["zone zone-redundant"]
+          direction TB
+          TS_NET_SUB_AZ_DATA_DATA[/"Data Data Subnet<br/>[Subnet]"/]
+        end
+      end
+    end
+    subgraph grp_Azure__azure_payments_prod["subscription azure-payments-prod"]
+      direction TB
+      subgraph grp_Azure__azure_payments_prod__uksouth["region uksouth"]
+        direction TB
+        TS_NET_VNET_AZ_PAYMENTS[/"Payments Virtual Network<br/>[Virtual network]"/]
+        subgraph grp_Azure__azure_payments_prod__uksouth__zone_redundant["zone zone-redundant"]
+          direction TB
+          TS_NET_SUB_AZ_PAYMENTS_APP[/"Payments App Subnet<br/>[Subnet]"/]
+          TS_NET_SUB_AZ_PAYMENTS_DATA[/"Payments Data Subnet<br/>[Subnet]"/]
+          TS_NET_NAT_AZ_PAYMENTS_NAT[/"Payments NAT Gateway<br/>[NAT gateway]"/]
+        end
+      end
+    end
+    subgraph grp_Azure__azure_platform_prod["subscription azure-platform-prod"]
+      direction TB
+      subgraph grp_Azure__azure_platform_prod__uksouth["region uksouth"]
+        direction TB
+        TS_NET_VNET_AZ_PLATFORM[/"Platform Virtual Network<br/>[Virtual network]"/]
+        subgraph grp_Azure__azure_platform_prod__uksouth__zone_redundant["zone zone-redundant"]
+          direction TB
+          TS_NET_SUB_AZ_PLATFORM_SHARED[/"Platform Shared Services<br/>Subnet<br/>[Subnet]"/]
+        end
+      end
+    end
+    subgraph grp_Azure__azure_risk_prod["subscription azure-risk-prod"]
+      direction TB
+      subgraph grp_Azure__azure_risk_prod__uksouth["region uksouth"]
+        direction TB
+        TS_NET_VNET_AZ_RISK[/"Risk Virtual Network<br/>[Virtual network]"/]
+        subgraph grp_Azure__azure_risk_prod__uksouth__zone_redundant["zone zone-redundant"]
+          direction TB
+          TS_NET_SUB_AZ_RISK_APP[/"Risk App Subnet<br/>[Subnet]"/]
+          TS_NET_NAT_AZ_RISK_NAT[/"Risk NAT Gateway<br/>[NAT gateway]"/]
+          TS_NET_SUB_AZ_RISK_PUB[/"Risk Public Subnet<br/>[Subnet]"/]
+          TS_NET_SUB_AZ_RISK_SHARED[/"Risk Shared Services<br/>Subnet<br/>[Subnet]"/]
+        end
+      end
+    end
+  end
+
   subgraph grp_GCP["GCP"]
     direction TB
     subgraph grp_GCP__gcp_analytics_prod["project gcp-analytics-prod"]
@@ -104,6 +178,28 @@ flowchart TB
     TS_ONPREM_DC[/"Primary Data Center<br/>[Virtual network]"/]
   end
 
+  TS_AZURE_VWAN -->|"network attachment"| TS_NET_VNET_AZ_CARDS
+  TS_NET_VNET_AZ_CARDS -->|"resolver"| TS_AZURE_PRIVATE_DNS
+  TS_NET_VNET_AZ_CARDS -->|"subnet"| TS_NET_SUB_AZ_CARDS_APP
+  TS_NET_VNET_AZ_CARDS -->|"subnet"| TS_NET_SUB_AZ_CARDS_DATA
+  TS_NET_VNET_AZ_CARDS -->|"egress route"| TS_NET_NAT_AZ_CARDS_NAT
+  TS_AZURE_VWAN -->|"network attachment"| TS_NET_VNET_AZ_RISK
+  TS_NET_VNET_AZ_RISK -->|"resolver"| TS_AZURE_PRIVATE_DNS
+  TS_NET_VNET_AZ_RISK -->|"subnet"| TS_NET_SUB_AZ_RISK_PUB
+  TS_NET_VNET_AZ_RISK -->|"subnet"| TS_NET_SUB_AZ_RISK_APP
+  TS_NET_VNET_AZ_RISK -->|"subnet"| TS_NET_SUB_AZ_RISK_SHARED
+  TS_NET_VNET_AZ_RISK -->|"egress route"| TS_NET_NAT_AZ_RISK_NAT
+  TS_AZURE_VWAN -->|"network attachment"| TS_NET_VNET_AZ_PAYMENTS
+  TS_NET_VNET_AZ_PAYMENTS -->|"resolver"| TS_AZURE_PRIVATE_DNS
+  TS_NET_VNET_AZ_PAYMENTS -->|"subnet"| TS_NET_SUB_AZ_PAYMENTS_APP
+  TS_NET_VNET_AZ_PAYMENTS -->|"subnet"| TS_NET_SUB_AZ_PAYMENTS_DATA
+  TS_NET_VNET_AZ_PAYMENTS -->|"egress route"| TS_NET_NAT_AZ_PAYMENTS_NAT
+  TS_AZURE_VWAN -->|"network attachment"| TS_NET_VNET_AZ_DATA
+  TS_NET_VNET_AZ_DATA -->|"resolver"| TS_AZURE_PRIVATE_DNS
+  TS_NET_VNET_AZ_DATA -->|"subnet"| TS_NET_SUB_AZ_DATA_DATA
+  TS_AZURE_VWAN -->|"network attachment"| TS_NET_VNET_AZ_PLATFORM
+  TS_NET_VNET_AZ_PLATFORM -->|"resolver"| TS_AZURE_PRIVATE_DNS
+  TS_NET_VNET_AZ_PLATFORM -->|"subnet"| TS_NET_SUB_AZ_PLATFORM_SHARED
   TS_NET_DX -->|"Direct Connect"| TS_ONPREM_DC
   TS_NET_VPN -->|"IPsec backup"| TS_ONPREM_DC
   TS_AWS_TGW -->|"DX gateway"| TS_NET_DX
@@ -153,26 +249,34 @@ flowchart TB
   classDef s_tech_services__shared_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
   class TS_GCPNET_EXT_LB_LEND,TS_NET_IGW_LENDING s_tech_services__edge;
   class TS_ONPREM_DC s_tech_services__on_prem;
-  class TS_GCPNET_SUB_LEND_APP,TS_GCPNET_SUB_LEND_APP_DR,TS_NET_SUB_LEND_APP_A,TS_NET_SUB_LEND_APP_B,TS_NET_VPC_LENDING,TS_NET_VPC_LENDING_DR,TS_NET_VPC_RISKOPS s_tech_services__private_app;
-  class TS_GCPNET_SUB_ANALYTICS_DATA,TS_GCPNET_SUB_ANALYTICS_DATA_DR,TS_GCPNET_SUB_LEND_DATA,TS_NET_SUB_LEND_DATA_A,TS_NET_SUB_LEND_DATA_B s_tech_services__private_data;
-  class TS_GCPNET_NAT_ANALYTICS,TS_GCPNET_NAT_LEND,TS_GCPNET_PROXY_SUB_LEND,TS_NET_NAT_LEND_A,TS_NET_NAT_LEND_B,TS_NET_SUB_LEND_PUB_A,TS_NET_SUB_LEND_PUB_B s_tech_services__public;
-  class TS_AWS_PRIVATELINK,TS_AWS_TGW,TS_GCP_CLOUD_DNS,TS_GCP_INTERCONNECT,TS_GCP_NCC,TS_GCP_SHARED_VPC,TS_GCPNET_HA_VPN,TS_NET_DX,TS_NET_ROUTE53,TS_NET_VPC_SHARED,TS_NET_VPN s_tech_services__shared_services;
+  class TS_GCPNET_SUB_LEND_APP,TS_GCPNET_SUB_LEND_APP_DR,TS_NET_SUB_AZ_CARDS_APP,TS_NET_SUB_AZ_PAYMENTS_APP,TS_NET_SUB_AZ_RISK_APP,TS_NET_SUB_LEND_APP_A,TS_NET_SUB_LEND_APP_B,TS_NET_VNET_AZ_CARDS,TS_NET_VNET_AZ_DATA,TS_NET_VNET_AZ_PAYMENTS,TS_NET_VNET_AZ_PLATFORM,TS_NET_VNET_AZ_RISK,TS_NET_VPC_LENDING,TS_NET_VPC_LENDING_DR,TS_NET_VPC_RISKOPS s_tech_services__private_app;
+  class TS_GCPNET_SUB_ANALYTICS_DATA,TS_GCPNET_SUB_ANALYTICS_DATA_DR,TS_GCPNET_SUB_LEND_DATA,TS_NET_SUB_AZ_CARDS_DATA,TS_NET_SUB_AZ_DATA_DATA,TS_NET_SUB_AZ_PAYMENTS_DATA,TS_NET_SUB_LEND_DATA_A,TS_NET_SUB_LEND_DATA_B s_tech_services__private_data;
+  class TS_GCPNET_NAT_ANALYTICS,TS_GCPNET_NAT_LEND,TS_GCPNET_PROXY_SUB_LEND,TS_NET_NAT_AZ_CARDS_NAT,TS_NET_NAT_AZ_PAYMENTS_NAT,TS_NET_NAT_AZ_RISK_NAT,TS_NET_NAT_LEND_A,TS_NET_NAT_LEND_B,TS_NET_SUB_AZ_RISK_PUB,TS_NET_SUB_LEND_PUB_A,TS_NET_SUB_LEND_PUB_B s_tech_services__public;
+  class TS_AWS_PRIVATELINK,TS_AWS_TGW,TS_AZURE_PRIVATE_DNS,TS_AZURE_VWAN,TS_GCP_CLOUD_DNS,TS_GCP_INTERCONNECT,TS_GCP_NCC,TS_GCP_SHARED_VPC,TS_GCPNET_HA_VPN,TS_NET_DX,TS_NET_ROUTE53,TS_NET_SUB_AZ_PLATFORM_SHARED,TS_NET_SUB_AZ_RISK_SHARED,TS_NET_VPC_SHARED,TS_NET_VPN s_tech_services__shared_services;
   classDef boundary1 fill:#f4f5f7,stroke:#5f6b7a,color:#3f4a5c;
   class grp_On_prem boundary1;
   classDef boundary2 fill:#f5fbfb,stroke:#00a4a6,color:#0b6e70,stroke-dasharray:6 3;
   class grp_AWS__prod_lending__eu_west_1,grp_AWS__prod_lending__eu_west_2,grp_AWS__prod_riskops__eu_west_2,grp_AWS__shared_network__eu_west_2 boundary2;
   classDef boundary3 fill:#f6f9fd,stroke:#147eba,color:#0f5f8c,stroke-dasharray:6 3;
   class grp_AWS__prod_lending__eu_west_2__eu_west_2a,grp_AWS__prod_lending__eu_west_2__eu_west_2b boundary3;
-  classDef boundary4 fill:#f8fafc,stroke:#5f6368,color:#3c4043,stroke-dasharray:2 3;
-  class grp_GCP__gcp_analytics_prod__europe_west1,grp_GCP__gcp_analytics_prod__europe_west2,grp_GCP__gcp_lending_prod__europe_west1,grp_GCP__gcp_lending_prod__europe_west2,grp_GCP__gcp_shared_network__europe_west2 boundary4;
-  classDef boundary5 fill:#f8fbff,stroke:#4285f4,color:#1a4f9e,stroke-dasharray:6 3;
-  class grp_GCP__gcp_analytics_prod,grp_GCP__gcp_lending_prod,grp_GCP__gcp_shared_network boundary5;
-  classDef boundary6 fill:#f8fbff,stroke:#4285f4,color:#1a4f9e;
-  class grp_GCP boundary6;
-  classDef boundary7 fill:#fbfcfd,stroke:#232f3e,color:#232f3e;
-  class grp_AWS boundary7;
-  classDef boundary8 fill:#fdf6fa,stroke:#c7257e,color:#8b1a58;
-  class grp_AWS__prod_lending,grp_AWS__prod_riskops,grp_AWS__shared_network boundary8;
+  classDef boundary4 fill:#f7fbfe,stroke:#0078d4,color:#1b4b7a,stroke-dasharray:6 3;
+  class grp_Azure__azure_cards_prod,grp_Azure__azure_connectivity_prod,grp_Azure__azure_data_prod,grp_Azure__azure_payments_prod,grp_Azure__azure_platform_prod,grp_Azure__azure_risk_prod boundary4;
+  classDef boundary5 fill:#f7fbfe,stroke:#0078d4,color:#1b4b7a;
+  class grp_Azure boundary5;
+  classDef boundary6 fill:#f8fafc,stroke:#5f6368,color:#3c4043,stroke-dasharray:2 3;
+  class grp_GCP__gcp_analytics_prod__europe_west1,grp_GCP__gcp_analytics_prod__europe_west2,grp_GCP__gcp_lending_prod__europe_west1,grp_GCP__gcp_lending_prod__europe_west2,grp_GCP__gcp_shared_network__europe_west2 boundary6;
+  classDef boundary7 fill:#f8fafc,stroke:#7a8699,color:#4b5563,stroke-dasharray:6 3;
+  class grp_Azure__azure_cards_prod__uksouth__zone_redundant,grp_Azure__azure_data_prod__uksouth__zone_redundant,grp_Azure__azure_payments_prod__uksouth__zone_redundant,grp_Azure__azure_platform_prod__uksouth__zone_redundant,grp_Azure__azure_risk_prod__uksouth__zone_redundant boundary7;
+  classDef boundary8 fill:#f8fafc,stroke:#7a8699,color:#4b5563,stroke-dasharray:2 3;
+  class grp_Azure__azure_cards_prod__uksouth,grp_Azure__azure_connectivity_prod__uksouth,grp_Azure__azure_data_prod__uksouth,grp_Azure__azure_payments_prod__uksouth,grp_Azure__azure_platform_prod__uksouth,grp_Azure__azure_risk_prod__uksouth boundary8;
+  classDef boundary9 fill:#f8fbff,stroke:#4285f4,color:#1a4f9e,stroke-dasharray:6 3;
+  class grp_GCP__gcp_analytics_prod,grp_GCP__gcp_lending_prod,grp_GCP__gcp_shared_network boundary9;
+  classDef boundary10 fill:#f8fbff,stroke:#4285f4,color:#1a4f9e;
+  class grp_GCP boundary10;
+  classDef boundary11 fill:#fbfcfd,stroke:#232f3e,color:#232f3e;
+  class grp_AWS boundary11;
+  classDef boundary12 fill:#fdf6fa,stroke:#c7257e,color:#8b1a58;
+  class grp_AWS__prod_lending,grp_AWS__prod_riskops,grp_AWS__shared_network boundary12;
 ```
 
 The same view as the app draws it, written beside the Mermaid by `terrane render`:
@@ -184,12 +288,18 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | Border | Boundary |
 |---|---|
 | solid `#232f3e` | AWS |
+| solid `#0078d4` | Azure |
 | solid `#4285f4` | GCP |
 | solid `#5f6b7a` | On-prem |
 | solid `#c7257e` | AWS account |
+| dashed `#0078d4` | Azure subscription |
 | dashed `#4285f4` | GCP project |
 | dashed `#00a4a6` | AWS region |
+| dotted `#7a8699` | Azure region |
 | dotted `#5f6368` | GCP region |
 | dashed `#147eba` | AWS availability zone |
+| dashed `#7a8699` | Azure availability zone |
 
-33 entities, 40 relationships. Generated from the model; edit the model, not this file.
+52 entities, 62 relationships. Generated from the model; edit the model, not this file.
+
+> 52 entities on an architecture diagram. Past about 40 this has become a landscape: narrow the scope, or mark it `kind: map`.

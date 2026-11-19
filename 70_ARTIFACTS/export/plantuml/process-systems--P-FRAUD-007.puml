@@ -1,0 +1,65 @@
+@startuml
+' Detect and act on first-party fraud and bust-out — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Detect and act on first-party fraud and bust-out — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_FRAUD_08, "First-Party Fraud & Bust-Out Management", "Detect and act on credit abuse by account holders themselves: bust-out, synthetic identities and payment fraud.", $tags="capabilities")
+  ' aac CAP_FRAUD_08: company_domain="Servicing"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_FRAUD_SLA, "Fraud alert handling service level", "Fraud alerts are actioned within the loss-budget SLA with disposition quality sampling; Reg E liability decisions are documented per case.", $tags="controls")
+  ' aac CTL_FRAUD_SLA: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_TRANSACTION, "Card transaction history", "Authorized, cleared and settled card transactions.", $tags="data_assets")
+  ' aac DA_TRANSACTION: company_domain="Payments"
+  SystemDb(DA_MODEL_FEAT, "Model feature store", "Curated features and scores for credit, fraud, and collections models.", $tags="data_assets")
+  ' aac DA_MODEL_FEAT: company_domain=""
+  SystemDb(DA_PAYMENT_INSTR, "Payment instructions", "Cardholder payment methods and instructions: ACH details, scheduled payments.", $tags="data_assets")
+  ' aac DA_PAYMENT_INSTR: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_FRAUD_007, "Detect and act on first-party fraud and bust-out", "Spot accounts run up to the limit by their owners with no intent to repay, from rapid balance build, payments that return and links between applications, then restrict the account and route it to fraud rather than collections. Booked as credit loss, first-party fraud is worked by the wrong team and reported in the wrong line.", $tags="processes")
+  ' aac P_FRAUD_007: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_CREDIT_DATA, "Credit data and decisioning environment", "Credit data, analytics, and decisioning environment. Built with Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_CREDIT_DATA: company_domain=""; technology="Snowflake Data Cloud"
+  System(SYS_MODEL, "Model platform", "Model development, deployment, and monitoring.", $tags="systems")
+  ' aac SYS_MODEL: company_domain=""
+  System(SYS_FRAUD_DETECT, "Transaction fraud detection", "Real-time transaction fraud scoring and alerting.", $tags="systems")
+  ' aac SYS_FRAUD_DETECT: company_domain=""
+}
+
+Rel(P_FRAUD_007, SYS_FRAUD_DETECT, "Primary")
+' aac rel: source="P_FRAUD_007"; target="SYS_FRAUD_DETECT"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_FRAUD_007, SYS_MODEL, "Supporting")
+' aac rel: source="P_FRAUD_007"; target="SYS_MODEL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_FRAUD_007, SYS_CORE_LEDGER, "Supporting")
+' aac rel: source="P_FRAUD_007"; target="SYS_CORE_LEDGER"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_FRAUD_007, SYS_CREDIT_DATA, "Supporting")
+' aac rel: source="P_FRAUD_007"; target="SYS_CREDIT_DATA"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_FRAUD_007, DA_TRANSACTION, "Read")
+' aac rel: source="P_FRAUD_007"; target="DA_TRANSACTION"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_FRAUD_007, DA_MODEL_FEAT, "Read")
+' aac rel: source="P_FRAUD_007"; target="DA_MODEL_FEAT"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_FRAUD_007, DA_PAYMENT_INSTR, "Read")
+' aac rel: source="P_FRAUD_007"; target="DA_PAYMENT_INSTR"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_FRAUD_007, CTL_FRAUD_SLA, "governed by")
+' aac rel: source="P_FRAUD_007"; target="CTL_FRAUD_SLA"; label="governed by"; relation="process_governed_by_control"
+Rel(P_FRAUD_007, CAP_FRAUD_08, "supports")
+' aac rel: source="P_FRAUD_007"; target="CAP_FRAUD_08"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

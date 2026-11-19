@@ -17,7 +17,7 @@ from terrane.palette import Palette
 from terrane.quick import read_any
 from terrane.render_archimate import ELEMENT_TYPES, export_archimate, gather
 
-from _fixture import REPO, Sandbox, seeded_model, seeded_views
+from _fixture import REPO, Sandbox, remove_scratch, seeded_model, seeded_views
 
 WEB = REPO / "80_APP" / "web"
 
@@ -28,6 +28,7 @@ class TestExport(unittest.TestCase):
         cls.model = seeded_model()
         cls.views = seeded_views()
         cls.tmp = Path(tempfile.mkdtemp(prefix="aac-archimate-"))
+        cls.addClassCleanup(remove_scratch, cls.tmp, "aac-archimate-")
         cls.path, cls.notes = export_archimate(cls.model, cls.views, cls.tmp / "model.xml",
                                                Palette(cls.model.config.get("palette")), IconMap(WEB),
                                                load_components(REPO))
@@ -135,7 +136,9 @@ class TestExport(unittest.TestCase):
         self.assertIn('<propertyDefinition identifier="propid-company-domain" type="string">', self.text)
         self.assertIn('<value xml:lang="en">INT-AUTH-LEDGER</value>', self.text)
         with Sandbox(seed=True) as root:
-            out = Path(tempfile.mkdtemp(prefix="aac-archimate-")) / "estate.xml"
+            folder = Path(tempfile.mkdtemp(prefix="aac-archimate-"))
+            self.addCleanup(remove_scratch, folder, "aac-archimate-")
+            out = folder / "estate.xml"
             path, _notes = terrane.export_archimate(str(root), out)
             doc, notes = read_any(path, root)
             self.assertTrue(any("the model's own, which the engine wrote" in n for n in notes), notes)

@@ -1,10 +1,28 @@
 actor_id,name,description,status,togaf_layer,architecture_domain,abstraction_level,last_reviewed,company_domain,company_subdomain,tags,archetype,archetype_instance,module,source,actor_kind,internal,owner_org_id,volume
 ACT-APPLICANT,Loan Applicant,"A prospect applying for installment credit, not yet a customer.",Active,Business,Business,,,Lending,,,,,,,Person,No,,
+ACT-BORROWER,Borrower,"A customer repaying an installment loan: pays, asks for payoffs and deferrals, and gets the title back at the end.
+",Active,Business,Business,,,Lending,,,,,,,Person,No,,
 ACT-CARD-SCHEME,Card Scheme,"The network carrying authorization and clearing. An external system we integrate with on their terms, not ours, which is why their availability is a design constraint rather than a requirement.
 ",Active,Business,Business,,,Payments,,,,,,,External system,No,,
 ACT-CARDHOLDER,Cardholder,"The customer. Uses the self-service channels, and is the reason the authorization path has a latency budget rather than a throughput one.
 ",Active,Business,Business,,,Servicing,,,,,,,Person,No,,~2.4M active accounts
+ACT-COBRAND-PARTNER,Co-Brand Partner,"A retailer, travel brand or affinity group whose name is on the card. Shares the program's revenue and funds part of its rewards.
+",Active,Business,Business,,,Card Issuing,,,,,,,Organization,No,,
+ACT-COLLECTION-AGENCY,Collection Agency,"Works charged-off accounts placed with it under the bank's conduct requirements, and remits what it collects.
+",Active,Business,Business,,,Collections,,,,,,,Organization,No,,
 ACT-COLLECTIONS-AGENT,Collections Agent,Handles arrears treatment and payment arrangements.,Active,Business,Business,,,Collections,,,,,,,Role,Yes,ORG-COLLECTIONS,
+ACT-DEALER,Dealer,"A dealership selling RVs, boats and powersports vehicles that takes the buyer's loan application and submits it. The bank's point of sale, and a third party it vets, monitors and pays a reserve to.
+",Active,Business,Business,,,Lending,,,,,,,Organization,No,,
+ACT-DEBT-BUYER,Debt Buyer,"Buys charged-off accounts in portfolio sales and takes over collecting them.
+",Active,Business,Business,,,Collections,,,,,,,Organization,No,,
+ACT-DEPOSIT-BROKER,Deposit Broker,"A broker-dealer that sells the bank's brokered CDs to its own customers and settles them through the depository.
+",Active,Business,Business,,,Deposits,,,,,,,Organization,No,,
+ACT-DEPOSITOR,Depositor,"A saver holding a CD or savings account opened directly with the bank.
+",Active,Business,Business,,,Deposits,,,,,,,Person,No,,
+ACT-FUNDING-ANALYST,Funding Analyst,"Reviews contract packages, clears stipulations and releases dealer funding.
+",Active,Business,Business,,,Lending,,,,,,,Role,Yes,ORG-LOAN-OPS,
+ACT-ISO,Independent Sales Organization,"Brings merchants to the bank and submits their applications. The bank sponsors those merchants into the networks and carries their liability.
+",Active,Business,Business,,,Payments,,,,,,,Organization,No,,
 ACT-MERCHANT,Merchant,"Accepts the card at point of sale. Reached through the scheme, never directly.",Active,Business,Business,,,Payments,,,,,,,Organization,No,,
 ACT-MERCHANT-ONBOARDING-ANALYST,Merchant Onboarding Analyst,Reviews a merchant's application and the documents behind it before the account opens.,Planned,Business,Business,,,Payments,,,compose:PRD-MERCHANT-PORTAL,PRD-MERCHANT-PORTAL,operator-role,,Role,Yes,ORG-MERCHANT,
 ACT-REGULATOR,Regulator,"Consumes periodic regulatory returns. Never integrates directly; the relationship is a reporting obligation with a deadline.
@@ -12,4 +30,6 @@ ACT-REGULATOR,Regulator,"Consumes periodic regulatory returns. Never integrates 
 ACT-SCREENING-ANALYST,Screening Analyst,"Works the alert queue: clears the false positives and escalates the rest. The queue exists because the screening does, and its volume is the number the vendor's tuning is judged on.
 ",Planned,Business,Business,,,Risk and Compliance,,,saas-onboarding,PRD-SCREENING,operator-role,,Role,Yes,ORG-COMPLIANCE,
 ACT-SERVICING-AGENT,Servicing Agent,"Contact center staff handling balance, dispute and account queries.",Active,Business,Business,,,Servicing,,,,,,,Role,Yes,ORG-SERVICING,~450 seats
+ACT-SERVICING-CLIENT,Servicing Client,"A lender whose card portfolio the bank services under contract. Sets the strategies, receives the reports and audits the work.
+",Active,Business,Business,,,Servicing,,,,,,,Organization,No,,
 ACT-UNDERWRITER,Credit Underwriter,Reviews referred applications the automated decision would not take.,Active,Business,Business,,,Risk and Compliance,,,,,,,Role,Yes,ORG-CREDIT,

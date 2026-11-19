@@ -1,70 +1,134 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="427.4" viewBox="0 0 1100 427.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="766.7" viewBox="0 0 1100 766.7" font-family="Geist, system-ui, sans-serif" data-layout="elk">
 <title>Application fraud screening — Processes and Capabilities</title>
 <rect width="100%" height="100%" fill="#ffffff"/>
 <g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Application fraud screening — Processes and Capabilities</text>
-<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   3 nodes · 2 edges</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   8 nodes · 7 edges</text>
 <text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One system, every process that uses it and in what role, and the capabilities those processes support. This shows the business impact of changing the system. A</text>
 <text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">long list against a low criticality rating is worth a second look.</text>
 <line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
-<g class="drawing" transform="translate(169.82 99.2)">
+<g class="drawing" transform="translate(165.72 99.2)">
 <g class="boundary" data-id="grp::Capability">
-<rect x="271.72" y="107.3" width="212.57" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
-<text x="313.72" y="124.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+<rect x="279.92" y="129.3" width="212.16" height="383.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="321.92" y="146.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
 </g>
 <g class="boundary" data-id="grp::Process">
-<rect x="9.66" y="33.28" width="212.67" height="103.42" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
-<text x="42.51" y="50.68" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+<rect x="9.87" y="118.26" width="212.27" height="295.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.72" y="135.67" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
 </g>
 <g class="boundary" data-id="grp::System">
-<rect x="529.3" y="24.3" width="221.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
-<text x="559.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+<rect x="537.3" y="24.3" width="221.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="567.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
 </g>
 <g class="edge" data-id="e0::P-ORIG-003::SYS-APPFRAUD">
 <title>Primary</title>
-<path d="M196 76.33 L224.94 76 A10 10 0 0 1 225.06 76 L526 76 L551.48 76" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M555 76 L545.43 80.78 L545.43 71.22 Z" fill="#7b8798"/>
+<path d="M196 254.67 L224.94 255 A10 10 0 0 0 225.06 255 L241 255 A10 10 0 0 0 251 245 L251 84 A10 10 0 0 1 261 74 L505 74 A1 1 0 0 1 506 75 L506 75 A1 1 0 0 0 507 76 L534 76 L559.48 76" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M563 76 L553.43 80.78 L553.43 71.22 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e0::P-ORIG-003::SYS-APPFRAUD">
-<rect x="354.32" y="53.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="375.5" y="65.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+<rect x="362.32" y="80.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="383.5" y="92.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
 </g>
-<g class="edge" data-id="e1::P-ORIG-003::CAP-ORIG-03">
+<g class="edge" data-id="e1::P-LENDING-003::SYS-APPFRAUD">
+<title>Supporting</title>
+<path d="M196 371 L225 371 L233 371 A8 8 0 0 1 241 379 L241 519 A10 10 0 0 0 251 529 L496 529 A10 10 0 0 0 506 519 L506 99 A10 10 0 0 1 516 89 L534 89 L559.48 89" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M563 89 L553.43 93.78 L553.43 84.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-LENDING-003::SYS-APPFRAUD">
+<rect x="354.46" y="535.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="383.5" y="547.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-FRAUD-008::SYS-APPFRAUD">
+<title>Primary</title>
+<path d="M196 166.67 L224.94 167 A10 10 0 0 0 225.06 167 L233 167 A8 8 0 0 0 241 159 L241 73 A10 10 0 0 1 251 63 L534 63 L559.48 63" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M563 63 L553.43 67.78 L553.43 58.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-FRAUD-008::SYS-APPFRAUD">
+<rect x="362.32" y="40.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="383.5" y="52.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e3::P-ORIG-003::CAP-ORIG-03">
 <title>supports</title>
-<path d="M196 93.67 L224.94 94 A10 10 0 0 0 225.06 94 L233 94 A8 8 0 0 1 241 102 L241 149 A10 10 0 0 0 251 159 L269 159 L294.48 159" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M298 159 L288.43 163.78 L288.43 154.22 Z" fill="#7b8798"/>
+<path d="M196 277.33 L224.94 277 A10 10 0 0 1 225.06 277 L277 277 L302.48 277" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M306 277 L296.43 281.79 L296.43 272.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e4::P-LENDING-003::CAP-LEND-02-01">
+<title>supports</title>
+<path d="M196 354 L225 354 L241 354 A10 10 0 0 1 251 364 L251 443 A10 10 0 0 0 261 453 L277 453 L302.48 453" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M306 453 L296.43 457.79 L296.43 448.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e5::P-FRAUD-008::CAP-FRAUD-08">
+<title>supports</title>
+<path d="M196 189.33 L224.94 189 A10 10 0 0 1 225.06 189 L277 189 L302.48 189" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M306 189 L296.43 193.78 L296.43 184.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e6::P-LENDING-003::CAP-LEND-02">
+<title>supports</title>
+<path d="M196 337 L225 337 L251 337 A10 10 0 0 1 261 347 L261 357 A8 8 0 0 0 269 365 L277 365 L302.48 365" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M306 365 L296.43 369.79 L296.43 360.21 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-FRAUD-08" data-type="capabilities">
+<title>First-Party Fraud &amp; Bust-Out Management</title>
+<path d="M346 155 L306 189 L346 223 L426 223 L466 189 L426 155 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="386" y="187.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">First-Party Fraud &amp;</text>
+<text x="386" y="199.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Bust-Out Management</text>
+</g>
+<g class="node" data-id="CAP-LEND-02" data-type="capabilities">
+<title>Indirect Application &amp; Underwriting</title>
+<path d="M346 331 L306 365 L346 399 L426 399 L466 365 L426 331 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="386" y="363.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Indirect Application &amp;</text>
+<text x="386" y="375.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Underwriting</text>
+</g>
+<g class="node" data-id="CAP-LEND-02-01" data-type="capabilities">
+<title>Dealer Application Intake</title>
+<path d="M346 419 L306 453 L346 487 L426 487 L466 453 L426 419 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="386" y="451.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dealer Application</text>
+<text x="386" y="463.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Intake</text>
 </g>
 <g class="node" data-id="CAP-ORIG-03" data-type="capabilities">
 <title>Application Fraud Screening</title>
-<path d="M338 133 L298 159 L338 185 L418 185 L458 159 L418 133 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
-<text x="378" y="157.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Application Fraud</text>
-<text x="378" y="169.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Screening</text>
+<path d="M346 243 L306 277 L346 311 L426 311 L466 277 L426 243 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="386" y="275.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Application Fraud</text>
+<text x="386" y="287.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Screening</text>
+</g>
+<g class="node" data-id="P-FRAUD-008" data-type="processes">
+<title>Investigate synthetic identity</title>
+<path d="M116 144 L36 169.97 L66.56 212 L165.44 212 L196 169.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="176.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Investigate synthetic</text>
+<text x="116" y="188.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">identity</text>
+</g>
+<g class="node" data-id="P-LENDING-003" data-type="processes">
+<title>Receive and validate dealer-submitted application</title>
+<path d="M116 320 L36 345.97 L66.56 388 L165.44 388 L196 345.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="346.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Receive and validate</text>
+<text x="116" y="358.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">dealer-submitted</text>
+<text x="116" y="370.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">application</text>
 </g>
 <g class="node" data-id="P-ORIG-003" data-type="processes">
 <title>Screen application for fraud</title>
-<path d="M116 59 L36 78.86 L66.56 111 L165.44 111 L196 78.86 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
-<text x="116" y="83.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Screen application for</text>
-<text x="116" y="95.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">fraud</text>
+<path d="M116 232 L36 257.97 L66.56 300 L165.44 300 L196 257.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="264.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Screen application for</text>
+<text x="116" y="276.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">fraud</text>
 </g>
 <g class="node" data-id="SYS-APPFRAUD" data-type="systems">
 <title>Application fraud screening</title>
-<rect x="555" y="50" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
-<text x="636" y="74.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Application fraud</text>
-<text x="636" y="86.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">screening</text>
-<svg x="707" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+<rect x="563" y="50" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="644" y="74.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Application fraud</text>
+<text x="644" y="86.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">screening</text>
+<svg x="715" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
 </g>
 </g>
-<g class="foot"><line x1="28" y1="325.4" x2="1072" y2="325.4" stroke="#d2dae5" stroke-width="1"/>
-<text x="28" y="349.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
-<g transform="translate(67.2 338.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
-<text x="93.2" y="349.4" font-size="12" font-weight="400" fill="#343d50">capability · 1</text>
-<g transform="translate(177.5 338.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
-<text x="203.5" y="349.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
-<g transform="translate(277.77 338.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
-<text x="303.77" y="349.4" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
-<text x="28" y="371.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
-<g transform="translate(73.5 360.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
-<text x="99.5" y="371.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
-<g transform="translate(166.02 360.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
-<text x="192.02" y="371.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
-<text x="28" y="405.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-processes--sys-appfraud · edit the model, not the picture</text></g>
+<g class="foot"><line x1="28" y1="664.7" x2="1072" y2="664.7" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="688.7" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 677.7)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="688.7" font-size="12" font-weight="400" fill="#343d50">capability · 4</text>
+<g transform="translate(180.27 677.7)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="206.27" y="688.7" font-size="12" font-weight="400" fill="#343d50">process · 3</text>
+<g transform="translate(283.29 677.7)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="309.29" y="688.7" font-size="12" font-weight="400" fill="#343d50">system · 1</text>
+<text x="28" y="710.7" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 699.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="710.7" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 699.7)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="710.7" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="744.7" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · system-processes--sys-appfraud · edit the model, not the picture</text></g>
 </svg>

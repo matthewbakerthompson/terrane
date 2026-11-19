@@ -14,6 +14,8 @@ Boundary(b_Capability, "Capability") {
   ' aac CAP_ORIG_05: company_domain="Originations"
   System(CAP_CRED_03, "Credit Line Assignment & Management", "Set initial lines and manage increases, decreases, and reallocation.", $tags="capabilities")
   ' aac CAP_CRED_03: company_domain="Originations"
+  System(CAP_CRED_03_02, "Credit Line Decrease & Account Action", "Decrease lines and restrict accounts on risk, with the adverse action notices that requires.", $tags="capabilities")
+  ' aac CAP_CRED_03_02: company_domain="Originations"
 }
 Boundary(b_Process, "Process") {
   System(P_CREDIT_004, "Execute credit line decrease or account action", "Apply risk-driven line decreases or account actions, with required notice. Adverse action obligations apply to decreases and closures just as they do to declines; the notice must state the principal reasons and bureau information used.", $tags="processes")
@@ -34,6 +36,8 @@ Rel(P_CREDIT_004, CAP_CRED_03, "supports")
 ' aac rel: source="P_CREDIT_004"; target="CAP_CRED_03"; label="supports"; relation="process_supports_capability"
 Rel(P_CREDIT_004, CAP_ORIG_05, "supports")
 ' aac rel: source="P_CREDIT_004"; target="CAP_ORIG_05"; label="supports"; relation="process_supports_capability"
+Rel(P_CREDIT_004, CAP_CRED_03_02, "supports")
+' aac rel: source="P_CREDIT_004"; target="CAP_CRED_03_02"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

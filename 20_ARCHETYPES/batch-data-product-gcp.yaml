@@ -86,6 +86,7 @@ provides:
   systems:
     - system_id: "SYS-{slug|upper}-PIPELINE"
       name: "{product_name} Pipeline"
+      component_type: etl
       description: "Dataflow jobs on a Composer schedule, ingesting the source events of {product_name} from Pub/Sub and curating them into BigQuery."
       system_category: Pipeline
       network_zone: Private-Data
@@ -94,6 +95,7 @@ provides:
       uses: [message-queue, etl, workflow, warehouse, catalog]
     - system_id: "SYS-{slug|upper}-SEMANTIC"
       name: "{product_name} Semantic Layer"
+      component_type: bi
       description: "Governed models and metrics exposed to analysts for {product_name}, served from BigQuery through Looker."
       system_category: Analytics
       network_zone: Private-Data

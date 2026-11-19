@@ -178,7 +178,7 @@ class LandingZoneGap(NamedTuple):
     bound_by: Sequence[str]
 
 
-def landing_zone_gaps(modules, archetypes, zone) -> List[LandingZoneGap]:
+def landing_zone_gaps(modules, archetypes, zone, kinds=None) -> List[LandingZoneGap]:
     """What each landing zone cannot answer, ahead of any shape asking.
 
     A shape composing a part whose kind resolves to nothing is refused; this
@@ -196,10 +196,20 @@ def landing_zone_gaps(modules, archetypes, zone) -> List[LandingZoneGap]:
     """
     shapes = list(archetypes)
     asked: Dict[str, List[Tuple[str, str]]] = {}
+    known = set(kinds or ())
     for module in sorted(modules.values(), key=lambda m: m.module_id):
         for param in module.parameters:
             if param.component and param.default is None:
                 asked.setdefault(param.component, []).append((module.module_id, param.name))
+            elif known and isinstance(param.default, list):
+                # A kind a part uses by default (`uses: [object-store, kms]`)
+                # asks the landing zone as much as a parameter does, given the
+                # component types to tell a kind from a block: the card
+                # issuer's Azure zone had no object store, and nothing said so
+                # until a part that stores documents was assembled there.
+                for value in param.default:
+                    if isinstance(value, str) and value in known:
+                        asked.setdefault(value, []).append((module.module_id, param.name))
     gaps: List[LandingZoneGap] = []
     for provider in landing_providers(shapes):
         if not has_landing_zone(provider, zone):

@@ -8,9 +8,23 @@ flowchart LR
   %% Land point-of-sale finance on Google Cloud — Footprint
   %% Generated from the model by `terrane render`. Do not edit by hand.
 
+  subgraph grp_Capability["Capability"]
+    direction LR
+    CAP_LEND_02_01{{"Dealer Application Intake"}}
+    CAP_LEND_02{{"Indirect Application &<br/>Underwriting"}}
+    CAP_LEND_02_02{{"Indirect Credit Decision &<br/>Counteroffer"}}
+  end
+
   subgraph grp_Data_Asset["Data Asset"]
     direction LR
     DA_POSFIN_OPERATIONAL[("Point-of-Sale Finance<br/>operational data")]
+  end
+
+  subgraph grp_Process["Process"]
+    direction LR
+    P_LENDING_004[\"Decide indirect loan and<br/>return terms"/]
+    P_LENDING_016[\"Originate point-of-sale<br/>installment loan"/]
+    P_LENDING_003[\"Receive and validate<br/>dealer-submitted<br/>application"/]
   end
 
   subgraph grp_System["System"]
@@ -32,15 +46,29 @@ flowchart LR
   WP_POS_FINANCE -->|"Builds"| SYS_POSFIN_EVENTS
   SYS_POSFIN_API -->|"ReadWrite"| DA_POSFIN_OPERATIONAL
   SYS_POSFIN_DB -->|"ReadWrite"| DA_POSFIN_OPERATIONAL
+  SYS_POSFIN_API -->|"realizes"| CAP_LEND_02
+  SYS_POSFIN_API -->|"realizes"| CAP_LEND_02_01
+  SYS_POSFIN_API -->|"realizes"| CAP_LEND_02_02
+  P_LENDING_003 -->|"supports"| CAP_LEND_02_01
+  P_LENDING_004 -->|"supports"| CAP_LEND_02_02
+  P_LENDING_016 -->|"supports"| CAP_LEND_02_01
+  P_LENDING_016 -->|"supports"| CAP_LEND_02_02
+  P_LENDING_003 -->|"supports"| CAP_LEND_02
+  P_LENDING_004 -->|"supports"| CAP_LEND_02
+  P_LENDING_016 -->|"supports"| CAP_LEND_02
 
+  classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
   classDef s_data_assets__data_assets fill:#a7f3d0,stroke:#047857,color:#0f172a,stroke-width:1.4px;
+  classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   classDef s_work_packages__work_packages fill:#ccfbf1,stroke:#0d9488,color:#0f172a,stroke-width:1.4px;
+  class CAP_LEND_02,CAP_LEND_02_01,CAP_LEND_02_02 s_capabilities__capabilities;
   class DA_POSFIN_OPERATIONAL s_data_assets__data_assets;
+  class P_LENDING_003,P_LENDING_004,P_LENDING_016 s_processes__processes;
   class SYS_POSFIN_API,SYS_POSFIN_DB,SYS_POSFIN_EVENTS,SYS_POSFIN_WEB s_systems__systems;
   class WP_POS_FINANCE s_work_packages__work_packages;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
-  class grp_Data_Asset,grp_System,grp_Work_Package boundary1;
+  class grp_Capability,grp_Data_Asset,grp_Process,grp_System,grp_Work_Package boundary1;
 ```
 
 The same view as the app draws it, written beside the Mermaid by `terrane render`:
@@ -51,8 +79,10 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 
 | | Entity type |
 |---|---|
+| `#6d28d9` | capabilities |
 | `#047857` | data assets |
+| `#0369a1` | processes |
 | `#4338ca` | systems |
 | `#0d9488` | work packages |
 
-6 entities, 6 relationships. Generated from the model; edit the model, not this file.
+12 entities, 16 relationships. Generated from the model; edit the model, not this file.

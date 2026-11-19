@@ -43,6 +43,10 @@ Boundary(b_9_0_Acquire__Construct_and_Manage_Assets, "9.0 Acquire, Construct and
   System(CAP_CORP_04, "Facilities & Workplace Operations", "Operate sites and workplace services.", $tags="capabilities")
   ' aac CAP_CORP_04: company_domain="Cross-Functional Services"
 }
+Boundary(b_9_2_Perform_Revenue_Accounting, "9.2 Perform Revenue Accounting") {
+  System(CAP_PART_05_02, "Partner Revenue Share Settlement", "Calculate and settle the partner's share of program revenue and its rewards funding.", $tags="capabilities")
+  ' aac CAP_PART_05_02: company_domain="Cross-Functional Services"
+}
 
 SHOW_LEGEND()
 @enduml

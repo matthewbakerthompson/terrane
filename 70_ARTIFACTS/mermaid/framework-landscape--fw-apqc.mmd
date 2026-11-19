@@ -39,10 +39,15 @@ flowchart LR
     CAP_CORP_04{{"Facilities & Workplace<br/>Operations"}}
   end
 
+  subgraph grp_9_2_Perform_Revenue_Accounting["9.2 Perform Revenue Accounting"]
+    direction TB
+    CAP_PART_05_02{{"Partner Revenue Share<br/>Settlement"}}
+  end
+
 
   classDef s_capabilities__direct fill:#b79bf1,stroke:#6d28d9,color:#0f172a,stroke-width:2.6px;
   classDef s_capabilities__enable fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.0px;
-  class CAP_PART_03,CAP_PART_04,CAP_PART_05,CAP_STRAT_03,CAP_STRAT_04,CAP_STRAT_05 s_capabilities__direct;
+  class CAP_PART_03,CAP_PART_04,CAP_PART_05,CAP_PART_05_02,CAP_STRAT_03,CAP_STRAT_04,CAP_STRAT_05 s_capabilities__direct;
   class CAP_CORP_01,CAP_CORP_02,CAP_CORP_03,CAP_CORP_04,CAP_CORP_05,CAP_FIN_05 s_capabilities__enable;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
-  class grp_1_0_Develop_Vision_and_Strategy,grp_11_0_Manage_External_Relationships,grp_12_0_Develop_and_Manage_Business_Capabilities,grp_6_0_Develop_and_Manage_Human_Capital,grp_8_0_Manage_Financial_Resources,grp_9_0_Acquire__Construct_and_Manage_Assets boundary1;
+  class grp_1_0_Develop_Vision_and_Strategy,grp_11_0_Manage_External_Relationships,grp_12_0_Develop_and_Manage_Business_Capabilities,grp_6_0_Develop_and_Manage_Human_Capital,grp_8_0_Manage_Financial_Resources,grp_9_0_Acquire__Construct_and_Manage_Assets,grp_9_2_Perform_Revenue_Accounting boundary1;

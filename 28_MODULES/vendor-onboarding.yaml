@@ -41,6 +41,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-VENDOR"
         name: "{product_name}"
+        component_type: vendor-saas
         description: >
           {product_name}, operated by {vendor} in their own tenancy. We hold a
           contract and a data processing agreement, not a deployment.
@@ -76,12 +77,16 @@
   parameters:
     - name: vendor
       required: true
+      ask: Vendor
       description: The vendor, as a name
     - name: vendor_region
       default: eu-west-1
+      ask: Where it holds our data
       description: Where the vendor processes our data
     - name: caller_system
       required: true
+      ask: Called in line by
+      names: systems
       description: The system on our side that calls the vendor in line
   # The members name the kinds they need -- a container platform, an API
   # gateway, a secrets manager -- and the shape binds each kind to the shared
@@ -160,6 +165,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-EGRESS"
         name: "{product_name} Private Egress"
+        component_type: private-egress
         description: >
           PrivateLink endpoint and egress allow-list for {vendor}. The control
           that keeps regulated data off the public internet, and the thing a
@@ -256,6 +262,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-FEDERATION"
         name: "{product_name} Identity Federation"
+        component_type: identity-provider
         description: >
           Single sign-on into {vendor}: assertions from our identity provider,
           so access is granted and revoked where the joiner and leaver process

@@ -16,6 +16,8 @@ Boundary(b_Capability, "Capability") {
   ' aac CAP_FRAUD_04: company_domain="Servicing"
   System(CAP_FRAUD_03, "Dispute Intake & Provisional Credit", "Take dispute claims and apply provisional credit within regulatory timers.", $tags="capabilities")
   ' aac CAP_FRAUD_03: company_domain="Servicing"
+  System(CAP_FRAUD_08, "First-Party Fraud & Bust-Out Management", "Detect and act on credit abuse by account holders themselves: bust-out, synthetic identities and payment fraud.", $tags="capabilities")
+  ' aac CAP_FRAUD_08: company_domain="Servicing"
   System(CAP_FRAUD_02, "Fraud Case Investigation", "Investigate and adjudicate fraud cases.", $tags="capabilities")
   ' aac CAP_FRAUD_02: company_domain="Servicing"
   System(CAP_FRAUD_05, "Fraud Loss Recovery & Write-off", "Recover and account for fraud losses.", $tags="capabilities")
@@ -52,6 +54,8 @@ Boundary(b_Framework, "Framework") {
 Boundary(b_Process, "Process") {
   System(P_SERVICING_005, "Authenticate cardholder", "Authenticate a cardholder to policy before disclosing information or executing a change. Authentication strength scales with request risk; failures route to step-up rather than disclosure, and the policy is tuned with the fraud team.", $tags="processes")
   ' aac P_SERVICING_005: company_domain=""
+  System(P_FRAUD_007, "Detect and act on first-party fraud and bust-out", "Spot accounts run up to the limit by their owners with no intent to repay, from rapid balance build, payments that return and links between applications, then restrict the account and route it to fraud rather than collections. Booked as credit loss, first-party fraud is worked by the wrong team and reported in the wrong line.", $tags="processes")
+  ' aac P_FRAUD_007: company_domain=""
   System(P_FRAUD_001, "Detect and action transaction fraud alert", "Detect a suspected fraudulent transaction, action the alert, and contact the cardholder. Alert handling runs against loss and customer-friction budgets; actions span block, reissue, and contact, and the clock matters because exposure grows per transaction.", $tags="processes")
   ' aac P_FRAUD_001: company_domain=""
   System(P_DISPUTE_002, "Execute network chargeback", "Submit and track a chargeback through the network within the applicable filing window. Chargeback rights and filing windows differ by network and reason code; a missed window converts a recoverable dispute into an issuer loss.", $tags="processes")
@@ -60,6 +64,8 @@ Boundary(b_Process, "Process") {
   ' aac P_DISPUTE_004: company_domain=""
   System(P_FRAUD_002, "Investigate and adjudicate fraud case", "Investigate a suspected fraud case and reach a documented determination. The case determination separates true fraud from friendly fraud and abuse, drives the Reg E liability decision, and feeds the loss and strategy data.", $tags="processes")
   ' aac P_FRAUD_002: company_domain=""
+  System(P_FRAUD_008, "Investigate synthetic identity", "Investigate identities built from real and invented data, often seasoned for months before they bust out, by linking shared phones, addresses and devices across applications and accounts; close the linked accounts and feed the pattern back to application screening. A synthetic identity has no victim to complain, so it is found only by looking.", $tags="processes")
+  ' aac P_FRAUD_008: company_domain=""
   System(P_FRAUD_006, "Maintain fraud detection strategy", "Define, test, and deploy changes to fraud detection rules and models. Strategy changes are tested against recent fraud and false-positive performance before deployment; every rule change is versioned and reversible.", $tags="processes")
   ' aac P_FRAUD_006: company_domain=""
   System(P_DISPUTE_001, "Process cardholder dispute claim", "Take a cardholder dispute claim, apply provisional credit, investigate, determine, and notify within regulatory timers.", $tags="processes")
@@ -74,6 +80,8 @@ Boundary(b_Process, "Process") {
   ' aac P_FRAUD_005: company_domain=""
 }
 Boundary(b_System, "System") {
+  System(SYS_APPFRAUD, "Application fraud screening", "Application fraud and identity risk screening.", $tags="systems")
+  ' aac SYS_APPFRAUD: company_domain=""
   System(SYS_DISPUTES_GATEWAY, "Dispute Management Platform Integration Gateway", "Our side of the Pegasystems integration: mapping, retry and audit. Built with AKS.", $tags="systems")
   ' aac SYS_DISPUTES_GATEWAY: company_domain="Servicing"; hosting="Azure"; technology="AKS"
   System(SYS_IAM, "Identity and access management", "Workforce identity, authentication, and access governance.", $tags="systems")
@@ -91,6 +99,7 @@ Rel(CAP_FRAUD_04, CAP_FRAUD, "part of")
 Rel(CAP_FRAUD_05, CAP_FRAUD, "part of")
 Rel(CAP_FRAUD_06, CAP_FRAUD, "part of")
 Rel(CAP_FRAUD_07, CAP_FRAUD, "part of")
+Rel(CAP_FRAUD_08, CAP_FRAUD, "part of")
 Rel(CAP_FRAUD, FW_BIAN, "Aligned to")
 ' aac rel: source="CAP_FRAUD"; target="FW_BIAN"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
 Rel(CAP_FRAUD, FW_PCI_DSS, "Governed by")
@@ -109,6 +118,8 @@ Rel(CAP_FRAUD_06, FW_BIAN, "Risk and Compliance > Regulations and Compliance > F
 ' aac rel: source="CAP_FRAUD_06"; target="FW_BIAN"; label="Risk and Compliance > Regulations and Compliance > Fraud Resolution"; relation="capability_references_framework"; ref="Risk and Compliance > Regulations and Compliance > Fraud Resolution"
 Rel(CAP_FRAUD_07, FW_BIAN, "Operations and Execution > Account Management > Fraud Diagnosis")
 ' aac rel: source="CAP_FRAUD_07"; target="FW_BIAN"; label="Operations and Execution > Account Management > Fraud Diagnosis"; relation="capability_references_framework"; ref="Operations and Execution > Account Management > Fraud Diagnosis"
+Rel(CAP_FRAUD_08, FW_BIAN, "Operations and Execution > Account Management > Fraud Diagnosis / Customer Behavior")
+' aac rel: source="CAP_FRAUD_08"; target="FW_BIAN"; label="Operations and Execution > Account Management > Fraud Diagnosis / Customer Behavior"; relation="capability_references_framework"; ref="Operations and Execution > Account Management > Fraud Diagnosis / Customer Behavior"
 Rel(P_SERVICING_005, CAP_FRAUD_06, "supported by")
 ' aac rel: source="P_SERVICING_005"; target="CAP_FRAUD_06"; label="supported by"; relation="process_supports_capability"
 Rel(P_FRAUD_001, CAP_FRAUD_01, "supported by")
@@ -131,6 +142,10 @@ Rel(P_DISPUTE_003, CAP_FRAUD_04, "supported by")
 ' aac rel: source="P_DISPUTE_003"; target="CAP_FRAUD_04"; label="supported by"; relation="process_supports_capability"
 Rel(P_DISPUTE_004, CAP_FRAUD_03, "supported by")
 ' aac rel: source="P_DISPUTE_004"; target="CAP_FRAUD_03"; label="supported by"; relation="process_supports_capability"
+Rel(P_FRAUD_007, CAP_FRAUD_08, "supported by")
+' aac rel: source="P_FRAUD_007"; target="CAP_FRAUD_08"; label="supported by"; relation="process_supports_capability"
+Rel(P_FRAUD_008, CAP_FRAUD_08, "supported by")
+' aac rel: source="P_FRAUD_008"; target="CAP_FRAUD_08"; label="supported by"; relation="process_supports_capability"
 Rel(CAP_FRAUD, CTL_AUTH_POLICY, "governed by")
 ' aac rel: source="CAP_FRAUD"; target="CTL_AUTH_POLICY"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
 Rel(CAP_FRAUD, CTL_FRAUD_SLA, "governed by")
@@ -159,10 +174,14 @@ Rel(CAP_FRAUD_06, CTL_AUTH_POLICY, "governed by")
 ' aac rel: source="CAP_FRAUD_06"; target="CTL_AUTH_POLICY"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
 Rel(CAP_FRAUD_06, CTL_IR_PLAYBOOK, "governed by")
 ' aac rel: source="CAP_FRAUD_06"; target="CTL_IR_PLAYBOOK"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_FRAUD_08, CTL_FRAUD_SLA, "governed by")
+' aac rel: source="CAP_FRAUD_08"; target="CTL_FRAUD_SLA"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
 Rel(SYS_DISPUTES_GATEWAY, CAP_FRAUD, "realizes")
 ' aac rel: source="SYS_DISPUTES_GATEWAY"; target="CAP_FRAUD"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_DISPUTES_SAAS, CAP_FRAUD, "realizes")
 ' aac rel: source="SYS_DISPUTES_SAAS"; target="CAP_FRAUD"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_APPFRAUD, CAP_FRAUD_08, "realizes")
+' aac rel: source="SYS_APPFRAUD"; target="CAP_FRAUD_08"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_DISPUTES_SAAS, CAP_FRAUD_02, "realizes")
 ' aac rel: source="SYS_DISPUTES_SAAS"; target="CAP_FRAUD_02"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_DISPUTES_SAAS, CAP_FRAUD_03, "realizes")
@@ -177,6 +196,8 @@ Rel(SYS_DISPUTES_SAAS, CAP_FRAUD_07, "realizes")
 ' aac rel: source="SYS_DISPUTES_SAAS"; target="CAP_FRAUD_07"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_FRAUD_DETECT, CAP_FRAUD_01, "realizes")
 ' aac rel: source="SYS_FRAUD_DETECT"; target="CAP_FRAUD_01"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_FRAUD_DETECT, CAP_FRAUD_08, "realizes")
+' aac rel: source="SYS_FRAUD_DETECT"; target="CAP_FRAUD_08"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_IAM, CAP_FRAUD_06, "realizes")
 ' aac rel: source="SYS_IAM"; target="CAP_FRAUD_06"; label="realizes"; relation="system_realizes_capability"
 

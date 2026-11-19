@@ -88,7 +88,9 @@
               "text",
               "note",
               "frame",
-              "line"
+              "line",
+              "pool",
+              "lane"
             ]
           },
           "label": {
@@ -114,7 +116,26 @@
             "items": {
               "type": "string"
             },
-            "description": "The keys of the frames it sits in, outermost first."
+            "description": "The keys of the frames, the swimlane and the lane it sits in, outermost first."
+          },
+          "runs": {
+            "enum": [
+              "across",
+              "down"
+            ],
+            "description": "A swimlane's lanes stacked across it, or side by side down it."
+          },
+          "names": {
+            "enum": [
+              "left",
+              "top"
+            ],
+            "description": "Where each of a swimlane's lanes has its name: in a column at its left, or a band at its top."
+          },
+          "stands_for": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The record a lane stands for, by id, an actor or an org unit: the lane is named as the record is."
           },
           "at": {
             "type": "array",
@@ -207,7 +228,7 @@
               "minItems": 2,
               "maxItems": 2
             },
-            "description": "The points of the sheet a straight line bends at, in order."
+            "description": "The points of the sheet a straight line bends at, in order; or a square or curved line's turns where its stretches were moved by hand."
           },
           "ends": {
             "enum": [
@@ -222,6 +243,101 @@
               "square",
               "curved"
             ]
+          },
+          "turns": {
+            "enum": [
+              "sharp",
+              "rounded"
+            ],
+            "description": "A square line's turns, sharp or rounded; sharp when left out."
+          },
+          "labels": {
+            "type": "object",
+            "additionalProperties": false,
+            "minProperties": 1,
+            "properties": {
+              "start": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120
+              },
+              "end": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120
+              }
+            },
+            "description": "A line's words at its start and its end; its middle's are its label."
+          },
+          "heads": {
+            "type": "object",
+            "additionalProperties": false,
+            "minProperties": 1,
+            "properties": {
+              "start": {
+                "enum": [
+                  "none",
+                  "arrow",
+                  "open-arrow",
+                  "dot",
+                  "inherits",
+                  "made-of",
+                  "has",
+                  "depends-on",
+                  "one",
+                  "many",
+                  "one-or-many",
+                  "none-or-one",
+                  "none-or-many",
+                  "serving",
+                  "triggering",
+                  "flow",
+                  "realization",
+                  "assignment",
+                  "access"
+                ]
+              },
+              "end": {
+                "enum": [
+                  "none",
+                  "arrow",
+                  "open-arrow",
+                  "dot",
+                  "inherits",
+                  "made-of",
+                  "has",
+                  "depends-on",
+                  "one",
+                  "many",
+                  "one-or-many",
+                  "none-or-one",
+                  "none-or-many",
+                  "serving",
+                  "triggering",
+                  "flow",
+                  "realization",
+                  "assignment",
+                  "access"
+                ]
+              }
+            },
+            "description": "A line's heads at its start and its end, each a plain one, UML's, crow's foot's or ArchiMate's; none where left out. Said in place of ends."
+          },
+          "group": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The key of the group it is picked and moved with, in the view's groups."
+          },
+          "layer": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The key of the drawing layer it is on, in the view's layers; the one just above the estate's records when left out."
+          },
+          "link": {
+            "type": "string",
+            "pattern": "^(https?://|mailto:)\\S+$",
+            "maxLength": 2000,
+            "description": "Where it links to: an address on the web or for email."
           },
           "look": {
             "type": "object",
@@ -242,6 +358,7 @@
                 "enum": [
                   "solid",
                   "dashed",
+                  "dotted",
                   "none"
                 ]
               },
@@ -282,6 +399,34 @@
                   "none"
                 ],
                 "description": "none drops the hard shadow a shape or a note casts."
+              },
+              "bold": {
+                "const": true,
+                "description": "Its words bold; a shape's caption with its name."
+              },
+              "italic": {
+                "const": true,
+                "description": "Its words italic."
+              },
+              "underline": {
+                "const": true,
+                "description": "Its words underlined."
+              },
+              "strike": {
+                "const": true,
+                "description": "Its words struck through."
+              },
+              "align": {
+                "enum": [
+                  "left",
+                  "center",
+                  "right"
+                ],
+                "description": "Where its words sit across it; a shape's in the middle and the rest's at the left when left out."
+              },
+              "list": {
+                "const": true,
+                "description": "A note's or text's lines as a list, each bulleted."
               }
             }
           }
@@ -439,6 +584,166 @@
     "up": {
       "type": "string",
       "description": "For a view about one thing: the view one level above it, drawn for what the subject sits in. A system's architecture goes up to its domain's landscape."
+    },
+    "saved_styles": {
+      "type": "array",
+      "description": "Looks the diagram keeps by name, offered in the Style tab.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "look"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "look": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "fill": {
+                "enum": [
+                  "accent",
+                  "lavender",
+                  "mint",
+                  "rose",
+                  "stone",
+                  "white",
+                  "yellow"
+                ]
+              },
+              "line": {
+                "enum": [
+                  "solid",
+                  "dashed",
+                  "dotted",
+                  "none"
+                ]
+              },
+              "text": {
+                "enum": [
+                  "l",
+                  "m",
+                  "s"
+                ]
+              },
+              "opacity": {
+                "type": "integer",
+                "minimum": 10,
+                "maximum": 100,
+                "description": "How much of its fill shows, in percent; all of it when left out."
+              },
+              "weight": {
+                "enum": [
+                  "s",
+                  "m",
+                  "l"
+                ],
+                "description": "How heavy its edge is drawn; m when left out."
+              },
+              "corners": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 32,
+                "description": "The radius its corners are rounded by; its kind's when left out."
+              },
+              "shadow": {
+                "enum": [
+                  "none"
+                ],
+                "description": "none drops the hard shadow a shape or a note casts."
+              },
+              "bold": {
+                "const": true,
+                "description": "Its words bold; a shape's caption with its name."
+              },
+              "italic": {
+                "const": true,
+                "description": "Its words italic."
+              },
+              "underline": {
+                "const": true,
+                "description": "Its words underlined."
+              },
+              "strike": {
+                "const": true,
+                "description": "Its words struck through."
+              },
+              "align": {
+                "enum": [
+                  "left",
+                  "center",
+                  "right"
+                ],
+                "description": "Where its words sit across it; a shape's in the middle and the rest's at the left when left out."
+              },
+              "list": {
+                "const": true,
+                "description": "A note's or text's lines as a list, each bulleted."
+              }
+            }
+          }
+        }
+      }
+    },
+    "layers": {
+      "type": "array",
+      "description": "The diagram's drawing layers, top first: each a key, a name, and hidden or locked when it is; the estate's records sit among them as {key: estate}. A layer above them draws over the records, one below under them; a hidden one is left out of every picture.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "key"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 60
+          },
+          "hidden": {
+            "const": true
+          },
+          "locked": {
+            "const": true
+          }
+        }
+      }
+    },
+    "groups": {
+      "type": "array",
+      "description": "The diagram's own picked and moved as one: each a key, a name and the group it sits in; its own in one name it with `group`.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "key",
+          "name"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 60
+          },
+          "group": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
     },
     "look": {
       "enum": [
@@ -896,6 +1201,636 @@
           "type": "integer",
           "minimum": 1,
           "description": "How many things a diagram, map or timeline draws before it is cut, pins and what the scope names kept first. A report is a table and is never cut: past its limit it is listed whole and says so."
+        }
+      }
+    },
+    "page": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 60,
+      "description": "The name of the diagram's first page; Page 1 when left out."
+    },
+    "pages": {
+      "type": "array",
+      "description": "The diagram's pages after its first, in their order: each a key, a name, and what it has of its own (the records it places and where they sit, what it draws); its name, look and drawing layers are the diagram's.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "key",
+          "name"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 60
+          },
+          "places": {
+            "type": "array",
+            "description": "Views placed on this one as boundaries, read as they are now whenever views are loaded, so the diagram stays in step with them. Each brings its scope, its lines and, unless this view groups by something of its own, its boundaries.",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "view"
+                  ],
+                  "properties": {
+                    "view": {
+                      "type": "string",
+                      "description": "The id of the view placed."
+                    },
+                    "only": {
+                      "type": "object",
+                      "description": "Field to the values kept: the rest of the placed view is left off this diagram."
+                    },
+                    "leave_out": {
+                      "type": "object",
+                      "description": "Field to the values left off this diagram; they stay in the placed view."
+                    },
+                    "parts": {
+                      "type": "boolean",
+                      "description": "false keeps the placed view's boundaries without its own boxes, so only what is placed inside them is drawn."
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "scope": {
+            "type": "object",
+            "additionalProperties": false,
+            "anyOf": [
+              {
+                "required": [
+                  "include"
+                ]
+              },
+              {
+                "required": [
+                  "pin"
+                ]
+              }
+            ],
+            "properties": {
+              "include": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "actors",
+                        "architecture_change_requests",
+                        "capabilities",
+                        "controls",
+                        "data_assets",
+                        "flows",
+                        "frameworks",
+                        "interfaces",
+                        "offered_interfaces",
+                        "org_units",
+                        "policies",
+                        "processes",
+                        "products",
+                        "roadmaps",
+                        "systems",
+                        "tech_services",
+                        "value_stream_stages",
+                        "value_streams",
+                        "work_packages"
+                      ]
+                    },
+                    "where": {
+                      "type": "object",
+                      "description": "Field to value or list of values. Also tags_any, tags_all, tags_none, has_any, has_all, has_none (relation names, testing whether the relation exists at all), id_in, id_prefix, and the {not: [...]} / {exists: true} forms."
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ]
+                },
+                "minItems": 1
+              },
+              "exclude": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "actors",
+                        "architecture_change_requests",
+                        "capabilities",
+                        "controls",
+                        "data_assets",
+                        "flows",
+                        "frameworks",
+                        "interfaces",
+                        "offered_interfaces",
+                        "org_units",
+                        "policies",
+                        "processes",
+                        "products",
+                        "roadmaps",
+                        "systems",
+                        "tech_services",
+                        "value_stream_stages",
+                        "value_streams",
+                        "work_packages"
+                      ]
+                    },
+                    "where": {
+                      "type": "object",
+                      "description": "Field to value or list of values. Also tags_any, tags_all, tags_none, has_any, has_all, has_none (relation names, testing whether the relation exists at all), id_in, id_prefix, and the {not: [...]} / {exists: true} forms."
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ]
+                }
+              },
+              "pin": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Ids kept on this drawing whatever the query finds. One thing each, not a seed for `expand`; kept first when the drawing is cut to max_nodes."
+              },
+              "hide": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Ids left off this drawing, applied last; a hide beats a pin."
+              },
+              "expand": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "relation": {
+                      "type": "string"
+                    },
+                    "depth": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "types": {
+                      "type": "array",
+                      "items": {
+                        "enum": [
+                          "actors",
+                          "architecture_change_requests",
+                          "capabilities",
+                          "controls",
+                          "data_assets",
+                          "flows",
+                          "frameworks",
+                          "interfaces",
+                          "offered_interfaces",
+                          "org_units",
+                          "policies",
+                          "processes",
+                          "products",
+                          "roadmaps",
+                          "systems",
+                          "tech_services",
+                          "value_stream_stages",
+                          "value_streams",
+                          "work_packages"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "positions": {
+            "type": "object",
+            "description": "Where each thing was put by hand on the canvas: a box keyed by the boundaries it sits in and its id, joined by ' / ', a boundary by its path, each to its top-left corner [x, y] in the boundary around it. A drawing with positions is arranged by hand: the layout places only what has none.",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "annotations": {
+            "type": "array",
+            "description": "Shapes, text, notes, frames and free lines the diagram draws of its own, none of them records. Each has a key that never changes; a box its corner `at` in the innermost frame of `in`, or on the sheet, and its `size`; a line its two ends.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "key",
+                "role"
+              ],
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "role": {
+                  "enum": [
+                    "shape",
+                    "text",
+                    "note",
+                    "frame",
+                    "line",
+                    "pool",
+                    "lane"
+                  ]
+                },
+                "label": {
+                  "type": "string",
+                  "description": "Its words."
+                },
+                "shape": {
+                  "enum": [
+                    "rectangle",
+                    "rounded",
+                    "ellipse",
+                    "diamond",
+                    "hexagon",
+                    "cylinder",
+                    "cloud",
+                    "document",
+                    "person",
+                    "callout"
+                  ]
+                },
+                "in": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "The keys of the frames, the swimlane and the lane it sits in, outermost first."
+                },
+                "runs": {
+                  "enum": [
+                    "across",
+                    "down"
+                  ],
+                  "description": "A swimlane's lanes stacked across it, or side by side down it."
+                },
+                "names": {
+                  "enum": [
+                    "left",
+                    "top"
+                  ],
+                  "description": "Where each of a swimlane's lanes has its name: in a column at its left, or a band at its top."
+                },
+                "stands_for": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "The record a lane stands for, by id, an actor or an org unit: the lane is named as the record is."
+                },
+                "at": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "description": "Its top-left corner in the frame around it, or on the sheet."
+                },
+                "size": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "description": "[width, height]."
+                },
+                "rotate": {
+                  "type": "number",
+                  "exclusiveMinimum": -360,
+                  "exclusiveMaximum": 360,
+                  "description": "Degrees clockwise about its middle: a shape, a note or text, not a frame."
+                },
+                "from": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "A record on the drawing by id, or a key of this list."
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      },
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "description": "A point on the sheet."
+                    }
+                  ]
+                },
+                "to": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "A record on the drawing by id, or a key of this list."
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      },
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "description": "A point on the sheet."
+                    }
+                  ]
+                },
+                "from_at": {
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "description": "Where on its box the line's start is held: [across, down], shares of the box from its top left corner."
+                },
+                "to_at": {
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "description": "Where on its box the line's end is held, as from_at."
+                },
+                "via": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "minItems": 2,
+                    "maxItems": 2
+                  },
+                  "description": "The points of the sheet a straight line bends at, in order; or a square or curved line's turns where its stretches were moved by hand."
+                },
+                "ends": {
+                  "enum": [
+                    "end",
+                    "both",
+                    "none"
+                  ]
+                },
+                "route": {
+                  "enum": [
+                    "straight",
+                    "square",
+                    "curved"
+                  ]
+                },
+                "turns": {
+                  "enum": [
+                    "sharp",
+                    "rounded"
+                  ],
+                  "description": "A square line's turns, sharp or rounded; sharp when left out."
+                },
+                "labels": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "minProperties": 1,
+                  "properties": {
+                    "start": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 120
+                    },
+                    "end": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 120
+                    }
+                  },
+                  "description": "A line's words at its start and its end; its middle's are its label."
+                },
+                "heads": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "minProperties": 1,
+                  "properties": {
+                    "start": {
+                      "enum": [
+                        "none",
+                        "arrow",
+                        "open-arrow",
+                        "dot",
+                        "inherits",
+                        "made-of",
+                        "has",
+                        "depends-on",
+                        "one",
+                        "many",
+                        "one-or-many",
+                        "none-or-one",
+                        "none-or-many",
+                        "serving",
+                        "triggering",
+                        "flow",
+                        "realization",
+                        "assignment",
+                        "access"
+                      ]
+                    },
+                    "end": {
+                      "enum": [
+                        "none",
+                        "arrow",
+                        "open-arrow",
+                        "dot",
+                        "inherits",
+                        "made-of",
+                        "has",
+                        "depends-on",
+                        "one",
+                        "many",
+                        "one-or-many",
+                        "none-or-one",
+                        "none-or-many",
+                        "serving",
+                        "triggering",
+                        "flow",
+                        "realization",
+                        "assignment",
+                        "access"
+                      ]
+                    }
+                  },
+                  "description": "A line's heads at its start and its end, each a plain one, UML's, crow's foot's or ArchiMate's; none where left out. Said in place of ends."
+                },
+                "group": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "The key of the group it is picked and moved with, in the view's groups."
+                },
+                "layer": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "The key of the drawing layer it is on, in the view's layers; the one just above the estate's records when left out."
+                },
+                "link": {
+                  "type": "string",
+                  "pattern": "^(https?://|mailto:)\\S+$",
+                  "maxLength": 2000,
+                  "description": "Where it links to: an address on the web or for email."
+                },
+                "look": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "fill": {
+                      "enum": [
+                        "accent",
+                        "lavender",
+                        "mint",
+                        "rose",
+                        "stone",
+                        "white",
+                        "yellow"
+                      ]
+                    },
+                    "line": {
+                      "enum": [
+                        "solid",
+                        "dashed",
+                        "dotted",
+                        "none"
+                      ]
+                    },
+                    "text": {
+                      "enum": [
+                        "l",
+                        "m",
+                        "s"
+                      ]
+                    },
+                    "icon": {
+                      "type": "string",
+                      "pattern": "^((aws|azure|gcp|brands)/)?[a-z0-9-]+$",
+                      "description": "The icon a shape carries as a tile, by name, or a provider's or vendor's mark as aws/lambda; its kind's when left out."
+                    },
+                    "opacity": {
+                      "type": "integer",
+                      "minimum": 10,
+                      "maximum": 100,
+                      "description": "How much of its fill shows, in percent; all of it when left out."
+                    },
+                    "weight": {
+                      "enum": [
+                        "s",
+                        "m",
+                        "l"
+                      ],
+                      "description": "How heavy its edge is drawn; m when left out."
+                    },
+                    "corners": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 32,
+                      "description": "The radius its corners are rounded by; its kind's when left out."
+                    },
+                    "shadow": {
+                      "enum": [
+                        "none"
+                      ],
+                      "description": "none drops the hard shadow a shape or a note casts."
+                    },
+                    "bold": {
+                      "const": true,
+                      "description": "Its words bold; a shape's caption with its name."
+                    },
+                    "italic": {
+                      "const": true,
+                      "description": "Its words italic."
+                    },
+                    "underline": {
+                      "const": true,
+                      "description": "Its words underlined."
+                    },
+                    "strike": {
+                      "const": true,
+                      "description": "Its words struck through."
+                    },
+                    "align": {
+                      "enum": [
+                        "left",
+                        "center",
+                        "right"
+                      ],
+                      "description": "Where its words sit across it; a shape's in the middle and the rest's at the left when left out."
+                    },
+                    "list": {
+                      "const": true,
+                      "description": "A note's or text's lines as a list, each bulleted."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "groups": {
+            "type": "array",
+            "description": "The diagram's own picked and moved as one: each a key, a name and the group it sits in; its own in one name it with `group`.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "key",
+                "name"
+              ],
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 60
+                },
+                "group": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "locked": {
+            "type": "array",
+            "description": "What is kept where it is on this diagram, records by id and the diagram's own by key: not carried, nudged, lined up or taken along by a frame until it is unlocked. It changes nothing of the record.",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          }
         }
       }
     }

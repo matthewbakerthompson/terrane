@@ -1,0 +1,53 @@
+@startuml
+' Administer deposit insurance records and escheatment — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Administer deposit insurance records and escheatment — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_DEP_05, "Deposit Compliance & Insurance Administration", "FDIC insurance administration, interest reporting, escheatment, and deposit-side regulatory obligations.", $tags="capabilities")
+  ' aac CAP_DEP_05: company_domain="Deposits"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_RETENTION, "Retention schedule enforcement", "Records are retained to schedule and destroyed on expiry with a certificate of disposition.", $tags="controls")
+  ' aac CTL_RETENTION: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_DEPOSIT_ACCOUNT, "Deposit account and CD record", "Depositor identity and ownership category, account terms, rate, interest accrued, maturity and instructions.", $tags="data_assets")
+  ' aac DA_DEPOSIT_ACCOUNT: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_DEPOSITS_008, "Administer deposit insurance records and escheatment", "Keep the ownership categories and records the deposit insurer needs to determine coverage, answer depositors' coverage questions, and report and remit dormant balances to the states. In a failure, coverage is determined from these records, so a record that cannot be read is a depositor who cannot be paid on time.", $tags="processes")
+  ' aac P_DEPOSITS_008: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_DEPOSIT, "Deposit platform", "System of record for CDs and savings: opening, interest accrual, maturities, early withdrawal and tax reporting.", $tags="systems")
+  ' aac SYS_DEPOSIT: company_domain=""
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+  System(SYS_GL, "General ledger", "General ledger and financial accounting.", $tags="systems")
+  ' aac SYS_GL: company_domain=""
+}
+
+Rel(P_DEPOSITS_008, SYS_DEPOSIT, "Primary")
+' aac rel: source="P_DEPOSITS_008"; target="SYS_DEPOSIT"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_DEPOSITS_008, SYS_GL, "Supporting")
+' aac rel: source="P_DEPOSITS_008"; target="SYS_GL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DEPOSITS_008, SYS_DOC, "Supporting")
+' aac rel: source="P_DEPOSITS_008"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DEPOSITS_008, DA_DEPOSIT_ACCOUNT, "Read")
+' aac rel: source="P_DEPOSITS_008"; target="DA_DEPOSIT_ACCOUNT"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_DEPOSITS_008, CTL_RETENTION, "governed by")
+' aac rel: source="P_DEPOSITS_008"; target="CTL_RETENTION"; label="governed by"; relation="process_governed_by_control"
+Rel(P_DEPOSITS_008, CAP_DEP_05, "supports")
+' aac rel: source="P_DEPOSITS_008"; target="CAP_DEP_05"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

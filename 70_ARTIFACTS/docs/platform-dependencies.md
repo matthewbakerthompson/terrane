@@ -113,4 +113,4 @@ Which technology services each system runs on. The systems attached to a service
 | Rewards Redemption Web <br>`SYS-REWARDS-WEB` | system uses tech service | Azure Kubernetes Service <br>`TS-AZURE-AKS` |
 | Rewards Redemption Web <br>`SYS-REWARDS-WEB` | system uses tech service | Microsoft Entra ID <br>`TS-ENTRA-ID` |
 
-106 relationships across 91 entities. Generated from the model; this is a report rather than a diagram, so it is a table.
+106 relationships across 104 entities. Generated from the model; this is a report rather than a diagram, so it is a table.

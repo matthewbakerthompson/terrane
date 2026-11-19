@@ -270,6 +270,8 @@ def graph_payload(model, view: View, palette: Palette, icons, components: Dict[s
     # estate by the app's engine and by terrane.draw.annotations.
     own = getattr(view, "annotations", None) or ()
     if own:
-        out["annotations"] = [dict(item) for item in own]
+        # A lane that stands for a record is named as the record is now.
+        from .annotations import by_layer, follow_names
+        out["annotations"] = by_layer(follow_names([dict(item) for item in own], model), getattr(view, "layers", ()))
         out["look"] = getattr(view, "look", None) or "illustrated"
     return out

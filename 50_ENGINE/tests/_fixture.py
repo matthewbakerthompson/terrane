@@ -8,6 +8,7 @@ the real working tree.
 
 from __future__ import annotations
 
+import atexit
 import shutil
 import sys
 import tempfile
@@ -141,6 +142,13 @@ def teardown_shared() -> None:
     if _SHARED is not None:
         _SHARED.__exit__(None, None, None)
     _SHARED, _SHARED_ROOT = None, None
+
+
+# Eight files read the shared sandbox with no `tearDownModule` to remove it,
+# and once each file ran in a process of its own, every run left eight
+# seeded copies of the repository in the temporary folder. The process
+# removes it on its way out, whichever file forgot.
+atexit.register(teardown_shared)
 
 
 def seeded_root() -> Path:

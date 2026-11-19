@@ -1,0 +1,61 @@
+@startuml
+' Open and fund direct deposit account — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Open and fund direct deposit account — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_DEP_02, "Deposit Account Opening", "Open and fund consumer deposit accounts directly: identity, disclosures, initial funding.", $tags="capabilities")
+  ' aac CAP_DEP_02: company_domain="Deposits"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_SANCTIONS, "Sanctions and watchlist screening", "Parties are screened at onboarding and on list updates; hits are dispositioned before processing continues.", $tags="controls")
+  ' aac CTL_SANCTIONS: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_DEPOSIT_ACCOUNT, "Deposit account and CD record", "Depositor identity and ownership category, account terms, rate, interest accrued, maturity and instructions.", $tags="data_assets")
+  ' aac DA_DEPOSIT_ACCOUNT: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_DEPOSITS_002, "Open and fund direct deposit account", "Open a CD or savings account applied for online, verify the depositor's identity and screen for sanctions, deliver the account disclosures, and take the opening deposit by ACH or wire. Deposit accounts are an entry point for fraud and money laundering, so identity and the source of funds are checked before the account goes live.", $tags="processes")
+  ' aac P_DEPOSITS_002: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_DEPOSIT, "Deposit platform", "System of record for CDs and savings: opening, interest accrual, maturities, early withdrawal and tax reporting.", $tags="systems")
+  ' aac SYS_DEPOSIT: company_domain=""
+  System_Ext(SYS_IDV_VENDOR, "Identity Document Verification", "Document and liveness verification, operated by Onfido in their own tenancy. Contractually pinned to EU processing; images are deleted at the vendor once the result is returned. Built with Onfido.", $tags="systems")
+  ' aac SYS_IDV_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="Onfido"
+  System(SYS_KYC, "Identity verification", "Identity verification and customer identification program checks.", $tags="systems")
+  ' aac SYS_KYC: company_domain=""
+  System_Ext(SYS_SCREENING_VENDOR, "NICE Actimize Screening", "Financial Crime Screening, operated by NICE Actimize in their own tenancy. Contractually pinned to EU processing; the DPA restricts sub-processors and sets a 90-day retention ceiling. Built with NICE Actimize.", $tags="systems")
+  ' aac SYS_SCREENING_VENDOR: company_domain="Risk and Compliance"; hosting="SaaS"; technology="NICE Actimize"
+  System(SYS_PAYMENT_GW, "Payment capture gateway", "Payment capture across ACH, debit, lockbox, and wallet channels.", $tags="systems")
+  ' aac SYS_PAYMENT_GW: company_domain=""
+}
+
+Rel(P_DEPOSITS_002, SYS_DEPOSIT, "Primary")
+' aac rel: source="P_DEPOSITS_002"; target="SYS_DEPOSIT"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_DEPOSITS_002, SYS_KYC, "Supporting")
+' aac rel: source="P_DEPOSITS_002"; target="SYS_KYC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DEPOSITS_002, SYS_IDV_VENDOR, "Supporting")
+' aac rel: source="P_DEPOSITS_002"; target="SYS_IDV_VENDOR"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DEPOSITS_002, SYS_SCREENING_VENDOR, "Supporting")
+' aac rel: source="P_DEPOSITS_002"; target="SYS_SCREENING_VENDOR"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DEPOSITS_002, SYS_PAYMENT_GW, "Supporting")
+' aac rel: source="P_DEPOSITS_002"; target="SYS_PAYMENT_GW"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_DEPOSITS_002, DA_DEPOSIT_ACCOUNT, "Write")
+' aac rel: source="P_DEPOSITS_002"; target="DA_DEPOSIT_ACCOUNT"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_DEPOSITS_002, CTL_SANCTIONS, "governed by")
+' aac rel: source="P_DEPOSITS_002"; target="CTL_SANCTIONS"; label="governed by"; relation="process_governed_by_control"
+Rel(P_DEPOSITS_002, CAP_DEP_02, "supports")
+' aac rel: source="P_DEPOSITS_002"; target="CAP_DEP_02"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

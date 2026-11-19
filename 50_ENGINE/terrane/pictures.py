@@ -242,6 +242,34 @@ def overlay(model: Model, instance: dict, expansion, instance_type: str) -> Mode
     return scratch
 
 
+#: What a shape whose instance is not a product is drawn by: a network.
+NETWORK_VIEW = "network-topology"
+
+
+def network_payload(scratch: Model, views: Sequence[View], instance_id: str, expansion, picture_id: str,
+                    title: str, description: str, palette: Palette, icons, components) -> dict:
+    """A network shape's picture: the network topology view, cut to the
+    sample network, what it made, and the landing zone's hub and resolver
+    its rows reach. The product architecture view asked for a product and
+    drew nothing of a network."""
+    view = next((v for v in views if v.view_id == NETWORK_VIEW), None)
+    if view is None:
+        raise ViewError("no %s view to draw the picture with" % NETWORK_VIEW)
+    ends = {instance_id}
+    for rows in expansion.relations.values():
+        for row in rows:
+            ends |= {str(v) for k, v in row.items() if k.endswith("_id") and not k.startswith("_") and v}
+    scoped = view._replace(scope={
+        "include": [{"type": "tech_services", "where": {"archetype_instance": [instance_id]}}],
+        "pin": sorted(ends),
+    })
+    payload = graph_payload(scratch, scoped, palette, icons, components)
+    payload["viewId"] = picture_id
+    payload["title"] = title
+    payload["description"] = description
+    return payload
+
+
 def picture_payload(scratch: Model, views: Sequence[View], instance_id: str, picture_id: str, title: str,
                     description: str, palette: Palette, icons, components) -> dict:
     view = next((v for v in views if v.view_id == PICTURE_VIEW), None)
@@ -286,13 +314,22 @@ def render_pictures(model: Model, views: Sequence[View], shapes: Sequence[Archet
         try:
             expansion = expand(instance, archetype, archetype.applies_to, library)
             scratch = overlay(model, instance, expansion, archetype.applies_to)
-            payload = picture_payload(
-                scratch, views, str(instance[ENTITY_TYPES[archetype.applies_to].pk]), picture_id,
-                "%s, as the shape makes it" % archetype.title,
-                "A sample product on this shape: every box is something the shape creates, named with "
-                "placeholders, and every line a relation it records. Drawn by the %s view, the way a real "
-                "product on the shape is." % PICTURE_VIEW.replace("-", " "),
-                palette, icons, components)
+            if archetype.applies_to == "products":
+                payload = picture_payload(
+                    scratch, views, str(instance[ENTITY_TYPES[archetype.applies_to].pk]), picture_id,
+                    "%s, as the shape makes it" % archetype.title,
+                    "A sample product on this shape: every box is something the shape creates, named with "
+                    "placeholders, and every line a relation it records. Drawn by the %s view, the way a real "
+                    "product on the shape is." % PICTURE_VIEW.replace("-", " "),
+                    palette, icons, components)
+            else:
+                payload = network_payload(
+                    scratch, views, str(instance[ENTITY_TYPES[archetype.applies_to].pk]), expansion, picture_id,
+                    "%s, as the shape makes it" % archetype.title,
+                    "A sample network on this shape, in its standard layout: every box is something the shape "
+                    "makes, named with placeholders, beside the landing zone's hub and resolver it attaches to. "
+                    "Drawn by the %s view." % NETWORK_VIEW.replace("-", " "),
+                    palette, icons, components)
             draw(payload, out_dir / (picture_id + ".svg"))
             shape_paths[archetype.archetype_id] = "svg/%s.svg" % picture_id
         except (ArchetypeError, ModuleError, LibraryError, ComposeError, ModelError, ViewError, Undrawable) as exc:
@@ -329,6 +366,30 @@ def render_pictures(model: Model, views: Sequence[View], shapes: Sequence[Archet
         for part in sorted((m for m in modules.values() if not m.is_kit), key=lambda m: m.module_id):
             instance = sample_part(part, first, model, modules)
             picture_id = "part--%s" % part.module_id
+            # A part a network shape composes makes a network, not a product:
+            # assembled as one it asked for the network's name. It is drawn
+            # as the shape on the first landing zone draws it.
+            network_shape = next((a for a in sorted(shapes, key=lambda a: a.archetype_id)
+                                  if a.applies_to != "products" and str(a.provider) == first
+                                  and any(str(e.get("module")) == part.module_id for e in a.modules)), None)
+            if network_shape is not None:
+                try:
+                    sample = sample_instance(network_shape)
+                    expansion = expand(sample, network_shape, network_shape.applies_to, library)
+                    scratch = overlay(model, sample, expansion, network_shape.applies_to)
+                    payload = network_payload(
+                        scratch, views, str(sample[ENTITY_TYPES[network_shape.applies_to].pk]), expansion,
+                        picture_id, "%s, on %s" % (part.name, first),
+                        "A sample network made from this part by the %s shape, in its standard layout, beside "
+                        "the landing zone's hub and resolver it attaches to; named with placeholders. Drawn by "
+                        "the %s view." % (network_shape.title, NETWORK_VIEW.replace("-", " ")),
+                        palette, icons, components)
+                    draw(payload, out_dir / (picture_id + ".svg"))
+                    part_paths[part.module_id] = "svg/%s.svg" % picture_id
+                except (ArchetypeError, ModuleError, LibraryError, ComposeError, ModelError, ViewError,
+                        Undrawable) as exc:
+                    notes["%s|%s" % (part.module_id, first)] = _reason(str(exc), str(sample.get("tech_service_id")))
+                continue
             try:
                 shape = inline_shape(root, instance, "products", shapes)
                 expansion = expand(instance, shape, "products", library)

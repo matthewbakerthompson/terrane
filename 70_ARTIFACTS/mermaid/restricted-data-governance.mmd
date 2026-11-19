@@ -15,6 +15,7 @@ flowchart LR
 
   subgraph grp_Data_Asset["Data Asset"]
     direction LR
+    DA_AUTH_LOG[("Authorization log")]
     DA_CARD_ACCOUNT[("Card account master")]
     DA_CARDSVC_OPERATIONAL[("Card Servicing operational<br/>data")]
     DA_TRANSACTION[("Card transaction history")]
@@ -23,8 +24,10 @@ flowchart LR
     DA_BUREAU_FILE[("Credit bureau furnishing<br/>file")]
     DA_CUST360_CURATED[("Customer 360 curated<br/>dataset")]
     DA_CUSTOMER_PROFILE[("Customer profile")]
+    DA_DEPOSIT_ACCOUNT[("Deposit account and CD<br/>record")]
     DA_DISPUTES_VENDOR_FEED[("Dispute Management<br/>Platform vendor feed")]
     DA_LENDING_OPERATIONAL[("Installment Lending<br/>operational data")]
+    DA_LOAN_ACCOUNT[("Installment loan account")]
     DA_SCREENING_OUTCOMES[("NICE Actimize Screening<br/>outcomes")]
     DA_PAYMENT_INSTR[("Payment instructions")]
   end
@@ -44,8 +47,10 @@ flowchart LR
     SYS_CORE_LEDGER["Core Card Ledger"]
     SYS_BUREAU_GW["Credit bureau gateway"]
     SYS_CUST360_PIPELINE["Customer 360 Pipeline<br/>[Snowflake Data Cloud +1]"]
+    SYS_DEPOSIT["Deposit platform"]
     SYS_CRM["Dynamics 365 Customer<br/>Service<br/>[Microsoft]"]
     SYS_LENDING_DB["Installment Lending<br/>Database<br/>[RDS]"]
+    SYS_LOAN_SVC["Installment loan servicing<br/>platform"]
     SYS_SCREENING_VENDOR["NICE Actimize Screening<br/>[NICE Actimize]"]
     SYS_ORIG_DECISION["Originations decision<br/>engine"]
     SYS_PAYMENT_GW["Payment capture gateway"]
@@ -56,7 +61,10 @@ flowchart LR
   SYS_CRM -.->|"masters"| DA_CUSTOMER_PROFILE
   SYS_AUTH_SWITCH -.->|"masters"| DA_TRANSACTION
   SYS_ORIG_DECISION -.->|"masters"| DA_APPLICATION
+  SYS_AUTH_SWITCH -.->|"masters"| DA_AUTH_LOG
   SYS_BUREAU_GW -.->|"masters"| DA_BUREAU_FILE
+  SYS_DEPOSIT -.->|"masters"| DA_DEPOSIT_ACCOUNT
+  SYS_LOAN_SVC -.->|"masters"| DA_LOAN_ACCOUNT
   SYS_PAYMENT_GW -.->|"masters"| DA_PAYMENT_INSTR
   SYS_CARDSVC_STORE -.->|"masters"| DA_CARDSVC_OPERATIONAL
   SYS_COLLECT_STORE -.->|"masters"| DA_COLLECT_OPERATIONAL
@@ -89,8 +97,8 @@ flowchart LR
   classDef s_policies__default fill:#fecaca,stroke:#dc2626,color:#0f172a,stroke-width:1.1px;
   classDef s_systems__default fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.1px;
   class CTL_DAILY_RECON,CTL_DQ_GATE,CTL_MASK_NONPROD,CTL_PCI_EVIDENCE,CTL_PRIV_REQ,CTL_RETENTION s_controls__default;
-  class DA_APPLICATION,DA_BUREAU_FILE,DA_CARD_ACCOUNT,DA_CARDSVC_OPERATIONAL,DA_COLLECT_OPERATIONAL,DA_CUST360_CURATED,DA_CUSTOMER_PROFILE,DA_DISPUTES_VENDOR_FEED,DA_LENDING_OPERATIONAL,DA_PAYMENT_INSTR,DA_SCREENING_OUTCOMES,DA_TRANSACTION s_data_assets__restricted;
+  class DA_APPLICATION,DA_AUTH_LOG,DA_BUREAU_FILE,DA_CARD_ACCOUNT,DA_CARDSVC_OPERATIONAL,DA_COLLECT_OPERATIONAL,DA_CUST360_CURATED,DA_CUSTOMER_PROFILE,DA_DEPOSIT_ACCOUNT,DA_DISPUTES_VENDOR_FEED,DA_LENDING_OPERATIONAL,DA_LOAN_ACCOUNT,DA_PAYMENT_INSTR,DA_SCREENING_OUTCOMES,DA_TRANSACTION s_data_assets__restricted;
   class POL_PRIVACY,POL_RECORDS,POL_TPRM s_policies__default;
-  class SYS_AUTH_SWITCH,SYS_BUREAU_GW,SYS_CARDSVC_STORE,SYS_COLLECT_STORE,SYS_CORE_LEDGER,SYS_CRM,SYS_CUST360_PIPELINE,SYS_DISPUTES_SAAS,SYS_LENDING_DB,SYS_ORIG_DECISION,SYS_PAYMENT_GW,SYS_SCREENING_VENDOR s_systems__default;
+  class SYS_AUTH_SWITCH,SYS_BUREAU_GW,SYS_CARDSVC_STORE,SYS_COLLECT_STORE,SYS_CORE_LEDGER,SYS_CRM,SYS_CUST360_PIPELINE,SYS_DEPOSIT,SYS_DISPUTES_SAAS,SYS_LENDING_DB,SYS_LOAN_SVC,SYS_ORIG_DECISION,SYS_PAYMENT_GW,SYS_SCREENING_VENDOR s_systems__default;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Control,grp_Data_Asset,grp_Policy,grp_System boundary1;

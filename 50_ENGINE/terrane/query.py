@@ -234,6 +234,65 @@ class View(NamedTuple):
     up: Optional[str] = None
     #: How it draws its own (`terrane.annotations.LOOKS`): Illustrated unless it says tiles.
     look: str = "illustrated"
+    #: The looks the diagram keeps by name (V16's Styles), each a name and a
+    #: look, copied onto what is picked when it is chosen.
+    saved_styles: tuple = ()
+    #: Its own picked and moved as one (V16): each a key, a name and the
+    #: group it sits in, if any; its own in one say so with `group:`.
+    groups: tuple = ()
+    #: Its drawing layers (V16), top first, the estate's records among them
+    #: as `{key: estate}`: each a key, a name and whether it is hidden or
+    #: locked. Its own name the layer each is on with `layer:`.
+    layers: tuple = ()
+    #: A diagram's pages after its first (V16), each a view of its own whose
+    #: id is this one's and the page's key; its first page's name, or blank
+    #: for a diagram of one page; and on a page, the view it is a page of.
+    pages: tuple = ()
+    page: str = ""
+    page_of: str = ""
+
+
+#: What each page of a diagram has of its own (V16's pages): the records it
+#: places and where they sit, and what it draws of its own and how; its
+#: name, look, drawing layers and the rest are the diagram's.
+PAGE_FIELDS = ("places", "scope", "positions", "annotations", "groups", "locked")
+
+
+def _paged(view: "View", data: dict, source: Optional[Path]) -> "View":
+    """The view with its pages after the first, each read as a view of its
+    own: the diagram's fields with the page's own in place of the first
+    page's. Refused where a page's key or name does not hold, or where what
+    is on it would be refused on a page of its own."""
+    raw, first = data.get("pages"), data.get("page")
+    if raw in (None, []) and first in (None, ""):
+        return view
+    where = "view %s" % view.view_id
+    if first is not None and (not isinstance(first, str) or not first.strip() or len(first) > 60):
+        raise ViewError("%s: page is the name of its first page, up to 60 characters" % where)
+    if raw not in (None, []) and not isinstance(raw, list):
+        raise ViewError("%s: pages is a list of its pages after the first, each a key, a name and what is on it"
+                        % where)
+    shared = {k: v for k, v in data.items() if k not in PAGE_FIELDS and k not in ("pages", "page")}
+    out, keys = [], []
+    for i, page in enumerate(raw or []):
+        ok = isinstance(page, dict) and not set(page) - set(PAGE_FIELDS) - {"key", "name"}
+        key, name = (page.get("key"), page.get("name")) if ok else (None, None)
+        if (not ok or not isinstance(key, str) or not re.fullmatch(r"[a-z0-9][a-z0-9-]*", key)
+                or not isinstance(name, str) or not name.strip() or len(name) > 60):
+            raise ViewError("%s: pages: number %d is a key of small letters, numbers and hyphens, a name of up to "
+                            "60 characters, and what is on it: %s" % (where, i + 1, ", ".join(PAGE_FIELDS)))
+        if key in keys:
+            raise ViewError("%s: pages: %s is the key of two" % (where, key))
+        keys.append(key)
+        sub = dict(shared, **{k: page[k] for k in PAGE_FIELDS if k in page})
+        sub["view_id"] = "%s--%s" % (view.view_id, key)
+        sub["title"] = "%s \u00b7 %s" % (view.title, name.strip())
+        try:
+            sub_view = parse_view(sub, source)
+        except ViewError as exc:
+            raise ViewError("%s: page %s: %s" % (where, name.strip(), exc))
+        out.append(sub_view._replace(page_of=view.view_id, page=name.strip()))
+    return view._replace(page=(first or "Page 1").strip(), pages=tuple(out))
 
 
 def _enum_of(field: str) -> Sequence[str]:
@@ -475,7 +534,7 @@ def _kind_of(data: dict) -> str:
 def parse_view(data: dict, source: Optional[Path] = None) -> View:
     if not isinstance(data, dict) or "view_id" not in data:
         raise ViewError("%s: missing view_id" % (source or "<view>"))
-    return View(
+    view = View(
         view_id=data["view_id"],
         title=data.get("title") or data["view_id"],
         description=data.get("description", "") or "",
@@ -501,7 +560,107 @@ def parse_view(data: dict, source: Optional[Path] = None) -> View:
         annotations=_annotations_of(data),
         up=str(data.get("up") or "").strip() or None,
         look=_look_of(data),
+        saved_styles=_saved_styles_of(data),
+        groups=_diagram_groups_of(data),
+        layers=_layers_of(data),
     )
+    return _paged(view, data, source)
+
+
+def _layers_of(data: dict) -> tuple:
+    """The diagram's drawing layers, top first: each a key, a name of up to
+    60 characters and `hidden` or `locked` when it is, and the estate's
+    records among them as `{key: estate}`, which has no name and may be
+    locked. Refused where a key is used twice, there is no layer to draw on,
+    or one of its own is on a layer the diagram does not name."""
+    from .annotations import ESTATE_LAYER
+    raw = data.get("layers")
+    where = "view %s: layers" % data.get("view_id")
+    out, keys = [], []
+    if raw not in (None, []):
+        if not isinstance(raw, list):
+            raise ViewError("%s is a list, top first, each a key, a name, and hidden or locked when it is" % where)
+        for i, layer in enumerate(raw):
+            ok = isinstance(layer, dict) and not set(layer) - {"key", "name", "hidden", "locked"}
+            key = layer.get("key") if ok else None
+            if not ok or not isinstance(key, str) or not key.strip():
+                raise ViewError("%s: number %d is a key, a name of up to 60 characters, and hidden or locked when "
+                                "it is" % (where, i + 1))
+            name = layer.get("name")
+            if key == ESTATE_LAYER:
+                if set(layer) - {"key", "locked"}:
+                    raise ViewError("%s: estate is where the estate's records sit among the layers: a key, and "
+                                    "locked when they are" % where)
+            elif not isinstance(name, str) or not name.strip() or len(name) > 60:
+                raise ViewError("%s: %s has a name of up to 60 characters" % (where, key))
+            for flag in ("hidden", "locked"):
+                if flag in layer and layer[flag] is not True:
+                    raise ViewError("%s: %s is %s: true, or says nothing of it" % (where, key, flag))
+            if key in keys:
+                raise ViewError("%s: %s is the key of two" % (where, key))
+            keys.append(key)
+            out.append(dict(layer, name=name.strip()) if key != ESTATE_LAYER else dict(layer))
+        if not [k for k in keys if k != ESTATE_LAYER]:
+            raise ViewError("%s: has no layer to draw on, only the estate's" % where)
+    for item in data.get("annotations") or []:
+        if isinstance(item, dict) and "layer" in item and (item["layer"] not in keys or item["layer"] == ESTATE_LAYER):
+            raise ViewError("view %s: annotations: %s is on layer %s, which the diagram's drawing layers do not name"
+                            % (data.get("view_id"), item.get("key"), item["layer"]))
+    return tuple(out)
+
+
+def _diagram_groups_of(data: dict) -> tuple:
+    """The diagram's groups, each a key, a name and the group it sits in;
+    a group has no box, so all it can get wrong is a key: one used twice, a
+    group in a group that is not there or that is in it, or one of its own
+    in a group the diagram does not name."""
+    raw = data.get("groups")
+    where = "view %s: groups" % data.get("view_id")
+    out, keys = [], []
+    if raw not in (None, []):
+        if not isinstance(raw, list):
+            raise ViewError("%s is a list, each a key, a name and the group it sits in" % where)
+        for i, group in enumerate(raw):
+            ok = isinstance(group, dict) and not set(group) - {"key", "name", "group"}
+            key, name = (group.get("key"), group.get("name")) if ok else (None, None)
+            if (not ok or not isinstance(key, str) or not key.strip() or not isinstance(name, str)
+                    or not name.strip() or len(name) > 60 or not isinstance(group.get("group", ""), str)):
+                raise ViewError("%s: number %d is a key, a name of up to 60 characters and the group it sits "
+                                "in, if any" % (where, i + 1))
+            if key in keys:
+                raise ViewError("%s: %s is the key of two" % (where, key))
+            keys.append(key)
+            out.append(dict(group, name=name.strip()))
+    holder = {g["key"]: g.get("group") for g in out}
+    for g in out:
+        # Up the groups it sits in, to the outermost: a ring that does not
+        # come back to it is said by the first of the ring, in its turn.
+        seen, at, via = {g["key"]}, g.get("group"), None
+        while at:
+            if at not in holder:
+                raise ViewError("%s: %s is in %s, which the diagram does not name" % (where, g["key"], at))
+            if at == g["key"]:
+                raise ViewError("%s: %s is in itself%s" % (where, at, ", by way of %s" % via if via else ""))
+            if at in seen:
+                break
+            seen.add(at)
+            via, at = at, holder[at]
+    for item in data.get("annotations") or []:
+        if isinstance(item, dict) and item.get("group") and item["group"] not in holder:
+            raise ViewError("view %s: annotations: %s is in group %s, which the diagram's groups do not name"
+                            % (data.get("view_id"), item.get("key"), item["group"]))
+    return tuple(out)
+
+
+def _saved_styles_of(data: dict) -> tuple:
+    """The looks the diagram keeps by name, each checked as a look is; an
+    icon says what a shape is, not how it looks, and is no part of one."""
+    from .annotations import AnnotationError, read_styles
+
+    try:
+        return read_styles(data.get("saved_styles"), "view %s: saved_styles" % data.get("view_id"))
+    except AnnotationError as error:
+        raise ViewError(str(error))
 
 
 def _look_of(data: dict) -> str:
@@ -578,6 +737,12 @@ def load_views(folder: Path) -> List[View]:
             raise ViewError("duplicate view_id %r" % view.view_id)
         seen.add(view.view_id)
         views.append(view)
+        # Each page after a diagram's first is a view of its own.
+        for page in view.pages:
+            if page.view_id in seen:
+                raise ViewError("duplicate view_id %r" % page.view_id)
+            seen.add(page.view_id)
+            views.append(page)
     order = {name: index for index, name in enumerate(VIEW_CATEGORIES)}
     # A view placing another in this folder is drawn with it from here on;
     # one placing a shipped view is completed by `estate.views_of`.

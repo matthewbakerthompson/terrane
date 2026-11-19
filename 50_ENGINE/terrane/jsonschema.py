@@ -151,7 +151,8 @@ def relations_schema() -> dict:
 def _annotations_schema() -> dict:
     """What a diagram draws of its own, as `terrane.annotations.read` takes
     it; that reader is the authority, and says which frame a key misses."""
-    from .annotations import ENDS, FILLS, MOST_CORNERS, OUTLINES, ROLES, ROUTES, SHAPES, TEXT_SIZES, WEIGHTS
+    from .annotations import (ALIGNS, ENDS, FILLS, HEADS, MOST_CORNERS, NAMES, OUTLINES, ROLES, ROUTES, RUNS,
+                              SHAPES, TEXT_SIZES, WEIGHTS)
 
     pair = {"type": "array", "items": {"type": "number"}, "minItems": 2, "maxItems": 2}
     end = {"oneOf": [{"type": "string", "description": "A record on the drawing by id, or a key of this list."},
@@ -171,7 +172,16 @@ def _annotations_schema() -> dict:
                 "label": {"type": "string", "description": "Its words."},
                 "shape": {"enum": list(SHAPES)},
                 "in": {"type": "array", "items": {"type": "string"},
-                       "description": "The keys of the frames it sits in, outermost first."},
+                       "description": "The keys of the frames, the swimlane and the lane it sits in, outermost "
+                                      "first."},
+                "runs": {"enum": list(RUNS),
+                         "description": "A swimlane's lanes stacked across it, or side by side down it."},
+                "names": {"enum": list(NAMES),
+                          "description": "Where each of a swimlane's lanes has its name: in a column at its left, "
+                                         "or a band at its top."},
+                "stands_for": {"type": "string", "minLength": 1,
+                               "description": "The record a lane stands for, by id, an actor or an org unit: the "
+                                              "lane is named as the record is."},
                 "at": dict(pair, description="Its top-left corner in the frame around it, or on the sheet."),
                 "size": dict(pair, description="[width, height]."),
                 "rotate": {"type": "number", "exclusiveMinimum": -360, "exclusiveMaximum": 360,
@@ -187,9 +197,27 @@ def _annotations_schema() -> dict:
                           "minItems": 2, "maxItems": 2,
                           "description": "Where on its box the line's end is held, as from_at."},
                 "via": {"type": "array", "minItems": 1, "items": pair,
-                        "description": "The points of the sheet a straight line bends at, in order."},
+                        "description": "The points of the sheet a straight line bends at, in order; or a square "
+                                       "or curved line's turns where its stretches were moved by hand."},
                 "ends": {"enum": list(ENDS)},
                 "route": {"enum": list(ROUTES)},
+                "turns": {"enum": ["sharp", "rounded"],
+                          "description": "A square line's turns, sharp or rounded; sharp when left out."},
+                "labels": {"type": "object", "additionalProperties": False, "minProperties": 1,
+                           "properties": {"start": {"type": "string", "minLength": 1, "maxLength": 120},
+                                          "end": {"type": "string", "minLength": 1, "maxLength": 120}},
+                           "description": "A line's words at its start and its end; its middle's are its label."},
+                "heads": {"type": "object", "additionalProperties": False, "minProperties": 1,
+                          "properties": {"start": {"enum": list(HEADS)}, "end": {"enum": list(HEADS)}},
+                          "description": "A line's heads at its start and its end, each a plain one, UML's, crow's "
+                                         "foot's or ArchiMate's; none where left out. Said in place of ends."},
+                "group": {"type": "string", "minLength": 1,
+                          "description": "The key of the group it is picked and moved with, in the view's groups."},
+                "layer": {"type": "string", "minLength": 1,
+                          "description": "The key of the drawing layer it is on, in the view's layers; the one just "
+                                         "above the estate's records when left out."},
+                "link": {"type": "string", "pattern": "^(https?://|mailto:)\\S+$", "maxLength": 2000,
+                         "description": "Where it links to: an address on the web or for email."},
                 "look": {
                     "type": "object",
                     "additionalProperties": False,
@@ -208,6 +236,14 @@ def _annotations_schema() -> dict:
                                     "description": "The radius its corners are rounded by; its kind's when left out."},
                         "shadow": {"enum": ["none"],
                                    "description": "none drops the hard shadow a shape or a note casts."},
+                        "bold": {"const": True, "description": "Its words bold; a shape's caption with its name."},
+                        "italic": {"const": True, "description": "Its words italic."},
+                        "underline": {"const": True, "description": "Its words underlined."},
+                        "strike": {"const": True, "description": "Its words struck through."},
+                        "align": {"enum": list(ALIGNS),
+                                  "description": "Where its words sit across it; a shape's in the middle and the "
+                                                 "rest's at the left when left out."},
+                        "list": {"const": True, "description": "A note's or text's lines as a list, each bulleted."},
                     },
                 },
             },
@@ -215,7 +251,37 @@ def _annotations_schema() -> dict:
     }
 
 
+def _saved_styles_schema() -> dict:
+    """A view's saved styles: looks kept by name, with no icon."""
+    look = dict(_annotations_schema()["items"]["properties"]["look"])
+    look["properties"] = {k: v for k, v in look["properties"].items() if k != "icon"}
+    return {"type": "array", "description": "Looks the diagram keeps by name, offered in the Style tab.",
+            "items": {"type": "object", "additionalProperties": False, "required": ["name", "look"],
+                      "properties": {"name": {"type": "string", "minLength": 1, "maxLength": 40}, "look": look}}}
+
+
 def view_schema() -> dict:
+    """A view's file, with a diagram's pages after its first (V16): each a
+    key, a name, and what a page has of its own, as the view has it."""
+    from .query import PAGE_FIELDS
+    schema = _view_schema_of_a_page()
+    props = schema["properties"]
+    props["page"] = {"type": "string", "minLength": 1, "maxLength": 60,
+                     "description": "The name of the diagram's first page; Page 1 when left out."}
+    props["pages"] = {
+        "type": "array",
+        "description": "The diagram's pages after its first, in their order: each a key, a name, and what it "
+                       "has of its own (the records it places and where they sit, what it draws); its name, "
+                       "look and drawing layers are the diagram's.",
+        "items": {"type": "object", "additionalProperties": False, "required": ["key", "name"],
+                  "properties": dict({"key": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+                                      "name": {"type": "string", "minLength": 1, "maxLength": 60}},
+                                     **{field: props[field] for field in PAGE_FIELDS if field in props})},
+    }
+    return schema
+
+
+def _view_schema_of_a_page() -> dict:
     where = {
         "type": "object",
         "description": (
@@ -361,6 +427,27 @@ def view_schema() -> dict:
                 "type": "string",
                 "description": "For a view about one thing: the view one level above it, drawn for what the "
                                "subject sits in. A system's architecture goes up to its domain's landscape.",
+            },
+            "saved_styles": _saved_styles_schema(),
+            "layers": {
+                "type": "array",
+                "description": "The diagram's drawing layers, top first: each a key, a name, and hidden or locked "
+                               "when it is; the estate's records sit among them as {key: estate}. A layer above them "
+                               "draws over the records, one below under them; a hidden one is left out of every "
+                               "picture.",
+                "items": {"type": "object", "additionalProperties": False, "required": ["key"],
+                          "properties": {"key": {"type": "string", "minLength": 1},
+                                         "name": {"type": "string", "minLength": 1, "maxLength": 60},
+                                         "hidden": {"const": True}, "locked": {"const": True}}},
+            },
+            "groups": {
+                "type": "array",
+                "description": "The diagram's own picked and moved as one: each a key, a name and the group it "
+                               "sits in; its own in one name it with `group`.",
+                "items": {"type": "object", "additionalProperties": False, "required": ["key", "name"],
+                          "properties": {"key": {"type": "string", "minLength": 1},
+                                         "name": {"type": "string", "minLength": 1, "maxLength": 60},
+                                         "group": {"type": "string", "minLength": 1}}},
             },
             "look": {
                 "enum": ["illustrated", "tiles"],
@@ -695,8 +782,19 @@ def component_type_schema() -> dict:
                 "description": "What else people call it, in generic words; a product goes under providers.",
             },
             "category": {"type": "string"},
+            "group": {
+                "type": "string",
+                "description": "The heading it is listed under within its category, on the canvas's Add and the "
+                               "library's shelf: Finance, Front ends. A kind with none is listed under its category.",
+            },
             "applies_to": {"enum": sorted(ENTITY_TYPES)},
             "shape": {"enum": sorted(SHAPES)},
+            "subnet": {
+                "type": "boolean",
+                "description": "False for a kind that sits in no subnet of ours: a managed service reached through "
+                               "the provider's endpoints, or bought SaaS. Its systems are not placed in their "
+                               "account's subnets by zone.",
+            },
             "description": {"type": "string"},
             "providers": {
                 "type": "object",
@@ -825,6 +923,12 @@ def connection_schema() -> dict:
                 "type": "array", "items": {"type": "string"},
                 "description": "From 27_PATTERNS: how this kind of connection is built here.",
             },
+            "datastore": {
+                "enum": ["target", "source", "both"],
+                "description": "Which end is a data store, a component type drawn as a cylinder, where the kind "
+                               "is a way into one (target), out of one (source) or between two (both): the "
+                               "chooser offers it first there.",
+            },
         },
     }
     return _one_or_many(
@@ -867,6 +971,14 @@ def module_schema() -> dict:
                         "estate": {
                             "type": "boolean",
                             "description": "Answered by the estate: `answers` in model.yaml holds it under this name, taken ahead of the default.",
+                        },
+                        "ask": {
+                            "type": "string",
+                            "description": "How a panel asks it, in a few words, e.g. Answers from.",
+                        },
+                        "names": {
+                            "type": "string",
+                            "description": "The kind of record its value names, as an entity type, e.g. systems; a list of them when the default is a list.",
                         },
                     },
                 },

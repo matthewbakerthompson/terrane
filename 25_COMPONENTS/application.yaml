@@ -12,6 +12,7 @@
     - browser application
     - web front end
   category: Application
+  group: Front ends
   applies_to: systems
   shape: rectangle
   description: >
@@ -27,10 +28,82 @@
     - smartphone app
     - mobile banking
   category: Application
+  group: Front ends
+  applies_to: systems
+  shape: rectangle
+  subnet: false
+  description: >
+    A published app with a release cycle you do not control and versions you cannot retire.
+  defaults:
+    network_zone: Edge
+
+- component_type_id: admin-console
+  name: Admin console
+  aliases:
+    - back office
+    - back-office application
+    - operations console
+    - staff console
+    - admin panel
+  category: Application
+  group: Front ends
   applies_to: systems
   shape: rectangle
   description: >
-    A published app with a release cycle you do not control and versions you cannot retire.
+    The screens staff use to run a product: look a customer up, correct a record, approve what the rules would not. Fewer users than the front end, and more power each.
+  defaults:
+    network_zone: Private-App
+
+- component_type_id: desktop-app
+  name: Desktop application
+  aliases:
+    - desktop client
+    - thick client
+    - installed application
+    - workstation application
+  category: Application
+  group: Front ends
+  applies_to: systems
+  shape: rectangle
+  subnet: false
+  description: >
+    Installed on the machines of the people who use it. Updates arrive when the machine does, so two versions are always live.
+  defaults:
+    network_zone: Edge
+
+- component_type_id: chat-interface
+  name: Chat interface
+  aliases:
+    - chatbot
+    - chat window
+    - chat widget
+    - conversational front end
+    - voice bot
+  category: Application
+  group: Front ends
+  applies_to: systems
+  shape: rectangle
+  description: >
+    A conversation as the front end: a chat window on the site or in the app, or a voice line, in front of the same API the screens call.
+  defaults:
+    network_zone: Private-App
+
+- component_type_id: device-app
+  name: Device application
+  aliases:
+    - kiosk
+    - terminal software
+    - handheld
+    - embedded software
+    - connected device
+    - IoT device
+  category: Application
+  group: Front ends
+  applies_to: systems
+  shape: rectangle
+  subnet: false
+  description: >
+    Software on a device the organization owns or ships: a kiosk, a handheld scanner, a terminal, a sensor. Patched on the device's schedule, which is slower than anyone plans for.
   defaults:
     network_zone: Edge
 
@@ -42,10 +115,179 @@
     - microservice
     - API service
   category: Application
+  group: Services and workers
   applies_to: systems
   shape: rectangle
   description: >
     A programmatic interface owned by one team. The unit most estates are actually decomposed into.
+  defaults:
+    network_zone: Private-App
+
+- component_type_id: batch-application
+  name: Batch application
+  aliases:
+    - batch job
+    - scheduled job
+    - nightly batch
+    - overnight processing
+  category: Application
+  group: Services and workers
+  applies_to: systems
+  shape: rectangle
+  description: >
+    Scheduled processing with a window. The deadline is external and usually non-negotiable.
+  defaults:
+    network_zone: Private-App
+
+- component_type_id: background-worker
+  name: Background worker
+  aliases:
+    - async worker
+    - worker
+    - job processor
+    - queue consumer
+    - background job
+  category: Application
+  group: Services and workers
+  applies_to: systems
+  shape: rectangle
+  description: >
+    Takes work off a queue and does it after the response has gone: the email, the PDF, the call to the slow partner. Nobody waits on it, so nobody notices when it falls behind.
+  defaults:
+    network_zone: Private-App
+
+- component_type_id: event-processor
+  name: Event processor
+  aliases:
+    - event consumer
+    - event handler
+    - event listener
+    - event publisher
+    - subscriber
+  category: Application
+  group: Services and workers
+  applies_to: systems
+  shape: rectangle
+  description: >
+    Reacts to the events another system published, or publishes this one's for others to react to. The coupling is to the event's shape, which is why the shape needs an owner.
+  defaults:
+    network_zone: Private-App
+
+- component_type_id: workflow-service
+  name: Workflow service
+  aliases:
+    - process engine
+    - business process management
+    - BPM
+    - approvals
+    - case handling
+  category: Application
+  group: Services and workers
+  applies_to: systems
+  shape: rectangle
+  description: >
+    A process that takes days and people: steps, approvals, deadlines and who has the case now. The state of the work is the record, kept for the audit.
+  defaults:
+    network_zone: Private-App
+
+- component_type_id: decision-service
+  name: Decision service
+  aliases:
+    - rules engine
+    - decision engine
+    - business rules
+    - credit decisioning
+    - eligibility rules
+  category: Application
+  group: Services and workers
+  applies_to: systems
+  shape: rectangle
+  description: >
+    Rules and models that answer yes, no or how much, kept apart from the screens that ask, so the policy can change without a release and every answer can be explained afterward.
+  defaults:
+    network_zone: Private-App
+
+- component_type_id: notification-service
+  name: Notification service
+  aliases:
+    - email sender
+    - SMS sender
+    - push notifications
+    - outbound messages
+    - customer alerts
+  category: Application
+  group: Services and workers
+  applies_to: systems
+  shape: rectangle
+  description: >
+    Sends the email, the text and the push notification, with the template, the customer's preferences and the record of what was sent. Every product needs one, and it should be the same one.
+  defaults:
+    network_zone: Private-App
+
+- component_type_id: integration-adapter
+  name: Integration adapter
+  aliases:
+    - connector
+    - adapter
+    - anti-corruption layer
+    - partner integration
+    - interface translator
+  category: Application
+  group: Services and workers
+  applies_to: systems
+  shape: rectangle
+  description: >
+    Translates between this estate and one other system, a partner's or an old one's, so neither has to learn the other's model. Small, owned by one team, and the first thing to break when the other side changes.
+  defaults:
+    network_zone: Private-App
+
+- component_type_id: reporting-service
+  name: Reporting service
+  aliases:
+    - reports
+    - report generator
+    - statements
+    - regulatory returns
+    - scheduled reports
+  category: Application
+  group: Services and workers
+  applies_to: systems
+  shape: rectangle
+  description: >
+    Produces the reports and statements a product owes: on a schedule, on request, or to a regulator. Reads a copy, never the live system.
+  defaults:
+    network_zone: Private-App
+
+- component_type_id: inference-service
+  name: Inference service
+  aliases:
+    - model serving
+    - scoring service
+    - prediction service
+    - model endpoint
+    - prompt orchestration
+  category: Application
+  group: AI
+  applies_to: systems
+  shape: rectangle
+  description: >
+    Puts a model to work for a product: builds the prompt or the features, calls the model, checks what comes back and logs both. The model is the provider's; this part is ours.
+  defaults:
+    network_zone: Private-App
+
+- component_type_id: ai-agent
+  name: AI agent
+  aliases:
+    - autonomous agent
+    - agentic workflow
+    - task agent
+    - tool-using assistant
+  category: Application
+  group: AI
+  applies_to: systems
+  shape: rectangle
+  description: >
+    A model given tools: it plans, calls other systems' APIs and acts, every action written down first. What it is allowed to touch is the design.
   defaults:
     network_zone: Private-App
 
@@ -58,25 +300,11 @@
     - ledger
     - mainframe
   category: Application
+  group: Platforms
   applies_to: systems
   shape: rectangle
   description: >
     A system of record other systems depend on. Old, central, and the one nobody wants to be holding during a migration.
-  defaults:
-    network_zone: Private-App
-
-- component_type_id: batch-application
-  name: Batch application
-  aliases:
-    - batch job
-    - scheduled job
-    - nightly batch
-    - overnight processing
-  category: Application
-  applies_to: systems
-  shape: rectangle
-  description: >
-    Scheduled processing with a window. The deadline is external and usually non-negotiable.
   defaults:
     network_zone: Private-App
 
@@ -89,8 +317,10 @@
     - hosted service
     - vendor application
   category: Application
+  group: Platforms
   applies_to: systems
   shape: round-tag
+  subnet: false
   description: >
     Software somebody else runs. What you own is the boundary around it, not what is inside.
   defaults:

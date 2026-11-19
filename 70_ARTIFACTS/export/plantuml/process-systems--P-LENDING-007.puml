@@ -1,0 +1,61 @@
+@startuml
+' Perfect lien with titling state — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Perfect lien with titling state — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_LEND_04, "Collateral, Title & Lien Management", "Perfect and track liens and titles on financed assets across state regimes; release on payoff.", $tags="capabilities")
+  ' aac CAP_LEND_04: company_domain="Lending"
+  System(CAP_LEND_04_01, "Lien Perfection & Title Custody", "Record the lien with the titling state and hold the title, through an outsourced title servicer.", $tags="capabilities")
+  ' aac CAP_LEND_04_01: company_domain="Lending"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_LIEN_PERFECT, "Lien perfection within policy window", "Liens not perfected within the policy window are aged and chased by state and by dealer, and reported weekly.", $tags="controls")
+  ' aac CTL_LIEN_PERFECT: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_COLLATERAL, "Collateral, title and lien record", "The financed vehicle or boat, its identification number and value, the lien filing, title custody and release.", $tags="data_assets")
+  ' aac DA_COLLATERAL: company_domain=""
+  SystemDb(DA_LOAN_ACCOUNT, "Installment loan account", "Loan terms, payment schedule, balances, payment history and status for each installment loan.", $tags="data_assets")
+  ' aac DA_LOAN_ACCOUNT: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_LENDING_007, "Perfect lien with titling state", "Record the bank as lienholder with the titling state, electronically where the state allows and on paper where it does not, and chase the title until it is in custody. An unperfected lien leaves the loan unsecured in a bankruptcy, so anything aging past the policy window is reported weekly by state and by dealer.", $tags="processes")
+  ' aac P_LENDING_007: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_DEALER_PORTAL, "Dealer portal", "Where dealers submit applications, see decisions and stipulations, upload contracts, and track funding and reserve. Built with SaaS.", $tags="systems")
+  ' aac SYS_DEALER_PORTAL: company_domain=""; hosting="SaaS"; technology="SaaS"
+  System(SYS_LOAN_SVC, "Installment loan servicing platform", "System of record for installment loans: boarding, billing, payment posting, payoff quotes, deferrals and ancillary product refunds.", $tags="systems")
+  ' aac SYS_LOAN_SVC: company_domain=""
+  System_Ext(SYS_TITLE, "Title and lien management", "Electronic lien and title tracking across the titling states, title custody, and release on payoff. Built with external.", $tags="systems")
+  ' aac SYS_TITLE: company_domain=""; hosting="External"; technology="external"
+}
+
+Rel(P_LENDING_007, SYS_TITLE, "Primary")
+' aac rel: source="P_LENDING_007"; target="SYS_TITLE"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_LENDING_007, SYS_LOAN_SVC, "Supporting")
+' aac rel: source="P_LENDING_007"; target="SYS_LOAN_SVC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_007, SYS_DEALER_PORTAL, "Supporting")
+' aac rel: source="P_LENDING_007"; target="SYS_DEALER_PORTAL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_007, DA_COLLATERAL, "Both")
+' aac rel: source="P_LENDING_007"; target="DA_COLLATERAL"; label="Both"; relation="process_uses_data_asset"; access="Both"
+Rel(P_LENDING_007, DA_LOAN_ACCOUNT, "Read")
+' aac rel: source="P_LENDING_007"; target="DA_LOAN_ACCOUNT"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_LENDING_007, CTL_LIEN_PERFECT, "governed by")
+' aac rel: source="P_LENDING_007"; target="CTL_LIEN_PERFECT"; label="governed by"; relation="process_governed_by_control"
+Rel(P_LENDING_007, CAP_LEND_04_01, "supports")
+' aac rel: source="P_LENDING_007"; target="CAP_LEND_04_01"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_007, CAP_LEND_04, "supports")
+' aac rel: source="P_LENDING_007"; target="CAP_LEND_04"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

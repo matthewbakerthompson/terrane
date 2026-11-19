@@ -1,0 +1,49 @@
+@startuml
+' Board merchant and register with networks — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Board merchant and register with networks — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_MERCH_03, "Merchant Boarding & Network Sponsorship", "Board approved merchants and sponsor them into the card networks under the bank's licenses.", $tags="capabilities")
+  ' aac CAP_MERCH_03: company_domain="Merchant Services"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_MERCH_SCREEN, "Merchant screening before boarding", "No merchant is boarded before the business and its owners clear sanctions and the networks' terminated-merchant file.", $tags="controls")
+  ' aac CTL_MERCH_SCREEN: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_MERCHANT, "Merchant master and underwriting file", "Merchant identity, beneficial owners, underwriting decision, limits, pricing and screening results.", $tags="data_assets")
+  ' aac DA_MERCHANT: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_MERCHANT_005, "Board merchant and register with networks", "Set the approved merchant up on the acquiring platform with its pricing, limits and reserve, assign merchant and terminal ids, and register it with the card networks under the bank's sponsorship. Boarding is where approved terms become system parameters, and a limit keyed wrong is exposure nobody approved.", $tags="processes")
+  ' aac P_MERCHANT_005: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_MERCH_ACQ, "Merchant acquiring platform", "Processor platform for merchant boarding, clearing, settlement, reserves, fees and statements. Built with external.", $tags="systems")
+  ' aac SYS_MERCH_ACQ: company_domain=""; hosting="External"; technology="external"
+  System(SYS_MERCHANT_WEB, "Merchant Portal Web", "Customer-facing front end for Merchant Portal. Built with AKS.", $tags="systems")
+  ' aac SYS_MERCHANT_WEB: company_domain="Payments"; hosting="Azure"; technology="AKS"
+}
+
+Rel(P_MERCHANT_005, SYS_MERCH_ACQ, "Primary")
+' aac rel: source="P_MERCHANT_005"; target="SYS_MERCH_ACQ"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_MERCHANT_005, SYS_MERCHANT_WEB, "Supporting")
+' aac rel: source="P_MERCHANT_005"; target="SYS_MERCHANT_WEB"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_MERCHANT_005, DA_MERCHANT, "Both")
+' aac rel: source="P_MERCHANT_005"; target="DA_MERCHANT"; label="Both"; relation="process_uses_data_asset"; access="Both"
+Rel(P_MERCHANT_005, CTL_MERCH_SCREEN, "governed by")
+' aac rel: source="P_MERCHANT_005"; target="CTL_MERCH_SCREEN"; label="governed by"; relation="process_governed_by_control"
+Rel(P_MERCHANT_005, CAP_MERCH_03, "supports")
+' aac rel: source="P_MERCHANT_005"; target="CAP_MERCH_03"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

@@ -111,6 +111,8 @@ def _bake(api: Path, written: int) -> int:
     _write(api / "overview.json", overview)
     _write(api / "schema.json", _call(server.api_schema))
     _write(api / "validate.json", _call(server.api_validate))
+    # Names that read alike, beside the rules on Checks.
+    _write(api / "checks" / "alike.json", _call(server.api_checks_alike))
     _write(api / "flows.json", _call(server.api_flows, plain))
     # Settings reads on the hosted copy: the kept sources and the estate's
     # facts. Bringing anything in needs the local app, and the page says so.
@@ -172,6 +174,9 @@ def _bake(api: Path, written: int) -> int:
     # each view's beside its drawing. Setting a field on many records needs
     # the local app.
     _write(api / "needs.json", _call(server.api_needs))
+    written += 1
+    # What kind each record probably is, read-only here as the list is.
+    _write(api / "needs" / "kinds.json", _call(server.api_needs_kinds))
     written += 1
     for view in overview["views"]:
         _write(api / "needs" / "view" / ("%s.json" % view["viewId"]),

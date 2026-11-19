@@ -10,15 +10,27 @@ flowchart LR
 
   subgraph grp_Capability["Capability"]
     direction LR
+    CAP_PART_05{{"Co-Brand & Program Partner<br/>Management"}}
     CAP_FIN_02{{"Interchange & Revenue<br/>Accounting"}}
+    CAP_PART_05_02{{"Partner Revenue Share<br/>Settlement"}}
+    CAP_SERV_09{{"Retention, Product Change<br/>& Account Closure"}}
+    CAP_BILL_04_03{{"Rewards Delivery"}}
+    CAP_BILL_04_01{{"Rewards Earn & Accrual"}}
     CAP_BILL_04{{"Rewards Earn, Accrual &<br/>Redemption"}}
+    CAP_PROD_04{{"Rewards Program Design"}}
+    CAP_BILL_04_02{{"Rewards Redemption"}}
   end
 
   subgraph grp_Process["Process"]
     direction LR
     P_REWARDS_001[\"Accrue rewards earn"/]
+    P_PARTNERSHIPS_003[\"Calculate and settle<br/>partner revenue share"/]
+    P_SERVICING_015[\"Close account and settle<br/>final balance"/]
+    P_PRODUCT_005[\"Design rewards program and<br/>earn structure"/]
+    P_SERVICING_013[\"Process product change or<br/>upgrade"/]
     P_REWARDS_002[\"Process rewards redemption"/]
     P_REWARDS_003[\"Reconcile rewards<br/>liability"/]
+    P_REWARDS_004[\"Serve redemption catalog<br/>and fulfill orders"/]
   end
 
   subgraph grp_System["System"]
@@ -29,16 +41,31 @@ flowchart LR
   P_REWARDS_001 -->|"Primary"| SYS_REWARDS
   P_REWARDS_002 -->|"Primary"| SYS_REWARDS
   P_REWARDS_003 -->|"Primary"| SYS_REWARDS
+  P_SERVICING_013 -->|"Supporting"| SYS_REWARDS
+  P_SERVICING_015 -->|"Supporting"| SYS_REWARDS
+  P_REWARDS_004 -->|"Supporting"| SYS_REWARDS
+  P_PRODUCT_005 -->|"Primary"| SYS_REWARDS
+  P_PARTNERSHIPS_003 -->|"Supporting"| SYS_REWARDS
   P_REWARDS_001 -->|"supports"| CAP_BILL_04
   P_REWARDS_002 -->|"supports"| CAP_BILL_04
   P_REWARDS_003 -->|"supports"| CAP_BILL_04
   P_REWARDS_003 -->|"supports"| CAP_FIN_02
+  P_SERVICING_013 -->|"supports"| CAP_SERV_09
+  P_SERVICING_015 -->|"supports"| CAP_SERV_09
+  P_REWARDS_004 -->|"supports"| CAP_BILL_04_02
+  P_REWARDS_004 -->|"supports"| CAP_BILL_04_03
+  P_PRODUCT_005 -->|"supports"| CAP_PROD_04
+  P_PARTNERSHIPS_003 -->|"supports"| CAP_PART_05_02
+  P_REWARDS_001 -->|"supports"| CAP_BILL_04_01
+  P_REWARDS_002 -->|"supports"| CAP_BILL_04_02
+  P_REWARDS_004 -->|"supports"| CAP_BILL_04
+  P_PARTNERSHIPS_003 -->|"supports"| CAP_PART_05
 
   classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
   classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
-  class CAP_BILL_04,CAP_FIN_02 s_capabilities__capabilities;
-  class P_REWARDS_001,P_REWARDS_002,P_REWARDS_003 s_processes__processes;
+  class CAP_BILL_04,CAP_BILL_04_01,CAP_BILL_04_02,CAP_BILL_04_03,CAP_FIN_02,CAP_PART_05,CAP_PART_05_02,CAP_PROD_04,CAP_SERV_09 s_capabilities__capabilities;
+  class P_PARTNERSHIPS_003,P_PRODUCT_005,P_REWARDS_001,P_REWARDS_002,P_REWARDS_003,P_REWARDS_004,P_SERVICING_013,P_SERVICING_015 s_processes__processes;
   class SYS_REWARDS s_systems__systems;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Capability,grp_Process,grp_System boundary1;
@@ -56,4 +83,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#0369a1` | processes |
 | `#4338ca` | systems |
 
-6 entities, 7 relationships. Generated from the model; edit the model, not this file.
+18 entities, 22 relationships. Generated from the model; edit the model, not this file.

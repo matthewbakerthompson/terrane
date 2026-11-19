@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="686.4" viewBox="0 0 1100 686.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Qualify, price, and contract servicing client — Systems, Data and Controls</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Qualify, price, and contract servicing client — Systems, Data and Controls</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   6 nodes · 5 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(169.72 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="271.92" y="350.3" width="212.16" height="119.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="313.92" y="367.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="529.3" y="348.3" width="221.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="571.3" y="365.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.87" y="200.26" width="212.27" height="119.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.72" y="217.67" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="529.3" y="24.3" width="221.4" height="295.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="559.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-CLIENTMGMT-001::SYS-CLIENT-PORTAL">
+<title>Primary</title>
+<path d="M196 237.33 L224.94 237 A10 10 0 0 1 225.06 237 L233 237 A8 8 0 0 0 241 229 L241 94 A10 10 0 0 1 251 84 L526 84 L551.48 84" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 84 L545.43 88.78 L545.43 79.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-CLIENTMGMT-001::SYS-CLIENT-PORTAL">
+<rect x="354.32" y="90.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="102.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-CLIENTMGMT-001::SYS-DOC">
+<title>Supporting</title>
+<path d="M196 248.67 L224.94 249 A10 10 0 0 0 225.06 249 L241 249 A10 10 0 0 0 251 239 L251 182 A10 10 0 0 1 261 172 L526 172 L551.48 172" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 172 L545.43 176.78 L545.43 167.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-CLIENTMGMT-001::SYS-DOC">
+<rect x="346.46" y="178.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="190.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-CLIENTMGMT-001::SYS-GRC">
+<title>Supporting</title>
+<path d="M196 260 L225 260 L526 260 L551.48 260" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 260 L545.43 264.79 L545.43 255.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-CLIENTMGMT-001::SYS-GRC">
+<rect x="346.46" y="266.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="278.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e3::P-CLIENTMGMT-001::DA-CLIENT-SERV">
+<title>Write</title>
+<path d="M196 271.33 L224.94 271 A10 10 0 0 1 225.06 271 L241 271 A10 10 0 0 1 251 281 L251 285 A10 10 0 0 0 261 295 L488 295 A10 10 0 0 1 498 305 L498 390 A10 10 0 0 0 508 400 L526 400 L551.48 400" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M555 400 L545.43 404.79 L545.43 395.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::P-CLIENTMGMT-001::DA-CLIENT-SERV">
+<rect x="360.05" y="301.5" width="30.91" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="375.5" y="313.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Write</text>
+</g>
+<g class="edge" data-id="e4::P-CLIENTMGMT-001::CAP-PART-03">
+<title>supports</title>
+<path d="M196 282.67 L224.94 283 A10 10 0 0 0 225.06 283 L233 283 A8 8 0 0 1 241 291 L241 400 A10 10 0 0 0 251 410 L269 410 L294.48 410" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M298 410 L288.43 414.79 L288.43 405.21 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-PART-03" data-type="capabilities">
+<title>Servicing Client Origination &amp; Contracting</title>
+<path d="M338 376 L298 410 L338 444 L418 444 L458 410 L418 376 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="378" y="402.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Servicing Client</text>
+<text x="378" y="414.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Origination &amp;</text>
+<text x="378" y="426.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Contracting</text>
+</g>
+<g class="node" data-id="DA-CLIENT-SERV" data-type="data_assets">
+<title>Servicing client program data</title>
+<path d="M555 376.6 Q563.5 374 597.5 374 L682.5 374 Q716.5 374 725 376.6 L725 423.4 Q716.5 426 682.5 426 L597.5 426 Q563.5 426 555 423.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="636" y="398.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Servicing client</text>
+<text x="636" y="410.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">program data</text>
+<svg x="707" y="379" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-CLIENTMGMT-001" data-type="processes">
+<title>Qualify, price, and contract servicing client</title>
+<path d="M116 226 L36 251.97 L66.56 294 L165.44 294 L196 251.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="252.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Qualify, price, and</text>
+<text x="116" y="264.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">contract servicing</text>
+<text x="116" y="276.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">client</text>
+</g>
+<g class="node" data-id="SYS-CLIENT-PORTAL" data-type="systems">
+<title>Servicing client portal</title>
+<rect x="555" y="50" width="170" height="68" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="636" y="82.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Servicing client</text>
+<text x="636" y="94.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">portal</text>
+<svg x="707" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-DOC" data-type="systems">
+<title>Document management and archive</title>
+<rect x="555" y="138" width="170" height="68" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="636" y="164.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Document</text>
+<text x="636" y="176.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">management and</text>
+<text x="636" y="188.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">archive</text>
+<svg x="707" y="143" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-GRC" data-type="systems">
+<title>Governance, risk and compliance platform</title>
+<rect x="555" y="226" width="170" height="68" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="636" y="258.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Governance, risk and</text>
+<text x="636" y="270.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">compliance platform</text>
+<svg x="707" y="231" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="584.4" x2="1072" y2="584.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="608.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 597.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="608.4" font-size="12" font-weight="400" fill="#343d50">capability · 1</text>
+<g transform="translate(177.5 597.4)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="203.5" y="608.4" font-size="12" font-weight="400" fill="#343d50">data asset · 1</text>
+<g transform="translate(291.6 597.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="317.6" y="608.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(391.87 597.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="417.87" y="608.4" font-size="12" font-weight="400" fill="#343d50">system · 3</text>
+<text x="28" y="630.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 619.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="630.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 619.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="630.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="664.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-clientmgmt-001 · edit the model, not the picture</text></g>
+</svg>

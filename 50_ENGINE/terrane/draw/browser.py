@@ -323,7 +323,22 @@ class Chrome:
                 self.process.wait(timeout=10)
             except subprocess.TimeoutExpired:
                 self.process.kill()
-        _remove_own(self.profile, "aac-chrome-")
+        # The browser's own process ends first and its helpers after it,
+        # holding the profile's cookies, journals and databases until they
+        # do: one run of the test suite left thirty-one profiles part
+        # removed. Under that load a helper took up to eleven seconds to go,
+        # and ending the whole tree at once with `taskkill /T` was no
+        # quicker. So the removal is tried until the folder is gone, for up
+        # to thirty seconds (a run of the suite: a median of two, at most
+        # eight); after that the stray folder is the cost.
+        deadline = time.time() + 30
+        pause = 0.1
+        while True:
+            _remove_own(self.profile, "aac-chrome-")
+            if not self.profile.exists() or time.time() > deadline:
+                break
+            time.sleep(pause)
+            pause = min(pause * 2, 1.0)
 
 
 class Rasterizer:

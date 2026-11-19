@@ -979,3 +979,404 @@
   togaf_layer: Application
   architecture_domain: Application
   patterns: [change-evidence-chain]
+
+# --- lending, merchant acquiring, deposits and recoveries ----------------
+# Drawn when the business layer gained its lending, merchant and deposit
+# processes, from the systems each process uses together, and as
+# unconfirmed as the rest of this file.
+
+- interface_id: INT-DEALER-PORTAL-LOS
+  name: Dealer Portal to Indirect Loan Origination
+  description: Applications and contract packages the dealer submits, and the decisions, counteroffers and stipulations sent back while the buyer waits.
+  status: Proposed
+  source_system_id: SYS-DEALER-PORTAL
+  target_system_id: SYS-LOS
+  owner_org_id: ORG-DEALER-SVC
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Restricted
+  company_domain: Lending
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [api-front-door]
+
+- interface_id: INT-LOS-BUREAU-GW
+  name: Indirect Loan Origination to Credit Bureau Gateway
+  description: The bureau pull inside the dealer decision, against the point-of-sale time budget.
+  status: Proposed
+  source_system_id: SYS-LOS
+  target_system_id: SYS-BUREAU-GW
+  owner_org_id: ORG-CREDIT
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Restricted
+  company_domain: Lending
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [inline-risk-decision]
+
+- interface_id: INT-LOS-KYC
+  name: Indirect Loan Origination to Identity Verification
+  description: Identity verification of the applicant before the dealer application is decided.
+  status: Proposed
+  source_system_id: SYS-LOS
+  target_system_id: SYS-KYC
+  owner_org_id: ORG-DEALER-SVC
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Restricted
+  company_domain: Lending
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [inline-risk-decision]
+
+- interface_id: INT-LOS-APPFRAUD
+  name: Indirect Loan Origination to Application Fraud Screening
+  description: Application fraud and synthetic identity scoring of the dealer application.
+  status: Proposed
+  source_system_id: SYS-LOS
+  target_system_id: SYS-APPFRAUD
+  owner_org_id: ORG-FRAUD
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Restricted
+  company_domain: Risk and Compliance
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [inline-risk-decision]
+
+- interface_id: INT-LOS-LOAN-SVC-BOARD
+  name: Indirect Loan Origination to Loan Servicing
+  description: Funded contracts boarded as loans, with their terms, schedule and collateral, in the nightly window.
+  status: Proposed
+  source_system_id: SYS-LOS
+  target_system_id: SYS-LOAN-SVC
+  owner_org_id: ORG-LOAN-OPS
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Restricted
+  company_domain: Lending
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [windowed-batch]
+
+- interface_id: INT-LOAN-SVC-TITLE
+  name: Loan Servicing to Title and Lien Management
+  description: Lien filings for new loans and release requests on payoff, exchanged with the outsourced title servicer.
+  status: Proposed
+  source_system_id: SYS-LOAN-SVC
+  target_system_id: SYS-TITLE
+  owner_org_id: ORG-TITLE
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: KeyPair
+  data_classification: Confidential
+  company_domain: Lending
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [partner-file-exchange]
+
+- interface_id: INT-PAYMENT-GW-LOAN-SVC
+  name: Payment Capture Gateway to Loan Servicing
+  description: Installment loan payments taken by ACH, debit card, check and automatic payment, for posting.
+  status: Proposed
+  source_system_id: SYS-PAYMENT-GW
+  target_system_id: SYS-LOAN-SVC
+  owner_org_id: ORG-PAYMENTS
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Restricted
+  company_domain: Lending
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [payment-capture-and-posting]
+
+- interface_id: INT-LOAN-SVC-GL
+  name: Loan Servicing to General Ledger
+  description: The day's loan fundings, payments, interest, fees, reserve and charge-offs as ledger entries.
+  status: Proposed
+  source_system_id: SYS-LOAN-SVC
+  target_system_id: SYS-GL
+  owner_org_id: ORG-FINANCE
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Confidential
+  company_domain: Lending
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [windowed-batch]
+
+- interface_id: INT-LOAN-SVC-COLLECT
+  name: Loan Servicing to Collections Platform
+  description: Past-due installment loans handed to collections each night, with promises and arrangements sent back.
+  status: Proposed
+  source_system_id: SYS-LOAN-SVC
+  target_system_id: SYS-COLLECT-API
+  owner_org_id: ORG-COLLECTIONS
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Restricted
+  company_domain: Collections
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [windowed-batch]
+
+- interface_id: INT-LOAN-SVC-BUREAU-GW
+  name: Loan Servicing to Credit Bureau Gateway
+  description: Monthly furnishing of installment loan status and balances to the bureaus.
+  status: Proposed
+  source_system_id: SYS-LOAN-SVC
+  target_system_id: SYS-BUREAU-GW
+  owner_org_id: ORG-COLLECTIONS
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Monthly
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Restricted
+  company_domain: Lending
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [regulatory-file-furnishing]
+
+- interface_id: INT-LOAN-SVC-REMARKET
+  name: Loan Servicing to Repossession and Remarketing
+  description: Repossession assignments out; recoveries, condition reports and sale proceeds back.
+  status: Proposed
+  source_system_id: SYS-LOAN-SVC
+  target_system_id: SYS-REMARKET
+  owner_org_id: ORG-ASSET-RECOVERY
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: KeyPair
+  data_classification: Confidential
+  company_domain: Lending
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [partner-file-exchange]
+
+- interface_id: INT-MERCHANT-API-ACQ
+  name: Merchant Portal Service to Merchant Acquiring Platform
+  description: Merchant applications passed to boarding, and settlements, chargebacks and statements read back for the portal.
+  status: Proposed
+  source_system_id: SYS-MERCHANT-API
+  target_system_id: SYS-MERCH-ACQ
+  owner_org_id: ORG-MERCHANT
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Confidential
+  company_domain: Payments
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [api-front-door]
+
+- interface_id: INT-MERCH-ACQ-RISK
+  name: Merchant Acquiring Platform to Merchant Risk Monitoring
+  description: The day's merchant volume, refunds and chargebacks, for exposure monitoring.
+  status: Proposed
+  source_system_id: SYS-MERCH-ACQ
+  target_system_id: SYS-MERCH-RISK
+  owner_org_id: ORG-MERCH-RISK
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Confidential
+  company_domain: Payments
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [windowed-batch]
+
+- interface_id: INT-MERCH-RISK-SCREENING
+  name: Merchant Risk Monitoring to Screening Gateway
+  description: Merchants and their owners screened against sanctions before boarding, through the screening product's gateway.
+  status: Proposed
+  source_system_id: SYS-MERCH-RISK
+  target_system_id: SYS-SCREENING-GATEWAY
+  owner_org_id: ORG-FIN-CRIMES
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Confidential
+  company_domain: Risk and Compliance
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [inline-risk-decision]
+
+- interface_id: INT-MERCH-ACQ-GL
+  name: Merchant Acquiring Platform to General Ledger
+  description: Merchant settlement, fees, reserves and chargeback losses as ledger entries.
+  status: Proposed
+  source_system_id: SYS-MERCH-ACQ
+  target_system_id: SYS-GL
+  owner_org_id: ORG-FINANCE
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Confidential
+  company_domain: Payments
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [windowed-batch]
+
+- interface_id: INT-MERCH-ACQ-RECON
+  name: Merchant Acquiring Platform to Reconciliation
+  description: Network settlement and merchant funding, reconciled to each other every day.
+  status: Proposed
+  source_system_id: SYS-MERCH-ACQ
+  target_system_id: SYS-RECON
+  owner_org_id: ORG-SETTLEMENT
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Confidential
+  company_domain: Payments
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [windowed-batch]
+
+- interface_id: INT-DEPOSIT-KYC
+  name: Deposit Platform to Identity Verification
+  description: Identity verification of a depositor opening an account directly.
+  status: Proposed
+  source_system_id: SYS-DEPOSIT
+  target_system_id: SYS-KYC
+  owner_org_id: ORG-DEPOSITS
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Restricted
+  company_domain: Deposits
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [inline-risk-decision]
+
+- interface_id: INT-DEPOSIT-SCREENING
+  name: Deposit Platform to Screening Gateway
+  description: Sanctions screening of a new depositor before the account goes live.
+  status: Proposed
+  source_system_id: SYS-DEPOSIT
+  target_system_id: SYS-SCREENING-GATEWAY
+  owner_org_id: ORG-FIN-CRIMES
+  protocol: HTTPS
+  direction: Outbound
+  frequency: Realtime
+  integration_style: Request-response
+  auth_method: OAuth2
+  data_classification: Restricted
+  company_domain: Risk and Compliance
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [inline-risk-decision]
+
+- interface_id: INT-BROKER-GW-DEPOSIT
+  name: Brokered Deposit Gateway to Deposit Platform
+  description: Brokered CD allocations and positions as settled through the depository, recorded as the bank's CDs.
+  status: Proposed
+  source_system_id: SYS-BROKER-GW
+  target_system_id: SYS-DEPOSIT
+  owner_org_id: ORG-BROKERED
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Confidential
+  company_domain: Deposits
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [windowed-batch]
+
+- interface_id: INT-DEPOSIT-GL
+  name: Deposit Platform to General Ledger
+  description: Deposit balances, interest expense, maturities and penalties as ledger entries.
+  status: Proposed
+  source_system_id: SYS-DEPOSIT
+  target_system_id: SYS-GL
+  owner_org_id: ORG-FINANCE
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Confidential
+  company_domain: Deposits
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [windowed-batch]
+
+- interface_id: INT-DEPOSIT-TREASURY
+  name: Deposit Platform to Treasury Management
+  description: Deposit balances and the maturity ladder, for the daily funding position.
+  status: Proposed
+  source_system_id: SYS-DEPOSIT
+  target_system_id: SYS-TREASURY
+  owner_org_id: ORG-TREASURY
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Daily
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Confidential
+  company_domain: Deposits
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [windowed-batch]
+
+- interface_id: INT-COLLECT-LEGAL
+  name: Collections Platform to Legal Matter Management
+  description: Accounts placed for suit with their documents, and filings, judgments and recoveries sent back.
+  status: Proposed
+  source_system_id: SYS-COLLECT-API
+  target_system_id: SYS-LEGAL-MATTER
+  owner_org_id: ORG-LEGAL
+  protocol: FileTransfer
+  direction: Outbound
+  frequency: Weekly
+  integration_style: Batch
+  auth_method: MutualTLS
+  data_classification: Confidential
+  company_domain: Collections
+  togaf_layer: Application
+  architecture_domain: Application
+  patterns: [windowed-batch]

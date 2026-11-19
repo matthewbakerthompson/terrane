@@ -14,6 +14,8 @@ Boundary(b_Capability, "Capability") {
   ' aac CAP_TECH_05: company_domain="Technology"
   System(CAP_TPS_05, "Client Audit & Oversight Support", "Support client and client-regulator oversight activity.", $tags="capabilities")
   ' aac CAP_TPS_05: company_domain="Cross-Functional Services"
+  System(CAP_PART_05, "Co-Brand & Program Partner Management", "Manage co-brand and program partner economics and obligations.", $tags="capabilities")
+  ' aac CAP_PART_05: company_domain="Cross-Functional Services"
   System(CAP_SERV_05, "Complaint Capture & Resolution", "Capture, classify, resolve, and evidence complaints.", $tags="capabilities")
   ' aac CAP_SERV_05: company_domain="Servicing"
   System(CAP_RGOV_06, "Complaint Oversight & UDAAP Management", "Aggregate, analyze, and act on complaint signal for unfair practice risk.", $tags="capabilities")
@@ -24,10 +26,16 @@ Boundary(b_Capability, "Capability") {
   ' aac CAP_TPRM_02: company_domain="Cross-Functional Services"
   System(CAP_SEC_04, "Data Protection & Cryptography", "Protect data at rest and in transit, and manage keys and cardholder data scope.", $tags="capabilities")
   ' aac CAP_SEC_04: company_domain="Cross-Functional Services"
+  System(CAP_LEND_01, "Dealer Network & Program Management", "Recruit, contract, monitor, and manage the dealer network that originates recreation loans, including program terms and dealer performance.", $tags="capabilities")
+  ' aac CAP_LEND_01: company_domain="Lending"
   System(CAP_STRAT_04, "Enterprise Architecture & Change Portfolio", "Govern the shape of the estate and the pipeline of change.", $tags="capabilities")
   ' aac CAP_STRAT_04: company_domain="Cross-Functional Services"
+  System(CAP_RGOV_09, "Fair Lending Monitoring", "Test credit decisions, pricing and dealer markup for disparities, and remediate what the testing finds.", $tags="capabilities")
+  ' aac CAP_RGOV_09: company_domain="Cross-Functional Services"
   System(CAP_RGOV_05, "Internal Audit & Examination Management", "Coordinate internal audits and regulatory examinations.", $tags="capabilities")
   ' aac CAP_RGOV_05: company_domain="Cross-Functional Services"
+  System(CAP_MERCH_01, "ISO & Agent Program Management", "Recruit, contract, and oversee ISOs and agents who bring merchant volume; manage program economics and liability.", $tags="capabilities")
+  ' aac CAP_MERCH_01: company_domain="Merchant Services"
   System(CAP_RGOV_04, "Issue & Remediation Management", "Track findings and issues to evidenced closure.", $tags="capabilities")
   ' aac CAP_RGOV_04: company_domain="Cross-Functional Services"
   System(CAP_PART_01, "Issuing Bank & Sponsor Relationship", "Manage the issuing bank relationship and its obligations.", $tags="capabilities")
@@ -36,10 +44,14 @@ Boundary(b_Capability, "Capability") {
   ' aac CAP_RGOV_08: company_domain="Cross-Functional Services"
   System(CAP_TPRM_03, "Ongoing Vendor Risk Monitoring", "Monitor supplier risk through the life of the relationship.", $tags="capabilities")
   ' aac CAP_TPRM_03: company_domain="Cross-Functional Services"
+  System(CAP_PART_05_01, "Partner Agreement & Program Governance", "Negotiate co-brand and affinity agreements, and govern the partner's obligations.", $tags="capabilities")
+  ' aac CAP_PART_05_01: company_domain="Cross-Functional Services"
   System(CAP_SEC_05, "Privacy Management", "Operate privacy obligations including consumer rights requests.", $tags="capabilities")
   ' aac CAP_SEC_05: company_domain="Cross-Functional Services"
   System(CAP_RGOV_02, "Regulatory Change Management", "Detect, interpret, and land regulatory change across the enterprise.", $tags="capabilities")
   ' aac CAP_RGOV_02: company_domain="Cross-Functional Services"
+  System(CAP_PART_03, "Servicing Client Origination & Contracting", "Win and contract third-party servicing engagements.", $tags="capabilities")
+  ' aac CAP_PART_03: company_domain="Cross-Functional Services"
   System(CAP_TECH_01, "Solution Delivery & Engineering", "Build and change software.", $tags="capabilities")
   ' aac CAP_TECH_01: company_domain="Technology"
   System(CAP_PROD_03, "Terms & Disclosure Management", "Author, version, and control cardholder agreements and disclosures.", $tags="capabilities")
@@ -78,16 +90,26 @@ Boundary(b_Process, "Process") {
   ' aac P_EA_003: company_domain=""
   System(P_INFOSEC_004, "Maintain cardholder data scope and evidence", "Maintain the cardholder data environment scope and the supporting compliance evidence. PCI scope is maintained continuously: network segmentation, asset inventory, and evidence collection, so assessment is a report, not a scramble.", $tags="processes")
   ' aac P_INFOSEC_004: company_domain=""
+  System(P_PARTNERSHIPS_002, "Manage co-brand program agreement", "Negotiate and amend a co-brand or affinity agreement, track the partner's obligations on marketing, data sharing and approval of card terms, and hold the quarterly program review. The partner's brand is on the card but the bank is the lender, so marketing and terms the partner proposes still pass the bank's compliance review.", $tags="processes")
+  ' aac P_PARTNERSHIPS_002: company_domain=""
   System(P_RISK_001, "Manage issue and remediation to closure", "Track an identified issue through remediation to evidenced closure. Issues from any source (audit, compliance, self-identified, exam) run one lifecycle: owner, action plan, dates, and evidenced closure that survives challenge.", $tags="processes")
   ' aac P_RISK_001: company_domain=""
   System(P_VENDORMGMT_002, "Monitor supplier risk and performance", "Monitor supplier risk, performance, and service levels through the relationship. Ongoing monitoring covers risk, performance, and financial condition on a tier-driven cadence; findings route to the relationship owner with dates.", $tags="processes")
   ' aac P_VENDORMGMT_002: company_domain=""
   System(P_VENDORMGMT_001, "Onboard and diligence supplier", "Assess, diligence, and contract a new supplier with required security and risk terms. Due diligence is risk-tiered per the TPRM policy; no supplier touches cardholder data before security review and contract terms land, which is the EX.DD control.", $tags="processes")
   ' aac P_VENDORMGMT_001: company_domain=""
+  System(P_MERCHANT_001, "Onboard and oversee ISO or agent", "Diligence and contract an independent sales organization or agent, register it with the networks, and review its portfolio quality, complaints and residuals each month. The bank sponsors the ISO's merchants into the networks and carries their liability, so an ISO's underwriting shortcuts become the bank's chargeback losses.", $tags="processes")
+  ' aac P_MERCHANT_001: company_domain=""
+  System(P_CLIENTMGMT_001, "Qualify, price, and contract servicing client", "Qualify a lender that wants its card portfolio serviced, price the work from the portfolio's size and the services chosen, answer the client's own diligence of the bank, and sign the servicing agreement and service levels. The agreement sets the reporting, service levels and change process every later step is held to.", $tags="processes")
+  ' aac P_CLIENTMGMT_001: company_domain=""
+  System(P_LENDING_001, "Recruit, vet, and contract dealer", "Recruit a dealer, check its licensing, ownership and complaint history, and sign the dealer agreement and program terms. A dealer takes credit applications in the bank's name, so diligence before the first application is the control that matters; an unvetted dealer is a fair lending and fraud exposure on every loan it sends.", $tags="processes")
+  ' aac P_LENDING_001: company_domain=""
   System(P_APPDEV_005, "Scan code and dependencies for security defects", "Run static, dependency, and secret scanning on every change and remediate findings within the applicable service level.", $tags="processes")
   ' aac P_APPDEV_005: company_domain=""
   System(P_TPS_007, "Support client audit or examination", "Assemble evidence and respond to client and client-regulator oversight requests. Client audits and client-regulator exams get coordinated evidence with the same discipline as the bank's own exams; commitments made in responses are tracked.", $tags="processes")
   ' aac P_TPS_007: company_domain=""
+  System(P_COMPLIANCE_006, "Test credit decisions and pricing for fair lending", "Test approvals, lines, pricing, dealer markup and collections treatment for disparities across protected classes, using proxy methods where the data is not collected, and investigate and remediate what the testing finds. Fair lending findings lead to restitution and consent orders, and discretionary dealer markup is the classic exposure.", $tags="processes")
+  ' aac P_COMPLIANCE_006: company_domain=""
   System(P_RISK_002, "Validate model independently", "Perform independent validation of a model and record the outcome and conditions. Independent validation is organizationally separate from development; findings condition or block production use, and revalidation triggers are set at approval.", $tags="processes")
   ' aac P_RISK_002: company_domain=""
 }
@@ -134,6 +156,16 @@ Rel(P_EA_008, SYS_GRC, "Supporting")
 ' aac rel: source="P_EA_008"; target="SYS_GRC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
 Rel(P_APPDEV_005, SYS_GRC, "Supporting")
 ' aac rel: source="P_APPDEV_005"; target="SYS_GRC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_001, SYS_GRC, "Supporting")
+' aac rel: source="P_LENDING_001"; target="SYS_GRC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_MERCHANT_001, SYS_GRC, "Supporting")
+' aac rel: source="P_MERCHANT_001"; target="SYS_GRC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PARTNERSHIPS_002, SYS_GRC, "Primary")
+' aac rel: source="P_PARTNERSHIPS_002"; target="SYS_GRC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_CLIENTMGMT_001, SYS_GRC, "Supporting")
+' aac rel: source="P_CLIENTMGMT_001"; target="SYS_GRC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COMPLIANCE_006, SYS_GRC, "Supporting")
+' aac rel: source="P_COMPLIANCE_006"; target="SYS_GRC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
 Rel(P_SERVICING_006, CAP_SERV_05, "supports")
 ' aac rel: source="P_SERVICING_006"; target="CAP_SERV_05"; label="supports"; relation="process_supports_capability"
 Rel(P_SERVICING_006, CAP_RGOV_06, "supports")
@@ -182,6 +214,18 @@ Rel(P_APPDEV_005, CAP_TECH_01, "supports")
 ' aac rel: source="P_APPDEV_005"; target="CAP_TECH_01"; label="supports"; relation="process_supports_capability"
 Rel(P_APPDEV_005, CAP_SEC_03, "supports")
 ' aac rel: source="P_APPDEV_005"; target="CAP_SEC_03"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_001, CAP_LEND_01, "supports")
+' aac rel: source="P_LENDING_001"; target="CAP_LEND_01"; label="supports"; relation="process_supports_capability"
+Rel(P_MERCHANT_001, CAP_MERCH_01, "supports")
+' aac rel: source="P_MERCHANT_001"; target="CAP_MERCH_01"; label="supports"; relation="process_supports_capability"
+Rel(P_PARTNERSHIPS_002, CAP_PART_05_01, "supports")
+' aac rel: source="P_PARTNERSHIPS_002"; target="CAP_PART_05_01"; label="supports"; relation="process_supports_capability"
+Rel(P_CLIENTMGMT_001, CAP_PART_03, "supports")
+' aac rel: source="P_CLIENTMGMT_001"; target="CAP_PART_03"; label="supports"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_006, CAP_RGOV_09, "supports")
+' aac rel: source="P_COMPLIANCE_006"; target="CAP_RGOV_09"; label="supports"; relation="process_supports_capability"
+Rel(P_PARTNERSHIPS_002, CAP_PART_05, "supports")
+' aac rel: source="P_PARTNERSHIPS_002"; target="CAP_PART_05"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

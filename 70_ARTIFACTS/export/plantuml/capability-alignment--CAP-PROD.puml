@@ -26,6 +26,8 @@ Boundary(b_Capability, "Capability") {
   ' aac CAP_PROD_03: company_domain="Products"
 }
 Boundary(b_Control, "Control") {
+  System(CTL_MKT_REVIEW, "Marketing material compliance review", "No creative or offer reaches market without documented compliance sign-off.", $tags="controls")
+  ' aac CTL_MKT_REVIEW: company_domain=""
   System(CTL_NOTICE_CONTENT, "Notice content and delivery evidence", "Required notices use legal-owned templates with version control, and delivery evidence is retained per notice.", $tags="controls")
   ' aac CTL_NOTICE_CONTENT: company_domain=""
 }
@@ -38,6 +40,8 @@ Boundary(b_Process, "Process") {
   ' aac P_PRODUCT_002: company_domain=""
   System(P_PRODUCT_001, "Design and approve product change", "Define, price, and obtain approval for a change to a card product. A product change binds pricing, terms, and eligibility; approval spans product, credit, finance, legal, and compliance before configuration starts.", $tags="processes")
   ' aac P_PRODUCT_001: company_domain=""
+  System(P_PRODUCT_005, "Design rewards program and earn structure", "Design the earn rates, categories, caps, redemption values and partner funding of a rewards program, model its cost against the revenue it should bring, and take it through legal and compliance review. Rewards terms are part of the card agreement, so changing them is a change in terms that needs notice.", $tags="processes")
+  ' aac P_PRODUCT_005: company_domain=""
   System(P_PRODUCT_003, "Launch product to market", "Configure, test, and release a product for origination across all affected systems. Launch is a coordinated configuration across origination, core, servicing, and statements, verified in test before the product opens to volume.", $tags="processes")
   ' aac P_PRODUCT_003: company_domain=""
   System(P_PRODUCT_004, "Retire or migrate product", "Sunset a product and migrate affected accounts with required notice. Retirement manages the migration and notices for live accounts; terms changes ride the change-in-terms rules, and the product stays resolvable for history.", $tags="processes")
@@ -48,6 +52,8 @@ Boundary(b_System, "System") {
   ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
   System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
   ' aac SYS_DOC: company_domain=""
+  System(SYS_REWARDS, "Rewards ledger", "Rewards accrual ledger and redemption.", $tags="systems")
+  ' aac SYS_REWARDS: company_domain=""
 }
 
 Rel(CAP_PROD_01, CAP_PROD, "part of")
@@ -77,10 +83,16 @@ Rel(P_PRODUCT_003, CAP_PROD_05, "supported by")
 ' aac rel: source="P_PRODUCT_003"; target="CAP_PROD_05"; label="supported by"; relation="process_supports_capability"
 Rel(P_PRODUCT_004, CAP_PROD_05, "supported by")
 ' aac rel: source="P_PRODUCT_004"; target="CAP_PROD_05"; label="supported by"; relation="process_supports_capability"
+Rel(P_PRODUCT_005, CAP_PROD_04, "supported by")
+' aac rel: source="P_PRODUCT_005"; target="CAP_PROD_04"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_PROD, CTL_MKT_REVIEW, "governed by")
+' aac rel: source="CAP_PROD"; target="CTL_MKT_REVIEW"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
 Rel(CAP_PROD, CTL_NOTICE_CONTENT, "governed by")
 ' aac rel: source="CAP_PROD"; target="CTL_NOTICE_CONTENT"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
 Rel(CAP_PROD_03, CTL_NOTICE_CONTENT, "governed by")
 ' aac rel: source="CAP_PROD_03"; target="CTL_NOTICE_CONTENT"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_PROD_04, CTL_MKT_REVIEW, "governed by")
+' aac rel: source="CAP_PROD_04"; target="CTL_MKT_REVIEW"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
 Rel(SYS_CORE_LEDGER, CAP_PROD_01, "realizes")
 ' aac rel: source="SYS_CORE_LEDGER"; target="CAP_PROD_01"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_CORE_LEDGER, CAP_PROD_02, "realizes")
@@ -89,6 +101,8 @@ Rel(SYS_CORE_LEDGER, CAP_PROD_05, "realizes")
 ' aac rel: source="SYS_CORE_LEDGER"; target="CAP_PROD_05"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_DOC, CAP_PROD_03, "realizes")
 ' aac rel: source="SYS_DOC"; target="CAP_PROD_03"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_REWARDS, CAP_PROD_04, "realizes")
+' aac rel: source="SYS_REWARDS"; target="CAP_PROD_04"; label="realizes"; relation="system_realizes_capability"
 
 SHOW_LEGEND()
 @enduml

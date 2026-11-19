@@ -22,6 +22,8 @@ flowchart LR
 
   subgraph grp_Technology_Service["Technology Service"]
     direction LR
+    TS_NET_SUB_LEND_APP_A[/"Lending App Subnet A<br/>[Subnet]"/]
+    TS_NET_SUB_LEND_APP_B[/"Lending App Subnet B<br/>[Subnet]"/]
     TS_ENTRA_ID[/"Microsoft Entra ID<br/>[Identity provider]"/]
     TS_ONPREM_DC[/"Primary Data Center<br/>[Virtual network]"/]
   end
@@ -32,6 +34,8 @@ flowchart LR
   SYS_CRM -->|"HTTPS"| SYS_LENDING_HUB
   SYS_CRM -.->|"runs on"| TS_ENTRA_ID
   SYS_CORE_LEDGER -.->|"runs on"| TS_ONPREM_DC
+  SYS_LENDING_HUB -.->|"runs on"| TS_NET_SUB_LEND_APP_A
+  SYS_LENDING_HUB -.->|"runs on"| TS_NET_SUB_LEND_APP_B
   SYS_CORE_LEDGER -->|"Read"| DA_PAYMENT_INSTR
   SYS_CREDIT_BUREAU -->|"Read"| DA_BUREAU_FILE
   SYS_CRM -->|"ReadWrite"| DA_DISPUTE_CASE
@@ -43,6 +47,6 @@ flowchart LR
   classDef s_tech_services__tech_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
   class DA_BUREAU_FILE,DA_CARD_ACCOUNT,DA_CUSTOMER_PROFILE,DA_DISPUTE_CASE,DA_PAYMENT_INSTR s_data_assets__data_assets;
   class SYS_CORE_LEDGER,SYS_CREDIT_BUREAU,SYS_CRM,SYS_LENDING_HUB s_systems__systems;
-  class TS_ENTRA_ID,TS_ONPREM_DC s_tech_services__tech_services;
+  class TS_ENTRA_ID,TS_NET_SUB_LEND_APP_A,TS_NET_SUB_LEND_APP_B,TS_ONPREM_DC s_tech_services__tech_services;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Data_Asset,grp_System,grp_Technology_Service boundary1;

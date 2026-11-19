@@ -22,6 +22,7 @@ flowchart LR
 
   subgraph grp_Process["Process"]
     direction LR
+    P_FINANCE_003[\"Compile, certify, and file<br/>regulatory reports"/]
     P_REG_DATA_PREP_001[\"Prepare regulatory<br/>reporting data"/]
   end
 
@@ -44,6 +45,7 @@ flowchart LR
   SYS_CUST360_SEMANTIC -->|"realizes"| CAP_DATA_04
   SYS_REG_REPORTING -->|"realizes"| CAP_FIN_04
   P_REG_DATA_PREP_001 -->|"supports"| CAP_FIN_04
+  P_FINANCE_003 -->|"supports"| CAP_FIN_04
 
   classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
   classDef s_data_assets__data_assets fill:#a7f3d0,stroke:#047857,color:#0f172a,stroke-width:1.4px;
@@ -52,7 +54,7 @@ flowchart LR
   classDef s_work_packages__work_packages fill:#ccfbf1,stroke:#0d9488,color:#0f172a,stroke-width:1.4px;
   class CAP_DATA_04,CAP_FIN_04 s_capabilities__capabilities;
   class DA_CUST360_CURATED,DA_LENDPERF_CURATED s_data_assets__data_assets;
-  class P_REG_DATA_PREP_001 s_processes__processes;
+  class P_FINANCE_003,P_REG_DATA_PREP_001 s_processes__processes;
   class SYS_CUST360_SEMANTIC,SYS_REG_REPORTING s_systems__systems;
   class WP_REG_REPORTING s_work_packages__work_packages;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
@@ -73,4 +75,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#4338ca` | systems |
 | `#0d9488` | work packages |
 
-8 entities, 8 relationships. Generated from the model; edit the model, not this file.
+9 entities, 9 relationships. Generated from the model; edit the model, not this file.

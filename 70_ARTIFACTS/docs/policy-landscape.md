@@ -17,8 +17,10 @@ Each policy, the controls that implement it, and the systems and data it applies
 | NICE Actimize Screening outcomes <br>`DA-SCREENING-OUTCOMES` | data subject to policy | Records Retention & Disposition Policy <br>`POL-RECORDS` | binds |
 | NICE Actimize Screening outcomes <br>`DA-SCREENING-OUTCOMES` | data subject to policy | Consumer Privacy & Data Handling Policy <br>`POL-PRIVACY` | binds |
 | Adverse action notice completeness <br>`CTL-ADVERSE-ACT` | policy id | Fair Lending & Credit Decision Policy <br>`POL-FAIR-LEND` | gives effect to |
+| Ancillary product refund on early termination <br>`CTL-ANCILLARY-REFUND` | policy id | Marketing Review & UDAAP Policy <br>`POL-MKT-UDAAP` | gives effect to |
 | Application completeness and disclosure <br>`CTL-APP-INTAKE` | policy id | Fair Lending & Credit Decision Policy <br>`POL-FAIR-LEND` | gives effect to |
 | Authorization availability and stand-in <br>`CTL-AUTH-AVAIL` | policy id | Technology Change Management Policy <br>`POL-CHANGE` | gives effect to |
+| Brokered deposit position reconciliation <br>`CTL-BROKERED-RECON` | policy id | Records Retention & Disposition Policy <br>`POL-RECORDS` | gives effect to |
 | Bureau furnishing accuracy <br>`CTL-BUREAU-ACC` | policy id | Fair Lending & Credit Decision Policy <br>`POL-FAIR-LEND` | gives effect to |
 | Cardholder authentication to policy <br>`CTL-AUTH-POLICY` | policy id | Information Security Policy <br>`POL-INFOSEC` | gives effect to |
 | Cardholder data scope and evidence maintenance <br>`CTL-PCI-EVIDENCE` | policy id | Information Security Policy <br>`POL-INFOSEC` | gives effect to |
@@ -29,16 +31,24 @@ Each policy, the controls that implement it, and the systems and data it applies
 | Complaint regulatory routing <br>`CTL-COMPLAINT-REG` | policy id | Marketing Review & UDAAP Policy <br>`POL-MKT-UDAAP` | gives effect to |
 | Consumer privacy request fulfillment <br>`CTL-PRIV-REQ` | policy id | Consumer Privacy & Data Handling Policy <br>`POL-PRIVACY` | gives effect to |
 | Conversion balance and record verification <br>`CTL-CONV-VERIFY` | policy id | Third-Party Risk Management Policy <br>`POL-TPRM` | gives effect to |
+| Credit balance refund and escheatment <br>`CTL-CREDIT-BAL` | policy id | Error Resolution & Billing Dispute Policy <br>`POL-ERROR-RES` | gives effect to |
 | Cycle assessment validation <br>`CTL-CYCLE-VALID` | policy id | Error Resolution & Billing Dispute Policy <br>`POL-ERROR-RES` | gives effect to |
 | Daily settlement and clearing reconciliation <br>`CTL-DAILY-RECON` | policy id | Records Retention & Disposition Policy <br>`POL-RECORDS` | gives effect to |
+| Dealer program and markup monitoring <br>`CTL-DEALER-MON` | policy id | Fair Lending & Credit Decision Policy <br>`POL-FAIR-LEND` | gives effect to |
+| Deposit interest tax reporting <br>`CTL-TAX-REPORT` | policy id | Records Retention & Disposition Policy <br>`POL-RECORDS` | gives effect to |
 | Dispute acknowledgment timeliness <br>`CTL-REGE-ACK` | policy id | Error Resolution & Billing Dispute Policy <br>`POL-ERROR-RES` | gives effect to |
 | Dispute determination timeliness and notice <br>`CTL-REGE-DETERM` | policy id | Error Resolution & Billing Dispute Policy <br>`POL-ERROR-RES` | gives effect to |
+| Fair lending testing <br>`CTL-FAIR-LEND-TEST` | policy id | Fair Lending & Credit Decision Policy <br>`POL-FAIR-LEND` | gives effect to |
 | Fraud alert handling service level <br>`CTL-FRAUD-SLA` | policy id | Error Resolution & Billing Dispute Policy <br>`POL-ERROR-RES` | gives effect to |
 | Furnishing and bucketing reconciliation <br>`CTL-METRO2-RECON` | policy id | Fair Lending & Credit Decision Policy <br>`POL-FAIR-LEND` | gives effect to |
 | Ingestion data quality gate <br>`CTL-DQ-GATE` | policy id | Records Retention & Disposition Policy <br>`POL-RECORDS` | gives effect to |
+| Lien perfection within policy window <br>`CTL-LIEN-PERFECT` | policy id | Collateral & Lien Management Policy <br>`POL-COLLATERAL` | gives effect to |
 | Marketing material compliance review <br>`CTL-MKT-REVIEW` | policy id | Marketing Review & UDAAP Policy <br>`POL-MKT-UDAAP` | gives effect to |
 | Masked data outside production <br>`CTL-MASK-NONPROD` | policy id | Information Security Policy <br>`POL-INFOSEC` | gives effect to |
+| Merchant exposure limit monitoring <br>`CTL-MERCH-EXPOSURE` | policy id | Merchant Acquiring Risk Policy <br>`POL-MERCHANT` | gives effect to |
+| Merchant screening before boarding <br>`CTL-MERCH-SCREEN` | policy id | BSA/AML & Sanctions Policy <br>`POL-BSA-AML` | gives effect to |
 | Notice content and delivery evidence <br>`CTL-NOTICE-CONTENT` | policy id | Error Resolution & Billing Dispute Policy <br>`POL-ERROR-RES` | gives effect to |
+| Payment allocation to rule <br>`CTL-PMT-ALLOC` | policy id | Error Resolution & Billing Dispute Policy <br>`POL-ERROR-RES` | gives effect to |
 | Payment posting timeliness <br>`CTL-PMT-POSTING` | policy id | Error Resolution & Billing Dispute Policy <br>`POL-ERROR-RES` | gives effect to |
 | Periodic access certification <br>`CTL-ACCESS-CERT` | policy id | Information Security Policy <br>`POL-INFOSEC` | gives effect to |
 | Production change approval <br>`CTL-CHG-APPROVAL` | policy id | Technology Change Management Policy <br>`POL-CHANGE` | gives effect to |
@@ -46,14 +56,17 @@ Each policy, the controls that implement it, and the systems and data it applies
 | Recovery test against committed objectives <br>`CTL-DR-TEST` | policy id | Technology Change Management Policy <br>`POL-CHANGE` | gives effect to |
 | Regulatory change implementation tracking <br>`CTL-REGCHANGE-TRACK` | policy id | BSA/AML & Sanctions Policy <br>`POL-BSA-AML` | gives effect to |
 | Regulatory report certification <br>`CTL-REGRPT-CERT` | policy id | Records Retention & Disposition Policy <br>`POL-RECORDS` | gives effect to |
+| Repossession and disposition notices <br>`CTL-REPO-NOTICE` | policy id | Collateral & Lien Management Policy <br>`POL-COLLATERAL` | gives effect to |
 | Retention schedule enforcement <br>`CTL-RETENTION` | policy id | Records Retention & Disposition Policy <br>`POL-RECORDS` | gives effect to |
 | Sanctions and watchlist screening <br>`CTL-SANCTIONS` | policy id | BSA/AML & Sanctions Policy <br>`POL-BSA-AML` | gives effect to |
 | Security incident response execution <br>`CTL-IR-PLAYBOOK` | policy id | Information Security Policy <br>`POL-INFOSEC` | gives effect to |
 | Servicemember protections screening <br>`CTL-SCRA-MLA` | policy id | Fair Lending & Credit Decision Policy <br>`POL-FAIR-LEND` | gives effect to |
 | Settlement funding confirmation <br>`CTL-FUNDING-CONF` | policy id | Records Retention & Disposition Policy <br>`POL-RECORDS` | gives effect to |
 | Statutory collections notices <br>`CTL-FDCPA-NOTICE` | policy id | Collections Conduct Policy <br>`POL-COLLECT` | gives effect to |
+| Stipulations cleared before funding <br>`CTL-FUND-STIPS` | policy id | Collateral & Lien Management Policy <br>`POL-COLLATERAL` | gives effect to |
 | Suspicious activity investigation and filing <br>`CTL-SAR-FILING` | policy id | BSA/AML & Sanctions Policy <br>`POL-BSA-AML` | gives effect to |
 | Third-party due diligence before onboarding <br>`CTL-TPRM-DD` | policy id | Third-Party Risk Management Policy <br>`POL-TPRM` | gives effect to |
+| Title release within statutory deadline <br>`CTL-LIEN-RELEASE` | policy id | Collateral & Lien Management Policy <br>`POL-COLLATERAL` | gives effect to |
 | Treatment strategy approval <br>`CTL-TREATMENT-APPR` | policy id | Fair Lending & Credit Decision Policy <br>`POL-FAIR-LEND` | gives effect to |
 | Vulnerability remediation service level <br>`CTL-VULN-SLA` | policy id | Information Security Policy <br>`POL-INFOSEC` | gives effect to |
 | Authorization Switch <br>`SYS-AUTH-SWITCH` | system subject to policy | Information Security Policy <br>`POL-INFOSEC` | binds |
@@ -82,4 +95,4 @@ Each policy, the controls that implement it, and the systems and data it applies
 | Security Monitoring <br>`SYS-SIEM` | system subject to policy | Information Security Policy <br>`POL-INFOSEC` | binds |
 | Security Monitoring <br>`SYS-SIEM` | system subject to policy | Records Retention & Disposition Policy <br>`POL-RECORDS` | binds |
 
-75 relationships across 70 entities. Generated from the model; this is a report rather than a diagram, so it is a table.
+88 relationships across 85 entities. Generated from the model; this is a report rather than a diagram, so it is a table.

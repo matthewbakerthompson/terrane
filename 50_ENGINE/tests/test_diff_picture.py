@@ -13,13 +13,15 @@ from terrane.diff import DiffError
 from terrane.diff_picture import changes_between, changes_since, mark
 from terrane.quick import LIBRARY_FOLDERS
 
-from _fixture import REPO
+from _fixture import REPO, remove_scratch
 
 SVG = "{http://www.w3.org/2000/svg}"
 
 
-def _estate(name: str) -> Path:
-    target = Path(tempfile.mkdtemp(prefix="aac-%s-" % name))
+def _estate(name: str, cleanup) -> Path:
+    prefix = "aac-%s-" % name
+    target = Path(tempfile.mkdtemp(prefix=prefix))
+    cleanup(remove_scratch, target, prefix)
     for folder in ("10_MODEL", "30_VIEWS") + tuple(LIBRARY_FOLDERS):
         if (REPO / folder).is_dir():
             shutil.copytree(REPO / folder, target / folder, ignore=shutil.ignore_patterns("__pycache__"))
@@ -61,7 +63,7 @@ def _nodes(svg: str):
 class TestChangePicture(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.before, cls.after = _estate("before"), _estate("after")
+        cls.before, cls.after = _estate("before", cls.addClassCleanup), _estate("after", cls.addClassCleanup)
         _step(cls.after)
         cls.drawing = changes_between(cls.before, cls.after, since="yesterday", until="today", date="2026-10-17")
 
@@ -137,7 +139,9 @@ class TestChangePicture(unittest.TestCase):
 
         from terrane import cli
 
-        target = Path(tempfile.mkdtemp(prefix="aac-diff-cli-")) / "change.svg"
+        folder = Path(tempfile.mkdtemp(prefix="aac-diff-cli-"))
+        self.addCleanup(remove_scratch, folder, "aac-diff-cli-")
+        target = folder / "change.svg"
         out, err = io.StringIO(), io.StringIO()
         with redirect_stdout(out), redirect_stderr(err):
             code = cli.main(["--root", str(REPO), "diff", "HEAD", "HEAD", "--picture", str(target)])

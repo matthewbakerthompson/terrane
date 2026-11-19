@@ -2,11 +2,11 @@
 
 The ways two systems are connected here: each kind a recurring shape of integration style, protocol and authentication, with the pattern that says how that kind is built. An interface is of a kind when its style is the kind's and its protocol one of the kind's, read off its own fields, so this counts the estate as it is whether or not anyone chose a kind. Generated from `24_CONNECTIONS/` by `terrane render`; edit that, not this.
 
-113 of 115 interfaces are of a kind; 2 of none.
+135 of 137 interfaces are of a kind; 2 of none.
 
 | Kind | Style | Protocols | Pattern | Interfaces |
 |---|---|---|---|---:|
-| [API call](#api-call) | Request-response | HTTPS | `api-front-door` | 39 |
+| [API call](#api-call) | Request-response | HTTPS | `api-front-door` | 47 |
 | [Request on a queue](#queued-request) | Request-response | MQ | none | 6 |
 | [Its own datastore](#own-datastore) | Request-response | TDS, PostgreSQL | `stateless-request-service` | 6 |
 | [Private path to a vendor](#private-egress) | Request-response | PrivateLink | `private-egress-to-saas` | 3 |
@@ -14,10 +14,14 @@ The ways two systems are connected here: each kind a recurring shape of integrat
 | [Event on the bus](#event) | Event | AMQP, Kafka, Pub/Sub | `event-fanout` | 14 |
 | [Event over HTTPS](#event-over-https) | Event | HTTPS | `api-front-door` | 10 |
 | [Log stream](#log-stream) | Event | Syslog | `observed-service` | 1 |
-| [Scheduled file](#scheduled-file) | Batch | FileTransfer | `windowed-batch` | 18 |
+| [Scheduled file](#scheduled-file) | Batch | FileTransfer | `windowed-batch` | 32 |
 | [Partner file](#partner-file) | Batch | SFTP | `partner-file-exchange` | 2 |
 | [Pipeline load](#pipeline-load) | Batch | SQL, Snowpipe, S3 | `analytics-landing-zone` | 8 |
 | [Scheduled API pull](#scheduled-pull) | Batch | HTTPS | none | 5 |
+| [Change data capture feed](#change-data-capture) | Event | CDC | none | 0 |
+| [Scheduled extract](#database-extract) | Batch | TDS, PostgreSQL | none | 0 |
+| [Database replica](#database-replica) | Event | Replication | none | 0 |
+| [Backup](#database-backup) | Batch | Snapshot | none | 0 |
 
 <a id="api-call"></a>
 ## API call
@@ -28,7 +32,7 @@ One system calls another's API and waits for the answer. The house rule is that 
 
 **Proposed with.** integration style Request-response, protocol HTTPS, auth method OAuth2, frequency Realtime, direction Outbound, patterns api-front-door.
 **Pattern.** `api-front-door` (API front door, Approved).
-**Interfaces.** 39 in the estate:
+**Interfaces.** 47 in the estate:
 
 - Authorization Switch to Tokenization Service (`INT-AUTH-TOKEN`): SYS-AUTH-SWITCH to SYS-TOKEN
 - Card Servicing Service to Identity Service (`INT-CARDSVC-API-IDENTITY`): SYS-CARDSVC-API to SYS-IDENTITY-SVC
@@ -40,6 +44,9 @@ One system calls another's API and waits for the answer. The house rule is that 
 - CRM to Dispute Gateway (`INT-CRM-DISPUTES`): SYS-CRM to SYS-DISPUTES-GATEWAY
 - CRM to Identity and Access Management (`INT-CRM-IAM`): SYS-CRM to SYS-IAM
 - Servicing CRM to Core Ledger (`INT-CRM-LEDGER`): SYS-CRM to SYS-CORE-LEDGER
+- Dealer Portal to Indirect Loan Origination (`INT-DEALER-PORTAL-LOS`): SYS-DEALER-PORTAL to SYS-LOS
+- Deposit Platform to Identity Verification (`INT-DEPOSIT-KYC`): SYS-DEPOSIT to SYS-KYC
+- Deposit Platform to Screening Gateway (`INT-DEPOSIT-SCREENING`): SYS-DEPOSIT to SYS-SCREENING-GATEWAY
 - Dispute Management Platform Gateway to Pegasystems (`INT-DISPUTES-GATEWAY-SAAS`): SYS-DISPUTES-GATEWAY to SYS-DISPUTES-SAAS
 - SYS-CORE-LEDGER to Dispute Management Platform Gateway (`INT-DISPUTES-UP-GATEWAY`): SYS-CORE-LEDGER to SYS-DISPUTES-GATEWAY
 - Document Management to Servicing Client Portal (`INT-DOC-CLIENT-PORTAL`): SYS-CLIENT-PORTAL to SYS-DOC
@@ -56,6 +63,11 @@ One system calls another's API and waits for the answer. The house rule is that 
 - CRM via Installment Lending hub (`INT-LENDING-CRM-HUB`): SYS-CRM to SYS-LENDING-HUB
 - Installment Lending Edge to Load Balancer (`INT-LENDING-EDGE-ALB`): SYS-LENDING-EDGE to SYS-LENDING-ALB
 - Installment Lending Web to API (`INT-LENDING-WEB-API`): SYS-LENDING-WEB to SYS-LENDING-API
+- Indirect Loan Origination to Application Fraud Screening (`INT-LOS-APPFRAUD`): SYS-LOS to SYS-APPFRAUD
+- Indirect Loan Origination to Credit Bureau Gateway (`INT-LOS-BUREAU-GW`): SYS-LOS to SYS-BUREAU-GW
+- Indirect Loan Origination to Identity Verification (`INT-LOS-KYC`): SYS-LOS to SYS-KYC
+- Merchant Risk Monitoring to Screening Gateway (`INT-MERCH-RISK-SCREENING`): SYS-MERCH-RISK to SYS-SCREENING-GATEWAY
+- Merchant Portal Service to Merchant Acquiring Platform (`INT-MERCHANT-API-ACQ`): SYS-MERCHANT-API to SYS-MERCH-ACQ
 - Merchant Portal Web to API (`INT-MERCHANT-WEB-API`): SYS-MERCHANT-WEB to SYS-MERCHANT-API
 - Cardholder Mobile to Card Servicing API (`INT-MOBILE-CARDSVC`): SYS-MOBILE to SYS-CARDSVC-API
 - Cardholder Mobile to Tokenization Service (`INT-MOBILE-TOKEN`): SYS-MOBILE to SYS-TOKEN
@@ -96,6 +108,7 @@ A service reading and writing the store that holds its state. Not an integration
 
 **Proposed with.** integration style Request-response, protocol TDS, auth method ManagedIdentity, frequency Realtime, direction Outbound, patterns stateless-request-service.
 **Pattern.** `stateless-request-service` (Stateless request service, Approved).
+**Where.** Into a data store, offered first where the target is one.
 **Interfaces.** 6 in the estate:
 
 - Card Servicing Service to Datastore (`INT-CARDSVC-API-STORE`): SYS-CARDSVC-API to SYS-CARDSVC-STORE
@@ -202,11 +215,15 @@ A file produced on a schedule for another system to pick up, with a window it ha
 
 **Proposed with.** integration style Batch, protocol FileTransfer, auth method MutualTLS, frequency Daily, direction Outbound, patterns windowed-batch.
 **Pattern.** `windowed-batch` (Windowed batch, Approved).
-**Interfaces.** 18 in the estate:
+**Interfaces.** 32 in the estate:
 
+- Brokered Deposit Gateway to Deposit Platform (`INT-BROKER-GW-DEPOSIT`): SYS-BROKER-GW to SYS-DEPOSIT
 - Credit Bureau Gateway to Credit Bureau (`INT-BUREAU-GW-BUREAU`): SYS-BUREAU-GW to SYS-CREDIT-BUREAU
 - Credit Bureau Gateway to CRM (`INT-BUREAU-GW-CRM`): SYS-BUREAU-GW to SYS-CRM
 - Collections Platform to Outbound Contact Platform (`INT-COLLECT-DIALER`): SYS-COLLECT-API to SYS-DIALER
+- Collections Platform to Legal Matter Management (`INT-COLLECT-LEGAL`): SYS-COLLECT-API to SYS-LEGAL-MATTER
+- Deposit Platform to General Ledger (`INT-DEPOSIT-GL`): SYS-DEPOSIT to SYS-GL
+- Deposit Platform to Treasury Management (`INT-DEPOSIT-TREASURY`): SYS-DEPOSIT to SYS-TREASURY
 - General Ledger to Treasury Management (`INT-GL-TREASURY`): SYS-GL to SYS-TREASURY
 - HR Information System to Identity and Access Management (`INT-HRIS-IAM`): SYS-HRIS to SYS-IAM
 - Core Card Ledger to Financial Crimes Platform (`INT-LEDGER-AML`): SYS-CORE-LEDGER to SYS-AML
@@ -218,8 +235,18 @@ A file produced on a schedule for another system to pick up, with a window it ha
 - Core Ledger to Data Ingestion Hub (`INT-LEDGER-INGEST`): SYS-CORE-LEDGER to SYS-DATA-INGEST
 - Core Card Ledger to Reconciliation Platform (`INT-LEDGER-RECON`): SYS-CORE-LEDGER to SYS-RECON
 - Core Ledger to Statement Generation (`INT-LEDGER-STATEMENTS`): SYS-CORE-LEDGER to SYS-STATEMENTS
+- Loan Servicing to Credit Bureau Gateway (`INT-LOAN-SVC-BUREAU-GW`): SYS-LOAN-SVC to SYS-BUREAU-GW
+- Loan Servicing to Collections Platform (`INT-LOAN-SVC-COLLECT`): SYS-LOAN-SVC to SYS-COLLECT-API
+- Loan Servicing to General Ledger (`INT-LOAN-SVC-GL`): SYS-LOAN-SVC to SYS-GL
+- Loan Servicing to Repossession and Remarketing (`INT-LOAN-SVC-REMARKET`): SYS-LOAN-SVC to SYS-REMARKET
+- Loan Servicing to Title and Lien Management (`INT-LOAN-SVC-TITLE`): SYS-LOAN-SVC to SYS-TITLE
+- Indirect Loan Origination to Loan Servicing (`INT-LOS-LOAN-SVC-BOARD`): SYS-LOS to SYS-LOAN-SVC
+- Merchant Acquiring Platform to General Ledger (`INT-MERCH-ACQ-GL`): SYS-MERCH-ACQ to SYS-GL
+- Merchant Acquiring Platform to Reconciliation (`INT-MERCH-ACQ-RECON`): SYS-MERCH-ACQ to SYS-RECON
+- Merchant Acquiring Platform to Merchant Risk Monitoring (`INT-MERCH-ACQ-RISK`): SYS-MERCH-ACQ to SYS-MERCH-RISK
 - Originations Decision Engine to Core Card Ledger (`INT-ORIG-LEDGER-BOARD`): SYS-ORIG-DECISION to SYS-CORE-LEDGER
 - Payment Capture Gateway to General Ledger (`INT-PAYMENT-GW-GL`): SYS-PAYMENT-GW to SYS-GL
+- Payment Capture Gateway to Loan Servicing (`INT-PAYMENT-GW-LOAN-SVC`): SYS-PAYMENT-GW to SYS-LOAN-SVC
 - Prospect Data Services to Campaign Management (`INT-PROSPECT-MARKETING`): SYS-PROSPECT-DATA to SYS-MARKETING
 - Statement Generation to Document Management (`INT-STATEMENTS-DOC`): SYS-STATEMENTS to SYS-DOC
 
@@ -246,6 +273,7 @@ Data landed once and built forward: from ingestion into the warehouse, and from 
 
 **Proposed with.** integration style Batch, protocol SQL, auth method KeyPair, frequency Daily, direction Outbound, patterns analytics-landing-zone.
 **Pattern.** `analytics-landing-zone` (Analytics landing zone, Approved).
+**Where.** Into a data store, offered first where the target is one.
 **Interfaces.** 8 in the estate:
 
 - Ingest to Customer 360 Pipeline (`INT-CUST360-INGEST`): SYS-DATA-INGEST to SYS-CUST360-PIPELINE
@@ -272,6 +300,50 @@ A batch of records fetched over an API on a schedule: evidence gathered for an a
 - IT Service Management to Governance, Risk and Compliance (`INT-ITSM-GRC`): SYS-ITSM to SYS-GRC
 - Lending Portfolio Performance Semantic Layer to Regulatory Reporting Engine (`INT-LENDPERF-REGREPORTING`): SYS-LENDPERF-SEMANTIC to SYS-REG-REPORTING
 - Work Tracking to Governance, Risk and Compliance (`INT-WORKTRACK-GRC`): SYS-WORKTRACK to SYS-GRC
+
+<a id="change-data-capture"></a>
+## Change data capture feed
+
+`change-data-capture`
+
+A database's committed changes read from its log and published as they happen, so another system follows it without querying it or sharing it. The way out of a database that leaves it its own service's.
+
+**Proposed with.** integration style Event, protocol CDC, auth method IAM, frequency Realtime, direction Outbound.
+**Where.** Out of a data store, offered first where the source is one.
+**Interfaces.** None yet.
+
+<a id="database-extract"></a>
+## Scheduled extract
+
+`database-extract`
+
+Rows read out of a database by a query on a schedule, into a pipeline or a report, at an hour agreed with the service that owns it so the read does not slow it. Simpler than a feed, and a day behind.
+
+**Proposed with.** integration style Batch, protocol TDS, auth method ManagedIdentity, frequency Daily, direction Outbound.
+**Where.** Out of a data store, offered first where the source is one.
+**Interfaces.** None yet.
+
+<a id="database-replica"></a>
+## Database replica
+
+`database-replica`
+
+One database kept a copy of another as it changes: a read replica that takes reporting off the primary, or a standby in another region to recover to. Both ends are databases, and the copy is never written to.
+
+**Proposed with.** integration style Event, protocol Replication, auth method MutualTLS, frequency Realtime, direction Outbound.
+**Where.** From one data store to another, offered first where both ends are.
+**Interfaces.** None yet.
+
+<a id="database-backup"></a>
+## Backup
+
+`database-backup`
+
+A database copied on a schedule to a store it can be restored from, kept apart from it in another account or region and for as long as the retention policy says.
+
+**Proposed with.** integration style Batch, protocol Snapshot, auth method IAM, frequency Daily, direction Outbound.
+**Where.** From one data store to another, offered first where both ends are.
+**Interfaces.** None yet.
 
 ## Of no kind
 

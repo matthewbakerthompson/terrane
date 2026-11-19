@@ -11,10 +11,15 @@ flowchart LR
   subgraph grp_Capability["Capability"]
     direction LR
     CAP_ORIG_03{{"Application Fraud<br/>Screening"}}
+    CAP_LEND_02_01{{"Dealer Application Intake"}}
+    CAP_FRAUD_08{{"First-Party Fraud &<br/>Bust-Out Management"}}
+    CAP_LEND_02{{"Indirect Application &<br/>Underwriting"}}
   end
 
   subgraph grp_Process["Process"]
     direction LR
+    P_FRAUD_008[\"Investigate synthetic<br/>identity"/]
+    P_LENDING_003[\"Receive and validate<br/>dealer-submitted<br/>application"/]
     P_ORIG_003[\"Screen application for<br/>fraud"/]
   end
 
@@ -24,13 +29,18 @@ flowchart LR
   end
 
   P_ORIG_003 -->|"Primary"| SYS_APPFRAUD
+  P_LENDING_003 -->|"Supporting"| SYS_APPFRAUD
+  P_FRAUD_008 -->|"Primary"| SYS_APPFRAUD
   P_ORIG_003 -->|"supports"| CAP_ORIG_03
+  P_LENDING_003 -->|"supports"| CAP_LEND_02_01
+  P_FRAUD_008 -->|"supports"| CAP_FRAUD_08
+  P_LENDING_003 -->|"supports"| CAP_LEND_02
 
   classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
   classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
-  class CAP_ORIG_03 s_capabilities__capabilities;
-  class P_ORIG_003 s_processes__processes;
+  class CAP_FRAUD_08,CAP_LEND_02,CAP_LEND_02_01,CAP_ORIG_03 s_capabilities__capabilities;
+  class P_FRAUD_008,P_LENDING_003,P_ORIG_003 s_processes__processes;
   class SYS_APPFRAUD s_systems__systems;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Capability,grp_Process,grp_System boundary1;
@@ -48,4 +58,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#0369a1` | processes |
 | `#4338ca` | systems |
 
-3 entities, 2 relationships. Generated from the model; edit the model, not this file.
+8 entities, 7 relationships. Generated from the model; edit the model, not this file.

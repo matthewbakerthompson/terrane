@@ -13,6 +13,8 @@ Boundary(b_eu_west_2, "region eu-west-2") {
   ' aac SYS_LENDING_WORKER: company_domain="Lending"; hosting="AWS"; technology="EKS · MSK"
   System(SYS_LENDING_DB, "Installment Lending Database", "Relational database for Installment Lending, encrypted with a customer managed key. Built with RDS.", $tags="systems")
   ' aac SYS_LENDING_DB: company_domain="Lending"; hosting="AWS"; technology="RDS"
+  System(SYS_LENDING_HUB, "Installment Lending Integration Hub", "Mediates every Installment Lending integration: one place for mapping, routing, retry and the audit trail, so the spokes do not each carry their own.", $tags="systems")
+  ' aac SYS_LENDING_HUB: company_domain="Lending"; hosting="AWS"
   System(SYS_LENDING_ALB, "Installment Lending Load Balancer", "Public load balancer terminating TLS for Installment Lending.", $tags="systems")
   ' aac SYS_LENDING_ALB: company_domain="Lending"; hosting="AWS"
   System(SYS_LENDING_BUCKET, "Installment Lending Object Store", "S3 bucket holding signed credit agreements and disbursement evidence. Seven-year retention with Object Lock; a records-management obligation rather than ordinary product storage. Built with S3.", $tags="systems")
@@ -51,18 +53,20 @@ Boundary(b_eu_west_2, "region eu-west-2") {
   }
 }
 
-Rel(SYS_LENDING_ALB, TS_NET_SUB_LEND_PUB_A, "deployed in")
-' aac rel: source="SYS_LENDING_ALB"; target="TS_NET_SUB_LEND_PUB_A"; label="deployed in"; relation="system_uses_tech_service"
-Rel(SYS_LENDING_ALB, TS_NET_SUB_LEND_PUB_B, "deployed in")
-' aac rel: source="SYS_LENDING_ALB"; target="TS_NET_SUB_LEND_PUB_B"; label="deployed in"; relation="system_uses_tech_service"
-Rel(SYS_LENDING_WEB, TS_NET_SUB_LEND_APP_A, "deployed in")
-' aac rel: source="SYS_LENDING_WEB"; target="TS_NET_SUB_LEND_APP_A"; label="deployed in"; relation="system_uses_tech_service"
-Rel(SYS_LENDING_WEB, TS_NET_SUB_LEND_APP_B, "deployed in")
-' aac rel: source="SYS_LENDING_WEB"; target="TS_NET_SUB_LEND_APP_B"; label="deployed in"; relation="system_uses_tech_service"
+Rel(SYS_LENDING_BUCKET, TS_NET_SUB_LEND_DATA_A, "deployed in")
+' aac rel: source="SYS_LENDING_BUCKET"; target="TS_NET_SUB_LEND_DATA_A"; label="deployed in"; relation="system_uses_tech_service"
 Rel(SYS_LENDING_API, TS_NET_SUB_LEND_APP_A, "deployed in")
 ' aac rel: source="SYS_LENDING_API"; target="TS_NET_SUB_LEND_APP_A"; label="deployed in"; relation="system_uses_tech_service"
 Rel(SYS_LENDING_API, TS_NET_SUB_LEND_APP_B, "deployed in")
 ' aac rel: source="SYS_LENDING_API"; target="TS_NET_SUB_LEND_APP_B"; label="deployed in"; relation="system_uses_tech_service"
+Rel(SYS_LENDING_WEB, TS_NET_SUB_LEND_APP_A, "deployed in")
+' aac rel: source="SYS_LENDING_WEB"; target="TS_NET_SUB_LEND_APP_A"; label="deployed in"; relation="system_uses_tech_service"
+Rel(SYS_LENDING_WEB, TS_NET_SUB_LEND_APP_B, "deployed in")
+' aac rel: source="SYS_LENDING_WEB"; target="TS_NET_SUB_LEND_APP_B"; label="deployed in"; relation="system_uses_tech_service"
+Rel(SYS_LENDING_ALB, TS_NET_SUB_LEND_PUB_A, "deployed in")
+' aac rel: source="SYS_LENDING_ALB"; target="TS_NET_SUB_LEND_PUB_A"; label="deployed in"; relation="system_uses_tech_service"
+Rel(SYS_LENDING_ALB, TS_NET_SUB_LEND_PUB_B, "deployed in")
+' aac rel: source="SYS_LENDING_ALB"; target="TS_NET_SUB_LEND_PUB_B"; label="deployed in"; relation="system_uses_tech_service"
 Rel(SYS_LENDING_WORKER, TS_NET_SUB_LEND_APP_A, "deployed in")
 ' aac rel: source="SYS_LENDING_WORKER"; target="TS_NET_SUB_LEND_APP_A"; label="deployed in"; relation="system_uses_tech_service"
 Rel(SYS_LENDING_WORKER, TS_NET_SUB_LEND_APP_B, "deployed in")
@@ -71,8 +75,10 @@ Rel(SYS_LENDING_DB, TS_NET_SUB_LEND_DATA_A, "deployed in")
 ' aac rel: source="SYS_LENDING_DB"; target="TS_NET_SUB_LEND_DATA_A"; label="deployed in"; relation="system_uses_tech_service"
 Rel(SYS_LENDING_DB, TS_NET_SUB_LEND_DATA_B, "deployed in")
 ' aac rel: source="SYS_LENDING_DB"; target="TS_NET_SUB_LEND_DATA_B"; label="deployed in"; relation="system_uses_tech_service"
-Rel(SYS_LENDING_BUCKET, TS_NET_SUB_LEND_DATA_A, "deployed in")
-' aac rel: source="SYS_LENDING_BUCKET"; target="TS_NET_SUB_LEND_DATA_A"; label="deployed in"; relation="system_uses_tech_service"
+Rel(SYS_LENDING_HUB, TS_NET_SUB_LEND_APP_A, "deployed in")
+' aac rel: source="SYS_LENDING_HUB"; target="TS_NET_SUB_LEND_APP_A"; label="deployed in"; relation="system_uses_tech_service"
+Rel(SYS_LENDING_HUB, TS_NET_SUB_LEND_APP_B, "deployed in")
+' aac rel: source="SYS_LENDING_HUB"; target="TS_NET_SUB_LEND_APP_B"; label="deployed in"; relation="system_uses_tech_service"
 Rel(TS_NET_SUB_LEND_APP_A, TS_NET_NAT_LEND_A, "egress route")
 ' aac rel: source="TS_NET_SUB_LEND_APP_A"; target="TS_NET_NAT_LEND_A"; label="egress route"; relation="tech_service_connects_to"; connection="egress route"
 Rel(TS_NET_SUB_LEND_APP_B, TS_NET_NAT_LEND_B, "egress route")

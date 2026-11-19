@@ -12,6 +12,7 @@ flowchart LR
     direction LR
     CAP_FRAUD_04{{"Chargeback & Representment<br/>Processing"}}
     CAP_FRAUD_03{{"Dispute Intake &<br/>Provisional Credit"}}
+    CAP_FRAUD_08{{"First-Party Fraud &<br/>Bust-Out Management"}}
     CAP_FRAUD_02{{"Fraud Case Investigation"}}
     CAP_FRAUD_05{{"Fraud Loss Recovery &<br/>Write-off"}}
     CAP_FRAUD_07{{"Fraud Reporting & Network<br/>Compliance"}}
@@ -39,10 +40,12 @@ flowchart LR
   subgraph grp_Process["Process"]
     direction LR
     P_SERVICING_005[\"Authenticate cardholder"/]
+    P_FRAUD_007[\"Detect and act on<br/>first-party fraud and<br/>bust-out"/]
     P_FRAUD_001[\"Detect and action<br/>transaction fraud alert"/]
     P_DISPUTE_002[\"Execute network chargeback"/]
     P_DISPUTE_004[\"Finalize dispute<br/>determination and notify"/]
     P_FRAUD_002[\"Investigate and adjudicate<br/>fraud case"/]
+    P_FRAUD_008[\"Investigate synthetic<br/>identity"/]
     P_FRAUD_006[\"Maintain fraud detection<br/>strategy"/]
     P_DISPUTE_001[\"Process cardholder dispute<br/>claim"/]
     P_DISPUTE_003[\"Process representment and<br/>pre-arbitration"/]
@@ -53,6 +56,7 @@ flowchart LR
 
   subgraph grp_System["System"]
     direction LR
+    SYS_APPFRAUD["Application fraud<br/>screening"]
     SYS_DISPUTES_GATEWAY["Dispute Management<br/>Platform Integration<br/>Gateway<br/>[AKS]"]
     SYS_IAM["Identity and access<br/>management"]
     SYS_DISPUTES_SAAS["Pega Smart Dispute<br/>[Pegasystems]"]
@@ -66,6 +70,7 @@ flowchart LR
   CAP_FRAUD_05 -->|"part of"| CAP_FRAUD
   CAP_FRAUD_06 -->|"part of"| CAP_FRAUD
   CAP_FRAUD_07 -->|"part of"| CAP_FRAUD
+  CAP_FRAUD_08 -->|"part of"| CAP_FRAUD
   CAP_FRAUD -->|"Aligned to"| FW_BIAN
   CAP_FRAUD -->|"Governed by"| FW_PCI_DSS
   CAP_FRAUD_01 -->|"Operations and Executio…"| FW_BIAN
@@ -75,6 +80,7 @@ flowchart LR
   CAP_FRAUD_05 -->|"Risk and Compliance #gt…"| FW_BIAN
   CAP_FRAUD_06 -->|"Risk and Compliance #gt…"| FW_BIAN
   CAP_FRAUD_07 -->|"Operations and Executio…"| FW_BIAN
+  CAP_FRAUD_08 -->|"Operations and Executio…"| FW_BIAN
   P_SERVICING_005 -->|"supported by"| CAP_FRAUD_06
   P_FRAUD_001 -->|"supported by"| CAP_FRAUD_01
   P_FRAUD_002 -->|"supported by"| CAP_FRAUD_02
@@ -86,6 +92,8 @@ flowchart LR
   P_DISPUTE_002 -->|"supported by"| CAP_FRAUD_04
   P_DISPUTE_003 -->|"supported by"| CAP_FRAUD_04
   P_DISPUTE_004 -->|"supported by"| CAP_FRAUD_03
+  P_FRAUD_007 -->|"supported by"| CAP_FRAUD_08
+  P_FRAUD_008 -->|"supported by"| CAP_FRAUD_08
   CAP_FRAUD -->|"governed by"| CTL_AUTH_POLICY
   CAP_FRAUD -->|"governed by"| CTL_FRAUD_SLA
   CAP_FRAUD -->|"governed by"| CTL_IR_PLAYBOOK
@@ -100,8 +108,10 @@ flowchart LR
   CAP_FRAUD_04 -->|"governed by"| CTL_REGE_DETERM
   CAP_FRAUD_06 -->|"governed by"| CTL_AUTH_POLICY
   CAP_FRAUD_06 -->|"governed by"| CTL_IR_PLAYBOOK
+  CAP_FRAUD_08 -->|"governed by"| CTL_FRAUD_SLA
   SYS_DISPUTES_GATEWAY -->|"realizes"| CAP_FRAUD
   SYS_DISPUTES_SAAS -->|"realizes"| CAP_FRAUD
+  SYS_APPFRAUD -->|"realizes"| CAP_FRAUD_08
   SYS_DISPUTES_SAAS -->|"realizes"| CAP_FRAUD_02
   SYS_DISPUTES_SAAS -->|"realizes"| CAP_FRAUD_03
   SYS_DISPUTES_SAAS -->|"realizes"| CAP_FRAUD_04
@@ -109,6 +119,7 @@ flowchart LR
   SYS_DISPUTES_SAAS -->|"realizes"| CAP_FRAUD_06
   SYS_DISPUTES_SAAS -->|"realizes"| CAP_FRAUD_07
   SYS_FRAUD_DETECT -->|"realizes"| CAP_FRAUD_01
+  SYS_FRAUD_DETECT -->|"realizes"| CAP_FRAUD_08
   SYS_IAM -->|"realizes"| CAP_FRAUD_06
 
   classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
@@ -116,11 +127,11 @@ flowchart LR
   classDef s_frameworks__frameworks fill:#d9f99d,stroke:#4d7c0f,color:#0f172a,stroke-width:1.4px;
   classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
-  class CAP_FRAUD,CAP_FRAUD_01,CAP_FRAUD_02,CAP_FRAUD_03,CAP_FRAUD_04,CAP_FRAUD_05,CAP_FRAUD_06,CAP_FRAUD_07 s_capabilities__capabilities;
+  class CAP_FRAUD,CAP_FRAUD_01,CAP_FRAUD_02,CAP_FRAUD_03,CAP_FRAUD_04,CAP_FRAUD_05,CAP_FRAUD_06,CAP_FRAUD_07,CAP_FRAUD_08 s_capabilities__capabilities;
   class CTL_AUTH_POLICY,CTL_FRAUD_SLA,CTL_IR_PLAYBOOK,CTL_REGE_ACK,CTL_REGE_DETERM,CTL_REGE_PROVCR s_controls__controls;
   class FW_BIAN,FW_PCI_DSS s_frameworks__frameworks;
-  class P_DISPUTE_001,P_DISPUTE_002,P_DISPUTE_003,P_DISPUTE_004,P_FRAUD_001,P_FRAUD_002,P_FRAUD_003,P_FRAUD_004,P_FRAUD_005,P_FRAUD_006,P_SERVICING_005 s_processes__processes;
-  class SYS_DISPUTES_GATEWAY,SYS_DISPUTES_SAAS,SYS_FRAUD_DETECT,SYS_IAM s_systems__systems;
+  class P_DISPUTE_001,P_DISPUTE_002,P_DISPUTE_003,P_DISPUTE_004,P_FRAUD_001,P_FRAUD_002,P_FRAUD_003,P_FRAUD_004,P_FRAUD_005,P_FRAUD_006,P_FRAUD_007,P_FRAUD_008,P_SERVICING_005 s_processes__processes;
+  class SYS_APPFRAUD,SYS_DISPUTES_GATEWAY,SYS_DISPUTES_SAAS,SYS_FRAUD_DETECT,SYS_IAM s_systems__systems;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Capability,grp_Control,grp_Framework,grp_Process,grp_System boundary1;
 ```
@@ -139,4 +150,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#0369a1` | processes |
 | `#4338ca` | systems |
 
-31 entities, 51 relationships. Generated from the model; edit the model, not this file.
+35 entities, 58 relationships. Generated from the model; edit the model, not this file.

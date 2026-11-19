@@ -48,6 +48,8 @@ Boundary(b_Framework, "Framework") {
   ' aac FW_BIAN: company_domain=""
 }
 Boundary(b_Process, "Process") {
+  System(P_FINANCE_003, "Compile, certify, and file regulatory reports", "Compile the quarterly condition and income report and the other regulatory filings from the prepared data, review the variances, get the certifying officer's sign-off, and file by the deadline. Late or restated filings are reported to the board and draw the examiners' attention.", $tags="processes")
+  ' aac P_FINANCE_003: company_domain=""
   System(P_COLLECTIONS_004, "Execute charge-off", "Execute charge-off on policy timing and record the accounting effect. Timing follows the charge-off policy aligned to regulatory guidance; the entry moves the balance to charged-off status and hands the account to recovery placement.", $tags="processes")
   ' aac P_COLLECTIONS_004: company_domain=""
   System(P_GL_CLOSE_001, "Execute monthly financial close", "Complete the period-end close, including reconciliations, accruals, and reporting sign-off. The close calendar drives reconciliations, accruals, and sign-offs to the reporting deadline; open items age visibly and block sign-off past threshold.", $tags="processes")
@@ -136,6 +138,8 @@ Rel(P_FINANCE_002, CAP_FIN_05, "supported by")
 ' aac rel: source="P_FINANCE_002"; target="CAP_FIN_05"; label="supported by"; relation="process_supports_capability"
 Rel(P_SETTLEMENT_004, CAP_FIN_02, "supported by")
 ' aac rel: source="P_SETTLEMENT_004"; target="CAP_FIN_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_FINANCE_003, CAP_FIN_04, "supported by")
+' aac rel: source="P_FINANCE_003"; target="CAP_FIN_04"; label="supported by"; relation="process_supports_capability"
 Rel(CAP_FIN, CTL_CHARGEOFF_TIME, "governed by")
 ' aac rel: source="CAP_FIN"; target="CTL_CHARGEOFF_TIME"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
 Rel(CAP_FIN, CTL_CLOSE_SIGNOFF, "governed by")
@@ -162,8 +166,6 @@ Rel(CAP_FIN_04, CTL_DQ_GATE, "governed by")
 ' aac rel: source="CAP_FIN_04"; target="CTL_DQ_GATE"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
 Rel(CAP_FIN_04, CTL_REGRPT_CERT, "governed by")
 ' aac rel: source="CAP_FIN_04"; target="CTL_REGRPT_CERT"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
-Rel(SYS_REG_REPORTING, CAP_FIN_04, "realizes")
-' aac rel: source="SYS_REG_REPORTING"; target="CAP_FIN_04"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_COLLECT_API, CAP_FIN_02, "realizes")
 ' aac rel: source="SYS_COLLECT_API"; target="CAP_FIN_02"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_CORE_LEDGER, CAP_FIN_01, "realizes")
@@ -184,6 +186,8 @@ Rel(SYS_GL, CAP_FIN_05, "realizes")
 ' aac rel: source="SYS_GL"; target="CAP_FIN_05"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_RECON, CAP_FIN_06, "realizes")
 ' aac rel: source="SYS_RECON"; target="CAP_FIN_06"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_REG_REPORTING, CAP_FIN_04, "realizes")
+' aac rel: source="SYS_REG_REPORTING"; target="CAP_FIN_04"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_REWARDS, CAP_FIN_02, "realizes")
 ' aac rel: source="SYS_REWARDS"; target="CAP_FIN_02"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_TREASURY, CAP_FIN_03, "realizes")

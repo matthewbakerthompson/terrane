@@ -57,14 +57,14 @@ for (const [key, name, button] of [["n", "note", "cvNote"], ["t", "text", "cvTex
   check(key.toUpperCase() + " chooses " + name, now === name && (await pressed(button)) === "true", now);
 }
 
-// Boundary is Add's own tab now: B opens it there.
+// Boundary is Add's own shelf now (V18): B opens it there.
 check("the toolbar has no Boundary of its own", await page.evaluate(() => !document.getElementById("cvBoundary")));
 await page.keyboard.press("b");
 await pause(300);
 const bounds = await page.evaluate(() => ({ open: !document.getElementById("cvPicker").hidden,
-  tab: (document.querySelector("#cvPicker .cv-tab[aria-selected=true]") || {}).textContent,
+  tab: ((document.querySelector("#cvPicker .cv-shelf[aria-selected=true]") || {}).firstChild || {}).textContent,
   tags: Array.from(new Set(Array.from(document.querySelectorAll("#cvPicker .cv-row .cv-tag")).map((t) => t.textContent))) }));
-check("B opens Add on its Boundaries tab, every row a boundary", bounds.open && bounds.tab === "Boundaries"
+check("B opens Add on its Boundaries shelf, every row a boundary", bounds.open && bounds.tab === "Boundaries"
   && bounds.tags.join() === "Boundary", JSON.stringify(bounds));
 await page.click("#cvAdd");
 await pause(200);

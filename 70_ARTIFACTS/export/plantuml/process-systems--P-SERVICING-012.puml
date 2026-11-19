@@ -1,0 +1,50 @@
+@startuml
+' Apply servicemember and military lending protections — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Apply servicemember and military lending protections — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_SERV_02, "Account Maintenance & Servicing Requests", "Execute cardholder-requested account changes.", $tags="capabilities")
+  ' aac CAP_SERV_02: company_domain="Servicing"
+  System(CAP_SERV_02_02, "Servicemember Protections", "Identify covered borrowers, and apply the rate, fee and collection protections they are owed.", $tags="capabilities")
+  ' aac CAP_SERV_02_02: company_domain="Servicing"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_SCRA_MLA, "Servicemember protections screening", "SCRA and MLA eligibility is screened at origination and on notification, with rate and protection application evidenced.", $tags="controls")
+  ' aac CTL_SCRA_MLA: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_SERVICING_012, "Apply servicemember and military lending protections", "Identify covered borrowers, apply the required rate and fee protections, and evidence compliance for servicemember accounts.", $tags="processes")
+  ' aac P_SERVICING_012: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_CORE_LEDGER, "Core Card Ledger", "The mainframe card ledger holding balances, limits, postings and interest. Everything else in the estate is downstream of this.", $tags="systems")
+  ' aac SYS_CORE_LEDGER: company_domain="Card Issuing"; hosting="On-prem"
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+  System(SYS_KYC, "Identity verification", "Identity verification and customer identification program checks.", $tags="systems")
+  ' aac SYS_KYC: company_domain=""
+}
+
+Rel(P_SERVICING_012, SYS_CORE_LEDGER, "Primary")
+' aac rel: source="P_SERVICING_012"; target="SYS_CORE_LEDGER"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_SERVICING_012, SYS_KYC, "Supporting")
+' aac rel: source="P_SERVICING_012"; target="SYS_KYC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_012, SYS_DOC, "Supporting")
+' aac rel: source="P_SERVICING_012"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_SERVICING_012, CTL_SCRA_MLA, "governed by")
+' aac rel: source="P_SERVICING_012"; target="CTL_SCRA_MLA"; label="governed by"; relation="process_governed_by_control"
+Rel(P_SERVICING_012, CAP_SERV_02, "supports")
+' aac rel: source="P_SERVICING_012"; target="CAP_SERV_02"; label="supports"; relation="process_supports_capability"
+Rel(P_SERVICING_012, CAP_SERV_02_02, "supports")
+' aac rel: source="P_SERVICING_012"; target="CAP_SERV_02_02"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

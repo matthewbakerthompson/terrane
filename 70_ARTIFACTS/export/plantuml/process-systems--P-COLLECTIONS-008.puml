@@ -1,0 +1,61 @@
+@startuml
+' Negotiate settlement offer — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Negotiate settlement offer — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_COLL_03, "Payment Arrangement & Settlement Offers", "Negotiate and administer arrangements and settlements.", $tags="capabilities")
+  ' aac CAP_COLL_03: company_domain="Collections"
+  System(CAP_COLL_03_02, "Settlement Offers", "Structure and execute settlements within the approved matrix.", $tags="capabilities")
+  ' aac CAP_COLL_03_02: company_domain="Collections"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_TREATMENT_APPR, "Treatment strategy approval", "Collections treatment strategies and authorization strategies deploy only with documented risk and compliance approval and champion-challenger evidence.", $tags="controls")
+  ' aac CTL_TREATMENT_APPR: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_COLLECT_ACT, "Collections activity record", "Contact attempts, dispositions, promises, and arrangement terms.", $tags="data_assets")
+  ' aac DA_COLLECT_ACT: company_domain=""
+  SystemDb(DA_BUREAU_FILE, "Credit bureau furnishing file", "Monthly tradeline furnishing extract and consumer-dispute responses.", $tags="data_assets")
+  ' aac DA_BUREAU_FILE: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_COLLECTIONS_008, "Negotiate settlement offer", "Offer a reduced lump-sum or short-term settlement within the approved matrix, put the terms in writing before payment, and on completion close the account and update the bureaus as settled. A settlement outside the matrix, or without written terms, is the account a regulator samples first.", $tags="processes")
+  ' aac P_COLLECTIONS_008: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_COLLECT_API, "Collections Workspace Service", "The service behind the Collections Workspace API, backing the channel. Built with AKS · Collections Workspace Cache.", $tags="systems")
+  ' aac SYS_COLLECT_API: company_domain="Collections"; hosting="Azure"; technology="AKS · Collections Workspace Cache"
+  System(SYS_BUREAU_GW, "Credit bureau gateway", "Credit bureau furnishing and consumer dispute exchange.", $tags="systems")
+  ' aac SYS_BUREAU_GW: company_domain=""
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+}
+
+Rel(P_COLLECTIONS_008, SYS_COLLECT_API, "Primary")
+' aac rel: source="P_COLLECTIONS_008"; target="SYS_COLLECT_API"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_COLLECTIONS_008, SYS_DOC, "Supporting")
+' aac rel: source="P_COLLECTIONS_008"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COLLECTIONS_008, SYS_BUREAU_GW, "Supporting")
+' aac rel: source="P_COLLECTIONS_008"; target="SYS_BUREAU_GW"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COLLECTIONS_008, DA_COLLECT_ACT, "Write")
+' aac rel: source="P_COLLECTIONS_008"; target="DA_COLLECT_ACT"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_COLLECTIONS_008, DA_BUREAU_FILE, "Write")
+' aac rel: source="P_COLLECTIONS_008"; target="DA_BUREAU_FILE"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_COLLECTIONS_008, CTL_TREATMENT_APPR, "governed by")
+' aac rel: source="P_COLLECTIONS_008"; target="CTL_TREATMENT_APPR"; label="governed by"; relation="process_governed_by_control"
+Rel(P_COLLECTIONS_008, CAP_COLL_03_02, "supports")
+' aac rel: source="P_COLLECTIONS_008"; target="CAP_COLL_03_02"; label="supports"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_008, CAP_COLL_03, "supports")
+' aac rel: source="P_COLLECTIONS_008"; target="CAP_COLL_03"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

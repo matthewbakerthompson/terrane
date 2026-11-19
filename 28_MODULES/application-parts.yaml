@@ -32,6 +32,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-MOBILE"
         name: "{product_name} Mobile App"
+        component_type: mobile-app
         description: "Mobile app for {product_name}, calling the product API through the API gateway."
         system_category: Channel
         network_zone: Edge
@@ -62,6 +63,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-ADMIN"
         name: "{product_name} Admin Console"
+        component_type: admin-console
         description: "Internal console for operating {product_name}, behind workforce single sign-on."
         system_category: Channel
         network_zone: Private-App
@@ -94,6 +96,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-JOBS"
         name: "{product_name} Scheduled Jobs"
+        component_type: batch-application
         description: "Scheduled batch work for {product_name}, run {schedule}."
         criticality: Medium
         system_category: Application
@@ -132,6 +135,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-CONSUMER"
         name: "{product_name} Event Consumer"
+        component_type: event-processor
         description: "Consumes events from {source_system} for {product_name}."
         criticality: Medium
         system_category: Integration
@@ -174,6 +178,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-NOTIFY"
         name: "{product_name} Notifications"
+        component_type: notification-service
         description: "Email, text and push notifications for {product_name}."
         criticality: Medium
         system_category: Integration
@@ -205,6 +210,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-SEARCH"
         name: "{product_name} Search Index"
+        component_type: search
         description: "Search index over {product_name} records, rebuilt from the API."
         criticality: Medium
         system_category: Datastore
@@ -224,7 +230,9 @@
     The service that calls a model on the product's behalf: prompt assembly,
     retrieval, guardrails and the log of what was asked, in one place rather
     than in every caller. Runs against the landing zone's foundation model
-    service.
+    service, reached through the landing zone's AI gateway, where the
+    content filters, the personal data redaction and the spending limits
+    are: a model is never called around it.
   requires: [api-service]
   parameters:
     - name: runs_on
@@ -232,15 +240,19 @@
     - name: models
       component: foundation-model-service
       description: The foundation model service the inference service calls
+    - name: gateway
+      component: ai-gateway
+      description: The AI gateway every model call goes through
   provides:
     systems:
       - system_id: "SYS-{slug|upper}-INFERENCE"
         name: "{product_name} Inference Service"
+        component_type: inference-service
         description: "Calls foundation models for {product_name}: prompts, retrieval, guardrails and the audit log."
         system_category: Application
         network_zone: Private-App
         runs_on: "{runs_on}"
-        uses: ["{models}"]
+        uses: ["{models}", "{gateway}"]
     interfaces:
       - interface_id: "INT-{slug|upper}-API-INFERENCE"
         name: "{product_name} Service to Inference Service"
@@ -262,6 +274,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-REPORTS"
         name: "{product_name} Reporting"
+        component_type: bi
         description: "Reports and extracts over {product_name} operational data."
         criticality: Medium
         system_category: Analytics
@@ -307,6 +320,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-{adapter_suffix}"
         name: "{product_name} {partner} Adapter"
+        component_type: integration-adapter
         description: "Mapping, retry and credentials for the {partner} integration of {product_name}."
         system_category: Integration
         network_zone: Private-App
@@ -323,3 +337,334 @@
         target_system_id: "{target_system}"
         direction: Outbound
         auth_method: OAuth2
+
+# --- the AI assistant's own parts ---------------------------------------------
+# An assistant is a chat, the API behind it, the inference service that
+# assembles each prompt and calls the model through the AI gateway, the
+# index it answers from and the record of what it said. The inference
+# service is above; these are the rest.
+
+- module_id: assistant-chat
+  name: Assistant chat
+  category: Channel
+  needs: [product_name, slug]
+  description: >
+    The chat people ask the assistant in: a web front end behind the
+    workforce identity provider, calling the assistant's API. Who may ask
+    is who may sign in, and the passages an answer is drawn from are the
+    ones the person asking may read.
+  requires: [api-service]
+  parameters:
+    - name: runs_on
+      default: [stateless-service.container-platform, stateless-service.observability]
+    - name: idp
+      component: identity-provider
+      description: The workforce identity provider people sign in with
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-CHAT"
+        name: "{product_name} Chat"
+        component_type: chat-interface
+        description: "The chat people ask {product_name} in, behind workforce single sign-on."
+        system_category: Channel
+        network_zone: Private-App
+        runs_on: "{runs_on}"
+        uses: ["{idp}"]
+    interfaces:
+      - interface_id: "INT-{slug|upper}-CHAT-API"
+        name: "{product_name} Chat to API"
+        source_system_id: "SYS-{slug|upper}-CHAT"
+        target_system_id: "SYS-{slug|upper}-API"
+        offered_interface_id: "OI-{slug|upper}-API"
+        auth_method: OAuth2
+
+- module_id: retrieval-index
+  name: Retrieval index
+  category: AI
+  needs: [product_name, slug, classification, owner_org]
+  description: >
+    What an assistant answers from: the organization's documents read by an
+    ingestion worker, split into passages, embedded with the landing zone's
+    foundation model service and written to an index on the landing zone's
+    vector database, which the inference service searches before it asks
+    the model. The sources are named on the product; the index holds copies
+    of what they hold, at their classification.
+  requires: [ml-inference-service]
+  parameters:
+    - name: runs_on
+      default: [stateless-service.container-platform, stateless-service.observability]
+    - name: vectors
+      component: vector-database
+      description: The vector database the index is kept on
+    - name: models
+      component: foundation-model-service
+      description: The foundation model service the passages are embedded with
+    - name: sources
+      default: []
+      description: The systems whose documents are indexed, as system ids
+    - name: contains_pii
+      default: "Yes"
+      description: Whether the indexed documents hold personal data
+    - name: data_org
+      estate: true
+      description: The org unit that stewards the estate's data
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-INGEST"
+        name: "{product_name} Document Ingestion"
+        component_type: etl
+        description: "Reads the documents {product_name} answers from, splits and embeds them, and writes the index."
+        system_category: Pipeline
+        network_zone: Private-App
+        runs_on: "{runs_on}"
+        uses: ["{models}"]
+      - system_id: "SYS-{slug|upper}-INDEX"
+        name: "{product_name} Retrieval Index"
+        component_type: vector-database
+        description: "The index of passages {product_name} searches for what it answers from."
+        system_category: Datastore
+        network_zone: Private-Data
+        togaf_layer: Data
+        architecture_domain: Data
+        uses: ["{vectors}"]
+    interfaces:
+      - interface_id: "INT-{slug|upper}-INGEST-INDEX"
+        name: "{product_name} Document Ingestion to Retrieval Index"
+        source_system_id: "SYS-{slug|upper}-INGEST"
+        target_system_id: "SYS-{slug|upper}-INDEX"
+        integration_style: Batch
+        frequency: Daily
+      - interface_id: "INT-{slug|upper}-INFERENCE-INDEX"
+        name: "{product_name} Inference Service to Retrieval Index"
+        source_system_id: "SYS-{slug|upper}-INFERENCE"
+        target_system_id: "SYS-{slug|upper}-INDEX"
+      - each: "{sources}"
+        interface_id: "INT-{slug|upper}-{item|stem}-INGEST"
+        name: "{product_name} documents from {item|stem}"
+        source_system_id: "{item}"
+        target_system_id: "SYS-{slug|upper}-INGEST"
+        integration_style: Batch
+        frequency: Daily
+        direction: Inbound
+    data_assets:
+      - data_asset_id: "DA-{slug|upper}-KNOWLEDGE"
+        name: "{product_name} knowledge index"
+        description: "Passages of the documents {product_name} answers from, with their embeddings: copies, at their sources' classification."
+        source_of_truth: "SYS-{slug|upper}-INDEX"
+        data_owner_org_id: "{owner_org}"
+        data_steward_org_id: "{data_org}"
+        classification: "{classification}"
+        pii_flag: "{contains_pii}"
+        togaf_layer: Data
+        architecture_domain: Data
+  relations:
+    system_reads_writes:
+      - system_id: "SYS-{slug|upper}-INGEST"
+        data_asset_id: "DA-{slug|upper}-KNOWLEDGE"
+        operation: Write
+      - system_id: "SYS-{slug|upper}-INFERENCE"
+        data_asset_id: "DA-{slug|upper}-KNOWLEDGE"
+        operation: Read
+
+- module_id: conversation-history
+  name: Conversation history
+  category: Data
+  needs: [product_name, slug, classification, owner_org]
+  description: >
+    What was asked and answered, kept: each conversation, the passages it
+    was answered from and what the person said of the answer. The record
+    an assistant is reviewed by and the set it is evaluated against. Runs
+    on the transactional store, as a product's own database does.
+  requires: [ml-inference-service]
+  parameters:
+    - name: runs_on
+      default: [transactional-store]
+    - name: protocol
+      default: PostgreSQL
+    - name: data_org
+      estate: true
+      description: The org unit that stewards the estate's data
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-HISTORY"
+        name: "{product_name} Conversation History"
+        component_type: relational-db
+        description: "Every conversation with {product_name}, the passages each answer came from, and the feedback on it."
+        system_category: Datastore
+        network_zone: Private-Data
+        deployment_unit: terraform
+        togaf_layer: Data
+        architecture_domain: Data
+        runs_on: "{runs_on}"
+    interfaces:
+      - interface_id: "INT-{slug|upper}-INFERENCE-HISTORY"
+        name: "{product_name} Inference Service to Conversation History"
+        source_system_id: "SYS-{slug|upper}-INFERENCE"
+        target_system_id: "SYS-{slug|upper}-HISTORY"
+        protocol: "{protocol}"
+        architecture_domain: Data
+    data_assets:
+      - data_asset_id: "DA-{slug|upper}-CONVERSATIONS"
+        name: "{product_name} conversations"
+        description: "What people asked {product_name}, what it answered, from which passages, and what they said of it."
+        source_of_truth: "SYS-{slug|upper}-HISTORY"
+        data_owner_org_id: "{owner_org}"
+        data_steward_org_id: "{data_org}"
+        classification: "{classification}"
+        risk_level: High
+        pii_flag: "Yes"
+        togaf_layer: Data
+        architecture_domain: Data
+  relations:
+    system_reads_writes:
+      - system_id: "SYS-{slug|upper}-INFERENCE"
+        data_asset_id: "DA-{slug|upper}-CONVERSATIONS"
+        operation: ReadWrite
+
+# --- an AI agent ---------------------------------------------------------------
+
+- module_id: agent-service
+  name: Agent
+  category: AI
+  needs: [product_name, slug, classification, owner_org]
+  description: >
+    An agent that acts, not only answers: it plans with the landing zone's
+    foundation model, through its AI gateway, on the landing zone's agent
+    platform, and acts through the APIs of the systems it is given as tools,
+    with its own credentials and no more than those. Every action it takes
+    is written to its action log before it is taken, so what it did can be
+    shown and, where a person must approve it, held until they do.
+  requires: [api-service]
+  parameters:
+    - name: runs_on
+      default: [stateless-service.observability]
+    - name: platform
+      component: agent-platform
+      description: The agent platform the agent runs on
+    - name: models
+      component: foundation-model-service
+      description: The foundation model service it plans with
+    - name: gateway
+      component: ai-gateway
+      description: The AI gateway every model call goes through
+    - name: tools
+      default: []
+      description: The systems whose APIs the agent acts through, as system ids
+    - name: data_org
+      estate: true
+      description: The org unit that stewards the estate's data
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-AGENT"
+        name: "{product_name} Agent"
+        component_type: ai-agent
+        description: "Plans with a foundation model and acts for {product_name} through the APIs it is given, every action logged."
+        system_category: Application
+        network_zone: Private-App
+        runs_on: "{runs_on}"
+        uses: ["{platform}", "{models}", "{gateway}"]
+      - system_id: "SYS-{slug|upper}-ACTIONS"
+        name: "{product_name} Action Log"
+        component_type: relational-db
+        description: "Every action the {product_name} agent took or asked to take, with who approved it."
+        system_category: Datastore
+        network_zone: Private-Data
+        togaf_layer: Data
+        architecture_domain: Data
+        runs_on: [transactional-store]
+    interfaces:
+      - interface_id: "INT-{slug|upper}-API-AGENT"
+        name: "{product_name} Service to Agent"
+        source_system_id: "SYS-{slug|upper}-API"
+        target_system_id: "SYS-{slug|upper}-AGENT"
+      - interface_id: "INT-{slug|upper}-AGENT-ACTIONS"
+        name: "{product_name} Agent to Action Log"
+        source_system_id: "SYS-{slug|upper}-AGENT"
+        target_system_id: "SYS-{slug|upper}-ACTIONS"
+        protocol: PostgreSQL
+      - each: "{tools}"
+        interface_id: "INT-{slug|upper}-AGENT-{item|stem}"
+        name: "{product_name} Agent acting through {item|stem}"
+        source_system_id: "SYS-{slug|upper}-AGENT"
+        target_system_id: "{item}"
+        auth_method: OAuth2
+    data_assets:
+      - data_asset_id: "DA-{slug|upper}-ACTIONS"
+        name: "{product_name} agent actions"
+        description: "What the {product_name} agent did, on whose behalf, through which system, and who approved it."
+        source_of_truth: "SYS-{slug|upper}-ACTIONS"
+        data_owner_org_id: "{owner_org}"
+        data_steward_org_id: "{data_org}"
+        classification: "{classification}"
+        risk_level: High
+        pii_flag: "Yes"
+        togaf_layer: Data
+        architecture_domain: Data
+  relations:
+    system_reads_writes:
+      - system_id: "SYS-{slug|upper}-AGENT"
+        data_asset_id: "DA-{slug|upper}-ACTIONS"
+        operation: ReadWrite
+
+# --- document intake -------------------------------------------------------------
+
+- module_id: document-intake
+  name: Document intake
+  category: AI
+  needs: [product_name, slug, classification, owner_org]
+  description: >
+    Documents people send in, read: each file lands in the product's object
+    store, a worker has the landing zone's document processing service read
+    it into fields, and the fields go to the product's API for a person to
+    check where the reading is unsure. Claims, applications, invoices and
+    identity documents all come in this way.
+  requires: [api-service, object-store]
+  parameters:
+    - name: runs_on
+      default: [stateless-service.container-platform, stateless-service.observability]
+    - name: reader
+      component: document-ai
+      description: The document processing service that reads the files
+    - name: data_org
+      estate: true
+      description: The org unit that stewards the estate's data
+  provides:
+    systems:
+      - system_id: "SYS-{slug|upper}-INTAKE"
+        name: "{product_name} Document Intake"
+        component_type: batch-application
+        description: "Reads each document sent to {product_name} into fields and hands them to the API."
+        system_category: Application
+        network_zone: Private-App
+        runs_on: "{runs_on}"
+        uses: ["{reader}"]
+    interfaces:
+      - interface_id: "INT-{slug|upper}-BUCKET-INTAKE"
+        name: "{product_name} Object Store to Document Intake"
+        source_system_id: "SYS-{slug|upper}-BUCKET"
+        target_system_id: "SYS-{slug|upper}-INTAKE"
+        integration_style: Event
+        protocol: AMQP
+      - interface_id: "INT-{slug|upper}-INTAKE-API"
+        name: "{product_name} Document Intake to API"
+        source_system_id: "SYS-{slug|upper}-INTAKE"
+        target_system_id: "SYS-{slug|upper}-API"
+        offered_interface_id: "OI-{slug|upper}-API"
+        auth_method: OAuth2
+    data_assets:
+      - data_asset_id: "DA-{slug|upper}-DOCUMENTS"
+        name: "{product_name} documents received"
+        description: "The documents sent to {product_name} and the fields read from them."
+        source_of_truth: "SYS-{slug|upper}-BUCKET"
+        data_owner_org_id: "{owner_org}"
+        data_steward_org_id: "{data_org}"
+        classification: "{classification}"
+        risk_level: High
+        pii_flag: "Yes"
+        togaf_layer: Data
+        architecture_domain: Data
+  relations:
+    system_reads_writes:
+      - system_id: "SYS-{slug|upper}-INTAKE"
+        data_asset_id: "DA-{slug|upper}-DOCUMENTS"
+        operation: Read

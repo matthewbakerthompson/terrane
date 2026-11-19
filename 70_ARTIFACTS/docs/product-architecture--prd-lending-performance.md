@@ -30,6 +30,7 @@ flowchart LR
       direction LR
       subgraph grp_GCP__gcp_analytics_prod__Private_Data["Private-Data"]
         direction LR
+        TS_GCPNET_SUB_ANALYTICS_DATA[/"Analytics Data Subnetwork<br/>[Subnet]"/]
         SYS_LENDPERF_PIPELINE["Lending Portfolio<br/>Performance Pipeline<br/>[BigQuery · Dataflow +3]"]
         SYS_LENDPERF_SEMANTIC["Lending Portfolio<br/>Performance Semantic Layer<br/>[BigQuery · Looker]"]
       end
@@ -41,6 +42,8 @@ flowchart LR
   end
 
   TS_COLLIBRA[/"Collibra<br/>[Data catalog]"/]
+  DA_DEALER[("Dealer master and<br/>agreement")]
+  DA_LOAN_ACCOUNT[("Installment loan account")]
   DA_LENDPERF_CURATED[("Lending Portfolio<br/>Performance curated<br/>dataset")]
 
   SYS_POSFIN_EVENTS -->|"Pub/Sub"| SYS_LENDPERF_PIPELINE
@@ -54,16 +57,19 @@ flowchart LR
   SYS_LENDPERF_SEMANTIC -.->|"runs on"| TS_GCP_BIGQUERY
   SYS_LENDPERF_SEMANTIC -.->|"runs on"| TS_GCP_LOOKER
   SYS_POSFIN_EVENTS -.->|"runs on"| TS_GCP_PUBSUB
+  SYS_LENDPERF_PIPELINE -.->|"runs on"| TS_GCPNET_SUB_ANALYTICS_DATA
   SYS_LENDPERF_PIPELINE -->|"Write"| DA_LENDPERF_CURATED
   SYS_LENDPERF_SEMANTIC -->|"Read"| DA_LENDPERF_CURATED
   SYS_REG_REPORTING -->|"Read"| DA_LENDPERF_CURATED
+  SYS_LENDPERF_SEMANTIC -->|"Read"| DA_LOAN_ACCOUNT
+  SYS_LENDPERF_SEMANTIC -->|"Read"| DA_DEALER
 
   classDef s_data_assets__data_assets fill:#a7f3d0,stroke:#047857,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   classDef s_tech_services__tech_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
-  class DA_LENDPERF_CURATED s_data_assets__data_assets;
+  class DA_DEALER,DA_LENDPERF_CURATED,DA_LOAN_ACCOUNT s_data_assets__data_assets;
   class SYS_LENDPERF_PIPELINE,SYS_LENDPERF_SEMANTIC,SYS_POSFIN_EVENTS,SYS_REG_REPORTING s_systems__systems;
-  class TS_COLLIBRA,TS_GCP_BIGQUERY,TS_GCP_COMPOSER,TS_GCP_DATAFLOW,TS_GCP_LOOKER,TS_GCP_PUBSUB s_tech_services__tech_services;
+  class TS_COLLIBRA,TS_GCP_BIGQUERY,TS_GCP_COMPOSER,TS_GCP_DATAFLOW,TS_GCP_LOOKER,TS_GCP_PUBSUB,TS_GCPNET_SUB_ANALYTICS_DATA s_tech_services__tech_services;
   classDef boundary1 fill:#f1f6fb,stroke:#5b9bd5,color:#2f5d8a;
   class grp_Azure__azure_risk_prod__Private_App boundary1;
   classDef boundary2 fill:#f1f6ff,stroke:#4285f4,color:#1a4f9e;
@@ -101,4 +107,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | solid `#5b9bd5` | Azure subnet |
 | solid `#4285f4` | GCP subnet |
 
-11 entities, 14 relationships. Generated from the model; edit the model, not this file.
+14 entities, 17 relationships. Generated from the model; edit the model, not this file.

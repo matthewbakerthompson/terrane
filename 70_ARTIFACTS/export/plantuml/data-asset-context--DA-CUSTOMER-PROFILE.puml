@@ -26,6 +26,8 @@ Boundary(b_Policy, "Policy") {
 Boundary(b_Process, "Process") {
   System(P_SERVICING_001, "Assess interest, fees, and minimum payment", "Calculate interest, fees, and the minimum payment due for the billing cycle. Cycle assessment applies the cardholder agreement exactly: interest method, fee triggers, and minimum-payment formula, because a systematic error here is a remediation event.", $tags="processes")
   ' aac P_SERVICING_001: company_domain=""
+  System(P_SERVICING_015, "Close account and settle final balance", "Close the account at the cardholder's or the bank's request, stop new charges while recurring payments and pending items clear, forfeit or pay out rewards per the terms, report the closure to the bureaus correctly, and confirm it in writing. A closed account still has a balance to bill and a bureau line to keep accurate.", $tags="processes")
+  ' aac P_SERVICING_015: company_domain=""
   System(P_TPS_002, "Convert client portfolio", "Migrate a client portfolio onto the servicing platform with reconciled balances and no cardholder disruption.", $tags="processes")
   ' aac P_TPS_002: company_domain=""
   System(P_STMT_GEN_001, "Cut cycle and generate statement", "Cut the billing cycle and generate the cardholder statement including the rewards position. Cycle cut is the hard deadline that sequences assessment, statement generation, and delivery; a late cut cascades into payment due dates and regulatory timing.", $tags="processes")
@@ -40,6 +42,14 @@ Boundary(b_Process, "Process") {
   ' aac P_PAYMENTS_002: company_domain=""
   System(P_DISPUTE_001, "Process cardholder dispute claim", "Take a cardholder dispute claim, apply provisional credit, investigate, determine, and notify within regulatory timers.", $tags="processes")
   ' aac P_DISPUTE_001: company_domain=""
+  System(P_SERVICING_013, "Process product change or upgrade", "Move an account to another card product at the cardholder's request or by invitation, carrying over the balance, history and rewards as the program rules say, and issue the new card and terms. A product change that resets the account's age or loses rewards is a complaint and, if terms worsen without notice, a disclosure failure.", $tags="processes")
+  ' aac P_SERVICING_013: company_domain=""
+  System(P_SERVICING_016, "Refund credit balance and report unclaimed property", "Refund a credit balance when the cardholder asks or once it reaches the regulatory age, by check or deposit, and report and remit balances that cannot be returned to the states as unclaimed property. Both clocks are regulatory, and a refund check that is never cashed starts the unclaimed property clock again.", $tags="processes")
+  ' aac P_SERVICING_016: company_domain=""
+  System(P_SERVICING_014, "Retain account at closure request", "When a cardholder asks to close, find the reason, offer what the retention strategy allows, such as a fee waiver, a rate review or a product change, and record the outcome. Offers follow the approved matrix, or two cardholders in the same position get different treatment.", $tags="processes")
+  ' aac P_SERVICING_014: company_domain=""
+  System(P_COMPLIANCE_008, "Screen transactions and parties against sanctions in line", "Screen card transactions in the authorization path, and customers and counterparties nightly, against sanctions, politically exposed person and adverse media lists, and hold or block the true matches. A missed sanctions match is a strict-liability violation, so list updates are applied the day they are published.", $tags="processes")
+  ' aac P_COMPLIANCE_008: company_domain=""
 }
 Boundary(b_System, "System") {
   System(SYS_CONTACT, "Contact center platform", "Contact center routing, voice, and digital channels.", $tags="systems")
@@ -74,6 +84,16 @@ Rel(P_FRAUD_001, DA_CUSTOMER_PROFILE, "Both")
 ' aac rel: source="P_FRAUD_001"; target="DA_CUSTOMER_PROFILE"; label="Both"; relation="process_uses_data_asset"; access="Both"
 Rel(P_TPS_002, DA_CUSTOMER_PROFILE, "Writes")
 ' aac rel: source="P_TPS_002"; target="DA_CUSTOMER_PROFILE"; label="Writes"; relation="process_uses_data_asset"; access="Writes"
+Rel(P_SERVICING_013, DA_CUSTOMER_PROFILE, "Read")
+' aac rel: source="P_SERVICING_013"; target="DA_CUSTOMER_PROFILE"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_SERVICING_014, DA_CUSTOMER_PROFILE, "Read")
+' aac rel: source="P_SERVICING_014"; target="DA_CUSTOMER_PROFILE"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_SERVICING_015, DA_CUSTOMER_PROFILE, "Write")
+' aac rel: source="P_SERVICING_015"; target="DA_CUSTOMER_PROFILE"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_SERVICING_016, DA_CUSTOMER_PROFILE, "Read")
+' aac rel: source="P_SERVICING_016"; target="DA_CUSTOMER_PROFILE"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_COMPLIANCE_008, DA_CUSTOMER_PROFILE, "Read")
+' aac rel: source="P_COMPLIANCE_008"; target="DA_CUSTOMER_PROFILE"; label="Read"; relation="process_uses_data_asset"; access="Read"
 Rel(DA_CUSTOMER_PROFILE, CTL_PRIV_REQ, "governed by")
 ' aac rel: source="DA_CUSTOMER_PROFILE"; target="CTL_PRIV_REQ"; label="governed by"; relation="data_governed_by_control"
 Rel(DA_CUSTOMER_PROFILE, POL_PRIVACY, "subject to")

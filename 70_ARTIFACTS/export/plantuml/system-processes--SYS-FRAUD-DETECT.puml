@@ -10,16 +10,30 @@ AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColo
 AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
 
 Boundary(b_Capability, "Capability") {
+  System(CAP_PAY_01_02, "Authorization Fraud Screening", "Real-time fraud scoring inside the authorization decision.", $tags="capabilities")
+  ' aac CAP_PAY_01_02: company_domain="Servicing"
   System(CAP_PAY_01, "Authorization Processing", "Decision and respond to real-time authorization requests.", $tags="capabilities")
   ' aac CAP_PAY_01: company_domain="Servicing"
   System(CAP_CRED_06, "Authorization Strategy Management", "Set the rules governing real-time authorization decisions.", $tags="capabilities")
   ' aac CAP_CRED_06: company_domain="Originations"
+  System(CAP_PAY_01_01, "Credential Authentication", "Validate card credentials and cryptograms in the authorization path.", $tags="capabilities")
+  ' aac CAP_PAY_01_01: company_domain="Servicing"
+  System(CAP_PAY_01_03, "Credit & Limit Check", "Open-to-buy and account-status verification at authorization.", $tags="capabilities")
+  ' aac CAP_PAY_01_03: company_domain="Servicing"
+  System(CAP_FRAUD_08, "First-Party Fraud & Bust-Out Management", "Detect and act on credit abuse by account holders themselves: bust-out, synthetic identities and payment fraud.", $tags="capabilities")
+  ' aac CAP_FRAUD_08: company_domain="Servicing"
   System(CAP_FRAUD_02, "Fraud Case Investigation", "Investigate and adjudicate fraud cases.", $tags="capabilities")
   ' aac CAP_FRAUD_02: company_domain="Servicing"
+  System(CAP_MERCH_06, "Merchant Monitoring & Exposure Management", "Monitor merchant transaction behavior, credit exposure, and collusion or bust-out patterns across the portfolio.", $tags="capabilities")
+  ' aac CAP_MERCH_06: company_domain="Merchant Services"
   System(CAP_FRAUD_01, "Transaction Fraud Detection & Strategy", "Detect fraudulent transactions in flight and set detection strategy.", $tags="capabilities")
   ' aac CAP_FRAUD_01: company_domain="Servicing"
+  System(CAP_PAY_01_05, "Transaction Switching", "Route authorization traffic between networks and the host.", $tags="capabilities")
+  ' aac CAP_PAY_01_05: company_domain="Servicing"
 }
 Boundary(b_Process, "Process") {
+  System(P_FRAUD_007, "Detect and act on first-party fraud and bust-out", "Spot accounts run up to the limit by their owners with no intent to repay, from rapid balance build, payments that return and links between applications, then restrict the account and route it to fraud rather than collections. Booked as credit loss, first-party fraud is worked by the wrong team and reported in the wrong line.", $tags="processes")
+  ' aac P_FRAUD_007: company_domain=""
   System(P_FRAUD_001, "Detect and action transaction fraud alert", "Detect a suspected fraudulent transaction, action the alert, and contact the cardholder. Alert handling runs against loss and customer-friction budgets; actions span block, reissue, and contact, and the clock matters because exposure grows per transaction.", $tags="processes")
   ' aac P_FRAUD_001: company_domain=""
   System(P_FRAUD_002, "Investigate and adjudicate fraud case", "Investigate a suspected fraud case and reach a documented determination. The case determination separates true fraud from friendly fraud and abuse, drives the Reg E liability decision, and feeds the loss and strategy data.", $tags="processes")
@@ -28,6 +42,8 @@ Boundary(b_Process, "Process") {
   ' aac P_CREDIT_007: company_domain=""
   System(P_FRAUD_006, "Maintain fraud detection strategy", "Define, test, and deploy changes to fraud detection rules and models. Strategy changes are tested against recent fraud and false-positive performance before deployment; every rule change is versioned and reversible.", $tags="processes")
   ' aac P_FRAUD_006: company_domain=""
+  System(P_MERCHANT_009, "Monitor merchant exposure and activity", "Watch merchant volume, ticket size, refund and chargeback ratios and future delivery exposure against approved limits, and investigate spikes, collusion and bust-out patterns. Excessive chargeback ratios put the merchant and the bank into network monitoring programs, with fines.", $tags="processes")
+  ' aac P_MERCHANT_009: company_domain=""
   System(P_PAYMENTS_001, "Process authorization request", "Receive, decision, and respond to a real-time authorization request within the network response window.", $tags="processes")
   ' aac P_PAYMENTS_001: company_domain=""
 }
@@ -46,6 +62,10 @@ Rel(P_FRAUD_002, SYS_FRAUD_DETECT, "Supporting")
 ' aac rel: source="P_FRAUD_002"; target="SYS_FRAUD_DETECT"; label="Supporting"; relation="process_uses_system"; role="Supporting"
 Rel(P_FRAUD_006, SYS_FRAUD_DETECT, "Primary")
 ' aac rel: source="P_FRAUD_006"; target="SYS_FRAUD_DETECT"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_MERCHANT_009, SYS_FRAUD_DETECT, "Supporting")
+' aac rel: source="P_MERCHANT_009"; target="SYS_FRAUD_DETECT"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_FRAUD_007, SYS_FRAUD_DETECT, "Primary")
+' aac rel: source="P_FRAUD_007"; target="SYS_FRAUD_DETECT"; label="Primary"; relation="process_uses_system"; role="Primary"
 Rel(P_CREDIT_007, CAP_CRED_06, "supports")
 ' aac rel: source="P_CREDIT_007"; target="CAP_CRED_06"; label="supports"; relation="process_supports_capability"
 Rel(P_PAYMENTS_001, CAP_PAY_01, "supports")
@@ -58,6 +78,20 @@ Rel(P_FRAUD_002, CAP_FRAUD_02, "supports")
 ' aac rel: source="P_FRAUD_002"; target="CAP_FRAUD_02"; label="supports"; relation="process_supports_capability"
 Rel(P_FRAUD_006, CAP_FRAUD_01, "supports")
 ' aac rel: source="P_FRAUD_006"; target="CAP_FRAUD_01"; label="supports"; relation="process_supports_capability"
+Rel(P_MERCHANT_009, CAP_MERCH_06, "supports")
+' aac rel: source="P_MERCHANT_009"; target="CAP_MERCH_06"; label="supports"; relation="process_supports_capability"
+Rel(P_FRAUD_007, CAP_FRAUD_08, "supports")
+' aac rel: source="P_FRAUD_007"; target="CAP_FRAUD_08"; label="supports"; relation="process_supports_capability"
+Rel(P_PAYMENTS_001, CAP_PAY_01_01, "supports")
+' aac rel: source="P_PAYMENTS_001"; target="CAP_PAY_01_01"; label="supports"; relation="process_supports_capability"
+Rel(P_PAYMENTS_001, CAP_PAY_01_02, "supports")
+' aac rel: source="P_PAYMENTS_001"; target="CAP_PAY_01_02"; label="supports"; relation="process_supports_capability"
+Rel(P_PAYMENTS_001, CAP_PAY_01_03, "supports")
+' aac rel: source="P_PAYMENTS_001"; target="CAP_PAY_01_03"; label="supports"; relation="process_supports_capability"
+Rel(P_PAYMENTS_001, CAP_PAY_01_05, "supports")
+' aac rel: source="P_PAYMENTS_001"; target="CAP_PAY_01_05"; label="supports"; relation="process_supports_capability"
+Rel(P_FRAUD_001, CAP_PAY_01_02, "supports")
+' aac rel: source="P_FRAUD_001"; target="CAP_PAY_01_02"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

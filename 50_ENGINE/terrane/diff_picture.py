@@ -26,10 +26,11 @@ picture draws a corrected one, since the changed thing may be the hub.
 
 from __future__ import annotations
 
+from contextlib import ExitStack
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
 
-from .diff import Diff, DiffError, diff, export_revision, snapshot
+from .diff import Diff, DiffError, diff, exported, snapshot
 from .model import ModelError, load
 from .pictures import scratch_model
 from .schema import ENTITY_TYPES, RELATION_TYPES
@@ -267,7 +268,8 @@ def changes_since(repo: Path, since: str, until: Optional[str] = None, *, view_i
     """The picture of what changed in the repository at `repo` from the
     revision `since` to `until`, or to the working tree."""
     repo = Path(repo)
-    before_root = export_revision(repo, since)
-    after_root = export_revision(repo, until) if until else repo
-    return changes_between(before_root, after_root, since=since, until=until or "the working tree",
-                           view_id=view_id, date=date, web=web)
+    with ExitStack() as exports:
+        before_root = exports.enter_context(exported(repo, since))
+        after_root = exports.enter_context(exported(repo, until)) if until else repo
+        return changes_between(before_root, after_root, since=since, until=until or "the working tree",
+                               view_id=view_id, date=date, web=web)

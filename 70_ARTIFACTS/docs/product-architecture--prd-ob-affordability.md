@@ -18,10 +18,12 @@ flowchart LR
       direction LR
       subgraph grp_GCP__gcp_lending_prod__Public["Public"]
         direction LR
+        TS_GCPNET_PROXY_SUB_LEND[/"Lending Proxy-only<br/>Subnetwork<br/>[Subnet]"/]
         SYS_OBAFF_WEBHOOKS["Open Banking Affordability<br/>Webhook Listener<br/>[GKE]"]
       end
       subgraph grp_GCP__gcp_lending_prod__Private_App["Private-App"]
         direction LR
+        TS_GCPNET_SUB_LEND_APP[/"Lending App Subnetwork<br/>[Subnet]"/]
         SYS_OBAFF_GATEWAY["Open Banking Affordability<br/>Integration Gateway<br/>[GKE]"]
         SYS_POSFIN_API["Point-of-Sale Finance<br/>Service<br/>[GKE · Point-of-Sale Finance Cache]"]
       end
@@ -62,11 +64,14 @@ flowchart LR
   SYS_POSFIN_API -.->|"runs on"| TS_GCP_APIGEE
   SYS_POSFIN_API -.->|"runs on"| TS_GCP_GKE
   SYS_POSFIN_API -.->|"runs on"| TS_GCP_SECRET_MANAGER
+  SYS_OBAFF_GATEWAY -.->|"runs on"| TS_GCPNET_SUB_LEND_APP
+  SYS_OBAFF_WEBHOOKS -.->|"runs on"| TS_GCPNET_PROXY_SUB_LEND
+  SYS_POSFIN_API -.->|"runs on"| TS_GCPNET_SUB_LEND_APP
 
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   classDef s_tech_services__tech_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
   class SYS_OBAFF_EGRESS,SYS_OBAFF_GATEWAY,SYS_OBAFF_VENDOR,SYS_OBAFF_WEBHOOKS,SYS_POSFIN_API s_systems__systems;
-  class TS_GCP_APIGEE,TS_GCP_GKE,TS_GCP_NCC,TS_GCP_PSC,TS_GCP_SECRET_MANAGER s_tech_services__tech_services;
+  class TS_GCP_APIGEE,TS_GCP_GKE,TS_GCP_NCC,TS_GCP_PSC,TS_GCP_SECRET_MANAGER,TS_GCPNET_PROXY_SUB_LEND,TS_GCPNET_SUB_LEND_APP s_tech_services__tech_services;
   classDef boundary1 fill:#f1f6ff,stroke:#4285f4,color:#1a4f9e;
   class grp_GCP__gcp_lending_prod__Public,grp_GCP__gcp_lending_prod__Private_App,grp_GCP__gcp_lending_prod__Shared_Services,grp_GCP__gcp_shared_network__Shared_Services boundary1;
   classDef boundary2 fill:#f8fbff,stroke:#4285f4,color:#1a4f9e,stroke-dasharray:6 3;
@@ -98,4 +103,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | dashed `#9a8f6a` | vendor tenancy |
 | solid `#4285f4` | GCP subnet |
 
-10 entities, 15 relationships. Generated from the model; edit the model, not this file.
+12 entities, 18 relationships. Generated from the model; edit the model, not this file.

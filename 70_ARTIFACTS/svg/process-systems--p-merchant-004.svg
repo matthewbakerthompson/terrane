@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="934.4" viewBox="0 0 1100 934.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Screen merchant against sanctions and network lists — Systems, Data and Controls</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Screen merchant against sanctions and network lists — Systems, Data and Controls</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   9 nodes · 8 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(145.66 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="319.72" y="542.3" width="212.57" height="175.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="361.72" y="559.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Control">
+<rect x="320.3" y="338.3" width="211.4" height="175.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="353.15" y="355.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Control</text>
+</g>
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="577.3" y="333.3" width="221.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="619.3" y="350.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.98" y="193.25" width="212.03" height="135.45" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.83" y="210.65" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="577.3" y="24.3" width="221.4" height="280.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="607.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-MERCHANT-004::SYS-SCREENING-VENDOR">
+<title>Primary</title>
+<path d="M196 228.33 L244.97 228 A10 10 0 0 1 245.03 228 L253 228 A8 8 0 0 0 261 220 L261 91.98 A10 10 0 0 1 270.98 81.98 L573.99 81.5 A10 10 0 0 1 574.01 81.5 L599.48 81.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M603 81.5 L593.43 86.28 L593.43 76.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-MERCHANT-004::SYS-SCREENING-VENDOR">
+<rect x="402.32" y="88.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="423.5" y="100.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-MERCHANT-004::SYS-MERCH-RISK">
+<title>Supporting</title>
+<path d="M196 237.67 L205.67 237.67 A0.33 0.33 0 0 1 206 238 L206 238 A0.33 0.33 0 0 0 206.33 238.33 L244.96 238 A10 10 0 0 1 245.04 238 L261 238 A10 10 0 0 0 271 228 L271 174.98 A10 10 0 0 1 280.98 164.98 L573.99 164.5 A10 10 0 0 1 574.01 164.5 L599.48 164.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M603 164.5 L593.43 169.28 L593.43 159.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-MERCHANT-004::SYS-MERCH-RISK">
+<rect x="394.46" y="171.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="423.5" y="183.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-MERCHANT-004::SYS-AML">
+<title>Supporting</title>
+<path d="M196 247 L205.33 247 A0.67 0.67 0 0 1 206 247.67 L206 247.67 A0.66 0.66 0 0 0 206.67 248.33 L244.96 248 A10 10 0 0 1 245.04 248 L573.99 247.5 A10 10 0 0 1 574.01 247.5 L599.48 247.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M603 247.5 L593.43 252.28 L593.43 242.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-MERCHANT-004::SYS-AML">
+<rect x="394.46" y="254.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="423.5" y="266.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e3::P-MERCHANT-004::DA-MERCHANT">
+<title>Read</title>
+<path d="M196 256.33 L205 256.33 A1 1 0 0 1 206 257.33 L206 257.33 A0.99 0.99 0 0 0 207 258.32 L244.96 258 A10 10 0 0 1 245.04 258 L291 258 A10 10 0 0 1 301 268 L301 273 A10 10 0 0 0 311 283 L536 283 A10 10 0 0 1 546 293 L546 375 A10 10 0 0 0 556 385 L574 385 L599.48 385" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M603 385 L593.43 389.79 L593.43 380.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::P-MERCHANT-004::DA-MERCHANT">
+<rect x="408.45" y="289.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="423.5" y="301.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e4::P-MERCHANT-004::CTL-MERCH-SCREEN">
+<title>governed by</title>
+<path d="M196 265.67 L204.67 265.67 A1.33 1.33 0 0 1 206 267 L206 267 A1.32 1.32 0 0 0 207.33 268.32 L244.96 268 A10 10 0 0 1 245.04 268 L281 268 A10 10 0 0 1 291 278 L291 380 A10 10 0 0 0 301 390 L317 390 L342.48 390" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M346 390 L336.43 394.79 L336.43 385.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e5::P-MERCHANT-004::CTL-SANCTIONS">
+<title>governed by</title>
+<path d="M196 275 L204.33 275 A1.67 1.67 0 0 1 206 276.67 L206 276.67 A1.65 1.65 0 0 0 207.67 278.32 L244.96 278 A10 10 0 0 1 245.04 278 L271 278 A10 10 0 0 1 281 288 L281 452 A10 10 0 0 0 291 462 L317 462 L342.48 462" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M346 462 L336.43 466.79 L336.43 457.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e6::P-MERCHANT-004::CAP-MERCH-02-02">
+<title>supports</title>
+<path d="M196 284.33 L204 284.33 A2 2 0 0 1 206 286.33 L206 286.33 A1.98 1.98 0 0 0 208 288.32 L244.96 288 A10 10 0 0 1 245.04 288 L261 288 A10 10 0 0 1 271 298 L271 584 A10 10 0 0 0 281 594 L317 594 L342.48 594" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M346 594 L336.43 598.78 L336.43 589.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e7::P-MERCHANT-004::CAP-MERCH-02">
+<title>supports</title>
+<path d="M196 293.67 L203.67 293.67 A2.33 2.33 0 0 1 206 296 L206 296 A2.31 2.31 0 0 0 208.33 298.31 L244.96 298 A10 10 0 0 1 245.04 298 L253 298 A8 8 0 0 1 261 306 L261 656 A10 10 0 0 0 271 666 L317 666 L342.48 666" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M346 666 L336.43 670.78 L336.43 661.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-MERCH-02" data-type="capabilities">
+<title>Merchant Underwriting &amp; Risk Vetting</title>
+<path d="M386 640 L346 666 L386 692 L466 692 L506 666 L466 640 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="426" y="658.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant</text>
+<text x="426" y="670.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Underwriting &amp; Risk</text>
+<text x="426" y="682.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Vetting</text>
+</g>
+<g class="node" data-id="CAP-MERCH-02-02" data-type="capabilities">
+<title>Merchant Screening &amp; Brand Risk</title>
+<path d="M386 568 L346 594 L386 620 L466 620 L506 594 L466 568 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="426" y="592.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant Screening &amp;</text>
+<text x="426" y="604.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Brand Risk</text>
+</g>
+<g class="node" data-id="CTL-MERCH-SCREEN" data-type="controls">
+<title>Merchant screening before boarding</title>
+<path d="M392.86 364 L346 379.23 L346 400.77 L392.86 416 L459.14 416 L506 400.77 L506 379.23 L459.14 364 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="426" y="388.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant screening</text>
+<text x="426" y="400.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">before boarding</text>
+</g>
+<g class="node" data-id="CTL-SANCTIONS" data-type="controls">
+<title>Sanctions and watchlist screening</title>
+<path d="M392.86 436 L346 451.23 L346 472.77 L392.86 488 L459.14 488 L506 472.77 L506 451.23 L459.14 436 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="426" y="460.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Sanctions and</text>
+<text x="426" y="472.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">watchlist screening</text>
+</g>
+<g class="node" data-id="DA-MERCHANT" data-type="data_assets">
+<title>Merchant master and underwriting file</title>
+<path d="M603 361.6 Q611.5 359 645.5 359 L730.5 359 Q764.5 359 773 361.6 L773 408.4 Q764.5 411 730.5 411 L645.5 411 Q611.5 411 603 408.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="684" y="383.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant master and</text>
+<text x="684" y="395.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">underwriting file</text>
+<svg x="755" y="364" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-MERCHANT-004" data-type="processes">
+<title>Screen merchant against sanctions and network lists</title>
+<path d="M116 219 L36 251.09 L66.56 303 L165.44 303 L196 251.09 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="253.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Screen merchant</text>
+<text x="116" y="265.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">against sanctions and</text>
+<text x="116" y="277.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">network lists</text>
+</g>
+<g class="node" data-id="SYS-AML" data-type="systems">
+<title>Financial crimes platform</title>
+<rect x="603" y="216" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="684" y="245.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Financial crimes</text>
+<text x="684" y="257.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">platform</text>
+<svg x="755" y="221" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-MERCH-RISK" data-type="systems">
+<title>Merchant risk monitoring</title>
+<rect x="603" y="133" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="684" y="162.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant risk</text>
+<text x="684" y="174.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">monitoring</text>
+<svg x="755" y="138" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-SCREENING-VENDOR" data-type="systems">
+<title>NICE Actimize Screening</title>
+<rect x="603" y="50" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="684" y="74.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">NICE Actimize</text>
+<text x="684" y="86.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Screening</text>
+<text x="688" y="107.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">NICE Actimize</text>
+<svg x="755" y="55" width="13" height="13" viewBox="0 0 16 16" opacity="0.9"><path d="M2 3.5h12v9H2z M2 6.5h12" fill="none" stroke="#3f4a5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="832.4" x2="1072" y2="832.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="856.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 845.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="856.4" font-size="12" font-weight="400" fill="#343d50">capability · 2</text>
+<g transform="translate(180.32 845.4)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="206.32" y="856.4" font-size="12" font-weight="400" fill="#343d50">control · 2</text>
+<g transform="translate(278.69 845.4)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="304.69" y="856.4" font-size="12" font-weight="400" fill="#343d50">data asset · 1</text>
+<g transform="translate(392.8 845.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="418.8" y="856.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(493.06 845.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="519.06" y="856.4" font-size="12" font-weight="400" fill="#343d50">system · 3</text>
+<text x="28" y="878.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 867.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="878.4" font-size="12" font-weight="400" fill="#343d50">governed by</text>
+<g transform="translate(184.75 867.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="210.75" y="878.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(277.26 867.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="303.26" y="878.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="912.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-merchant-004 · edit the model, not the picture</text></g>
+</svg>

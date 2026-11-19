@@ -13,7 +13,7 @@ from terrane.excel_import import sheets
 from terrane.quick import read_any, render_sketch
 from terrane.schema import ENTITY_TYPES
 
-from _fixture import REPO, setup_shared, teardown_shared
+from _fixture import REPO, remove_scratch, setup_shared, teardown_shared
 
 
 def setUpModule() -> None:
@@ -28,7 +28,9 @@ class TestShown(unittest.TestCase):
     def test_the_pictures_of_a_repository_travel_as_a_workbook_and_come_back_as_the_same_pages(self) -> None:
         asked = ["system-context", {"use": "product-architecture", "with": {"product": "PRD-CARD-SERVICING"}}]
         drawings = terrane.diagrams(str(REPO), views=asked, date="2026-10-17")
-        out = Path(tempfile.mkdtemp(prefix="aac-shown-")) / "pictures.xlsx"
+        folder = Path(tempfile.mkdtemp(prefix="aac-shown-"))
+        self.addCleanup(remove_scratch, folder, "aac-shown-")
+        out = folder / "pictures.xlsx"
         drawings.excel(out)
         doc, _notes = read_any(out)
         self.assertEqual([v["view_id"] for v in doc["views"]],
@@ -67,7 +69,9 @@ class TestShown(unittest.TestCase):
 
         thurman = REPO / "90_EXAMPLE" / "thurman-health"
         drawings = terrane.diagrams(str(thurman), views=["system-context", "application-landscape"], date="2026-10-17")
-        out = Path(tempfile.mkdtemp(prefix="aac-shown-")) / "thurman.xlsx"
+        folder = Path(tempfile.mkdtemp(prefix="aac-shown-"))
+        self.addCleanup(remove_scratch, folder, "aac-shown-")
+        out = folder / "thurman.xlsx"
         drawings.excel(out)
         # The kind column names the health system's own kinds, which the shipped catalog has not heard of.
         rows = dict(sheets(out.read_bytes()))["interfaces"]
@@ -88,6 +92,7 @@ class TestShown(unittest.TestCase):
         from terrane.pack import build_pack
 
         tmp = Path(tempfile.mkdtemp(prefix="aac-shown-"))
+        self.addCleanup(remove_scratch, tmp, "aac-shown-")
         said: list = []
         path, slides = build_pack(REPO, tmp / "deck.pptx", ["system-context", "control-coverage"], date="2026-10-17",
                                   log=said.append, excel=tmp / "deck.xlsx")

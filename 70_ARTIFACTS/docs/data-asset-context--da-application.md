@@ -16,9 +16,15 @@ flowchart LR
   subgraph grp_Process["Process"]
     direction LR
     P_ORIG_001[\"Capture card application"/]
+    P_LENDING_004[\"Decide indirect loan and<br/>return terms"/]
     P_ORIG_004[\"Execute credit decision"/]
+    P_FRAUD_008[\"Investigate synthetic<br/>identity"/]
     P_ORIG_005[\"Issue adverse action<br/>notice"/]
+    P_LENDING_016[\"Originate point-of-sale<br/>installment loan"/]
+    P_LENDING_003[\"Receive and validate<br/>dealer-submitted<br/>application"/]
+    P_LENDING_005[\"Review contract package<br/>and clear stipulations"/]
     P_ORIG_003[\"Screen application for<br/>fraud"/]
+    P_COMPLIANCE_006[\"Test credit decisions and<br/>pricing for fair lending"/]
     P_ORIG_002[\"Verify applicant identity<br/>and satisfy CIP"/]
   end
 
@@ -26,8 +32,10 @@ flowchart LR
     direction LR
     SYS_APPFRAUD["Application fraud<br/>screening"]
     SYS_CREDIT_DATA["Credit data and<br/>decisioning environment<br/>[Snowflake Data Cloud]"]
+    SYS_DEALER_PORTAL["Dealer portal<br/>[SaaS]"]
     SYS_AML["Financial crimes platform"]
     SYS_KYC["Identity verification"]
+    SYS_LOS["Indirect loan origination<br/>system"]
     SYS_ORIG_DECISION["Originations decision<br/>engine"]
   end
 
@@ -37,18 +45,26 @@ flowchart LR
   SYS_KYC -->|"Read"| DA_APPLICATION
   SYS_CREDIT_DATA -->|"Read"| DA_APPLICATION
   SYS_AML -->|"Read"| DA_APPLICATION
+  SYS_LOS -->|"ReadWrite"| DA_APPLICATION
+  SYS_DEALER_PORTAL -->|"Write"| DA_APPLICATION
   P_ORIG_001 -->|"Writes"| DA_APPLICATION
   P_ORIG_002 -->|"Both"| DA_APPLICATION
   P_ORIG_003 -->|"Reads"| DA_APPLICATION
   P_ORIG_004 -->|"Both"| DA_APPLICATION
   P_ORIG_005 -->|"Reads"| DA_APPLICATION
+  P_LENDING_003 -->|"Write"| DA_APPLICATION
+  P_LENDING_004 -->|"Both"| DA_APPLICATION
+  P_LENDING_005 -->|"Read"| DA_APPLICATION
+  P_LENDING_016 -->|"Write"| DA_APPLICATION
+  P_FRAUD_008 -->|"Read"| DA_APPLICATION
+  P_COMPLIANCE_006 -->|"Read"| DA_APPLICATION
 
   classDef s_data_assets__restricted fill:#70c9a7,stroke:#047857,color:#0f172a,stroke-width:2.6px;
   classDef s_processes__default fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.1px;
   classDef s_systems__default fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.1px;
   class DA_APPLICATION s_data_assets__restricted;
-  class P_ORIG_001,P_ORIG_002,P_ORIG_003,P_ORIG_004,P_ORIG_005 s_processes__default;
-  class SYS_AML,SYS_APPFRAUD,SYS_CREDIT_DATA,SYS_KYC,SYS_ORIG_DECISION s_systems__default;
+  class P_COMPLIANCE_006,P_FRAUD_008,P_LENDING_003,P_LENDING_004,P_LENDING_005,P_LENDING_016,P_ORIG_001,P_ORIG_002,P_ORIG_003,P_ORIG_004,P_ORIG_005 s_processes__default;
+  class SYS_AML,SYS_APPFRAUD,SYS_CREDIT_DATA,SYS_DEALER_PORTAL,SYS_KYC,SYS_LOS,SYS_ORIG_DECISION s_systems__default;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Data_Asset,grp_Process,grp_System boundary1;
 ```
@@ -72,4 +88,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | 2.6px | Restricted |
 | 1.1px | default |
 
-11 entities, 11 relationships. Generated from the model; edit the model, not this file.
+19 entities, 19 relationships. Generated from the model; edit the model, not this file.

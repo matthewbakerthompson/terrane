@@ -178,6 +178,42 @@
   last_reviewed: 2026-08-17
   source: Business architecture repository
 
+- process_id: P-CLIENTMGMT-001
+  name: Qualify, price, and contract servicing client
+  description: Qualify a lender that wants its card portfolio serviced, price the work from the portfolio's size and the services chosen, answer the client's own diligence of the bank, and sign the servicing agreement and service levels. The agreement sets the reporting, service levels and change process every later step is held to.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ONBOARD-CLIENT
+  owner_org_id: ORG-CLIENTMGMT
+  business_unit: Clientmgmt
+  criticality: High
+  risk_level: Medium
+  trigger: Client-initiated
+  frequency: Ad hoc
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-CLIENTMGMT-002
+  name: Review client service levels and performance
+  description: Report each client's service levels, portfolio performance and open issues, hold the monthly service review, and agree remediation and credits where a service level was missed. Missed service levels carry contractual credits, and a run of them can end a client relationship.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ONBOARD-CLIENT
+  owner_org_id: ORG-CLIENTMGMT
+  business_unit: Clientmgmt
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
 - process_id: P-COLLECTIONS-001
   name: Assign delinquency treatment strategy
   description: Segment delinquent accounts and assign the contact and treatment strategy. Runs nightly after delinquency bucketing; the strategy drives queue, channel, intensity, and hardship routing, and a wrong assignment is a conduct risk as much as a loss risk.
@@ -304,6 +340,60 @@
   last_reviewed: 2026-08-17
   source: Business architecture repository
 
+- process_id: P-COLLECTIONS-008
+  name: Negotiate settlement offer
+  description: Offer a reduced lump-sum or short-term settlement within the approved matrix, put the terms in writing before payment, and on completion close the account and update the bureaus as settled. A settlement outside the matrix, or without written terms, is the account a regulator samples first.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RECOVER-VALUE
+  owner_org_id: ORG-COLLECTIONS
+  business_unit: Collections
+  criticality: High
+  risk_level: Medium
+  trigger: Customer-initiated
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-COLLECTIONS-009
+  name: Locate unreachable borrower
+  description: When contact details fail, search consumer reporting and public data for new phone numbers and addresses, verify them, and return the account to treatment. Location data is consumer report information used under a permissible purpose, and a wrong-party contact discloses the debt to someone else.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RECOVER-VALUE
+  owner_org_id: ORG-COLLECTIONS
+  business_unit: Collections
+  criticality: Medium
+  risk_level: Medium
+  trigger: Threshold
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-COLLECTIONS-010
+  name: Collect serviced client portfolio to client strategy
+  description: Work delinquent accounts on a client's portfolio to the client's own treatment strategy, scripts and settlement authority, in the client's name, and report results back under the servicing agreement. Collecting another lender's accounts brings third-party collector rules into play, so contact and notice rules can differ from those on the bank's own portfolio.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RECOVER-VALUE
+  owner_org_id: ORG-CLIENT-COLL
+  business_unit: Collections
+  criticality: High
+  risk_level: High
+  trigger: Threshold
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
 - process_id: P-COMPLIANCE-001
   name: Assess and land regulatory change
   description: Detect a regulatory change, assess applicability and impact, and drive implementation. Starts at horizon scanning and ends when the change is implemented and evidenced in the affected processes; applicability calls are documented even when the answer is not applicable.
@@ -388,6 +478,58 @@
   trigger: Scheduled
   frequency: Monthly
   last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-COMPLIANCE-006
+  name: Test credit decisions and pricing for fair lending
+  description: Test approvals, lines, pricing, dealer markup and collections treatment for disparities across protected classes, using proxy methods where the data is not collected, and investigate and remediate what the testing finds. Fair lending findings lead to restitution and consent orders, and discretionary dealer markup is the classic exposure.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-FAIR-LENDING
+  business_unit: Compliance
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Quarterly
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-COMPLIANCE-007
+  name: Monitor transactions for suspicious activity
+  description: Run monitoring scenarios over card, loan, deposit and merchant activity, triage the alerts, and escalate unusual activity to investigation, tuning the scenarios to the bank's risk assessment. Alerts aged past the review window put suspicious activity report deadlines at risk.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-FIN-CRIMES
+  business_unit: Compliance
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-COMPLIANCE-008
+  name: Screen transactions and parties against sanctions in line
+  description: Screen card transactions in the authorization path, and customers and counterparties nightly, against sanctions, politically exposed person and adverse media lists, and hold or block the true matches. A missed sanctions match is a strict-liability violation, so list updates are applied the day they are published.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-FIN-CRIMES
+  business_unit: Compliance
+  criticality: High
+  risk_level: High
+  trigger: Event-driven
+  frequency: Real-time
+  last_reviewed: 2026-11-18
   source: Business architecture repository
 
 - process_id: P-CREDIT-001
@@ -681,6 +823,150 @@
   trigger: Scheduled
   frequency: Daily
   last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-DEPOSITS-001
+  name: Set deposit rates and product terms
+  description: Set the rate sheet for CDs and savings against funding needs and the market, approve term and early withdrawal penalty changes, and publish the disclosures that must match. Rates are the funding cost of every loan the bank makes, and a published rate that differs from the booked one is a disclosure error.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-GROW-SAVINGS
+  owner_org_id: ORG-PRODUCT
+  business_unit: Deposits
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Weekly
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-DEPOSITS-002
+  name: Open and fund direct deposit account
+  description: Open a CD or savings account applied for online, verify the depositor's identity and screen for sanctions, deliver the account disclosures, and take the opening deposit by ACH or wire. Deposit accounts are an entry point for fraud and money laundering, so identity and the source of funds are checked before the account goes live.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-GROW-SAVINGS
+  owner_org_id: ORG-DEPOSITS
+  business_unit: Deposits
+  criticality: High
+  risk_level: High
+  trigger: Customer-initiated
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-DEPOSITS-003
+  name: Issue brokered CDs through the broker network
+  description: Agree the size, term and rate of a brokered CD issue with Treasury, offer it through the broker-dealer network, and confirm the allocations each broker sold. Brokered CDs are a primary funding channel, and their volume is watched against the brokered deposit limits that apply if capital weakens.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-GROW-SAVINGS
+  owner_org_id: ORG-BROKERED
+  business_unit: Deposits
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Weekly
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-DEPOSITS-004
+  name: Settle brokered CDs and keep the position
+  description: Settle each brokered issue through the depository against the brokers' allocations, record the CD position, and pay interest and maturities through the same channel, reconciling to the brokers' records. The underlying depositors are the brokers' customers, so their insurance coverage depends on the pass-through records kept here.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-GROW-SAVINGS
+  owner_org_id: ORG-DEPOSITS
+  business_unit: Deposits
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-DEPOSITS-005
+  name: Accrue and pay deposit interest
+  description: Accrue interest daily on every CD and savings account at its contract rate, credit or pay it on schedule, and post the expense to the ledger. An accrual error repeats across every account on the same rate, so the daily accrual is reconciled to the ledger before close.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-GROW-SAVINGS
+  owner_org_id: ORG-DEPOSITS
+  business_unit: Deposits
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-DEPOSITS-006
+  name: Produce deposit tax reporting
+  description: Produce and deliver year-end interest statements to depositors and file the information returns, with corrections and backup withholding where a taxpayer id is missing or wrong. The filing deadlines are fixed, and missing or wrong forms carry penalties by the form.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-GROW-SAVINGS
+  owner_org_id: ORG-DEPOSITS
+  business_unit: Deposits
+  criticality: High
+  risk_level: Medium
+  trigger: Regulatory
+  frequency: Annually
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-DEPOSITS-007
+  name: Process CD maturity, renewal, and early withdrawal
+  description: Send maturity notices ahead of the date, take the depositor's instruction, renew at the current rate or pay out at maturity, and calculate the penalty on an early withdrawal. A CD that renews without the required notice, or pays out to an unverified account, is both a complaint and a fraud exposure.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-GROW-SAVINGS
+  owner_org_id: ORG-DEPOSITS
+  business_unit: Deposits
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-DEPOSITS-008
+  name: Administer deposit insurance records and escheatment
+  description: Keep the ownership categories and records the deposit insurer needs to determine coverage, answer depositors' coverage questions, and report and remit dormant balances to the states. In a failure, coverage is determined from these records, so a record that cannot be read is a depositor who cannot be paid on time.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-GROW-SAVINGS
+  owner_org_id: ORG-COMPLIANCE
+  business_unit: Deposits
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Quarterly
+  last_reviewed: 2026-11-18
   source: Business architecture repository
 
 - process_id: P-DIGITAL-001
@@ -977,6 +1263,23 @@
   last_reviewed: 2026-08-17
   source: Business architecture repository
 
+- process_id: P-FINANCE-003
+  name: Compile, certify, and file regulatory reports
+  description: Compile the quarterly condition and income report and the other regulatory filings from the prepared data, review the variances, get the certifying officer's sign-off, and file by the deadline. Late or restated filings are reported to the board and draw the examiners' attention.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-FINANCE
+  business_unit: Finance
+  criticality: High
+  risk_level: High
+  trigger: Regulatory
+  frequency: Quarterly
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
 - process_id: P-FRAUD-001
   name: Detect and action transaction fraud alert
   description: Detect a suspected fraudulent transaction, action the alert, and contact the cardholder. Alert handling runs against loss and customer-friction budgets; actions span block, reissue, and contact, and the clock matters because exposure grows per transaction.
@@ -1080,6 +1383,41 @@
   trigger: Manual
   frequency: Monthly
   last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-FRAUD-007
+  name: Detect and act on first-party fraud and bust-out
+  description: Spot accounts run up to the limit by their owners with no intent to repay, from rapid balance build, payments that return and links between applications, then restrict the account and route it to fraud rather than collections. Booked as credit loss, first-party fraud is worked by the wrong team and reported in the wrong line.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-FRAUD
+  business_unit: Fraud
+  criticality: High
+  risk_level: High
+  trigger: Event-driven
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-FRAUD-008
+  name: Investigate synthetic identity
+  description: Investigate identities built from real and invented data, often seasoned for months before they bust out, by linking shared phones, addresses and devices across applications and accounts; close the linked accounts and feed the pattern back to application screening. A synthetic identity has no victim to complain, so it is found only by looking.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-FRAUD
+  business_unit: Fraud
+  criticality: High
+  risk_level: High
+  trigger: Event-driven
+  frequency: Weekly
+  last_reviewed: 2026-11-18
   source: Business architecture repository
 
 - process_id: P-FUNDING-001
@@ -1202,6 +1540,312 @@
   last_reviewed: 2026-08-17
   source: Business architecture repository
 
+- process_id: P-LENDING-001
+  name: Recruit, vet, and contract dealer
+  description: Recruit a dealer, check its licensing, ownership and complaint history, and sign the dealer agreement and program terms. A dealer takes credit applications in the bank's name, so diligence before the first application is the control that matters; an unvetted dealer is a fair lending and fraud exposure on every loan it sends.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-FINANCE-PURCHASE
+  owner_org_id: ORG-DEALER-SVC
+  business_unit: Lending
+  criticality: High
+  risk_level: Medium
+  trigger: Manual
+  frequency: Weekly
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-LENDING-002
+  name: Monitor dealer performance and program compliance
+  description: Review each dealer's volume, early payment defaults, funding exceptions, complaints and rate markup against program limits, and put dealers on watch, retrain or end them. Dealer markup is where indirect lending meets fair lending exposure, so the review evidences the markup cap as well as credit quality.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-FINANCE-PURCHASE
+  owner_org_id: ORG-DEALER-SVC
+  business_unit: Lending
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-LENDING-003
+  name: Receive and validate dealer-submitted application
+  description: Accept a credit application keyed by the dealer's finance office, check it is complete, verify the applicant's identity and screen it for application fraud before it reaches the decision. The buyer is at the dealership, so intake runs against a point-of-sale clock; an incomplete or unverified application that slips through becomes a funding exception later.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-FINANCE-PURCHASE
+  owner_org_id: ORG-DEALER-SVC
+  business_unit: Lending
+  criticality: High
+  risk_level: High
+  trigger: Customer-initiated
+  frequency: Real-time
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-LENDING-004
+  name: Decide indirect loan and return terms
+  description: Score the application against the recreation lending credit policy, price it, and return an approval, a counteroffer with conditions, or a decline to the dealer while the buyer waits. Counteroffers and declines carry adverse action obligations, and the collateral's value sets the advance, so the decision reads the asset's value guide as well as the bureau.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-FINANCE-PURCHASE
+  owner_org_id: ORG-CREDIT
+  business_unit: Lending
+  criticality: High
+  risk_level: High
+  trigger: Upstream-process
+  frequency: Real-time
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-LENDING-005
+  name: Review contract package and clear stipulations
+  description: Check the signed retail installment contract, the title application and the proofs of income, insurance and identity the approval was conditioned on, and send back what is missing or wrong. A contract funded with an open stipulation is a loan the bank may not be able to enforce or perfect, which is why funding waits on this review.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-FINANCE-PURCHASE
+  owner_org_id: ORG-LOAN-OPS
+  business_unit: Lending
+  criticality: High
+  risk_level: High
+  trigger: Upstream-process
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-LENDING-006
+  name: Board loan and fund dealer
+  description: Create the loan on the servicing platform with its terms, payment schedule and collateral, pay the dealer the amount financed with its reserve, and post the entries. Boarding errors surface months later as wrong payment amounts or payoff quotes, and a funding paid twice or to the wrong dealer is cash out of the door.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-FINANCE-PURCHASE
+  owner_org_id: ORG-LOAN-OPS
+  business_unit: Lending
+  criticality: High
+  risk_level: High
+  trigger: Upstream-process
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-LENDING-007
+  name: Perfect lien with titling state
+  description: Record the bank as lienholder with the titling state, electronically where the state allows and on paper where it does not, and chase the title until it is in custody. An unperfected lien leaves the loan unsecured in a bankruptcy, so anything aging past the policy window is reported weekly by state and by dealer.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-FINANCE-PURCHASE
+  owner_org_id: ORG-TITLE
+  business_unit: Lending
+  criticality: High
+  risk_level: High
+  trigger: Upstream-process
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-LENDING-008
+  name: Quote payoff and release title
+  description: Give the borrower or a refinancing lender a payoff quote, apply the payoff, and release the lien and send the title within the state's deadline. Late releases carry statutory penalties and complaints, and a release sent before the payoff funds clear is collateral given away.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-FINANCE-PURCHASE
+  owner_org_id: ORG-TITLE
+  business_unit: Lending
+  criticality: High
+  risk_level: High
+  trigger: Customer-initiated
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-LENDING-009
+  name: Bill installment loan and post payments
+  description: Send the monthly bill, take payments by ACH, debit card, check and automatic payment, and post them to interest, principal and fees in the order the contract says. Posting drives the delinquency that collections and bureau reporting read, so a misposted payment shows up as a wrong late fee, a wrong call and a wrong bureau line.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-FINANCE-PURCHASE
+  owner_org_id: ORG-LOAN-OPS
+  business_unit: Lending
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-LENDING-010
+  name: Service installment loan account requests
+  description: "Handle borrower requests on a loan: due-date changes, payment deferrals and extensions, insurance and address updates, and statements of account. A deferral changes the payment schedule and the interest earned, so it is approved to policy and recorded where collections and finance will see it."
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-FINANCE-PURCHASE
+  owner_org_id: ORG-LOAN-OPS
+  business_unit: Lending
+  criticality: High
+  risk_level: Medium
+  trigger: Customer-initiated
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-LENDING-011
+  name: Collect delinquent installment loan
+  description: Work past-due installment loans through calls, letters and digital contact, take promises and arrangements, and decide when a loan goes to repossession. Recreation loans are secured and seasonal, so treatment weighs the collateral and the season as well as the days past due; the contact limits that apply to cards apply here too.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RECOVER-VALUE
+  owner_org_id: ORG-COLLECTIONS
+  business_unit: Collections
+  criticality: High
+  risk_level: High
+  trigger: Threshold
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-LENDING-012
+  name: Assign repossession and send required notices
+  description: Assign a licensed repossession agent, confirm the recovery and the personal property found inside, and send the notices of redemption rights and intended sale each state requires. A repossession done or noticed outside state law voids the deficiency and invites a claim, so the notice timeline is controlled state by state.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-FINANCE-PURCHASE
+  owner_org_id: ORG-ASSET-RECOVERY
+  business_unit: Lending
+  criticality: High
+  risk_level: High
+  trigger: Upstream-process
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-LENDING-013
+  name: Remarket recovered collateral and pursue deficiency
+  description: Recondition and sell the recovered vehicle or boat at auction or retail, apply the proceeds, cancel the ancillary products for refund, and collect, place or sell the deficiency balance. The sale must be commercially reasonable and properly noticed, or the deficiency cannot be collected at all.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-FINANCE-PURCHASE
+  owner_org_id: ORG-RECOVERY
+  business_unit: Lending
+  criticality: High
+  risk_level: Medium
+  trigger: Upstream-process
+  frequency: Weekly
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-LENDING-014
+  name: Cancel ancillary products and refund unearned premium
+  description: When a loan pays off early, is charged off, or its collateral is repossessed or destroyed, cancel the gap coverage, service contract and credit insurance sold with it and refund the unearned part. Missed refunds are a recurring supervisory finding in indirect lending, and they are owed whether or not the borrower asks.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-FINANCE-PURCHASE
+  owner_org_id: ORG-LOAN-OPS
+  business_unit: Lending
+  criticality: High
+  risk_level: High
+  trigger: Event-driven
+  frequency: Weekly
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-LENDING-015
+  name: Calculate and settle dealer reserve
+  description: Calculate the dealer's participation on each funded loan, pay it, and charge back the unearned part when a loan pays off or defaults inside the chargeback window. Reserve is the dealer's pay for the rate it sets, so its calculation is also what the markup review reads.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-FINANCE-PURCHASE
+  owner_org_id: ORG-DEALER-SVC
+  business_unit: Lending
+  criticality: Medium
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-LENDING-016
+  name: Originate point-of-sale installment loan
+  description: Take a financing application started in a retailer's checkout, check affordability from the shopper's bank data with consent, decide it, and book the installment loan with disbursement through the card ledger. The point-of-sale products run on platforms of their own, apart from the dealer channel, and share its credit policy and adverse action rules.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-FINANCE-PURCHASE
+  owner_org_id: ORG-LENDING
+  business_unit: Lending
+  criticality: High
+  risk_level: Medium
+  trigger: Customer-initiated
+  frequency: Real-time
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-LENDING-017
+  name: Service point-of-sale installment loan
+  description: Collect the scheduled installments on point-of-sale loans, handle early settlement and missed payments, and keep the shopper informed by message and statement. These loans repay over months rather than years and are serviced on the installment lending platform, not on the recreation loan system.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-FINANCE-PURCHASE
+  owner_org_id: ORG-LOAN-OPS
+  business_unit: Lending
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
 - process_id: P-MARKETING-001
   name: Build and permission prospect list
   description: Source, screen, and permission prospect data for use in acquisition campaigns. Prospect data carries permissible-purpose and suppression obligations; the list that leaves this process is the compliant universe for everything downstream.
@@ -1287,6 +1931,204 @@
   trigger: Scheduled
   frequency: Monthly
   last_reviewed: 2026-08-19
+  source: Business architecture repository
+
+- process_id: P-MERCHANT-001
+  name: Onboard and oversee ISO or agent
+  description: Diligence and contract an independent sales organization or agent, register it with the networks, and review its portfolio quality, complaints and residuals each month. The bank sponsors the ISO's merchants into the networks and carries their liability, so an ISO's underwriting shortcuts become the bank's chargeback losses.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ENABLE-MERCHANT
+  owner_org_id: ORG-ISO-MGMT
+  business_unit: Merchant
+  criticality: High
+  risk_level: High
+  trigger: Manual
+  frequency: Monthly
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-MERCHANT-002
+  name: Capture merchant application
+  description: Take a merchant's application, sent by an ISO or made directly in the merchant portal, with its owners, processing history, business model and bank account, and check it is complete before underwriting. Beneficial ownership is collected here because sanctions screening and the network's terminated-merchant check both read it.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ENABLE-MERCHANT
+  owner_org_id: ORG-ISO-MGMT
+  business_unit: Merchant
+  criticality: High
+  risk_level: Medium
+  trigger: Customer-initiated
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-MERCHANT-003
+  name: Underwrite merchant
+  description: Assess the merchant's credit, processing history, delivery timeframes and chargeback exposure against the appetite for its business type, and approve with limits and reserve terms, or decline. Specialty and higher-risk business types are the point of the program, so underwriting sets the exposure every later step monitors.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ENABLE-MERCHANT
+  owner_org_id: ORG-MERCH-RISK
+  business_unit: Merchant
+  criticality: High
+  risk_level: High
+  trigger: Upstream-process
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-MERCHANT-004
+  name: Screen merchant against sanctions and network lists
+  description: Screen the business and its owners against sanctions lists and the networks' terminated-merchant file, and review prohibited and brand-damaging business types before boarding. A merchant on the terminated file, or in a prohibited category, boarded under the bank's sponsorship draws network fines on the bank.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ENABLE-MERCHANT
+  owner_org_id: ORG-FIN-CRIMES
+  business_unit: Merchant
+  criticality: High
+  risk_level: High
+  trigger: Upstream-process
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-MERCHANT-005
+  name: Board merchant and register with networks
+  description: Set the approved merchant up on the acquiring platform with its pricing, limits and reserve, assign merchant and terminal ids, and register it with the card networks under the bank's sponsorship. Boarding is where approved terms become system parameters, and a limit keyed wrong is exposure nobody approved.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ENABLE-MERCHANT
+  owner_org_id: ORG-MERCHANT
+  business_unit: Merchant
+  criticality: High
+  risk_level: Medium
+  trigger: Upstream-process
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-MERCHANT-006
+  name: Settle and fund merchants
+  description: Clear the day's card volume, net out fees, chargebacks and reserve holds, and fund each merchant's bank account by ACH, reconciling network settlement to merchant funding. Funding a merchant that should have been held is exactly the loss the reserve was meant to cover.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ENABLE-MERCHANT
+  owner_org_id: ORG-SETTLEMENT
+  business_unit: Merchant
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-MERCHANT-007
+  name: Set and adjust merchant reserve
+  description: Set the reserve or delayed funding a merchant must carry, raise it when chargebacks, refunds or delivery risk grow, and release it when exposure ends after the merchant leaves. Reserves are held merchant money, so each change is evidenced against the merchant agreement.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ENABLE-MERCHANT
+  owner_org_id: ORG-MERCH-RISK
+  business_unit: Merchant
+  criticality: High
+  risk_level: High
+  trigger: Threshold
+  frequency: Weekly
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-MERCHANT-008
+  name: Process acquiring chargeback
+  description: Receive chargebacks from the networks against merchants, debit the merchant or its reserve, collect the merchant's evidence and represent within the reason code's window, and absorb the loss when the merchant cannot pay. Chargebacks a merchant cannot cover fall on the bank as its sponsor.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ENABLE-MERCHANT
+  owner_org_id: ORG-MERCHANT
+  business_unit: Merchant
+  criticality: High
+  risk_level: Medium
+  trigger: Event-driven
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-MERCHANT-009
+  name: Monitor merchant exposure and activity
+  description: Watch merchant volume, ticket size, refund and chargeback ratios and future delivery exposure against approved limits, and investigate spikes, collusion and bust-out patterns. Excessive chargeback ratios put the merchant and the bank into network monitoring programs, with fines.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ENABLE-MERCHANT
+  owner_org_id: ORG-MERCH-RISK
+  business_unit: Merchant
+  criticality: High
+  risk_level: High
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-MERCHANT-010
+  name: Terminate merchant and report to network list
+  description: Close a merchant for risk, fraud or breach, hold funds to cover the chargeback tail, and add it to the networks' terminated-merchant file where the rules require. A termination that is not reported lets the merchant board elsewhere, and is itself a rule breach.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ENABLE-MERCHANT
+  owner_org_id: ORG-MERCH-RISK
+  business_unit: Merchant
+  criticality: High
+  risk_level: High
+  trigger: Event-driven
+  frequency: Ad hoc
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-MERCHANT-011
+  name: Bill merchant fees and serve statements
+  description: Calculate the month's processing, network and service fees, deliver the merchant statement, pay ISO residuals, and answer merchant and ISO questions about funding and fees. Statements are what a merchant checks its funding against, so a pricing error found here is a refund to many merchants at once.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-ENABLE-MERCHANT
+  owner_org_id: ORG-MERCHANT
+  business_unit: Merchant
+  criticality: Medium
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-11-18
   source: Business architecture repository
 
 - process_id: P-NETWORK-RECON-001
@@ -1485,6 +2327,41 @@
   last_reviewed: 2026-08-19
   source: Business architecture repository
 
+- process_id: P-PARTNERSHIPS-002
+  name: Manage co-brand program agreement
+  description: Negotiate and amend a co-brand or affinity agreement, track the partner's obligations on marketing, data sharing and approval of card terms, and hold the quarterly program review. The partner's brand is on the card but the bank is the lender, so marketing and terms the partner proposes still pass the bank's compliance review.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-LAUNCH-PRODUCT
+  owner_org_id: ORG-COBRAND
+  business_unit: Partnerships
+  criticality: High
+  risk_level: Medium
+  trigger: Manual
+  frequency: Quarterly
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-PARTNERSHIPS-003
+  name: Calculate and settle partner revenue share
+  description: Calculate each partner's share of interchange, interest and fees, its bounties for new accounts and its rewards funding under the agreement, settle the net amount, and reconcile it to the ledger. Revenue share is the partner's view of the program's health, so a disputed calculation sours the relationship as well as the books.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  owner_org_id: ORG-FINANCE
+  business_unit: Finance
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
 - process_id: P-PAYMENTS-001
   name: Process authorization request
   description: Receive, decision, and respond to a real-time authorization request within the network response window.
@@ -1572,6 +2449,96 @@
   trigger: Regulatory
   frequency: Quarterly
   last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-PAYMENTS-006
+  name: Operate stand-in authorization during a host outage
+  description: When the authorization host is slow or down, switch to stand-in so the switch or the network approves within set limits, then replay the stand-in decisions to the ledger when the host returns. Stand-in limits trade lost sales against unsecured exposure, and every stand-in approval must post or it is a balance nobody owes.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-AUTH-OPS
+  business_unit: Payments
+  criticality: High
+  risk_level: High
+  trigger: Threshold
+  frequency: Ad hoc
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-PAYMENTS-007
+  name: Maintain authorization routing and network connectivity
+  description: Maintain the switch's routing tables, network keys and message specifications, apply the networks' release changes, and test connectivity with each network. A routing or key error declines every transaction on that path until it is fixed.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-AUTH-OPS
+  business_unit: Payments
+  criticality: High
+  risk_level: Medium
+  trigger: Manual
+  frequency: Weekly
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-PAYMENTS-008
+  name: Enroll and run automatic payments
+  description: Enroll a cardholder's bank account for recurring payments of the minimum, the statement balance or a fixed amount, verify the account, and originate the debits on schedule under the authorization the cardholder gave. Each debit needs a valid authorization, and a debit taken after it was revoked is an error claim.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-PAYMENTS
+  business_unit: Payments
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-PAYMENTS-009
+  name: Process lockbox and check payments
+  description: Receive mailed checks through the lockbox, match each to an account by coupon or by research, post it the day it arrives, and work the exceptions. A payment received by the cutoff must be credited that day, so unmatched items are researched before they age.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-PAYMENTS
+  business_unit: Payments
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-PAYMENTS-010
+  name: Allocate payment across balances
+  description: Apply each payment above the minimum to the balance with the highest rate first, as the card rules require, and treat promotional, deferred-interest and disputed balances correctly. Allocation errors overcharge interest on every account with more than one balance, which makes them a remediation, not a correction.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-PAYMENTS
+  business_unit: Payments
+  criticality: High
+  risk_level: High
+  trigger: Upstream-process
+  frequency: Daily
+  last_reviewed: 2026-11-18
   source: Business architecture repository
 
 - process_id: P-PRIVACY-001
@@ -1662,6 +2629,24 @@
   trigger: Manual
   frequency: Ad hoc
   last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-PRODUCT-005
+  name: Design rewards program and earn structure
+  description: Design the earn rates, categories, caps, redemption values and partner funding of a rewards program, model its cost against the revenue it should bring, and take it through legal and compliance review. Rewards terms are part of the card agreement, so changing them is a change in terms that needs notice.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-LAUNCH-PRODUCT
+  owner_org_id: ORG-PRODUCT
+  business_unit: Product
+  criticality: High
+  risk_level: Medium
+  trigger: Manual
+  frequency: Ad hoc
+  last_reviewed: 2026-11-18
   source: Business architecture repository
 
 - process_id: P-QE-001
@@ -1907,6 +2892,24 @@
   last_reviewed: 2026-08-17
   source: Business architecture repository
 
+- process_id: P-RECOVERY-006
+  name: Refer account to legal and manage litigation
+  description: Choose accounts for suit under the legal placement strategy, place them with outside counsel, track filings, judgments and garnishments, and post the recoveries. Every account sued needs the documents to prove the debt, and a suit on a time-barred or disputed account is a conduct finding.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RECOVER-VALUE
+  owner_org_id: ORG-LEGAL
+  business_unit: Legal
+  criticality: High
+  risk_level: High
+  trigger: Upstream-process
+  frequency: Weekly
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
 - process_id: P-REG-DATA-PREP-001
   name: Prepare regulatory reporting data
   description: Assemble, validate, and certify the data supporting regulatory reporting submissions. Report data is assembled from governed sources with reconciliation to the ledger and prior submissions; certification is a named officer's sign-off, not a batch job.
@@ -1975,6 +2978,24 @@
   trigger: Scheduled
   frequency: Monthly
   last_reviewed: 2026-08-17
+  source: Business architecture repository
+
+- process_id: P-REWARDS-004
+  name: Serve redemption catalog and fulfill orders
+  description: Serve the rewards catalog, take redemptions for statement credit, gift cards, merchandise and travel, send orders to the fulfillment partners, and reverse the points when an order fails or comes back. The rewards liability is relieved only when value is delivered, so undelivered orders are tracked until they close.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-REWARDS
+  business_unit: Rewards
+  criticality: Medium
+  risk_level: Medium
+  trigger: Customer-initiated
+  frequency: Daily
+  last_reviewed: 2026-11-18
   source: Business architecture repository
 
 - process_id: P-RISK-001
@@ -2239,6 +3260,78 @@
   trigger: Event-driven
   frequency: Daily
   last_reviewed: 2026-08-19
+  source: Business architecture repository
+
+- process_id: P-SERVICING-013
+  name: Process product change or upgrade
+  description: Move an account to another card product at the cardholder's request or by invitation, carrying over the balance, history and rewards as the program rules say, and issue the new card and terms. A product change that resets the account's age or loses rewards is a complaint and, if terms worsen without notice, a disclosure failure.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-SERVICING
+  business_unit: Servicing
+  criticality: High
+  risk_level: Medium
+  trigger: Customer-initiated
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-SERVICING-014
+  name: Retain account at closure request
+  description: When a cardholder asks to close, find the reason, offer what the retention strategy allows, such as a fee waiver, a rate review or a product change, and record the outcome. Offers follow the approved matrix, or two cardholders in the same position get different treatment.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RESOLVE-ISSUE
+  owner_org_id: ORG-SERVICING
+  business_unit: Servicing
+  criticality: Medium
+  risk_level: Medium
+  trigger: Customer-initiated
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-SERVICING-015
+  name: Close account and settle final balance
+  description: Close the account at the cardholder's or the bank's request, stop new charges while recurring payments and pending items clear, forfeit or pay out rewards per the terms, report the closure to the bureaus correctly, and confirm it in writing. A closed account still has a balance to bill and a bureau line to keep accurate.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-RESOLVE-ISSUE
+  owner_org_id: ORG-SERVICING
+  business_unit: Servicing
+  criticality: High
+  risk_level: Medium
+  trigger: Customer-initiated
+  frequency: Daily
+  last_reviewed: 2026-11-18
+  source: Business architecture repository
+
+- process_id: P-SERVICING-016
+  name: Refund credit balance and report unclaimed property
+  description: Refund a credit balance when the cardholder asks or once it reaches the regulatory age, by check or deposit, and report and remit balances that cannot be returned to the states as unclaimed property. Both clocks are regulatory, and a refund check that is never cashed starts the unclaimed property clock again.
+  status: Proposed
+  togaf_layer: Business
+  architecture_domain: Business
+  abstraction_level: Logical
+  process_level: L2
+  value_stream_id: VS-SERVICE-ACCOUNT
+  owner_org_id: ORG-SERVICING
+  business_unit: Servicing
+  criticality: High
+  risk_level: Medium
+  trigger: Scheduled
+  frequency: Monthly
+  last_reviewed: 2026-11-18
   source: Business architecture repository
 
 - process_id: P-SETTLEMENT-001

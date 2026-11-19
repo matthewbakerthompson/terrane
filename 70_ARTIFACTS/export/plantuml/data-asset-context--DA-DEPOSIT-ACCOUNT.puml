@@ -1,0 +1,81 @@
+@startuml
+' Deposit account and CD record — Where It Lives and Who Uses It
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Deposit account and CD record — Where It Lives and Who Uses It
+
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_DEPOSIT_ACCOUNT, "Deposit account and CD record", "Depositor identity and ownership category, account terms, rate, interest accrued, maturity and instructions.", $tags="data_assets")
+  ' aac DA_DEPOSIT_ACCOUNT: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_DEPOSITS_005, "Accrue and pay deposit interest", "Accrue interest daily on every CD and savings account at its contract rate, credit or pay it on schedule, and post the expense to the ledger. An accrual error repeats across every account on the same rate, so the daily accrual is reconciled to the ledger before close.", $tags="processes")
+  ' aac P_DEPOSITS_005: company_domain=""
+  System(P_DEPOSITS_008, "Administer deposit insurance records and escheatment", "Keep the ownership categories and records the deposit insurer needs to determine coverage, answer depositors' coverage questions, and report and remit dormant balances to the states. In a failure, coverage is determined from these records, so a record that cannot be read is a depositor who cannot be paid on time.", $tags="processes")
+  ' aac P_DEPOSITS_008: company_domain=""
+  System(P_DEPOSITS_003, "Issue brokered CDs through the broker network", "Agree the size, term and rate of a brokered CD issue with Treasury, offer it through the broker-dealer network, and confirm the allocations each broker sold. Brokered CDs are a primary funding channel, and their volume is watched against the brokered deposit limits that apply if capital weakens.", $tags="processes")
+  ' aac P_DEPOSITS_003: company_domain=""
+  System(P_COMPLIANCE_007, "Monitor transactions for suspicious activity", "Run monitoring scenarios over card, loan, deposit and merchant activity, triage the alerts, and escalate unusual activity to investigation, tuning the scenarios to the bank's risk assessment. Alerts aged past the review window put suspicious activity report deadlines at risk.", $tags="processes")
+  ' aac P_COMPLIANCE_007: company_domain=""
+  System(P_DEPOSITS_002, "Open and fund direct deposit account", "Open a CD or savings account applied for online, verify the depositor's identity and screen for sanctions, deliver the account disclosures, and take the opening deposit by ACH or wire. Deposit accounts are an entry point for fraud and money laundering, so identity and the source of funds are checked before the account goes live.", $tags="processes")
+  ' aac P_DEPOSITS_002: company_domain=""
+  System(P_DEPOSITS_007, "Process CD maturity, renewal, and early withdrawal", "Send maturity notices ahead of the date, take the depositor's instruction, renew at the current rate or pay out at maturity, and calculate the penalty on an early withdrawal. A CD that renews without the required notice, or pays out to an unverified account, is both a complaint and a fraud exposure.", $tags="processes")
+  ' aac P_DEPOSITS_007: company_domain=""
+  System(P_DEPOSITS_006, "Produce deposit tax reporting", "Produce and deliver year-end interest statements to depositors and file the information returns, with corrections and backup withholding where a taxpayer id is missing or wrong. The filing deadlines are fixed, and missing or wrong forms carry penalties by the form.", $tags="processes")
+  ' aac P_DEPOSITS_006: company_domain=""
+  System(P_DEPOSITS_001, "Set deposit rates and product terms", "Set the rate sheet for CDs and savings against funding needs and the market, approve term and early withdrawal penalty changes, and publish the disclosures that must match. Rates are the funding cost of every loan the bank makes, and a published rate that differs from the booked one is a disclosure error.", $tags="processes")
+  ' aac P_DEPOSITS_001: company_domain=""
+  System(P_DEPOSITS_004, "Settle brokered CDs and keep the position", "Settle each brokered issue through the depository against the brokers' allocations, record the CD position, and pay interest and maturities through the same channel, reconciling to the brokers' records. The underlying depositors are the brokers' customers, so their insurance coverage depends on the pass-through records kept here.", $tags="processes")
+  ' aac P_DEPOSITS_004: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_BROKER_GW, "Brokered deposit settlement gateway", "Exchanges brokered CD issuance, allocation and position files with the broker-dealers and the depository.", $tags="systems")
+  ' aac SYS_BROKER_GW: company_domain=""
+  System(SYS_DEPOSIT, "Deposit platform", "System of record for CDs and savings: opening, interest accrual, maturities, early withdrawal and tax reporting.", $tags="systems")
+  ' aac SYS_DEPOSIT: company_domain=""
+  System(SYS_AML, "Financial crimes platform", "Sanctions screening, transaction monitoring, and case management.", $tags="systems")
+  ' aac SYS_AML: company_domain=""
+  System(SYS_KYC, "Identity verification", "Identity verification and customer identification program checks.", $tags="systems")
+  ' aac SYS_KYC: company_domain=""
+  System(SYS_TREASURY, "Treasury management", "Treasury, funding, and liquidity management.", $tags="systems")
+  ' aac SYS_TREASURY: company_domain=""
+}
+
+Rel(SYS_DEPOSIT, DA_DEPOSIT_ACCOUNT, "masters")
+' aac rel: source="SYS_DEPOSIT"; target="DA_DEPOSIT_ACCOUNT"; label="masters"; field="source_of_truth"
+Rel(SYS_DEPOSIT, DA_DEPOSIT_ACCOUNT, "ReadWrite")
+' aac rel: source="SYS_DEPOSIT"; target="DA_DEPOSIT_ACCOUNT"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_BROKER_GW, DA_DEPOSIT_ACCOUNT, "Write")
+' aac rel: source="SYS_BROKER_GW"; target="DA_DEPOSIT_ACCOUNT"; label="Write"; relation="system_reads_writes"; operation="Write"
+Rel(SYS_TREASURY, DA_DEPOSIT_ACCOUNT, "Read")
+' aac rel: source="SYS_TREASURY"; target="DA_DEPOSIT_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_KYC, DA_DEPOSIT_ACCOUNT, "Read")
+' aac rel: source="SYS_KYC"; target="DA_DEPOSIT_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(SYS_AML, DA_DEPOSIT_ACCOUNT, "Read")
+' aac rel: source="SYS_AML"; target="DA_DEPOSIT_ACCOUNT"; label="Read"; relation="system_reads_writes"; operation="Read"
+Rel(P_DEPOSITS_001, DA_DEPOSIT_ACCOUNT, "Read")
+' aac rel: source="P_DEPOSITS_001"; target="DA_DEPOSIT_ACCOUNT"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_DEPOSITS_002, DA_DEPOSIT_ACCOUNT, "Write")
+' aac rel: source="P_DEPOSITS_002"; target="DA_DEPOSIT_ACCOUNT"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_DEPOSITS_003, DA_DEPOSIT_ACCOUNT, "Write")
+' aac rel: source="P_DEPOSITS_003"; target="DA_DEPOSIT_ACCOUNT"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_DEPOSITS_004, DA_DEPOSIT_ACCOUNT, "Both")
+' aac rel: source="P_DEPOSITS_004"; target="DA_DEPOSIT_ACCOUNT"; label="Both"; relation="process_uses_data_asset"; access="Both"
+Rel(P_DEPOSITS_005, DA_DEPOSIT_ACCOUNT, "Both")
+' aac rel: source="P_DEPOSITS_005"; target="DA_DEPOSIT_ACCOUNT"; label="Both"; relation="process_uses_data_asset"; access="Both"
+Rel(P_DEPOSITS_006, DA_DEPOSIT_ACCOUNT, "Read")
+' aac rel: source="P_DEPOSITS_006"; target="DA_DEPOSIT_ACCOUNT"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_DEPOSITS_007, DA_DEPOSIT_ACCOUNT, "Both")
+' aac rel: source="P_DEPOSITS_007"; target="DA_DEPOSIT_ACCOUNT"; label="Both"; relation="process_uses_data_asset"; access="Both"
+Rel(P_DEPOSITS_008, DA_DEPOSIT_ACCOUNT, "Read")
+' aac rel: source="P_DEPOSITS_008"; target="DA_DEPOSIT_ACCOUNT"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_COMPLIANCE_007, DA_DEPOSIT_ACCOUNT, "Read")
+' aac rel: source="P_COMPLIANCE_007"; target="DA_DEPOSIT_ACCOUNT"; label="Read"; relation="process_uses_data_asset"; access="Read"
+
+SHOW_LEGEND()
+@enduml

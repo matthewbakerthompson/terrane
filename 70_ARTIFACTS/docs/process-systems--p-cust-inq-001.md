@@ -11,7 +11,9 @@ flowchart LR
   subgraph grp_Capability["Capability"]
     direction LR
     CAP_SERV_02{{"Account Maintenance &<br/>Servicing Requests"}}
+    CAP_SERV_01_01{{"Contact Center Operations"}}
     CAP_SERV_01{{"Contact Handling & Routing"}}
+    CAP_SERV_01_02{{"Contact Routing"}}
   end
 
   subgraph grp_Process["Process"]
@@ -33,11 +35,13 @@ flowchart LR
   P_CUST_INQ_001 -->|"Supporting"| SYS_IVR
   P_CUST_INQ_001 -->|"supports"| CAP_SERV_01
   P_CUST_INQ_001 -->|"supports"| CAP_SERV_02
+  P_CUST_INQ_001 -->|"supports"| CAP_SERV_01_01
+  P_CUST_INQ_001 -->|"supports"| CAP_SERV_01_02
 
   classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
   classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
-  class CAP_SERV_01,CAP_SERV_02 s_capabilities__capabilities;
+  class CAP_SERV_01,CAP_SERV_01_01,CAP_SERV_01_02,CAP_SERV_02 s_capabilities__capabilities;
   class P_CUST_INQ_001 s_processes__processes;
   class SYS_CONTACT,SYS_CORE_LEDGER,SYS_CRM,SYS_IVR s_systems__systems;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
@@ -56,4 +60,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#0369a1` | processes |
 | `#4338ca` | systems |
 
-7 entities, 6 relationships. Generated from the model; edit the model, not this file.
+9 entities, 8 relationships. Generated from the model; edit the model, not this file.

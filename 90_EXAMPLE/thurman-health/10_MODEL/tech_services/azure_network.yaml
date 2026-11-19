@@ -1,0 +1,92 @@
+# The Azure health system's networks: one for each subscription its systems sit in,
+# each made from the azure-workload-network shape, so its subnets, its NAT
+# gateway, its attachment to the Virtual WAN hub and its resolver link are
+# the shape's and not written here. Every system in the subscription lands in
+# the subnet for its network zone. A subscription gets the tiers its systems
+# use; a new one is a record here, made once.
+
+- tech_service_id: TS-NET-VNET-CLINICAL
+  name: Clinical Virtual Network
+  description: The clinical subscription's network.
+  status: Active
+  cidr: 10.20.0.0/16
+  company_domain: Enterprise Platform
+  archetype: azure-workload-network
+  parameters:
+    slug: clinical
+    network_name: Clinical
+    account: azure-clinical-prod
+    region: eastus2
+    subnets:
+      - {id: APP, name: App Subnet, zone: Private-App, az: zone-redundant}
+    nat_gateways:
+      - {id: NAT, name: NAT Gateway, az: zone-redundant}
+
+- tech_service_id: TS-NET-VNET-DATA
+  name: Data Virtual Network
+  description: The data subscription's network, private data tier only.
+  status: Active
+  cidr: 10.21.0.0/16
+  company_domain: Enterprise Platform
+  archetype: azure-workload-network
+  parameters:
+    slug: data
+    network_name: Data
+    account: azure-data-prod
+    region: eastus2
+    subnets:
+      - {id: DATA, name: Data Subnet, zone: Private-Data, az: zone-redundant}
+    nat_gateways: []
+
+- tech_service_id: TS-NET-VNET-ENTERPRISE
+  name: Enterprise Virtual Network
+  description: The enterprise subscription's network.
+  status: Active
+  cidr: 10.22.0.0/16
+  company_domain: Enterprise Platform
+  archetype: azure-workload-network
+  parameters:
+    slug: enterprise
+    network_name: Enterprise
+    account: azure-enterprise-prod
+    region: eastus2
+    subnets:
+      - {id: APP, name: App Subnet, zone: Private-App, az: zone-redundant}
+      - {id: SHARED, name: Shared Services Subnet, zone: Shared-Services, az: zone-redundant}
+    nat_gateways:
+      - {id: NAT, name: NAT Gateway, az: zone-redundant}
+
+- tech_service_id: TS-NET-VNET-PATIENT
+  name: Patient Virtual Network
+  description: The patient subscription's network, which the portal and its services land in.
+  status: Active
+  cidr: 10.23.0.0/16
+  company_domain: Enterprise Platform
+  archetype: azure-workload-network
+  parameters:
+    slug: patient
+    network_name: Patient
+    account: azure-patient-prod
+    region: eastus2
+    subnets:
+      - {id: APP, name: App Subnet, zone: Private-App, az: zone-redundant}
+      - {id: DATA, name: Data Subnet, zone: Private-Data, az: zone-redundant}
+      - {id: SHARED, name: Shared Services Subnet, zone: Shared-Services, az: zone-redundant}
+    nat_gateways:
+      - {id: NAT, name: NAT Gateway, az: zone-redundant}
+
+- tech_service_id: TS-NET-VNET-SECURITY
+  name: Security Virtual Network
+  description: The security subscription's network, for shared services.
+  status: Active
+  cidr: 10.24.0.0/16
+  company_domain: Enterprise Platform
+  archetype: azure-workload-network
+  parameters:
+    slug: security
+    network_name: Security
+    account: azure-security-prod
+    region: eastus2
+    subnets:
+      - {id: SHARED, name: Shared Services Subnet, zone: Shared-Services, az: zone-redundant}
+    nat_gateways: []

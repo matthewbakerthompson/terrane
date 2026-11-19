@@ -158,6 +158,25 @@ class TestModuleLibrary(unittest.TestCase):
         with self.assertRaises(ModuleError):
             parse_module({"module_id": "x", "name": "X", "description": "Nothing."})
 
+    def test_a_kit_says_how_it_asks_and_what_its_answers_name(self) -> None:
+        """The canvas asks a kit's parameters of the person who drops it:
+        in a few words, and by offering the records a value names."""
+        sources = self.modules["ai-assistant-baseline"].parameters[0]
+        self.assertEqual((sources.name, sources.ask, sources.names, sources.default),
+                         ("sources", "Answers from", "systems", []))
+        # Every kit's own parameter is asked in words.
+        for module in self.modules.values():
+            if module.is_kit:
+                for param in module.parameters:
+                    self.assertTrue(param.ask, "%s %s" % (module.module_id, param.name))
+
+    def test_a_parameter_naming_no_kind_of_record_is_refused(self) -> None:
+        with self.assertRaises(ModuleError) as caught:
+            parse_module({"module_id": "x", "name": "X", "description": "X.",
+                          "parameters": [{"name": "sources", "names": "sytems", "default": []}],
+                          "provides": {"systems": [{"system_id": "SYS-X"}]}})
+        self.assertIn("sytems", str(caught.exception))
+
 
 class TestComposition(unittest.TestCase):
     @classmethod
@@ -1175,8 +1194,12 @@ class TestAProductThatChooses(unittest.TestCase):
                 if r["system_id"] == system_id}
 
     def test_the_private_path_runs_on_azure(self) -> None:
-        self.assertEqual(self._uses("SYS-IDV-EGRESS"), {"TS-AZURE-PRIVATELINK", "TS-AZURE-VWAN"})
-        self.assertEqual(self._uses("SYS-IDV-GATEWAY"), {"TS-AZURE-AKS", "TS-AZURE-APIM", "TS-AZURE-KEYVAULT"})
+        # And the subnet of the risk subscription's network its zone says,
+        # the network made once for the subscription (2026-11-04).
+        self.assertEqual(self._uses("SYS-IDV-EGRESS"),
+                         {"TS-AZURE-PRIVATELINK", "TS-AZURE-VWAN", "TS-NET-SUB-AZ-RISK-SHARED"})
+        self.assertEqual(self._uses("SYS-IDV-GATEWAY"),
+                         {"TS-AZURE-AKS", "TS-AZURE-APIM", "TS-AZURE-KEYVAULT", "TS-NET-SUB-AZ-RISK-APP"})
 
     def test_our_side_lands_in_the_subscription_the_product_names(self) -> None:
         """The vendor stays in its tenancy; the gateway, the egress and the
@@ -1307,20 +1330,19 @@ class TestRenderedParts(unittest.TestCase):
         cls.zones = render_landing_zones(cls.modules, cls.shapes, cls.model)
 
     def test_every_provider_a_shape_lands_on_has_a_landing_zone_section(self) -> None:
-        self.assertIn("| [AWS](#aws) | `aws-product-onboarding`, `saas-onboarding` |", self.zones)
+        self.assertIn("| [AWS](#aws) | `aws-product-onboarding`, `aws-workload-network`, `saas-onboarding` |", self.zones)
         self.assertIn('<a id="azure"></a>', self.zones)
         self.assertIn("## Shared", self.zones)
         self.assertNotIn("On-prem", self.zones)
 
     def test_a_landing_zone_lists_what_it_has_and_what_is_asked_of_it_that_it_lacks(self) -> None:
         self.assertIn("(`TS-AWS-APIGW`) | `api-outbound` (front_door)", self.zones)
-        self.assertIn(
-            "| `identity-provider` | Microsoft Entra ID (`TS-ENTRA-ID`) | `admin-console` (idp), "
-            "`identity-hub` (idp), `sso-federation` (idp) |",
-            self.zones,
-        )
-        self.assertIn("| `foundation-model-service` | Amazon Bedrock (`TS-AWS-BEDROCK`) | `ml-inference-service` (models) |",
-                      self.zones)
+        # Read by the part each row is about: every part added to the
+        # library lengthened the list, and the test with it.
+        rows = {line.split(" | ")[0] + " | " + line.split(" | ")[1]: line for line in self.zones.splitlines()
+                if line.startswith("| `") and line.count(" | ") >= 2}
+        self.assertIn("`admin-console` (idp)", rows["| `identity-provider` | Microsoft Entra ID (`TS-ENTRA-ID`)"])
+        self.assertIn("`ml-inference-service` (models)", rows["| `foundation-model-service` | Amazon Bedrock (`TS-AWS-BEDROCK`)"])
         self.assertIn("(`TS-NET-VPN`) — ambiguous | — |", self.zones)
         self.assertIn(
             "| `event-stream` | Azure Event Hubs (`TS-AZURE-EVENTHUBS`) | `async-worker` (stream) |",

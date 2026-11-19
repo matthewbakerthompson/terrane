@@ -194,11 +194,11 @@ if (!(await fetch(URL + "/api/view?id=lending-onboarding")).ok) {
   });
   check("pressed, its arrow opens Add asking what comes next", asked.open && /What comes next to Lending portal/.test(asked.said),
     asked.said);
-  await lend.evaluate(() => Array.from(document.querySelectorAll("#cvPicker .cv-tab")).find((t) => t.innerText.trim() === "This estate").click());
+  await lend.evaluate(() => Array.from(document.querySelectorAll("#cvPicker .cv-shelf")).find((t) => t.firstChild.textContent === "Systems").click());
   await pause(300);
   const chosen = await lend.evaluate(() => {
     const row = document.querySelector("#cvPicker .cv-row");
-    const name = row.querySelector("b").innerText;
+    const name = (row.querySelector("b") || row.querySelector(".cv-cell-name")).innerText;
     row.click();
     return name;
   });

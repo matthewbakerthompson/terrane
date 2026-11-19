@@ -22,6 +22,10 @@ Boundary(b_Client_Opportunity_to_Live_Program, "Client Opportunity to Live Progr
   ' aac P_TPS_008: company_domain=""
   System(P_TPS_004, "Produce contracted client reporting", "Produce and deliver reporting to the schedule and specification in the client contract. Contracted reporting ships to specification and schedule; late or wrong reporting is an SLA breach with credits, so production is monitored like any critical batch.", $tags="processes")
   ' aac P_TPS_004: company_domain=""
+  System(P_CLIENTMGMT_001, "Qualify, price, and contract servicing client", "Qualify a lender that wants its card portfolio serviced, price the work from the portfolio's size and the services chosen, answer the client's own diligence of the bank, and sign the servicing agreement and service levels. The agreement sets the reporting, service levels and change process every later step is held to.", $tags="processes")
+  ' aac P_CLIENTMGMT_001: company_domain=""
+  System(P_CLIENTMGMT_002, "Review client service levels and performance", "Report each client's service levels, portfolio performance and open issues, hold the monthly service review, and agree remediation and credits where a service level was missed. Missed service levels carry contractual credits, and a run of them can end a client relationship.", $tags="processes")
+  ' aac P_CLIENTMGMT_002: company_domain=""
   System(P_TPS_007, "Support client audit or examination", "Assemble evidence and respond to client and client-regulator oversight requests. Client audits and client-regulator exams get coordinated evidence with the same discipline as the bank's own exams; commitments made in responses are tracked.", $tags="processes")
   ' aac P_TPS_007: company_domain=""
 }
@@ -30,14 +34,56 @@ Boundary(b_Concept_to_Market, "Concept to Market") {
   ' aac P_PRODUCT_002: company_domain=""
   System(P_PRODUCT_001, "Design and approve product change", "Define, price, and obtain approval for a change to a card product. A product change binds pricing, terms, and eligibility; approval spans product, credit, finance, legal, and compliance before configuration starts.", $tags="processes")
   ' aac P_PRODUCT_001: company_domain=""
+  System(P_PRODUCT_005, "Design rewards program and earn structure", "Design the earn rates, categories, caps, redemption values and partner funding of a rewards program, model its cost against the revenue it should bring, and take it through legal and compliance review. Rewards terms are part of the card agreement, so changing them is a change in terms that needs notice.", $tags="processes")
+  ' aac P_PRODUCT_005: company_domain=""
   System(P_PRODUCT_003, "Launch product to market", "Configure, test, and release a product for origination across all affected systems. Launch is a coordinated configuration across origination, core, servicing, and statements, verified in test before the product opens to volume.", $tags="processes")
   ' aac P_PRODUCT_003: company_domain=""
+  System(P_PARTNERSHIPS_002, "Manage co-brand program agreement", "Negotiate and amend a co-brand or affinity agreement, track the partner's obligations on marketing, data sharing and approval of card terms, and hold the quarterly program review. The partner's brand is on the card but the bank is the lender, so marketing and terms the partner proposes still pass the bank's compliance review.", $tags="processes")
+  ' aac P_PARTNERSHIPS_002: company_domain=""
   System(P_PRODUCT_004, "Retire or migrate product", "Sunset a product and migrate affected accounts with required notice. Retirement manages the migration and notices for live accounts; terms changes ride the change-in-terms rules, and the product stays resolvable for history.", $tags="processes")
   ' aac P_PRODUCT_004: company_domain=""
+}
+Boundary(b_Dealer_Purchase_to_Funded_Loan, "Dealer Purchase to Funded Loan") {
+  System(P_LENDING_012, "Assign repossession and send required notices", "Assign a licensed repossession agent, confirm the recovery and the personal property found inside, and send the notices of redemption rights and intended sale each state requires. A repossession done or noticed outside state law voids the deficiency and invites a claim, so the notice timeline is controlled state by state.", $tags="processes")
+  ' aac P_LENDING_012: company_domain=""
+  System(P_LENDING_009, "Bill installment loan and post payments", "Send the monthly bill, take payments by ACH, debit card, check and automatic payment, and post them to interest, principal and fees in the order the contract says. Posting drives the delinquency that collections and bureau reporting read, so a misposted payment shows up as a wrong late fee, a wrong call and a wrong bureau line.", $tags="processes")
+  ' aac P_LENDING_009: company_domain=""
+  System(P_LENDING_006, "Board loan and fund dealer", "Create the loan on the servicing platform with its terms, payment schedule and collateral, pay the dealer the amount financed with its reserve, and post the entries. Boarding errors surface months later as wrong payment amounts or payoff quotes, and a funding paid twice or to the wrong dealer is cash out of the door.", $tags="processes")
+  ' aac P_LENDING_006: company_domain=""
+  System(P_LENDING_015, "Calculate and settle dealer reserve", "Calculate the dealer's participation on each funded loan, pay it, and charge back the unearned part when a loan pays off or defaults inside the chargeback window. Reserve is the dealer's pay for the rate it sets, so its calculation is also what the markup review reads.", $tags="processes")
+  ' aac P_LENDING_015: company_domain=""
+  System(P_LENDING_014, "Cancel ancillary products and refund unearned premium", "When a loan pays off early, is charged off, or its collateral is repossessed or destroyed, cancel the gap coverage, service contract and credit insurance sold with it and refund the unearned part. Missed refunds are a recurring supervisory finding in indirect lending, and they are owed whether or not the borrower asks.", $tags="processes")
+  ' aac P_LENDING_014: company_domain=""
+  System(P_LENDING_004, "Decide indirect loan and return terms", "Score the application against the recreation lending credit policy, price it, and return an approval, a counteroffer with conditions, or a decline to the dealer while the buyer waits. Counteroffers and declines carry adverse action obligations, and the collateral's value sets the advance, so the decision reads the asset's value guide as well as the bureau.", $tags="processes")
+  ' aac P_LENDING_004: company_domain=""
+  System(P_LENDING_002, "Monitor dealer performance and program compliance", "Review each dealer's volume, early payment defaults, funding exceptions, complaints and rate markup against program limits, and put dealers on watch, retrain or end them. Dealer markup is where indirect lending meets fair lending exposure, so the review evidences the markup cap as well as credit quality.", $tags="processes")
+  ' aac P_LENDING_002: company_domain=""
+  System(P_LENDING_016, "Originate point-of-sale installment loan", "Take a financing application started in a retailer's checkout, check affordability from the shopper's bank data with consent, decide it, and book the installment loan with disbursement through the card ledger. The point-of-sale products run on platforms of their own, apart from the dealer channel, and share its credit policy and adverse action rules.", $tags="processes")
+  ' aac P_LENDING_016: company_domain=""
+  System(P_LENDING_007, "Perfect lien with titling state", "Record the bank as lienholder with the titling state, electronically where the state allows and on paper where it does not, and chase the title until it is in custody. An unperfected lien leaves the loan unsecured in a bankruptcy, so anything aging past the policy window is reported weekly by state and by dealer.", $tags="processes")
+  ' aac P_LENDING_007: company_domain=""
+  System(P_LENDING_008, "Quote payoff and release title", "Give the borrower or a refinancing lender a payoff quote, apply the payoff, and release the lien and send the title within the state's deadline. Late releases carry statutory penalties and complaints, and a release sent before the payoff funds clear is collateral given away.", $tags="processes")
+  ' aac P_LENDING_008: company_domain=""
+  System(P_LENDING_003, "Receive and validate dealer-submitted application", "Accept a credit application keyed by the dealer's finance office, check it is complete, verify the applicant's identity and screen it for application fraud before it reaches the decision. The buyer is at the dealership, so intake runs against a point-of-sale clock; an incomplete or unverified application that slips through becomes a funding exception later.", $tags="processes")
+  ' aac P_LENDING_003: company_domain=""
+  System(P_LENDING_001, "Recruit, vet, and contract dealer", "Recruit a dealer, check its licensing, ownership and complaint history, and sign the dealer agreement and program terms. A dealer takes credit applications in the bank's name, so diligence before the first application is the control that matters; an unvetted dealer is a fair lending and fraud exposure on every loan it sends.", $tags="processes")
+  ' aac P_LENDING_001: company_domain=""
+  System(P_LENDING_013, "Remarket recovered collateral and pursue deficiency", "Recondition and sell the recovered vehicle or boat at auction or retail, apply the proceeds, cancel the ancillary products for refund, and collect, place or sell the deficiency balance. The sale must be commercially reasonable and properly noticed, or the deficiency cannot be collected at all.", $tags="processes")
+  ' aac P_LENDING_013: company_domain=""
+  System(P_LENDING_005, "Review contract package and clear stipulations", "Check the signed retail installment contract, the title application and the proofs of income, insurance and identity the approval was conditioned on, and send back what is missing or wrong. A contract funded with an open stipulation is a loan the bank may not be able to enforce or perfect, which is why funding waits on this review.", $tags="processes")
+  ' aac P_LENDING_005: company_domain=""
+  System(P_LENDING_010, "Service installment loan account requests", "Handle borrower requests on a loan: due-date changes, payment deferrals and extensions, insurance and address updates, and statements of account. A deferral changes the payment schedule and the interest earned, so it is approved to policy and recorded where collections and finance will see it.", $tags="processes")
+  ' aac P_LENDING_010: company_domain=""
+  System(P_LENDING_017, "Service point-of-sale installment loan", "Collect the scheduled installments on point-of-sale loans, handle early settlement and missed payments, and keep the shopper informed by message and statement. These loans repay over months rather than years and are serviced on the installment lending platform, not on the recreation loan system.", $tags="processes")
+  ' aac P_LENDING_017: company_domain=""
 }
 Boundary(b_Delinquency_to_Recovery, "Delinquency to Recovery") {
   System(P_COLLECTIONS_001, "Assign delinquency treatment strategy", "Segment delinquent accounts and assign the contact and treatment strategy. Runs nightly after delinquency bucketing; the strategy drives queue, channel, intensity, and hardship routing, and a wrong assignment is a conduct risk as much as a loss risk.", $tags="processes")
   ' aac P_COLLECTIONS_001: company_domain=""
+  System(P_LENDING_011, "Collect delinquent installment loan", "Work past-due installment loans through calls, letters and digital contact, take promises and arrangements, and decide when a loan goes to repossession. Recreation loans are secured and seasonal, so treatment weighs the collateral and the season as well as the days past due; the contact limits that apply to cards apply here too.", $tags="processes")
+  ' aac P_LENDING_011: company_domain=""
+  System(P_COLLECTIONS_010, "Collect serviced client portfolio to client strategy", "Work delinquent accounts on a client's portfolio to the client's own treatment strategy, scripts and settlement authority, in the client's name, and report results back under the servicing agreement. Collecting another lender's accounts brings third-party collector rules into play, so contact and notice rules can differ from those on the bank's own portfolio.", $tags="processes")
+  ' aac P_COLLECTIONS_010: company_domain=""
   System(P_DELQ_001, "Detect and bucket delinquent account", "Identify accounts that have missed a payment and assign them to the correct delinquency bucket. Bucketing runs in the nightly cycle and is the trigger for every downstream collections treatment; a bucketing error propagates into contact, reporting, and accounting.", $tags="processes")
   ' aac P_DELQ_001: company_domain=""
   System(P_SERVICING_008, "Enroll account in hardship or assistance program", "Assess eligibility and enroll an account into a hardship or payment assistance program. Hardship enrollment applies documented eligibility consistently; program terms change interest, fees, and reporting, so enrollment is evidenced and reviewed.", $tags="processes")
@@ -56,12 +102,36 @@ Boundary(b_Delinquency_to_Recovery, "Delinquency to Recovery") {
   ' aac P_RECOVERY_004: company_domain=""
   System(P_COLLECTIONS_007, "Issue debt validation notice", "Generate and deliver the required validation notice within the prescribed period. The validation notice is a statutory precondition to continued collection on affected accounts; timing and content mistakes surface directly as regulatory findings.", $tags="processes")
   ' aac P_COLLECTIONS_007: company_domain=""
+  System(P_COLLECTIONS_009, "Locate unreachable borrower", "When contact details fail, search consumer reporting and public data for new phone numbers and addresses, verify them, and return the account to treatment. Location data is consumer report information used under a permissible purpose, and a wrong-party contact discloses the debt to someone else.", $tags="processes")
+  ' aac P_COLLECTIONS_009: company_domain=""
   System(P_COLLECTIONS_003, "Negotiate and administer payment arrangement", "Agree, document, and administer a payment arrangement or settlement. Covers promises to pay, long-term arrangements, and settlements; terms must fit the approved matrix, and the arrangement drives bucket movement and interest treatment downstream.", $tags="processes")
   ' aac P_COLLECTIONS_003: company_domain=""
+  System(P_COLLECTIONS_008, "Negotiate settlement offer", "Offer a reduced lump-sum or short-term settlement within the approved matrix, put the terms in writing before payment, and on completion close the account and update the bureaus as settled. A settlement outside the matrix, or without written terms, is the account a regulator samples first.", $tags="processes")
+  ' aac P_COLLECTIONS_008: company_domain=""
   System(P_RECOVERY_001, "Place account with collection agency", "Select, place, and monitor charged-off accounts with an external collection agency. Agency placement follows the approved network with performance and conduct oversight; the agency acts in the bank's name, so its conduct is the bank's risk.", $tags="processes")
   ' aac P_RECOVERY_001: company_domain=""
   System(P_RECOVERY_005, "Post recovery and account for proceeds", "Post recoveries and account for proceeds from agency, legal, and sale channels. Proceeds post against charged-off balances with channel attribution; recoveries feed the loss forecast, so mis-posting distorts the allowance.", $tags="processes")
   ' aac P_RECOVERY_005: company_domain=""
+  System(P_RECOVERY_006, "Refer account to legal and manage litigation", "Choose accounts for suit under the legal placement strategy, place them with outside counsel, track filings, judgments and garnishments, and post the recoveries. Every account sued needs the documents to prove the debt, and a suit on a time-barred or disputed account is a conduct finding.", $tags="processes")
+  ' aac P_RECOVERY_006: company_domain=""
+}
+Boundary(b_Deposit_Opened_to_Maturity, "Deposit Opened to Maturity") {
+  System(P_DEPOSITS_005, "Accrue and pay deposit interest", "Accrue interest daily on every CD and savings account at its contract rate, credit or pay it on schedule, and post the expense to the ledger. An accrual error repeats across every account on the same rate, so the daily accrual is reconciled to the ledger before close.", $tags="processes")
+  ' aac P_DEPOSITS_005: company_domain=""
+  System(P_DEPOSITS_008, "Administer deposit insurance records and escheatment", "Keep the ownership categories and records the deposit insurer needs to determine coverage, answer depositors' coverage questions, and report and remit dormant balances to the states. In a failure, coverage is determined from these records, so a record that cannot be read is a depositor who cannot be paid on time.", $tags="processes")
+  ' aac P_DEPOSITS_008: company_domain=""
+  System(P_DEPOSITS_003, "Issue brokered CDs through the broker network", "Agree the size, term and rate of a brokered CD issue with Treasury, offer it through the broker-dealer network, and confirm the allocations each broker sold. Brokered CDs are a primary funding channel, and their volume is watched against the brokered deposit limits that apply if capital weakens.", $tags="processes")
+  ' aac P_DEPOSITS_003: company_domain=""
+  System(P_DEPOSITS_002, "Open and fund direct deposit account", "Open a CD or savings account applied for online, verify the depositor's identity and screen for sanctions, deliver the account disclosures, and take the opening deposit by ACH or wire. Deposit accounts are an entry point for fraud and money laundering, so identity and the source of funds are checked before the account goes live.", $tags="processes")
+  ' aac P_DEPOSITS_002: company_domain=""
+  System(P_DEPOSITS_007, "Process CD maturity, renewal, and early withdrawal", "Send maturity notices ahead of the date, take the depositor's instruction, renew at the current rate or pay out at maturity, and calculate the penalty on an early withdrawal. A CD that renews without the required notice, or pays out to an unverified account, is both a complaint and a fraud exposure.", $tags="processes")
+  ' aac P_DEPOSITS_007: company_domain=""
+  System(P_DEPOSITS_006, "Produce deposit tax reporting", "Produce and deliver year-end interest statements to depositors and file the information returns, with corrections and backup withholding where a taxpayer id is missing or wrong. The filing deadlines are fixed, and missing or wrong forms carry penalties by the form.", $tags="processes")
+  ' aac P_DEPOSITS_006: company_domain=""
+  System(P_DEPOSITS_001, "Set deposit rates and product terms", "Set the rate sheet for CDs and savings against funding needs and the market, approve term and early withdrawal penalty changes, and publish the disclosures that must match. Rates are the funding cost of every loan the bank makes, and a published rate that differs from the booked one is a disclosure error.", $tags="processes")
+  ' aac P_DEPOSITS_001: company_domain=""
+  System(P_DEPOSITS_004, "Settle brokered CDs and keep the position", "Settle each brokered issue through the depository against the brokers' allocations, record the CD position, and pay interest and maturities through the same channel, reconciling to the brokers' records. The underlying depositors are the brokers' customers, so their insurance coverage depends on the pass-through records kept here.", $tags="processes")
+  ' aac P_DEPOSITS_004: company_domain=""
 }
 Boundary(b_Inquiry_to_Resolution, "Inquiry to Resolution") {
   System(P_COMPLIANCE_005, "Analyze complaint signal for conduct risk", "Aggregate and analyze complaint data for unfair or deceptive practice risk. Feeds the UDAAP program: complaint taxonomy, root cause, and trend analysis across channels, including complaints held by servicing clients about serviced portfolios.", $tags="processes")
@@ -70,6 +140,8 @@ Boundary(b_Inquiry_to_Resolution, "Inquiry to Resolution") {
   ' aac P_SERVICING_005: company_domain=""
   System(P_SERVICING_006, "Capture and resolve complaint", "Capture, classify, resolve, and evidence a cardholder complaint. Complaint handling runs intake through evidenced resolution with regulatory routing where required; the taxonomy feeds UDAAP analysis, so classification is not clerical.", $tags="processes")
   ' aac P_SERVICING_006: company_domain=""
+  System(P_SERVICING_015, "Close account and settle final balance", "Close the account at the cardholder's or the bank's request, stop new charges while recurring payments and pending items clear, forfeit or pay out rewards per the terms, report the closure to the bureaus correctly, and confirm it in writing. A closed account still has a balance to bill and a bureau line to keep accurate.", $tags="processes")
+  ' aac P_SERVICING_015: company_domain=""
   System(P_SERVICING_004, "Execute account maintenance request", "Execute a cardholder-requested change to account details or preferences. Maintenance changes execute after authentication with an audit trail; address changes get extra scrutiny because they precede takeover fraud.", $tags="processes")
   ' aac P_SERVICING_004: company_domain=""
   System(P_DISPUTE_002, "Execute network chargeback", "Submit and track a chargeback through the network within the applicable filing window. Chargeback rights and filing windows differ by network and reason code; a missed window converts a recoverable dispute into an issuer loss.", $tags="processes")
@@ -94,6 +166,32 @@ Boundary(b_Inquiry_to_Resolution, "Inquiry to Resolution") {
   ' aac P_DISPUTE_003: company_domain=""
   System(P_FRAUD_003, "Respond to account takeover event", "Contain, remediate, and communicate an account takeover or identity compromise event. Account takeover response contains first, then remediates credentials, reverses fraudulent activity, and communicates with the cardholder; speed limits the loss.", $tags="processes")
   ' aac P_FRAUD_003: company_domain=""
+  System(P_SERVICING_014, "Retain account at closure request", "When a cardholder asks to close, find the reason, offer what the retention strategy allows, such as a fee waiver, a rate review or a product change, and record the outcome. Offers follow the approved matrix, or two cardholders in the same position get different treatment.", $tags="processes")
+  ' aac P_SERVICING_014: company_domain=""
+}
+Boundary(b_Merchant_Signed_to_Settled, "Merchant Signed to Settled") {
+  System(P_MERCHANT_011, "Bill merchant fees and serve statements", "Calculate the month's processing, network and service fees, deliver the merchant statement, pay ISO residuals, and answer merchant and ISO questions about funding and fees. Statements are what a merchant checks its funding against, so a pricing error found here is a refund to many merchants at once.", $tags="processes")
+  ' aac P_MERCHANT_011: company_domain=""
+  System(P_MERCHANT_005, "Board merchant and register with networks", "Set the approved merchant up on the acquiring platform with its pricing, limits and reserve, assign merchant and terminal ids, and register it with the card networks under the bank's sponsorship. Boarding is where approved terms become system parameters, and a limit keyed wrong is exposure nobody approved.", $tags="processes")
+  ' aac P_MERCHANT_005: company_domain=""
+  System(P_MERCHANT_002, "Capture merchant application", "Take a merchant's application, sent by an ISO or made directly in the merchant portal, with its owners, processing history, business model and bank account, and check it is complete before underwriting. Beneficial ownership is collected here because sanctions screening and the network's terminated-merchant check both read it.", $tags="processes")
+  ' aac P_MERCHANT_002: company_domain=""
+  System(P_MERCHANT_009, "Monitor merchant exposure and activity", "Watch merchant volume, ticket size, refund and chargeback ratios and future delivery exposure against approved limits, and investigate spikes, collusion and bust-out patterns. Excessive chargeback ratios put the merchant and the bank into network monitoring programs, with fines.", $tags="processes")
+  ' aac P_MERCHANT_009: company_domain=""
+  System(P_MERCHANT_001, "Onboard and oversee ISO or agent", "Diligence and contract an independent sales organization or agent, register it with the networks, and review its portfolio quality, complaints and residuals each month. The bank sponsors the ISO's merchants into the networks and carries their liability, so an ISO's underwriting shortcuts become the bank's chargeback losses.", $tags="processes")
+  ' aac P_MERCHANT_001: company_domain=""
+  System(P_MERCHANT_008, "Process acquiring chargeback", "Receive chargebacks from the networks against merchants, debit the merchant or its reserve, collect the merchant's evidence and represent within the reason code's window, and absorb the loss when the merchant cannot pay. Chargebacks a merchant cannot cover fall on the bank as its sponsor.", $tags="processes")
+  ' aac P_MERCHANT_008: company_domain=""
+  System(P_MERCHANT_004, "Screen merchant against sanctions and network lists", "Screen the business and its owners against sanctions lists and the networks' terminated-merchant file, and review prohibited and brand-damaging business types before boarding. A merchant on the terminated file, or in a prohibited category, boarded under the bank's sponsorship draws network fines on the bank.", $tags="processes")
+  ' aac P_MERCHANT_004: company_domain=""
+  System(P_MERCHANT_007, "Set and adjust merchant reserve", "Set the reserve or delayed funding a merchant must carry, raise it when chargebacks, refunds or delivery risk grow, and release it when exposure ends after the merchant leaves. Reserves are held merchant money, so each change is evidenced against the merchant agreement.", $tags="processes")
+  ' aac P_MERCHANT_007: company_domain=""
+  System(P_MERCHANT_006, "Settle and fund merchants", "Clear the day's card volume, net out fees, chargebacks and reserve holds, and fund each merchant's bank account by ACH, reconciling network settlement to merchant funding. Funding a merchant that should have been held is exactly the loss the reserve was meant to cover.", $tags="processes")
+  ' aac P_MERCHANT_006: company_domain=""
+  System(P_MERCHANT_010, "Terminate merchant and report to network list", "Close a merchant for risk, fraud or breach, hold funds to cover the chargeback tail, and add it to the networks' terminated-merchant file where the rules require. A termination that is not reported lets the merchant board elsewhere, and is itself a rule breach.", $tags="processes")
+  ' aac P_MERCHANT_010: company_domain=""
+  System(P_MERCHANT_003, "Underwrite merchant", "Assess the merchant's credit, processing history, delivery timeframes and chargeback exposure against the appetite for its business type, and approve with limits and reserve terms, or decline. Specialty and higher-risk business types are the point of the program, so underwriting sets the exposure every later step monitors.", $tags="processes")
+  ' aac P_MERCHANT_003: company_domain=""
 }
 Boundary(b_Prospect_to_Funded_Account, "Prospect to Funded Account") {
   System(P_MARKETING_001, "Build and permission prospect list", "Source, screen, and permission prospect data for use in acquisition campaigns. Prospect data carries permissible-purpose and suppression obligations; the list that leaves this process is the compliant universe for everything downstream.", $tags="processes")
@@ -132,6 +230,8 @@ Boundary(b_Transact_to_Statement, "Transact to Statement") {
   ' aac P_REWARDS_001: company_domain=""
   System(P_SERVICING_011, "Administer secured card deposit lifecycle", "Collect, hold, apply, and refund security deposits for secured card accounts, including graduation and charge-off application, with correct accounting and disclosure treatment.", $tags="processes")
   ' aac P_SERVICING_011: company_domain=""
+  System(P_PAYMENTS_010, "Allocate payment across balances", "Apply each payment above the minimum to the balance with the highest rate first, as the card rules require, and treat promotional, deferred-interest and disputed balances correctly. Allocation errors overcharge interest on every account with more than one balance, which makes them a remediation, not a correction.", $tags="processes")
+  ' aac P_PAYMENTS_010: company_domain=""
   System(P_SERVICING_012, "Apply servicemember and military lending protections", "Identify covered borrowers, apply the required rate and fee protections, and evidence compliance for servicemember accounts.", $tags="processes")
   ' aac P_SERVICING_012: company_domain=""
   System(P_SERVICING_001, "Assess interest, fees, and minimum payment", "Calculate interest, fees, and the minimum payment due for the billing cycle. Cycle assessment applies the cardholder agreement exactly: interest method, fee triggers, and minimum-payment formula, because a systematic error here is a remediation event.", $tags="processes")
@@ -142,8 +242,12 @@ Boundary(b_Transact_to_Statement, "Transact to Statement") {
   ' aac P_STMT_GEN_001: company_domain=""
   System(P_SERVICING_002, "Deliver and archive statement", "Deliver the statement by the cardholder's elected channel and retain it for retrieval. Delivery honors the e-consent election and postal fallback; the archived statement is the legal record retrieved for disputes and subpoenas.", $tags="processes")
   ' aac P_SERVICING_002: company_domain=""
+  System(P_FRAUD_007, "Detect and act on first-party fraud and bust-out", "Spot accounts run up to the limit by their owners with no intent to repay, from rapid balance build, payments that return and links between applications, then restrict the account and route it to fraud rather than collections. Booked as credit loss, first-party fraud is worked by the wrong team and reported in the wrong line.", $tags="processes")
+  ' aac P_FRAUD_007: company_domain=""
   System(P_FRAUD_001, "Detect and action transaction fraud alert", "Detect a suspected fraudulent transaction, action the alert, and contact the cardholder. Alert handling runs against loss and customer-friction budgets; actions span block, reissue, and contact, and the clock matters because exposure grows per transaction.", $tags="processes")
   ' aac P_FRAUD_001: company_domain=""
+  System(P_PAYMENTS_008, "Enroll and run automatic payments", "Enroll a cardholder's bank account for recurring payments of the minimum, the statement balance or a fixed amount, verify the account, and originate the debits on schedule under the authorization the cardholder gave. Each debit needs a valid authorization, and a debit taken after it was revoked is an error claim.", $tags="processes")
+  ' aac P_PAYMENTS_008: company_domain=""
   System(P_DIGITAL_001, "Enroll cardholder in digital servicing", "Register and authenticate a cardholder for web and mobile self-service. Enrollment binds the cardholder to a verified identity with step-up options; weak enrollment is the account-takeover front door, so identity proofing follows the fraud strategy.", $tags="processes")
   ' aac P_DIGITAL_001: company_domain=""
   System(P_CREDIT_004, "Execute credit line decrease or account action", "Apply risk-driven line decreases or account actions, with required notice. Adverse action obligations apply to decreases and closures just as they do to declines; the notice must state the principal reasons and bureau information used.", $tags="processes")
@@ -154,12 +258,16 @@ Boundary(b_Transact_to_Statement, "Transact to Statement") {
   ' aac P_SETTLEMENT_001: company_domain=""
   System(P_PAYMENTS_002, "Ingest clearing file and post transactions", "Receive network clearing files and post transactions to cardholder accounts. Clearing ingestion matches presentments to authorizations, posts to accounts, and routes exceptions; the file must balance to network totals before posting completes.", $tags="processes")
   ' aac P_PAYMENTS_002: company_domain=""
+  System(P_PAYMENTS_007, "Maintain authorization routing and network connectivity", "Maintain the switch's routing tables, network keys and message specifications, apply the networks' release changes, and test connectivity with each network. A routing or key error declines every transaction on that path until it is fixed.", $tags="processes")
+  ' aac P_PAYMENTS_007: company_domain=""
   System(P_CREDIT_007, "Maintain authorization strategy", "Define and deploy the rules governing real-time authorization decisions. Authorization strategy balances approval rates, fraud losses, and credit exposure in real time; changes deploy through the same testing discipline as origination strategy.", $tags="processes")
   ' aac P_CREDIT_007: company_domain=""
   System(P_PAYMENTS_004, "Manage token and credential lifecycle", "Issue, update, suspend, and delete payment tokens and credentials. Token lifecycle events flow between networks, wallets, and the account of record; a stale token strands the cardholder's wallet, so lifecycle sync is monitored.", $tags="processes")
   ' aac P_PAYMENTS_004: company_domain=""
   System(P_SETTLEMENT_004, "Monitor and optimize interchange qualification", "Monitor interchange qualification rates, identify downgrades, and drive corrections in processing configuration.", $tags="processes")
   ' aac P_SETTLEMENT_004: company_domain=""
+  System(P_PAYMENTS_006, "Operate stand-in authorization during a host outage", "When the authorization host is slow or down, switch to stand-in so the switch or the network approves within set limits, then replay the stand-in decisions to the ledger when the host returns. Stand-in limits trade lost sales against unsecured exposure, and every stand-in approval must post or it is a balance nobody owes.", $tags="processes")
+  ' aac P_PAYMENTS_006: company_domain=""
   System(P_CREDIT_008, "Perform account review and reissue decision", "Review account risk periodically and decide reissue, close, or continue. Periodic account review drives reissue, line, and closure decisions at card expiry and on risk triggers; decisions carry the same notice obligations as any adverse action.", $tags="processes")
   ' aac P_CREDIT_008: company_domain=""
   System(P_INTERCHANGE_POST_001, "Post interchange and settlement entries", "Calculate and post interchange and settlement accounting entries to the ledger. Interchange entries reconcile to network reports before posting; unexplained variances stop the post rather than flowing into revenue.", $tags="processes")
@@ -168,14 +276,24 @@ Boundary(b_Transact_to_Statement, "Transact to Statement") {
   ' aac P_PAYMENTS_001: company_domain=""
   System(P_SERVICING_003, "Process billing adjustment or goodwill credit", "Apply approved goodwill credits, fee reversals, and billing corrections. Adjustments carry approval limits and reason codes; patterns feed complaint and conduct analysis because repeated goodwill on the same defect is a signal.", $tags="processes")
   ' aac P_SERVICING_003: company_domain=""
+  System(P_PAYMENTS_009, "Process lockbox and check payments", "Receive mailed checks through the lockbox, match each to an account by coupon or by research, post it the day it arrives, and work the exceptions. A payment received by the cutoff must be credited that day, so unmatched items are researched before they age.", $tags="processes")
+  ' aac P_PAYMENTS_009: company_domain=""
+  System(P_SERVICING_013, "Process product change or upgrade", "Move an account to another card product at the cardholder's request or by invitation, carrying over the balance, history and rewards as the program rules say, and issue the new card and terms. A product change that resets the account's age or loses rewards is a complaint and, if terms worsen without notice, a disclosure failure.", $tags="processes")
+  ' aac P_SERVICING_013: company_domain=""
   System(P_PAYMENTS_003, "Process returned payment and assess NSF", "Handle returned and reversed payments and assess the associated fees. Return handling reverses the payment application, restores the balance, assesses any permitted fee, and feeds NSF patterns to risk; Reg E error claims can start here.", $tags="processes")
   ' aac P_PAYMENTS_003: company_domain=""
   System(P_REWARDS_002, "Process rewards redemption", "Execute a cardholder rewards redemption and settle the resulting obligation. Redemption executes across cash, statement credit, and partner channels; partner settlement follows the program contract, and failed redemptions reverse cleanly.", $tags="processes")
   ' aac P_REWARDS_002: company_domain=""
   System(P_NETWORK_RECON_001, "Reconcile network settlement", "Reconcile network settlement files against internal transaction and ledger positions and resolve breaks.", $tags="processes")
   ' aac P_NETWORK_RECON_001: company_domain=""
+  System(P_SERVICING_016, "Refund credit balance and report unclaimed property", "Refund a credit balance when the cardholder asks or once it reaches the regulatory age, by check or deposit, and report and remit balances that cannot be returned to the states as unclaimed property. Both clocks are regulatory, and a refund check that is never cashed starts the unclaimed property clock again.", $tags="processes")
+  ' aac P_SERVICING_016: company_domain=""
+  System(P_COMPLIANCE_008, "Screen transactions and parties against sanctions in line", "Screen card transactions in the authorization path, and customers and counterparties nightly, against sanctions, politically exposed person and adverse media lists, and hold or block the true matches. A missed sanctions match is a strict-liability violation, so list updates are applied the day they are published.", $tags="processes")
+  ' aac P_COMPLIANCE_008: company_domain=""
   System(P_DIGITAL_002, "Serve digital self-service transaction", "Execute a cardholder self-service action in web or mobile without agent involvement. Self-service actions execute against the same core services as agent actions, with the same entitlements; the channel changes, the control does not.", $tags="processes")
   ' aac P_DIGITAL_002: company_domain=""
+  System(P_REWARDS_004, "Serve redemption catalog and fulfill orders", "Serve the rewards catalog, take redemptions for statement credit, gift cards, merchandise and travel, send orders to the fulfillment partners, and reverse the points when an order fails or comes back. The rewards liability is relieved only when value is delivered, so undelivered orders are tracked until they close.", $tags="processes")
+  ' aac P_REWARDS_004: company_domain=""
 }
 System(P_CREDIT_009, "Acquire and refresh credit bureau data", "Source consumer bureau data for prescreen, account review, and portfolio monitoring under permissible purpose, and manage refresh cadence and quality.", $tags="processes")
 ' aac P_CREDIT_009: company_domain=""
@@ -187,8 +305,12 @@ System(P_EA_005, "Assess technology lifecycle and rationalization", "Rate each a
 ' aac P_EA_005: company_domain=""
 System(P_QE_002, "Build and maintain the automated regression suite", "Author, review, and prune automated tests so the regression suite stays fast, trusted, and aligned to current behavior.", $tags="processes")
 ' aac P_QE_002: company_domain=""
+System(P_PARTNERSHIPS_003, "Calculate and settle partner revenue share", "Calculate each partner's share of interchange, interest and fees, its bounties for new accounts and its rewards funding under the agreement, settle the net amount, and reconcile it to the ledger. Revenue share is the partner's view of the program's health, so a disputed calculation sours the relationship as well as the books.", $tags="processes")
+' aac P_PARTNERSHIPS_003: company_domain=""
 System(P_QE_008, "Certify a release for production", "Assess test results, open defects, and exit criteria, and issue or withhold the quality certification the change authority relies on.", $tags="processes")
 ' aac P_QE_008: company_domain=""
+System(P_FINANCE_003, "Compile, certify, and file regulatory reports", "Compile the quarterly condition and income report and the other regulatory filings from the prepared data, review the variances, get the certifying officer's sign-off, and file by the deadline. Late or restated filings are reported to the board and draw the examiners' attention.", $tags="processes")
+' aac P_FINANCE_003: company_domain=""
 System(P_CREDIT_005, "Conduct monthly portfolio credit review", "Review vintage, roll-rate, and segment performance against risk appetite and record the actions agreed at the portfolio credit review.", $tags="processes")
 ' aac P_CREDIT_005: company_domain=""
 System(P_RISK_003, "Coordinate regulatory examination", "Coordinate the response to a regulatory examination, including evidence and findings. Exam coordination controls the single flow of requests, evidence, and meetings; every submission is logged and consistent with what other responses have said.", $tags="processes")
@@ -235,6 +357,8 @@ System(P_SETTLEMENT_003, "Investigate and clear settlement exception", "Investig
 ' aac P_SETTLEMENT_003: company_domain=""
 System(P_COMPLIANCE_004, "Investigate and file suspicious activity report", "Investigate an alert and, where warranted, prepare and file the regulatory report. The SAR decision and filing run on the BSA clock from alert qualification; the investigation file must stand on its own for examiner review, and filing is confidential by law.", $tags="processes")
 ' aac P_COMPLIANCE_004: company_domain=""
+System(P_FRAUD_008, "Investigate synthetic identity", "Investigate identities built from real and invented data, often seasoned for months before they bust out, by linking shared phones, addresses and devices across applications and accounts; close the linked accounts and feed the pattern back to application screening. A synthetic identity has no victim to complain, so it is found only by looking.", $tags="processes")
+' aac P_FRAUD_008: company_domain=""
 System(P_EA_004, "Maintain architecture standards and reference models", "Author, review, version, and retire the standards and reference models that solution reviews are judged against.", $tags="processes")
 ' aac P_EA_004: company_domain=""
 System(P_INFOSEC_004, "Maintain cardholder data scope and evidence", "Maintain the cardholder data environment scope and the supporting compliance evidence. PCI scope is maintained continuously: network segmentation, asset inventory, and evidence collection, so assessment is a report, not a scramble.", $tags="processes")
@@ -263,6 +387,8 @@ System(P_DATAGOV_002, "Measure and remediate data quality", "Measure data qualit
 ' aac P_DATAGOV_002: company_domain=""
 System(P_VENDORMGMT_002, "Monitor supplier risk and performance", "Monitor supplier risk, performance, and service levels through the relationship. Ongoing monitoring covers risk, performance, and financial condition on a tier-driven cadence; findings route to the relationship owner with dates.", $tags="processes")
 ' aac P_VENDORMGMT_002: company_domain=""
+System(P_COMPLIANCE_007, "Monitor transactions for suspicious activity", "Run monitoring scenarios over card, loan, deposit and merchant activity, triage the alerts, and escalate unusual activity to investigation, tuning the scenarios to the bank's risk assessment. Alerts aged past the review window put suspicious activity report deadlines at risk.", $tags="processes")
+' aac P_COMPLIANCE_007: company_domain=""
 System(P_DATAGOV_001, "Onboard and classify data asset", "Register a data asset, assign ownership, and classify it for handling. Onboarding assigns owner, steward, classification, and retention up front; the Collibra registration is the system of record this model's stub points at.", $tags="processes")
 ' aac P_DATAGOV_001: company_domain=""
 System(P_VENDORMGMT_001, "Onboard and diligence supplier", "Assess, diligence, and contract a new supplier with required security and risk terms. Due diligence is risk-tiered per the TPRM policy; no supplier touches cardholder data before security review and contract terms land, which is the EX.DD control.", $tags="processes")
@@ -313,6 +439,8 @@ System(P_FRAUD_005, "Submit network fraud reporting", "Compile and submit fraud 
 ' aac P_FRAUD_005: company_domain=""
 System(P_APPDEV_008, "Support a production application", "Diagnose and fix application defects escalated from service management, and feed root causes back into the backlog.", $tags="processes")
 ' aac P_APPDEV_008: company_domain=""
+System(P_COMPLIANCE_006, "Test credit decisions and pricing for fair lending", "Test approvals, lines, pricing, dealer markup and collections treatment for disparities across protected classes, using proxy methods where the data is not collected, and investigate and remediate what the testing finds. Fair lending findings lead to restitution and consent orders, and discretionary dealer markup is the classic exposure.", $tags="processes")
+' aac P_COMPLIANCE_006: company_domain=""
 System(P_RISK_002, "Validate model independently", "Perform independent validation of a model and record the outcome and conditions. Independent validation is organizationally separate from development; findings condition or block production use, and revalidation triggers are set at approval.", $tags="processes")
 ' aac P_RISK_002: company_domain=""
 System(P_QE_009, "Verify a release in production", "Run post-deployment checks and smoke tests in production, confirm monitoring is green, and trigger rollback if criteria fail.", $tags="processes")

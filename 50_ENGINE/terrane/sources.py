@@ -255,6 +255,31 @@ def _names_index(model, kind: str) -> Dict[str, str]:
     return index
 
 
+def _nearest(model, kind: str, names: Sequence[str]) -> Dict[str, dict]:
+    """For each name the model does not hold, the record of `kind` it reads
+    like, where one does at the adopt page's floor or above (`join.PROBABLY`)
+    and no second is as near (`join.ALONE`): its id, name, score and the
+    words the two share. Below the floor the nearest is as often wrong as
+    right (on the card issuer's quick inventory, Risk engineering reads 0.58
+    like Quality Engineering, on "engineering" alone), and two as near are
+    the person's to choose between (Finance Technology reads 0.70 like both
+    Technology and Finance), so nothing is offered. Offered, never taken."""
+    from .join import ALONE, PROBABLY
+    from .match import Matcher
+
+    if not names:
+        return {}
+    entity_type = ENTITY_TYPES[kind]
+    matcher = Matcher((str(r.get(entity_type.pk)), str(r.get("name"))) for r in model.all_of(kind) if r.get("name"))
+    out: Dict[str, dict] = {}
+    for name in names:
+        got = matcher.rank(name, limit=2)
+        if not got or got[0].score < PROBABLY or (len(got) > 1 and got[1].score >= got[0].score - ALONE):
+            continue
+        out[name] = {"id": got[0].id, "name": got[0].name, "score": got[0].score, "reasons": list(got[0].reasons)}
+    return out
+
+
 def words_needed(table: Table, kind: str, columns: Dict[str, List[str]], model) -> dict:
     """Field by field, the export's words for a field with a fixed list of
     the model's words, each with how many rows say it and the model's word
@@ -280,8 +305,17 @@ def words_needed(table: Table, kind: str, columns: Dict[str, List[str]], model) 
             elif field.ref and field.ref in ENTITY_TYPES:
                 index = _names_index(model, field.ref)
                 found = [w for w in counts if fold(w) in index]
+                missing = [w for w in counts if fold(w) not in index]
+                ref_type = ENTITY_TYPES[field.ref]
+                # Each name with its rows and the record it is (V15), the
+                # record a missing one reads like, and every record of the
+                # kind for a person to choose from: the Words step's names.
                 refs.append({"field": target, "column": column, "kind": field.ref,
-                             "found": len(found), "missing": [w for w in counts if fold(w) not in index]})
+                             "found": len(found), "missing": missing,
+                             "names": [{"name": w, "rows": n, "id": index.get(fold(w), "")} for w, n in counts.items()],
+                             "near": _nearest(model, field.ref, missing),
+                             "records": sorted(({"id": str(r.get(ref_type.pk)), "name": str(r.get("name") or r.get(ref_type.pk))}
+                                                for r in model.all_of(field.ref)), key=lambda r: (r["name"].lower(), r["id"]))})
     return {"words": words, "refs": refs}
 
 

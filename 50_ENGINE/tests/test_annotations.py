@@ -23,9 +23,27 @@ the slide and the page drawing the tile, and the canvas's numbers the
 same. The Style tab's settings: how much of a fill shows, how heavy an
 edge is, the corners' radius and no shadow, read and refused where they
 mean nothing, drawn by the picture, the slide and the page, a see-through
-fill casting no shadow, and the canvas's weights the same. Last, the
-file: the list is written before positions, a diagram of its own shapes
-alone is saved, validated and drawn, and so is its look.
+fill casting no shadow, and the canvas's weights the same. How the words
+are set (bold, italic, underlined, struck through, where they sit, a list),
+refused where a kind cannot take it and drawn alike by every painter; a
+diagram's saved styles read and refused as a look is, and the canvas's
+five styles and what it paints all looks the engine reads. A link on
+one of its own, an address on the web or for email and nothing else, made
+a link of the picture's, a slide's hyperlink and draw.io's own. A
+diagram's groups, read and refused where a key does not hold together, and
+drawn by nothing. A swimlane, its pool and lanes read and refused where they
+do not hold together, drawn alike by every painter, a lane named as the
+record it stands for and listed on its page. A diagram's drawing layers,
+read and refused where the keys do not hold together, a hidden one left
+out of every picture, the rest drawn bottom first, and one under the
+estate drawn under its records. A diagram's pages, each a view of its own
+read from the diagram's fields and the page's, refused where a key or what
+is on a page does not hold. Saved styles kept for the whole estate in
+model.yaml, read and refused as a diagram's are and checked by validate.
+A line's words at its start and its end, Dotted, how heavy it is and its
+turns rounded, drawn alike by every painter from the canvas's numbers. Last, the file: the list is written before positions, a
+diagram of its own shapes alone is saved, validated and drawn, and so are
+its look, its saved styles and its groups.
 """
 
 from __future__ import annotations
@@ -41,8 +59,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from terrane import jsonschema, places  # noqa: E402
-from terrane.annotations import (FILLS, MOST_CORNERS, SHAPES, TEXT_SIZES, WEIGHTS, WORDS_ON,  # noqa: E402
-                                 AnnotationError, read)
+from terrane.annotations import (FILLS, LINK, LOOK_KEYS, MOST_CORNERS, SHAPES, TEXT_SIZES,  # noqa: E402
+                                 WEIGHTS, WORDS_ON, AnnotationError, check_look, read)
 from terrane.blocks import load_components  # noqa: E402
 from terrane.draw import annotations as drawn  # noqa: E402
 from terrane.draw.svg import render_svg  # noqa: E402
@@ -102,7 +120,7 @@ class TestReading(unittest.TestCase):
             (dict(note, size=[0, 10]), "both more than nought"),
             (dict(note, role="shape", shape="star"), "shape is one of"),
             (dict(note, look={"fill": "teal"}), "look.fill is one of"),
-            (dict(note, look={"line": "dotted"}), "look.line is one of"),
+            (dict(note, look={"line": "wavy"}), "look.line is one of"),
             (dict(note, look={"font": "s"}), "look has font"),
             (dict(note, **{"in": ["nowhere"]}), "n is in nowhere, which is not a frame"),
             ({"key": "l", "role": "line", "from": "SYS-X", "to": {"x": 1}}, "to is a record's id"),
@@ -404,20 +422,38 @@ class TestAroundBoxes(unittest.TestCase):
 
 
 class TestBends(unittest.TestCase):
-    """A straight line bent at points of the sheet (`via`), read, refused on
-    a line that turns by itself, and drawn through its bends by the picture
-    and by the scene the deck and the draw.io page are painted from."""
+    """A line's bends (`via`): a straight line's points of the sheet, and a
+    square or curved line's turns kept where its stretches were moved by
+    hand (V16), read, refused where they are no points, and drawn through
+    by the picture and by the scene the deck and the draw.io page are
+    painted from."""
 
     LINE = {"key": "l", "role": "line", "from": [0, 0], "to": [200, 0], "via": [[100, 80]]}
 
-    def test_read_on_a_straight_line_and_refused_where_it_turns_by_itself(self) -> None:
+    def test_read_on_any_line_and_refused_where_they_are_no_points(self) -> None:
         self.assertEqual(read([self.LINE], "here")[0]["via"], [[100, 80]])
-        for wrong, said in ((dict(self.LINE, route="square"), "turns by itself"),
-                            (dict(self.LINE, route="curved"), "turns by itself"), (dict(self.LINE, via=[]), "bends at"),
+        self.assertEqual(read([dict(self.LINE, route="square")], "here")[0]["via"], [[100, 80]])
+        for wrong, said in ((dict(self.LINE, via=[]), "bends at"),
                             (dict(self.LINE, via=[[1, 2, 3]]), "bends at"), (dict(self.LINE, via="here"), "bends at")):
             with self.subTest(wrong=wrong), self.assertRaises(AnnotationError) as caught:
                 read([wrong], "here")
             self.assertIn(said, str(caught.exception))
+
+    def test_a_square_line_keeps_its_turns_and_leaves_each_box_square(self) -> None:
+        boxes = [{"key": "a", "role": "shape", "label": "A", "at": [0, 0], "size": [100, 50]},
+                 {"key": "b", "role": "shape", "label": "B", "at": [300, 200], "size": [100, 50]}]
+        # Its middle stretch carried to x 160, then a box that faces neither
+        # turn: B's last turn needs a turn of its own toward B's middle.
+        line = {"key": "l", "role": "line", "from": "a", "to": "b", "route": "square", "via": [[160, 25], [160, 120]]}
+        own = [o for o in drawn.scene(boxes + [line], (0.0, 0.0), {}) if o.role == "line"][0]
+        self.assertEqual(own.points, ((100.0, 25.0), (160.0, 25.0), (160.0, 120.0), (160.0, 225.0), (300.0, 225.0)))
+        for p, q in zip(own.points, own.points[1:]):
+            self.assertTrue(p[0] == q[0] or p[1] == q[1], (p, q))
+        # A turn over its box leaves the box from under it, not its middle.
+        line = dict(line, via=[[60, 120], [350, 120]])
+        own = [o for o in drawn.scene(boxes + [line], (0.0, 0.0), {}) if o.role == "line"][0]
+        self.assertEqual(own.points, ((60.0, 50.0), (60.0, 120.0), (350.0, 120.0), (350.0, 200.0)))
+        self.assertEqual(drawn.kept_turns((0, 0, 10, 10), (100, 100, 110, 110), [(50, 5)]), [(50, 5), (50, 105.0)])
 
     def test_the_picture_and_the_scene_go_through_its_bends_from_the_sheets_corner(self) -> None:
         svg, _ = drawn.paint([self.LINE], (10.0, 20.0), {}, drawn_metrics(), "over")
@@ -493,6 +529,12 @@ class TestTheSameNumbersAsTheCanvas(unittest.TestCase):
     def scalar(self, name: str):
         found = re.search(r"\b%s = ([^,;]+)[,;]" % name, self.text)
         return eval(found.group(1))  # noqa: S307 -- our own file's literals
+
+    def test_a_swimlane_is_drawn_from_the_same_numbers(self) -> None:
+        for js, py in (("POOL_TITLE", drawn.POOL_TITLE), ("LANE_COLUMN", drawn.LANE_COLUMN),
+                       ("LANE_BAND", drawn.LANE_BAND), ("BAND", drawn.BAND)):
+            with self.subTest(name=js):
+                self.assertEqual(self.scalar(js), py)
 
     def test_the_inks_the_shadow_and_the_corners_are_the_same(self) -> None:
         """Illustrated is one look in two painters only while both say its
@@ -690,7 +732,677 @@ class TestStyle(unittest.TestCase):
 
     def test_the_schema_admits_them(self) -> None:
         props = jsonschema.view_schema()["properties"]["annotations"]["items"]["properties"]["look"]["properties"]
-        self.assertEqual(sorted(props), sorted(["fill", "line", "text", "icon", "opacity", "weight", "corners", "shadow"]))
+        self.assertEqual(sorted(props), sorted(LOOK_KEYS))
+
+
+class TestWords(unittest.TestCase):
+    """V16's words toolbar: `bold`, `italic`, `underline`, `strike`,
+    `align` and a note's or text's `list` in a look, for all its words."""
+
+    NOTE = {"key": "n", "role": "note", "label": "Moves in Q2\nKeeps its keys", "at": [0, 0], "size": [170, 80]}
+    SHAPE = {"key": "s", "role": "shape", "shape": "rounded", "label": "Payments API\nREST", "at": [0, 0],
+             "size": [150, 64]}
+
+    def draw(self, item: dict, look: dict, box=None) -> str:
+        item = dict(item, look=look)
+        size = item["size"]
+        return drawn._box(item, box or (0.0, 0.0, float(size[0]), float(size[1])), drawn_metrics())
+
+    def test_read_and_refused_where_a_kind_cannot_take_it(self) -> None:
+        look = {"bold": True, "italic": True, "underline": True, "strike": True, "align": "right"}
+        self.assertEqual(read([dict(self.NOTE, look=dict(look, list=True))], "here")[0]["look"]["list"], True)
+        self.assertEqual(read([dict(self.SHAPE, look=look)], "here")[0]["look"], look)
+        frame = {"key": "f", "role": "frame", "label": "Platform", "at": [0, 0], "size": [300, 200]}
+        line = {"key": "l", "role": "line", "from": [0, 0], "to": [10, 10]}
+        for item, said in ((dict(frame, look={"bold": True}), "bold already"),
+                           (dict(frame, look={"align": "center"}), "at its left"),
+                           (dict(self.SHAPE, look={"list": True}), "a note's or text's words take, not a shape's"),
+                           (dict(line, look={"italic": True}), "which a line's words do not take"),
+                           (dict(self.NOTE, look={"bold": "yes"}), "look.bold is true, or left out"),
+                           (dict(self.NOTE, look={"align": "justify"}), "look.align is one of left, center, right")):
+            with self.subTest(said=said), self.assertRaises(AnnotationError) as caught:
+                read([item], "here")
+            self.assertIn(said, str(caught.exception))
+
+    def test_the_picture_sets_a_notes_words(self) -> None:
+        svg = self.draw(self.NOTE, {"bold": True, "italic": True, "underline": True, "strike": True})
+        self.assertIn('font-weight="600" fill="%s" font-style="italic" text-decoration="underline line-through">'
+                      'Moves in Q2</text>' % drawn.INK, svg)
+        right = self.draw(self.NOTE, {"align": "right"})
+        self.assertIn('<text x="160" ', right)
+        self.assertIn('text-anchor="end">Moves in Q2</text>', right)
+
+    def test_a_list_bullets_each_line_and_wraps_past_the_bullet(self) -> None:
+        svg = self.draw(self.NOTE, {"list": True})
+        self.assertEqual(svg.count(">•</text>"), 2)
+        self.assertIn('<text x="10" ', svg)
+        self.assertIn('<text x="23" ', svg)
+        # A line the bullet narrows wraps a word sooner than it would bare.
+        long = dict(self.NOTE, label="Keeps its keys in the vault, with rotation every ninety days")
+        bare = self.draw(long, {}).count("</text>")
+        listed = self.draw(long, {"list": True}).count("</text>") - 1
+        self.assertGreaterEqual(listed, bare)
+
+    def test_the_picture_sets_a_shapes_caption_with_its_name(self) -> None:
+        svg = self.draw(self.SHAPE, {"bold": True, "align": "left"})
+        self.assertIn('font-weight="600" fill="%s">REST</text>' % drawn.CAPTION_INK, svg)
+        self.assertIn('<text x="8" ', svg)
+        self.assertNotIn('text-anchor="middle"', svg)
+        tab = drawn._box({"key": "f", "role": "frame", "label": "Platform", "look": {"italic": True}},
+                         (0.0, 0.0, 300.0, 200.0), drawn_metrics())
+        self.assertIn('font-style="italic">Platform</text>', tab)
+
+    def test_the_slide_and_the_page_set_them(self) -> None:
+        from terrane.draw.dml import _Sheet, _own_xml
+        from terrane.render_drawio import _own_label, own_style
+        sheet = _Sheet((0, 0, 400, 200), (0, 0, 4, 2))
+        note = drawn.scene([dict(self.NOTE, look={"list": True, "italic": True, "underline": True, "strike": True})],
+                           (0.0, 0.0), {})[0]
+        self.assertEqual((note.listed, note.italic, note.underline, note.strike), (True, True, True, True))
+        xml = _own_xml(2, note, sheet)
+        self.assertEqual(xml.count('<a:buChar char="•"/>'), 2)
+        self.assertIn(' i="1" u="sng" strike="sngStrike"', xml)
+        self.assertIn("fontStyle=14;", own_style(note))
+        self.assertIn("• Moves in Q2<br>• Keeps its keys", _own_label(note))
+        shape = drawn.scene([dict(self.SHAPE, look={"bold": True, "align": "right"})], (0.0, 0.0), {})[0]
+        self.assertIn('algn="r"', _own_xml(2, shape, sheet))
+        self.assertIn("fontStyle=1;align=right;", own_style(shape))
+
+
+class TestLink(unittest.TestCase):
+    """The words toolbar's last button: `link:` on one of its own, where a
+    click on it goes."""
+
+    ADDRESS = "https://wiki.example/runbook?a=1&b=2"
+    LINKED = {"key": "s", "role": "shape", "shape": "rounded", "label": "Runbook", "at": [0, 0], "size": [150, 64],
+              "link": ADDRESS}
+
+    def test_read_and_refused_unless_on_the_web_or_for_email(self) -> None:
+        self.assertEqual(read([self.LINKED], "here")[0]["link"], self.ADDRESS)
+        mail = dict(self.LINKED, role="note", link="mailto:ops@example.com")
+        self.assertEqual(read([mail], "here")[0]["link"], "mailto:ops@example.com")
+        line = {"key": "l", "role": "line", "from": [0, 0], "to": [10, 10], "link": "https://x.example"}
+        for item, said in ((dict(self.LINKED, link="www.example.com"), "starting https://, http:// or mailto:"),
+                           (dict(self.LINKED, link="javascript:alert(1)"), "starting https://"),
+                           (dict(self.LINKED, link="https://a b"), "starting https://"),
+                           (dict(self.LINKED, link="https://x.example/" + "a" * 2000), "starting https://"),
+                           (line, "which a line does not")):
+            with self.subTest(said=said, link=str(item.get("link"))[:30]), self.assertRaises(AnnotationError) as caught:
+                read([item], "here")
+            self.assertIn(said, str(caught.exception))
+
+    def test_the_picture_makes_the_shape_a_link(self) -> None:
+        svg = drawn._box(self.LINKED, (0.0, 0.0, 150.0, 64.0), drawn_metrics())
+        safe = "https://wiki.example/runbook?a=1&amp;b=2"
+        self.assertTrue(svg.startswith('<a href="%s" target="_blank" rel="noopener"><title>%s</title>' % (safe, safe)), svg[:120])
+        self.assertTrue(svg.endswith("</a>"))
+        self.assertIn('data-key="s" data-role="shape"', svg)
+        self.assertFalse(drawn._box(dict(self.LINKED, link=""), (0.0, 0.0, 150.0, 64.0), drawn_metrics()).startswith("<a "))
+        tile = drawn._box(self.LINKED, (0.0, 0.0, 150.0, 64.0), drawn_metrics(), "tiles")
+        self.assertTrue(tile.startswith('<a href="%s"' % safe))
+
+    def test_the_slide_and_the_page_carry_it(self) -> None:
+        from terrane.draw.dml import scene_links, slide_shapes
+        from terrane.draw.svg import Scene
+        from terrane.pptx import REL, Deck
+        from terrane.render_drawio import diagram_xml
+        own = tuple(drawn.scene([self.LINKED, dict(self.LINKED, key="t", at=[200, 0])], (0.0, 0.0), {}))
+        self.assertEqual(own[0].link, self.ADDRESS)
+        scene = Scene((0.0, 0.0, 400.0, 100.0), [], [], [], True, "own", own)
+        self.assertEqual(scene_links(scene), [self.ADDRESS])
+        shapes = "".join(slide_shapes(scene, (0.5, 1.0, 12.8, 7.0), 2))
+        self.assertEqual(shapes.count('><a:hlinkClick r:id="rIdLink1"/></p:cNvPr>'), 2)
+        slide = Deck("t").slide()
+        slide.hyperlinks(scene_links(scene))
+        self.assertIn('<Relationship Id="rIdLink1" Type="%shyperlink" Target="https://wiki.example/runbook?a=1&amp;b=2" '
+                      'TargetMode="External"/>' % REL, slide.rels(1))
+        self.assertEqual(diagram_xml(scene).count('link="https://wiki.example/runbook?a=1&amp;b=2"'), 2)
+
+    def test_the_canvas_takes_the_same_addresses(self) -> None:
+        canvas = (REPO / "80_APP" / "web" / "canvas" / "canvas.js").read_text(encoding="utf-8")
+        self.assertIn(r"var LINK = /^(https?:\/\/|mailto:)\S+$/;", canvas)
+        self.assertEqual(LINK.pattern, r"(https?://|mailto:)\S+")
+
+
+class TestGroups(unittest.TestCase):
+    """V16's groups: the diagram's own picked and moved as one, a key and a
+    name in `groups:` and `group:` on each of its own in one."""
+
+    def view(self, groups, grouped=None):
+        items = [dict(item) for item in LANDING[:3]]
+        for key, group in (grouped or {}).items():
+            next(item for item in items if item["key"] == key)["group"] = group
+        return parse_view(dict(OWN_ONLY, annotations=items, groups=groups))
+
+    def test_read_with_the_group_each_sits_in(self) -> None:
+        view = self.view([{"key": "outer", "name": " Platform "}, {"key": "inner", "name": "Security", "group": "outer"}],
+                         {"ou-security": "inner", "guardrails": "inner", "org": "outer"})
+        self.assertEqual(view.groups, ({"key": "outer", "name": "Platform"},
+                                       {"key": "inner", "name": "Security", "group": "outer"}))
+        self.assertEqual([a.get("group") for a in view.annotations], ["outer", "inner", "inner"])
+        self.assertEqual(parse_view(OWN_ONLY).groups, ())
+
+    def test_refused_where_a_key_does_not_hold_together(self) -> None:
+        for groups, grouped, said in (
+                ("Platform", {}, "is a list, each a key, a name"),
+                ([{"key": "g", "name": ""}], {}, "number 1 is a key, a name of up to 60 characters"),
+                ([{"key": "g", "name": "x" * 61}], {}, "number 1 is a key, a name of up to 60 characters"),
+                ([{"key": "g", "name": "G", "color": "red"}], {}, "number 1 is a key"),
+                ([{"key": "g", "name": "G"}, {"key": "g", "name": "H"}], {}, "g is the key of two"),
+                ([{"key": "g", "name": "G", "group": "h"}], {}, "g is in h, which the diagram does not name"),
+                ([{"key": "g", "name": "G", "group": "g"}], {}, "g is in itself"),
+                ([{"key": "g", "name": "G", "group": "h"}, {"key": "h", "name": "H", "group": "g"}], {},
+                 "g is in itself, by way of h"),
+                ([{"key": "g", "name": "G"}], {"org": "h"}, "org is in group h, which the diagram's groups do not name")):
+            with self.subTest(said=said), self.assertRaises(ViewError) as caught:
+                self.view(groups, grouped)
+            self.assertIn(said, str(caught.exception))
+
+    def test_only_a_box_is_in_one(self) -> None:
+        line = {"key": "l", "role": "line", "from": [0, 0], "to": [10, 10], "group": "g"}
+        for item, said in ((line, "which a line does not"),
+                           (dict(LANDING[2], group=" "), "group is the key of one of the diagram's groups")):
+            with self.subTest(said=said), self.assertRaises(AnnotationError) as caught:
+                read([item], "here")
+            self.assertIn(said, str(caught.exception))
+
+    def test_the_schema_keeps_a_key_a_name_and_where_it_sits(self) -> None:
+        schema = jsonschema.view_schema()["properties"]["groups"]["items"]
+        self.assertEqual(schema["required"], ["key", "name"])
+        self.assertEqual(sorted(schema["properties"]), ["group", "key", "name"])
+        self.assertEqual(schema["properties"]["name"]["maxLength"], 60)
+
+    def test_drawn_by_nothing(self) -> None:
+        items = [{"key": "a", "role": "shape", "shape": "rounded", "label": "Gateway", "at": [0, 0], "size": [150, 64]},
+                 {"key": "b", "role": "shape", "shape": "rounded", "label": "Ledger", "at": [200, 0], "size": [150, 64]}]
+        grouped = [dict(item, group="g") for item in items]
+        for layer in ("under", "over"):
+            with self.subTest(layer=layer):
+                self.assertEqual(drawn.paint(grouped, (0.0, 0.0), {}, drawn_metrics(), layer),
+                                 drawn.paint(items, (0.0, 0.0), {}, drawn_metrics(), layer))
+        self.assertEqual([o.box for o in drawn.scene(grouped, (0.0, 0.0), {})],
+                         [o.box for o in drawn.scene(items, (0.0, 0.0), {})])
+
+    def test_the_canvas_keeps_them_and_hears_a_double_click_first(self) -> None:
+        web = REPO / "80_APP" / "web" / "canvas"
+        engine = (web / "engine.js").read_text(encoding="utf-8")
+        canvas = (web / "canvas.js").read_text(encoding="utf-8")
+        self.assertIn("if (a.group) item.group = a.group;", engine)
+        # Undo puts the groups back with what is in them, and the layers.
+        self.assertIn("locked: cv.data.locked || [], groups: cv.data.groups || [], layers: cv.data.layers || null });",
+                      canvas)
+        # maxGraph's own double-click on a shape stops the event there: heard
+        # on the way up, the words opened only on an empty spot.
+        self.assertIn("      editText(cell);\n    }, true);", engine)
+        # Ctrl+D on several gave every copy one key until a key in the
+        # model counted as taken.
+        self.assertIn('!used[role + "-" + n] && !s.model.getCell(idOf(role + "-" + n))', engine)
+
+
+#: A swimlane as the canvas draws one: two lanes across it, the first
+#: standing for an org unit, a shape in the second.
+SWIMLANE = [
+    {"key": "pool-1", "role": "pool", "label": "Card payment, by who does it", "at": [0, 0], "size": [960, 354]},
+    {"key": "lane-1", "role": "lane", "label": "Payments Operations", "in": ["pool-1"], "at": [0, 34],
+     "size": [960, 160], "stands_for": "ORG-PAYMENTS"},
+    {"key": "lane-2", "role": "lane", "label": "Cardholder", "in": ["pool-1"], "at": [0, 194], "size": [960, 160]},
+    {"key": "shape-1", "role": "shape", "shape": "rounded", "label": "Pays at checkout", "in": ["pool-1", "lane-2"],
+     "at": [170, 50], "size": [150, 60]},
+]
+
+
+class TestSwimlanes(unittest.TestCase):
+    """V16's swimlane: a pool, its lanes in it, what is drawn in a lane in
+    it, and a lane that stands for a record."""
+
+    def test_read_as_the_canvas_writes_one(self) -> None:
+        read_back = read(SWIMLANE + [dict(SWIMLANE[0], key="pool-2", runs="down", names="top", at=[0, 400])], "here")
+        self.assertEqual([a["role"] for a in read_back], ["pool", "lane", "lane", "shape", "pool"])
+        self.assertEqual(read_back[1]["stands_for"], "ORG-PAYMENTS")
+        self.assertEqual((read_back[4]["runs"], read_back[4]["names"]), ("down", "top"))
+
+    def test_refused_where_it_does_not_hold_together(self) -> None:
+        pool, lane, shape = SWIMLANE[0], SWIMLANE[1], SWIMLANE[3]
+        for items, said in (
+                ([dict(lane, **{"in": []})], "lane-1 is a lane, and sits in a swimlane"),
+                ([pool, dict(shape, **{"in": ["pool-1"]})], "shape-1 sits in the swimlane pool-1 itself"),
+                ([dict(pool, runs="sideways")], "runs is across or down"),
+                ([dict(pool, names="bottom")], "names is where each lane's name sits"),
+                ([pool, dict(lane, stands_for="")], "stands_for is the id of the record"),
+                ([dict(pool, look={"fill": "rose"})], "look has fill, which a swimlane's pool does not take"),
+                ([dict(shape, stands_for="ORG-PAYMENTS", **{"in": []})], "has stands_for, which a shape does not"),
+                ([dict(pool, rotate=10)], "a pool is not turned")):
+            with self.subTest(said=said), self.assertRaises(AnnotationError) as caught:
+                read(items, "here")
+            self.assertIn(said, str(caught.exception))
+
+    def test_the_picture_draws_the_band_the_columns_and_the_names(self) -> None:
+        svg, _ = drawn.paint(SWIMLANE, (0.0, 0.0), {}, drawn_metrics(), "under")
+        self.assertIn('<rect x="0" y="0" width="960" height="34" fill="%s"' % drawn.BAND, svg)
+        self.assertIn('<rect x="0" y="34" width="130" height="160" fill="%s"' % drawn.BAND, svg)
+        self.assertIn(">Card payment, by who does it</text>", svg)
+        # The org unit's name wraps in its column, and its id is under it.
+        self.assertIn(">Payments</text>", svg)
+        self.assertIn(">Operations</text>", svg)
+        self.assertIn('fill="%s">ORG-PAYMENTS</text>' % drawn.CAPTION_INK, svg)
+        # What is in a lane goes with the swimlane, under the estate.
+        self.assertIn('data-key="shape-1"', svg)
+        self.assertEqual(drawn.layer_of(SWIMLANE[3], drawn.place(SWIMLANE, (0.0, 0.0)), ()), "under")
+
+    def test_names_at_the_top_sit_in_a_band(self) -> None:
+        items = [dict(SWIMLANE[0], names="top")] + SWIMLANE[1:]
+        svg, _ = drawn.paint(items, (0.0, 0.0), {}, drawn_metrics(), "under")
+        self.assertIn('<rect x="0" y="34" width="960" height="40" fill="%s"' % drawn.BAND, svg)
+        self.assertIn(">Payments Operations</text>", svg)
+
+    def test_the_slide_and_the_page_draw_the_same_parts(self) -> None:
+        from terrane.draw.dml import slide_shapes
+        from terrane.draw.svg import Scene
+        from terrane.render_drawio import diagram_xml
+        own = tuple(drawn.scene(SWIMLANE, (0.0, 0.0), {}))
+        by_key = {o.key: o for o in own}
+        self.assertEqual((by_key["pool-1"].role, by_key["pool-1"].corners, by_key["pool-1"].label), ("frame", 0.0, ""))
+        self.assertEqual(by_key["lane-1"].within, "pool-1")
+        self.assertEqual(by_key["shape-1"].within, "lane-2")
+        words = [o.label for o in own if o.within in ("pool-1", "lane-1") and o.role == "note"]
+        self.assertEqual(words, ["Card payment, by who does it", "Payments\nOperations", "ORG-PAYMENTS"])
+        scene = Scene((0.0, 0.0, 960.0, 354.0), [], [], [], True, "own", own)
+        shapes = "".join(slide_shapes(scene, (0.5, 1.0, 12.8, 7.0), 2))
+        self.assertIn(">ORG-PAYMENTS<", shapes)
+        page = diagram_xml(scene)
+        self.assertIn('id="own-lane-1"', page)
+        self.assertIn('parent="own-lane-2"', page)
+        self.assertIn("ORG-PAYMENTS", page)
+
+    def test_a_lane_is_named_as_its_record_is_now(self) -> None:
+        from terrane.annotations import follow_names
+        model = seeded_model()
+        named = follow_names([dict(SWIMLANE[1], label="Payments Ops (old)")], model)
+        self.assertEqual(named[0]["label"], model.find("ORG-PAYMENTS")[1]["name"])
+        gone = follow_names([dict(SWIMLANE[1], stands_for="ORG-NOT-HERE", label="Kept")], model)
+        self.assertEqual(gone[0]["label"], "Kept")
+
+    def test_the_records_page_lists_the_diagram_it_has_a_lane_on(self) -> None:
+        from terrane import levels
+        view = parse_view(dict(OWN_ONLY, annotations=SWIMLANE))
+        groups = levels.diagrams_of(seeded_model(), [view], "ORG-PAYMENTS")
+        lanes = [g for g in groups if g["kind"] == "lanes"]
+        self.assertEqual([i["viewId"] for i in lanes[0]["items"]], ["landing-zone"])
+        self.assertEqual(lanes[0]["name"], "")
+        self.assertFalse([g for g in levels.diagrams_of(seeded_model(), [view], "ACT-CARDHOLDER") if g["kind"] == "lanes"])
+
+    def test_the_schema_takes_it(self) -> None:
+        item = jsonschema.view_schema()["properties"]["annotations"]["items"]
+        self.assertIn("pool", item["properties"]["role"]["enum"])
+        self.assertIn("lane", item["properties"]["role"]["enum"])
+        self.assertEqual(item["properties"]["runs"]["enum"], ["across", "down"])
+        self.assertEqual(item["properties"]["names"]["enum"], ["left", "top"])
+        self.assertIn("stands_for", item["properties"])
+
+
+#: Three drawing layers, top first, the estate's records between the
+#: first two: notes over the records, the sketch under them, and a hidden
+#: layer of review marks.
+LAYERS = [{"key": "review", "name": "Review marks", "hidden": True}, {"key": "notes", "name": "Notes"},
+          {"key": "estate"}, {"key": "sketch", "name": "Sketch", "locked": True}]
+
+
+class TestLayers(unittest.TestCase):
+    """V16's drawing layers: `layers:` top first, the estate's records
+    among them, and `layer:` on each of the diagram's own."""
+
+    ITEMS = [
+        {"key": "f", "role": "frame", "label": "Platform", "at": [0, 0], "size": [400, 300], "layer": "sketch"},
+        {"key": "in-f", "role": "note", "label": "In the frame", "in": ["f"], "at": [20, 40], "size": [120, 60]},
+        {"key": "a", "role": "shape", "label": "Gateway", "at": [500, 0], "size": [150, 64]},
+        {"key": "b", "role": "shape", "label": "Ledger", "at": [700, 0], "size": [150, 64], "layer": "sketch"},
+        {"key": "r", "role": "note", "label": "Who signs off?", "at": [900, 0], "size": [150, 64], "layer": "review"},
+        {"key": "l", "role": "line", "from": "a", "to": "b", "layer": "review"},
+    ]
+
+    def view(self, layers, items=None):
+        return parse_view(dict(OWN_ONLY, layers=layers, annotations=items or self.ITEMS))
+
+    def test_read_top_first_with_the_estate_among_them(self) -> None:
+        view = self.view(LAYERS)
+        self.assertEqual([layer["key"] for layer in view.layers], ["review", "notes", "estate", "sketch"])
+        self.assertEqual(view.layers[2], {"key": "estate"})
+        self.assertEqual(parse_view(OWN_ONLY).layers, ())
+
+    def test_refused_where_the_keys_do_not_hold_together(self) -> None:
+        for layers, items, said in (
+                ("Notes", None, "is a list, top first"),
+                ([{"name": "Notes"}], None, "number 1 is a key"),
+                ([{"key": "notes", "name": "x" * 61}], None, "notes has a name of up to 60 characters"),
+                ([{"key": "notes", "name": "Notes", "hidden": False}], None, "notes is hidden: true"),
+                ([{"key": "notes", "name": "Notes"}, {"key": "notes", "name": "More"}], None, "notes is the key of two"),
+                ([{"key": "estate", "name": "Records"}, {"key": "notes", "name": "Notes"}], None,
+                 "estate is where the estate's records sit"),
+                ([{"key": "estate"}], [], "has no layer to draw on"),
+                (LAYERS, [dict(self.ITEMS[2], layer="nowhere")], "a is on layer nowhere, which the diagram's drawing"),
+                (LAYERS, [dict(self.ITEMS[2], layer="estate")], "a is on layer estate")):
+            with self.subTest(said=said), self.assertRaises(ViewError) as caught:
+                self.view(layers, items)
+            self.assertIn(said, str(caught.exception))
+        with self.assertRaises(AnnotationError) as caught:
+            read([dict(self.ITEMS[2], layer="")], "here")
+        self.assertIn("layer is the key of one of the diagram's drawing layers", str(caught.exception))
+
+    def test_a_hidden_layer_is_left_out_and_the_rest_drawn_bottom_first(self) -> None:
+        from terrane.annotations import by_layer, layer_home
+        self.assertEqual(layer_home(LAYERS), "notes")
+        drawn_items = by_layer([dict(i) for i in self.ITEMS], LAYERS)
+        # The review layer's note and line are gone; the sketch (under the
+        # estate) first, the frame's note with its frame; then the notes.
+        self.assertEqual([i["key"] for i in drawn_items], ["f", "in-f", "b", "a"])
+        self.assertEqual([i["key"] for i in drawn_items if i.get("_under")], ["f", "in-f", "b"])
+        self.assertEqual(by_layer([dict(i) for i in self.ITEMS], ()), [dict(i) for i in self.ITEMS])
+
+    def test_a_layer_under_the_estate_is_drawn_under_its_records(self) -> None:
+        from terrane.annotations import by_layer
+        items = by_layer([dict(i) for i in self.ITEMS], LAYERS)
+        boxes = drawn.place(items, (0.0, 0.0))
+        self.assertEqual({i["key"]: drawn.layer_of(i, boxes, ()) for i in items},
+                         {"f": "under", "in-f": "under", "b": "under", "a": "over"})
+        under, _ = drawn.paint(items, (0.0, 0.0), {}, drawn_metrics(), "under")
+        over, _ = drawn.paint(items, (0.0, 0.0), {}, drawn_metrics(), "over")
+        self.assertIn('data-key="b"', under)
+        self.assertNotIn('data-key="b"', over)
+        self.assertNotIn("Who signs off?", under + over)
+
+    def test_the_schema_takes_them(self) -> None:
+        schema = jsonschema.view_schema()["properties"]
+        self.assertEqual(schema["layers"]["items"]["required"], ["key"])
+        self.assertEqual(sorted(schema["layers"]["items"]["properties"]), ["hidden", "key", "locked", "name"])
+        self.assertIn("layer", schema["annotations"]["items"]["properties"])
+
+    def test_the_canvas_names_the_estate_the_same(self) -> None:
+        from terrane.annotations import ESTATE_LAYER
+        canvas = (REPO / "80_APP" / "web" / "canvas" / "canvas.js").read_text(encoding="utf-8")
+        engine = (REPO / "80_APP" / "web" / "canvas" / "engine.js").read_text(encoding="utf-8")
+        self.assertIn('var ESTATE_LAYER = "%s";' % ESTATE_LAYER, canvas)
+        self.assertIn('var ESTATE = "%s";' % ESTATE_LAYER, engine)
+
+
+#: A diagram of two pages: its first, Payments, the file's top level, and
+#: Settlement under pages.
+PAGED = dict(OWN_ONLY, page="Payments", pages=[
+    {"key": "page-2", "name": "Settlement",
+     "annotations": [{"key": "note-1", "role": "note", "label": "Settle the batch", "at": [0, 0], "size": [184, 96]}]}])
+
+
+class TestPages(unittest.TestCase):
+    """V16's pages: the first the file's top level, the rest under
+    `pages:`, each with the records it places and what it draws of its
+    own, and each a view of its own."""
+
+    def test_each_page_after_the_first_is_a_view_of_its_own(self) -> None:
+        from terrane.query import PAGE_FIELDS
+        view = parse_view(PAGED)
+        self.assertEqual(view.page, "Payments")
+        [settlement] = view.pages
+        self.assertEqual((settlement.view_id, settlement.page, settlement.page_of),
+                         ("landing-zone--page-2", "Settlement", "landing-zone"))
+        self.assertEqual(settlement.title, "AWS landing zone \u00b7 Settlement")
+        self.assertEqual([a["label"] for a in settlement.annotations], ["Settle the batch"])
+        # Its name, look and the rest are the diagram's; what is on it its own.
+        self.assertEqual((settlement.category, settlement.kind, settlement.look), (view.category, view.kind, view.look))
+        self.assertEqual([a["key"] for a in view.annotations], ["org", "ou-security", "guardrails"])
+        self.assertEqual(PAGE_FIELDS, ("places", "scope", "positions", "annotations", "groups", "locked"))
+        self.assertEqual((parse_view(OWN_ONLY).page, parse_view(OWN_ONLY).pages), ("", ()))
+
+    def test_refused_where_a_page_does_not_hold(self) -> None:
+        page = PAGED["pages"][0]
+        for pages, first, said in (
+                ("Settlement", None, "pages is a list of its pages after the first"),
+                ([dict(page, key="Page 2")], None, "number 1 is a key of small letters"),
+                ([dict(page, title="Settlement")], None, "number 1 is a key"),
+                ([page, dict(page, name="Again")], None, "page-2 is the key of two"),
+                ([dict(page, annotations=[{"key": "x", "role": "blob", "at": [0, 0], "size": [1, 1]}])], None,
+                 "page Settlement: view landing-zone--page-2: annotations: x has role 'blob'"),
+                ([page], "x" * 61, "page is the name of its first page")):
+            with self.subTest(said=said), self.assertRaises(ViewError) as caught:
+                parse_view(dict(PAGED, pages=pages, **({"page": first} if first else {})))
+            self.assertIn(said, str(caught.exception))
+
+    def test_the_schema_takes_them(self) -> None:
+        props = jsonschema.view_schema()["properties"]
+        self.assertEqual(props["page"]["maxLength"], 60)
+        page = props["pages"]["items"]
+        self.assertEqual(page["required"], ["key", "name"])
+        self.assertEqual(page["properties"]["annotations"], props["annotations"])
+        self.assertIn("positions", page["properties"])
+
+
+class TestSavedStyles(unittest.TestCase):
+    """V16's Styles: a diagram's looks kept by name (`saved_styles:`),
+    checked as a look is, and the canvas's own five and what it paints all
+    looks the engine reads."""
+
+    def view(self, styles):
+        return parse_view(dict(OWN_ONLY, saved_styles=styles))
+
+    def test_read_as_a_name_and_a_look(self) -> None:
+        kept = self.view([{"name": " Edge ", "look": {"fill": "lavender", "line": "dashed", "bold": True}}])
+        self.assertEqual(kept.saved_styles, ({"name": "Edge", "look": {"fill": "lavender", "line": "dashed", "bold": True}},))
+        self.assertEqual(parse_view(OWN_ONLY).saved_styles, ())
+
+    def test_refused_saying_what_to_fix(self) -> None:
+        for styles, said in (("Edge", "is a list"),
+                             ([{"name": "", "look": {}}], "a name of up to 40 characters"),
+                             ([{"name": "x" * 41, "look": {}}], "a name of up to 40 characters"),
+                             ([{"name": "Edge", "look": {}}, {"name": "edge", "look": {}}], "edge is the name of two"),
+                             ([{"name": "Edge", "look": {"icon": "server"}}], "says what a shape is"),
+                             ([{"name": "Edge", "look": {"fill": "teal"}}], "look.fill is one of")):
+            with self.subTest(said=said), self.assertRaises(ViewError) as caught:
+                self.view(styles)
+            self.assertIn(said, str(caught.exception))
+
+    def test_the_schema_keeps_a_name_and_a_look_with_no_icon(self) -> None:
+        schema = jsonschema.view_schema()["properties"]["saved_styles"]["items"]
+        self.assertEqual(schema["required"], ["name", "look"])
+        self.assertNotIn("icon", schema["properties"]["look"]["properties"])
+
+    def test_the_canvas_styles_and_paints_only_looks_the_engine_reads(self) -> None:
+        canvas = (REPO / "80_APP" / "web" / "canvas" / "canvas.js").read_text(encoding="utf-8")
+        block = canvas.split("var STYLES = [", 1)[1].split("];", 1)[0]
+        styles = re.findall(r'\["(\w+)", (\{[^}]*\})\]', block)
+        self.assertEqual([name for name, _ in styles], ["Service", "Data", "Outside", "Risk", "Quiet"])
+        for name, literal in styles:
+            look = eval(re.sub(r"(\w+):", r'"\1":', literal).replace("true", "True"))  # noqa: S307 -- our own file
+            with self.subTest(style=name):
+                check_look(look, name)
+        paints = canvas.split("var PAINTS = {", 1)[1].split("};", 1)[0]
+        for word in re.findall(r'"(\w+)"', paints):
+            with self.subTest(paints=word):
+                self.assertIn(word, LOOK_KEYS)
+
+
+class TestEstateStyles(unittest.TestCase):
+    """Saved styles kept for every diagram: `saved_styles` in model.yaml,
+    read as a diagram's own are."""
+
+    def test_read_as_a_name_and_a_look(self) -> None:
+        from terrane.annotations import estate_styles
+        self.assertEqual(estate_styles({"saved_styles": [{"name": " Hot path ", "look": {"fill": "rose"}}]}),
+                         ({"name": "Hot path", "look": {"fill": "rose"}},))
+        self.assertEqual(estate_styles({}), ())
+        self.assertEqual(estate_styles(None), ())
+
+    def test_refused_as_a_diagrams_are(self) -> None:
+        from terrane.annotations import estate_styles
+        for styles, said in (("Edge", "model.yaml: saved_styles is a list"),
+                             ([{"name": "", "look": {}}], "a name of up to 40 characters"),
+                             ([{"name": "Edge", "look": {}}, {"name": "EDGE", "look": {}}], "EDGE is the name of two"),
+                             ([{"name": "Edge", "look": {"icon": "server"}}], "says what a shape is"),
+                             ([{"name": "Edge", "look": {"fill": "teal"}}], "look.fill is one of")):
+            with self.subTest(said=said), self.assertRaises(AnnotationError) as caught:
+                estate_styles({"saved_styles": styles})
+            self.assertIn(said, str(caught.exception))
+
+    def test_validate_says_where_one_is_wrong(self) -> None:
+        from types import SimpleNamespace
+        from terrane import validate
+        found = validate._check_estate_styles(SimpleNamespace(config={"saved_styles": [{"name": "X", "look": {"fill": "teal"}}]}))
+        self.assertEqual([(f.code, f.where) for f in found], [("styles.estate", "10_MODEL/model.yaml")])
+        self.assertEqual(validate._check_estate_styles(SimpleNamespace(config={})), [])
+
+    def test_the_canvas_turns_a_group_as_one(self) -> None:
+        engine = (REPO / "80_APP" / "web" / "canvas" / "engine.js").read_text(encoding="utf-8")
+        canvas = (REPO / "80_APP" / "web" / "canvas" / "canvas.js").read_text(encoding="utf-8")
+        self.assertIn("function turnTogether(keys, degrees)", engine)
+        self.assertIn("picked, moved, copied and turned as one", canvas)
+
+
+class TestLinePanel(unittest.TestCase):
+    """V16's line picked, its first part: words at three places, Dotted,
+    S, M or L, and rounded turns."""
+
+    ITEMS = [
+        {"key": "a", "role": "shape", "label": "Checkout web", "at": [0, 0], "size": [100, 50]},
+        {"key": "b", "role": "shape", "label": "Card ledger", "at": [300, 200], "size": [100, 50]},
+        {"key": "l", "role": "line", "from": "a", "to": "b", "route": "square", "turns": "rounded",
+         "label": "reads balances", "labels": {"start": "every five minutes", "end": "read only"},
+         "look": {"line": "dotted", "weight": "l"}},
+    ]
+
+    def test_read_and_refused(self) -> None:
+        line = read(self.ITEMS, "here")[2]
+        self.assertEqual((line["turns"], line["labels"]["end"], line["look"]["weight"]), ("rounded", "read only", "l"))
+        base = self.ITEMS[2]
+        for item, said in ((dict(base, turns="soft"), "turns is sharp or rounded"),
+                           (dict(base, labels={"middle": "x"}), "labels is its words at its start and its end"),
+                           (dict(base, labels={"start": ""}), "labels is its words"),
+                           (dict(base, labels={}), "labels is its words"),
+                           (dict(base, look={"weight": "xl"}), "one of s, m, l"),
+                           (dict(base, look={"corners": 4}), "which a line does not have")):
+            with self.subTest(said=said), self.assertRaises(AnnotationError) as caught:
+                read(self.ITEMS[:2] + [item], "here")
+            self.assertIn(said, str(caught.exception))
+
+    def test_the_picture_draws_it_dotted_heavy_rounded_with_its_words(self) -> None:
+        svg, _ = drawn.paint(self.ITEMS, (0.0, 0.0), {}, drawn_metrics(), "over")
+        path = [line for line in svg.splitlines() if 'fill="none"' in line and "<path" in line][0]
+        self.assertIn('stroke-width="2.5" stroke-dasharray="2 3"', path)
+        self.assertIn("L190 25 Q200 25 200 35", path)
+        for words in ("every five minutes", "reads balances", "read only"):
+            self.assertIn(">%s</text>" % words, svg)
+        # The start's words a share of the way in from the start.
+        self.assertIn('<text x="160" y="28.91"', svg)
+
+    def test_the_slide_and_the_page_draw_the_same(self) -> None:
+        from terrane.draw.dml import slide_shapes
+        from terrane.draw.svg import Scene
+        from terrane.render_drawio import diagram_xml
+        own = tuple(drawn.scene(self.ITEMS, (0.0, 0.0), {}))
+        line = [o for o in own if o.role == "line"][0]
+        self.assertEqual((line.weight, line.dotted, line.turns, dict(line.labels)),
+                         (2.5, True, "rounded", {"start": "every five minutes", "end": "read only"}))
+        scene = Scene((0.0, 0.0, 400.0, 250.0), [], [], [], True, "own", own)
+        shapes = "".join(slide_shapes(scene, (0.5, 1.0, 12.8, 7.0), 2))
+        self.assertIn('<a:prstDash val="sysDot"/>', shapes)
+        self.assertIn("<a:quadBezTo>", shapes)
+        self.assertIn(">every five minutes<", shapes)
+        page = diagram_xml(scene)
+        self.assertIn("rounded=1;", page)
+        self.assertIn("strokeWidth=2.5;", page)
+        self.assertIn("dashPattern=2 3;", page)
+        self.assertIn('value="read only"', page)
+        self.assertIn('<mxGeometry x="0.7" relative="1" as="geometry">', page)
+
+    def test_the_canvas_draws_from_the_same_numbers(self) -> None:
+        from terrane.annotations import LINE_WEIGHTS
+        engine = ENGINE.read_text(encoding="utf-8")
+        self.assertIn("var LINE_WEIGHTS = { s: %g, m: %g, l: %g }" % (LINE_WEIGHTS["s"], LINE_WEIGHTS["m"], LINE_WEIGHTS["l"]),
+                      engine)
+        self.assertIn('DASHES = { dashed: "%s", dotted: "%s" }' % (drawn.DASHES["dashed"], drawn.DASHES["dotted"]), engine)
+        self.assertIn("END_LABEL_AT = %g;" % (1 - 2 * drawn.END_LABELS_AT), engine)
+
+
+class TestHeads(unittest.TestCase):
+    """V16's line picked, its ends: a head at each from four notations,
+    read, drawn by the picture from its glyph, by the slide and the draw.io
+    page, and by the canvas from the same table."""
+
+    ITEMS = [
+        {"key": "a", "role": "shape", "label": "Customer", "at": [0, 0], "size": [100, 50]},
+        {"key": "b", "role": "shape", "label": "Order", "at": [300, 0], "size": [100, 50]},
+        {"key": "l", "role": "line", "from": "a", "to": "b", "heads": {"start": "none-or-one", "end": "many"}},
+    ]
+
+    def test_read_and_refused(self) -> None:
+        from terrane.annotations import heads_of
+        line = read(self.ITEMS, "here")[2]
+        self.assertEqual(heads_of(line), ("none-or-one", "many"))
+        self.assertEqual(heads_of({"heads": {"end": "flow"}}), ("none", "flow"))
+        self.assertEqual([heads_of({"ends": e}) for e in ("end", "both", "none")],
+                         [("none", "arrow"), ("arrow", "arrow"), ("none", "none")])
+        self.assertEqual(heads_of({}), ("none", "arrow"))
+        base = self.ITEMS[2]
+        for item, said in ((dict(base, heads={"middle": "dot"}), "heads is the head at its start and at its end"),
+                           (dict(base, heads={"end": "crow"}), "each one of none, arrow"),
+                           (dict(base, heads={}), "heads is the head"),
+                           (dict(base, heads="many"), "heads is the head"),
+                           (dict(base, ends="both"), "by heads or by ends, not both")):
+            with self.subTest(said=said), self.assertRaises(AnnotationError) as caught:
+                read(self.ITEMS[:2] + [item], "here")
+            self.assertIn(said, str(caught.exception))
+
+    def test_the_picture_draws_each_head_from_its_glyph(self) -> None:
+        svg, _ = drawn.paint(self.ITEMS, (0.0, 0.0), {}, drawn_metrics(), "over")
+        # None or one at its start: the line stops past its ring, which a
+        # stroke runs on from to the box, a bar across it.
+        self.assertIn('<path d="M115 25 L300 25" fill="none"', svg)
+        self.assertIn('<circle cx="112.5" cy="25" r="2.5" fill="none" stroke=', svg)
+        self.assertIn('<path d="M110 25 L100 25" fill="none"', svg)
+        self.assertIn('<path d="M105 29.5 L105 20.5" fill="none"', svg)
+        # Many at its end: the crow's foot, its toes on the box.
+        self.assertIn('<path d="M300 20.5 L292 25 L300 29.5" fill="none"', svg)
+        # A hollow head: the line stops at its base, drawn round, not filled.
+        has = dict(self.ITEMS[2], heads={"end": "has"})
+        svg, _ = drawn.paint(self.ITEMS[:2] + [has], (0.0, 0.0), {}, drawn_metrics(), "over")
+        self.assertIn('<path d="M100 25 L288 25" fill="none"', svg)
+        self.assertIn('<path d="M300 25 L294 21.5 L288 25 L294 28.5 Z" fill="none" stroke=', svg)
+        # The plain arrow as it always was.
+        plain = {k: v for k, v in self.ITEMS[2].items() if k != "heads"}
+        svg, _ = drawn.paint(self.ITEMS[:2] + [plain], (0.0, 0.0), {}, drawn_metrics(), "over")
+        self.assertIn('<path d="M300 25 L293 21.5 L293 28.5 Z" fill=', svg)
+        self.assertIn('<path d="M100 25 L293 25" fill="none"', svg)
+
+    def test_the_slide_and_the_page_draw_the_same(self) -> None:
+        from terrane.draw.dml import slide_shapes
+        from terrane.draw.svg import Scene
+        from terrane.render_drawio import diagram_xml
+        own = tuple(drawn.scene(self.ITEMS, (0.0, 0.0), {}))
+        line = [o for o in own if o.role == "line"][0]
+        self.assertEqual(line.heads, ("none-or-one", "many"))
+        scene = Scene((0.0, 0.0, 400.0, 50.0), [], [], [], True, "own", own)
+        shapes = "".join(slide_shapes(scene, (0.5, 1.0, 12.8, 7.0), 2))
+        # Crow's foot has no line end in DrawingML: each head a shape.
+        self.assertEqual(shapes.count('name="Head l"'), 2)
+        self.assertNotIn("<a:tailEnd", shapes)
+        page = diagram_xml(scene)
+        self.assertIn("startArrow=ERzeroToOne;startFill=0;", page)
+        self.assertIn("endArrow=ERmany;endFill=0;", page)
+        # Those it has, PowerPoint draws itself.
+        for head, end in (("arrow", "triangle"), ("dot", "oval"), ("made-of", "diamond"), ("serving", "arrow")):
+            item = dict(self.ITEMS[2], heads={"end": head})
+            scene = Scene((0.0, 0.0, 400.0, 50.0), [], [], [], True, "own",
+                          tuple(drawn.scene(self.ITEMS[:2] + [item], (0.0, 0.0), {})))
+            shapes = "".join(slide_shapes(scene, (0.5, 1.0, 12.8, 7.0), 2))
+            with self.subTest(head=head):
+                self.assertIn('<a:tailEnd type="%s" w="sm" len="sm"/>' % end, shapes)
+                self.assertNotIn('name="Head l"', shapes)
+
+    def test_the_canvas_draws_from_the_same_glyphs(self) -> None:
+        from terrane.annotations import HEADS
+        engine = ENGINE.read_text(encoding="utf-8")
+        table = engine.split("var HEAD_GLYPHS = ", 1)[1].split(";\n", 1)[0]
+        self.assertEqual(json.loads(table), drawn.HEAD_GLYPHS)
+        self.assertEqual(tuple(drawn.HEAD_GLYPHS), HEADS)
+        panel = (ENGINE.parent / "canvas.js").read_text(encoding="utf-8")
+        groups = panel.split("var HEAD_GROUPS = [", 1)[1].split("\n  ];", 1)[0]
+        self.assertEqual(tuple(re.findall(r'\["([a-z-]+)", "', groups)), HEADS)
 
 
 class TestIllustrated(unittest.TestCase):
@@ -795,6 +1507,97 @@ class TestTheFile(unittest.TestCase):
         self.assertIn("data:image/svg+xml;base64,", svg)
         self.assertIn('data-key="s" data-role="shape"', svg)
         self.assertIn('class="ground"', svg)
+
+    def test_a_diagrams_saved_styles_are_saved_after_its_look_and_read_back(self) -> None:
+        styles = [{"name": "Edge", "look": {"fill": "lavender", "line": "dashed"}}]
+        data = dict(OWN_ONLY, look="tiles", saved_styles=styles)
+        del data["view_id"]
+        saved = self.server.api_canvas_save({}, {"id": None, "data": data})
+        self.assertEqual(saved["errors"], [])
+        text = (self.root / saved["path"]).read_text(encoding="utf-8")
+        self.assertLess(text.index("\nlook: tiles\n"), text.index("\nsaved_styles:\n"))
+        self.assertEqual(self.server.api_view({"id": [saved["id"]]}, {})["data"]["saved_styles"], styles)
+
+    def test_a_diagrams_groups_are_saved_after_its_styles_and_read_back(self) -> None:
+        styles = [{"name": "Edge", "look": {"fill": "lavender"}}]
+        groups = [{"key": "group-1", "name": "Security"}]
+        items = [dict(item) for item in LANDING[:3]]
+        items[1]["group"] = items[2]["group"] = "group-1"
+        data = dict(OWN_ONLY, saved_styles=styles, groups=groups, annotations=items)
+        del data["view_id"]
+        saved = self.server.api_canvas_save({}, {"id": None, "data": data})
+        self.assertEqual(saved["errors"], [])
+        text = (self.root / saved["path"]).read_text(encoding="utf-8")
+        self.assertLess(text.index("\nsaved_styles:\n"), text.index("\ngroups:\n"))
+        self.assertLess(text.index("\ngroups:\n"), text.index("\nannotations:\n"))
+        back = self.server.api_view({"id": [saved["id"]]}, {})["data"]
+        self.assertEqual(back["groups"], groups)
+        self.assertEqual([a.get("group") for a in back["annotations"]], [None, "group-1", "group-1"])
+        refused = dict(data, groups=[])
+        with self.assertRaises(self.server.ApiError) as caught:
+            self.server.api_canvas_save({}, {"id": None, "data": refused})
+        self.assertIn("which the diagram's groups do not name", str(caught.exception))
+
+    def test_a_swimlane_is_saved_and_read_back(self) -> None:
+        data = dict(OWN_ONLY, annotations=SWIMLANE)
+        del data["view_id"]
+        saved = self.server.api_canvas_save({}, {"id": None, "data": data})
+        self.assertEqual(saved["errors"], [])
+        back = self.server.api_view({"id": [saved["id"]]}, {})["data"]["annotations"]
+        self.assertEqual(back, SWIMLANE)
+        self.assertIn('data-role="lane"', self.server.api_svg({"view": [saved["id"]]}))
+
+    def test_drawing_layers_are_saved_before_groups_and_drawn_as_they_say(self) -> None:
+        data = dict(OWN_ONLY, layers=LAYERS, annotations=TestLayers.ITEMS,
+                    groups=[{"key": "group-1", "name": "Pair"}])
+        data["annotations"] = [dict(i, group="group-1") if i["key"] in ("a", "b") else i for i in TestLayers.ITEMS]
+        del data["view_id"]
+        saved = self.server.api_canvas_save({}, {"id": None, "data": data})
+        self.assertEqual(saved["errors"], [])
+        text = (self.root / saved["path"]).read_text(encoding="utf-8")
+        self.assertLess(text.index("\nlayers:\n"), text.index("\ngroups:\n"))
+        self.assertEqual(self.server.api_view({"id": [saved["id"]]}, {})["data"]["layers"], LAYERS)
+        graph = self.server.api_graph({"view": [saved["id"]]}, None)
+        self.assertEqual([a["key"] for a in graph["annotations"]], ["f", "in-f", "b", "a"])
+        svg = self.server.api_svg({"view": [saved["id"]]})
+        self.assertIn("Gateway", svg)
+        self.assertNotIn("Who signs off?", svg)
+
+    def test_a_diagrams_pages_are_saved_last_drawn_alone_and_listed_once(self) -> None:
+        data = dict(PAGED)
+        del data["view_id"]
+        saved = self.server.api_canvas_save({}, {"id": None, "data": data})
+        self.assertEqual(saved["errors"], [])
+        text = (self.root / saved["path"]).read_text(encoding="utf-8")
+        self.assertLess(text.index("\ntitle: "), text.index("\npage: Payments\n"))
+        self.assertLess(text.index("\nannotations:\n"), text.index("\npages:\n"))
+        back = self.server.api_view({"id": [saved["id"]]}, {})["data"]
+        self.assertEqual(back["pages"], PAGED["pages"])
+        svg = self.server.api_svg({"view": [saved["id"] + "--page-2"]})
+        self.assertIn("Settle the batch", svg)
+        self.assertNotIn("Guardrails", svg)
+        listed = [v["viewId"] for v in self.server.api_overview({}, None)["views"] if v["viewId"].startswith(saved["id"])]
+        self.assertEqual(listed, [saved["id"]])
+
+    def test_the_estates_styles_are_kept_in_model_yaml_and_offered(self) -> None:
+        path = self.root / "10_MODEL" / "model.yaml"
+        was = path.read_text(encoding="utf-8")
+        try:
+            kept = self.server.api_canvas_styles({}, {"styles": [{"name": "Hot path", "look": {"fill": "rose"}}]})
+            self.assertEqual(kept["styles"], [{"name": "Hot path", "look": {"fill": "rose"}}])
+            text = path.read_text(encoding="utf-8")
+            self.assertTrue(text.startswith(was), "the rest of model.yaml is left as it was")
+            self.assertIn("saved_styles:\n  - name: Hot path\n", text)
+            self.assertEqual(self.server.api_canvas_parts({}, None)["styles"], kept["styles"])
+            again = self.server.api_canvas_styles({}, {"styles": [{"name": "Quiet", "look": {"line": "none"}}]})
+            self.assertEqual(path.read_text(encoding="utf-8").count("saved_styles:"), 1)
+            self.assertEqual(again["styles"][0]["name"], "Quiet")
+            with self.assertRaises(self.server.ApiError):
+                self.server.api_canvas_styles({}, {"styles": [{"name": "Bad", "look": {"fill": "teal"}}]})
+            self.server.api_canvas_styles({}, {"styles": []})
+            self.assertEqual(path.read_text(encoding="utf-8"), was)
+        finally:
+            path.write_text(was, encoding="utf-8", newline="")
 
     def test_the_marks_are_listed_for_the_panel_and_baked_for_the_hosted_copy(self) -> None:
         marks = self.server.api_icons({}, None)["marks"]

@@ -24,6 +24,7 @@ flowchart LR
     TS_AWS_PRIVATELINK[/"AWS PrivateLink<br/>[Private egress]"/]
     TS_AWS_TGW[/"AWS Transit Gateway<br/>[Transit hub]"/]
     TS_AZURE_SERVICEBUS[/"Azure Service Bus<br/>[Message queue]"/]
+    TS_NET_SUB_AZ_DATA_DATA[/"Data Data Subnet<br/>[Subnet]"/]
     TS_ENTRA_ID[/"Microsoft Entra ID<br/>[Identity provider]"/]
     TS_NET_VPC_SHARED[/"Shared Services VPC<br/>[Virtual network]"/]
     TS_SNOWFLAKE[/"Snowflake<br/>[Data warehouse]"/]
@@ -39,6 +40,7 @@ flowchart LR
   SYS_DATA_INGEST -.->|"runs on"| TS_AZURE_SERVICEBUS
   SYS_DATA_INGEST -.->|"runs on"| TS_SNOWFLAKE
   SYS_SCREENING_EGRESS -.->|"runs on"| TS_NET_VPC_SHARED
+  SYS_DATA_INGEST -.->|"runs on"| TS_NET_SUB_AZ_DATA_DATA
   SYS_DATA_INGEST -->|"Read"| DA_DISPUTES_VENDOR_FEED
   SYS_SCREENING_VENDOR -->|"Write"| DA_SCREENING_OUTCOMES
   SYS_DATA_INGEST -->|"Read"| DA_SCREENING_OUTCOMES
@@ -49,6 +51,6 @@ flowchart LR
   classDef s_tech_services__tech_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
   class DA_DISPUTES_VENDOR_FEED,DA_MODEL_FEAT,DA_SCREENING_OUTCOMES s_data_assets__data_assets;
   class SYS_DATA_INGEST,SYS_SCREENING_EGRESS,SYS_SCREENING_FEDERATION,SYS_SCREENING_VENDOR,SYS_SIEM s_systems__systems;
-  class TS_AWS_PRIVATELINK,TS_AWS_TGW,TS_AZURE_SERVICEBUS,TS_ENTRA_ID,TS_NET_VPC_SHARED,TS_SNOWFLAKE s_tech_services__tech_services;
+  class TS_AWS_PRIVATELINK,TS_AWS_TGW,TS_AZURE_SERVICEBUS,TS_ENTRA_ID,TS_NET_SUB_AZ_DATA_DATA,TS_NET_VPC_SHARED,TS_SNOWFLAKE s_tech_services__tech_services;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Data_Asset,grp_System,grp_Technology_Service boundary1;

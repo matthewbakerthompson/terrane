@@ -317,7 +317,50 @@ def load(root: Path) -> Model:
             for row in rows or []:
                 model._add_relation(relation_name, row, str(source))
 
+    place_by_zone(model, library[0] if library is not None else {})
     return model
+
+
+#: Where a placed row says it came from: no file wrote it.
+PLACED = "placed in its account's subnets by zone"
+
+
+def place_by_zone(model: Model, components: dict) -> None:
+    """Every system in a cloud account and a network zone lands in that
+    account's subnets for the zone, one `system_uses_tech_service` row each:
+    a network is made once per account and every product in the account
+    reuses it. Until 2026-11-04 the lending product's ten rows were written
+    by hand and no other product was placed at all.
+
+    A system that names a subnet of its own is left as it says (the lending
+    bucket sits in one data subnet, its endpoint's). A system of a kind the
+    library places in no subnet (`subnet: false`: an object store, a BI
+    layer, bought SaaS) is not placed. A subnet in another region than the
+    system's is not its, so a recovery region's subnets stay the recovery
+    region's."""
+    subnets: Dict[Tuple[str, str], List[dict]] = {}
+    for record in model.all_of("tech_services"):
+        if record.get("component_type") == "subnet" and record.get("cloud_account") and record.get("network_zone"):
+            subnets.setdefault((str(record["cloud_account"]), str(record["network_zone"])), []).append(record)
+    if not subnets:
+        return
+    ids = {str(r["tech_service_id"]) for rows in subnets.values() for r in rows}
+    placed = {str(r["system_id"]) for r in model.relation_rows("system_uses_tech_service")
+              if str(r["tech_service_id"]) in ids}
+    for system in model.all_of("systems"):
+        system_id = str(system.get("system_id"))
+        if system_id in placed or not system.get("cloud_account") or not system.get("network_zone"):
+            continue
+        kind = components.get(str(system.get("component_type") or ""))
+        if kind is not None and not getattr(kind, "subnet", True):
+            continue
+        region = str(system.get("region") or "")
+        found = subnets.get((str(system["cloud_account"]), str(system["network_zone"])), [])
+        for subnet in sorted(found, key=lambda r: str(r["tech_service_id"])):
+            if region and subnet.get("region") and str(subnet["region"]) != region:
+                continue
+            model._add_relation("system_uses_tech_service",
+                                {"system_id": system_id, "tech_service_id": str(subnet["tech_service_id"])}, PLACED)
 
 
 def iter_entities(model: Model, types: Optional[Iterable[str]] = None) -> Iterable[dict]:

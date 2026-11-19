@@ -13,6 +13,10 @@ flowchart TB
     subgraph grp_AWS__AI["AI"]
       direction LR
       TS_AWS_BEDROCK[/"Amazon Bedrock<br/>[Foundation model service]"/]
+      TS_AWS_AGENTCORE[/"Amazon Bedrock AgentCore<br/>[Agent platform]"/]
+      TS_AWS_BEDROCK_GUARDRAILS[/"Amazon Bedrock Guardrails<br/>[AI gateway and guardrails]"/]
+      TS_AWS_OPENSEARCH[/"Amazon OpenSearch Service<br/>[Vector database]"/]
+      TS_AWS_TEXTRACT[/"Amazon Textract<br/>[Document processing]"/]
     end
     subgraph grp_AWS__Compute["Compute"]
       direction LR
@@ -44,6 +48,7 @@ flowchart TB
     end
     subgraph grp_AWS__Security["Security"]
       direction LR
+      TS_AWS_COGNITO[/"Amazon Cognito<br/>[Customer identity]"/]
       TS_AWS_KMS[/"AWS KMS<br/>[Key management]"/]
       TS_AWS_SECRETS[/"AWS Secrets Manager<br/>[Secrets manager]"/]
     end
@@ -53,6 +58,8 @@ flowchart TB
     direction LR
     subgraph grp_Azure__AI["AI"]
       direction LR
+      TS_AZURE_DOC_INTELLIGENCE[/"Azure AI Document<br/>Intelligence<br/>[Document processing]"/]
+      TS_AZURE_AI_SEARCH[/"Azure AI Search<br/>[Vector database]"/]
       TS_AZURE_FOUNDRY[/"Microsoft Foundry<br/>[Foundation model service]"/]
     end
     subgraph grp_Azure__Compute["Compute"]
@@ -72,7 +79,6 @@ flowchart TB
     subgraph grp_Azure__Network["Network"]
       direction LR
       TS_AZURE_PRIVATELINK[/"Azure Private Link<br/>[Private egress]"/]
-      TS_AZURE_VWAN[/"Azure Virtual WAN hub<br/>[Transit hub]"/]
     end
     subgraph grp_Azure__Operations["Operations"]
       direction LR
@@ -81,6 +87,11 @@ flowchart TB
     subgraph grp_Azure__Security["Security"]
       direction LR
       TS_AZURE_KEYVAULT[/"Azure Key Vault<br/>[Secrets manager]"/]
+      TS_AZURE_EXTERNAL_ID[/"Microsoft Entra External<br/>ID<br/>[Customer identity]"/]
+    end
+    subgraph grp_Azure__Storage["Storage"]
+      direction LR
+      TS_AZURE_BLOB[/"Azure Blob Storage<br/>[Object store]"/]
     end
   end
 
@@ -93,7 +104,10 @@ flowchart TB
     direction LR
     subgraph grp_GCP__AI["AI"]
       direction LR
+      TS_GCP_DOCUMENT_AI[/"Document AI<br/>[Document processing]"/]
       TS_GCP_GEMINI_PLATFORM[/"Gemini Enterprise Agent<br/>Platform<br/>[Foundation model service]"/]
+      TS_GCP_MODEL_ARMOR[/"Model Armor<br/>[AI gateway and guardrails]"/]
+      TS_GCP_VECTOR_SEARCH[/"Vector Search<br/>[Vector database]"/]
     end
     subgraph grp_GCP__Compute["Compute"]
       direction LR
@@ -129,6 +143,7 @@ flowchart TB
       direction LR
       TS_GCP_CLOUD_ARMOR[/"Cloud Armor<br/>[Web application firewall]"/]
       TS_GCP_KMS[/"Cloud KMS<br/>[Key management]"/]
+      TS_GCP_IDENTITY_PLATFORM[/"Identity Platform<br/>[Customer identity]"/]
       TS_GCP_SECRET_MANAGER[/"Secret Manager<br/>[Secrets manager]"/]
     end
     subgraph grp_GCP__Storage["Storage"]
@@ -158,17 +173,17 @@ flowchart TB
   classDef s_tech_services__operations fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
   classDef s_tech_services__security fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
   classDef s_tech_services__storage fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
-  class TS_AWS_BEDROCK,TS_AZURE_FOUNDRY,TS_GCP_GEMINI_PLATFORM s_tech_services__ai;
+  class TS_AWS_AGENTCORE,TS_AWS_BEDROCK,TS_AWS_BEDROCK_GUARDRAILS,TS_AWS_OPENSEARCH,TS_AWS_TEXTRACT,TS_AZURE_AI_SEARCH,TS_AZURE_DOC_INTELLIGENCE,TS_AZURE_FOUNDRY,TS_GCP_DOCUMENT_AI,TS_GCP_GEMINI_PLATFORM,TS_GCP_MODEL_ARMOR,TS_GCP_VECTOR_SEARCH s_tech_services__ai;
   class TS_AWS_EKS,TS_AZURE_AKS,TS_GCP_GKE s_tech_services__compute;
   class TS_AWS_RDS,TS_AWS_S3,TS_AZURE_SQL,TS_GCP_BIGQUERY,TS_GCP_CLOUD_SQL,TS_GCP_DATAFLOW,TS_GCP_LOOKER,TS_GCP_MEMORYSTORE,TS_SNOWFLAKE s_tech_services__data;
   class TS_AWS_ORG,TS_COLLIBRA,TS_SERVICENOW s_tech_services__governance;
   class TS_AWS_APIGW,TS_AWS_MSK,TS_AWS_SQS,TS_AZURE_APIM,TS_AZURE_EVENTHUBS,TS_AZURE_SERVICEBUS,TS_GCP_APIGEE,TS_GCP_COMPOSER,TS_GCP_MANAGED_KAFKA,TS_GCP_PUBSUB s_tech_services__integration;
-  class TS_AWS_ALB,TS_AWS_CLOUDFRONT,TS_AZURE_PRIVATELINK,TS_AZURE_VWAN,TS_GCP_CLOUD_CDN,TS_GCP_CLOUD_LB,TS_GCP_PSC s_tech_services__network;
+  class TS_AWS_ALB,TS_AWS_CLOUDFRONT,TS_AZURE_PRIVATELINK,TS_GCP_CLOUD_CDN,TS_GCP_CLOUD_LB,TS_GCP_PSC s_tech_services__network;
   class TS_AWS_CLOUDWATCH,TS_AZURE_MONITOR,TS_GCP_BACKUP_DR,TS_GCP_MONITORING s_tech_services__operations;
-  class TS_AWS_KMS,TS_AWS_SECRETS,TS_AZURE_KEYVAULT,TS_ENTRA_ID,TS_GCP_CLOUD_ARMOR,TS_GCP_KMS,TS_GCP_SECRET_MANAGER s_tech_services__security;
-  class TS_GCP_GCS s_tech_services__storage;
+  class TS_AWS_COGNITO,TS_AWS_KMS,TS_AWS_SECRETS,TS_AZURE_EXTERNAL_ID,TS_AZURE_KEYVAULT,TS_ENTRA_ID,TS_GCP_CLOUD_ARMOR,TS_GCP_IDENTITY_PLATFORM,TS_GCP_KMS,TS_GCP_SECRET_MANAGER s_tech_services__security;
+  class TS_AZURE_BLOB,TS_GCP_GCS s_tech_services__storage;
   classDef boundary1 fill:#e7ebf6,stroke:#8f9bb5,color:#3b4a6b;
-  class grp_AWS__AI,grp_AWS__Compute,grp_AWS__Data,grp_AWS__Governance,grp_AWS__Integration,grp_AWS__Network,grp_AWS__Operations,grp_AWS__Security,grp_Azure__AI,grp_Azure__Compute,grp_Azure__Data,grp_Azure__Integration,grp_Azure__Network,grp_Azure__Operations,grp_Azure__Security,grp_GCP__AI,grp_GCP__Compute,grp_GCP__Data,grp_GCP__Integration,grp_GCP__Network,grp_GCP__Operations,grp_GCP__Security,grp_GCP__Storage boundary1;
+  class grp_AWS__AI,grp_AWS__Compute,grp_AWS__Data,grp_AWS__Governance,grp_AWS__Integration,grp_AWS__Network,grp_AWS__Operations,grp_AWS__Security,grp_Azure__AI,grp_Azure__Compute,grp_Azure__Data,grp_Azure__Integration,grp_Azure__Network,grp_Azure__Operations,grp_Azure__Security,grp_Azure__Storage,grp_GCP__AI,grp_GCP__Compute,grp_GCP__Data,grp_GCP__Integration,grp_GCP__Network,grp_GCP__Operations,grp_GCP__Security,grp_GCP__Storage boundary1;
   classDef boundary2 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Data,grp_Governance,grp_Security boundary2;
   classDef boundary3 fill:#f7fbfe,stroke:#0078d4,color:#1b4b7a;
@@ -193,6 +208,6 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | solid `#0078d4` | Azure |
 | solid `#4285f4` | GCP |
 
-47 entities, 0 relationships. Generated from the model; edit the model, not this file.
+59 entities, 0 relationships. Generated from the model; edit the model, not this file.
 
 > No edges connected the selected entities.

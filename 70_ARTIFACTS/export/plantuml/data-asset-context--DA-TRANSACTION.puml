@@ -26,16 +26,22 @@ Boundary(b_Policy, "Policy") {
   ' aac POL_RECORDS: company_domain=""
 }
 Boundary(b_Process, "Process") {
+  System(P_PAYMENTS_010, "Allocate payment across balances", "Apply each payment above the minimum to the balance with the highest rate first, as the card rules require, and treat promotional, deferred-interest and disputed balances correctly. Allocation errors overcharge interest on every account with more than one balance, which makes them a remediation, not a correction.", $tags="processes")
+  ' aac P_PAYMENTS_010: company_domain=""
   System(P_SERVICING_001, "Assess interest, fees, and minimum payment", "Calculate interest, fees, and the minimum payment due for the billing cycle. Cycle assessment applies the cardholder agreement exactly: interest method, fee triggers, and minimum-payment formula, because a systematic error here is a remediation event.", $tags="processes")
   ' aac P_SERVICING_001: company_domain=""
   System(P_TPS_002, "Convert client portfolio", "Migrate a client portfolio onto the servicing platform with reconciled balances and no cardholder disruption.", $tags="processes")
   ' aac P_TPS_002: company_domain=""
   System(P_STMT_GEN_001, "Cut cycle and generate statement", "Cut the billing cycle and generate the cardholder statement including the rewards position. Cycle cut is the hard deadline that sequences assessment, statement generation, and delivery; a late cut cascades into payment due dates and regulatory timing.", $tags="processes")
   ' aac P_STMT_GEN_001: company_domain=""
+  System(P_FRAUD_007, "Detect and act on first-party fraud and bust-out", "Spot accounts run up to the limit by their owners with no intent to repay, from rapid balance build, payments that return and links between applications, then restrict the account and route it to fraud rather than collections. Booked as credit loss, first-party fraud is worked by the wrong team and reported in the wrong line.", $tags="processes")
+  ' aac P_FRAUD_007: company_domain=""
   System(P_FRAUD_001, "Detect and action transaction fraud alert", "Detect a suspected fraudulent transaction, action the alert, and contact the cardholder. Alert handling runs against loss and customer-friction budgets; actions span block, reissue, and contact, and the clock matters because exposure grows per transaction.", $tags="processes")
   ' aac P_FRAUD_001: company_domain=""
   System(P_PAYMENTS_002, "Ingest clearing file and post transactions", "Receive network clearing files and post transactions to cardholder accounts. Clearing ingestion matches presentments to authorizations, posts to accounts, and routes exceptions; the file must balance to network totals before posting completes.", $tags="processes")
   ' aac P_PAYMENTS_002: company_domain=""
+  System(P_COMPLIANCE_007, "Monitor transactions for suspicious activity", "Run monitoring scenarios over card, loan, deposit and merchant activity, triage the alerts, and escalate unusual activity to investigation, tuning the scenarios to the bank's risk assessment. Alerts aged past the review window put suspicious activity report deadlines at risk.", $tags="processes")
+  ' aac P_COMPLIANCE_007: company_domain=""
   System(P_PAYMENTS_001, "Process authorization request", "Receive, decision, and respond to a real-time authorization request within the network response window.", $tags="processes")
   ' aac P_PAYMENTS_001: company_domain=""
   System(P_DISPUTE_001, "Process cardholder dispute claim", "Take a cardholder dispute claim, apply provisional credit, investigate, determine, and notify within regulatory timers.", $tags="processes")
@@ -100,6 +106,12 @@ Rel(P_FRAUD_001, DA_TRANSACTION, "Reads")
 ' aac rel: source="P_FRAUD_001"; target="DA_TRANSACTION"; label="Reads"; relation="process_uses_data_asset"; access="Reads"
 Rel(P_TPS_002, DA_TRANSACTION, "Writes")
 ' aac rel: source="P_TPS_002"; target="DA_TRANSACTION"; label="Writes"; relation="process_uses_data_asset"; access="Writes"
+Rel(P_PAYMENTS_010, DA_TRANSACTION, "Write")
+' aac rel: source="P_PAYMENTS_010"; target="DA_TRANSACTION"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_FRAUD_007, DA_TRANSACTION, "Read")
+' aac rel: source="P_FRAUD_007"; target="DA_TRANSACTION"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_COMPLIANCE_007, DA_TRANSACTION, "Read")
+' aac rel: source="P_COMPLIANCE_007"; target="DA_TRANSACTION"; label="Read"; relation="process_uses_data_asset"; access="Read"
 Rel(DA_TRANSACTION, CTL_DAILY_RECON, "governed by")
 ' aac rel: source="DA_TRANSACTION"; target="CTL_DAILY_RECON"; label="governed by"; relation="data_governed_by_control"
 Rel(DA_TRANSACTION, CTL_PCI_EVIDENCE, "governed by")

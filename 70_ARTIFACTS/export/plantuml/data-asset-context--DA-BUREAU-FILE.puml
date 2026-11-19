@@ -14,12 +14,16 @@ Boundary(b_Data_Asset, "Data Asset") {
   ' aac DA_BUREAU_FILE: company_domain=""
 }
 Boundary(b_Process, "Process") {
+  System(P_SERVICING_015, "Close account and settle final balance", "Close the account at the cardholder's or the bank's request, stop new charges while recurring payments and pending items clear, forfeit or pay out rewards per the terms, report the closure to the bureaus correctly, and confirm it in writing. A closed account still has a balance to bill and a bureau line to keep accurate.", $tags="processes")
+  ' aac P_SERVICING_015: company_domain=""
   System(P_ORIG_004, "Execute credit decision", "Apply the approved credit strategy to render an approve, decline, or counter-offer decision with a line assignment.", $tags="processes")
   ' aac P_ORIG_004: company_domain=""
   System(P_COLLECTIONS_005, "Furnish credit bureau data", "Compile and furnish account data to the consumer reporting agencies. Monthly Metro 2 furnishing to the bureaus; accuracy is an FCRA obligation, and the file must reconcile to the system of record before transmission.", $tags="processes")
   ' aac P_COLLECTIONS_005: company_domain=""
   System(P_ORIG_005, "Issue adverse action notice", "Generate and deliver a compliant adverse action or counter-offer notice within the required period. ECOA and FCRA set the notice content and the clock; the principal reasons must match the actual decision factors, which is exactly what fair-lending testing checks.", $tags="processes")
   ' aac P_ORIG_005: company_domain=""
+  System(P_COLLECTIONS_008, "Negotiate settlement offer", "Offer a reduced lump-sum or short-term settlement within the approved matrix, put the terms in writing before payment, and on completion close the account and update the bureaus as settled. A settlement outside the matrix, or without written terms, is the account a regulator samples first.", $tags="processes")
+  ' aac P_COLLECTIONS_008: company_domain=""
   System(P_CREDIT_001, "Set and deploy credit decision strategy", "Define, test, approve, and deploy changes to the credit decision strategy and its cutoffs. Strategy changes ship through champion-challenger testing with documented approval; the deployed strategy is the single decisioning authority for originations.", $tags="processes")
   ' aac P_CREDIT_001: company_domain=""
 }
@@ -44,6 +48,10 @@ Rel(P_ORIG_004, DA_BUREAU_FILE, "Reads")
 ' aac rel: source="P_ORIG_004"; target="DA_BUREAU_FILE"; label="Reads"; relation="process_uses_data_asset"; access="Reads"
 Rel(P_ORIG_005, DA_BUREAU_FILE, "Reads")
 ' aac rel: source="P_ORIG_005"; target="DA_BUREAU_FILE"; label="Reads"; relation="process_uses_data_asset"; access="Reads"
+Rel(P_SERVICING_015, DA_BUREAU_FILE, "Write")
+' aac rel: source="P_SERVICING_015"; target="DA_BUREAU_FILE"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_COLLECTIONS_008, DA_BUREAU_FILE, "Write")
+' aac rel: source="P_COLLECTIONS_008"; target="DA_BUREAU_FILE"; label="Write"; relation="process_uses_data_asset"; access="Write"
 
 SHOW_LEGEND()
 @enduml

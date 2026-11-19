@@ -10,6 +10,7 @@ flowchart LR
 
   subgraph grp_Data_Asset["Data Asset"]
     direction LR
+    DA_AUTH_LOG[("Authorization log")]
     DA_CARD_ACCOUNT[("Card account master")]
     DA_CARDSVC_OPERATIONAL[("Card Servicing operational<br/>data")]
     DA_TRANSACTION[("Card transaction history")]
@@ -18,31 +19,72 @@ flowchart LR
     DA_BUREAU_FILE[("Credit bureau furnishing<br/>file")]
     DA_CUST360_CURATED[("Customer 360 curated<br/>dataset")]
     DA_CUSTOMER_PROFILE[("Customer profile")]
+    DA_DEPOSIT_ACCOUNT[("Deposit account and CD<br/>record")]
     DA_DISPUTES_VENDOR_FEED[("Dispute Management<br/>Platform vendor feed")]
     DA_LENDING_OPERATIONAL[("Installment Lending<br/>operational data")]
+    DA_LOAN_ACCOUNT[("Installment loan account")]
     DA_SCREENING_OUTCOMES[("NICE Actimize Screening<br/>outcomes")]
     DA_PAYMENT_INSTR[("Payment instructions")]
   end
 
   subgraph grp_Process["Process"]
     direction LR
+    P_DEPOSITS_005[\"Accrue and pay deposit<br/>interest"/]
+    P_DEPOSITS_008[\"Administer deposit<br/>insurance records and<br/>escheatment"/]
+    P_PAYMENTS_010[\"Allocate payment across<br/>balances"/]
     P_SERVICING_001[\"Assess interest, fees, and<br/>minimum payment"/]
+    P_LENDING_012[\"Assign repossession and<br/>send required notices"/]
+    P_LENDING_009[\"Bill installment loan and<br/>post payments"/]
+    P_LENDING_006[\"Board loan and fund dealer"/]
+    P_LENDING_015[\"Calculate and settle<br/>dealer reserve"/]
+    P_LENDING_014[\"Cancel ancillary products<br/>and refund unearned<br/>premium"/]
     P_CARD_PMT_001[\"Capture and apply<br/>cardholder payment"/]
     P_ORIG_001[\"Capture card application"/]
+    P_SERVICING_015[\"Close account and settle<br/>final balance"/]
+    P_LENDING_011[\"Collect delinquent<br/>installment loan"/]
     P_TPS_002[\"Convert client portfolio"/]
     P_STMT_GEN_001[\"Cut cycle and generate<br/>statement"/]
+    P_LENDING_004[\"Decide indirect loan and<br/>return terms"/]
+    P_FRAUD_007[\"Detect and act on<br/>first-party fraud and<br/>bust-out"/]
     P_FRAUD_001[\"Detect and action<br/>transaction fraud alert"/]
+    P_PAYMENTS_008[\"Enroll and run automatic<br/>payments"/]
     P_ORIG_006[\"Establish account and<br/>issue credentials"/]
     P_ORIG_004[\"Execute credit decision"/]
     P_PRIVACY_001[\"Fulfill consumer privacy<br/>request"/]
     P_COLLECTIONS_005[\"Furnish credit bureau data"/]
     P_PAYMENTS_002[\"Ingest clearing file and<br/>post transactions"/]
+    P_FRAUD_008[\"Investigate synthetic<br/>identity"/]
     P_ORIG_005[\"Issue adverse action<br/>notice"/]
+    P_DEPOSITS_003[\"Issue brokered CDs through<br/>the broker network"/]
+    P_PAYMENTS_007[\"Maintain authorization<br/>routing and network<br/>connectivity"/]
+    P_LENDING_002[\"Monitor dealer performance<br/>and program compliance"/]
+    P_COMPLIANCE_007[\"Monitor transactions for<br/>suspicious activity"/]
+    P_COLLECTIONS_008[\"Negotiate settlement offer"/]
+    P_DEPOSITS_002[\"Open and fund direct<br/>deposit account"/]
+    P_PAYMENTS_006[\"Operate stand-in<br/>authorization during a<br/>host outage"/]
+    P_LENDING_016[\"Originate point-of-sale<br/>installment loan"/]
+    P_LENDING_007[\"Perfect lien with titling<br/>state"/]
     P_PAYMENTS_001[\"Process authorization<br/>request"/]
     P_DISPUTE_001[\"Process cardholder dispute<br/>claim"/]
+    P_DEPOSITS_007[\"Process CD maturity,<br/>renewal, and early<br/>withdrawal"/]
+    P_PAYMENTS_009[\"Process lockbox and check<br/>payments"/]
+    P_SERVICING_013[\"Process product change or<br/>upgrade"/]
+    P_DEPOSITS_006[\"Produce deposit tax<br/>reporting"/]
+    P_LENDING_008[\"Quote payoff and release<br/>title"/]
+    P_LENDING_003[\"Receive and validate<br/>dealer-submitted<br/>application"/]
     P_NETWORK_RECON_001[\"Reconcile network<br/>settlement"/]
+    P_SERVICING_016[\"Refund credit balance and<br/>report unclaimed property"/]
+    P_LENDING_013[\"Remarket recovered<br/>collateral and pursue<br/>deficiency"/]
+    P_SERVICING_014[\"Retain account at closure<br/>request"/]
+    P_LENDING_005[\"Review contract package<br/>and clear stipulations"/]
     P_ORIG_003[\"Screen application for<br/>fraud"/]
+    P_COMPLIANCE_008[\"Screen transactions and<br/>parties against sanctions<br/>in line"/]
+    P_LENDING_010[\"Service installment loan<br/>account requests"/]
+    P_LENDING_017[\"Service point-of-sale<br/>installment loan"/]
     P_CREDIT_001[\"Set and deploy credit<br/>decision strategy"/]
+    P_DEPOSITS_001[\"Set deposit rates and<br/>product terms"/]
+    P_DEPOSITS_004[\"Settle brokered CDs and<br/>keep the position"/]
+    P_COMPLIANCE_006[\"Test credit decisions and<br/>pricing for fair lending"/]
     P_ORIG_002[\"Verify applicant identity<br/>and satisfy CIP"/]
   end
 
@@ -73,11 +115,57 @@ flowchart LR
   P_FRAUD_001 -->|"Both"| DA_CUSTOMER_PROFILE
   P_TPS_002 -->|"Writes"| DA_CUSTOMER_PROFILE
   P_TPS_002 -->|"Writes"| DA_TRANSACTION
+  P_LENDING_002 -->|"Read"| DA_LOAN_ACCOUNT
+  P_LENDING_003 -->|"Write"| DA_APPLICATION
+  P_LENDING_004 -->|"Both"| DA_APPLICATION
+  P_LENDING_005 -->|"Read"| DA_APPLICATION
+  P_LENDING_006 -->|"Write"| DA_LOAN_ACCOUNT
+  P_LENDING_007 -->|"Read"| DA_LOAN_ACCOUNT
+  P_LENDING_008 -->|"Both"| DA_LOAN_ACCOUNT
+  P_LENDING_009 -->|"Both"| DA_LOAN_ACCOUNT
+  P_LENDING_009 -->|"Read"| DA_PAYMENT_INSTR
+  P_LENDING_010 -->|"Both"| DA_LOAN_ACCOUNT
+  P_LENDING_011 -->|"Read"| DA_LOAN_ACCOUNT
+  P_LENDING_012 -->|"Read"| DA_LOAN_ACCOUNT
+  P_LENDING_013 -->|"Both"| DA_LOAN_ACCOUNT
+  P_LENDING_014 -->|"Both"| DA_LOAN_ACCOUNT
+  P_LENDING_015 -->|"Read"| DA_LOAN_ACCOUNT
+  P_LENDING_016 -->|"Write"| DA_APPLICATION
+  P_LENDING_017 -->|"Read"| DA_PAYMENT_INSTR
+  P_DEPOSITS_001 -->|"Read"| DA_DEPOSIT_ACCOUNT
+  P_DEPOSITS_002 -->|"Write"| DA_DEPOSIT_ACCOUNT
+  P_DEPOSITS_003 -->|"Write"| DA_DEPOSIT_ACCOUNT
+  P_DEPOSITS_004 -->|"Both"| DA_DEPOSIT_ACCOUNT
+  P_DEPOSITS_005 -->|"Both"| DA_DEPOSIT_ACCOUNT
+  P_DEPOSITS_006 -->|"Read"| DA_DEPOSIT_ACCOUNT
+  P_DEPOSITS_007 -->|"Both"| DA_DEPOSIT_ACCOUNT
+  P_DEPOSITS_008 -->|"Read"| DA_DEPOSIT_ACCOUNT
+  P_SERVICING_013 -->|"Read"| DA_CUSTOMER_PROFILE
+  P_SERVICING_014 -->|"Read"| DA_CUSTOMER_PROFILE
+  P_SERVICING_015 -->|"Write"| DA_CUSTOMER_PROFILE
+  P_SERVICING_015 -->|"Write"| DA_BUREAU_FILE
+  P_SERVICING_016 -->|"Read"| DA_CUSTOMER_PROFILE
+  P_PAYMENTS_006 -->|"Both"| DA_AUTH_LOG
+  P_PAYMENTS_007 -->|"Read"| DA_AUTH_LOG
+  P_PAYMENTS_008 -->|"Both"| DA_PAYMENT_INSTR
+  P_PAYMENTS_009 -->|"Write"| DA_PAYMENT_INSTR
+  P_PAYMENTS_010 -->|"Read"| DA_PAYMENT_INSTR
+  P_PAYMENTS_010 -->|"Write"| DA_TRANSACTION
+  P_COLLECTIONS_008 -->|"Write"| DA_BUREAU_FILE
+  P_FRAUD_007 -->|"Read"| DA_TRANSACTION
+  P_FRAUD_007 -->|"Read"| DA_PAYMENT_INSTR
+  P_FRAUD_008 -->|"Read"| DA_APPLICATION
+  P_COMPLIANCE_006 -->|"Read"| DA_APPLICATION
+  P_COMPLIANCE_006 -->|"Read"| DA_LOAN_ACCOUNT
+  P_COMPLIANCE_007 -->|"Read"| DA_TRANSACTION
+  P_COMPLIANCE_007 -->|"Read"| DA_DEPOSIT_ACCOUNT
+  P_COMPLIANCE_008 -->|"Read"| DA_AUTH_LOG
+  P_COMPLIANCE_008 -->|"Read"| DA_CUSTOMER_PROFILE
 
   classDef s_data_assets__restricted fill:#70c9a7,stroke:#047857,color:#0f172a,stroke-width:2.6px;
   classDef s_processes__default fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.1px;
-  class DA_APPLICATION,DA_BUREAU_FILE,DA_CARD_ACCOUNT,DA_CARDSVC_OPERATIONAL,DA_COLLECT_OPERATIONAL,DA_CUST360_CURATED,DA_CUSTOMER_PROFILE,DA_DISPUTES_VENDOR_FEED,DA_LENDING_OPERATIONAL,DA_PAYMENT_INSTR,DA_SCREENING_OUTCOMES,DA_TRANSACTION s_data_assets__restricted;
-  class P_CARD_PMT_001,P_COLLECTIONS_005,P_CREDIT_001,P_DISPUTE_001,P_FRAUD_001,P_NETWORK_RECON_001,P_ORIG_001,P_ORIG_002,P_ORIG_003,P_ORIG_004,P_ORIG_005,P_ORIG_006,P_PAYMENTS_001,P_PAYMENTS_002,P_PRIVACY_001,P_SERVICING_001,P_STMT_GEN_001,P_TPS_002 s_processes__default;
+  class DA_APPLICATION,DA_AUTH_LOG,DA_BUREAU_FILE,DA_CARD_ACCOUNT,DA_CARDSVC_OPERATIONAL,DA_COLLECT_OPERATIONAL,DA_CUST360_CURATED,DA_CUSTOMER_PROFILE,DA_DEPOSIT_ACCOUNT,DA_DISPUTES_VENDOR_FEED,DA_LENDING_OPERATIONAL,DA_LOAN_ACCOUNT,DA_PAYMENT_INSTR,DA_SCREENING_OUTCOMES,DA_TRANSACTION s_data_assets__restricted;
+  class P_CARD_PMT_001,P_COLLECTIONS_005,P_COLLECTIONS_008,P_COMPLIANCE_006,P_COMPLIANCE_007,P_COMPLIANCE_008,P_CREDIT_001,P_DEPOSITS_001,P_DEPOSITS_002,P_DEPOSITS_003,P_DEPOSITS_004,P_DEPOSITS_005,P_DEPOSITS_006,P_DEPOSITS_007,P_DEPOSITS_008,P_DISPUTE_001,P_FRAUD_001,P_FRAUD_007,P_FRAUD_008,P_LENDING_002,P_LENDING_003,P_LENDING_004,P_LENDING_005,P_LENDING_006,P_LENDING_007,P_LENDING_008,P_LENDING_009,P_LENDING_010,P_LENDING_011,P_LENDING_012,P_LENDING_013,P_LENDING_014,P_LENDING_015,P_LENDING_016,P_LENDING_017,P_NETWORK_RECON_001,P_ORIG_001,P_ORIG_002,P_ORIG_003,P_ORIG_004,P_ORIG_005,P_ORIG_006,P_PAYMENTS_001,P_PAYMENTS_002,P_PAYMENTS_006,P_PAYMENTS_007,P_PAYMENTS_008,P_PAYMENTS_009,P_PAYMENTS_010,P_PRIVACY_001,P_SERVICING_001,P_SERVICING_013,P_SERVICING_014,P_SERVICING_015,P_SERVICING_016,P_STMT_GEN_001,P_TPS_002 s_processes__default;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Data_Asset,grp_Process boundary1;
 ```
@@ -100,4 +188,6 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | 2.6px | Restricted |
 | 1.1px | default |
 
-30 entities, 27 relationships. Generated from the model; edit the model, not this file.
+72 entities, 73 relationships. Generated from the model; edit the model, not this file.
+
+> 72 entities on an architecture diagram. Past about 40 this has become a landscape: narrow the scope, or mark it `kind: map`.

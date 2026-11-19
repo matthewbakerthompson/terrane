@@ -121,9 +121,11 @@ class TheHealthcareEstate(unittest.TestCase):
         self.assertLessEqual(applied, set(adoption))
 
     def test_a_cloud_it_has_no_landing_zone_on_has_no_gaps(self) -> None:
+        # And its own has none: its one, no Azure service answering for a
+        # foundation model, closed when its landing zone took on what the
+        # AI assistant asks for, Foundry and AI Search (2026-11-04).
         gaps = [f.message for f in self.report.warnings if f.code == "library.landing_zone_gap"]
-        self.assertEqual(len(gaps), 1, gaps)
-        self.assertIn("the Azure landing zone answers for no `foundation-model-service`", gaps[0])
+        self.assertEqual(gaps, [])
 
     def test_a_shape_for_a_cloud_it_does_not_use_waits(self) -> None:
         """The AWS and Google shapes bind services this estate has no reason

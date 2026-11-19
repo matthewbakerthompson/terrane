@@ -13,7 +13,6 @@ a folder of its own and removes exactly that folder.
 from __future__ import annotations
 
 import io
-import shutil
 import sys
 import tempfile
 import unittest
@@ -30,6 +29,7 @@ from terrane.model import load  # noqa: E402
 from terrane.query import ViewError, load_views  # noqa: E402
 from terrane.shipped import sample_inventory, shipped_root  # noqa: E402
 from terrane import validate  # noqa: E402
+from _fixture import remove_scratch  # noqa: E402
 
 SHIPPED_VIEWS = len(load_views(shipped_root() / "30_VIEWS"))
 
@@ -47,7 +47,7 @@ def _server():
 class _Estate(unittest.TestCase):
     def setUp(self) -> None:
         self.tmp = Path(tempfile.mkdtemp(prefix="aac-estate-"))
-        self.addCleanup(shutil.rmtree, self.tmp)
+        self.addCleanup(remove_scratch, self.tmp, "aac-estate-")
         self.root = self.tmp / "estate"
 
     def init(self, *extra: str) -> int:

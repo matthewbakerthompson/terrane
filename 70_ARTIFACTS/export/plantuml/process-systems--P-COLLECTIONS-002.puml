@@ -16,6 +16,8 @@ Boundary(b_Capability, "Capability") {
   ' aac CAP_COLL_07: company_domain="Collections"
   System(CAP_COLL_02, "Outbound Contact Operations", "Execute dialer, digital, and letter treatment.", $tags="capabilities")
   ' aac CAP_COLL_02: company_domain="Collections"
+  System(CAP_COLL_02_01, "Owned-Portfolio Collections Contact", "Contact delinquent borrowers on the bank's own card and loan portfolios.", $tags="capabilities")
+  ' aac CAP_COLL_02_01: company_domain="Collections"
 }
 Boundary(b_Control, "Control") {
   System(CTL_CONTACT_LIM, "Collections contact limits", "Outbound contact respects time-of-day, frequency, and channel-consent constraints; blocked numbers and cease requests are honored.", $tags="controls")
@@ -52,6 +54,8 @@ Rel(P_COLLECTIONS_002, CAP_COLL_02, "supports")
 ' aac rel: source="P_COLLECTIONS_002"; target="CAP_COLL_02"; label="supports"; relation="process_supports_capability"
 Rel(P_COLLECTIONS_002, CAP_COLL_07, "supports")
 ' aac rel: source="P_COLLECTIONS_002"; target="CAP_COLL_07"; label="supports"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_002, CAP_COLL_02_01, "supports")
+' aac rel: source="P_COLLECTIONS_002"; target="CAP_COLL_02_01"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

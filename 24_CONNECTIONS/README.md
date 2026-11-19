@@ -42,6 +42,7 @@ and the catalog reads them.
   frequency: Realtime
   direction: Outbound
   patterns: [event-fanout]          # from 27_PATTERNS; checked by the gate
+  datastore: source                 # optional: target, source or both
 ```
 
 `terrane validate` refuses a kind whose style is not one of the three, whose
@@ -49,6 +50,25 @@ pattern the library lacks (`connection.unknown_pattern`), or which shares a
 style and a protocol with another. Like a block or a pattern, a kind names no
 vendor: a protocol is a protocol, and the product that carries it is the
 technology service's business.
+
+## A database's ways in and out
+
+A kind may say which end of it is a data store, a component type the library
+draws as a cylinder: `target` for a way into one from something that is not
+one, `source` for a way out of one, `both` for one store to another. A line
+drawn into or out of a database then says what the estate already does with
+that kind of store, and offers those kinds first, the library's ways in or out
+after them: into a relational database, its own service's datastore, as the
+estate's six are; out of one, a change data capture feed or a scheduled
+extract, where the chooser used to propose an API call; between two, a
+replica or a backup. A system of another product reaching into a database
+another service already reads and writes as its own is said to be the shared
+database the library deprecates, and is never the likeliest answer.
+
+The four ways out (`change-data-capture`, `database-extract`,
+`database-replica`, `database-backup`) are the one place this catalog is
+ahead of the estate, at the owner's asking: no interface is of them yet, and
+the catalog says "None yet" under each until one is.
 
 ## Adding one
 

@@ -15,7 +15,7 @@ from __future__ import annotations
 from contextlib import contextmanager
 from contextvars import ContextVar
 from pathlib import Path
-from typing import Dict, Iterator, List, NamedTuple, Optional, Sequence, Tuple
+from typing import Dict, Iterator, List, NamedTuple, Optional, Sequence, Set, Tuple
 
 from .library import LibraryError, load_layer
 from .schema import INTEGRATION_STYLES
@@ -62,6 +62,10 @@ class ConnectionKind(NamedTuple):
     frequency: str
     direction: str
     patterns: Tuple[str, ...]
+    #: Which end of the interface is a data store where the kind is a way
+    #: into or out of one: "target", "source" or "both", or "" for a kind
+    #: that is neither. The chooser offers it first where that end is one.
+    datastore: str = ""
     source: Optional[Path] = None
     library: str = ""
     replaced: str = ""
@@ -80,6 +84,35 @@ class ConnectionKind(NamedTuple):
         if self.patterns:
             out["patterns"] = list(self.patterns)
         return out
+
+
+#: The ends a kind may say are a data store: the one it goes into, the one
+#: it comes out of, or both, as a replica's.
+DATASTORE_ENDS = ("target", "source", "both")
+
+
+def data_stores(library) -> Set[str]:
+    """The component types that are data stores: those the library draws
+    as a cylinder, every notation's shape for what holds data and the one
+    place the library already says it. A relational database, a cache, an
+    object store and an archive are; an ETL pipeline and a BI layer are
+    not."""
+    return {type_id for type_id, kind in (library or {}).items() if getattr(kind, "shape", "") == "cylinder"}
+
+
+def fits(kind: "ConnectionKind", from_store: bool, to_store: bool) -> bool:
+    """Whether a kind is a way in or out of a data store that these two
+    ends call for: into one from something that is not one, out of one
+    where the source is, from one to another where both are. A database
+    does not read and write another as its own, and a backup goes to a
+    store, not to a web front end."""
+    if kind.datastore == "target":
+        return to_store and not from_store
+    if kind.datastore == "source":
+        return from_store
+    if kind.datastore == "both":
+        return from_store and to_store
+    return False
 
 
 def _listed(value) -> Tuple[str, ...]:
@@ -108,6 +141,12 @@ def parse_connection(data: dict, source: Optional[Path] = None) -> ConnectionKin
         # A kind with no protocol recognizes nothing, and says nothing a new
         # interface could be proposed with.
         raise LibraryError("connection kind %s names no protocol%s" % (kind_id, where))
+    datastore = str(data.get("datastore") or "")
+    if datastore and datastore not in DATASTORE_ENDS:
+        raise LibraryError(
+            "connection kind %s has datastore %r; it is one of %s%s"
+            % (kind_id, datastore, ", ".join(DATASTORE_ENDS), where)
+        )
     return ConnectionKind(
         connection_id=kind_id,
         name=str(data["name"]),
@@ -118,6 +157,7 @@ def parse_connection(data: dict, source: Optional[Path] = None) -> ConnectionKin
         frequency=str(data.get("frequency") or ""),
         direction=str(data.get("direction") or ""),
         patterns=_listed(data.get("patterns")),
+        datastore=datastore,
         source=source,
     )
 

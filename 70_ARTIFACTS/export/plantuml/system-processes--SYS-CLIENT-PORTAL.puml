@@ -16,20 +16,34 @@ Boundary(b_Capability, "Capability") {
   ' aac CAP_TPS_04: company_domain="Cross-Functional Services"
   System(CAP_TPS_03, "Client Reporting & Data Exchange", "Deliver contracted reporting and data feeds to clients.", $tags="capabilities")
   ' aac CAP_TPS_03: company_domain="Cross-Functional Services"
+  System(CAP_PART_04, "Client Service Level & Performance Management", "Manage delivery against contracted service levels and report performance.", $tags="capabilities")
+  ' aac CAP_PART_04: company_domain="Cross-Functional Services"
   System(CAP_TPS_06, "Client-Directed Change Management", "Intake, price, and deliver client-requested change.", $tags="capabilities")
   ' aac CAP_TPS_06: company_domain="Cross-Functional Services"
   System(CAP_DATA_02, "Data Sourcing & Integration", "Acquire and integrate internal and third-party data.", $tags="capabilities")
   ' aac CAP_DATA_02: company_domain="Cross-Functional Services"
+  System(CAP_COLL_02, "Outbound Contact Operations", "Execute dialer, digital, and letter treatment.", $tags="capabilities")
+  ' aac CAP_COLL_02: company_domain="Collections"
+  System(CAP_COLL_02_02, "Serviced-Portfolio Collections Contact", "Collect on client portfolios to each client's strategy and in its name.", $tags="capabilities")
+  ' aac CAP_COLL_02_02: company_domain="Collections"
+  System(CAP_PART_03, "Servicing Client Origination & Contracting", "Win and contract third-party servicing engagements.", $tags="capabilities")
+  ' aac CAP_PART_03: company_domain="Cross-Functional Services"
 }
 Boundary(b_Process, "Process") {
   System(P_TPS_006, "Bill client servicing fees", "Calculate and invoice servicing fees per the contract and recognize the revenue. Fee billing calculates from contracted schedules against actual volumes; invoices carry the detail clients audit, and revenue recognition follows the contract.", $tags="processes")
   ' aac P_TPS_006: company_domain=""
+  System(P_COLLECTIONS_010, "Collect serviced client portfolio to client strategy", "Work delinquent accounts on a client's portfolio to the client's own treatment strategy, scripts and settlement authority, in the client's name, and report results back under the servicing agreement. Collecting another lender's accounts brings third-party collector rules into play, so contact and notice rules can differ from those on the bank's own portfolio.", $tags="processes")
+  ' aac P_COLLECTIONS_010: company_domain=""
   System(P_TPS_005, "Exchange client data feed", "Send and receive contracted data feeds with the client on schedule. Data feeds run both directions on contracted schedules with schema and quality checks at the boundary; feed failures page, because clients reconcile against them.", $tags="processes")
   ' aac P_TPS_005: company_domain=""
   System(P_TPS_008, "Intake and deliver client-directed change", "Receive, price, approve, and deliver a change requested by a servicing client. Client-directed changes are priced, approved, and delivered under the contract's change provisions; scope discipline here is what keeps serviced portfolios profitable.", $tags="processes")
   ' aac P_TPS_008: company_domain=""
   System(P_TPS_004, "Produce contracted client reporting", "Produce and deliver reporting to the schedule and specification in the client contract. Contracted reporting ships to specification and schedule; late or wrong reporting is an SLA breach with credits, so production is monitored like any critical batch.", $tags="processes")
   ' aac P_TPS_004: company_domain=""
+  System(P_CLIENTMGMT_001, "Qualify, price, and contract servicing client", "Qualify a lender that wants its card portfolio serviced, price the work from the portfolio's size and the services chosen, answer the client's own diligence of the bank, and sign the servicing agreement and service levels. The agreement sets the reporting, service levels and change process every later step is held to.", $tags="processes")
+  ' aac P_CLIENTMGMT_001: company_domain=""
+  System(P_CLIENTMGMT_002, "Review client service levels and performance", "Report each client's service levels, portfolio performance and open issues, hold the monthly service review, and agree remediation and credits where a service level was missed. Missed service levels carry contractual credits, and a run of them can end a client relationship.", $tags="processes")
+  ' aac P_CLIENTMGMT_002: company_domain=""
   System(P_TPS_007, "Support client audit or examination", "Assemble evidence and respond to client and client-regulator oversight requests. Client audits and client-regulator exams get coordinated evidence with the same discipline as the bank's own exams; commitments made in responses are tracked.", $tags="processes")
   ' aac P_TPS_007: company_domain=""
 }
@@ -48,6 +62,12 @@ Rel(P_TPS_007, SYS_CLIENT_PORTAL, "Supporting")
 ' aac rel: source="P_TPS_007"; target="SYS_CLIENT_PORTAL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
 Rel(P_TPS_008, SYS_CLIENT_PORTAL, "Supporting")
 ' aac rel: source="P_TPS_008"; target="SYS_CLIENT_PORTAL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COLLECTIONS_010, SYS_CLIENT_PORTAL, "Supporting")
+' aac rel: source="P_COLLECTIONS_010"; target="SYS_CLIENT_PORTAL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_CLIENTMGMT_001, SYS_CLIENT_PORTAL, "Primary")
+' aac rel: source="P_CLIENTMGMT_001"; target="SYS_CLIENT_PORTAL"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_CLIENTMGMT_002, SYS_CLIENT_PORTAL, "Primary")
+' aac rel: source="P_CLIENTMGMT_002"; target="SYS_CLIENT_PORTAL"; label="Primary"; relation="process_uses_system"; role="Primary"
 Rel(P_TPS_004, CAP_TPS_03, "supports")
 ' aac rel: source="P_TPS_004"; target="CAP_TPS_03"; label="supports"; relation="process_supports_capability"
 Rel(P_TPS_005, CAP_TPS_03, "supports")
@@ -60,6 +80,14 @@ Rel(P_TPS_007, CAP_TPS_05, "supports")
 ' aac rel: source="P_TPS_007"; target="CAP_TPS_05"; label="supports"; relation="process_supports_capability"
 Rel(P_TPS_008, CAP_TPS_06, "supports")
 ' aac rel: source="P_TPS_008"; target="CAP_TPS_06"; label="supports"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_010, CAP_COLL_02_02, "supports")
+' aac rel: source="P_COLLECTIONS_010"; target="CAP_COLL_02_02"; label="supports"; relation="process_supports_capability"
+Rel(P_CLIENTMGMT_001, CAP_PART_03, "supports")
+' aac rel: source="P_CLIENTMGMT_001"; target="CAP_PART_03"; label="supports"; relation="process_supports_capability"
+Rel(P_CLIENTMGMT_002, CAP_PART_04, "supports")
+' aac rel: source="P_CLIENTMGMT_002"; target="CAP_PART_04"; label="supports"; relation="process_supports_capability"
+Rel(P_COLLECTIONS_010, CAP_COLL_02, "supports")
+' aac rel: source="P_COLLECTIONS_010"; target="CAP_COLL_02"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

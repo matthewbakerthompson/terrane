@@ -13,7 +13,7 @@ import terrane
 from terrane.draw.dml import connector, node_path
 from terrane.pack import build_pack
 
-from _fixture import REPO
+from _fixture import REPO, remove_scratch
 
 P = "{http://schemas.openxmlformats.org/presentationml/2006/main}"
 A = "{http://schemas.openxmlformats.org/drawingml/2006/main}"
@@ -77,7 +77,9 @@ class TestDeck(unittest.TestCase):
         drawings = terrane.diagrams(str(REPO / "90_EXAMPLE" / "quick" / "sample.vsdx"), date="2026-10-17")
         scene = drawings["applications"].scene
         self.assertEqual((len(scene.nodes), len(scene.edges), len(scene.boundaries)), (7, 7, 1))
-        out = Path(tempfile.mkdtemp(prefix="aac-dml-")) / "deck.pptx"
+        folder = Path(tempfile.mkdtemp(prefix="aac-dml-"))
+        self.addCleanup(remove_scratch, folder, "aac-dml-")
+        out = folder / "deck.pptx"
         drawings.pack(out, title="Visio", editable=True)
         with zipfile.ZipFile(out) as archive:
             slide = ET.fromstring(archive.read("ppt/slides/slide3.xml"))
@@ -103,7 +105,9 @@ class TestDeck(unittest.TestCase):
 
     def test_the_review_pack_opens_with_what_changed_when_something_did(self) -> None:
         said = []
-        out = Path(tempfile.mkdtemp(prefix="aac-since-")) / "pack.pptx"
+        folder = Path(tempfile.mkdtemp(prefix="aac-since-"))
+        self.addCleanup(remove_scratch, folder, "aac-since-")
+        out = folder / "pack.pptx"
         # HEAD and the working tree hold the same model: said, and left out.
         path, slides = build_pack(REPO, out, ["system-context"], date="2026-10-17", log=said.append, since="HEAD")
         self.assertEqual(slides, 3)
@@ -113,7 +117,9 @@ class TestDeck(unittest.TestCase):
         from test_render_drawio import OWN_SKETCH
 
         drawings = terrane.diagrams(OWN_SKETCH, date="2026-10-17")
-        out = Path(tempfile.mkdtemp(prefix="aac-dml-")) / "own.pptx"
+        folder = Path(tempfile.mkdtemp(prefix="aac-dml-"))
+        self.addCleanup(remove_scratch, folder, "aac-dml-")
+        out = folder / "own.pptx"
         drawings.pack(out, title="Own", editable=True)
         with zipfile.ZipFile(out) as archive:
             slide = ET.fromstring(archive.read("ppt/slides/slide3.xml"))
@@ -144,7 +150,9 @@ class TestDeck(unittest.TestCase):
         self.assertIsNotNone(line.find(".//" + A + "tailEnd"))
 
     def test_the_review_pack_takes_editable(self) -> None:
-        out = Path(tempfile.mkdtemp(prefix="aac-dml-")) / "pack.pptx"
+        folder = Path(tempfile.mkdtemp(prefix="aac-dml-"))
+        self.addCleanup(remove_scratch, folder, "aac-dml-")
+        out = folder / "pack.pptx"
         path, slides = build_pack(REPO, out, ["system-context"], date="2026-10-17", log=lambda t: None, editable=True)
         self.assertEqual(slides, 3)
         with zipfile.ZipFile(path) as archive:

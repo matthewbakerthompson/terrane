@@ -62,6 +62,14 @@ class ModuleParameter(NamedTuple):
     #: goes, which controls govern a vendor tenancy -- which the parts used to
     #: name as the sample's own records, so a second estate had to hold them.
     estate: bool = False
+    #: How a panel asks it, in a few words: "Answers from", "Acts through".
+    #: The description says the rest. Without it the name is asked.
+    ask: str = ""
+    #: The kind of record its value names, as an entity type: `systems` for
+    #: a system id, or a list of them when the default is a list. The canvas
+    #: offers the estate's records of that kind to pick from rather than a
+    #: box to type an id into.
+    names: str = ""
 
 
 class Module(NamedTuple):
@@ -210,6 +218,10 @@ def parse_module(data: dict, source: Optional[Path] = None) -> Module:
         if not isinstance(raw, dict) or "name" not in raw:
             raise ModuleError("%s: each parameter needs a name" % where)
         component = str(raw.get("component") or "")
+        names = str(raw.get("names") or "")
+        if names and names not in ENTITY_TYPES:
+            raise ModuleError("%s: parameter %s names %r, which is not a kind of record"
+                              % (where, raw["name"], names))
         params.append(ModuleParameter(
             name=str(raw["name"]),
             # A parameter that names a kind is bound by the shape, not asked
@@ -220,6 +232,8 @@ def parse_module(data: dict, source: Optional[Path] = None) -> Module:
             description=str(raw.get("description") or ""),
             component=component,
             estate=bool(raw.get("estate", False)),
+            ask=str(raw.get("ask") or ""),
+            names=names,
         ))
     provides = data.get("provides") or {}
     if not isinstance(provides, dict):

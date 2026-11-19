@@ -54,6 +54,9 @@ Boundary(b_Azure, "Azure") {
       ' aac SYS_MERCHANT_API: company_domain="Payments"; hosting="Azure"; technology="AKS · Merchant Portal Cache"
       System(SYS_MERCHANT_WEB, "Merchant Portal Web", "Customer-facing front end for Merchant Portal. Built with AKS.", $tags="systems")
       ' aac SYS_MERCHANT_WEB: company_domain="Payments"; hosting="Azure"; technology="AKS"
+      Deployment_Node(TS_NET_SUB_AZ_PAYMENTS_APP, "Payments App Subnet", "Subnet", $tags="tech_services") {
+        ' aac TS_NET_SUB_AZ_PAYMENTS_APP: company_domain=""; technology="Subnet"
+      }
     }
     Boundary(b_Azure__azure_payments_prod__Private_Data, "Private-Data") {
       Deployment_Node(TS_MERCHANT_BACKUP, "Merchant Portal Backup and recovery", "Azure Backup", "Copies that survive the thing they came from. The recovery objective is a property of this, not of the database.", $tags="tech_services") {
@@ -61,17 +64,30 @@ Boundary(b_Azure, "Azure") {
       }
       System(SYS_MERCHANT_STORE, "Merchant Portal Database", "Relational database for Merchant Portal, encrypted with a customer managed key. Built with Azure SQL.", $tags="systems")
       ' aac SYS_MERCHANT_STORE: company_domain="Payments"; hosting="Azure"; technology="Azure SQL"
+      Deployment_Node(TS_NET_SUB_AZ_PAYMENTS_DATA, "Payments Data Subnet", "Subnet", $tags="tech_services") {
+        ' aac TS_NET_SUB_AZ_PAYMENTS_DATA: company_domain=""; technology="Subnet"
+      }
     }
   }
 }
+Person_Ext(ACT_ISO, "Independent Sales Organization", "Brings merchants to the bank and submits their applications. The bank sponsors those merchants into the networks and carries their liability.", $tags="actors")
+' aac ACT_ISO: company_domain="Payments"; actor_kind="Organization"; internal="No"
+System_Ext(SYS_MERCH_ACQ, "Merchant acquiring platform", "Processor platform for merchant boarding, clearing, settlement, reserves, fees and statements. Built with external.", $tags="systems")
+' aac SYS_MERCH_ACQ: company_domain=""; hosting="External"; technology="external"
+SystemDb(DA_MERCHANT, "Merchant master and underwriting file", "Merchant identity, beneficial owners, underwriting decision, limits, pricing and screening results.", $tags="data_assets")
+' aac DA_MERCHANT: company_domain=""
 Person(ACT_MERCHANT_ONBOARDING_ANALYST, "Merchant Onboarding Analyst", "Reviews a merchant's application and the documents behind it before the account opens.", $tags="actors")
 ' aac ACT_MERCHANT_ONBOARDING_ANALYST: company_domain="Payments"; actor_kind="Role"; internal="Yes"
 SystemDb(DA_MERCHANT_OPERATIONAL, "Merchant Portal operational data", "Operational records held by Merchant Portal.", $tags="data_assets")
 ' aac DA_MERCHANT_OPERATIONAL: company_domain="Payments"
+SystemDb(DA_MERCH_SETTLE, "Merchant settlement and reserve ledger", "Daily merchant volume, fees, chargebacks, funding and reserve balances.", $tags="data_assets")
+' aac DA_MERCH_SETTLE: company_domain=""
 Deployment_Node(TS_ENTRA_ID, "Microsoft Entra ID", "Identity provider", "Workforce and customer identity provider.", $tags="tech_services") {
   ' aac TS_ENTRA_ID: company_domain="Enterprise Platform"; technology="Identity provider"
 }
 
+Rel(SYS_MERCHANT_API, SYS_MERCH_ACQ, "Merchant Portal Service to Merchant Acquiring Platform", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_MERCHANT_API"; target="SYS_MERCH_ACQ"; label="Merchant Portal Service to Merchant Acquiring Platform"; interface_id="INT-MERCHANT-API-ACQ"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="api-front-door"
 Rel(SYS_MERCHANT_WEB, OI_MERCHANT_API, "Merchant Portal Web to API", "HTTPS", $tags="api-call")
 ' aac rel: source="SYS_MERCHANT_WEB"; target="OI_MERCHANT_API"; label="Merchant Portal Web to API"; interface_id="INT-MERCHANT-WEB-API"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; offered_interface_id="OI-MERCHANT-API"
 Rel(SYS_MERCHANT_API, SYS_MERCHANT_STORE, "Merchant Portal Service to Database", "TDS", $tags="own-datastore")
@@ -104,10 +120,26 @@ Rel(SYS_MERCHANT_STORE, TS_AZURE_KEYVAULT, "runs on")
 ' aac rel: source="SYS_MERCHANT_STORE"; target="TS_AZURE_KEYVAULT"; label="runs on"; relation="system_uses_tech_service"
 Rel(SYS_MERCHANT_EVENTS, TS_AZURE_SERVICEBUS, "runs on")
 ' aac rel: source="SYS_MERCHANT_EVENTS"; target="TS_AZURE_SERVICEBUS"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_MERCHANT_API, TS_NET_SUB_AZ_PAYMENTS_APP, "runs on")
+' aac rel: source="SYS_MERCHANT_API"; target="TS_NET_SUB_AZ_PAYMENTS_APP"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_MERCHANT_WEB, TS_NET_SUB_AZ_PAYMENTS_APP, "runs on")
+' aac rel: source="SYS_MERCHANT_WEB"; target="TS_NET_SUB_AZ_PAYMENTS_APP"; label="runs on"; relation="system_uses_tech_service"
+Rel(SYS_MERCHANT_STORE, TS_NET_SUB_AZ_PAYMENTS_DATA, "runs on")
+' aac rel: source="SYS_MERCHANT_STORE"; target="TS_NET_SUB_AZ_PAYMENTS_DATA"; label="runs on"; relation="system_uses_tech_service"
 Rel(SYS_MERCHANT_API, DA_MERCHANT_OPERATIONAL, "ReadWrite")
 ' aac rel: source="SYS_MERCHANT_API"; target="DA_MERCHANT_OPERATIONAL"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_MERCH_ACQ, DA_MERCHANT, "ReadWrite")
+' aac rel: source="SYS_MERCH_ACQ"; target="DA_MERCHANT"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_MERCH_ACQ, DA_MERCH_SETTLE, "ReadWrite")
+' aac rel: source="SYS_MERCH_ACQ"; target="DA_MERCH_SETTLE"; label="ReadWrite"; relation="system_reads_writes"; operation="ReadWrite"
+Rel(SYS_MERCHANT_API, DA_MERCHANT, "Write")
+' aac rel: source="SYS_MERCHANT_API"; target="DA_MERCHANT"; label="Write"; relation="system_reads_writes"; operation="Write"
+Rel(SYS_MERCHANT_API, DA_MERCH_SETTLE, "Read")
+' aac rel: source="SYS_MERCHANT_API"; target="DA_MERCH_SETTLE"; label="Read"; relation="system_reads_writes"; operation="Read"
 Rel(ACT_MERCHANT_ONBOARDING_ANALYST, SYS_MERCHANT_API, "Reviews applications")
 ' aac rel: source="ACT_MERCHANT_ONBOARDING_ANALYST"; target="SYS_MERCHANT_API"; label="Reviews applications"; relation="actor_uses_system"; interaction="Reviews applications"
+Rel(ACT_ISO, SYS_MERCHANT_WEB, "Submits merchant applications")
+' aac rel: source="ACT_ISO"; target="SYS_MERCHANT_WEB"; label="Submits merchant applications"; relation="actor_uses_system"; interaction="Submits merchant applications"
 Rel(OI_MERCHANT_API, SYS_MERCHANT_API, "offered by")
 ' aac rel: source="OI_MERCHANT_API"; target="SYS_MERCHANT_API"; label="offered by"; field="system_id"
 

@@ -25,7 +25,7 @@ library and the model on the day it was written; `terrane stats` and the catalog
       | instantiated as
 10_MODEL/products   the products themselves
 
-24_CONNECTIONS  the ways two systems are connected, read off    12 kinds
+24_CONNECTIONS  the ways two systems are connected, read off    16 kinds
                 the interfaces; each names its pattern
 
 library_paths   the organization's own folders of the same      read after
@@ -98,6 +98,14 @@ two systems on the drawing asks which kind and fills the form from it.
 library and its protocols apart from every other kind's, and the catalog
 lists the interfaces of each kind whether or not they were made from it, so
 the kinds also describe the interfaces already in the estate.
+
+Four more came later, ahead of the estate at the owner's asking: a
+database's ways out, a change data capture feed, a scheduled extract, a
+database replica and a backup, which no interface uses yet. A kind may say
+`datastore:`, which end is a data store (a component type the library draws
+as a cylinder): `target` a way in, `source` a way out, `both` from one store
+to another. A line drawn into or out of a database offers those kinds first,
+after whatever the estate already does with that kind of store.
 
 ## What was added next: a library of your own
 
@@ -225,6 +233,35 @@ back, the card issuer's 106 come back first 84% of the time and in the
 first three 92%, Thurman Health's 22 at 91% and 91%. `terrane needs --types` prints them for the records that
 have no `component_type`, grouped by the likeliest kind, and writes
 nothing; a person sets the field.
+
+A system a part or a shape makes cannot be given its kind one record at a
+time: it is made again on every expansion. So the parts say it, where the
+library has a kind that plainly is the system: the web channel's is a web
+application, the relational datastore's a relational database, the vendor
+tenancy's vendor SaaS, the hub-and-spoke hubs an integration platform, an
+event bus, master data management and an identity provider. An async
+worker, an event publisher or consumer, a notification or inference
+service, a partner adapter, an integration gateway and a webhook listener
+have no kind that is them, and say none. 34 of the 47 systems the card
+issuer's products make take their kind from their part, and 9 of Thurman
+Health's 12; what is left for a person is what people write. Checks lists
+those under What the diagrams need, a card a kind, each record ticked where
+its kind matched three of its words or more at a score of a quarter or
+more, and sets the kind on what is ticked, each record in its own file.
+
+## What was added next: a network made once per account
+
+A product never made a network, and the estate's were written by hand: the
+lending product's VPC and subnets on AWS, a shared VPC on Google Cloud, and
+nothing at all for the five Azure subscriptions the card issuer's products
+sit in. A network is now made from a shape, once per account, as the
+landing zone vends it (`28_MODULES/networks.yaml` and the three
+`*-workload-network` shapes), and a system lands in its account's subnets by
+its network zone without a line saying so. A component type says
+`subnet: false` where its kind sits in no subnet of ours (an object store,
+a BI layer, a CDN, bought SaaS), so those are left out. A new account is
+one record: its network's name, its account and, where it needs other than
+the standard tiers, its subnets.
 
 ## The order to extend it in
 

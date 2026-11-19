@@ -12,6 +12,18 @@ Boundary(b_AWS, "AWS") {
     Deployment_Node(TS_AWS_BEDROCK, "Amazon Bedrock", "Foundation model service", "Managed access to foundation models (Amazon Nova, Claude, Llama and others) inside the account's own data boundary.", $tags="tech_services") {
       ' aac TS_AWS_BEDROCK: company_domain="Enterprise Platform"; technology="Foundation model service"
     }
+    Deployment_Node(TS_AWS_AGENTCORE, "Amazon Bedrock AgentCore", "Agent platform", "Where agents run, with their tools, memory and identity, inside the account.", $tags="tech_services") {
+      ' aac TS_AWS_AGENTCORE: company_domain="Enterprise Platform"; technology="Agent platform"
+    }
+    Deployment_Node(TS_AWS_BEDROCK_GUARDRAILS, "Amazon Bedrock Guardrails", "AI gateway and guardrails", "The content filters, personal data redaction and denied topics every model call in the account goes through.", $tags="tech_services") {
+      ' aac TS_AWS_BEDROCK_GUARDRAILS: company_domain="Enterprise Platform"; technology="AI gateway and guardrails"
+    }
+    Deployment_Node(TS_AWS_OPENSEARCH, "Amazon OpenSearch Service", "Vector database", "Managed search with vector indexes, where a product's retrieval index is kept.", $tags="tech_services") {
+      ' aac TS_AWS_OPENSEARCH: company_domain="Enterprise Platform"; technology="Vector database"
+    }
+    Deployment_Node(TS_AWS_TEXTRACT, "Amazon Textract", "Document processing", "Reads documents into text, forms and tables.", $tags="tech_services") {
+      ' aac TS_AWS_TEXTRACT: company_domain="Enterprise Platform"; technology="Document processing"
+    }
   }
   Boundary(b_AWS__Compute, "Compute") {
     Deployment_Node(TS_AWS_EKS, "Amazon EKS", "Container platform", "Managed Kubernetes running the containerized workloads.", $tags="tech_services") {
@@ -56,6 +68,9 @@ Boundary(b_AWS, "AWS") {
     }
   }
   Boundary(b_AWS__Security, "Security") {
+    Deployment_Node(TS_AWS_COGNITO, "Amazon Cognito", "Customer identity", "Customer sign-up and sign-in for every product's customers.", $tags="tech_services") {
+      ' aac TS_AWS_COGNITO: company_domain="Enterprise Platform"; technology="Customer identity"
+    }
     Deployment_Node(TS_AWS_KMS, "AWS KMS", "Key management", "Customer managed keys for data at rest.", $tags="tech_services") {
       ' aac TS_AWS_KMS: company_domain="Enterprise Platform"; technology="Key management"
     }
@@ -66,6 +81,12 @@ Boundary(b_AWS, "AWS") {
 }
 Boundary(b_Azure, "Azure") {
   Boundary(b_Azure__AI, "AI") {
+    Deployment_Node(TS_AZURE_DOC_INTELLIGENCE, "Azure AI Document Intelligence", "Document processing", "Reads documents into text, forms and tables.", $tags="tech_services") {
+      ' aac TS_AZURE_DOC_INTELLIGENCE: company_domain="Enterprise Platform"; technology="Document processing"
+    }
+    Deployment_Node(TS_AZURE_AI_SEARCH, "Azure AI Search", "Vector database", "Managed search with vector indexes, where a product's retrieval index is kept, and the organization's search across its documents.", $tags="tech_services") {
+      ' aac TS_AZURE_AI_SEARCH: company_domain="Enterprise Platform"; technology="Vector database"
+    }
     Deployment_Node(TS_AZURE_FOUNDRY, "Microsoft Foundry", "Foundation model service", "Managed access to foundation models (OpenAI, Microsoft MAI, Claude and others), formerly Azure OpenAI Service and Azure AI Foundry.", $tags="tech_services") {
       ' aac TS_AZURE_FOUNDRY: company_domain="Enterprise Platform"; technology="Foundation model service"
     }
@@ -95,9 +116,6 @@ Boundary(b_Azure, "Azure") {
     Deployment_Node(TS_AZURE_PRIVATELINK, "Azure Private Link", "Private egress", "Private endpoints to bought services, so the only path our data takes to a vendor never touches the public internet.", $tags="tech_services") {
       ' aac TS_AZURE_PRIVATELINK: company_domain="Enterprise Platform"; technology="Private egress"
     }
-    Deployment_Node(TS_AZURE_VWAN, "Azure Virtual WAN hub", "Transit hub", "The hub every virtual network attaches to, and the route back to the data center.", $tags="tech_services") {
-      ' aac TS_AZURE_VWAN: company_domain="Enterprise Platform"; technology="Transit hub"
-    }
   }
   Boundary(b_Azure__Operations, "Operations") {
     Deployment_Node(TS_AZURE_MONITOR, "Azure Monitor", "Observability", "Metrics, logs and alerts for the Azure-hosted estate.", $tags="tech_services") {
@@ -108,6 +126,14 @@ Boundary(b_Azure, "Azure") {
     Deployment_Node(TS_AZURE_KEYVAULT, "Azure Key Vault", "Secrets manager", "Secret, key and certificate management.", $tags="tech_services") {
       ' aac TS_AZURE_KEYVAULT: company_domain="Enterprise Platform"; technology="Secrets manager"
     }
+    Deployment_Node(TS_AZURE_EXTERNAL_ID, "Microsoft Entra External ID", "Customer identity", "Customer sign-up and sign-in for every product's customers.", $tags="tech_services") {
+      ' aac TS_AZURE_EXTERNAL_ID: company_domain="Enterprise Platform"; technology="Customer identity"
+    }
+  }
+  Boundary(b_Azure__Storage, "Storage") {
+    Deployment_Node(TS_AZURE_BLOB, "Azure Blob Storage", "Object store", "Object storage for every product's documents and extracts, encrypted with the customer managed key.", $tags="tech_services") {
+      ' aac TS_AZURE_BLOB: company_domain="Enterprise Platform"; technology="Object store"
+    }
   }
 }
 Boundary(b_Data, "Data") {
@@ -117,8 +143,17 @@ Boundary(b_Data, "Data") {
 }
 Boundary(b_GCP, "GCP") {
   Boundary(b_GCP__AI, "AI") {
+    Deployment_Node(TS_GCP_DOCUMENT_AI, "Document AI", "Document processing", "Reads documents into text, forms and tables.", $tags="tech_services") {
+      ' aac TS_GCP_DOCUMENT_AI: company_domain="Enterprise Platform"; technology="Document processing"
+    }
     Deployment_Node(TS_GCP_GEMINI_PLATFORM, "Gemini Enterprise Agent Platform", "Foundation model service", "Managed access to foundation models (Gemini, Gemma, Claude and others) through Model Garden, formerly Vertex AI.", $tags="tech_services") {
       ' aac TS_GCP_GEMINI_PLATFORM: company_domain="Enterprise Platform"; technology="Foundation model service"
+    }
+    Deployment_Node(TS_GCP_MODEL_ARMOR, "Model Armor", "AI gateway and guardrails", "The prompt and response screening every model call in the project goes through.", $tags="tech_services") {
+      ' aac TS_GCP_MODEL_ARMOR: company_domain="Enterprise Platform"; technology="AI gateway and guardrails"
+    }
+    Deployment_Node(TS_GCP_VECTOR_SEARCH, "Vector Search", "Vector database", "Managed vector indexes, where a product's retrieval index is kept.", $tags="tech_services") {
+      ' aac TS_GCP_VECTOR_SEARCH: company_domain="Enterprise Platform"; technology="Vector database"
     }
   }
   Boundary(b_GCP__Compute, "Compute") {
@@ -182,6 +217,9 @@ Boundary(b_GCP, "GCP") {
     }
     Deployment_Node(TS_GCP_KMS, "Cloud KMS", "Key management", "Customer-managed encryption keys for every datastore in the zone, one key ring per workload project.", $tags="tech_services") {
       ' aac TS_GCP_KMS: company_domain="Enterprise Platform"; technology="Key management"
+    }
+    Deployment_Node(TS_GCP_IDENTITY_PLATFORM, "Identity Platform", "Customer identity", "Customer sign-up and sign-in for every product's customers.", $tags="tech_services") {
+      ' aac TS_GCP_IDENTITY_PLATFORM: company_domain="Enterprise Platform"; technology="Customer identity"
     }
     Deployment_Node(TS_GCP_SECRET_MANAGER, "Secret Manager", "Secrets manager", "Application secrets, read by workload identity rather than by key.", $tags="tech_services") {
       ' aac TS_GCP_SECRET_MANAGER: company_domain="Enterprise Platform"; technology="Secrets manager"

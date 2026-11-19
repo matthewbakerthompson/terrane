@@ -26,12 +26,16 @@ Boundary(b_Capability, "Capability") {
   ' aac CAP_SERV_03: company_domain="Servicing"
   System(CAP_SERV_07, "Hardship & Payment Assistance", "Operate hardship, forbearance, and payment assistance programs.", $tags="capabilities")
   ' aac CAP_SERV_07: company_domain="Servicing"
+  System(CAP_SERV_09, "Retention, Product Change & Account Closure", "Keep customers who ask to leave, move accounts between products, and close accounts with balances, rewards and notices settled.", $tags="capabilities")
+  ' aac CAP_SERV_09: company_domain="Servicing"
   System(CAP_SERV_06, "Servicing Knowledge & Agent Enablement", "Equip agents with current, compliant guidance.", $tags="capabilities")
   ' aac CAP_SERV_06: company_domain="Servicing"
   System(CAP_SERV_08, "Servicing Quality Monitoring", "Monitor and score servicing interactions for quality and compliance.", $tags="capabilities")
   ' aac CAP_SERV_08: company_domain="Servicing"
 }
 Boundary(b_Control, "Control") {
+  System(CTL_BUREAU_ACC, "Bureau furnishing accuracy", "Furnished tradeline data is reconciled to the system of record before transmission; consumer disputes update furnishing.", $tags="controls")
+  ' aac CTL_BUREAU_ACC: company_domain=""
   System(CTL_COMPLAINT_REG, "Complaint regulatory routing", "Complaints are classified to taxonomy, resolved to SLA, and routed to regulators where required; executive and regulator complaints carry expedited handling.", $tags="controls")
   ' aac CTL_COMPLAINT_REG: company_domain=""
   System(CTL_REGE_DETERM, "Dispute determination timeliness and notice", "Final dispute determinations, account adjustment, and the written explanation complete within the Reg E / Reg Z window; the clock is measured from claim receipt.", $tags="controls")
@@ -52,6 +56,8 @@ Boundary(b_Process, "Process") {
   ' aac P_SERVICING_012: company_domain=""
   System(P_SERVICING_006, "Capture and resolve complaint", "Capture, classify, resolve, and evidence a cardholder complaint. Complaint handling runs intake through evidenced resolution with regulatory routing where required; the taxonomy feeds UDAAP analysis, so classification is not clerical.", $tags="processes")
   ' aac P_SERVICING_006: company_domain=""
+  System(P_SERVICING_015, "Close account and settle final balance", "Close the account at the cardholder's or the bank's request, stop new charges while recurring payments and pending items clear, forfeit or pay out rewards per the terms, report the closure to the bureaus correctly, and confirm it in writing. A closed account still has a balance to bill and a bureau line to keep accurate.", $tags="processes")
+  ' aac P_SERVICING_015: company_domain=""
   System(P_SERVICING_008, "Enroll account in hardship or assistance program", "Assess eligibility and enroll an account into a hardship or payment assistance program. Hardship enrollment applies documented eligibility consistently; program terms change interest, fees, and reporting, so enrollment is evidenced and reviewed.", $tags="processes")
   ' aac P_SERVICING_008: company_domain=""
   System(P_DIGITAL_001, "Enroll cardholder in digital servicing", "Register and authenticate a cardholder for web and mobile self-service. Enrollment binds the cardholder to a verified identity with step-up options; weak enrollment is the account-takeover front door, so identity proofing follows the fraud strategy.", $tags="processes")
@@ -68,6 +74,10 @@ Boundary(b_Process, "Process") {
   ' aac P_SERVICING_009: company_domain=""
   System(P_SERVICING_010, "Monitor and score servicing interactions", "Sample, monitor, score, and calibrate servicing interactions for quality and regulatory compliance signal.", $tags="processes")
   ' aac P_SERVICING_010: company_domain=""
+  System(P_SERVICING_013, "Process product change or upgrade", "Move an account to another card product at the cardholder's request or by invitation, carrying over the balance, history and rewards as the program rules say, and issue the new card and terms. A product change that resets the account's age or loses rewards is a complaint and, if terms worsen without notice, a disclosure failure.", $tags="processes")
+  ' aac P_SERVICING_013: company_domain=""
+  System(P_SERVICING_014, "Retain account at closure request", "When a cardholder asks to close, find the reason, offer what the retention strategy allows, such as a fee waiver, a rate review or a product change, and record the outcome. Offers follow the approved matrix, or two cardholders in the same position get different treatment.", $tags="processes")
+  ' aac P_SERVICING_014: company_domain=""
   System(P_DIGITAL_002, "Serve digital self-service transaction", "Execute a cardholder self-service action in web or mobile without agent involvement. Self-service actions execute against the same core services as agent actions, with the same entitlements; the channel changes, the control does not.", $tags="processes")
   ' aac P_DIGITAL_002: company_domain=""
 }
@@ -100,6 +110,7 @@ Rel(CAP_SERV_05, CAP_SERV, "part of")
 Rel(CAP_SERV_06, CAP_SERV, "part of")
 Rel(CAP_SERV_07, CAP_SERV, "part of")
 Rel(CAP_SERV_08, CAP_SERV, "part of")
+Rel(CAP_SERV_09, CAP_SERV, "part of")
 Rel(CAP_SERV, FW_BIAN, "Aligned to")
 ' aac rel: source="CAP_SERV"; target="FW_BIAN"; label="Aligned to"; relation="capability_aligns_to_framework"; alignment="Aligned to"
 Rel(CAP_SERV_01, FW_BIAN, "Sales and Service > Channel Specific > Contact Center Operations")
@@ -118,6 +129,8 @@ Rel(CAP_SERV_07, FW_BIAN, "Operations and Execution > Operational Services > Del
 ' aac rel: source="CAP_SERV_07"; target="FW_BIAN"; label="Operations and Execution > Operational Services > Delinquent Account Handling"; relation="capability_references_framework"; ref="Operations and Execution > Operational Services > Delinquent Account Handling"
 Rel(CAP_SERV_08, FW_BIAN, "Sales and Service > Channel Specific > Contact Center Operations")
 ' aac rel: source="CAP_SERV_08"; target="FW_BIAN"; label="Sales and Service > Channel Specific > Contact Center Operations"; relation="capability_references_framework"; ref="Sales and Service > Channel Specific > Contact Center Operations"
+Rel(CAP_SERV_09, FW_BIAN, "Sales and Service > Customer Management > Customer Product And Service Eligibility")
+' aac rel: source="CAP_SERV_09"; target="FW_BIAN"; label="Sales and Service > Customer Management > Customer Product And Service Eligibility"; relation="capability_references_framework"; ref="Sales and Service > Customer Management > Customer Product And Service Eligibility"
 Rel(P_CUST_INQ_001, CAP_SERV_01, "supported by")
 ' aac rel: source="P_CUST_INQ_001"; target="CAP_SERV_01"; label="supported by"; relation="process_supports_capability"
 Rel(P_CUST_INQ_001, CAP_SERV_02, "supported by")
@@ -144,6 +157,14 @@ Rel(P_SERVICING_011, CAP_SERV_02, "supported by")
 ' aac rel: source="P_SERVICING_011"; target="CAP_SERV_02"; label="supported by"; relation="process_supports_capability"
 Rel(P_SERVICING_012, CAP_SERV_02, "supported by")
 ' aac rel: source="P_SERVICING_012"; target="CAP_SERV_02"; label="supported by"; relation="process_supports_capability"
+Rel(P_SERVICING_013, CAP_SERV_09, "supported by")
+' aac rel: source="P_SERVICING_013"; target="CAP_SERV_09"; label="supported by"; relation="process_supports_capability"
+Rel(P_SERVICING_014, CAP_SERV_09, "supported by")
+' aac rel: source="P_SERVICING_014"; target="CAP_SERV_09"; label="supported by"; relation="process_supports_capability"
+Rel(P_SERVICING_015, CAP_SERV_09, "supported by")
+' aac rel: source="P_SERVICING_015"; target="CAP_SERV_09"; label="supported by"; relation="process_supports_capability"
+Rel(CAP_SERV, CTL_BUREAU_ACC, "governed by")
+' aac rel: source="CAP_SERV"; target="CTL_BUREAU_ACC"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
 Rel(CAP_SERV, CTL_COMPLAINT_REG, "governed by")
 ' aac rel: source="CAP_SERV"; target="CTL_COMPLAINT_REG"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
 Rel(CAP_SERV, CTL_NOTICE_CONTENT, "governed by")
@@ -160,6 +181,10 @@ Rel(CAP_SERV_04, CTL_REGE_DETERM, "governed by")
 ' aac rel: source="CAP_SERV_04"; target="CTL_REGE_DETERM"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
 Rel(CAP_SERV_05, CTL_COMPLAINT_REG, "governed by")
 ' aac rel: source="CAP_SERV_05"; target="CTL_COMPLAINT_REG"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_SERV_09, CTL_BUREAU_ACC, "governed by")
+' aac rel: source="CAP_SERV_09"; target="CTL_BUREAU_ACC"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
+Rel(CAP_SERV_09, CTL_NOTICE_CONTENT, "governed by")
+' aac rel: source="CAP_SERV_09"; target="CTL_NOTICE_CONTENT"; label="governed by"; relation="capability_governed_by_control"; basis="Process"
 Rel(SYS_CARDSVC_API, CAP_SERV, "realizes")
 ' aac rel: source="SYS_CARDSVC_API"; target="CAP_SERV"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_CARDSVC_WEB, CAP_SERV, "realizes")
@@ -170,6 +195,8 @@ Rel(SYS_CRM, CAP_SERV, "realizes")
 ' aac rel: source="SYS_CRM"; target="CAP_SERV"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_STATEMENTS, CAP_SERV, "realizes")
 ' aac rel: source="SYS_STATEMENTS"; target="CAP_SERV"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CARDSVC_API, CAP_SERV_09, "realizes")
+' aac rel: source="SYS_CARDSVC_API"; target="CAP_SERV_09"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_CARDSVC_WEB, CAP_SERV_03, "realizes")
 ' aac rel: source="SYS_CARDSVC_WEB"; target="CAP_SERV_03"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_COLLECT_API, CAP_SERV_07, "realizes")
@@ -182,10 +209,14 @@ Rel(SYS_CONTACT, CAP_SERV_08, "realizes")
 ' aac rel: source="SYS_CONTACT"; target="CAP_SERV_08"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_CORE_LEDGER, CAP_SERV_02, "realizes")
 ' aac rel: source="SYS_CORE_LEDGER"; target="CAP_SERV_02"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CORE_LEDGER, CAP_SERV_09, "realizes")
+' aac rel: source="SYS_CORE_LEDGER"; target="CAP_SERV_09"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_CRM, CAP_SERV_05, "realizes")
 ' aac rel: source="SYS_CRM"; target="CAP_SERV_05"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_CRM, CAP_SERV_06, "realizes")
 ' aac rel: source="SYS_CRM"; target="CAP_SERV_06"; label="realizes"; relation="system_realizes_capability"
+Rel(SYS_CRM, CAP_SERV_09, "realizes")
+' aac rel: source="SYS_CRM"; target="CAP_SERV_09"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_DISPUTES_SAAS, CAP_SERV_04, "realizes")
 ' aac rel: source="SYS_DISPUTES_SAAS"; target="CAP_SERV_04"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_DOC, CAP_SERV_04, "realizes")

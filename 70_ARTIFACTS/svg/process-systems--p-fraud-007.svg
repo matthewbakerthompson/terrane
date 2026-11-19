@@ -1,0 +1,190 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="1015.4" viewBox="0 0 1100 1015.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Detect and act on first-party fraud and bust-out — Systems, Data and Controls</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Detect and act on first-party fraud and bust-out — Systems, Data and Controls</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   10 nodes · 9 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(130.66 99.2)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="329.92" y="679.3" width="212.16" height="119.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="371.92" y="696.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
+<g class="boundary" data-id="grp::Control">
+<rect x="330.3" y="547.3" width="211.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="363.15" y="564.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Control</text>
+</g>
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="595.3" y="480.3" width="221.4" height="247.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="637.3" y="497.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="9.98" y="329.25" width="212.03" height="135.45" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.83" y="346.65" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="595.3" y="24.3" width="233.4" height="427.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="625.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::P-FRAUD-007::SYS-FRAUD-DETECT">
+<title>Primary</title>
+<path d="M196 363.4 L202.8 363.4 A3.2 3.2 0 0 0 206 360.2 L206 360.2 A3.2 3.2 0 0 1 209.2 357 L255 357 L263 357 A8 8 0 0 0 271 349 L271 99.98 A10 10 0 0 1 280.98 89.98 L591.99 89.5 A10 10 0 0 1 592.01 89.5 L617.48 89.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M621 89.5 L611.43 94.28 L611.43 84.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::P-FRAUD-007::SYS-FRAUD-DETECT">
+<rect x="412.32" y="96.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="108.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+</g>
+<g class="edge" data-id="e1::P-FRAUD-007::SYS-MODEL">
+<title>Supporting</title>
+<path d="M196 371.8 L213.6 371.8 A2.4 2.4 0 0 0 216 369.4 L216 369.4 A2.4 2.4 0 0 1 218.4 367 L255 367 L271 367 A10 10 0 0 0 281 357 L281 198.98 A10 10 0 0 1 290.98 188.98 L591.99 188.5 A10 10 0 0 1 592.01 188.5 L617.48 188.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M621 188.5 L611.43 193.28 L611.43 183.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::P-FRAUD-007::SYS-MODEL">
+<rect x="404.46" y="195.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="207.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e2::P-FRAUD-007::SYS-CORE-LEDGER">
+<title>Supporting</title>
+<path d="M196 380.2 L204.4 380.2 A1.6 1.6 0 0 0 206 378.6 L206 378.6 A1.6 1.6 0 0 1 207.6 377 L255 377 L281 377 A10 10 0 0 0 291 367 L291 297.98 A10 10 0 0 1 300.98 287.98 L591.99 287.5 A10 10 0 0 1 592.01 287.5 L617.48 287.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M621 287.5 L611.43 292.29 L611.43 282.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::P-FRAUD-007::SYS-CORE-LEDGER">
+<rect x="404.46" y="294.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="306.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e3::P-FRAUD-007::SYS-CREDIT-DATA">
+<title>Supporting</title>
+<path d="M196 388.6 L205.2 388.6 A0.8 0.8 0 0 0 206 387.8 L206 387.8 A0.8 0.8 0 0 1 206.8 387 L254.99 387 A10 10 0 0 0 255.01 387 L591.99 386.5 A10 10 0 0 1 592.01 386.5 L617.48 386.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M621 386.5 L611.43 391.29 L611.43 381.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::P-FRAUD-007::SYS-CREDIT-DATA">
+<rect x="404.46" y="393.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="405.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+</g>
+<g class="edge" data-id="e4::P-FRAUD-007::DA-TRANSACTION">
+<title>Read</title>
+<path d="M196 397 L255 397 L301 397 A10 10 0 0 1 311 407 L311 412 A10 10 0 0 0 321 422 L566 422 A10 10 0 0 1 576 432 L576 524 A8 8 0 0 0 584 532 L592 532 L617.48 532" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M621 532 L611.43 536.78 L611.43 527.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::P-FRAUD-007::DA-TRANSACTION">
+<rect x="418.45" y="428.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="440.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e5::P-FRAUD-007::DA-MODEL-FEAT">
+<title>Read</title>
+<path d="M196 405.4 L205.2 405.4 A0.8 0.8 0 0 1 206 406.2 L206 406.2 A0.8 0.8 0 0 0 206.8 407 L255 407 L291 407 A10 10 0 0 1 301 417 L301 447 A10 10 0 0 0 311 457 L556 457 A10 10 0 0 1 566 467 L566 594 A10 10 0 0 0 576 604 L592 604 L617.48 604" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M621 604 L611.43 608.78 L611.43 599.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e5::P-FRAUD-007::DA-MODEL-FEAT">
+<rect x="418.45" y="463.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="475.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e6::P-FRAUD-007::DA-PAYMENT-INSTR">
+<title>Read</title>
+<path d="M196 413.8 L204.4 413.8 A1.6 1.6 0 0 1 206 415.4 L206 415.4 A1.6 1.6 0 0 0 207.6 417 L255 417 L281 417 A10 10 0 0 1 291 427 L291 482 A10 10 0 0 0 301 492 L546 492 A10 10 0 0 1 556 502 L556 666 A10 10 0 0 0 566 676 L592 676 L617.48 676" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M621 676 L611.43 680.78 L611.43 671.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e6::P-FRAUD-007::DA-PAYMENT-INSTR">
+<rect x="418.45" y="498.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="433.5" y="510.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e7::P-FRAUD-007::CTL-FRAUD-SLA">
+<title>governed by</title>
+<path d="M196 422.2 L213.6 422.2 A2.4 2.4 0 0 1 216 424.6 L216 424.6 A2.4 2.4 0 0 0 218.4 427 L255 427 L271 427 A10 10 0 0 1 281 437 L281 589 A10 10 0 0 0 291 599 L327 599 L352.48 599" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M356 599 L346.43 603.78 L346.43 594.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e8::P-FRAUD-007::CAP-FRAUD-08">
+<title>supports</title>
+<path d="M196 430.6 L202.8 430.6 A3.2 3.2 0 0 1 206 433.8 L206 433.8 A3.2 3.2 0 0 0 209.2 437 L255 437 L263 437 A8 8 0 0 1 271 445 L271 729 A10 10 0 0 0 281 739 L327 739 L352.48 739" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M356 739 L346.43 743.78 L346.43 734.22 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-FRAUD-08" data-type="capabilities">
+<title>First-Party Fraud &amp; Bust-Out Management</title>
+<path d="M396 705 L356 739 L396 773 L476 773 L516 739 L476 705 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="436" y="737.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">First-Party Fraud &amp;</text>
+<text x="436" y="749.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Bust-Out Management</text>
+</g>
+<g class="node" data-id="CTL-FRAUD-SLA" data-type="controls">
+<title>Fraud alert handling service level</title>
+<path d="M402.86 573 L356 588.23 L356 609.77 L402.86 625 L469.14 625 L516 609.77 L516 588.23 L469.14 573 Z" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"/>
+<text x="436" y="597.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Fraud alert handling</text>
+<text x="436" y="609.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">service level</text>
+</g>
+<g class="node" data-id="DA-MODEL-FEAT" data-type="data_assets">
+<title>Model feature store</title>
+<path d="M621 580.6 Q629.5 578 663.5 578 L748.5 578 Q782.5 578 791 580.6 L791 627.4 Q782.5 630 748.5 630 L663.5 630 Q629.5 630 621 627.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="702" y="608.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Model feature store</text>
+<svg x="773" y="583" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-PAYMENT-INSTR" data-type="data_assets">
+<title>Payment instructions</title>
+<path d="M621 652.6 Q629.5 650 663.5 650 L748.5 650 Q782.5 650 791 652.6 L791 699.4 Q782.5 702 748.5 702 L663.5 702 Q629.5 702 621 699.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="702" y="680.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Payment instructions</text>
+<svg x="773" y="655" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-TRANSACTION" data-type="data_assets">
+<title>Card transaction history</title>
+<path d="M621 508.6 Q629.5 506 663.5 506 L748.5 506 Q782.5 506 791 508.6 L791 555.4 Q782.5 558 748.5 558 L663.5 558 Q629.5 558 621 555.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="702" y="530.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Card transaction</text>
+<text x="702" y="542.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">history</text>
+<svg x="773" y="511" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-FRAUD-007" data-type="processes">
+<title>Detect and act on first-party fraud and bust-out</title>
+<path d="M116 355 L36 387.09 L66.56 439 L165.44 439 L196 387.09 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="389.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Detect and act on</text>
+<text x="116" y="401.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">first-party fraud and</text>
+<text x="116" y="413.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">bust-out</text>
+</g>
+<g class="node" data-id="SYS-CORE-LEDGER" data-type="systems">
+<title>Core Card Ledger</title>
+<rect x="621" y="248" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="708" y="291.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Core Card Ledger</text>
+<svg x="785" y="253" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-CREDIT-DATA" data-type="systems">
+<title>Credit data and decisioning environment</title>
+<rect x="621" y="347" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="702" y="373.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Credit data and</text>
+<text x="702" y="385.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">decisioning</text>
+<text x="702" y="397.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">environment</text>
+<text x="712" y="420.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Snowflake Data Cloud</text>
+<image x="781" y="351" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMjlCNUU4IiByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+U25vd2ZsYWtlPC90aXRsZT48cGF0aCBkPSJNMjQgMy40NTljMCAuNjQ2LS40MTggMS4xOC0xLjE0MSAxLjE4LS43MjMgMC0xLjE0Mi0uNTM0LTEuMTQyLTEuMTggMC0uNjQ3LjQxOS0xLjE4IDEuMTQyLTEuMTguNzIzIDAgMS4xNDEuNTMzIDEuMTQxIDEuMTh6bS0uMjI4IDBjMC0uNTMzLS4zOC0uOTUxLS45MTMtLjk1MXMtLjkxMy4zOC0uOTEzLjk1YzAgLjUzMy4zOC45NTIuOTEzLjk1Mi41NyAwIC45MTMtLjQxOS45MTMtLjk1MXptLTEuMzctLjUzM2guNDk1Yy4yNjYgMCAuNDU2LjE1Mi40NTYuMzggMCAuMTUzLS4wNzYuMjI5LS4xOS4zMDVsLjE5LjI2NnYuMDM4aC0uMjY2bC0uMTktLjI2NmgtLjIyOXYuMjY2aC0uMjY2em0uNDk1LjIyOGgtLjIyOXYuMjY3aC4yMjljLjExNCAwIC4xNTItLjAzOC4xNTItLjExNC4wMzgtLjA3Ny0uMDM4LS4xNTMtLjE1Mi0uMTUzek03LjYwMiAxMi40Yy4wMzgtLjE1MS4wNzYtLjMwNC4wNzYtLjQ1NiAwLS4xMTQtLjAzOC0uMjI4LS4wMzgtLjM0Mi0uMTE0LS4zNDMtLjMwNC0uNjQ3LS42NDYtLjgzOGwtNC44Ny0yLjc3N2MtLjY4NS0uMzgtMS41Ni0uMTUyLTEuOTQuNTMzLS4zODEuNjg1LS4xNTMgMS41Ni41MzIgMS45NGwyLjcwMSAxLjU2LTIuNzAxIDEuNTZjLS42ODUuMzgtLjkxMyAxLjI1Ni0uNTMzIDEuOTQuMzguNjg1IDEuMjU2LjkxNCAxLjk0LjUzM2w0LjgzMi0yLjc3N2MuMzQzLS4yNjcuNTcxLS41MzMuNjQ3LS44NzZ6bTEuMzMyIDIuNjI2Yy0uMjY2LS4wMzgtLjU3LjAzOC0uODM3LjE5bC00LjgzMiAyLjc3N2MtLjY4NS4zOC0uOTEzIDEuMjU2LS41MzIgMS45NC4zOC42ODYgMS4yNTUuOTE0IDEuOTQuNTMzbDIuNzAxLTEuNTZ2My4xMmMwIC44LjY0NyAxLjQwOCAxLjQ0NiAxLjQwOC43OTkgMCAxLjQwNy0uNjQ3IDEuNDA3LTEuNDA4di01LjU5MmMwLS43NjEtLjU3LTEuMzctMS4yOTMtMS40MDh6bTQuOTQ2LTYuMDg4Yy4yNjYuMDM4LjU3LS4wMzguODM3LS4xOWw0LjgzMi0yLjc3N2MuNjg1LS4zOC45MTMtMS4yNTYuNTMyLTEuOTQtLjM4LS42ODYtMS4yNTUtLjkxNC0xLjk0LS41MzNsLTIuNzAxIDEuNTZWMS45NzVjMC0uNzk5LS42NDctMS40MDgtMS40NDYtMS40MDgtLjc5OSAwLTEuNDQ2LjYwOS0xLjQ0NiAxLjQwOFY3LjUzYzAgLjc2LjYwOSAxLjM3IDEuMzMyIDEuNDA3ek0zLjI2NSA1Ljk3bDQuODMyIDIuNzc3Yy4yNjYuMTUyLjUzMy4xOS44MzcuMTkuNzIzLS4wMzggMS4zMzEtLjY4NCAxLjMzMS0xLjQwN1YxLjk3NWMwLS43OTktLjY0Ni0xLjQwOC0xLjQwNy0xLjQwOC0uNzk5IDAtMS40NDYuNjQ3LTEuNDQ2IDEuNDA4djMuMTJsLTIuNzAxLTEuNTZjLS42ODUtLjM4LTEuNTYtLjE1Mi0xLjk0LjUzMy0uNDE5LjY0Ni0uMTkgMS41MjEuNDk0IDEuOTAyem05LjA5MyA2LjAxMWEuNDEyLjQxMiAwIDAwLS4xMTQtLjI2NmwtLjU3LS41NzFhLjM0Ni4zNDYgMCAwMC0uMjY3LS4xMTQuNDEyLjQxMiAwIDAwLS4yNjYuMTE0bC0uNTcxLjU3YS40MTEuNDExIDAgMDAtLjExNC4yNjdjMCAuMDc2LjAzOC4xOS4xMTQuMjY3bC41Ny41N2EuMzQ1LjM0NSAwIDAwLjI2Ny4xMTRjLjA3NiAwIC4xOS0uMDM4LjI2Ni0uMTE0bC41NzEtLjU3YS40MTIuNDEyIDAgMDAuMTE0LS4yNjd6bTEuNTk4LjUzM0wxMS45NCAxNC41M2MtLjAzOS4wMzgtLjE1My4xMTQtLjIyOS4xMTRoLS42MDhhLjQxMS40MTEgMCAwMS0uMjY3LS4xMTRMOC44MiAxMi41MTRhLjQwOC40MDggMCAwMS0uMDc2LS4yMjl2LS42MDhjMC0uMDc2LjAzOC0uMTkuMTE0LS4yNjdsMi4wMTYtMi4wMTZhLjQxLjQxIDAgMDEuMjY3LS4xMTRoLjYwOGEuNDEuNDEgMCAwMS4yNjcuMTE0bDIuMDE2IDIuMDE2YS4zNDcuMzQ3IDAgMDEuMTE0LjI2N3YuNjA4Yy0uMDc2LjA3Ny0uMTE0LjE5LS4xOS4yMjl6bTUuNTkzIDUuNDRsLTQuODMyLTIuNzc3Yy0uMjY2LS4xNTItLjU3LS4xOS0uODM3LS4xNTItLjcyMy4wMzgtMS4zMzIuNjg0LTEuMzMyIDEuNDA4djUuNTU0YzAgLjguNjQ3IDEuNDA4IDEuNDA4IDEuNDA4Ljc5OSAwIDEuNDQ2LS42NDcgMS40NDYtMS40MDh2LTMuMTJsMi43IDEuNTZjLjY4Ni4zOCAxLjU2MS4xNTIgMS45NDEtLjUzMy40MTktLjY0Ni4xOS0xLjUyMS0uNDk0LTEuOTR6bTIuNTQ5LTcuNTMzbC0yLjcwMSAxLjU2IDIuNyAxLjU2Yy42ODYuMzguOTE0IDEuMjU2LjUzMyAxLjk0LS4zOC42ODUtMS4yNTUuOTEzLTEuOTQuNTMzbC00LjgzMi0yLjc3OGExLjY0NCAxLjY0NCAwIDAxLS42NDctLjc5OGMtLjAzNy0uMTUzLS4wNzYtLjMwNS0uMDc2LS40NTcgMC0uMTE0LjAzOS0uMjI4LjAzOS0uMzQyLjExNC0uMzQzLjM0Mi0uNjQ3LjY0Ni0uODM3bDQuODMyLTIuNzc4Yy42ODUtLjM4IDEuNTYtLjE1MiAxLjk0LjUzMy40NTcuNjA5LjE5IDEuNDg0LS40OTQgMS44NjQiLz48L3N2Zz4="/>
+</g>
+<g class="node" data-id="SYS-FRAUD-DETECT" data-type="systems">
+<title>Transaction fraud detection</title>
+<rect x="621" y="50" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="708" y="87.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Transaction fraud</text>
+<text x="708" y="99.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">detection</text>
+<svg x="785" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-MODEL" data-type="systems">
+<title>Model platform</title>
+<rect x="621" y="149" width="182" height="79" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="708" y="192.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Model platform</text>
+<svg x="785" y="154" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="913.4" x2="1072" y2="913.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="937.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 926.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="937.4" font-size="12" font-weight="400" fill="#343d50">capability · 1</text>
+<g transform="translate(177.5 926.4)" fill="#fca5a5" stroke="#b91c1c" stroke-width="1.4"><path d="M6 1h8l5 4v4l-5 4H6l-5-4V5z"/></g>
+<text x="203.5" y="937.4" font-size="12" font-weight="400" fill="#343d50">control · 1</text>
+<g transform="translate(273.05 926.4)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="299.05" y="937.4" font-size="12" font-weight="400" fill="#343d50">data asset · 3</text>
+<g transform="translate(389.9 926.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="415.9" y="937.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(490.17 926.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="516.17" y="937.4" font-size="12" font-weight="400" fill="#343d50">system · 4</text>
+<text x="28" y="959.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 948.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="959.4" font-size="12" font-weight="400" fill="#343d50">governed by</text>
+<g transform="translate(184.75 948.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="210.75" y="959.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(277.26 948.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="303.26" y="959.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="993.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-fraud-007 · edit the model, not the picture</text></g>
+</svg>

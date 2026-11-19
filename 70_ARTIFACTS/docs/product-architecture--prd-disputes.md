@@ -17,6 +17,7 @@ flowchart LR
       direction LR
       subgraph grp_Azure__azure_cards_prod__Private_App["Private-App"]
         direction LR
+        TS_NET_SUB_AZ_CARDS_APP[/"Cards App Subnet<br/>[Subnet]"/]
         SYS_DISPUTES_GATEWAY["Dispute Management<br/>Platform Integration<br/>Gateway<br/>[AKS]"]
       end
     end
@@ -55,6 +56,7 @@ flowchart LR
   SYS_DISPUTES_GATEWAY -.->|"runs on"| TS_AZURE_AKS
   SYS_DISPUTES_GATEWAY -.->|"runs on"| TS_AZURE_APIM
   SYS_DISPUTES_GATEWAY -.->|"runs on"| TS_AZURE_KEYVAULT
+  SYS_DISPUTES_GATEWAY -.->|"runs on"| TS_NET_SUB_AZ_CARDS_APP
   SYS_DISPUTES_SAAS -->|"Write"| DA_DISPUTES_VENDOR_FEED
   SYS_DATA_INGEST -->|"Read"| DA_DISPUTES_VENDOR_FEED
   ACT_SERVICING_AGENT -->|"Handles cases"| SYS_CRM
@@ -67,7 +69,7 @@ flowchart LR
   class ACT_SERVICING_AGENT s_actors__actors;
   class DA_DISPUTES_VENDOR_FEED s_data_assets__data_assets;
   class SYS_CORE_LEDGER,SYS_CRM,SYS_DATA_INGEST,SYS_DISPUTES_GATEWAY,SYS_DISPUTES_SAAS s_systems__systems;
-  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT s_tech_services__tech_services;
+  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_KEYVAULT,TS_NET_SUB_AZ_CARDS_APP s_tech_services__tech_services;
   classDef boundary1 fill:#f1f6fb,stroke:#5b9bd5,color:#2f5d8a;
   class grp_Azure__azure_cards_prod__Private_App,grp_Azure__azure_data_prod__Private_Data boundary1;
   classDef boundary2 fill:#f4f5f7,stroke:#5f6b7a,color:#3f4a5c;
@@ -122,4 +124,4 @@ Each flow is a recorded sequence of interfaces. The steps drawn on this diagram 
 3. Customer 360 Pipeline → Customer 360 Semantic Layer (SQL) — not on this diagram
 4. Customer 360 Semantic Layer → Regulatory Reporting Engine (SQL) — not on this diagram
 
-10 entities, 13 relationships. Generated from the model; edit the model, not this file.
+11 entities, 14 relationships. Generated from the model; edit the model, not this file.

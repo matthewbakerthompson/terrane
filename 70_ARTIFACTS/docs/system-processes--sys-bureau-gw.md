@@ -12,12 +12,23 @@ flowchart LR
     direction LR
     CAP_COLL_08{{"Credit Bureau Reporting &<br/>Dispute Handling"}}
     CAP_FRAUD_03{{"Dispute Intake &<br/>Provisional Credit"}}
+    CAP_LEND_02{{"Indirect Application &<br/>Underwriting"}}
+    CAP_LEND_02_02{{"Indirect Credit Decision &<br/>Counteroffer"}}
+    CAP_COLL_02{{"Outbound Contact<br/>Operations"}}
+    CAP_COLL_02_01{{"Owned-Portfolio<br/>Collections Contact"}}
+    CAP_COLL_03{{"Payment Arrangement &<br/>Settlement Offers"}}
+    CAP_SERV_09{{"Retention, Product Change<br/>& Account Closure"}}
+    CAP_COLL_03_02{{"Settlement Offers"}}
   end
 
   subgraph grp_Process["Process"]
     direction LR
+    P_SERVICING_015[\"Close account and settle<br/>final balance"/]
+    P_LENDING_004[\"Decide indirect loan and<br/>return terms"/]
     P_COLLECTIONS_005[\"Furnish credit bureau data"/]
     P_COLLECTIONS_006[\"Handle credit reporting<br/>dispute"/]
+    P_COLLECTIONS_009[\"Locate unreachable<br/>borrower"/]
+    P_COLLECTIONS_008[\"Negotiate settlement offer"/]
     P_DISPUTE_001[\"Process cardholder dispute<br/>claim"/]
   end
 
@@ -29,15 +40,26 @@ flowchart LR
   P_DISPUTE_001 -->|"Supporting"| SYS_BUREAU_GW
   P_COLLECTIONS_005 -->|"Primary"| SYS_BUREAU_GW
   P_COLLECTIONS_006 -->|"Primary"| SYS_BUREAU_GW
+  P_LENDING_004 -->|"Supporting"| SYS_BUREAU_GW
+  P_SERVICING_015 -->|"Supporting"| SYS_BUREAU_GW
+  P_COLLECTIONS_008 -->|"Supporting"| SYS_BUREAU_GW
+  P_COLLECTIONS_009 -->|"Supporting"| SYS_BUREAU_GW
   P_DISPUTE_001 -->|"supports"| CAP_FRAUD_03
   P_COLLECTIONS_005 -->|"supports"| CAP_COLL_08
   P_COLLECTIONS_006 -->|"supports"| CAP_COLL_08
+  P_LENDING_004 -->|"supports"| CAP_LEND_02_02
+  P_SERVICING_015 -->|"supports"| CAP_SERV_09
+  P_COLLECTIONS_008 -->|"supports"| CAP_COLL_03_02
+  P_COLLECTIONS_009 -->|"supports"| CAP_COLL_02_01
+  P_COLLECTIONS_008 -->|"supports"| CAP_COLL_03
+  P_COLLECTIONS_009 -->|"supports"| CAP_COLL_02
+  P_LENDING_004 -->|"supports"| CAP_LEND_02
 
   classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
   classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
-  class CAP_COLL_08,CAP_FRAUD_03 s_capabilities__capabilities;
-  class P_COLLECTIONS_005,P_COLLECTIONS_006,P_DISPUTE_001 s_processes__processes;
+  class CAP_COLL_02,CAP_COLL_02_01,CAP_COLL_03,CAP_COLL_03_02,CAP_COLL_08,CAP_FRAUD_03,CAP_LEND_02,CAP_LEND_02_02,CAP_SERV_09 s_capabilities__capabilities;
+  class P_COLLECTIONS_005,P_COLLECTIONS_006,P_COLLECTIONS_008,P_COLLECTIONS_009,P_DISPUTE_001,P_LENDING_004,P_SERVICING_015 s_processes__processes;
   class SYS_BUREAU_GW s_systems__systems;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Capability,grp_Process,grp_System boundary1;
@@ -55,4 +77,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#0369a1` | processes |
 | `#4338ca` | systems |
 
-6 entities, 6 relationships. Generated from the model; edit the model, not this file.
+17 entities, 17 relationships. Generated from the model; edit the model, not this file.

@@ -14,12 +14,26 @@ Boundary(b_Capability, "Capability") {
   ' aac CAP_RGOV_07: company_domain="Cross-Functional Services"
   System(CAP_ORIG_02, "Identity Verification & KYC/CIP", "Verify applicant identity and satisfy customer identification obligations.", $tags="capabilities")
   ' aac CAP_ORIG_02: company_domain="Originations"
+  System(CAP_MERCH_02_02, "Merchant Screening & Brand Risk", "Screen merchants and their owners against sanctions and the networks' terminated-merchant file, and review prohibited business types.", $tags="capabilities")
+  ' aac CAP_MERCH_02_02: company_domain="Merchant Services"
+  System(CAP_MERCH_02, "Merchant Underwriting & Risk Vetting", "Underwrite merchants against credit and brand risk appetite — the specialty-vertical appetite is the differentiator.", $tags="capabilities")
+  ' aac CAP_MERCH_02: company_domain="Merchant Services"
+  System(CAP_RGOV_07_01, "Sanctions Screening", "Screen customers, merchants and transactions against sanctions lists and watchlists.", $tags="capabilities")
+  ' aac CAP_RGOV_07_01: company_domain="Cross-Functional Services"
+  System(CAP_RGOV_07_02, "Transaction Monitoring & Suspicious Activity Reporting", "Monitor activity for suspicious patterns, investigate alerts, and file reports.", $tags="capabilities")
+  ' aac CAP_RGOV_07_02: company_domain="Cross-Functional Services"
 }
 Boundary(b_Process, "Process") {
   System(P_COMPLIANCE_004, "Investigate and file suspicious activity report", "Investigate an alert and, where warranted, prepare and file the regulatory report. The SAR decision and filing run on the BSA clock from alert qualification; the investigation file must stand on its own for examiner review, and filing is confidential by law.", $tags="processes")
   ' aac P_COMPLIANCE_004: company_domain=""
+  System(P_COMPLIANCE_007, "Monitor transactions for suspicious activity", "Run monitoring scenarios over card, loan, deposit and merchant activity, triage the alerts, and escalate unusual activity to investigation, tuning the scenarios to the bank's risk assessment. Alerts aged past the review window put suspicious activity report deadlines at risk.", $tags="processes")
+  ' aac P_COMPLIANCE_007: company_domain=""
   System(P_COMPLIANCE_003, "Screen for sanctions and watchlists", "Screen parties and transactions against sanctions and watchlists and adjudicate hits. Screening runs at onboarding and on list updates across cardholders, clients, and suppliers; a hit blocks processing until dispositioned, and the disposition is retained as evidence.", $tags="processes")
   ' aac P_COMPLIANCE_003: company_domain=""
+  System(P_MERCHANT_004, "Screen merchant against sanctions and network lists", "Screen the business and its owners against sanctions lists and the networks' terminated-merchant file, and review prohibited and brand-damaging business types before boarding. A merchant on the terminated file, or in a prohibited category, boarded under the bank's sponsorship draws network fines on the bank.", $tags="processes")
+  ' aac P_MERCHANT_004: company_domain=""
+  System(P_COMPLIANCE_008, "Screen transactions and parties against sanctions in line", "Screen card transactions in the authorization path, and customers and counterparties nightly, against sanctions, politically exposed person and adverse media lists, and hold or block the true matches. A missed sanctions match is a strict-liability violation, so list updates are applied the day they are published.", $tags="processes")
+  ' aac P_COMPLIANCE_008: company_domain=""
   System(P_ORIG_002, "Verify applicant identity and satisfy CIP", "Verify the applicant's identity and record evidence satisfying customer identification obligations. CIP evidence is retained per BSA requirements; verification failures route to document request rather than automatic decline, and synthetic identity signals feed fraud screening.", $tags="processes")
   ' aac P_ORIG_002: company_domain=""
 }
@@ -34,6 +48,12 @@ Rel(P_COMPLIANCE_003, SYS_AML, "Primary")
 ' aac rel: source="P_COMPLIANCE_003"; target="SYS_AML"; label="Primary"; relation="process_uses_system"; role="Primary"
 Rel(P_COMPLIANCE_004, SYS_AML, "Primary")
 ' aac rel: source="P_COMPLIANCE_004"; target="SYS_AML"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_MERCHANT_004, SYS_AML, "Supporting")
+' aac rel: source="P_MERCHANT_004"; target="SYS_AML"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_COMPLIANCE_007, SYS_AML, "Primary")
+' aac rel: source="P_COMPLIANCE_007"; target="SYS_AML"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_COMPLIANCE_008, SYS_AML, "Supporting")
+' aac rel: source="P_COMPLIANCE_008"; target="SYS_AML"; label="Supporting"; relation="process_uses_system"; role="Supporting"
 Rel(P_ORIG_002, CAP_ORIG_02, "supports")
 ' aac rel: source="P_ORIG_002"; target="CAP_ORIG_02"; label="supports"; relation="process_supports_capability"
 Rel(P_ORIG_002, CAP_RGOV_07, "supports")
@@ -42,6 +62,22 @@ Rel(P_COMPLIANCE_003, CAP_RGOV_07, "supports")
 ' aac rel: source="P_COMPLIANCE_003"; target="CAP_RGOV_07"; label="supports"; relation="process_supports_capability"
 Rel(P_COMPLIANCE_004, CAP_RGOV_07, "supports")
 ' aac rel: source="P_COMPLIANCE_004"; target="CAP_RGOV_07"; label="supports"; relation="process_supports_capability"
+Rel(P_MERCHANT_004, CAP_MERCH_02_02, "supports")
+' aac rel: source="P_MERCHANT_004"; target="CAP_MERCH_02_02"; label="supports"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_007, CAP_RGOV_07_02, "supports")
+' aac rel: source="P_COMPLIANCE_007"; target="CAP_RGOV_07_02"; label="supports"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_008, CAP_RGOV_07_01, "supports")
+' aac rel: source="P_COMPLIANCE_008"; target="CAP_RGOV_07_01"; label="supports"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_003, CAP_RGOV_07_01, "supports")
+' aac rel: source="P_COMPLIANCE_003"; target="CAP_RGOV_07_01"; label="supports"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_004, CAP_RGOV_07_02, "supports")
+' aac rel: source="P_COMPLIANCE_004"; target="CAP_RGOV_07_02"; label="supports"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_007, CAP_RGOV_07, "supports")
+' aac rel: source="P_COMPLIANCE_007"; target="CAP_RGOV_07"; label="supports"; relation="process_supports_capability"
+Rel(P_COMPLIANCE_008, CAP_RGOV_07, "supports")
+' aac rel: source="P_COMPLIANCE_008"; target="CAP_RGOV_07"; label="supports"; relation="process_supports_capability"
+Rel(P_MERCHANT_004, CAP_MERCH_02, "supports")
+' aac rel: source="P_MERCHANT_004"; target="CAP_MERCH_02"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

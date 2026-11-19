@@ -10,6 +10,7 @@ flowchart LR
 
   subgraph grp_Data_Asset["Data Asset"]
     direction LR
+    DA_AUTH_LOG[("Authorization log")]
     DA_CARD_ACCOUNT[("Card account master")]
     DA_TRANSACTION[("Card transaction history")]
     DA_MODEL_FEAT[("Model feature store")]
@@ -51,6 +52,8 @@ flowchart LR
   SYS_FRAUD_DETECT -->|"Read"| DA_MODEL_FEAT
   SYS_CORE_LEDGER -->|"Read"| DA_PAYMENT_INSTR
   SYS_TOKEN -->|"Read"| DA_CARD_ACCOUNT
+  SYS_AUTH_SWITCH -->|"ReadWrite"| DA_AUTH_LOG
+  SYS_FRAUD_DETECT -->|"Read"| DA_AUTH_LOG
   SYS_AUTH_SWITCH -->|"Read"| DA_CARD_ACCOUNT
   SYS_AUTH_SWITCH -->|"ReadWrite"| DA_TRANSACTION
   SYS_CORE_LEDGER -->|"ReadWrite"| DA_CARD_ACCOUNT
@@ -60,7 +63,7 @@ flowchart LR
   classDef s_offered_interfaces__offered_interfaces fill:#e6ecff,stroke:#6366f1,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   classDef s_tech_services__tech_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
-  class DA_CARD_ACCOUNT,DA_MODEL_FEAT,DA_PAYMENT_INSTR,DA_TRANSACTION s_data_assets__data_assets;
+  class DA_AUTH_LOG,DA_CARD_ACCOUNT,DA_MODEL_FEAT,DA_PAYMENT_INSTR,DA_TRANSACTION s_data_assets__data_assets;
   class OI_LEDGER_QUEUE s_offered_interfaces__offered_interfaces;
   class SYS_AUTH_SWITCH,SYS_CORE_LEDGER,SYS_FRAUD_DETECT,SYS_SCREENING_GATEWAY,SYS_TOKEN s_systems__systems;
   class TS_AWS_APIGW,TS_AWS_CLOUDWATCH,TS_AWS_EKS,TS_AWS_SECRETS,TS_NET_VPC_RISKOPS,TS_ONPREM_DC s_tech_services__tech_services;
@@ -92,4 +95,4 @@ Each flow is a recorded sequence of interfaces. The steps drawn on this diagram 
 3. NICE Actimize Screening Private Egress → NICE Actimize Screening (PrivateLink) — not on this diagram
 4. Authorization Switch → Core Card Ledger (MQ)
 
-16 entities, 19 relationships. Generated from the model; edit the model, not this file.
+17 entities, 21 relationships. Generated from the model; edit the model, not this file.

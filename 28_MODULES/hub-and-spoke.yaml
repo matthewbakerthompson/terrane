@@ -39,6 +39,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-{hub_suffix}"
         name: "{product_name} Integration Hub"
+        component_type: ipaas
         description: >
           Mediates every {product_name} integration: one place for mapping,
           routing, retry and the audit trail, so the spokes do not each carry
@@ -82,6 +83,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-BUS"
         name: "{product_name} Event Hub"
+        component_type: event-bus
         description: >
           The {product_name} event bus: publishers on one side, subscribers on
           the other, and no pair-wise integrations between them.
@@ -129,6 +131,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-DATAHUB"
         name: "{product_name} Data Hub"
+        component_type: mdm
         description: >
           Consolidates {product_name} data from every source into one dataset
           with one owner, so a question is answered once.
@@ -187,6 +190,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-IDP"
         name: "{product_name} Identity Hub"
+        component_type: identity-provider
         description: >
           The one place {product_name} users sign on. Every application
           federates here; none holds a password of its own.

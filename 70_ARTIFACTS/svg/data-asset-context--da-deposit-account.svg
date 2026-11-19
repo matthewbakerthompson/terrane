@@ -1,0 +1,272 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="1506.13" viewBox="0 0 1100 1506.13" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<title>Deposit account and CD record — Where It Lives and Who Uses It</title>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Deposit account and CD record — Where It Lives and Who Uses It</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   15 nodes · 15 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One data asset in full: the system that masters it, the systems that read or write it, the processes that use it, the controls that govern it and the policies it is subject</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">to. The page a privacy or audit question starts from.</text>
+<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(173.53 99.08)">
+<g class="boundary" data-id="grp::Data Asset">
+<rect x="519.9" y="631.7" width="222.6" height="136.6" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="561.9" y="649.11" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="20.11" y="24.42" width="211.78" height="823.13" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="52.96" y="41.83" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+</g>
+<g class="boundary" data-id="grp::System">
+<rect x="10.45" y="876.45" width="221.1" height="391.1" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="40.25" y="893.86" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+</g>
+<g class="edge" data-id="e0::SYS-DEPOSIT::DA-DEPOSIT-ACCOUNT">
+<title>masters</title>
+<path d="M206 919.33 L234.94 919 A10 10 0 0 1 235.06 919 L312.1 919 L361.2 919 A10 10 0 0 0 371.2 909 L371.2 730 A10 10 0 0 1 381.2 720 L437.2 720 L481.45 720 A4.75 4.75 0 0 0 486.2 715.25 L486.2 715.25 A4.75 4.75 0 0 1 490.95 710.5 L542.68 710.5" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/>
+<path d="M546.2 710.5 L536.63 715.28 L536.63 705.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e1::SYS-DEPOSIT::DA-DEPOSIT-ACCOUNT">
+<title>ReadWrite</title>
+<path d="M206 936.67 L234.94 937 A10 10 0 0 0 235.06 937 L371.2 937 A10 10 0 0 0 381.2 927 L381.2 740 A10 10 0 0 1 391.2 730 L437.2 730 L489.07 730 A7.12 7.12 0 0 0 496.2 722.88 L496.2 722.88 A7.12 7.12 0 0 1 503.32 715.75 L542.68 715.75" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M546.2 715.75 L536.63 720.53 L536.63 710.97 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e1::SYS-DEPOSIT::DA-DEPOSIT-ACCOUNT">
+<rect x="284.71" y="943.5" width="54.78" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="955.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">ReadWrite</text>
+</g>
+<g class="edge" data-id="e2::SYS-BROKER-GW::DA-DEPOSIT-ACCOUNT">
+<title>Write</title>
+<path d="M206 1072 L235 1072 L391.2 1072 A10 10 0 0 0 401.2 1062 L401.2 760 A10 10 0 0 1 411.2 750 L437.2 750 L506.2 750 A10 10 0 0 0 516.2 740 L516.2 736.25 A10 10 0 0 1 526.2 726.25 L542.68 726.25" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M546.2 726.25 L536.63 731.03 L536.63 721.47 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e2::SYS-BROKER-GW::DA-DEPOSIT-ACCOUNT">
+<rect x="296.65" y="1078.5" width="30.91" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="1090.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Write</text>
+</g>
+<g class="edge" data-id="e3::SYS-TREASURY::DA-DEPOSIT-ACCOUNT">
+<title>Read</title>
+<path d="M206 1216 L235 1216 L411.2 1216 A10 10 0 0 0 421.2 1206 L421.2 778 A8 8 0 0 1 429.2 770 L437.2 770 L526.2 770 A10 10 0 0 0 536.2 760 L536.2 739.99 A3.24 3.24 0 0 1 539.44 736.75 L542.68 736.75" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M546.2 736.75 L536.63 741.53 L536.63 731.97 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e3::SYS-TREASURY::DA-DEPOSIT-ACCOUNT">
+<rect x="297.06" y="1222.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="1234.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e4::SYS-KYC::DA-DEPOSIT-ACCOUNT">
+<title>Read</title>
+<path d="M206 1144 L235 1144 L401.2 1144 A10 10 0 0 0 411.2 1134 L411.2 770 A10 10 0 0 1 421.2 760 L437.2 760 L516.2 760 A10 10 0 0 0 526.2 750 L526.2 739.74 A8.24 8.24 0 0 1 534.44 731.5 L542.68 731.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M546.2 731.5 L536.63 736.28 L536.63 726.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e4::SYS-KYC::DA-DEPOSIT-ACCOUNT">
+<rect x="297.06" y="1150.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="1162.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e5::SYS-AML::DA-DEPOSIT-ACCOUNT">
+<title>Read</title>
+<path d="M206 1000 L235 1000 L381.2 1000 A10 10 0 0 0 391.2 990 L391.2 750 A10 10 0 0 1 401.2 740 L437.2 740 L496.7 740 A9.5 9.5 0 0 0 506.2 730.5 L506.2 730.5 A9.5 9.5 0 0 1 515.7 721 L542.68 721" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M546.2 721 L536.63 725.78 L536.63 716.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e5::SYS-AML::DA-DEPOSIT-ACCOUNT">
+<rect x="297.06" y="1006.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="1018.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e6::P-DEPOSITS-001::DA-DEPOSIT-ACCOUNT">
+<title>Read</title>
+<path d="M206 436 L235 436 L371.2 436 A10 10 0 0 1 381.2 446 L381.2 660 A10 10 0 0 0 391.2 670 L437.2 670 L489.07 670 A7.12 7.12 0 0 1 496.2 677.12 L496.2 677.12 A7.12 7.12 0 0 0 503.32 684.25 L542.68 684.25" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M546.2 684.25 L536.63 689.03 L536.63 679.47 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e6::P-DEPOSITS-001::DA-DEPOSIT-ACCOUNT">
+<rect x="297.06" y="442.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="454.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e7::P-DEPOSITS-002::DA-DEPOSIT-ACCOUNT">
+<title>Write</title>
+<path d="M206 84 L235 84 L411.2 84 A10 10 0 0 1 421.2 94 L421.2 622 A8 8 0 0 0 429.2 630 L437.2 630 L526.2 630 A10 10 0 0 1 536.2 640 L536.2 660.01 A3.24 3.24 0 0 0 539.44 663.25 L542.68 663.25" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M546.2 663.25 L536.63 668.03 L536.63 658.47 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e7::P-DEPOSITS-002::DA-DEPOSIT-ACCOUNT">
+<rect x="296.65" y="90.5" width="30.91" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="102.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Write</text>
+</g>
+<g class="edge" data-id="e8::P-DEPOSITS-003::DA-DEPOSIT-ACCOUNT">
+<title>Write</title>
+<path d="M206 612 L235 612 L351.2 612 A10 10 0 0 1 361.2 622 L361.2 680 A10 10 0 0 0 371.2 690 L437.2 690 L473.82 690 A2.38 2.38 0 0 1 476.2 692.38 L476.2 692.38 A2.38 2.38 0 0 0 478.57 694.75 L542.68 694.75" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M546.2 694.75 L536.63 699.53 L536.63 689.97 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e8::P-DEPOSITS-003::DA-DEPOSIT-ACCOUNT">
+<rect x="296.65" y="618.5" width="30.91" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="630.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Write</text>
+</g>
+<g class="edge" data-id="e9::P-DEPOSITS-004::DA-DEPOSIT-ACCOUNT">
+<title>Both</title>
+<path d="M206 700 L235 700 L437.2 700 L542.68 700" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M546.2 700 L536.63 704.78 L536.63 695.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e9::P-DEPOSITS-004::DA-DEPOSIT-ACCOUNT">
+<rect x="297.95" y="706.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="718.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e10::P-DEPOSITS-005::DA-DEPOSIT-ACCOUNT">
+<title>Both</title>
+<path d="M206 260 L235 260 L391.2 260 A10 10 0 0 1 401.2 270 L401.2 640 A10 10 0 0 0 411.2 650 L437.2 650 L506.2 650 A10 10 0 0 1 516.2 660 L516.2 663.75 A10 10 0 0 0 526.2 673.75 L542.68 673.75" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M546.2 673.75 L536.63 678.53 L536.63 668.97 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e10::P-DEPOSITS-005::DA-DEPOSIT-ACCOUNT">
+<rect x="297.95" y="266.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="278.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e11::P-DEPOSITS-006::DA-DEPOSIT-ACCOUNT">
+<title>Read</title>
+<path d="M206 348 L235 348 L381.2 348 A10 10 0 0 1 391.2 358 L391.2 650 A10 10 0 0 0 401.2 660 L437.2 660 L496.7 660 A9.5 9.5 0 0 1 506.2 669.5 L506.2 669.5 A9.5 9.5 0 0 0 515.7 679 L542.68 679" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M546.2 679 L536.63 683.78 L536.63 674.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e11::P-DEPOSITS-006::DA-DEPOSIT-ACCOUNT">
+<rect x="297.06" y="354.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="366.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e12::P-DEPOSITS-007::DA-DEPOSIT-ACCOUNT">
+<title>Both</title>
+<path d="M206 524 L235 524 L361.2 524 A10 10 0 0 1 371.2 534 L371.2 670 A10 10 0 0 0 381.2 680 L437.2 680 L481.45 680 A4.75 4.75 0 0 1 486.2 684.75 L486.2 684.75 A4.75 4.75 0 0 0 490.95 689.5 L542.68 689.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M546.2 689.5 L536.63 694.28 L536.63 684.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e12::P-DEPOSITS-007::DA-DEPOSIT-ACCOUNT">
+<rect x="297.95" y="530.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="542.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e13::P-DEPOSITS-008::DA-DEPOSIT-ACCOUNT">
+<title>Read</title>
+<path d="M206 788 L235 788 L351.2 788 A10 10 0 0 0 361.2 778 L361.2 720 A10 10 0 0 1 371.2 710 L437.2 710 L473.82 710 A2.38 2.38 0 0 0 476.2 707.62 L476.2 707.62 A2.38 2.38 0 0 1 478.57 705.25 L542.68 705.25" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M546.2 705.25 L536.63 710.03 L536.63 700.47 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e13::P-DEPOSITS-008::DA-DEPOSIT-ACCOUNT">
+<rect x="297.06" y="794.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="806.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e14::P-COMPLIANCE-007::DA-DEPOSIT-ACCOUNT">
+<title>Read</title>
+<path d="M206 172 L235 172 L401.2 172 A10 10 0 0 1 411.2 182 L411.2 630 A10 10 0 0 0 421.2 640 L437.2 640 L516.2 640 A10 10 0 0 1 526.2 650 L526.2 660.26 A8.24 8.24 0 0 0 534.44 668.5 L542.68 668.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M546.2 668.5 L536.63 673.28 L536.63 663.72 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e14::P-COMPLIANCE-007::DA-DEPOSIT-ACCOUNT">
+<rect x="297.06" y="178.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="312.1" y="190.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="node" data-id="DA-DEPOSIT-ACCOUNT" data-type="data_assets">
+<title>Deposit account and CD record</title>
+<path d="M546.2 662.2 Q554.7 658 588.7 658 L673.7 658 Q707.7 658 716.2 662.2 L716.2 737.8 Q707.7 742 673.7 742 L588.7 742 Q554.7 742 546.2 737.8 Z" fill="#70c9a7" stroke="#047857" stroke-width="2.6"/>
+<text x="627.2" y="698.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Deposit account and</text>
+<text x="627.2" y="710.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">CD record</text>
+<svg x="698.2" y="663" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-COMPLIANCE-007" data-type="processes">
+<title>Monitor transactions for suspicious activity</title>
+<path d="M126 138 L46 163.97 L76.56 206 L175.44 206 L206 163.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="126" y="170.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Monitor transactions</text>
+<text x="126" y="182.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">for suspicious activity</text>
+</g>
+<g class="node" data-id="P-DEPOSITS-001" data-type="processes">
+<title>Set deposit rates and product terms</title>
+<path d="M126 402 L46 427.97 L76.56 470 L175.44 470 L206 427.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="126" y="434.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Set deposit rates and</text>
+<text x="126" y="446.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">product terms</text>
+</g>
+<g class="node" data-id="P-DEPOSITS-002" data-type="processes">
+<title>Open and fund direct deposit account</title>
+<path d="M126 50 L46 75.97 L76.56 118 L175.44 118 L206 75.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="126" y="82.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Open and fund direct</text>
+<text x="126" y="94.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">deposit account</text>
+</g>
+<g class="node" data-id="P-DEPOSITS-003" data-type="processes">
+<title>Issue brokered CDs through the broker network</title>
+<path d="M126 578 L46 603.97 L76.56 646 L175.44 646 L206 603.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="126" y="604.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Issue brokered CDs</text>
+<text x="126" y="616.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">through the broker</text>
+<text x="126" y="628.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">network</text>
+</g>
+<g class="node" data-id="P-DEPOSITS-004" data-type="processes">
+<title>Settle brokered CDs and keep the position</title>
+<path d="M126 666 L46 691.97 L76.56 734 L175.44 734 L206 691.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="126" y="698.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Settle brokered CDs</text>
+<text x="126" y="710.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and keep the position</text>
+</g>
+<g class="node" data-id="P-DEPOSITS-005" data-type="processes">
+<title>Accrue and pay deposit interest</title>
+<path d="M126 226 L46 251.97 L76.56 294 L175.44 294 L206 251.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="126" y="258.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Accrue and pay</text>
+<text x="126" y="270.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">deposit interest</text>
+</g>
+<g class="node" data-id="P-DEPOSITS-006" data-type="processes">
+<title>Produce deposit tax reporting</title>
+<path d="M126 314 L46 339.97 L76.56 382 L175.44 382 L206 339.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="126" y="346.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Produce deposit tax</text>
+<text x="126" y="358.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">reporting</text>
+</g>
+<g class="node" data-id="P-DEPOSITS-007" data-type="processes">
+<title>Process CD maturity, renewal, and early withdrawal</title>
+<path d="M126 490 L46 515.97 L76.56 558 L175.44 558 L206 515.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="126" y="516.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Process CD maturity,</text>
+<text x="126" y="528.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">renewal, and early</text>
+<text x="126" y="540.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">withdrawal</text>
+</g>
+<g class="node" data-id="P-DEPOSITS-008" data-type="processes">
+<title>Administer deposit insurance records and escheatment</title>
+<path d="M126 754 L46 779.97 L76.56 822 L175.44 822 L206 779.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.1"/>
+<text x="126" y="780.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Administer deposit</text>
+<text x="126" y="792.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">insurance records and</text>
+<text x="126" y="804.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">escheatment</text>
+</g>
+<g class="node" data-id="SYS-AML" data-type="systems">
+<title>Financial crimes platform</title>
+<rect x="36" y="974" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="117" y="998.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Financial crimes</text>
+<text x="117" y="1010.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">platform</text>
+<svg x="188" y="979" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-BROKER-GW" data-type="systems">
+<title>Brokered deposit settlement gateway</title>
+<rect x="36" y="1046" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="117" y="1070.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Brokered deposit</text>
+<text x="117" y="1082.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">settlement gateway</text>
+<svg x="188" y="1051" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-DEPOSIT" data-type="systems">
+<title>Deposit platform</title>
+<rect x="36" y="902" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="117" y="932.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Deposit platform</text>
+<svg x="188" y="907" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-KYC" data-type="systems">
+<title>Identity verification</title>
+<rect x="36" y="1118" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="117" y="1148.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Identity verification</text>
+<svg x="188" y="1123" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+<g class="node" data-id="SYS-TREASURY" data-type="systems">
+<title>Treasury management</title>
+<rect x="36" y="1190" width="170" height="52" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.1"/>
+<text x="117" y="1214.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Treasury</text>
+<text x="117" y="1226.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">management</text>
+<svg x="188" y="1195" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+</g>
+</g>
+<g class="foot"><line x1="28" y1="1382.13" x2="1072" y2="1382.13" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="1406.13" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 1395.13)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="93.2" y="1406.13" font-size="12" font-weight="400" fill="#343d50">data asset · 1</text>
+<g transform="translate(181.3 1395.13)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="207.3" y="1406.13" font-size="12" font-weight="400" fill="#343d50">process · 9</text>
+<g transform="translate(284.08 1395.13)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="310.08" y="1406.13" font-size="12" font-weight="400" fill="#343d50">system · 5</text>
+<text x="28" y="1428.13" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">CLASSIFICATION</text>
+<g transform="translate(130.2 1417.13)" fill="#70c9a7" stroke="#047857" stroke-width="2.6"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="156.2" y="1428.13" font-size="12" font-weight="400" fill="#343d50">Restricted · 1</text>
+<g transform="translate(243.85 1417.13)" fill="#a7f3d0" stroke="#047857" stroke-width="1.1"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="269.85" y="1428.13" font-size="12" font-weight="400" fill="#343d50">not recorded · 14</text>
+<text x="28" y="1450.13" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 1439.13)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="1450.13" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<g transform="translate(143.25 1439.13)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6" stroke-dasharray="6 3"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="169.25" y="1450.13" font-size="12" font-weight="400" fill="#343d50">masters</text>
+<g transform="translate(231.51 1439.13)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="257.51" y="1450.13" font-size="12" font-weight="400" fill="#343d50">reads / writes</text>
+<text x="28" y="1484.13" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · data-asset-context--da-deposit-account · edit the model, not the picture</text></g>
+</svg>

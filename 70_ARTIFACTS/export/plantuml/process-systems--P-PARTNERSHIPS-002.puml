@@ -1,0 +1,57 @@
+@startuml
+' Manage co-brand program agreement — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Manage co-brand program agreement — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_PART_05, "Co-Brand & Program Partner Management", "Manage co-brand and program partner economics and obligations.", $tags="capabilities")
+  ' aac CAP_PART_05: company_domain="Cross-Functional Services"
+  System(CAP_PART_05_01, "Partner Agreement & Program Governance", "Negotiate co-brand and affinity agreements, and govern the partner's obligations.", $tags="capabilities")
+  ' aac CAP_PART_05_01: company_domain="Cross-Functional Services"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_MKT_REVIEW, "Marketing material compliance review", "No creative or offer reaches market without documented compliance sign-off.", $tags="controls")
+  ' aac CTL_MKT_REVIEW: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_PARTNER_PROGRAM, "Partner program terms and economics", "Co-brand and affinity agreements, revenue share terms, bounties, rewards funding and settlement history.", $tags="data_assets")
+  ' aac DA_PARTNER_PROGRAM: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_PARTNERSHIPS_002, "Manage co-brand program agreement", "Negotiate and amend a co-brand or affinity agreement, track the partner's obligations on marketing, data sharing and approval of card terms, and hold the quarterly program review. The partner's brand is on the card but the bank is the lender, so marketing and terms the partner proposes still pass the bank's compliance review.", $tags="processes")
+  ' aac P_PARTNERSHIPS_002: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_MARKETING, "Campaign management", "Campaign management and execution.", $tags="systems")
+  ' aac SYS_MARKETING: company_domain=""
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+  System(SYS_GRC, "Governance, risk and compliance platform", "Policy, control, issue, and risk register management.", $tags="systems")
+  ' aac SYS_GRC: company_domain=""
+}
+
+Rel(P_PARTNERSHIPS_002, SYS_GRC, "Primary")
+' aac rel: source="P_PARTNERSHIPS_002"; target="SYS_GRC"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_PARTNERSHIPS_002, SYS_DOC, "Supporting")
+' aac rel: source="P_PARTNERSHIPS_002"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PARTNERSHIPS_002, SYS_MARKETING, "Supporting")
+' aac rel: source="P_PARTNERSHIPS_002"; target="SYS_MARKETING"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PARTNERSHIPS_002, DA_PARTNER_PROGRAM, "Write")
+' aac rel: source="P_PARTNERSHIPS_002"; target="DA_PARTNER_PROGRAM"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_PARTNERSHIPS_002, CTL_MKT_REVIEW, "governed by")
+' aac rel: source="P_PARTNERSHIPS_002"; target="CTL_MKT_REVIEW"; label="governed by"; relation="process_governed_by_control"
+Rel(P_PARTNERSHIPS_002, CAP_PART_05_01, "supports")
+' aac rel: source="P_PARTNERSHIPS_002"; target="CAP_PART_05_01"; label="supports"; relation="process_supports_capability"
+Rel(P_PARTNERSHIPS_002, CAP_PART_05, "supports")
+' aac rel: source="P_PARTNERSHIPS_002"; target="CAP_PART_05"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

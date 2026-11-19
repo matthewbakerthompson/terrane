@@ -8,10 +8,13 @@ flowchart LR
   %% Lending Portfolio Performance — By part
   %% Generated from the model by `terrane render`. Do not edit by hand.
 
+  TS_GCPNET_SUB_ANALYTICS_DATA[/"Analytics Data Subnetwork<br/>[Subnet]"/]
   TS_GCP_BIGQUERY[/"BigQuery<br/>[Data warehouse]"/]
   TS_GCP_COMPOSER[/"Cloud Composer<br/>[Workflow orchestration]"/]
   TS_COLLIBRA[/"Collibra<br/>[Data catalog]"/]
   TS_GCP_DATAFLOW[/"Dataflow<br/>[Data pipeline]"/]
+  DA_DEALER[("Dealer master and<br/>agreement")]
+  DA_LOAN_ACCOUNT[("Installment loan account")]
   DA_LENDPERF_CURATED[("Lending Portfolio<br/>Performance curated<br/>dataset")]
   SYS_LENDPERF_PIPELINE["Lending Portfolio<br/>Performance Pipeline<br/>[BigQuery · Dataflow +3]"]
   SYS_LENDPERF_SEMANTIC["Lending Portfolio<br/>Performance Semantic Layer<br/>[BigQuery · Looker]"]
@@ -26,15 +29,18 @@ flowchart LR
   SYS_LENDPERF_PIPELINE -.->|"runs on"| TS_COLLIBRA
   SYS_LENDPERF_SEMANTIC -.->|"runs on"| TS_GCP_BIGQUERY
   SYS_LENDPERF_SEMANTIC -.->|"runs on"| TS_GCP_LOOKER
+  SYS_LENDPERF_PIPELINE -.->|"runs on"| TS_GCPNET_SUB_ANALYTICS_DATA
   SYS_LENDPERF_PIPELINE -->|"Write"| DA_LENDPERF_CURATED
   SYS_LENDPERF_SEMANTIC -->|"Read"| DA_LENDPERF_CURATED
+  SYS_LENDPERF_SEMANTIC -->|"Read"| DA_LOAN_ACCOUNT
+  SYS_LENDPERF_SEMANTIC -->|"Read"| DA_DEALER
 
   classDef s_data_assets__data_assets fill:#a7f3d0,stroke:#047857,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   classDef s_tech_services__tech_services fill:#fed7aa,stroke:#c2410c,color:#0f172a,stroke-width:1.4px;
-  class DA_LENDPERF_CURATED s_data_assets__data_assets;
+  class DA_DEALER,DA_LENDPERF_CURATED,DA_LOAN_ACCOUNT s_data_assets__data_assets;
   class SYS_LENDPERF_PIPELINE,SYS_LENDPERF_SEMANTIC s_systems__systems;
-  class TS_COLLIBRA,TS_GCP_BIGQUERY,TS_GCP_COMPOSER,TS_GCP_DATAFLOW,TS_GCP_LOOKER,TS_GCP_PUBSUB s_tech_services__tech_services;
+  class TS_COLLIBRA,TS_GCP_BIGQUERY,TS_GCP_COMPOSER,TS_GCP_DATAFLOW,TS_GCP_LOOKER,TS_GCP_PUBSUB,TS_GCPNET_SUB_ANALYTICS_DATA s_tech_services__tech_services;
 ```
 
 The same view as the app draws it, written beside the Mermaid by `terrane render`:
@@ -49,4 +55,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#4338ca` | systems |
 | `#c2410c` | tech services |
 
-9 entities, 10 relationships. Generated from the model; edit the model, not this file.
+12 entities, 13 relationships. Generated from the model; edit the model, not this file.

@@ -15,7 +15,7 @@ from terrane.query import resolve
 from terrane.quick import check_sketch, read_any
 from terrane.render_plantuml import alias, export_plantuml, render_plantuml
 
-from _fixture import REPO, Sandbox, seeded_model, seeded_views, setup_shared, teardown_shared
+from _fixture import REPO, Sandbox, remove_scratch, seeded_model, seeded_views, setup_shared, teardown_shared
 
 VISIO = REPO / "90_EXAMPLE" / "quick" / "sample.vsdx"
 
@@ -73,6 +73,7 @@ class TestRender(unittest.TestCase):
         # the "Built with" sentence for the description.
         with Sandbox(seed=True) as root:
             out = Path(tempfile.mkdtemp(prefix="aac-puml-"))
+            self.addCleanup(remove_scratch, out, "aac-puml-")
             written, _notes = terrane.export_plantuml(str(root), out, views=["system-context", "application-landscape",
                                                                             "data-landscape", "framework-landscape",
                                                                             "restricted-data-governance",
@@ -110,7 +111,8 @@ class TestRender(unittest.TestCase):
 
     def test_an_interface_is_a_rel_with_its_name_and_protocol(self) -> None:
         view = self.views["application-landscape"]
-        text = render_plantuml(resolve(self.model, view), self.model, title=view.title)
+        graph = resolve(self.model, view)
+        text = render_plantuml(graph, self.model, title=view.title)
         # An interface of a kind carries the kind as its Rel's tag, and the legend names it.
         self.assertIn('Rel(SYS_AUTH_SWITCH, SYS_CORE_LEDGER, "Authorization Switch to Core Ledger", "MQ", '
                       '$tags="queued-request")', text)
@@ -125,9 +127,16 @@ class TestRender(unittest.TestCase):
 
         kinds = load_connections(self.model.root)
         self.assertEqual(kind_of(interfaces[("SYS-AUTH-SWITCH", "SYS-CORE-LEDGER")], kinds), "queued-request")
-        tagged = [i for i in self.model.all_of("interfaces") if kind_of(i, kinds)]
+        # Every interface of a kind the landscape draws comes back as one. The
+        # floor was half the estate's until the business layer harvested its
+        # lending, merchant and deposit systems (2026-11-18): Proposed, they
+        # are off a landscape of current systems, and so are their interfaces.
+        shown = {str(n.record.get("system_id")) for n in graph.nodes if n.entity_type == "systems"}
+        drawn = [i for i in self.model.all_of("interfaces") if kind_of(i, kinds)
+                 and i.get("source_system_id") in shown and i.get("target_system_id") in shown]
         back = [i for i in doc["interfaces"] if kind_of(i, kinds)]
-        self.assertTrue(len(back) >= len(tagged) // 2, (len(back), len(tagged)))
+        self.assertEqual(len(back), len(drawn))
+        self.assertGreater(len(back), 50)
 
     def test_a_technology_service_is_a_deployment_node(self) -> None:
         view = self.views["product-architecture"]
@@ -146,7 +155,9 @@ class TestExport(unittest.TestCase):
         from terrane.quick import read_any
 
         thurman = REPO / "90_EXAMPLE" / "thurman-health"
-        out = Path(tempfile.mkdtemp(prefix="aac-puml-")) / "puml"
+        folder = Path(tempfile.mkdtemp(prefix="aac-puml-"))
+        self.addCleanup(remove_scratch, folder, "aac-puml-")
+        out = folder / "puml"
         written, _notes = terrane.export_plantuml(thurman, out, views=["application-landscape"])
         text = Path(written[0]).read_text(encoding="utf-8")
         self.assertIn('AddRelTag("hl7v2-feed", $legendText="HL7 v2 feed")', text)
@@ -166,6 +177,7 @@ class TestExport(unittest.TestCase):
         """A page an earlier export wrote goes; a `.puml` of the reader's own
         in the same folder stays, where the sweep once took it too."""
         out = Path(tempfile.mkdtemp(prefix="aac-puml-"))
+        self.addCleanup(remove_scratch, out, "aac-puml-")
         stale = out / "gone.puml"
         stale.write_text("@startuml\n' Gone\n' Generated from the model by `terrane export plantuml`. "
                          "Edit the model, not the diagram.\n@enduml\n", encoding="utf-8")
@@ -195,6 +207,7 @@ class TestExport(unittest.TestCase):
         self.assertEqual([s.get("company_domain") for s in doc["systems"]], ["Payments", "Payments"])
         self.assertEqual(doc["policies"][0]["policy_id"], "POL-CARD-DATA-STAYS-IN-THE-PCI-ZONE")
         folder = Path(tempfile.mkdtemp(prefix="aac-puml-"))
+        self.addCleanup(remove_scratch, folder, "aac-puml-")
         names = sorted(p.name for p in drawings.save(folder, "visio", plantuml=True))
         self.assertIn("visio--applications.puml", names)
         self.assertNotIn("visio--applications.mmd", names)

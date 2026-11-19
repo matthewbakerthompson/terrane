@@ -1,129 +1,150 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="797.4" viewBox="0 0 1100 797.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="973.4" viewBox="0 0 1100 973.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
 <title>Handle cardholder inquiry — Systems, Data and Controls</title>
 <rect width="100%" height="100%" fill="#ffffff"/>
 <g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Handle cardholder inquiry — Systems, Data and Controls</text>
-<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   7 nodes · 6 edges</text>
+<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   9 nodes · 8 edges</text>
 <text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One process, the systems it uses and in what role, the data it touches, and the controls and policies that apply to it. The process comes from the business layer;</text>
 <text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">everything around it comes from the technology estate.</text>
 <line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
-<g class="drawing" transform="translate(165.7 99.2)">
+<g class="drawing" transform="translate(145.66 99.2)">
 <g class="boundary" data-id="grp::Capability">
-<rect x="279.92" y="373.3" width="212.16" height="207.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
-<text x="321.92" y="390.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+<rect x="319.92" y="373.3" width="212.16" height="383.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="361.92" y="390.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
 </g>
 <g class="boundary" data-id="grp::Process">
-<rect x="9.9" y="226.26" width="212.2" height="123.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
-<text x="42.75" y="243.66" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
+<rect x="9.98" y="228.25" width="212.03" height="135.45" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="42.83" y="245.65" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
 </g>
 <g class="boundary" data-id="grp::System">
-<rect x="537.3" y="24.3" width="221.4" height="363.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
-<text x="567.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+<rect x="577.3" y="24.3" width="221.4" height="363.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="607.1" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
 </g>
 <g class="edge" data-id="e0::P-CUST-INQ-001::SYS-CONTACT">
 <title>Primary</title>
-<path d="M196 262.29 L224.95 262 A10 10 0 0 1 225.05 262 L233 262 A8 8 0 0 0 241 254 L241 91.98 A10 10 0 0 1 250.98 81.98 L533.99 81.5 A10 10 0 0 1 534.01 81.5 L559.48 81.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M563 81.5 L553.43 86.28 L553.43 76.72 Z" fill="#7b8798"/>
+<path d="M196 263.33 L244.97 263 A10 10 0 0 1 245.03 263 L253 263 A8 8 0 0 0 261 255 L261 91.98 A10 10 0 0 1 270.98 81.98 L573.99 81.5 A10 10 0 0 1 574.01 81.5 L599.48 81.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M603 81.5 L593.43 86.28 L593.43 76.72 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e0::P-CUST-INQ-001::SYS-CONTACT">
-<rect x="362.32" y="88.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="383.5" y="100.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
+<rect x="402.32" y="88.5" width="42.35" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="423.5" y="100.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Primary</text>
 </g>
 <g class="edge" data-id="e1::P-CUST-INQ-001::SYS-CRM">
 <title>Supporting</title>
-<path d="M196 272.57 L224.93 273 A10 10 0 0 0 225.07 273 L241 273 A10 10 0 0 0 251 263 L251 257.98 A10 10 0 0 1 260.98 247.98 L533.99 247.5 A10 10 0 0 1 534.01 247.5 L559.48 247.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M563 247.5 L553.43 252.28 L553.43 242.72 Z" fill="#7b8798"/>
+<path d="M196 272.67 L205.67 272.67 A0.33 0.33 0 0 1 206 273 L206 273 A0.33 0.33 0 0 0 206.33 273.33 L244.96 273 A10 10 0 0 1 245.04 273 L261 273 A10 10 0 0 0 271 263 L271 257.98 A10 10 0 0 1 280.98 247.98 L573.99 247.5 A10 10 0 0 1 574.01 247.5 L599.48 247.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M603 247.5 L593.43 252.28 L593.43 242.72 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e1::P-CUST-INQ-001::SYS-CRM">
-<rect x="354.46" y="254.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="383.5" y="266.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+<rect x="394.46" y="254.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="423.5" y="266.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
 </g>
 <g class="edge" data-id="e2::P-CUST-INQ-001::SYS-CORE-LEDGER">
 <title>Supporting</title>
-<path d="M196 282.86 L224.98 283 A10 10 0 0 0 225.02 283 L496 283 A10 10 0 0 0 506 273 L506 174.82 A10 10 0 0 1 515.82 164.82 L533.91 164.5 A10 10 0 0 1 534.09 164.5 L559.48 164.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M563 164.5 L553.43 169.28 L553.43 159.72 Z" fill="#7b8798"/>
+<path d="M196 282 L205.33 282 A0.67 0.67 0 0 1 206 282.67 L206 282.67 A0.66 0.66 0 0 0 206.67 283.33 L244.96 283 A10 10 0 0 1 245.04 283 L536 283 A10 10 0 0 0 546 273 L546 174.82 A10 10 0 0 1 555.82 164.82 L573.91 164.5 A10 10 0 0 1 574.09 164.5 L599.48 164.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M603 164.5 L593.43 169.28 L593.43 159.72 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e2::P-CUST-INQ-001::SYS-CORE-LEDGER">
-<rect x="354.46" y="289.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="383.5" y="301.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+<rect x="394.46" y="289.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="423.5" y="301.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
 </g>
 <g class="edge" data-id="e3::P-CUST-INQ-001::SYS-IVR">
 <title>Supporting</title>
-<path d="M196 293.14 L224.98 293 A10 10 0 0 1 225.02 293 L251 293 A10 10 0 0 1 261 303 L261 308 A10 10 0 0 0 271 318 L499.5 318 A6.5 6.5 0 0 1 506 324.5 L506 324.5 A6.38 6.38 0 0 0 512.5 330.88 L533.91 330.5 A10 10 0 0 1 534.09 330.5 L559.48 330.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M563 330.5 L553.43 335.29 L553.43 325.71 Z" fill="#7b8798"/>
+<path d="M196 291.33 L205 291.33 A1 1 0 0 1 206 292.33 L206 292.33 A0.99 0.99 0 0 0 207 293.32 L244.96 293 A10 10 0 0 1 245.04 293 L291 293 A10 10 0 0 1 301 303 L301 308 A10 10 0 0 0 311 318 L539.5 318 A6.5 6.5 0 0 1 546 324.5 L546 324.5 A6.38 6.38 0 0 0 552.5 330.88 L573.91 330.5 A10 10 0 0 1 574.09 330.5 L599.48 330.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M603 330.5 L593.43 335.29 L593.43 325.71 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e3::P-CUST-INQ-001::SYS-IVR">
-<rect x="354.46" y="324.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="383.5" y="336.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
+<rect x="394.46" y="324.5" width="58.08" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="423.5" y="336.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Supporting</text>
 </g>
 <g class="edge" data-id="e4::P-CUST-INQ-001::CAP-SERV-01">
 <title>supports</title>
-<path d="M196 303.43 L224.93 303 A10 10 0 0 1 225.07 303 L241 303 A10 10 0 0 1 251 313 L251 423 A10 10 0 0 0 261 433 L277 433 L302.48 433" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M306 433 L296.43 437.79 L296.43 428.21 Z" fill="#7b8798"/>
+<path d="M196 300.67 L204.67 300.67 A1.33 1.33 0 0 1 206 302 L206 302 A1.32 1.32 0 0 0 207.33 303.32 L244.96 303 A10 10 0 0 1 245.04 303 L281 303 A10 10 0 0 1 291 313 L291 423 A10 10 0 0 0 301 433 L317 433 L342.48 433" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M346 433 L336.43 437.79 L336.43 428.21 Z" fill="#7b8798"/>
 </g>
 <g class="edge" data-id="e5::P-CUST-INQ-001::CAP-SERV-02">
 <title>supports</title>
-<path d="M196 313.71 L224.95 314 A10 10 0 0 0 225.05 314 L233 314 A8 8 0 0 1 241 322 L241 511 A10 10 0 0 0 251 521 L277 521 L302.48 521" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M306 521 L296.43 525.78 L296.43 516.22 Z" fill="#7b8798"/>
+<path d="M196 310 L204.33 310 A1.67 1.67 0 0 1 206 311.67 L206 311.67 A1.65 1.65 0 0 0 207.67 313.32 L244.96 313 A10 10 0 0 1 245.04 313 L253 313 A8 8 0 0 1 261 321 L261 687 A10 10 0 0 0 271 697 L317 697 L342.48 697" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M346 697 L336.43 701.78 L336.43 692.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e6::P-CUST-INQ-001::CAP-SERV-01-01">
+<title>supports</title>
+<path d="M196 319.33 L204 319.33 A2 2 0 0 1 206 321.33 L206 321.33 A1.98 1.98 0 0 0 208 323.32 L244.96 323 A10 10 0 0 1 245.04 323 L271 323 A10 10 0 0 1 281 333 L281 511 A10 10 0 0 0 291 521 L317 521 L342.48 521" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M346 521 L336.43 525.78 L336.43 516.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e7::P-CUST-INQ-001::CAP-SERV-01-02">
+<title>supports</title>
+<path d="M196 328.67 L203.67 328.67 A2.33 2.33 0 0 1 206 331 L206 331 A2.31 2.31 0 0 0 208.33 333.31 L244.96 333 A10 10 0 0 1 245.04 333 L261 333 A10 10 0 0 1 271 343 L271 599 A10 10 0 0 0 281 609 L317 609 L342.48 609" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M346 609 L336.43 613.78 L336.43 604.22 Z" fill="#7b8798"/>
 </g>
 <g class="node" data-id="CAP-SERV-01" data-type="capabilities">
 <title>Contact Handling &amp; Routing</title>
-<path d="M346 399 L306 433 L346 467 L426 467 L466 433 L426 399 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
-<text x="386" y="431.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Contact Handling &amp;</text>
-<text x="386" y="443.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Routing</text>
+<path d="M386 399 L346 433 L386 467 L466 467 L506 433 L466 399 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="426" y="431.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Contact Handling &amp;</text>
+<text x="426" y="443.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Routing</text>
+</g>
+<g class="node" data-id="CAP-SERV-01-01" data-type="capabilities">
+<title>Contact Center Operations</title>
+<path d="M386 487 L346 521 L386 555 L466 555 L506 521 L466 487 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="426" y="519.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Contact Center</text>
+<text x="426" y="531.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Operations</text>
+</g>
+<g class="node" data-id="CAP-SERV-01-02" data-type="capabilities">
+<title>Contact Routing</title>
+<path d="M386 575 L346 609 L386 643 L466 643 L506 609 L466 575 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="426" y="613.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Contact Routing</text>
 </g>
 <g class="node" data-id="CAP-SERV-02" data-type="capabilities">
 <title>Account Maintenance &amp; Servicing Requests</title>
-<path d="M346 487 L306 521 L346 555 L426 555 L466 521 L426 487 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
-<text x="386" y="519.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Account Maintenance</text>
-<text x="386" y="531.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">&amp; Servicing Requests</text>
+<path d="M386 663 L346 697 L386 731 L466 731 L506 697 L466 663 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="426" y="695.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Account Maintenance</text>
+<text x="426" y="707.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">&amp; Servicing Requests</text>
 </g>
 <g class="node" data-id="P-CUST-INQ-001" data-type="processes">
 <title>Handle cardholder inquiry</title>
-<path d="M116 252 L36 279.5 L66.56 324 L165.44 324 L196 279.5 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
-<text x="116" y="286.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Handle cardholder</text>
-<text x="116" y="298.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">inquiry</text>
+<path d="M116 254 L36 286.09 L66.56 338 L165.44 338 L196 286.09 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="116" y="294.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Handle cardholder</text>
+<text x="116" y="306.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">inquiry</text>
 </g>
 <g class="node" data-id="SYS-CONTACT" data-type="systems">
 <title>Contact center platform</title>
-<rect x="563" y="50" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
-<text x="644" y="79.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Contact center</text>
-<text x="644" y="91.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">platform</text>
-<svg x="715" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+<rect x="603" y="50" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="684" y="79.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Contact center</text>
+<text x="684" y="91.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">platform</text>
+<svg x="755" y="55" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
 </g>
 <g class="node" data-id="SYS-CORE-LEDGER" data-type="systems">
 <title>Core Card Ledger</title>
-<rect x="563" y="133" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
-<text x="644" y="168.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Core Card Ledger</text>
-<svg x="715" y="138" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+<rect x="603" y="133" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="684" y="168.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Core Card Ledger</text>
+<svg x="755" y="138" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
 </g>
 <g class="node" data-id="SYS-CRM" data-type="systems">
 <title>Dynamics 365 Customer Service</title>
-<rect x="563" y="216" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
-<text x="644" y="240.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dynamics 365</text>
-<text x="644" y="252.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer Service</text>
-<text x="648" y="273.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Microsoft</text>
-<svg x="715" y="221" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+<rect x="603" y="216" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="684" y="240.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Dynamics 365</text>
+<text x="684" y="252.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Customer Service</text>
+<text x="688" y="273.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Microsoft</text>
+<svg x="755" y="221" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
 </g>
 <g class="node" data-id="SYS-IVR" data-type="systems">
 <title>IVR and self-service voice</title>
-<rect x="563" y="299" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
-<text x="644" y="328.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">IVR and self-service</text>
-<text x="644" y="340.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">voice</text>
-<svg x="715" y="304" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+<rect x="603" y="299" width="170" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="684" y="328.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">IVR and self-service</text>
+<text x="684" y="340.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">voice</text>
+<svg x="755" y="304" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
 </g>
 </g>
-<g class="foot"><line x1="28" y1="695.4" x2="1072" y2="695.4" stroke="#d2dae5" stroke-width="1"/>
-<text x="28" y="719.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
-<g transform="translate(67.2 708.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
-<text x="93.2" y="719.4" font-size="12" font-weight="400" fill="#343d50">capability · 2</text>
-<g transform="translate(180.32 708.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
-<text x="206.32" y="719.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
-<g transform="translate(280.59 708.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
-<text x="306.59" y="719.4" font-size="12" font-weight="400" fill="#343d50">system · 4</text>
-<text x="28" y="741.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
-<g transform="translate(73.5 730.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
-<text x="99.5" y="741.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
-<g transform="translate(166.02 730.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
-<text x="192.02" y="741.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
-<text x="28" y="775.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-cust-inq-001 · edit the model, not the picture</text></g>
+<g class="foot"><line x1="28" y1="871.4" x2="1072" y2="871.4" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="895.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 884.4)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="895.4" font-size="12" font-weight="400" fill="#343d50">capability · 4</text>
+<g transform="translate(180.27 884.4)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="206.27" y="895.4" font-size="12" font-weight="400" fill="#343d50">process · 1</text>
+<g transform="translate(280.54 884.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="306.54" y="895.4" font-size="12" font-weight="400" fill="#343d50">system · 4</text>
+<text x="28" y="917.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 906.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="917.4" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 906.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="917.4" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<text x="28" y="951.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · process-systems--p-cust-inq-001 · edit the model, not the picture</text></g>
 </svg>

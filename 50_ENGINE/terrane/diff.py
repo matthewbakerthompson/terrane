@@ -21,8 +21,9 @@ import posixpath
 import subprocess
 import tarfile
 import tempfile
+from contextlib import contextmanager
 from pathlib import Path
-from typing import Any, Dict, List, NamedTuple, Optional, Sequence, Tuple
+from typing import Any, Dict, Iterator, List, NamedTuple, Optional, Sequence, Tuple
 
 from . import model as model_module
 from .connections import kind_of, load_connections
@@ -153,9 +154,23 @@ def _git(cwd: Path, *args: str) -> str:
     return done.stdout
 
 
-def export_revision(repo: Path, rev: str) -> Path:
-    """The model folders at `rev`, extracted to a temporary directory, and
-    the path of the estate in it.
+@contextmanager
+def exported(repo: Path, rev: str) -> Iterator[Path]:
+    """The estate at `rev` for the length of a `with` block, in a scratch
+    folder removed when the block ends. Every diff once left its export
+    behind: two thousand of them in one temporary folder by 2026-10-27,
+    from the app's diff page, the review pack and the test suite. What is
+    removed is the folder `TemporaryDirectory` made, never a path worked
+    out from the estate's place inside it; what is left to ignore is
+    Windows holding a file a moment longer."""
+    with tempfile.TemporaryDirectory(prefix="aac-rev-", ignore_cleanup_errors=True) as out:
+        yield export_revision(repo, rev, Path(out))
+
+
+def export_revision(repo: Path, rev: str, out: Path) -> Path:
+    """The model folders at `rev`, extracted into `out`, an empty folder
+    the caller made and removes (`exported` does both), and the path of
+    the estate in it.
 
     `git archive` writes a tar to stdout and Python unpacks it, so nothing
     but git is needed. Folders that do not exist at that revision are left
@@ -176,7 +191,7 @@ def export_revision(repo: Path, rev: str) -> Path:
     present = [f for f in MODEL_FOLDERS if f in listing.stdout.split()]
     if "10_MODEL" not in present:
         raise DiffError("%s has no 10_MODEL; nothing to compare" % rev)
-    out = Path(tempfile.mkdtemp(prefix="aac-rev-"))
+    out = Path(out)
     prefix = _git(repo, "rev-parse", "--show-prefix").strip().strip("/")
     root = out.joinpath(*prefix.split("/")) if prefix else out
     root.mkdir(parents=True, exist_ok=True)
@@ -296,8 +311,13 @@ def diff(before: Snapshot, after: Snapshot, since: str = "", until: str = "") ->
 def between(repo: Path, since: str, until: Optional[str] = None) -> Diff:
     """The diff from `since` to `until`, or to the working tree when `until`
     is not given."""
-    before = snapshot(export_revision(repo, since))
-    after = snapshot(export_revision(repo, until)) if until else snapshot(Path(repo))
+    with exported(repo, since) as root:
+        before = snapshot(root)
+    if until:
+        with exported(repo, until) as root:
+            after = snapshot(root)
+    else:
+        after = snapshot(Path(repo))
     return diff(before, after, since, until or "the working tree")
 
 

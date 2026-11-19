@@ -1,0 +1,42 @@
+@startuml
+' Design rewards program and earn structure — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Design rewards program and earn structure — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_PROD_04, "Rewards Program Design", "Define earn, accrual, and redemption economics for rewards programs.", $tags="capabilities")
+  ' aac CAP_PROD_04: company_domain="Products"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_MKT_REVIEW, "Marketing material compliance review", "No creative or offer reaches market without documented compliance sign-off.", $tags="controls")
+  ' aac CTL_MKT_REVIEW: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_PRODUCT_005, "Design rewards program and earn structure", "Design the earn rates, categories, caps, redemption values and partner funding of a rewards program, model its cost against the revenue it should bring, and take it through legal and compliance review. Rewards terms are part of the card agreement, so changing them is a change in terms that needs notice.", $tags="processes")
+  ' aac P_PRODUCT_005: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_DATA_INGEST, "Enterprise Data Ingestion Hub", "Landing zone and ingestion orchestration for inbound file and event feeds before they reach the warehouse. Built with Service Bus · Snowflake Data Cloud.", $tags="systems")
+  ' aac SYS_DATA_INGEST: company_domain="Data and Analytics"; hosting="Azure"; technology="Service Bus · Snowflake Data Cloud"
+  System(SYS_REWARDS, "Rewards ledger", "Rewards accrual ledger and redemption.", $tags="systems")
+  ' aac SYS_REWARDS: company_domain=""
+}
+
+Rel(P_PRODUCT_005, SYS_REWARDS, "Primary")
+' aac rel: source="P_PRODUCT_005"; target="SYS_REWARDS"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_PRODUCT_005, SYS_DATA_INGEST, "Supporting")
+' aac rel: source="P_PRODUCT_005"; target="SYS_DATA_INGEST"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_PRODUCT_005, CTL_MKT_REVIEW, "governed by")
+' aac rel: source="P_PRODUCT_005"; target="CTL_MKT_REVIEW"; label="governed by"; relation="process_governed_by_control"
+Rel(P_PRODUCT_005, CAP_PROD_04, "supports")
+' aac rel: source="P_PRODUCT_005"; target="CAP_PROD_04"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

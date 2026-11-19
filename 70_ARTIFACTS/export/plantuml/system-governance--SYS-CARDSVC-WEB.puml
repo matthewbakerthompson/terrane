@@ -17,6 +17,8 @@ Boundary(b_Capability, "Capability") {
   ' aac CAP_SERV_03: company_domain="Servicing"
 }
 Boundary(b_Control, "Control") {
+  System(CTL_BUREAU_ACC, "Bureau furnishing accuracy", "Furnished tradeline data is reconciled to the system of record before transmission; consumer disputes update furnishing.", $tags="controls")
+  ' aac CTL_BUREAU_ACC: company_domain=""
   System(CTL_COMPLAINT_REG, "Complaint regulatory routing", "Complaints are classified to taxonomy, resolved to SLA, and routed to regulators where required; executive and regulator complaints carry expedited handling.", $tags="controls")
   ' aac CTL_COMPLAINT_REG: company_domain=""
   System(CTL_REGE_DETERM, "Dispute determination timeliness and notice", "Final dispute determinations, account adjustment, and the written explanation complete within the Reg E / Reg Z window; the clock is measured from claim receipt.", $tags="controls")
@@ -43,6 +45,8 @@ Rel(SYS_CARDSVC_WEB, CAP_SERV, "realizes")
 ' aac rel: source="SYS_CARDSVC_WEB"; target="CAP_SERV"; label="realizes"; relation="system_realizes_capability"
 Rel(SYS_CARDSVC_WEB, CAP_SERV_03, "realizes")
 ' aac rel: source="SYS_CARDSVC_WEB"; target="CAP_SERV_03"; label="realizes"; relation="system_realizes_capability"
+Rel(CAP_SERV, CTL_BUREAU_ACC, "governed by")
+' aac rel: source="CAP_SERV"; target="CTL_BUREAU_ACC"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
 Rel(CAP_SERV, CTL_COMPLAINT_REG, "governed by")
 ' aac rel: source="CAP_SERV"; target="CTL_COMPLAINT_REG"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
 Rel(CAP_SERV, CTL_NOTICE_CONTENT, "governed by")
@@ -51,6 +55,7 @@ Rel(CAP_SERV, CTL_REGE_DETERM, "governed by")
 ' aac rel: source="CAP_SERV"; target="CTL_REGE_DETERM"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
 Rel(CAP_SERV, CTL_SCRA_MLA, "governed by")
 ' aac rel: source="CAP_SERV"; target="CTL_SCRA_MLA"; label="governed by"; relation="capability_governed_by_control"; basis="Descendant"
+Rel(CTL_BUREAU_ACC, POL_FAIR_LEND, "gives effect to")
 Rel(CTL_COMPLAINT_REG, POL_MKT_UDAAP, "gives effect to")
 Rel(CTL_NOTICE_CONTENT, POL_ERROR_RES, "gives effect to")
 Rel(CTL_REGE_DETERM, POL_ERROR_RES, "gives effect to")

@@ -11,6 +11,7 @@ flowchart LR
   subgraph grp_Capability["Capability"]
     direction LR
     CAP_CRED_03{{"Credit Line Assignment &<br/>Management"}}
+    CAP_CRED_03_01{{"Credit Line Increase"}}
   end
 
   subgraph grp_Process["Process"]
@@ -27,11 +28,12 @@ flowchart LR
   P_CREDIT_003 -->|"Primary"| SYS_CORE_LEDGER
   P_CREDIT_003 -->|"Supporting"| SYS_ORIG_DECISION
   P_CREDIT_003 -->|"supports"| CAP_CRED_03
+  P_CREDIT_003 -->|"supports"| CAP_CRED_03_01
 
   classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
   classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
-  class CAP_CRED_03 s_capabilities__capabilities;
+  class CAP_CRED_03,CAP_CRED_03_01 s_capabilities__capabilities;
   class P_CREDIT_003 s_processes__processes;
   class SYS_CORE_LEDGER,SYS_ORIG_DECISION s_systems__systems;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
@@ -50,4 +52,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#0369a1` | processes |
 | `#4338ca` | systems |
 
-4 entities, 3 relationships. Generated from the model; edit the model, not this file.
+5 entities, 4 relationships. Generated from the model; edit the model, not this file.

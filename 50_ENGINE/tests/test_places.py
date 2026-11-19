@@ -14,7 +14,6 @@ a diagram quietly drawn without it.
 
 from __future__ import annotations
 
-import shutil
 import sys
 import tempfile
 import unittest
@@ -25,7 +24,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from terrane import jsonschema, places, validate  # noqa: E402
 from terrane.query import load_views, resolve  # noqa: E402
 
-from _fixture import REPO, seeded_model, setup_shared, teardown_shared  # noqa: E402
+from _fixture import REPO, remove_scratch, seeded_model, setup_shared, teardown_shared  # noqa: E402
 
 NETWORK = (REPO / "30_VIEWS" / "network-topology.view.yaml").read_text(encoding="utf-8")
 
@@ -62,7 +61,7 @@ class _Views(unittest.TestCase):
         self.write("network-topology.view.yaml", NETWORK)
 
     def tearDown(self) -> None:
-        shutil.rmtree(self.folder)
+        remove_scratch(self.folder, "aac-places-")
 
     def write(self, name: str, text: str) -> None:
         (self.folder / name).write_text(text, encoding="utf-8")

@@ -70,9 +70,6 @@
   var PLACE_WORDS = { cloud_provider: "cloud", cloud_account: "account", region: "region",
     availability_zone: "zone", network_zone: "network zone", company_domain: "domain" };
 
-  //: The parts a new diagram is most often drawn from, first in the list.
-  var FIRST_PARTS = ["web-app", "service-api", "batch-application", "mobile-app"];
-
   function openCanvas(viewId, layer) {
     if (window.__AAC_STATIC__) {
       toast("warn", "Drawing needs the local app", "The published copy is read-only.");
@@ -97,7 +94,7 @@
       };
       cv = { id: viewId || null, data: data, parts: got[1], tool: "select", from: null, made: {}, sel: null,
         saving: Promise.resolve(), status: viewId ? "saved" : "fresh", timer: null, fieldTimers: {}, focus: null,
-        undo: [], redo: [], toolShape: "rectangle" };
+        undo: [], redo: [], toolShape: "rectangle", file: data, page: 0 };
       if (viewId) state.viewId = viewId;
       state.selectedId = null;
       document.querySelector(".shell").classList.add("canvas-mode");
@@ -107,6 +104,7 @@
       $("cvDetails").hidden = false;
       setCanvasTool("select");
       renderUndo();
+      renderPages();
       syncUrl();
       return canvasDraw();
     }).then(function () { if (cv) canvasSelect(null); }).catch(fail);
@@ -118,12 +116,21 @@
     cv = null;
     cvDrag = null;
     closeCanvasPicker();
+    closeKitPanel();
     closeShapeMenu();
     // The canvas's own model goes with it; a view drawn next is Cytoscape's.
     if (Canvas.engine) Canvas.engine.detach();
     document.querySelector(".shell").classList.remove("canvas-mode");
     ["cvTools", "cvChips", "cvEmpty", "cvDetails", "cvFold", "cvTip", "cvLayout", "cvStatus", "cvKeys", "cvGuideX", "cvGuideY", "cvFileDrop", "cvHint", "cvBar"]
       .forEach(function (id) { $(id).hidden = true; });
+    // The group's outline is made the first time one is picked; the sheet
+    // it sits on is the next view's too.
+    if ($("cvGroup")) $("cvGroup").hidden = true;
+    if ($("cvLayers")) { $("cvLayers").hidden = true; $("cvLayersBtn").setAttribute("aria-expanded", "false"); }
+    if ($("cvPages")) $("cvPages").hidden = true;
+    closePageMenu();
+    Canvas.drawLayer = null;
+    Canvas.inside = null;
     $("cvDetails").textContent = "";
   }
 
@@ -167,6 +174,243 @@
     return data;
   }
 
+  /* ---- pages (V16) ----
+   * A diagram's first page is its file's top level, as every diagram's
+   * one page always was; the rest are under `pages:`, each a key, a name
+   * and what it has of its own (PAGE_FIELDS in terrane/query.py). The
+   * canvas works on the page on the sheet as `cv.data`, the diagram's
+   * fields with that page's own, and puts it back among the others when
+   * the file is saved (`cv.file`). Undo is the page's: changing pages
+   * starts it again. */
+  var PAGE_FIELDS = ["places", "scope", "positions", "annotations", "groups", "locked"];
+
+  // The page at `i` as the canvas works on it: the first is the file.
+  function pageData(c, i) {
+    if (!i) return c.file;
+    var page = c.file.pages[i - 1], out = {};
+    Object.keys(c.file).forEach(function (k) {
+      if (PAGE_FIELDS.indexOf(k) === -1 && k !== "pages" && k !== "page") out[k] = c.file[k];
+    });
+    PAGE_FIELDS.forEach(function (k) { if (k in page) out[k] = JSON.parse(JSON.stringify(page[k])); });
+    return out;
+  }
+
+  // The page on the sheet put back in its place in the file.
+  function commitPage(c) {
+    if (!c.page) return;
+    var at = c.file.pages[c.page - 1];
+    PAGE_FIELDS.forEach(function (k) { if (k in c.data) at[k] = c.data[k]; else delete at[k]; });
+    Object.keys(c.data).forEach(function (k) { if (PAGE_FIELDS.indexOf(k) === -1) c.file[k] = c.data[k]; });
+    Object.keys(c.file).forEach(function (k) {
+      if (PAGE_FIELDS.indexOf(k) === -1 && k !== "pages" && k !== "page" && !(k in c.data)) delete c.file[k];
+    });
+  }
+
+  // The whole file, as it is saved: the page on the sheet tidied as one
+  // is, in its place among the others.
+  function canvasFile(c) {
+    var page = canvasData(c);
+    if (!c.page) return page;
+    commitPage(c);
+    var file = JSON.parse(JSON.stringify(c.file)), at = file.pages[c.page - 1];
+    PAGE_FIELDS.forEach(function (k) { if (k in page) at[k] = page[k]; else delete at[k]; });
+    file.view_id = page.view_id;
+    return file;
+  }
+
+  // Every page, first included, each its key (blank for the first), its
+  // name and its own fields, for what reorders or copies them.
+  function allPages(c) {
+    commitPage(c);
+    var first = { key: "", name: c.file.page || "Page 1" };
+    PAGE_FIELDS.forEach(function (k) { if (k in c.file) first[k] = JSON.parse(JSON.stringify(c.file[k])); });
+    return [first].concat((c.file.pages || []).map(function (p) { return JSON.parse(JSON.stringify(p)); }));
+  }
+
+  function freePageKey(list) {
+    for (var n = 2; ; n += 1) if (!list.some(function (p) { return p.key === "page-" + n; })) return "page-" + n;
+  }
+
+  // The pages written back in this order, the one at `current` on the
+  // sheet; a page moved out of first place takes a key.
+  function setPages(c, list, current) {
+    var file = c.file, first = list[0];
+    PAGE_FIELDS.forEach(function (k) { if (k in first) file[k] = first[k]; else delete file[k]; });
+    if (first.name && first.name !== "Page 1") file.page = first.name; else delete file.page;
+    var rest = list.slice(1).map(function (p) {
+      var out = { key: p.key || freePageKey(list), name: p.name };
+      if (!p.key) p.key = out.key;
+      PAGE_FIELDS.forEach(function (k) { if (k in p) out[k] = p[k]; });
+      return out;
+    });
+    if (rest.length) file.pages = rest; else delete file.pages;
+    showPage(current);
+  }
+
+  // A page put on the sheet, its own Undo begun.
+  function showPage(i) {
+    cv.page = i;
+    cv.data = pageData(cv, i);
+    cv.undo = [];
+    cv.redo = [];
+    cv.sel = null;
+    Canvas.inside = null;
+    renderUndo();
+    renderPages();
+    canvasSoon(0);
+    // The diagram's own drawn again for this page: a sheet with no records
+    // on either page is the same empty drawing, which the engine does not
+    // draw anew, and the last page's shapes stayed on it.
+    return canvasDraw().then(function () {
+      if (!cv) return;
+      if (Canvas.engine && Canvas.engine.live()) Canvas.engine.own(cv.data.annotations || []);
+      canvasSelect(null);
+    });
+  }
+
+  function switchPage(i) {
+    if (!cv || i === cv.page) return Promise.resolve();
+    commitPage(cv);
+    return showPage(i);
+  }
+
+  function addPage() {
+    if (!cv) return;
+    var list = allPages(cv), key = freePageKey(list);
+    list.push({ key: key, name: "Page " + (list.length + 1) });
+    setPages(cv, list, list.length - 1);
+  }
+
+  // The tabs at the sheet's foot: one a page, the one on the sheet marked,
+  // and + for one more.
+  function renderPages() {
+    var bar = $("cvPages");
+    if (!bar) return;
+    if (!cv) { bar.hidden = true; return; }
+    bar.textContent = "";
+    allPages(cv).forEach(function (p, i) {
+      var tab = el("button", { type: "button", role: "tab", class: "cv-page" + (i === cv.page ? " is-on" : ""),
+        "aria-selected": String(i === cv.page), "data-page": String(i), text: p.name });
+      tab.addEventListener("click", function () { switchPage(i); });
+      tab.addEventListener("dblclick", function () { if (i === cv.page) renamePage(tab, i); });
+      tab.addEventListener("contextmenu", function (e) { e.preventDefault(); openPageMenu(tab, i); });
+      bar.appendChild(tab);
+    });
+    bar.appendChild(el("button", { type: "button", class: "cv-page-add", "aria-label": "New page",
+      title: "New page: one more sheet in this diagram's file, with its own shapes and its own records placed, "
+        + "under the diagram's name and look. A record on two pages is one record.", onclick: addPage },
+      [svgIcon("i-plus")]));
+    bar.hidden = false;
+  }
+
+  function renamePage(tab, i) {
+    closePageMenu();
+    var list = allPages(cv), input = el("input", { type: "text", class: "cv-input cv-page-name", maxlength: "60",
+      "aria-label": "The page's name" });
+    input.value = list[i].name;
+    tab.replaceWith(input);
+    input.focus();
+    input.select();
+    var done = false;
+    function keep() {
+      if (done) return;
+      done = true;
+      var v = input.value.trim();
+      if (v && v !== list[i].name) {
+        list[i].name = v;
+        setPagesKeepingSheet(list);
+      } else renderPages();
+    }
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") { e.preventDefault(); keep(); }
+      if (e.key === "Escape") { e.preventDefault(); done = true; renderPages(); }
+      e.stopPropagation();
+    });
+    input.addEventListener("blur", keep);
+  }
+
+  // The pages written back with the page on the sheet still on it, not
+  // drawn again: a name changed moves nothing.
+  function setPagesKeepingSheet(list) {
+    var file = cv.file;
+    if (list[0].name && list[0].name !== "Page 1") file.page = list[0].name; else delete file.page;
+    (file.pages || []).forEach(function (p, i) { p.name = list[i + 1].name; });
+    if (!cv.page) cv.data = file;
+    renderPages();
+    canvasSoon(0);
+  }
+
+  // A page's menu, over its tab: open, rename, duplicate, move it, delete.
+  function openPageMenu(tab, i) {
+    var menu = $("cvPageMenu");
+    if (!menu || !cv) return;
+    menu.textContent = "";
+    var list = allPages(cv), confirming = false;
+    function item(text, icon, act, disabled, key) {
+      var b = el("button", { type: "button", role: "menuitem", class: "cv-page-item" }, [svgIcon(icon),
+        el("span", { text: text }), key ? el("span", { class: "cv-page-key", text: key }) : null]);
+      if (disabled) b.disabled = true;
+      b.addEventListener("click", act);
+      menu.appendChild(b);
+      return b;
+    }
+    item("Open", "i-file-up", function () { closePageMenu(); switchPage(i); });
+    item("Rename", "i-pencil", function () {
+      closePageMenu();
+      switchPage(i).then(function () {
+        var t = document.querySelector('#cvPages .cv-page[data-page="' + i + '"]');
+        if (t) renamePage(t, i);
+      });
+    }, false, "Double-click");
+    item("Duplicate", "i-copy", function () {
+      closePageMenu();
+      var copy = JSON.parse(JSON.stringify(list[i]));
+      copy.key = freePageKey(list);
+      copy.name = ("Copy of " + list[i].name).slice(0, 60);
+      list.splice(i + 1, 0, copy);
+      setPages(cv, list, i + 1);
+    });
+    item("Move left", "i-arrow-left", function () { closePageMenu(); movePage(list, i, -1); }, i === 0);
+    item("Move right", "i-arrow-right", function () { closePageMenu(); movePage(list, i, 1); }, i === list.length - 1);
+    var gone = item("Delete the page", "i-x", function () {
+      if (!confirming) {
+        confirming = true;
+        gone.querySelector("span").textContent = "Delete it and all on it";
+        gone.classList.add("is-sure");
+        return;
+      }
+      closePageMenu();
+      list.splice(i, 1);
+      setPages(cv, list, Math.max(0, cv.page === i ? i - 1 : cv.page > i ? cv.page - 1 : cv.page));
+    }, list.length < 2);
+    gone.classList.add("is-danger");
+    var sheet = $("mapSheet").getBoundingClientRect(), b = tab.getBoundingClientRect();
+    menu.style.left = Math.round(b.left - sheet.left) + "px";
+    menu.hidden = false;
+    menu.style.top = Math.round(b.top - sheet.top - menu.offsetHeight - 6) + "px";
+    setTimeout(function () { document.addEventListener("pointerdown", closeOnPress, true); }, 0);
+  }
+
+  function closeOnPress(e) {
+    var menu = $("cvPageMenu");
+    if (menu && !menu.contains(e.target)) closePageMenu();
+  }
+
+  function closePageMenu() {
+    var menu = $("cvPageMenu");
+    if (menu) menu.hidden = true;
+    document.removeEventListener("pointerdown", closeOnPress, true);
+  }
+
+  function movePage(list, i, step) {
+    var to = i + step;
+    if (to < 0 || to >= list.length) return;
+    var moving = list.splice(i, 1)[0];
+    list.splice(to, 0, moving);
+    var current = cv.page === i ? to : cv.page === to ? i : cv.page;
+    setPages(cv, list, current);
+  }
+
   function viewInfo(viewId) {
     return (cv.parts.views || []).filter(function (v) { return v.id === viewId; })[0] || null;
   }
@@ -189,7 +433,7 @@
     clearTimeout(mine.timer);
     setCanvasStatus("saving");
     mine.saving = mine.saving.catch(function () {}).then(function () {
-      return api("/api/canvas/save", { id: mine.id, data: canvasData(mine) });
+      return api("/api/canvas/save", { id: mine.id, data: canvasFile(mine) });
     }).then(function (res) {
       var created = !mine.id;
       mine.id = res.id;
@@ -489,7 +733,7 @@
 
   function snapshot() {
     return JSON.stringify({ annotations: cv.data.annotations || [], positions: cv.data.positions || null,
-      locked: cv.data.locked || [] });
+      locked: cv.data.locked || [], groups: cv.data.groups || [], layers: cv.data.layers || null });
   }
 
   function remember() {
@@ -510,6 +754,10 @@
     if (then.annotations.length) cv.data.annotations = then.annotations; else delete cv.data.annotations;
     if (then.positions) cv.data.positions = then.positions; else delete cv.data.positions;
     if ((then.locked || []).length) cv.data.locked = then.locked; else delete cv.data.locked;
+    if ((then.groups || []).length) cv.data.groups = then.groups; else delete cv.data.groups;
+    if (then.layers) cv.data.layers = then.layers; else delete cv.data.layers;
+    Canvas.inside = null;
+    renderLayers();
     applyLocks();
     renderUndo();
     canvasSelect(null);
@@ -685,13 +933,21 @@
   }
 
   function isLocked(name) {
-    return lockedHere().indexOf(name) !== -1;
+    return lockedHere().indexOf(name) !== -1 || recordsLocked().indexOf(name) !== -1;
+  }
+
+  // Every record on the drawing, when the estate's place among the drawing
+  // layers is locked.
+  function recordsLocked() {
+    var estate = cv && (cv.data.layers || []).filter(function (l) { return l.key === ESTATE_LAYER; })[0];
+    if (!estate || !estate.locked || !state.cy) return [];
+    return state.cy.nodes().filter(function (n) { return !n.data("isGroup"); }).map(function (n) { return n.id(); });
   }
 
   // Cytoscape will not carry what is not grabbable, and the engine's
   // pointer asks it; only what this made ungrabbable is made grabbable.
   function applyLocks() {
-    var cy = state.cy, set = lockedHere();
+    var cy = state.cy, set = lockedHere().concat(recordsLocked());
     if (cy && cv) {
       cy.nodes().forEach(function (n) {
         if (set.indexOf(n.id()) !== -1) { n.ungrabify(); n.scratch("_locked", true); }
@@ -920,6 +1176,8 @@
     var box = $("cvDetails");
     box.textContent = "";
     if (!sel) canvasDiagramDetails(box);
+    else if (sel.kind === "own" && pickedGroup(sel.keys)) canvasGroupDetails(box, pickedGroup(sel.keys));
+    else if (sel.kind === "own" && sel.keys.length === 1 && swimOf(sel.keys[0])) canvasSwimDetails(box, sel.keys[0]);
     else if (sel.kind === "own" && sel.keys.length > 1) canvasSeveralDetails(box, { ids: [], keys: sel.keys });
     else if (sel.kind === "own") canvasOwnDetails(box, sel.keys);
     else if (sel.kind === "several") canvasSeveralDetails(box, sel);
@@ -961,6 +1219,8 @@
     if (tool === "text") return "Click where the words go, or drag the width they wrap at. Esc stops.";
     if (tool === "note") return "Click where the note goes, or drag its size. Esc stops.";
     if (tool === "frame") return "Drag the frame's size: what is drawn inside it moves with it. Esc stops.";
+    if (tool === "shape" && shape === "swimlane") return "Drag the swimlane's size, or click for one of three lanes: "
+      + "what is drawn in a lane moves with it. Esc stops.";
     if (tool === "line") return "Drag from where the " + (shape && shape !== "straight" ? shape + " " : "")
       + "line starts to where it ends; on a box or a shape it stays joined to it, and between two records it asks "
       + "whether it is a connection. Esc stops.";
@@ -1002,6 +1262,8 @@
     // Lining several up says itself as one step, before it moves them.
     if (!cv.holdUndo) remember();
     if (list.length) cv.data.annotations = list; else delete cv.data.annotations;
+    if (cv.data.groups) setTimeout(tidyGroups, 0);
+    renderLayers();
     if (list.length) arrangeForOwn();
     $("cvEmpty").hidden = !canvasEmpty();
     renderCanvasStatus();
@@ -1019,10 +1281,309 @@
     // it. Only a click comes this way; a band dragged round several, or a
     // pick made by code, goes to canvasPicked and paints nothing.
     if (Canvas.painting && keys.length === 1 && !additive && keys[0] !== Canvas.painting.from) {
-      paintOnto(keys, Canvas.painting.look);
+      paintOnto(widen(keys), Canvas.painting.look);
     }
     if (!additive && !keys.length && (!cv.sel || (cv.sel.kind !== "own" && cv.sel.kind !== "several"))) return;
+    keys = widen(additive ? notDropped(pickedKeys(cv.sel), keys) : keys);
     canvasPick(additive ? pickedIds(cv.sel) : [], keys);
+  }
+
+  /* ---- groups (V16) ----
+   * The diagram's own picked and moved as one. A group is a name kept in
+   * the diagram's file (`groups:`, each a key, a name and the group it
+   * sits in, if any), and each of its own in one says so (`group:`). It
+   * has no box of its own, so nothing draws it: picked, its outline and
+   * its name show over the drawing, as the bar over several does. A pick
+   * of one in a group picks the group whole, at the level the pick is at:
+   * a double-click goes inside it, and Esc comes back out. It is not a
+   * maxGraph parent: frames are those, and a group may sit in a frame and
+   * hold one, which a parent of the frame's could not. */
+  function groupsOf() { return (cv && cv.data.groups) || []; }
+  function groupByKey(key) { return groupsOf().filter(function (g) { return g.key === key; })[0] || null; }
+
+  // The groups a group sits in, it first and the outermost last.
+  function chainOf(group) {
+    var out = [], g = group;
+    while (g && out.indexOf(g) === -1) {
+      out.push(g);
+      var e = groupByKey(g);
+      g = e && e.group;
+    }
+    return out;
+  }
+
+  function groupOf(key) {
+    var eng = Canvas.engine, a = eng && eng.live() ? eng.item(key) : null;
+    return a && a.group && groupByKey(a.group) ? a.group : null;
+  }
+
+  // What a pick of `key` picks: the group just inside the one gone into,
+  // the outermost when none is, or the thing itself.
+  function unitOf(key) {
+    var chain = chainOf(groupOf(key));
+    if (!chain.length) return { key: key };
+    var at = Canvas.inside ? chain.indexOf(Canvas.inside) : -1;
+    if (at === 0) return { key: key };
+    return { group: at > 0 ? chain[at - 1] : chain[chain.length - 1] };
+  }
+
+  // Every one of its own a group holds, at any depth.
+  function membersOf(group) {
+    return (cv.data.annotations || []).filter(function (a) {
+      return a.role !== "line" && a.group && chainOf(a.group).indexOf(group) !== -1;
+    }).map(function (a) { return a.key; });
+  }
+
+  function widen(keys) {
+    // Out of a group gone into when nothing picked is in it.
+    if (Canvas.inside && !keys.some(function (k) { return chainOf(groupOf(k)).indexOf(Canvas.inside) !== -1; })) {
+      Canvas.inside = null;
+    }
+    var out = [];
+    keys.forEach(function (k) {
+      var u = unitOf(k);
+      (u.group ? membersOf(u.group) : [k]).forEach(function (m) { if (out.indexOf(m) === -1) out.push(m); });
+    });
+    return out;
+  }
+
+  // A Shift-click on one of a group picked takes the whole group out, or
+  // widening would put back the one maxGraph took.
+  function notDropped(before, keys) {
+    var drop = [];
+    before.forEach(function (k) {
+      if (keys.indexOf(k) !== -1) return;
+      var u = unitOf(k);
+      (u.group ? membersOf(u.group) : [k]).forEach(function (m) { drop.push(m); });
+    });
+    return keys.filter(function (k) { return drop.indexOf(k) === -1; });
+  }
+
+  // The group picked whole, if what is picked is exactly one.
+  function pickedGroup(keys) {
+    if (!keys || keys.length < 2) return null;
+    var u = unitOf(keys[0]);
+    if (!u.group) return null;
+    var all = membersOf(u.group);
+    return all.length === keys.length && all.every(function (k) { return keys.indexOf(k) !== -1; }) ? u.group : null;
+  }
+
+  function newGroupKey() {
+    var n = 0;
+    groupsOf().forEach(function (g) {
+      var m = /^group-(\d+)$/.exec(g.key);
+      if (m) n = Math.max(n, Number(m[1]));
+    });
+    return "group-" + (n + 1);
+  }
+
+  // What a pick groups: each picked thing at its level, a group as one.
+  function unitsOf(keys) {
+    var eng = Canvas.engine, out = [];
+    keys.forEach(function (k) {
+      var a = eng.item(k);
+      // A lane is grouped with its swimlane, never on its own.
+      if (!a || a.role === "line" || a.role === "lane") return;
+      var u = unitOf(k), id = u.group ? "g:" + u.group : "k:" + k;
+      if (out.indexOf(id) === -1) out.push(id);
+    });
+    return out;
+  }
+
+  function groupThem() {
+    var eng = Canvas.engine && Canvas.engine.live() ? Canvas.engine : null;
+    if (!cv || !eng || !cv.sel || cv.sel.kind !== "own") return false;
+    var keys = cv.sel.keys.slice(), units = unitsOf(keys);
+    if (units.length < 2) return false;
+    var key = newGroupKey(), entry = { key: key, name: "Group " + key.split("-")[1] };
+    if (Canvas.inside) entry.group = Canvas.inside;
+    remember();
+    cv.holdUndo = true;
+    try {
+      cv.data.groups = groupsOf().concat([entry]);
+      eng.together(function () {
+        units.forEach(function (u) {
+          if (u.indexOf("g:") === 0) groupByKey(u.slice(2)).group = key;
+          else eng.update(u.slice(2), { group: key });
+        });
+      });
+    } finally {
+      cv.holdUndo = false;
+    }
+    canvasSoon(0);
+    canvasPick([], widen(keys));
+    return true;
+  }
+
+  // A group let go: what was in it goes into the group it sat in, if any.
+  function letGo(entry) {
+    var eng = Canvas.engine, parent = entry.group || null;
+    groupsOf().forEach(function (o) {
+      if (o.group === entry.key) { if (parent) o.group = parent; else delete o.group; }
+    });
+    var held = (cv.data.annotations || []).filter(function (a) { return a.group === entry.key; });
+    cv.data.groups = groupsOf().filter(function (o) { return o.key !== entry.key; });
+    if (!cv.data.groups.length) delete cv.data.groups;
+    if (held.length && eng && eng.live()) {
+      eng.together(function () { held.forEach(function (a) { eng.update(a.key, { group: parent }); }); });
+    }
+  }
+
+  function ungroup(group) {
+    var entry = groupByKey(group);
+    if (!cv || !entry) return false;
+    var keys = membersOf(group);
+    remember();
+    cv.holdUndo = true;
+    try { letGo(entry); } finally { cv.holdUndo = false; }
+    canvasSoon(0);
+    canvasPick([], keys);
+    return true;
+  }
+
+  function ungroupPicked() {
+    var g = cv && cv.sel && cv.sel.kind === "own" ? pickedGroup(cv.sel.keys) : null;
+    return g ? ungroup(g) : false;
+  }
+
+  /* A group holding fewer than two things lets them go, and one its own
+   * name a group the file does not have is let out: a delete that left one
+   * in a group, or a duplicate of one of a group, alone in its copy. The
+   * step it makes is the one that caused it, for Undo. */
+  function tidyGroups() {
+    var eng = Canvas.engine && Canvas.engine.live() ? Canvas.engine : null;
+    if (!cv || !eng) return;
+    cv.holdUndo = true;
+    try {
+      for (var pass = 0; pass < 8; pass += 1) {
+        var count = {};
+        groupsOf().forEach(function (g) { count[g.key] = 0; });
+        var strays = [];
+        (cv.data.annotations || []).forEach(function (a) {
+          if (!a.group) return;
+          if (a.group in count) count[a.group] += 1; else strays.push(a.key);
+        });
+        groupsOf().forEach(function (g) { if (g.group && g.group in count) count[g.group] += 1; });
+        var gone = groupsOf().filter(function (g) { return count[g.key] < 2; });
+        if (strays.length) eng.together(function () { strays.forEach(function (k) { eng.update(k, { group: null }); }); });
+        if (!gone.length && !strays.length) break;
+        gone.forEach(letGo);
+      }
+    } finally {
+      cv.holdUndo = false;
+    }
+  }
+
+  // A double-click on one in a group picked whole goes inside it (engine.js).
+  function canvasGoIn(key) {
+    var eng = Canvas.engine, g = cv && cv.sel && cv.sel.kind === "own" ? pickedGroup(cv.sel.keys) : null;
+    if (!eng || !g || membersOf(g).indexOf(key) === -1) return false;
+    Canvas.inside = g;
+    canvasPick([], widen([key]));
+    return true;
+  }
+
+  // Esc inside a group comes out of it, the group picked whole again.
+  function goOut() {
+    var g = Canvas.inside;
+    if (!g) return false;
+    var entry = groupByKey(g);
+    Canvas.inside = entry && entry.group ? entry.group : null;
+    canvasPick([], widen(membersOf(g)));
+    return true;
+  }
+
+  // The copy of a group a duplicate or a paste puts its copies in, made the
+  // first time one asks, named as the group copied; set going and stopped
+  // round each (Canvas.regroup), so nothing else makes one.
+  function groupKeyFor(old) {
+    var r = Canvas.regroup;
+    if (!r || !old) return null;
+    if (r.made[old]) return r.made[old];
+    var src = (r.from || []).filter(function (g) { return g.key === old; })[0];
+    var key = newGroupKey(), entry = { key: key, name: src ? src.name : "Group " + key.split("-")[1] };
+    r.made[old] = key;
+    cv.data.groups = groupsOf().concat([entry]);
+    var parent = src && src.group ? groupKeyFor(src.group) : null;
+    if (parent) entry.group = parent;
+    return key;
+  }
+
+  function regrouping(from, fn) {
+    Canvas.regroup = { from: from || [], made: {} };
+    try { return fn(); } finally { Canvas.regroup = null; }
+  }
+
+  //: A count said in words, for the group's panel.
+  var COUNT_WORDS = ["None", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven",
+    "Twelve"];
+
+  // A group picked whole (V16): its name, what is in it, and Ungroup.
+  function canvasGroupDetails(box, group) {
+    var eng = Canvas.engine, entry = groupByKey(group), keys = membersOf(group);
+    box.appendChild(el("span", { class: "cv-badge is-own", text: "Group \u00b7 on this diagram only" }));
+    box.appendChild(el("h2", { class: "cv-h", text: entry.name }));
+    box.appendChild(el("p", { class: "cv-lede", text: (COUNT_WORDS[keys.length] || String(keys.length))
+      + " of the diagram's own, picked, moved and turned as one. A group has no box; its name is shown only while it is "
+      + "picked." }));
+    var name = el("input", { type: "text", class: "cv-input", maxlength: "60", "aria-label": "Its name" });
+    name.value = entry.name;
+    name.addEventListener("change", function () {
+      var v = name.value.trim();
+      if (!v || v === entry.name) { name.value = entry.name; return; }
+      remember();
+      entry.name = v;
+      canvasSoon(0);
+      canvasSelect(cv.sel, true);
+    });
+    box.appendChild(cvField("Name", name));
+    box.appendChild(el("p", { class: "cv-label", text: "In it" }));
+    var list = el("div", { class: "cv-picks" });
+    // What it holds as it was put in: its own, and the groups inside it.
+    groupsOf().filter(function (g) { return g.group === group; }).forEach(function (g) {
+      list.appendChild(el("button", { type: "button", class: "cv-pick is-own", onclick: function () {
+        Canvas.inside = group;
+        canvasPick([], membersOf(g.key));
+      } }, [el("span", { class: "cv-pick-dot", "aria-hidden": "true" }), el("span", { class: "cv-pick-n", text: g.name }),
+        el("span", { class: "cv-pick-id", text: "a group in it" })]));
+    });
+    (cv.data.annotations || []).filter(function (a) { return a.group === group; }).forEach(function (a) {
+      list.appendChild(el("button", { type: "button", class: "cv-pick is-own", onclick: function () {
+        Canvas.inside = group;
+        canvasPick([], [a.key]);
+      } }, [el("span", { class: "cv-pick-dot", "aria-hidden": "true" }),
+        el("span", { class: "cv-pick-n", text: firstLine(a.label) || (a.role === "shape" ? shapeName(a.shape) : ROLE_WORDS[a.role]) }),
+        el("span", { class: "cv-pick-id", text: "its own " + a.role })]));
+    });
+    box.appendChild(list);
+    box.appendChild(el("p", { class: "cv-small cv-keyline", text: "Double-click to go in \u00b7 Esc comes out \u00b7 "
+      + "Ctrl+Shift+U ungroups" }));
+    // Turned as one about its middle, by the degrees said, either way.
+    var by = el("input", { type: "number", class: "cv-input cv-turn-by", min: "1", max: "180", step: "15",
+      "aria-label": "Degrees to turn it by" });
+    by.value = "90";
+    var turnBy = function (sign) {
+      var d = Math.max(1, Math.min(180, Math.round(Number(by.value) || 90)));
+      if (eng) eng.turnTogether(keys, sign * d);
+    };
+    box.appendChild(section("Turned", hint("about its middle, as one"), [el("div", { class: "cv-turn-row" }, [
+      cvField("Degrees", by),
+      el("button", { type: "button", class: "btn small", onclick: function () { turnBy(-1); } },
+        [svgIcon("i-rotate-ccw"), el("span", { text: "Turn left" })]),
+      el("button", { type: "button", class: "btn small", onclick: function () { turnBy(1); } },
+        [svgIcon("i-rotate-cw"), el("span", { text: "Turn right" })]),
+    ])]));
+    box.appendChild(el("div", { class: "cv-acts" }, [
+      el("button", { type: "button", class: "btn small", onclick: function () { ungroup(group); } },
+        [svgIcon("i-ungroup"), el("span", { text: "Ungroup" })]),
+      lockButton(keys),
+      el("button", { type: "button", class: "btn small", onclick: function () { if (eng) eng.remove(keys); } },
+        [svgIcon("i-x"), el("span", { text: "Delete" })]),
+    ]));
+    var held = lockedNote(keys);
+    if (held) box.appendChild(held);
+    box.appendChild(el("p", { class: "cv-small", text: "Its look is each shape's own; Copy the look on a group copies "
+      + "the look of the first in it." }));
   }
 
   /* ---- several picked ----
@@ -1065,7 +1626,7 @@
   function canvasPicked(ids, keys, additive) {
     if (!cv) return;
     if (additive) { ids = pickedIds(cv.sel).concat(ids); keys = pickedKeys(cv.sel).concat(keys); }
-    canvasPick(ids, keys);
+    canvasPick(ids, widen(keys));
   }
 
   // Shift and a record: one more, or one fewer.
@@ -1107,17 +1668,21 @@
     ["top", "i-align-top", "Line up their tops"], ["middle", "i-align-middle", "Line up their middles, down"],
     ["bottom", "i-align-bottom", "Line up their bottoms"], null,
     ["across", "i-spread-across", "Space them evenly across"], ["down", "i-spread-down", "Space them evenly down"], null,
-    ["frame", "i-frame", "Put a frame around them (Ctrl+G)"],
+    ["frame", "i-frame", "Put a frame around them (Ctrl+G)"], ["group", "i-group", "Group them (Ctrl+Shift+G)"],
   ];
 
   /* The bar, over what is picked when it is more than one thing: on the
    * sheet above them, where the eye already is. */
   function renderBar() {
+    if (Canvas.engine && Canvas.engine.live()) Canvas.engine.stretches();
     var bar = $("cvBar");
     if (!bar) return;
     var sel = cv && cv.sel, cy = state.cy;
     var items = sel && cy ? pickedBoxes(sel) : [];
-    if (items.length < 2) { bar.hidden = true; return; }
+    // A group picked whole shows its outline and its name, not the bar.
+    var group = sel && sel.kind === "own" ? pickedGroup(sel.keys) : null;
+    renderGroupOutline(group, items, group ? null : lanePicked(sel));
+    if (items.length < 2 || group) { bar.hidden = true; return; }
     if (!bar.childNodes.length) {
       BAR.forEach(function (b) {
         if (!b) { bar.appendChild(el("span", { class: "sep", "aria-hidden": "true" })); return; }
@@ -1125,6 +1690,10 @@
           onclick: function () { arrangePicked(b[0]); } }, [svgIcon(b[1])]));
       });
     }
+    // Only the diagram's own group, two things or more at their level.
+    Array.prototype.forEach.call(bar.querySelectorAll('[data-do="group"]'), function (b) {
+      b.disabled = !sel || sel.kind !== "own" || unitsOf(sel.keys).length < 2;
+    });
     // Spreading needs three to have a space between to even out.
     Array.prototype.forEach.call(bar.querySelectorAll('[data-do="across"], [data-do="down"]'), function (b) {
       b.disabled = items.length < 3;
@@ -1138,6 +1707,42 @@
     bar.style.top = Math.round(Math.max(62, top)) + "px";
   }
 
+  // A group's outline and its name, over the drawing while it is picked:
+  // the group has no box of its own to draw.
+  // A lane picked alone: its place among its swimlane's lanes, and how
+  // many there are.
+  function lanePicked(sel) {
+    var a = sel && sel.kind === "own" && sel.keys.length === 1 ? swimOf(sel.keys[0]) : null;
+    if (!a || a.role !== "lane" || !(a.in || []).length) return null;
+    var all = Canvas.engine.lanes(a.in[a.in.length - 1]);
+    var at = all.map(function (l) { return l.key; }).indexOf(a.key);
+    return at < 0 ? null : "Lane " + (at + 1) + " of " + all.length;
+  }
+
+  function renderGroupOutline(group, items, lane) {
+    var sheet = $("mapSheet"), out = $("cvGroup");
+    if ((!group && !lane) || !items.length || !state.cy || !sheet) { if (out) out.hidden = true; return; }
+    if (!out) {
+      out = el("div", { id: "cvGroup", class: "cv-gathered", "aria-hidden": "true" }, [
+        el("span", { class: "cv-gathered-tag" })]);
+      sheet.appendChild(out);
+    }
+    var tag = out.querySelector(".cv-gathered-tag");
+    tag.textContent = "";
+    tag.appendChild(svgIcon(lane ? "i-table" : "i-group"));
+    tag.appendChild(el("span", { class: "cv-gathered-name" }));
+    // A lane's own outline is maxGraph's, picked: the tab is all it adds.
+    out.classList.toggle("is-lane", !!lane);
+    var entry = group ? groupByKey(group) : null, u = unionOf(items), cy = state.cy, z = cy.zoom(), pan = cy.pan();
+    var cr = $("cy").getBoundingClientRect(), sr = sheet.getBoundingClientRect(), pad = lane ? 0 : 8;
+    out.querySelector(".cv-gathered-name").textContent = lane || (entry ? entry.name : "") + " \u00b7 " + membersOf(group).length;
+    out.style.left = Math.round(cr.left - sr.left + u.x1 * z + pan.x - pad) + "px";
+    out.style.top = Math.round(cr.top - sr.top + u.y1 * z + pan.y - pad) + "px";
+    out.style.width = Math.round((u.x2 - u.x1) * z + 2 * pad) + "px";
+    out.style.height = Math.round((u.y2 - u.y1) * z + 2 * pad) + "px";
+    out.hidden = false;
+  }
+
   /* Lined up, spread or framed: each record moved where it is kept, each
    * of the diagram's own by maxGraph, one step for Undo, and saved. */
   function arrangePicked(how) {
@@ -1145,6 +1750,7 @@
     var items = pickedBoxes(cv.sel);
     if (items.length < 2) return;
     if (how === "frame") { frameThem(); return; }
+    if (how === "group") { groupThem(); return; }
     var u = unionOf(items), moves = [];
     var across = how === "left" || how === "center" || how === "right" || how === "across";
     if (how === "across" || how === "down") {
@@ -1252,7 +1858,8 @@
     box.appendChild(el("span", { class: "cv-badge is-link", text: n + " selected" }));
     box.appendChild(el("h2", { class: "cv-h", text: capFirst(spoken(words)) }));
     box.appendChild(el("p", { class: "cv-lede", text: "What the bar over them does, it does to all " + n
-      + ": line them up, spread them, frame them." + (sel.ids.length ? " Their fields stay their own, each in its record's panel." : "") }));
+      + ": line them up, spread them, frame them" + (sel.ids.length ? "." : " or group them.")
+      + (sel.ids.length ? " Their fields stay their own, each in its record's panel." : "") }));
     var list = el("div", { class: "cv-picks" });
     sel.ids.forEach(function (id) {
       var item = indexItem(id);
@@ -1274,16 +1881,24 @@
     box.appendChild(list);
     var acts = [el("button", { type: "button", class: "btn small", onclick: frameThem },
       [svgIcon("i-frame"), el("span", { text: "Put a frame around them" })]), lockButton(sel.ids.concat(sel.keys))];
+    // The diagram's own group; a record is the estate's, and stays out.
+    if (!sel.ids.length && unitsOf(sel.keys).length >= 2) {
+      acts.unshift(el("button", { type: "button", class: "btn small primary", onclick: groupThem },
+        [svgIcon("i-group"), el("span", { text: "Group them" })]));
+    }
     if (sel.keys.length) {
       acts.push(el("button", { type: "button", class: "btn small", onclick: function () { if (eng) eng.remove(sel.keys); } },
         [svgIcon("i-x"), el("span", { text: sel.ids.length ? "Delete its own" : "Delete them" })]));
     }
     box.appendChild(el("div", { class: "cv-acts" }, acts));
-    box.appendChild(el("p", { class: "cv-small", text: "A frame is this diagram's own, drawn under what it is around. "
+    box.appendChild(el("p", { class: "cv-small", text: (sel.ids.length ? "" : "A group has no box of its own. It is "
+      + "picked, moved, copied and turned as one, and a double-click goes inside it to pick one of it. ")
+      + "A frame is this diagram's own, drawn under what it is around. "
       + "What is inside it moves with it, its own and the records, and a frame sets no field the way "
-      + "dropping a box into a boundary does." }));
+      + "dropping a box into a boundary does; a group can sit in a frame, and a frame in a group." }));
     box.appendChild(el("p", { class: "cv-small cv-keyline", text: "Drag across the sheet to pick several \u00b7 Shift-click "
-      + "adds or takes one \u00b7 the arrows nudge them, Shift by ten \u00b7 Ctrl+G frames them \u00b7 Space and drag, "
+      + "adds or takes one \u00b7 the arrows nudge them, Shift by ten \u00b7 Ctrl+G frames them \u00b7 Ctrl+Shift+G groups "
+      + "them \u00b7 Space and drag, "
       + "or H, moves the sheet" }));
   }
 
@@ -1325,6 +1940,7 @@
     var path = document.createElementNS(ns, "path");
     path.setAttribute("d", shape === "rounded"
       ? "M5 0H23A5 5 0 0 1 28 5V15A5 5 0 0 1 23 20H5A5 5 0 0 1 0 15V5A5 5 0 0 1 5 0Z"
+      : shape === "swimlane" ? "M0 0H28V20H0Z M0 5H28 M0 12.5H28 M8 5V20"
       : Canvas.engine.pathData(shape, 28, 20));
     svg.appendChild(path);
     return svg;
@@ -1379,6 +1995,11 @@
           onclick: function () { closeShapeMenu(); setCanvasTool("shape", s[0]); } },
           [shapePicture(s[0]), el("span", { text: s[1] })]));
       });
+      // A swimlane, the last of them (V16): a pool of lanes.
+      menu.appendChild(el("button", { type: "button", role: "menuitem", class: "cv-shape-item",
+        "aria-pressed": String(cv.tool === "shape" && cv.toolShape === "swimlane"),
+        onclick: function () { closeShapeMenu(); setCanvasTool("shape", "swimlane"); } },
+        [shapePicture("swimlane"), el("span", { text: "Swimlane" })]));
     }
     menu.style.left = ($("cvTools").offsetLeft + $(from).offsetLeft) + "px";
     menu.hidden = false;
@@ -1388,7 +2009,7 @@
     if (first) first.focus();
   }
 
-  var ROLE_WORDS = { note: "Note", text: "Text", frame: "Frame", line: "Line" };
+  var ROLE_WORDS = { note: "Note", text: "Text", frame: "Frame", line: "Line", pool: "Swimlane", lane: "Lane" };
   // What a thing of the diagram's own is called in a list: a shape's first
   // line of words, its name, without the caption under it.
   function firstLine(label) {
@@ -1405,7 +2026,7 @@
   function endWords(end) {
     if (Array.isArray(end)) return "a point on the sheet";
     var it = Canvas.engine.item(end);
-    if (it) return it.label ? "\u201c" + it.label + "\u201d" : (it.role === "shape" ? shapeName(it.shape) : ROLE_WORDS[it.role]).toLowerCase();
+    if (it) return firstLine(it.label) ? "\u201c" + firstLine(it.label) + "\u201d" : (it.role === "shape" ? shapeName(it.shape) : ROLE_WORDS[it.role]).toLowerCase();
     var rec = indexItem(end);
     return rec ? rec.name : end;
   }
@@ -1506,6 +2127,37 @@
     return looks;
   }
 
+  // Where its words link to (V16's toolbar, its last button): an address on
+  // the web or for email (LINK in terrane/annotations.py), so no file can
+  // carry a script to run on a click. Opened from the mark at its corner on
+  // the canvas, and from the shape itself in the picture, on a slide and on
+  // a draw.io page.
+  var LINK = /^(https?:\/\/|mailto:)\S+$/;
+  function linkRow(a, key, change) {
+    var input = el("input", { type: "url", class: "cv-input cv-link-in", placeholder: "https://\u2026",
+      "aria-label": "Its link", maxlength: "2000" });
+    input.value = a.link || "";
+    var said = el("p", { class: "cv-small", hidden: "" });
+    var keep = function () {
+      var v = input.value.trim();
+      if (v === (a.link || "")) return;
+      if (v && !LINK.test(v)) {
+        said.textContent = "A link starts with https://, http:// or mailto:";
+        said.hidden = false;
+        return;
+      }
+      change({ link: v || null });
+    };
+    input.addEventListener("change", keep);
+    input.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); keep(); } });
+    return el("div", { class: "cv-link-row" }, [input, el("span", { class: "cv-link-acts" }, [
+      el("button", { type: "button", class: "btn small", disabled: a.link ? null : "",
+        onclick: function () { window.open(a.link, "_blank", "noopener"); } }, [el("span", { text: "Open" })]),
+      el("button", { type: "button", class: "btn small", disabled: a.link ? null : "",
+        onclick: function () { Canvas.linkFor = null; change({ link: null }); } }, [el("span", { text: "Remove" })]),
+    ]), said]);
+  }
+
   function canvasOwnDetails(box, keys) {
     var eng = Canvas.engine;
     var items = eng && eng.live() ? keys.map(function (k) { return eng.item(k); }).filter(Boolean) : [];
@@ -1524,7 +2176,7 @@
 
     // A line keeps the one panel it had; the rest are styled and arranged
     // in two tabs (V16), the one last opened kept as the pick moves on.
-    if (a.role === "line") { lineDetails(box, a, key, look, change, keysLine); return; }
+    if (a.role === "line") { lineDetails(box, a, key, look, change, keysLine, redo); return; }
     var tab = Canvas.ownTab === "arrange" ? "arrange" : "style";
     var tabs = segmented("Style or arrange", [["style", "Style"], ["arrange", "Arrange"]], tab, function (v) {
       Canvas.ownTab = v;
@@ -1553,6 +2205,418 @@
         + "keys \u00b7 Double-click it to type in it \u00b7 Delete removes it \u00b7 Ctrl+D copies it" }));
   }
 
+  /* ---- drawing layers (V16) ----
+   * A popover off the toolbar: the diagram's drawing layers top first, the
+   * estate's records among them, each with its grip, shown or hidden,
+   * locked or not, its name and how much is on it; a click on a name marks
+   * it to draw on, a double-click renames it. A diagram with no layers in
+   * its file shows the two it starts with, and the first change writes
+   * them. */
+  var ESTATE_LAYER = "estate";
+
+  function layersOf() {
+    return cv && cv.data.layers ? cv.data.layers : [{ key: "layer-1", name: "Layer 1" }, { key: ESTATE_LAYER }];
+  }
+  function drawingLayers() { return layersOf().filter(function (l) { return l.key !== ESTATE_LAYER; }); }
+  function layerHomeKey() {
+    var list = layersOf(), keys = list.map(function (l) { return l.key; }), at = keys.indexOf(ESTATE_LAYER);
+    if (at === -1) at = keys.length;
+    return at > 0 ? keys[at - 1] : drawingLayers()[0].key;
+  }
+  // The layer what is drawn goes on: the one marked, else what names none's.
+  function drawLayer() {
+    var keys = drawingLayers().map(function (l) { return l.key; });
+    return Canvas.drawLayer && keys.indexOf(Canvas.drawLayer) !== -1 ? Canvas.drawLayer : layerHomeKey();
+  }
+
+  // A change to the layers: one step for Undo, drawn and saved.
+  function changeLayers(fn) {
+    if (!cv) return;
+    remember();
+    var list = JSON.parse(JSON.stringify(layersOf()));
+    fn(list);
+    cv.data.layers = list;
+    if (Canvas.engine && Canvas.engine.live()) Canvas.engine.setLayers(list);
+    applyLocks();
+    canvasSoon(0);
+    renderLayers();
+  }
+
+  function toggleLayers() {
+    var pop = $("cvLayers");
+    if (!pop || !cv) return;
+    pop.hidden = !pop.hidden;
+    $("cvLayersBtn").setAttribute("aria-expanded", String(!pop.hidden));
+    renderLayers();
+  }
+
+  // What is picked, to the drawing layer above or below its own, skipping
+  // the estate's; one step for Undo.
+  function moveToLayer(keys, step) {
+    var eng = Canvas.engine, order = drawingLayers().map(function (l) { return l.key; });
+    if (!cv || !eng || order.length < 2) return;
+    if (!cv.data.layers) cv.data.layers = layersOf();
+    var home = layerHomeKey(), moves = [];
+    keys.forEach(function (k) {
+      var a = eng.item(k);
+      if (!a || (a.in || []).length) return;
+      var at = order.indexOf(eng.layerOf(k) || home), to = Math.max(0, Math.min(order.length - 1, at + step));
+      if (to !== at) moves.push([k, order[to]]);
+    });
+    if (!moves.length) return;
+    remember();
+    cv.holdUndo = true;
+    try {
+      eng.together(function () { moves.forEach(function (m) { eng.update(m[0], { layer: m[1] === home ? null : m[1] }); }); });
+    } finally {
+      cv.holdUndo = false;
+    }
+    renderLayers();
+  }
+
+  function renderLayers() {
+    var pop = $("cvLayers");
+    if (!pop || pop.hidden || !cv) return;
+    pop.textContent = "";
+    var list = layersOf(), home = layerHomeKey(), mark = drawLayer();
+    var counts = {};
+    (cv.data.annotations || []).forEach(function (a) {
+      if ((a.in || []).length) return;
+      var k = a.layer && list.some(function (l) { return l.key === a.layer; }) ? a.layer : home;
+      counts[k] = (counts[k] || 0) + 1;
+    });
+    var records = state.cy ? state.cy.nodes().filter(function (n) { return !n.data("isGroup"); }).length : 0;
+    pop.appendChild(el("div", { class: "cv-layers-h" }, [el("span", { class: "cv-label", text: "Drawing layers" }),
+      el("button", { type: "button", class: "cv-link-b", text: "+ New layer", onclick: function () {
+        var n = 1;
+        while (layersOf().some(function (l) { return l.key === "layer-" + n; })) n += 1;
+        Canvas.drawLayer = "layer-" + n;
+        changeLayers(function (l) { l.unshift({ key: "layer-" + n, name: "Layer " + n }); });
+      } })]));
+    pop.appendChild(el("p", { class: "cv-small", text: "The top of the list is drawn on top. What you draw goes on the "
+      + "layer marked." }));
+    var rows = el("div", { class: "cv-layer-list", role: "list" });
+    list.forEach(function (l) {
+      var estate = l.key === ESTATE_LAYER, here = l.key === mark;
+      var status = statusOf(l, mark);
+      var eye = el("button", { type: "button", class: "cv-layer-b", "aria-pressed": String(!l.hidden),
+        title: estate ? "The estate's records are on every drawing of the diagram" : l.hidden ? "Show it" : "Hide it",
+        "aria-label": l.hidden ? "Show it" : "Hide it",
+        onclick: function () { changeLayers(function (all) { var x = find(all, l.key); if (x.hidden) delete x.hidden; else x.hidden = true; }); } },
+        [svgIcon(l.hidden ? "i-eye-off" : "i-eye")]);
+      if (estate) eye.disabled = true;
+      var lock = el("button", { type: "button", class: "cv-layer-b", "aria-pressed": String(!!l.locked),
+        title: l.locked ? "Unlock it" : "Lock it: nothing on it is picked or moved", "aria-label": l.locked ? "Unlock it" : "Lock it",
+        onclick: function () { changeLayers(function (all) { var x = find(all, l.key); if (x.locked) delete x.locked; else x.locked = true; }); } },
+        [svgIcon(l.locked ? "i-lock" : "i-lock-open")]);
+      var name = el("button", { type: "button", class: "cv-layer-n", text: estate ? "Records from the estate" : l.name,
+        onclick: function () { if (!estate) markLayer(l.key); } });
+      if (estate) name.disabled = true;
+      name.addEventListener("dblclick", function () { if (!estate) renameLayer(row, l); });
+      var gone = estate || drawingLayers().length < 2 ? null : el("button", { type: "button", class: "cv-layer-b cv-layer-x",
+        title: "Delete the layer: what is on it goes to the layer under it", "aria-label": "Delete the layer",
+        onclick: function () { deleteLayer(l.key); } }, [svgIcon("i-x")]);
+      var row = el("div", { class: "cv-layer" + (here ? " is-on" : "") + (l.hidden ? " is-hidden" : ""), role: "listitem",
+        "data-key": l.key }, [
+        el("span", { class: "cv-lane-grip", title: "Drag to put it elsewhere in the stack", "aria-hidden": "true" }, [svgIcon("i-grip")]),
+        eye, lock,
+        el("div", { class: "cv-layer-what" }, [name, el("span", { class: "cv-layer-s", text: status })]),
+        el("span", { class: "cv-layer-c", text: String(estate ? records : counts[l.key] || 0) }),
+        gone,
+      ]);
+      row.querySelector(".cv-lane-grip").addEventListener("pointerdown", function (ev) { dragLayer(ev, row, rows, l.key); });
+      rows.appendChild(row);
+    });
+    pop.appendChild(rows);
+    pop.appendChild(el("p", { class: "cv-small", text: "A hidden drawing layer is left out of Export and the review pack. "
+      + "What is picked goes to the layer above or below with Ctrl+Alt+] and Ctrl+Alt+[, or its Drawing layer in "
+      + "Arrange." }));
+  }
+
+  function find(list, key) { return list.filter(function (l) { return l.key === key; })[0]; }
+
+  // What a layer's row says under its name.
+  function statusOf(l, mark) {
+    if (l.key === ESTATE_LAYER) return l.locked ? "locked" : "every record on the drawing";
+    return l.hidden ? "hidden" : l.key === mark ? "drawing here" : l.locked ? "locked" : "";
+  }
+
+  // A layer marked to draw on, its row and the others said again where
+  // they are: drawn anew, the row under the pointer would take no
+  // double-click to rename it.
+  function markLayer(key) {
+    Canvas.drawLayer = key;
+    var list = layersOf();
+    Array.prototype.forEach.call(document.querySelectorAll("#cvLayers .cv-layer"), function (row) {
+      var l = find(list, row.dataset.key);
+      if (!l) return;
+      row.classList.toggle("is-on", l.key === key);
+      row.querySelector(".cv-layer-s").textContent = statusOf(l, key);
+    });
+  }
+
+  function renameLayer(row, l) {
+    var input = el("input", { type: "text", class: "cv-input cv-layer-name", maxlength: "60", "aria-label": "The layer's name" });
+    input.value = l.name;
+    var name = row.querySelector(".cv-layer-n");
+    name.replaceWith(input);
+    input.focus();
+    input.select();
+    var done = false;
+    function keep() {
+      if (done) return;
+      done = true;
+      var v = input.value.trim();
+      if (v && v !== l.name) changeLayers(function (all) { find(all, l.key).name = v; });
+      else renderLayers();
+    }
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") { e.preventDefault(); keep(); }
+      if (e.key === "Escape") { e.preventDefault(); done = true; renderLayers(); }
+      e.stopPropagation();
+    });
+    input.addEventListener("blur", keep);
+  }
+
+  // A layer deleted: what is on it goes to the drawing layer under it (the
+  // one above, for the bottom one), in the same step.
+  function deleteLayer(key) {
+    var eng = Canvas.engine, order = drawingLayers().map(function (l) { return l.key; });
+    var at = order.indexOf(key);
+    if (at === -1 || order.length < 2) return;
+    var into = order[at + 1 < order.length ? at + 1 : at - 1];
+    remember();
+    cv.holdUndo = true;
+    try {
+      var list = JSON.parse(JSON.stringify(layersOf())).filter(function (l) { return l.key !== key; });
+      var home = (function () { var keys = list.map(function (l) { return l.key; }), e = keys.indexOf(ESTATE_LAYER);
+        return e > 0 ? keys[e - 1] : keys.filter(function (k) { return k !== ESTATE_LAYER; })[0]; })();
+      var oldHome = layerHomeKey();
+      cv.data.layers = list;
+      if (Canvas.drawLayer === key) Canvas.drawLayer = into;
+      eng.setLayers(list);
+      eng.together(function () {
+        (cv.data.annotations || []).forEach(function (a) {
+          if ((a.in || []).length) return;
+          var on = a.layer || oldHome, now = on === key ? into : on;
+          var want = now === home ? null : now;
+          if ((a.layer || null) !== want) eng.update(a.key, { layer: want });
+        });
+      });
+    } finally {
+      cv.holdUndo = false;
+    }
+    applyLocks();
+    canvasSoon(0);
+    renderLayers();
+  }
+
+  // A layer's row carried by its grip to another place in the stack.
+  function dragLayer(ev, row, list, key) {
+    ev.preventDefault();
+    var rows = Array.prototype.slice.call(list.children), others = rows.filter(function (r) { return r !== row; });
+    var from = rows.indexOf(row), to = from;
+    row.classList.add("is-carried");
+    function move(e) {
+      to = others.filter(function (r) { var b = r.getBoundingClientRect(); return e.clientY > b.top + b.height / 2; }).length;
+      others.forEach(function (r, i) {
+        r.classList.toggle("is-before", i === to && to !== from);
+        r.classList.toggle("is-after", i === others.length - 1 && to === others.length && to !== from);
+      });
+    }
+    function up() {
+      document.removeEventListener("pointermove", move);
+      document.removeEventListener("pointerup", up);
+      row.classList.remove("is-carried");
+      if (to === from) { renderLayers(); return; }
+      // What named no layer stays where it was drawn: on the layer that
+      // was just above the estate, said now by name.
+      var oldHome = layerHomeKey();
+      changeLayers(function (all) {
+        var moving = find(all, key);
+        all.splice(all.indexOf(moving), 1);
+        all.splice(to, 0, moving);
+      });
+      var home = layerHomeKey();
+      if (home !== oldHome) {
+        cv.holdUndo = true;
+        try {
+          Canvas.engine.together(function () {
+            (cv.data.annotations || []).forEach(function (a) {
+              if ((a.in || []).length) return;
+              var on = a.layer || oldHome, want = on === home ? null : on;
+              if ((a.layer || null) !== want) Canvas.engine.update(a.key, { layer: want });
+            });
+          });
+        } finally {
+          cv.holdUndo = false;
+        }
+      }
+    }
+    document.addEventListener("pointermove", move);
+    document.addEventListener("pointerup", up);
+  }
+
+  /* ---- swimlanes (V16) ---- */
+  // The swimlane or lane picked alone, or nothing.
+  function swimOf(key) {
+    var eng = Canvas.engine, a = eng && eng.live() ? eng.item(key) : null;
+    return a && (a.role === "pool" || a.role === "lane") ? a : null;
+  }
+
+  //: Who a lane may stand for (V16): an actor or an org unit.
+  var STANDS = { actors: "an actor", org_units: "an org unit" };
+
+  // A swimlane's lane picked, or the swimlane itself: what it stands for,
+  // its lanes in order, which way they run and where their names sit.
+  function canvasSwimDetails(box, key) {
+    var eng = Canvas.engine, a = eng.item(key), lane = a.role === "lane";
+    var pool = lane ? eng.item((a.in || [])[(a.in || []).length - 1]) : a;
+    if (!pool) { canvasDiagramDetails(box); return; }
+    var all = eng.lanes(pool.key), redo = function () { if (cv && cv.sel) canvasSelect(cv.sel, true); };
+    var title = pool.label || "Swimlane", down = pool.runs === "down";
+    var record = lane && a.stands_for ? indexItem(a.stands_for) : null;
+    box.appendChild(el("span", { class: "cv-badge is-own", text: (lane ? "Lane" : "Swimlane") + " \u00b7 on this diagram only" }));
+    box.appendChild(el("h2", { class: "cv-h", text: lane ? (record ? record.name : a.label || "Lane") : title }));
+    box.appendChild(el("p", { class: "cv-lede", text: lane
+      ? "A lane of \u201c" + title + "\u201d. What is drawn in it moves with it, and a box carried into another lane changes lanes."
+      : "Its lanes " + (down ? "side by side down it" : "stacked across it") + ", each holding what is drawn in it. "
+        + "What is drawn in a lane moves with it, and a box carried into another lane changes lanes." }));
+    if (lane) box.appendChild(standsSection(a, record, redo));
+    else {
+      var name = el("input", { type: "text", class: "cv-input", maxlength: "120", "aria-label": "Its name" });
+      name.value = pool.label || "";
+      name.addEventListener("change", function () { eng.update(pool.key, { label: name.value.trim() || "Swimlane" }); redo(); });
+      box.appendChild(cvField("Name", name));
+    }
+    if (lane && !record) {
+      var words = el("input", { type: "text", class: "cv-input", maxlength: "120", "aria-label": "The lane's name" });
+      words.value = a.label || "";
+      words.addEventListener("change", function () { eng.update(key, { label: words.value.trim() || "Lane" }); redo(); });
+      box.appendChild(cvField("Name", words));
+    }
+    box.appendChild(lanesSection(pool, all, lane ? key : null, redo));
+    box.appendChild(el("p", { class: "cv-label", text: "The lanes run" }));
+    box.appendChild(segmented("The lanes run", [["across", "Across"], ["down", "Down"]], down ? "down" : "across",
+      function (v) { eng.swimRuns(pool.key, v); redo(); }));
+    box.appendChild(segmented("Where each lane's name sits", [["left", "Names at the left"], ["top", "Names at the top"]],
+      pool.names === "top" ? "top" : "left", function (v) { eng.swimNames(pool.key, v); redo(); }));
+    var gone = el("button", { type: "button", class: "btn small", onclick: function () { eng.remove([key]); } },
+      [svgIcon("i-x"), el("span", { text: lane ? "Delete the lane" : "Delete the swimlane" })]);
+    if (lane && all.length < 2) {
+      gone.disabled = true;
+      gone.title = "A swimlane keeps one lane at least; delete the swimlane instead";
+    }
+    box.appendChild(el("div", { class: "cv-acts" }, [lockButton([key]), gone]));
+    var held = lockedNote([key]);
+    if (held) box.appendChild(held);
+    box.appendChild(el("p", { class: "cv-small", text: lane
+      ? "A swimlane is drawn from Shapes, the last of them. Deleting a lane keeps what was in it, moved up into the "
+        + "lane above."
+      : "A lane is picked by its name, or by a click inside it. Deleting the swimlane deletes what is drawn in its "
+        + "lanes too." }));
+  }
+
+  // What a lane stands for: an actor or an org unit, or nothing in the
+  // estate, chosen by its name.
+  function standsSection(a, record, redo) {
+    var eng = Canvas.engine;
+    var sec = section("Stands for", record ? null : hint("Nothing in the estate"));
+    var find = el("div", { class: "cv-stands-find", hidden: "" });
+    var input = el("input", { type: "search", class: "cv-input cv-stands-in", placeholder: "Find an actor or an org unit",
+      "aria-label": "Find an actor or an org unit" });
+    var found = el("div", { class: "cv-picks cv-stands-list" });
+    function list() {
+      var q = input.value.trim().toLowerCase();
+      found.textContent = "";
+      (state.index || []).filter(function (i) {
+        return STANDS[i.type] && (!q || String(i.name || "").toLowerCase().indexOf(q) !== -1 || i.id.toLowerCase().indexOf(q) !== -1);
+      }).slice(0, 8).forEach(function (i) {
+        found.appendChild(el("button", { type: "button", class: "cv-pick", onclick: function () {
+          eng.update(a.key, { stands_for: i.id, label: i.name || i.id });
+          redo();
+        } }, [el("span", { class: "cv-pick-dot", "aria-hidden": "true" }), el("span", { class: "cv-pick-n", text: i.name || i.id }),
+          el("span", { class: "cv-pick-id", text: i.id })]));
+      });
+      if (!found.childNodes.length) found.appendChild(el("p", { class: "cv-small", text: "No actor or org unit by that name." }));
+    }
+    input.addEventListener("input", list);
+    find.appendChild(input);
+    find.appendChild(found);
+    function open() { find.hidden = false; list(); input.focus(); }
+    if (record) {
+      sec.appendChild(el("div", { class: "cv-stands" }, [
+        svgIcon(record.type === "actors" ? "i-users" : "i-blocks"),
+        el("div", { class: "cv-stands-what" }, [el("span", { class: "cv-stands-n", text: record.name || record.id }),
+          el("span", { class: "cv-stands-id", text: record.id + " \u00b7 " + (STANDS[record.type] || record.label || "a record") })]),
+        el("button", { type: "button", class: "cv-link-b", text: "Change", onclick: open }),
+      ]));
+      sec.appendChild(el("p", { class: "cv-small", text: "Its name follows the record's, and the record's page lists the "
+        + "diagrams it has a lane on." }));
+      sec.appendChild(el("button", { type: "button", class: "cv-link-b", text: "Stand for nothing", onclick: function () {
+        eng.update(a.key, { stands_for: null });
+        redo();
+      } }));
+    } else {
+      sec.appendChild(el("button", { type: "button", class: "btn small", onclick: open },
+        [svgIcon("i-search"), el("span", { text: "Choose an actor or an org unit" })]));
+    }
+    sec.appendChild(find);
+    return sec;
+  }
+
+  // A swimlane's lanes in order, the one picked marked: a click picks one,
+  // its grip drags it to another place, and one more is added at the end.
+  function lanesSection(pool, all, current, redo) {
+    var eng = Canvas.engine;
+    var add = el("button", { type: "button", class: "cv-link-b", text: "+ Add a lane", onclick: function () {
+      var key = eng.addLane(pool.key);
+      if (key) canvasPick([], [key]);
+    } });
+    var list = el("div", { class: "cv-lanes", role: "list" });
+    all.forEach(function (l, i) {
+      var rec = l.stands_for ? indexItem(l.stands_for) : null;
+      var row = el("div", { class: "cv-lane" + (l.key === current ? " is-on" : ""), role: "listitem", "data-key": l.key }, [
+        el("span", { class: "cv-lane-grip", title: "Drag to put it elsewhere among the lanes", "aria-hidden": "true" },
+          [svgIcon("i-grip")]),
+        el("button", { type: "button", class: "cv-lane-n", text: rec ? rec.name : l.label || "Lane " + (i + 1),
+          onclick: function () { canvasPick([], [l.key]); } }),
+        el("span", { class: "cv-lane-id", text: l.stands_for || "" }),
+      ]);
+      row.querySelector(".cv-lane-grip").addEventListener("pointerdown", function (ev) { dragLane(ev, row, list, l.key, redo); });
+      list.appendChild(row);
+    });
+    var sec = section("Lanes", add, [list]);
+    return sec;
+  }
+
+  // A lane's row carried by its grip to another place in the list, and the
+  // lane put there among its swimlane's lanes.
+  function dragLane(ev, row, list, key, redo) {
+    ev.preventDefault();
+    var rows = Array.prototype.slice.call(list.children), from = rows.indexOf(row), to = from;
+    var others = rows.filter(function (r) { return r !== row; });
+    row.classList.add("is-carried");
+    // Its place among the others: how many of them are above the pointer.
+    function move(e) {
+      to = others.filter(function (r) { var b = r.getBoundingClientRect(); return e.clientY > b.top + b.height / 2; }).length;
+      others.forEach(function (r, i) {
+        r.classList.toggle("is-before", i === to && to !== from);
+        r.classList.toggle("is-after", i === others.length - 1 && to === others.length && to !== from);
+      });
+    }
+    function up() {
+      document.removeEventListener("pointermove", move);
+      document.removeEventListener("pointerup", up);
+      row.classList.remove("is-carried");
+      others.forEach(function (r) { r.classList.remove("is-before", "is-after"); });
+      if (to !== from) Canvas.engine.moveLane(key, to);
+      redo();
+    }
+    document.addEventListener("pointermove", move);
+    document.addEventListener("pointerup", up);
+  }
+
   // A heading, with what goes at its right, over what it heads.
   function section(title, right, kids) {
     return el("div", { class: "cv-sec" }, [el("div", { class: "cv-sec-h" },
@@ -1579,28 +2643,245 @@
   }
 
   // A line of the diagram's own: its words, outline, size, route and ends.
-  function lineDetails(box, a, key, look, change, keysLine) {
-    var eng = Canvas.engine;
-    box.appendChild(cvField("Words", wordsBox(a, key)));
-    box.appendChild(el("p", { class: "cv-label", text: "Look" }));
-    var looks = el("div", { class: "cv-look-row" });
-    looks.appendChild(segmented("Outline", [["solid", "Solid"], ["dashed", "Dashed"]], look.line || "solid", function (v) {
-      change({ look: { line: v === "solid" ? null : v } });
-    }));
-    looks.appendChild(segmented("Size of the words", [["s", "S"], ["m", "M"], ["l", "L"]], look.text || "s", function (v) {
+  //: Where a line's words sit (V16): at its start, its middle, its end.
+  var LABEL_PLACES = [["start", "Start"], ["middle", "Middle"], ["end", "End"]];
+
+  /* A line's words (V16), a row a place it says something: where, and the
+   * words. + Add a label opens the next place free; a place changed carries
+   * the words to it. Its middle's are the line's label, the others its
+   * `labels`. */
+  function labelsSection(a, key, look, change, redo) {
+    var said = { start: (a.labels || {}).start || "", middle: a.label || "", end: (a.labels || {}).end || "" };
+    var draft = Canvas.labelDraft && Canvas.labelDraft.key === key ? Canvas.labelDraft.at : null;
+    var write = function (next) {
+      var labels = {};
+      if (next.start) labels.start = next.start;
+      if (next.end) labels.end = next.end;
+      Canvas.labelDraft = null;
+      change({ label: next.middle || "", labels: Object.keys(labels).length ? labels : null });
+    };
+    var rows = el("div", { class: "cv-labels" });
+    LABEL_PLACES.forEach(function (p) {
+      if (!said[p[0]] && draft !== p[0]) return;
+      var place = el("select", { class: "cv-input cv-label-at", "aria-label": "Where the words sit" });
+      LABEL_PLACES.forEach(function (q) {
+        var o = el("option", { value: q[0], text: q[1] });
+        if (q[0] === p[0]) o.selected = true;
+        else if (said[q[0]]) o.disabled = true;
+        place.appendChild(o);
+      });
+      var words = el("input", { type: "text", class: "cv-input cv-label-in", maxlength: "120",
+        "aria-label": "What it says at its " + p[0], placeholder: "What it says at its " + p[0] });
+      words.value = said[p[0]];
+      words.addEventListener("change", function () {
+        var next = Object.assign({}, said);
+        next[p[0]] = words.value.trim();
+        write(next);
+      });
+      words.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); words.blur(); } });
+      place.addEventListener("change", function () {
+        var next = Object.assign({}, said), v = words.value.trim();
+        next[p[0]] = "";
+        next[place.value] = v;
+        if (!v) { Canvas.labelDraft = { key: key, at: place.value }; redo(); return; }
+        write(next);
+      });
+      rows.appendChild(el("div", { class: "cv-label-row", "data-at": p[0] }, [place, words]));
+    });
+    // The middle first, as a line is most often labeled, then each end.
+    var free = ["middle", "start", "end"].map(function (k) {
+      return LABEL_PLACES.filter(function (p) { return p[0] === k; })[0];
+    }).filter(function (p) { return !said[p[0]] && draft !== p[0]; })[0];
+    var add = free ? el("button", { type: "button", class: "cv-link-b", text: "+ Add a label", onclick: function () {
+      Canvas.labelDraft = { key: key, at: free[0] };
+      redo();
+      var input = document.querySelector('#cvDetails .cv-label-row[data-at="' + free[0] + '"] input');
+      if (input) input.focus();
+    } }) : null;
+    var size = segmented("Size of the words", [["s", "S"], ["m", "M"], ["l", "L"]], look.text || "s", function (v) {
       change({ look: { text: v === "s" ? null : v } });
+    });
+    return section("Labels", add, [rows, el("div", { class: "cv-label-size" }, [hint("Size of the words"), size])]);
+  }
+
+  //: The heads an end of a line may have (V16), by notation, as its
+  //: popover offers them (HEADS in annotations.py, held equal by a test).
+  var HEAD_GROUPS = [
+    ["Plain", [["none", "Nothing"], ["arrow", "Arrow"], ["open-arrow", "Open arrow"], ["dot", "Dot"]]],
+    ["UML", [["inherits", "Inherits"], ["made-of", "Is made of"], ["has", "Has"], ["depends-on", "Depends on"]]],
+    ["Crow's foot", [["one", "One"], ["many", "Many"], ["one-or-many", "One or many"], ["none-or-one", "None or one"],
+      ["none-or-many", "None or many"]]],
+    ["ArchiMate", [["serving", "Serving"], ["triggering", "Triggering"], ["flow", "Flow"], ["realization", "Realization"],
+      ["assignment", "Assignment"], ["access", "Access"]]],
+  ];
+  //: The line a UML or ArchiMate head draws, as its notation does.
+  var HEAD_LINES = { "depends-on": "dashed", flow: "dashed", realization: "dotted", access: "dotted" };
+
+  function headName(head) {
+    var found = "Nothing";
+    HEAD_GROUPS.forEach(function (g) { g[1].forEach(function (h) { if (h[0] === head) found = h[1]; }); });
+    return found;
+  }
+
+  // A head as its picker and popover show it, 30 by 12, pointing right: a
+  // stretch of line to where the line stops, then its parts, as the
+  // picture draws them (HEAD_GLYPHS).
+  function headGlyph(head) {
+    var ns = "http://www.w3.org/2000/svg", g = Canvas.engine.HEAD_GLYPHS[head] || { stop: 0, parts: [] };
+    var svg = document.createElementNS(ns, "svg");
+    svg.setAttribute("viewBox", "0 0 30 12");
+    svg.setAttribute("width", "30");
+    svg.setAttribute("height", "12");
+    svg.setAttribute("class", "cv-head-glyph");
+    svg.setAttribute("aria-hidden", "true");
+    var add = function (tag, attrs) {
+      var n = document.createElementNS(ns, tag);
+      Object.keys(attrs).forEach(function (k) { n.setAttribute(k, attrs[k]); });
+      svg.appendChild(n);
+    };
+    var x = function (a) { return 28 - a; };
+    // The stretch dashed or dotted as the head draws its line, and
+    // Assignment's dot at the other end, as the frame draws them.
+    var stretch = { d: "M2 6H" + x(g.stop), fill: "none" }, dash = { dashed: "4 3", dotted: "2 3" }[HEAD_LINES[head]];
+    if (dash) stretch["stroke-dasharray"] = dash;
+    add("path", stretch);
+    if (head === "assignment") add("circle", { cx: 4, cy: 6, r: 2, fill: "currentColor" });
+    g.parts.forEach(function (part) {
+      var kind = part[0], v = part[1];
+      if (kind === "dot" || kind === "ring") {
+        add("circle", { cx: x(v[0]), cy: 6, r: v[1], fill: kind === "dot" ? "currentColor" : "none" });
+        return;
+      }
+      var d = "";
+      for (var i = 0; i < v.length; i += 2) d += (i ? "L" : "M") + x(v[i]) + " " + (6 - v[i + 1]);
+      add("path", { d: d + (kind === "line" ? "" : "Z"), fill: kind === "fill" ? "currentColor" : "none" });
+    });
+    return svg;
+  }
+
+  // An end of a line as its panel names it: the first line of what it
+  // joins, or where it was left on the sheet.
+  function endName(end, place) {
+    if (Array.isArray(end)) return "its " + place;
+    var it = Canvas.engine.item(end);
+    if (it) return firstLine(it.label) || (it.role === "shape" ? shapeName(it.shape) : ROLE_WORDS[it.role]).toLowerCase();
+    var rec = indexItem(end);
+    return rec ? rec.name : end;
+  }
+
+  /* A line's ends (V16), a row each: where, and a picker that opens its
+   * heads by notation. A UML or ArchiMate head draws its line as its
+   * notation does, one taken off gives back the plain line, and
+   * Assignment puts a dot at the other end where it has nothing. */
+  function endsSection(a, look, change) {
+    var heads = Canvas.engine.headsOf(a), places = ["start", "end"];
+    var names = [endName(a.from, "start"), endName(a.to, "end")];
+    var choose = function (i, head) {
+      var next = heads.slice(), was = next[i];
+      next[i] = head;
+      if (head === "assignment" && next[1 - i] === "none") next[1 - i] = "dot";
+      var patch = { heads: { start: next[0], end: next[1] } };
+      var line = HEAD_LINES[next[0]] || HEAD_LINES[next[1]];
+      if (line) patch.look = { line: line };
+      else if (HEAD_LINES[was] && look.line === HEAD_LINES[was]) patch.look = { line: null };
+      closeHeads();
+      change(patch);
+    };
+    var rows = places.map(function (place, i) {
+      var pick = el("button", { type: "button", class: "cv-head-pick", "aria-haspopup": "dialog", "aria-expanded": "false",
+        "aria-label": "The head at " + names[i] + ": " + headName(heads[i]) }, [headGlyph(heads[i]),
+        el("span", { class: "cv-head-name", text: headName(heads[i]) }), el("span", { class: "cv-head-chev", "aria-hidden": "true" })]);
+      pick.addEventListener("click", function () {
+        if (Canvas.headsOpen && Canvas.headsOpen.anchor === pick) { closeHeads(); return; }
+        openHeads(pick, names[i], heads[i], function (h) { choose(i, h); });
+      });
+      return el("div", { class: "cv-end-row", "data-at": place }, [el("span", { class: "cv-end-at", text: "At " + names[i] }), pick]);
+    });
+    return section("Ends", null, rows);
+  }
+
+  // The heads of one end (V16): by notation, the one it has marked; Escape
+  // or a click elsewhere shuts it with nothing changed.
+  function openHeads(anchor, name, current, pick) {
+    closeHeads();
+    var pop = el("div", { class: "cv-heads", id: "cvHeads", role: "dialog", "aria-label": "The end at " + name });
+    pop.appendChild(el("p", { class: "cv-heads-h", text: "The end at " + name }));
+    HEAD_GROUPS.forEach(function (g) {
+      pop.appendChild(el("p", { class: "cv-label", text: g[0] }));
+      pop.appendChild(el("div", { class: "cv-heads-row", role: "group", "aria-label": g[0] }, g[1].map(function (h) {
+        var b = el("button", { type: "button", class: "cv-head-opt", "aria-pressed": String(h[0] === current), "data-head": h[0],
+          onclick: function () { pick(h[0]); } }, [headGlyph(h[0]), el("span", { text: h[1] })]);
+        return b;
+      })));
+    });
+    pop.appendChild(el("p", { class: "cv-small", text: "A UML or ArchiMate head draws its line as its notation does: "
+      + "Depends on and Flow dashed, Realization and Access dotted. Assignment puts a dot at the other end." }));
+    document.body.appendChild(pop);
+    anchor.setAttribute("aria-expanded", "true");
+    // Beside the panel, its top at the picker's, held on the screen.
+    var r = anchor.getBoundingClientRect(), panel = $("cvDetails").getBoundingClientRect();
+    pop.style.left = Math.max(8, panel.left - pop.offsetWidth - 10) + "px";
+    pop.style.top = Math.max(8, Math.min(r.top - 14, window.innerHeight - pop.offsetHeight - 8)) + "px";
+    var current0 = pop.querySelector('.cv-head-opt[aria-pressed="true"]');
+    if (current0) current0.focus();
+    Canvas.headsOpen = { pop: pop, anchor: anchor, away: function (e) {
+      if (!pop.contains(e.target) && !anchor.contains(e.target)) closeHeads();
+    }, key: function (e) {
+      // Its own Escape, on the window to come before the canvas's keys on
+      // the document, which would drop the line picked as well.
+      if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); closeHeads(); anchor.focus(); }
+    } };
+    setTimeout(function () {
+      if (!Canvas.headsOpen || Canvas.headsOpen.pop !== pop) return;
+      document.addEventListener("pointerdown", Canvas.headsOpen.away, true);
+      window.addEventListener("keydown", Canvas.headsOpen.key, true);
+    }, 0);
+  }
+
+  function closeHeads() {
+    var o = Canvas.headsOpen;
+    if (!o) return;
+    Canvas.headsOpen = null;
+    document.removeEventListener("pointerdown", o.away, true);
+    window.removeEventListener("keydown", o.key, true);
+    if (o.pop.parentNode) o.pop.parentNode.removeChild(o.pop);
+    o.anchor.setAttribute("aria-expanded", "false");
+  }
+
+  function lineDetails(box, a, key, look, change, keysLine, redo) {
+    var eng = Canvas.engine;
+    box.appendChild(labelsSection(a, key, look, change, redo));
+    var looks = el("div", { class: "cv-look-row" });
+    looks.appendChild(segmented("Outline", [["solid", "Solid"], ["dashed", "Dashed"], ["dotted", "Dotted"]], look.line || "solid",
+      function (v) { change({ look: { line: v === "solid" ? null : v } }); }));
+    looks.appendChild(segmented("How heavy it is", [["s", "S"], ["m", "M"], ["l", "L"]], look.weight || "m", function (v) {
+      change({ look: { weight: v === "m" ? null : v } });
     }));
-    box.appendChild(looks);
-    box.appendChild(el("p", { class: "cv-label", text: "Route" }));
-    box.appendChild(segmented("Route", eng.ROUTES, a.route || "straight", function (v) { change({ route: v }); }));
-    box.appendChild(el("p", { class: "cv-label", text: "Ends" }));
-    box.appendChild(segmented("Ends", [["end", "One arrow"], ["both", "Both"], ["none", "None"]], a.ends || "end",
-      function (v) { change({ ends: v }); }));
-    if (Array.isArray(a.via) && a.via.length) {
+    box.appendChild(section("Look", null, [looks]));
+    var route = [segmented("Route", eng.ROUTES, a.route || "straight", function (v) { change({ route: v }); })];
+    if (a.route === "square") {
+      route.push(segmented("Turns", [["sharp", "Sharp turns"], ["rounded", "Rounded turns"]],
+        a.turns === "rounded" ? "rounded" : "sharp", function (v) { change({ turns: v === "rounded" ? "rounded" : null }); }));
+    }
+    box.appendChild(section("Route", null, route));
+    if (Array.isArray(a.via) && a.via.length && (!a.route || a.route === "straight")) {
       box.appendChild(el("div", { class: "cv-acts" }, [el("button", { type: "button", class: "btn small",
         onclick: function () { change({ via: null }); } },
         [el("span", { text: a.via.length === 1 ? "Remove the bend" : "Remove the " + a.via.length + " bends" })])]));
     }
+    // A square or curved line's turns kept where its stretches were moved
+    // by hand (V16): said, and given back to the line to turn by itself.
+    if (a.route === "square" || a.route === "curved") {
+      var kept = Array.isArray(a.via) ? a.via.length : 0;
+      box.appendChild(section("Bends", kept ? el("button", { type: "button", class: "cv-link-b", text: "Remove the bends",
+        onclick: function () { change({ via: null }); } }) : null, [el("p", { class: "cv-small", text: kept
+        ? "Moved by hand: it keeps " + (kept === 1 ? "its bend" : "its " + kept + " bends") + " where you put "
+          + (kept === 1 ? "it" : "them") + " and stays " + (a.route === "curved" ? "curved" : "square")
+          + ". Remove the bends and it finds its own way around the boxes again."
+        : "Drag a stretch to move it. Until you do, it finds its own way around the boxes." })]));
+    }
+    // Its heads, after its bends, as V16 lists them.
+    box.appendChild(endsSection(a, look, change));
     box.appendChild(el("div", { class: "cv-acts" }, [
       lockButton([key]),
       el("button", { type: "button", class: "btn small", onclick: function () { eng.remove([key]); } },
@@ -1619,11 +2900,13 @@
   function styleTab(box, a, key, look, change, redo) {
     var eng = Canvas.engine, tiles = eng.look() === "tiles";
     box.appendChild(section("Look of this diagram", hint("all its shapes"), [lookChoice(redo)]));
+    if (a.role !== "text") box.appendChild(stylesSection(a, key, redo));
     var sizes = segmented("Size of the words", [["s", "S"], ["m", "M"], ["l", "L"]], look.text || "m", function (v) {
       change({ look: { text: v === "m" ? null : v } });
     });
     box.appendChild(section(a.role === "frame" ? "Title" : "Words", el("span", { class: "cv-sec-r" }, [hint("Size"), sizes]),
-      [wordsBox(a, key)]));
+      [wordsTools(a, look, change, redo)].concat(a.link || Canvas.linkFor === key ? [linkRow(a, key, change)] : [],
+        [wordsBox(a, key)])));
     if (a.role === "shape") {
       // Illustrated sets a shape's first line as its name and the rest as
       // a caption under it; the panel says so where the words are typed.
@@ -1703,6 +2986,22 @@
     h.addEventListener("change", sized);
     box.appendChild(section("Size", hint("in the drawing's units"),
       [el("div", { class: "cv-pair" }, [cvField("Width", w), cvField("Height", h)])]));
+    // Where it sits: its corner from the corner of the frame or lane it sits
+    // in, or of the sheet, as the file keeps it. A lane's place is its
+    // swimlane's to say.
+    if (a.role !== "lane") {
+      var at = a.at || [0, 0], inFrame = (a.in || []).length > 0;
+      var px = el("input", { type: "number", class: "cv-input cv-x", step: "1", "aria-label": "Across" });
+      var py = el("input", { type: "number", class: "cv-input cv-y", step: "1", "aria-label": "Down" });
+      px.value = String(Math.round(at[0]));
+      py.value = String(Math.round(at[1]));
+      px.disabled = py.disabled = locked;
+      var placed = function () { change({ at: [Number(px.value), Number(py.value)] }); };
+      px.addEventListener("change", placed);
+      py.addEventListener("change", placed);
+      box.appendChild(section("Place", hint(inFrame ? "from the corner of what it sits in" : "from the sheet's corner"),
+        [el("div", { class: "cv-pair" }, [cvField("Across", px), cvField("Down", py)])]));
+    }
     if (a.role === "shape" || a.role === "note" || a.role === "text") {
       // Turned about its middle, as maxGraph's handle above it turns it.
       var turn = el("input", { type: "number", class: "cv-input cv-turn", min: "-180", max: "180", step: "15",
@@ -1717,6 +3016,19 @@
       });
       box.appendChild(section("Turned", hint("about its middle"), [cvField("Degrees clockwise", turn)]));
     }
+    // The drawing layer it is on, when the diagram has layers and it sits
+    // in no frame (what sits in one goes with it).
+    if (cv.data.layers && !(a.in || []).length) {
+      var layer = el("select", { class: "cv-input cv-layer", "aria-label": "Drawing layer" });
+      drawingLayers().forEach(function (l) {
+        var o = el("option", { value: l.key, text: l.name });
+        if (l.key === (Canvas.engine.layerOf(key) || "")) o.selected = true;
+        layer.appendChild(o);
+      });
+      layer.disabled = locked;
+      layer.addEventListener("change", function () { change({ layer: layer.value === layerHomeKey() ? null : layer.value }); });
+      box.appendChild(section("Drawing layer", hint("Ctrl+Alt+] and Ctrl+Alt+[ move it"), [layer]));
+    }
     box.appendChild(section("Order", hint("among what shares its frame"), [el("div", { class: "cv-acts" }, [
       el("button", { type: "button", class: "btn small", onclick: function () { eng.order([key], false); } },
         [el("span", { text: "Bring forward" })]),
@@ -1728,14 +3040,168 @@
   /* Copy the look (V16), the format painter: what the picked one looks
    * like, painted onto each of its own clicked next until Esc, or by
    * Ctrl+Alt+C and Ctrl+Alt+V. What a kind has no use for is left alone:
-   * a line takes only its outline and the size of its words, text only the
-   * size; an icon says what a shape is, not how it looks, and stays. */
+   * a line takes only its outline and the size of its words, text only how
+   * its words are set, a frame's name no bold, place or list; an icon says
+   * what a shape is, not how it looks, and stays. */
   var PAINTS = {
-    shape: ["fill", "line", "text", "opacity", "weight", "corners", "shadow"],
-    note: ["fill", "line", "text", "opacity", "weight", "corners", "shadow"],
-    frame: ["fill", "line", "text", "opacity", "weight", "corners"],
-    text: ["text"], line: ["line", "text"],
+    shape: ["fill", "line", "text", "opacity", "weight", "corners", "shadow", "bold", "italic", "underline", "strike",
+      "align"],
+    note: ["fill", "line", "text", "opacity", "weight", "corners", "shadow", "bold", "italic", "underline", "strike",
+      "align", "list"],
+    frame: ["fill", "line", "text", "opacity", "weight", "corners", "italic", "underline", "strike"],
+    text: ["text", "bold", "italic", "underline", "strike", "align", "list"], line: ["line", "text"],
   };
+
+  /* Styles (V16): five to start from, and the diagram's own, saved by name
+   * in its file (`saved_styles:`). A style is a look: chosen, it is copied
+   * onto what is picked, one step for Undo, as Copy the look paints, and its
+   * chip is ticked while the look is the style's. */
+  var STYLES = [
+    ["Service", { fill: "accent" }],
+    ["Data", { fill: "stone" }],
+    ["Outside", { fill: "white", line: "dashed", shadow: "none" }],
+    ["Risk", { fill: "rose", weight: "l", bold: true }],
+    ["Quiet", { fill: "white", weight: "s", shadow: "none" }],
+  ];
+
+  // Whether a look is a style's, over what the kind takes, each side's fill
+  // as it shows.
+  function sameLook(style, a) {
+    var mine = lookOf(a);
+    return (PAINTS[a.role] || []).every(function (k) {
+      var x = style[k], y = mine[k];
+      if (k === "fill") { x = x || ROLE_FILL[a.role]; y = y || ROLE_FILL[a.role]; }
+      return (x === undefined ? null : x) === (y === undefined ? null : y);
+    });
+  }
+
+  // A style's chip: its fill and edge in little, its name under it, and
+  // for one of the diagram's own a way to take it out.
+  function styleChip(name, l, a, key, redo, remove) {
+    var eng = Canvas.engine;
+    var edge = (l.weight === "l" ? 2 : l.weight === "s" ? 0.75 : 1.25) + "px " + (l.line === "dashed" ? "dashed" : "solid") +
+      " " + (l.line === "none" ? "transparent" : eng.INK);
+    var b = el("button", { type: "button", class: "cv-style", title: name, "aria-pressed": String(sameLook(l, a)),
+      onclick: function () { paintOnto([key], l); redo(); } }, [
+      el("span", { class: "cv-style-sw" }, [el("span", { class: "cv-style-chip",
+        style: "background:" + (eng.FILLS[l.fill || "white"] || "transparent") + ";border:" + edge }),
+        el("span", { class: "cv-style-bar" })]),
+      el("span", { class: "cv-style-name", text: name })]);
+    var kids = [b];
+    if (remove) {
+      kids.push(el("button", { type: "button", class: "cv-style-x", title: "Remove the style " + name,
+        "aria-label": "Remove the style " + name, onclick: remove }, [svgIcon("i-x")]));
+    }
+    return el("div", { class: "cv-style-wrap", role: "listitem" }, kids);
+  }
+
+  // The estate's saved styles written whole to model.yaml, and offered
+  // on every diagram from now.
+  function keepEstateStyles(list, redo) {
+    api("/api/canvas/styles", { styles: list }).then(function (res) {
+      if (cv && cv.parts) cv.parts.styles = res.styles || [];
+      redo();
+    }).catch(fail);
+  }
+
+  function stylesSection(a, key, redo) {
+    var d = cv.data, row = el("div", { class: "cv-styles", role: "list", "aria-label": "Styles" });
+    var every = (cv.parts && cv.parts.styles) || [];
+    STYLES.forEach(function (s) { row.appendChild(styleChip(s[0], s[1], a, key, redo)); });
+    // The estate's, offered on every diagram, kept in model.yaml.
+    every.forEach(function (s) {
+      var chip = styleChip(s.name, s.look || {}, a, key, redo, function () {
+        keepEstateStyles(every.filter(function (o) { return o !== s; }), redo);
+      });
+      chip.classList.add("is-estate");
+      chip.querySelector(".cv-style").title = s.name + ", for every diagram";
+      row.appendChild(chip);
+    });
+    (d.saved_styles || []).forEach(function (s) {
+      row.appendChild(styleChip(s.name, s.look || {}, a, key, redo, function () {
+        d.saved_styles = (d.saved_styles || []).filter(function (o) { return o !== s; });
+        if (!d.saved_styles.length) delete d.saved_styles;
+        canvasSoon(0);
+        redo();
+      }));
+    });
+    var form = el("div", { class: "cv-style-form", hidden: "" });
+    var name = el("input", { type: "text", class: "cv-input", maxlength: "40", placeholder: "Name the style",
+      "aria-label": "The style's name" });
+    var said = el("p", { class: "cv-small", hidden: "" });
+    var keep = function () {
+      var n = name.value.trim();
+      var taken = STYLES.map(function (s) { return s[0]; }).concat((d.saved_styles || []).map(function (s) { return s.name; }),
+        every.map(function (s) { return s.name; }));
+      said.hidden = false;
+      if (!n) { said.textContent = "Give it a name first."; return; }
+      if (taken.some(function (t) { return t.toLowerCase() === n.toLowerCase(); })) {
+        said.textContent = n + " is a style already.";
+        return;
+      }
+      var made = { name: n, look: lookOf(Canvas.engine.item(key)) };
+      if (forEvery) { keepEstateStyles(every.concat([made]), redo); return; }
+      d.saved_styles = (d.saved_styles || []).concat([made]);
+      canvasSoon(0);
+      redo();
+    };
+    name.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") { e.preventDefault(); keep(); }
+      else if (e.key === "Escape") { e.preventDefault(); form.hidden = true; said.hidden = true; }
+    });
+    // Kept in this diagram's file, or in model.yaml for every diagram.
+    var forEvery = false;
+    var where = segmented("Where the style is kept", [["here", "This diagram"], ["every", "Every diagram"]], "here",
+      function (v) {
+        forEvery = v === "every";
+        Array.prototype.forEach.call(where.children, function (b, i) { b.setAttribute("aria-checked", String((i === 1) === forEvery)); });
+      });
+    form.appendChild(where);
+    form.appendChild(name);
+    form.appendChild(el("button", { type: "button", class: "btn small", onclick: keep }, [el("span", { text: "Save" })]));
+    var open = el("button", { type: "button", class: "cv-link-b", text: "Save this as a style",
+      onclick: function () { form.hidden = false; name.focus(); } });
+    return section("Styles", open, [row, form, said]);
+  }
+
+  // The words' toolbar (V16): bold, italic, underline and strikethrough for
+  // all of its words, a note's or text's lines as a list, and where they
+  // sit. A frame's name is bold already, at its left, on one line.
+  function wordsTools(a, look, change, redo) {
+    var row = el("div", { class: "cv-words-tools", role: "toolbar", "aria-label": "How the words are set" });
+    var toggles = [["italic", "Italic", "i-italic"], ["underline", "Underline", "i-underline"],
+      ["strike", "Strikethrough", "i-strike"]];
+    if (a.role !== "frame") toggles.unshift(["bold", "Bold", "i-bold"]);
+    if (a.role === "note" || a.role === "text") toggles.push(["list", "A list of its lines", "i-list"]);
+    toggles.forEach(function (t) {
+      row.appendChild(el("button", { type: "button", class: "cv-tool-b", title: t[1], "aria-label": t[1],
+        "aria-pressed": String(look[t[0]] === true), onclick: function () {
+          var p = {};
+          p[t[0]] = look[t[0]] === true ? null : true;
+          // A list sits at the left.
+          if (t[0] === "list") p.align = null;
+          change({ look: p });
+        } }, [svgIcon(t[2])]));
+    });
+    // Its last button sets where its words link to (linkRow).
+    row.appendChild(el("button", { type: "button", class: "cv-tool-b", title: a.link ? "Its link: " + a.link : "Link",
+      "aria-label": "Link", "aria-pressed": String(!!a.link || Canvas.linkFor === a.key), onclick: function () {
+        Canvas.linkFor = Canvas.linkFor === a.key ? null : a.key;
+        redo();
+      } }, [svgIcon("i-link")]));
+    if (a.role !== "frame" && !look.list) {
+      var home = a.role === "shape" ? "center" : "left", now = look.align || home;
+      var aligns = el("span", { class: "cv-tool-set", role: "radiogroup", "aria-label": "Where the words sit" });
+      [["left", "To the left", "i-text-left"], ["center", "In the middle", "i-text-center"],
+        ["right", "To the right", "i-text-right"]].forEach(function (t) {
+        aligns.appendChild(el("button", { type: "button", role: "radio", class: "cv-tool-b", title: t[1], "aria-label": t[1],
+          "aria-checked": String(now === t[0]), onclick: function () { change({ look: { align: t[0] === home ? null : t[0] } }); } },
+          [svgIcon(t[2])]));
+      });
+      row.appendChild(aligns);
+    }
+    return row;
+  }
 
   // A look as it shows: a shape's paper and a note's yellow said outright,
   // so painted onto the other they come along.
@@ -1798,6 +3264,9 @@
     else if (mod && (k === "y" || k === "Y")) canvasUndo(false);
     // By the key's place, not its letter: with Alt held a layout may type
     // another character.
+    else if (mod && e.altKey && (e.code === "BracketRight" || e.code === "BracketLeft") && keys.length) {
+      moveToLayer(keys, e.code === "BracketRight" ? -1 : 1);
+    }
     else if (mod && e.altKey && e.code === "KeyC" && keys.length) Canvas.copiedLook = lookOf(eng.item(keys[0]));
     else if (mod && e.altKey && e.code === "KeyV" && keys.length && Canvas.copiedLook) {
       paintOnto(keys, Canvas.copiedLook);
@@ -1810,6 +3279,8 @@
     else if (!mod && !e.altKey && (k === "a" || k === "A")) $("cvAdd").click();
     else if (!mod && !e.altKey && (k === "b" || k === "B")) openCanvasPicker("boundaries");
     else if (!mod && k === "?") toggleKeys();
+    else if (mod && e.shiftKey && (k === "g" || k === "G")) groupThem();
+    else if (mod && e.shiftKey && (k === "u" || k === "U")) ungroupPicked();
     else if (mod && (k === "g" || k === "G") && pickedBoxes(cv.sel).length) frameThem();
     else if (mod && e.shiftKey && (k === "l" || k === "L") && toggleLockPicked()) { /* said in the panel */ }
     else if (mod && !e.shiftKey && (k === "c" || k === "C") && canvasCopy()) { /* kept */ }
@@ -1820,8 +3291,8 @@
     }
     else if (!keys.length) done = false;
     else if (k === "Delete" || k === "Backspace") eng.remove(keys);
-    else if (k === "Escape") eng.select([]);
-    else if (mod && (k === "d" || k === "D")) eng.copy(keys);
+    else if (k === "Escape") { if (!goOut()) eng.select([]); }
+    else if (mod && (k === "d" || k === "D")) regrouping(groupsOf(), function () { return eng.copy(keys); });
     else if (mod && k === "]") eng.order(keys, false);
     else if (mod && k === "[") eng.order(keys, true);
     else if (/^Arrow/.test(k)) {
@@ -1855,7 +3326,7 @@
     var ids = pickedIds(cv.sel), keys = eng ? eng.selected() : [];
     if (!ids.length && !keys.length) return false;
     var clip = { from: cv.id || "", model: (state.overview && state.overview.modelName) || "",
-      own: keys.length ? eng.clip(keys) : [], records: ids.slice(), pasted: 0 };
+      own: keys.length ? eng.clip(keys) : [], records: ids.slice(), pasted: 0, groups: groupsOf() };
     clipHeld = clip;
     try { localStorage.setItem(CLIP_KEY, JSON.stringify(clip)); } catch (e) { /* private mode: this page only */ }
     var words = [];
@@ -1907,7 +3378,7 @@
     }
     function drawOwn() {
       if (cv !== mine || !own.length || !Canvas.engine || !Canvas.engine.live()) return [];
-      return Canvas.engine.paste(own, dx, dy);
+      return regrouping(clip.groups, function () { return Canvas.engine.paste(own, dx, dy); });
     }
     function said(made) {
       var words = [];
@@ -1945,7 +3416,9 @@
       ["N", "Note"], ["F", "Frame"], ["L", "Line, the last route chosen"], ["A", "Add from the library or the estate"],
       ["B", "Add a boundary"]]],
     ["Editing", [["Ctrl+Z", "Undo"], ["Ctrl+Shift+Z", "Redo"], ["Delete", "Delete its own"], ["Ctrl+D", "Duplicate"], ["Ctrl+C", "Copy, for this diagram or another"], ["Ctrl+V", "Paste"],
-      ["Ctrl+Alt+C", "Copy the look"], ["Ctrl+Alt+V", "Paint the look copied"],
+      ["Ctrl+Alt+C", "Copy the look"], ["Ctrl+Alt+V", "Paint the look copied"], ["Ctrl+Shift+G", "Group them"],
+      ["Ctrl+Alt+]", "To the drawing layer above"], ["Ctrl+Alt+[", "To the drawing layer below"],
+      ["Ctrl+Shift+U", "Ungroup"],
       ["Ctrl+] [", "Forward, back"], ["Arrows", "Nudge, Shift by ten"], ["Enter", "Type in it"],
       ["Ctrl+G", "Frame what is picked"], ["Ctrl+Shift+L", "Lock or unlock it here"], ["Esc", "Let go"]]],
     ["Around", [["Ctrl+K", "Commands and search"], ["/", "Search"], ["Shift+click", "Pick one more, or one fewer"],
@@ -2501,16 +3974,105 @@
     box.hidden = !said.length;
   }
 
-  /* ---- the picker: the library and the estate, to click or drag ---- */
+  /* ---- Add on shelves (V18) ----
+   * The library's kinds by what each is for, its kits, and the estate's
+   * systems and boundaries, a shelf each, every shelf under its headings.
+   * It was four tabs over one list: Library showed the eleven kits and the
+   * first fourteen of 109 kinds, unsorted, and the database, the queue and
+   * the other ninety-five were reachable only by typing their names. */
 
-  function closeCanvasPicker() {
-    var pick = $("cvPicker");
-    if (cv) cv.connect = null;
-    if (!pick) return;
-    pick.hidden = true;
-    pick.textContent = "";
-    $("cvAdd").setAttribute("aria-expanded", "false");
+  //: Add's shelves, in the order they are listed: the library's four, which
+  //: the server tells apart (`_shelf_of` in server.py), and the estate's two.
+  var SHELVES = [
+    { id: "kits", side: "library", name: "Whole applications", icon: "blocks",
+      say: "A kit places the systems an application is made of, with their lines, in the account you drop it in." },
+    { id: "parts", side: "library", name: "Parts of an application", icon: "box",
+      say: "One box each: the pieces a system you build is made of, each in the zone it usually runs in." },
+    { id: "business", side: "library", name: "Business systems", icon: "building-2",
+      say: "One box each: what an organization runs, mostly bought, so it sits in no subnet of ours." },
+    { id: "blocks", side: "library", name: "Building blocks", icon: "layers",
+      say: "Several cloud services that arrive together, with their lines. Dropped in an account, they are that cloud's products." },
+    { id: "cloud", side: "library", name: "Cloud services", icon: "cloud",
+      say: "One box each: what systems run on. Dropped in an account, it is that cloud's product." },
+    { id: "systems", side: "estate", name: "Systems", found: "Systems in this estate", icon: "database",
+      say: "The estate's own systems, by domain. Placed as they are, where they belong." },
+    { id: "data", side: "estate", name: "Data", found: "Data in this estate", icon: "table",
+      say: "The estate's data, by classification. Placed, each is joined by a line to the systems on the diagram that read or write it." },
+    { id: "actors", side: "estate", name: "Actors", icon: "circle-user",
+      say: "Who uses the systems, outside the company and inside it. Placed, each is joined by a line to the systems on the diagram it uses." },
+    { id: "teams", side: "estate", name: "Teams", icon: "users",
+      say: "The organization's units, under the one each sits in. Placed, each is joined by a line to what it owns on the diagram." },
+    { id: "boundaries", side: "estate", name: "Boundaries", icon: "square-dashed", say: "" },
+  ];
+
+  //: The shelf Add opens on, the one picked last, kept per browser.
+  var SHELF_KEY = "aac.add.shelf";
+
+  //: The shelves of what is placed whole, rather than as a box: quick
+  //: connect joins its line to one box, so it offers none of these.
+  var WHOLE_SHELVES = ["kits", "blocks", "boundaries"];
+
+  //: The lines a record placed from Add brings (V19): what reads and writes
+  //: a data asset and the system that keeps its master, the systems an
+  //: actor uses, what a team owns, and a block's services' own. A new
+  //: diagram draws interfaces alone, so a data asset placed on it stood by
+  //: itself beside the systems that write it.
+  var LINES_OF = { data_assets: ["system_reads_writes", "source_of_truth"], actors: ["actor_uses_system"],
+    org_units: ["owner"], tech_services: ["tech_service_connects_to"] };
+
+  function addLines(type) {
+    var want = LINES_OF[type] || [];
+    if (!want.length) return;
+    if (!Array.isArray(cv.data.edges) || !cv.data.edges.length) cv.data.edges = [{ via: "interfaces" }];
+    want.forEach(function (via) {
+      if (!cv.data.edges.some(function (e) { return e && e.via === via; })) cv.data.edges.push({ via: via });
+    });
   }
+
+  // A word for more than one: a capability, two capabilities.
+  function plural(word) {
+    return /[^aeiou]y$/.test(word) ? word.slice(0, -1) + "ies" : /(s|x|ch|sh)$/.test(word) ? word + "es" : word + "s";
+  }
+
+  // "ten more systems", in a sentence.
+  function inWords(n, word) {
+    var said = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"][n];
+    return (said || String(n)) + " " + (n === 1 ? word : plural(word));
+  }
+
+  // Who writes a data asset, keeps its master and reads it, said.
+  function dataSaid(d) {
+    var parts = [], others = (d.writers || []).filter(function (w) { return w !== d.master; });
+    if (d.master && (d.writers || []).indexOf(d.master) !== -1) parts.push(d.master + " writes it and keeps the master");
+    else if (d.master) parts.push(d.master + " keeps the master");
+    if (others.length) parts.push(listed(others) + (others.length === 1 ? " writes" : " write") + " it");
+    if (d.readers) parts.push(inWords(d.readers, parts.length ? "more system" : "system") + (d.readers === 1 ? " reads" : " read") + " it");
+    if (!parts.length) return "No system is recorded reading or writing it.";
+    var said = parts.join("; ");
+    return said.charAt(0).toUpperCase() + said.slice(1) + ". Placed, a line joins it to each of them that is on the diagram.";
+  }
+
+  // The systems an actor uses, said, the first few by name.
+  function usesSaid(a) {
+    var uses = a.uses || [];
+    if (!uses.length) return "No system is recorded as one it uses.";
+    var named = uses.length > 4 ? uses.slice(0, 3).concat([inWords(uses.length - 3, "more system")]) : uses;
+    return "Uses " + listed(named) + ". Placed, a line joins it to each of them that is on the diagram.";
+  }
+
+  // What a team owns, said by kind, the three it has most of by name.
+  function ownsSaid(t) {
+    var owns = t.owns || [];
+    if (!owns.length) return "It owns nothing in the estate yet.";
+    var named = owns.slice(0, 3).map(function (o) { return o[1] + " " + (o[1] === 1 ? o[0] : plural(o[0])); });
+    var rest = owns.slice(3).reduce(function (n, o) { return n + o[1]; }, 0);
+    if (rest) named.push(rest + " more " + (rest === 1 ? "record" : "records"));
+    return "Owns " + listed(named) + ". Placed, a line joins it to each of them that is on the diagram.";
+  }
+
+  //: How many of one shelf's finds Everything found shows before a link to
+  //: the rest, so a short word does not bury the other shelves under one.
+  var FOUND_EACH = 8;
 
   //: The words a product's name starts with that say whose it is: "EC2"
   //: asked for is Amazon EC2 exactly.
@@ -2527,183 +4089,465 @@
     return 2;
   }
 
-  function pickerItems(tab, q, boundaries) {
-    var p = cv.parts, out = { library: [], estate: [] };
-    var hit = function (text) { return !q || String(text || "").toLowerCase().indexOf(q) !== -1; };
-    if (!boundaries && tab !== "estate") {
-      // A part is found by what each cloud calls it as well as by its own
-      // name: "EC2" is the virtual machine, named for what was asked.
-      var parts = p.parts.slice().sort(function (a, b) {
-        var ra = FIRST_PARTS.indexOf(a.id), rb = FIRST_PARTS.indexOf(b.id);
-        return (ra === -1 ? 99 : ra) - (rb === -1 ? 99 : rb);
-      }).map(function (x, i) {
-        if (hit(x.name + " " + x.category + " " + x.typeLabel)) return { part: x, rank: closeness(x.name, q), at: i };
-        var said = null;
-        // Of a part's products the one closest to what was asked.
-        Object.keys(x.products || {}).forEach(function (cloud) {
-          x.products[cloud].forEach(function (product) {
-            if (!hit(product)) return;
-            if (!said || closeness(product, q) < closeness(said.product, q)) said = { cloud: cloud, product: product };
-          });
-        });
-        // A former name, "Azure OpenAI", finds the cloud's usual product.
-        if (!said) Object.keys(x.providers || {}).some(function (cloud) {
-          if (!hit(x.providers[cloud]) || !(x.products || {})[cloud]) return false;
-          said = { cloud: cloud, product: x.products[cloud][0] };
-          return true;
-        });
-        return said ? { part: x, cloud: said.cloud, product: said.product, rank: closeness(said.product, q), at: i } : null;
-      }).filter(Boolean);
-      // What was asked for first: "EC2" is the virtual machine before the
-      // accelerated instances whose answer says EC2 too.
-      if (q) parts.sort(function (a, b) {
-        return a.rank - b.rank || (a.product || a.part.name).length - (b.product || b.part.name).length || a.at - b.at;
-      });
-      out.library = parts.slice(0, q ? 30 : (tab === "library" ? 14 : 4)).map(function (found) {
-        var x = found.part;
-        return { kind: "part", id: x.id, name: found.product || x.name, part: x.name, products: x.products || {},
-          product: found.product || "", cloud: found.cloud || "",
-          sub: found.product ? x.name + " \u00b7 " + found.cloud + " \u00b7 " + x.typeLabel : "Part \u00b7 " + x.typeLabel,
-          tag: "Box", icon: "i-box", typeLabel: x.typeLabel, type: x.type };
-      });
-    }
-    if (tab !== "library") {
-      var views = p.views.slice().sort(function (a, b) { return (a.id !== p.network) - (b.id !== p.network); })
-        .filter(function (v) { return hit(v.title + " " + v.category); })
-        .map(function (v) {
-          var accounts = v.fold && v.fold.field === "cloud_account"
-            ? v.fold.values.filter(function (x) { return x.value; }).length : 0;
-          return { kind: "view", id: v.id, name: v.title, tag: "Boundary", icon: v.id === p.network ? "i-network" : "i-grid",
-            sub: "View · " + v.nodes + " " + nodesWord(v) + (accounts ? ", " + accounts + " accounts" : "") };
-        });
-      var accounts = p.accounts.filter(function (a) { return hit(a.label); }).map(function (a) {
-        return { kind: "account", value: a.value, name: a.value, tag: "Boundary", icon: "i-cloud",
-          sub: a.label.split(" · ")[0] + " account · " + a.count + " network parts" };
-      });
-      var zones = p.zones.filter(function (z) { return hit(z.value + " zone"); }).map(function (z) {
-        return { kind: "zone", value: z.value, name: z.value, tag: "Boundary", icon: "i-shield",
-          sub: "Network zone · " + z.count + " network parts" };
-      });
-      var systems = boundaries ? [] : p.systems.filter(function (s) { return hit(s.name + " " + s.id + " " + s.domain); })
-        .map(function (s) {
-          return { kind: "system", id: s.id, name: s.name, tag: "Box", icon: "i-app-window",
-            sub: "System" + (s.domain ? " · " + s.domain : "") };
-        });
-      if (!q && tab === "all") {
-        out.estate = views.slice(0, 1).concat(accounts.slice(0, 1), zones.slice(0, 1), systems.slice(0, 1));
-      } else {
-        var cap = q ? 12 : (boundaries ? 40 : 8);
-        out.estate = views.slice(0, q ? 8 : 40).concat(accounts.slice(0, cap), zones.slice(0, cap), systems.slice(0, cap));
-      }
-    }
+  // An icon of the kinds' own (kind-icons.js), else the chrome's sprite.
+  function lucide(name) {
+    var drawn = (window.TerraneKindIcons || {}).icons || {};
+    if (!drawn[name]) return svgIcon("i-" + name);
+    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "i");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("aria-hidden", "true");
+    svg.innerHTML = drawn[name];
+    return svg;
+  }
+
+  // The icon beside a kind: its own, else its category's, else a box.
+  function kindIconName(part) {
+    var t = window.TerraneKindIcons || {};
+    return (t.kinds || {})[part.id] || (t.categories || {})[part.category] || "box";
+  }
+
+  function lowerFirst(text) {
+    // "AI agent" keeps its capitals; "Async worker" is the async worker.
+    return /^[A-Z][a-z]/.test(text) ? text.charAt(0).toLowerCase() + text.slice(1) : text;
+  }
+
+  function listed(words) {
+    return words.length < 2 ? words.join("") : words.slice(0, -1).join(", ") + " and " + words[words.length - 1];
+  }
+
+  /* Which kits make a system of this kind, and as what: "Also in the
+   * Event-driven service kit, as its async worker." A kit that makes two
+   * of it says both. */
+  function kitsSaid(kits) {
+    var by = [], seen = {};
+    (kits || []).forEach(function (k) {
+      if (!seen[k.id]) { seen[k.id] = { name: k.name, as: [] }; by.push(seen[k.id]); }
+      if (seen[k.id].as.indexOf(k.as) === -1) seen[k.id].as.push(k.as);
+    });
+    if (!by.length) return "";
+    var as = function (k) { return listed(k.as.map(lowerFirst)); };
+    var same = by.every(function (k) { return as(k) === as(by[0]); });
+    if (by.length > 3) return "Also in " + by.length + " kits" + (same ? ", as their " + as(by[0]) : "") + ".";
+    if (by.length === 1) return "Also in the " + by[0].name + " kit, as its " + as(by[0]) + ".";
+    if (same) return "Also in the " + listed(by.map(function (k) { return k.name; })) + " kits, as their " + as(by[0]) + ".";
+    return "Also in " + listed(by.map(function (k) { return "the " + k.name + " kit as its " + as(k); })) + ".";
+  }
+
+  // What a kind is sold as, said short: one maker's answer whole, or the
+  // usual product of each cloud.
+  function offeredSaid(x) {
+    var clouds = Object.keys(x.providers || {});
+    if (clouds.length === 1) return String(x.providers[clouds[0]]).replace(/\s*\(formerly [^)]*\)/g, "");
+    return clouds.map(function (c) { return ((x.products || {})[c] || [])[0]; }).filter(Boolean).join(", ");
+  }
+
+  /* Everything Add offers, shelf by shelf, each with the heading it is
+   * listed under: the kinds as the server orders them, the kits by their
+   * category, the estate's systems by domain and its boundaries by what
+   * they are. Opened by quick connect, only what is a box. */
+  function shelfItems(link) {
+    var p = cv.parts, out = {};
+    SHELVES.forEach(function (s) { out[s.id] = []; });
+    (link ? [] : p.blocks || []).forEach(function (b) {
+      out.blocks.push({ kind: "block", id: b.id, name: b.name, block: b, group: b.category, tag: "Block", icon: "layers",
+        sub: counted(b.services.length, "cloud service") + ": " + b.services.map(function (s) { return s.name; }).join(" \u00b7 "),
+        find: b.name + " " + b.category });
+    });
+    (p.data || []).forEach(function (d) {
+      out.data.push({ kind: "record", type: "data_assets", id: d.id, name: d.name, src: d, group: d.classification || "Unclassified",
+        tag: "Data", icon: "table", sub: d.domain, find: d.name + " " + d.id + " " + d.classification + " " + d.domain });
+    });
+    (p.actors || []).forEach(function (a) {
+      out.actors.push({ kind: "record", type: "actors", id: a.id, name: a.name, src: a,
+        group: a.internal ? "Inside the company" : "Outside the company", tag: "Actor", icon: "circle-user", sub: a.kind,
+        find: a.name + " " + a.id + " " + a.kind });
+    });
+    (p.teams || []).forEach(function (t) {
+      out.teams.push({ kind: "record", type: "org_units", id: t.id, name: t.name, src: t,
+        group: t.parent ? "In " + t.parent : "At the top", tag: "Team", icon: "users", sub: t.parent,
+        find: t.name + " " + t.id + " " + t.parent });
+    });
+    if (!link) (p.kits || []).forEach(function (k) {
+      out.kits.push({ kind: "kit", id: k.id, name: k.name, kit: k, group: k.category, tag: "Kit", icon: "blocks",
+        sub: counted(k.systems.length, "system") + ": " + k.systems.map(function (s) { return s.name; }).join(" · "),
+        find: k.name + " " + k.category });
+    });
+    (p.parts || []).forEach(function (x) {
+      (out[x.shelf] || out.cloud).push({ kind: "part", id: x.id, name: x.name, part: x.name, src: x,
+        group: x.group || x.category, products: x.products || {}, product: "", cloud: "", typeLabel: x.typeLabel,
+        type: x.type, tag: "Box", icon: kindIconName(x), sub: offeredSaid(x) });
+    });
+    // By domain, the domains in alphabetical order and the systems of none
+    // after them.
+    (p.systems || []).map(function (s, i) { return { s: s, i: i }; }).sort(function (a, b) {
+      return (!a.s.domain) - (!b.s.domain) || a.s.domain.toLowerCase().localeCompare(b.s.domain.toLowerCase()) || a.i - b.i;
+    }).forEach(function (o) {
+      var s = o.s;
+      out.systems.push({ kind: "system", id: s.id, name: s.name, src: s, group: s.domain || "No domain", tag: "System",
+        icon: "app-window", sub: "", find: s.name + " " + s.id + " " + s.domain });
+    });
+    if (!link) boundaryItems(p, out.boundaries);
+    SHELVES.forEach(function (s) { out[s.id].forEach(function (i) { i.shelf = s.id; }); });
     return out;
   }
 
-  /* Add's picker: the library's parts, the estate's records and its
-   * boundaries, a tab each beside All. Boundary had a button of its own
-   * beside Add; it is Add's Boundaries tab now, as V13 has it (B). */
+  function boundaryItems(p, into) {
+    p.views.slice().sort(function (a, b) { return (a.id !== p.network) - (b.id !== p.network); }).forEach(function (v) {
+      var accounts = v.fold && v.fold.field === "cloud_account"
+        ? v.fold.values.filter(function (x) { return x.value; }).length : 0;
+      into.push({ kind: "view", id: v.id, name: v.title, group: "Views", tag: "Boundary",
+        icon: v.id === p.network ? "network" : "grid", find: v.title + " " + v.category,
+        sub: "View · " + v.nodes + " " + nodesWord(v) + (accounts ? ", " + accounts + " accounts" : "") });
+    });
+    p.accounts.forEach(function (a) {
+      into.push({ kind: "account", value: a.value, name: a.value, group: "Accounts", tag: "Boundary",
+        icon: "cloud", find: a.label, sub: a.label.split(" · ")[0] + " account · " + a.count + " network parts" });
+    });
+    p.zones.forEach(function (z) {
+      into.push({ kind: "zone", value: z.value, name: z.value, group: "Network zones", tag: "Boundary",
+        icon: "shield", find: z.value + " zone", sub: "Network zone · " + z.count + " network parts" });
+    });
+  }
+
+  /* How an item answers what was typed, or null: how near (`closeness`),
+   * and for a kind found by what a cloud or a maker calls it, that product,
+   * which it is then placed as. */
+  function answers(item, q) {
+    var hit = function (text) { return String(text || "").toLowerCase().indexOf(q) !== -1; };
+    if (item.kind === "part") {
+      var x = item.src;
+      if (hit([x.name, x.category, x.group, x.typeLabel].concat(x.aliases || []).join(" "))) return { rank: closeness(x.name, q) };
+      var said = null;
+      // Of a kind's products the one closest to what was asked: "EC2" is
+      // the virtual machine, placed as Amazon EC2.
+      Object.keys(x.products || {}).forEach(function (cloud) {
+        x.products[cloud].forEach(function (product) {
+          if (!hit(product)) return;
+          if (!said || closeness(product, q) < closeness(said.product, q)) said = { cloud: cloud, product: product };
+        });
+      });
+      // A former name, "Azure OpenAI", finds the cloud's usual product.
+      if (!said) Object.keys(x.providers || {}).some(function (cloud) {
+        if (!hit(x.providers[cloud]) || !(x.products || {})[cloud]) return false;
+        said = { cloud: cloud, product: x.products[cloud][0] };
+        return true;
+      });
+      return said ? { rank: closeness(said.product, q), cloud: said.cloud, product: said.product } : null;
+    }
+    if (hit(item.find)) return { rank: closeness(item.name, q) };
+    // A kit is found by a system it makes as well, after what is called so:
+    // "chat" is the assistant chat's kind before the kit that has one.
+    if (item.kind === "kit" && hit(item.kit.systems.map(function (s) { return s.name; }).join(" "))) return { rank: 9 };
+    if (item.kind === "block" && hit(item.block.services.map(function (s) { return s.name; }).join(" "))) return { rank: 9 };
+    return null;
+  }
+
+  // Items under their headings, the headings in the order they come.
+  function headed(items) {
+    var out = [], by = {};
+    items.forEach(function (i) {
+      if (!by[i.group]) { by[i.group] = { name: i.group, items: [] }; out.push(by[i.group]); }
+      by[i.group].items.push(i);
+    });
+    return out;
+  }
+
+  function closeCanvasPicker() {
+    var pick = $("cvPicker");
+    if (cv) cv.connect = null;
+    if (!pick) return;
+    pick.hidden = true;
+    pick.textContent = "";
+    $("cvAdd").setAttribute("aria-expanded", "false");
+  }
+
+  /* Add: the shelves beside what the picked one holds, and below both what
+   * the one pointed at is. Typed, every shelf is searched at once and what
+   * was found is listed by shelf and heading, Everything found first.
+   * Opened from the Boundaries key on Boundaries; from quick connect, only
+   * what is a box, since what is chosen is joined to that record. */
   function openCanvasPicker(tab, boundaries, link) {
     if (!cv) return;
     var pick = $("cvPicker");
-    var state2 = { tab: boundaries ? "boundaries" : tab || "all" };
     closeCanvasPicker();
-    // Opened by quick connect: what is chosen is joined to that record, so
-    // only parts and records are offered, and no boundary.
     if (link) cv.connect = link;
     pick.textContent = "";
     pick.hidden = false;
+    // A drop that ended before its drag had begun left it faded and deaf
+    // to clicks: a drag's own timer marks the list as carried.
+    pick.classList.remove("is-carrying");
     $("cvAdd").setAttribute("aria-expanded", "true");
-    var search = el("input", { type: "search", class: "cv-search", "aria-label": "Find something to place" });
-    var tabs = el("div", { class: "cv-tabs", role: "tablist" });
-    var head = el("p", { class: "cv-pick-head" });
+    var shelves = SHELVES.filter(function (s) { return !link || WHOLE_SHELVES.indexOf(s.id) === -1; });
+    var ids = shelves.map(function (s) { return s.id; });
+    var kept = "";
+    try { kept = localStorage.getItem(SHELF_KEY) || ""; } catch (e) { kept = ""; }
+    var library = ["kits", "parts", "business", "blocks", "cloud"];
+    var first = boundaries || tab === "boundaries" ? "boundaries"
+      : tab === "estate" ? (kept && library.indexOf(kept) === -1 ? kept : "systems")
+      : tab === "library" ? (library.indexOf(kept) !== -1 ? kept : "parts")
+      : kept;
+    var at = { shelf: ids.indexOf(first) !== -1 ? first : "parts", found: "everything" };
+    var items = shelfItems(link);
+    var shown = [], current = -1, finds = null, moved = "";
+
+    var search = el("input", { type: "search", class: "cv-search", "aria-label": "Find something to place",
+      placeholder: "Find a kind, a product like RDS, a system, an account…" });
+    var nav = el("div", { class: "cv-shelves", role: "tablist", "aria-label": "Shelves" });
     var list = el("div", { class: "cv-list" });
-    var c = cv.parts.counts;
+    var foot = el("div", { class: "cv-detail", "aria-live": "polite" });
     pick.appendChild(el("div", { class: "cv-search-row" }, [svgIcon("i-search"), search]));
-    [["all", "All"], ["library", "Library"], ["estate", "This estate"], ["boundaries", "Boundaries"]].filter(function (t) {
-      return !link || t[0] !== "boundaries";
-    }).forEach(function (t) {
-      tabs.appendChild(el("button", { type: "button", role: "tab", class: "cv-tab",
-        "aria-selected": String(state2.tab === t[0]),
-        onclick: function () {
-          state2.tab = t[0];
-          tabs.querySelectorAll(".cv-tab").forEach(function (b) { b.setAttribute("aria-selected", String(b === this)); }, this);
-          fill();
-        } }, [t[1]]));
-    });
     if (link) {
       pick.appendChild(el("p", { class: "cv-pick-link" }, [svgIcon("i-link"), el("span", {
         text: "What comes next to " + ((indexItem(link.from) || {}).name || link.from) + "? A line will join them." })]));
     }
-    pick.appendChild(tabs);
-    pick.appendChild(head);
-    pick.appendChild(list);
-    pick.appendChild(el("p", { class: "cv-foot", text: c.systems + " systems, " + c.views + " views to place as boundaries and "
-      + c.parts + " parts in all: type to find one, or drag it straight onto the sheet." }));
+    pick.appendChild(el("div", { class: "cv-shelf-body" }, [nav, list]));
+    pick.appendChild(foot);
 
-    function row(item) {
-      var r = el("div", { class: "cv-row", draggable: "true", tabindex: "0", role: "button",
-        "aria-label": "Place " + item.name + ", " + item.sub }, [
-        el("span", { class: "cv-grip" }, [svgIcon("i-grip")]),
-        el("span", { class: "cv-ico" }, [svgIcon(item.icon)]),
-        el("span", { class: "cv-row-text" }, [el("b", { text: item.name }), el("span", { text: item.sub })]),
-        el("span", { class: "cv-tag" + (item.tag === "Boundary" ? " is-boundary" : ""), text: item.tag }),
-      ]);
-      r.addEventListener("click", function () { canvasPlace(item, [], null); });
-      r.addEventListener("keydown", function (e) {
+    function shelfOf(id) { return SHELVES.filter(function (s) { return s.id === id; })[0]; }
+
+    function placeable(item, node) {
+      var n = shown.length;
+      shown.push(item);
+      node.addEventListener("click", function () { canvasPlace(item, [], null); });
+      node.addEventListener("keydown", function (e) {
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); canvasPlace(item, [], null); }
       });
-      r.addEventListener("dragstart", function (e) {
+      // Pointed at by a pointer that moved, not by the list redrawn under
+      // one at rest: typing with the pointer on the list made the row
+      // under it the one Enter placed.
+      node.addEventListener("mousemove", function (e) {
+        var xy = e.clientX + "," + e.clientY;
+        if (xy === moved) return;
+        moved = xy;
+        if (current !== n) point(n, false);
+      });
+      node.addEventListener("focus", function () { point(n, false); });
+      node.addEventListener("dragstart", function (e) {
         cvDrag = item;
         e.dataTransfer.effectAllowed = "copy";
         try { e.dataTransfer.setData("text/plain", item.name); } catch (err) { /* old engines */ }
-        r.classList.add("is-dragging");
+        node.classList.add("is-dragging");
         setTimeout(function () { $("cvPicker").classList.add("is-carrying"); }, 0);
         $("cvEmpty").classList.add("is-drop");
         $("cvEmptyDrop").textContent = item.tag === "Boundary"
-          ? "Drop to place " + item.name + " as a boundary" : "Drop to place " + item.name;
+          ? "Drop to place " + item.name + " as a boundary" : "Drop to place " + (item.product || item.name);
       });
-      r.addEventListener("dragend", function () {
-        r.classList.remove("is-dragging");
+      node.addEventListener("dragend", function () {
+        node.classList.remove("is-dragging");
         clearCanvasDrop();
         cvDrag = null;
       });
-      return r;
+      return node;
     }
 
-    function fill() {
-      list.textContent = "";
-      var bounds = state2.tab === "boundaries";
-      pick.classList.toggle("is-boundary", bounds);
-      search.placeholder = bounds ? "Find a view, an account, a zone…" : "Find a part, a system, an account, a view…";
-      head.textContent = bounds ? "A boundary: a view, or an account or zone of " + (cv.parts.networkTitle || "the network") : "";
-      head.hidden = !bounds;
-      var q = search.value.trim().toLowerCase();
-      var got = pickerItems(bounds ? "estate" : state2.tab, q, bounds);
-      if (link) {
-        var boxy = function (i) { return i.kind === "part" || i.kind === "system"; };
-        got = { library: got.library.filter(boxy), estate: got.estate.filter(boxy) };
-      }
-      if (got.library.length) {
-        list.appendChild(el("p", { class: "cv-group", text: "From the library" }));
-        got.library.forEach(function (i) { list.appendChild(row(i)); });
-      }
-      if (got.estate.length) {
-        list.appendChild(el("p", { class: "cv-group", text: "From this estate" }));
-        got.estate.forEach(function (i) { list.appendChild(row(i)); });
-      }
-      if (!got.library.length && !got.estate.length) {
-        list.appendChild(el("p", { class: "cv-none", text: "Nothing here is called that." }));
-      }
+    function said(item) { return "Place " + (item.product || item.name) + (item.sub ? ", " + item.sub : ""); }
+
+    // One of a shelf's kinds or systems, two to a row: its icon and name.
+    function cell(item) {
+      return placeable(item, el("div", { class: "cv-row is-cell", draggable: "true", tabindex: "0", role: "button",
+        "aria-label": said(item), title: item.name }, [
+        el("span", { class: "cv-grip" }, [svgIcon("i-grip")]),
+        el("span", { class: "cv-ico" }, [lucide(item.icon)]),
+        el("span", { class: "cv-cell-name", text: item.name }),
+      ]));
     }
-    search.addEventListener("input", fill);
+
+    // A kit or a boundary as it is browsed, or anything found: a line each.
+    function row(item, found) {
+      var note = found ? (item.product ? item.product + " · " + item.cloud : item.kind === "system" ? "" : item.sub) : item.sub;
+      var whole = item.kind === "kit" || item.kind === "block";
+      return placeable(item, el("div", { class: "cv-row" + (found ? " is-line" : "") + (whole && !found ? " is-kit" : ""),
+        draggable: "true", tabindex: "0", role: "button", "aria-label": said(item) }, [
+        el("span", { class: "cv-grip" }, [svgIcon("i-grip")]),
+        el("span", { class: "cv-ico" }, [lucide(item.icon)]),
+        el("span", { class: "cv-row-text" }, [el("b", { text: item.name }), note ? el("span", { text: note }) : null]),
+        el("span", { class: "cv-tag" + (item.tag === "Boundary" ? " is-boundary" : item.tag === "Kit" || item.tag === "Block" ? " is-kit" : ""), text: item.tag }),
+      ]));
+    }
+
+    function headings(groups, grid, found) {
+      groups.forEach(function (g) {
+        list.appendChild(el("p", { class: "cv-group" }, [el("span", { text: g.name }),
+          el("span", { class: "cv-group-n", text: String(g.items.length) })]));
+        var box = el("div", { class: grid ? "cv-grid" : "cv-rows" });
+        g.items.forEach(function (i) { box.appendChild(grid ? cell(i) : row(i, found)); });
+        list.appendChild(box);
+      });
+    }
+
+    function shelfButton(id, name, n) {
+      var on = (finds ? at.found : at.shelf) === id;
+      return el("button", { type: "button", role: "tab", class: "cv-shelf" + (id === "everything" ? " is-all" : ""),
+        "aria-selected": String(on), disabled: finds && !n && id !== "everything" ? "disabled" : null,
+        onclick: function () {
+          if (finds) at.found = id;
+          else {
+            at.shelf = id;
+            try { localStorage.setItem(SHELF_KEY, id); } catch (e) { /* private mode: this page only */ }
+          }
+          render();
+          list.scrollTop = 0;
+        } }, [el("span", { text: name }), el("span", { class: "cv-shelf-n", text: String(n) })]);
+    }
+
+    function fillNav(total) {
+      nav.textContent = "";
+      if (finds) nav.appendChild(shelfButton("everything", "Everything found", total));
+      [["library", "The library"], ["estate", "This estate"]].forEach(function (side) {
+        var mine = shelves.filter(function (s) { return s.side === side[0]; });
+        if (!mine.length) return;
+        nav.appendChild(el("p", { class: "cv-shelf-side", text: side[1] }));
+        mine.forEach(function (s) { nav.appendChild(shelfButton(s.id, s.name, (finds || items)[s.id].length)); });
+      });
+      nav.appendChild(el("p", { class: "cv-shelf-hint",
+        text: finds ? "Pick a shelf to see only what it found." : "Opens on the shelf you used last." }));
+    }
+
+    // What was found on one shelf, under its headings in the shelf's order
+    // and nearest first under each: "EC2" is the virtual machine before the
+    // accelerated instances whose answer says EC2 too.
+    function found(id, q) {
+      var hits = items[id].map(function (item, i) {
+        var a = answers(item, q);
+        if (!a) return null;
+        var hit = Object.assign({}, item, { near: a.rank }, a.product ? { product: a.product, cloud: a.cloud } : {});
+        return { item: hit, group: item.group, at: i };
+      }).filter(Boolean);
+      return headed(hits).reduce(function (all, g) {
+        // Equals keep the shelf's order; shortest first put Merchant Portal
+        // Web ahead of Authorization Switch when "pay" was in neither name.
+        return all.concat(g.items.sort(function (a, b) { return a.item.near - b.item.near || a.at - b.at; })
+          .map(function (h) { return h.item; }));
+      }, []);
+    }
+
+    // How near a shelf's best find is to what was typed.
+    function nearest(id) {
+      return finds[id].reduce(function (n, i) { return Math.min(n, i.near); }, 99);
+    }
+
+    function render() {
+      var q = search.value.trim().toLowerCase();
+      finds = null;
+      var order = shelves;
+      if (q) {
+        finds = {};
+        shelves.forEach(function (s) { finds[s.id] = found(s.id, q); });
+        if (at.found !== "everything" && !finds[at.found].length) at.found = "everything";
+        // The shelf with what was asked for first, the shelves' own order
+        // between equals: "rds" is Amazon RDS before the work tracking
+        // whose Azure Boards holds the letters.
+        order = shelves.slice().sort(function (a, b) {
+          return nearest(a.id) - nearest(b.id) || shelves.indexOf(a) - shelves.indexOf(b);
+        });
+      }
+      var total = finds ? shelves.reduce(function (n, s) { return n + finds[s.id].length; }, 0) : 0;
+      fillNav(total);
+      list.textContent = "";
+      shown = [];
+      if (!finds) {
+        var shelf = shelfOf(at.shelf);
+        list.appendChild(el("div", { class: "cv-shelf-head" }, [el("h3", { text: shelf.name }), el("p", {
+          text: shelf.id === "boundaries"
+            ? "A view, or an account or zone of " + (cv.parts.networkTitle || "the network") + ", drawn as a box around what it holds."
+            : shelf.say })]));
+        headings(headed(items[shelf.id]), WHOLE_SHELVES.indexOf(shelf.id) === -1, false);
+        if (!items[shelf.id].length) list.appendChild(el("p", { class: "cv-none", text: "Nothing on this shelf yet." }));
+      } else {
+        // Said once, from what was found: the first kind found by a
+        // product's name says how.
+        var byProduct = null;
+        order.forEach(function (s) {
+          finds[s.id].forEach(function (i) { if (i.product && (!byProduct || i.near < byProduct.near)) byProduct = i; });
+        });
+        list.appendChild(el("div", { class: "cv-shelf-head" }, [
+          el("h3", { text: counted(total, "thing") + " found for “" + search.value.trim() + "”" }),
+          el("p", { text: !total ? "Nothing on any shelf is called that." : "By shelf." + (byProduct
+            ? " A kind is found by what its makers call it too: “" + byProduct.product + "” is listed under "
+              + byProduct.name + "." : "") })]));
+        order.forEach(function (s) {
+          if (at.found !== "everything" && at.found !== s.id) return;
+          var all = finds[s.id];
+          if (!all.length) return;
+          var some = at.found === "everything" ? all.slice(0, FOUND_EACH) : all;
+          list.appendChild(el("p", { class: "cv-found-shelf" }, [lucide(s.icon), el("span", { text: s.found || s.name })]));
+          headings(headed(some), false, true);
+          if (some.length < all.length) {
+            list.appendChild(el("button", { type: "button", class: "cv-link cv-found-more",
+              text: "All " + all.length + " found on " + s.name, onclick: function () {
+                at.found = s.id;
+                render();
+                list.scrollTop = 0;
+              } }));
+          }
+        });
+      }
+      point(finds && shown.length ? 0 : -1, false);
+    }
+
+    // The one pointed at, by the pointer or the arrow keys: marked, and said
+    // in the foot. Found, the first is pointed at, and Enter places it.
+    function point(n, scroll) {
+      current = n;
+      var nodes = list.querySelectorAll(".cv-row");
+      Array.prototype.forEach.call(nodes, function (node, i) { node.classList.toggle("is-current", i === n); });
+      if (scroll && nodes[n]) nodes[n].scrollIntoView({ block: "nearest" });
+      tell(shown[n] || null);
+    }
+
+    function tell(item) {
+      foot.textContent = "";
+      var act = link ? "Click to place it, joined to " + ((indexItem(link.from) || {}).name || link.from) + " by a line."
+        : finds ? "Enter places it; the arrow keys move through what was found."
+        : item && (item.kind === "kit" || item.kind === "block") ? "Drag it into an account, or click to place it."
+        : "Drag it onto the sheet, or click to place it.";
+      if (!item) {
+        foot.appendChild(el("p", { class: "cv-detail-hint", text: "Point at one to read what it is. " + act }));
+        return;
+      }
+      var shelf = shelfOf(item.shelf);
+      var about = item.kind === "part" ? item.src.description
+        : item.kind === "kit" ? item.kit.description
+        : item.kind === "block" ? item.block.description
+        : item.type === "data_assets" ? item.src.description + (item.src.classification ? " " + item.src.classification + "." : "")
+        : item.kind === "record" ? item.src.description
+        : item.kind === "system" ? (item.src.description || "A system of the estate" + (item.src.status ? ", " + item.src.status.toLowerCase() : "") + ".")
+        : item.sub + ". Drawn as a box around what it holds.";
+      var more = item.kind === "part" ? [item.product ? "Placed, it is named " + item.product + "." : "",
+        kitsSaid(item.src.kits)].filter(Boolean).join(" ")
+        : item.kind === "kit" ? "It places " + listed(item.kit.systems.map(function (s) { return lowerFirst(s.name); })) + "."
+        : item.kind === "block" ? "It places " + listed(item.block.services.map(function (s) { return lowerFirst(s.name); }))
+          + (item.block.lines.length ? ", with " + inWords(item.block.lines.length, "line") + " between them." : ".")
+        : item.type === "data_assets" ? dataSaid(item.src)
+        : item.type === "actors" ? usesSaid(item.src)
+        : item.type === "org_units" ? ownsSaid(item.src)
+        : "";
+      foot.appendChild(el("span", { class: "cv-ico" }, [lucide(item.icon)]));
+      foot.appendChild(el("div", { class: "cv-detail-text" }, [
+        el("p", { class: "cv-detail-name" }, [el("b", { text: item.name }),
+          finds ? el("span", { class: "cv-detail-where", text: (shelf ? shelf.name : "") + " · " + item.group })
+            : el("span", { class: "cv-tag" + (item.tag === "Boundary" ? " is-boundary" : item.tag === "Kit" || item.tag === "Block" ? " is-kit" : ""), text: item.tag })]),
+        el("p", { class: "cv-detail-about", text: String(about || "").trim() }),
+        el("p", { class: "cv-detail-more", text: (more ? more + " " : "") + act }),
+      ]));
+    }
+
+    search.addEventListener("input", function () {
+      if (!search.value.trim()) at.found = "everything";
+      render();
+      list.scrollTop = 0;
+    });
     search.addEventListener("keydown", function (e) {
       if (e.key === "Escape") { e.preventDefault(); closeCanvasPicker(); $("cvAdd").focus(); }
+      if (e.key === "ArrowDown" && shown.length) { e.preventDefault(); point(Math.min(current + 1, shown.length - 1), true); }
+      if (e.key === "ArrowUp" && shown.length) { e.preventDefault(); point(Math.max(current - 1, 0), true); }
       if (e.key === "Enter") {
-        var first = list.querySelector(".cv-row");
-        if (first) { e.preventDefault(); first.click(); }
+        var chosen = shown[current] || shown[0];
+        if (chosen) { e.preventDefault(); canvasPlace(chosen, [], null); }
       }
     });
-    fill();
+    render();
     search.focus();
   }
 
@@ -2788,7 +4632,7 @@
     if (!cv || !cvDrag) return;
     e.preventDefault();
     e.dataTransfer.dropEffect = "copy";
-    var boxy = cvDrag.kind === "part" || cvDrag.kind === "system";
+    var boxy = cvDrag.kind !== "view" && cvDrag.kind !== "account" && cvDrag.kind !== "zone";
     var info = boxy ? canvasDropInfo(e) : { into: [], group: null };
     if (state.cy) {
       state.cy.nodes(".drop-into").forEach(function (g) { if (g !== info.group) g.removeClass("drop-into"); });
@@ -2809,12 +4653,530 @@
     e.preventDefault();
     var item = cvDrag;
     cvDrag = null;
-    var boxy = item.kind === "part" || item.kind === "system";
+    var boxy = item.kind !== "view" && item.kind !== "account" && item.kind !== "zone";
     var info = boxy ? canvasDropInfo(e) : { into: [], group: null };
     clearCanvasDrop();
     var r = $("cy").getBoundingClientRect(), z = state.cy ? state.cy.zoom() : 1, pan = state.cy ? state.cy.pan() : { x: 0, y: 0 };
     canvasPlace(item, info.into, { x: e.clientX, y: e.clientY, group: info.group ? info.group.id() : null,
       mx: (e.clientX - r.left - pan.x) / z, my: (e.clientY - r.top - pan.y) / z });
+  }
+
+  /* ---- a kit, placed whole (V17) ----
+   * The owner placed "AI assistant" and got one box. Dropped into an
+   * account, a kit asks what it needs and says what it makes there before
+   * anything is written: its name, the account (the one it was dropped
+   * in), who owns it, what its parameters ask, and each system with the
+   * landing zone's services it runs on, from the server's real expansion
+   * (`/api/canvas/kit`). Place writes one product through Assemble's own
+   * create and pins the systems it made; Just one box is the part of the
+   * same name, as Add placed it before. */
+
+  function counted(n, word) { return n + " " + word + (n === 1 ? "" : "s"); }
+
+  var COUNT_WORDS = ["No", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve"];
+
+  function countedWord(n, word) {
+    return (COUNT_WORDS[n] || String(n)) + " " + word + (n === 1 ? "" : "s");
+  }
+
+  // "A, B and C".
+  function listed(items) {
+    return items.length < 2 ? items.join("") : items.slice(0, -1).join(", ") + " and " + items[items.length - 1];
+  }
+
+  // A part as Add lists it with nothing searched: Just one box places it.
+  function partItem(x) {
+    return { kind: "part", id: x.id, name: x.name, part: x.name, products: x.products || {}, product: "", cloud: "",
+      sub: "Part · " + x.typeLabel, tag: "Box", icon: "i-box", typeLabel: x.typeLabel, type: x.type };
+  }
+
+  function closeKitPanel() {
+    var box = $("cvKit"), mark = $("cvKitMark");
+    if (box) { box.hidden = true; box.textContent = ""; }
+    if (mark) mark.hidden = true;
+    if (cv) cv.kit = null;
+  }
+
+  function openKitPanel(item, into, at) {
+    if (!cv) return;
+    closeContextMenu();
+    closeKitPanel();
+    var mine = cv, box = $("cvKit"), mark = $("cvKitMark"), k = item.kit;
+    var ask = { kit: k.id, into: into || [], name: k.name, "with": {} };
+    var res = null, busy = false, timer = null, built = false, seq = 0;
+    var same = (cv.parts.parts || []).filter(function (x) { return x.name.toLowerCase() === k.name.toLowerCase(); })[0];
+    cv.kit = ask;
+    // Where it was dropped, marked while it is asked.
+    if (at && mark) {
+      mark.textContent = "";
+      mark.appendChild(svgIcon("i-blocks"));
+      mark.appendChild(el("b", { text: k.name }));
+      mark.appendChild(el("span", { text: "Kit · " + counted(k.systems.length, "system") }));
+      var r = box.parentNode.getBoundingClientRect();
+      mark.style.left = Math.max(8, at.x - r.left - 14) + "px";
+      mark.style.top = Math.max(8, at.y - r.top - 16) + "px";
+      mark.hidden = false;
+    }
+    box.textContent = "";
+    box.hidden = false;
+    box.onkeydown = function (e) {
+      if (e.key === "Escape" && e.target.type !== "search") { e.preventDefault(); closeKitPanel(); }
+    };
+    var sub = el("p", { class: "cv-kit-sub" });
+    var name = el("input", { type: "text", class: "cv-kit-input", "aria-label": "Name" });
+    var nameHint = el("p", { class: "cv-kit-hint" });
+    var lands = el("select", { class: "cv-kit-input", "aria-label": "Lands in" });
+    var landsHint = el("p", { class: "cv-kit-hint" });
+    var owner = el("select", { class: "cv-kit-input", "aria-label": "Owned by" });
+    var ownerHint = el("p", { class: "cv-kit-hint" });
+    // The owner the estate offers, with its reason, said in a line; the
+    // choice opens on Change, or when there is none to offer.
+    var ownerSaid = el("p", { class: "cv-kit-hint cv-kit-owned", hidden: "hidden" });
+    var ownerBox = el("div", { class: "cv-kit-owner" });
+    var asks = el("div", { class: "cv-kit-asks" });
+    var makes = el("div", { class: "cv-kit-makes" });
+    var waits = el("p", { class: "cv-kit-waits", hidden: "hidden" });
+    var placeBtn = el("button", { type: "button", class: "btn primary", onclick: place });
+    var acts = el("div", { class: "cv-kit-acts" }, [placeBtn]);
+    if (same) {
+      acts.appendChild(el("button", { type: "button", class: "btn", text: "Just one box", onclick: function () {
+        closeKitPanel();
+        askPartName(partItem(same), into || [], at);
+      } }));
+    }
+    box.appendChild(el("div", { class: "cv-kit-head" }, [svgIcon("i-blocks"),
+      el("h2", { text: "Place the " + k.name + " kit" }),
+      el("button", { type: "button", class: "cv-kit-x", "aria-label": "Close", onclick: closeKitPanel }, [svgIcon("i-x")])]));
+    box.appendChild(sub);
+    var body = el("div", { class: "cv-kit-body" });
+    box.appendChild(body);
+    body.appendChild(el("label", { class: "cv-kit-label", text: "Name" }));
+    body.appendChild(name);
+    body.appendChild(nameHint);
+    body.appendChild(el("label", { class: "cv-kit-label", text: "Lands in" }));
+    body.appendChild(lands);
+    body.appendChild(landsHint);
+    body.appendChild(ownerSaid);
+    ownerBox.appendChild(el("label", { class: "cv-kit-label", text: "Owned by" }));
+    ownerBox.appendChild(owner);
+    ownerBox.appendChild(ownerHint);
+    body.appendChild(ownerBox);
+    body.appendChild(asks);
+    body.appendChild(makes);
+    box.appendChild(waits);
+    box.appendChild(acts);
+    name.value = k.name;
+    name.addEventListener("input", function () {
+      ask.name = name.value.trim();
+      clearTimeout(timer);
+      timer = setTimeout(load, 250);
+    });
+    name.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") { e.preventDefault(); place(); }
+    });
+    lands.addEventListener("change", function () {
+      ask.lands = lands.value;
+      // Who owns it follows where it lands until the person says.
+      if (!ask.ownerSaid) delete ask.owner;
+      load();
+    });
+    owner.addEventListener("change", function () {
+      ask.owner = owner.value;
+      ask.ownerSaid = true;
+      load();
+    });
+    name.focus();
+    name.select();
+    makes.appendChild(el("p", { class: "cv-kit-none", text: "Reading what it makes…" }));
+    placeBtn.textContent = "Place " + counted(k.systems.length, "system");
+    placeBtn.disabled = true;
+    load();
+
+    function load() {
+      var body = { kit: ask.kit, into: ask.into, name: ask.name, lands: ask.lands || "", "with": ask["with"] };
+      if ("owner" in ask) body.owner = ask.owner;
+      // Only the answer to the last question asked: a name typed fast
+      // asks several times.
+      var n = ++seq;
+      return api("/api/canvas/kit", body).then(function (got) {
+        if (cv !== mine || cv.kit !== ask || n !== seq) return;
+        res = got;
+        if (!ask.lands && got.lands) ask.lands = got.lands;
+        if (!built) buildAsks(got.asks);
+        built = true;
+        draw();
+      }).catch(function (err) {
+        if (cv !== mine || cv.kit !== ask || n !== seq) return;
+        res = null;
+        makes.textContent = "";
+        makes.appendChild(el("p", { class: "cv-kit-none", text: err.message }));
+        placeBtn.disabled = true;
+      });
+    }
+
+    function systemName(id) {
+      var s = (cv.parts.systems || []).filter(function (x) { return x.id === id; })[0];
+      return s ? s.name : id;
+    }
+
+    /* What the kit's parameters ask, built once so typing keeps its place:
+     * the estate's systems as chips with a way to add one, or a box for a
+     * name. */
+    function buildAsks(list) {
+      asks.textContent = "";
+      (list || []).forEach(function (a) {
+        asks.appendChild(el("label", { class: "cv-kit-label", text: a.ask }));
+        if (!a.names) {
+          var input = el("input", { type: "text", class: "cv-kit-input", "aria-label": a.ask });
+          input.value = a.value == null ? "" : String(a.value);
+          input.addEventListener("input", function () {
+            ask["with"][a.name] = input.value.trim();
+            clearTimeout(timer);
+            timer = setTimeout(load, 250);
+          });
+          asks.appendChild(input);
+        } else {
+          var chips = el("div", { class: "cv-kit-chips" });
+          var finder = el("div", { class: "cv-kit-find", hidden: "hidden" });
+          var chosen = function () {
+            var v = a.name in ask["with"] ? ask["with"][a.name] : a.value;
+            return Array.isArray(v) ? v.slice() : v ? [v] : [];
+          };
+          var set = function (ids) {
+            ask["with"][a.name] = a.list ? ids : (ids[0] || "");
+            chipsOf();
+            load();
+          };
+          var chipsOf = function () {
+            chips.textContent = "";
+            var ids = chosen();
+            ids.forEach(function (id) {
+              chips.appendChild(el("span", { class: "cv-kit-chip" }, [el("span", { text: systemName(id) }),
+                el("button", { type: "button", "aria-label": "Take out " + systemName(id), onclick: function () {
+                  set(chosen().filter(function (x) { return x !== id; }));
+                } }, [svgIcon("i-x")])]));
+            });
+            if (a.list || !ids.length) {
+              chips.appendChild(el("button", { type: "button", class: "cv-kit-add", onclick: function () {
+                finder.hidden = !finder.hidden;
+                if (!finder.hidden) findIn("");
+              } }, [svgIcon("i-plus"), el("span", { text: "Add" })]));
+            }
+          };
+          var search = el("input", { type: "search", class: "cv-kit-input", "aria-label": "Find a system for " + a.ask,
+            placeholder: "Find a system…" });
+          var found = el("div", { class: "cv-kit-found" });
+          var findIn = function (q) {
+            found.textContent = "";
+            var have = chosen();
+            (cv.parts.systems || []).filter(function (s) {
+              return have.indexOf(s.id) === -1 && (!q || (s.name + " " + s.id).toLowerCase().indexOf(q) !== -1);
+            }).slice(0, 6).forEach(function (s) {
+              found.appendChild(el("button", { type: "button", class: "cv-kit-pick", onclick: function () {
+                finder.hidden = true;
+                search.value = "";
+                set(a.list ? chosen().concat([s.id]) : [s.id]);
+              } }, [el("b", { text: s.name }), el("span", { text: s.domain || s.id })]));
+            });
+            if (!found.children.length) found.appendChild(el("p", { class: "cv-kit-none", text: "No other system is called that." }));
+          };
+          search.addEventListener("input", function () { findIn(search.value.trim().toLowerCase()); });
+          search.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") { e.preventDefault(); finder.hidden = true; }
+            if (e.key === "Enter") { var first = found.querySelector(".cv-kit-pick"); if (first) { e.preventDefault(); first.click(); } }
+          });
+          finder.appendChild(search);
+          finder.appendChild(found);
+          chipsOf();
+          asks.appendChild(chips);
+          asks.appendChild(finder);
+        }
+        if (a.hint) asks.appendChild(el("p", { class: "cv-kit-hint", text: a.hint }));
+      });
+    }
+
+    function options(select, list, value, none) {
+      var want = (none && !value ? [{ value: "", label: none }] : []).concat(list);
+      var key = want.map(function (o) { return o.value; }).join("\n");
+      if (select.dataset.key !== key) {
+        select.textContent = "";
+        want.forEach(function (o) { select.appendChild(el("option", { value: o.value, text: o.label })); });
+        select.dataset.key = key;
+      }
+      select.value = value || "";
+    }
+
+    function draw() {
+      if (!res) return;
+      var land = (res.landsOptions || []).filter(function (l) { return l.value === res.lands; })[0];
+      var n = res.makes.length ? res.makes.reduce(function (t, g) { return t + g.systems.length; }, 0) : k.systems.length;
+      sub.textContent = land
+        ? countedWord(n, "system") + " on the " + land.provider + " landing zone of " + land.account
+          + (res.dropped ? ", where you dropped it" : "") + ". They land in its subnets by zone."
+        : countedWord(n, "system") + " on the landing zone of the account it lands in: choose one below.";
+      nameHint.textContent = "Saved as one product, " + res.id + ", made from the kit."
+        + (res.taken ? " " + res.taken + " is taken." : "");
+      options(lands, (res.landsOptions || []).map(function (l) { return { value: l.value, label: l.label }; }),
+        res.lands, "Choose an account");
+      landsHint.textContent = !land ? "Its systems land in that account's subnets by zone."
+        : res.dropped ? "The account you dropped it in" + (res.domain ? ", in the " + res.domain + " domain." : ".")
+        : "Its systems land in this account's subnets by zone." + (res.domain ? " Its records are in the " + res.domain + " domain." : "");
+      options(owner, (res.owners || []).map(function (o) { return { value: o.id, label: o.name }; }),
+        res.owner, "Choose who owns it");
+      ownerHint.textContent = res.owner && res.owner === res.suggested && res.ownerWhy ? res.ownerWhy
+        : "The org unit that answers for it, and for every system it makes.";
+      var folded = !ask.ownerOpen && res.owner && res.owner === res.suggested && res.ownerWhy;
+      var who = (res.owners || []).filter(function (o) { return o.id === res.owner; })[0];
+      ownerBox.hidden = !!folded;
+      ownerSaid.hidden = !folded;
+      ownerSaid.textContent = "";
+      if (folded) {
+        ownerSaid.appendChild(el("span", { text: "Owned by " + (who ? who.name : res.owner) + ", "
+          + res.ownerWhy.charAt(0).toLowerCase() + res.ownerWhy.slice(1) + " " }));
+        ownerSaid.appendChild(el("button", { type: "button", class: "cv-link", text: "Change", onclick: function () {
+          ask.ownerOpen = true;
+          draw();
+          owner.focus();
+        } }));
+      }
+      makes.textContent = "";
+      makes.appendChild(el("p", { class: "cv-kit-makes-h", text: "What it makes here" }));
+      if (!land) {
+        makes.appendChild(el("p", { class: "cv-kit-none", text: "Choose where it lands to see what each system runs on there." }));
+      }
+      res.makes.forEach(function (g) {
+        var head = g.placed ? "In the " + g.words + " subnets"
+          : g.zone ? (g.none ? "In the " + g.words + " zone, which " + land.account + " has no subnet for" : "Outside the subnets")
+          : "In no network zone";
+        if (g.shared && g.shared.length) head += ", on " + listed(g.shared);
+        makes.appendChild(el("p", { class: "cv-kit-zone", text: head }));
+        g.systems.forEach(function (s) {
+          var adds = (s.adds || []).map(function (u) { return (u.own ? "its own " : "") + u.name; });
+          makes.appendChild(el("p", { class: "cv-kit-made" }, [el("b", { text: s.part }),
+            el("span", { text: adds.length ? listed(adds) : "" })]));
+        });
+      });
+      waits.hidden = !res.missing.length;
+      waits.textContent = res.missing.length ? "Place waits for " + listed(res.missing) + "." : "";
+      placeBtn.textContent = "Place " + counted(n, "system");
+      placeBtn.disabled = busy || !res.assembly;
+    }
+
+    function place() {
+      if (!res || !res.assembly || busy || cv !== mine) return;
+      busy = true;
+      draw();
+      var made = res, systems = [];
+      made.makes.forEach(function (g) { g.systems.forEach(function (s) { systems.push(s.id); }); });
+      var land = (made.landsOptions || []).filter(function (l) { return l.value === made.lands; })[0];
+      setCanvasStatus("saving");
+      api("/api/assemble/create", made.assembly).then(function (out) {
+        if (cv !== mine) return null;
+        closeKitPanel();
+        var ids = systems.filter(function (id) { return (out.generated || []).indexOf(id) !== -1; });
+        ids.forEach(function (id) {
+          cv.made[id] = made.kitName;
+          if (pinsOf().indexOf(id) === -1) pinsOf().push(id);
+        });
+        cv.focus = ids.length ? { id: ids[0] } : null;
+        return loadIndex().then(canvasSave).then(canvasDraw).then(function () {
+          if (ids.length) canvasSelect({ kind: "record", id: ids[0] });
+          toast("ok", "Placed " + made.name, counted(ids.length, "system") + " and their lines"
+            + (land ? ", in " + land.account : "") + ". Saved in " + out.path + ".");
+        });
+      }).catch(function (err) {
+        busy = false;
+        if (cv !== mine) return;
+        setCanvasStatus("failed", err.message);
+        if (cv.kit === ask) { waits.hidden = false; waits.textContent = err.message; draw(); }
+      });
+    }
+  }
+
+  /* A building block dropped (V19): its name, where it lands and who owns
+   * it, and what it makes there, each service with the cloud's product, in
+   * the order its lines run. Place writes them with their lines, given the
+   * account's fields and the owner, and pins them; the Library's Add a block
+   * wrote the same records with no account, which left them in no box. */
+  function openBlockPanel(item, into, at) {
+    if (!cv) return;
+    closeContextMenu();
+    closeKitPanel();
+    var mine = cv, box = $("cvKit"), mark = $("cvKitMark"), b = item.block;
+    var ask = { block: b.id, into: into || [], name: b.name };
+    var res = null, busy = false, timer = null, seq = 0;
+    cv.kit = ask;
+    if (at && mark) {
+      mark.textContent = "";
+      mark.appendChild(lucide("layers"));
+      mark.appendChild(el("b", { text: b.name }));
+      mark.appendChild(el("span", { text: "Block \u00b7 " + counted(b.services.length, "service") }));
+      var r = box.parentNode.getBoundingClientRect();
+      mark.style.left = Math.max(8, at.x - r.left - 14) + "px";
+      mark.style.top = Math.max(8, at.y - r.top - 16) + "px";
+      mark.hidden = false;
+    }
+    box.textContent = "";
+    box.hidden = false;
+    box.onkeydown = function (e) {
+      if (e.key === "Escape") { e.preventDefault(); closeKitPanel(); }
+    };
+    var sub = el("p", { class: "cv-kit-sub" });
+    var name = el("input", { type: "text", class: "cv-kit-input", "aria-label": "Name" });
+    var nameHint = el("p", { class: "cv-kit-hint" });
+    var lands = el("select", { class: "cv-kit-input", "aria-label": "Lands in" });
+    var landsHint = el("p", { class: "cv-kit-hint" });
+    var owner = el("select", { class: "cv-kit-input", "aria-label": "Owned by" });
+    var ownerHint = el("p", { class: "cv-kit-hint" });
+    var makes = el("div", { class: "cv-kit-makes" });
+    var waits = el("p", { class: "cv-kit-waits", hidden: "hidden" });
+    var placeBtn = el("button", { type: "button", class: "btn primary", onclick: place });
+    box.appendChild(el("div", { class: "cv-kit-head" }, [lucide("layers"),
+      el("h2", { text: "Place the " + b.name + " block" }),
+      el("button", { type: "button", class: "cv-kit-x", "aria-label": "Close", onclick: closeKitPanel }, [svgIcon("i-x")])]));
+    box.appendChild(sub);
+    var body = el("div", { class: "cv-kit-body" });
+    box.appendChild(body);
+    [["Name", name, nameHint], ["Lands in", lands, landsHint], ["Owned by", owner, ownerHint]].forEach(function (f) {
+      body.appendChild(el("label", { class: "cv-kit-label", text: f[0] }));
+      body.appendChild(f[1]);
+      body.appendChild(f[2]);
+    });
+    body.appendChild(makes);
+    box.appendChild(waits);
+    box.appendChild(el("div", { class: "cv-kit-acts" }, [placeBtn,
+      el("button", { type: "button", class: "btn", text: "Cancel", onclick: closeKitPanel })]));
+    name.value = b.name;
+    name.addEventListener("input", function () {
+      ask.name = name.value.trim();
+      clearTimeout(timer);
+      timer = setTimeout(load, 250);
+    });
+    name.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") { e.preventDefault(); place(); }
+    });
+    lands.addEventListener("change", function () {
+      ask.lands = lands.value;
+      if (!ask.ownerSaid) delete ask.owner;
+      load();
+    });
+    owner.addEventListener("change", function () {
+      ask.owner = owner.value;
+      ask.ownerSaid = true;
+      load();
+    });
+    name.focus();
+    name.select();
+    makes.appendChild(el("p", { class: "cv-kit-none", text: "Reading what it makes\u2026" }));
+    placeBtn.textContent = "Place " + counted(b.services.length, "service");
+    placeBtn.disabled = true;
+    load();
+
+    function asked() {
+      var said = { block: ask.block, into: ask.into, name: ask.name, lands: ask.lands || "" };
+      if ("owner" in ask) said.owner = ask.owner;
+      return said;
+    }
+
+    function load() {
+      // Only the answer to the last question asked: a name typed fast asks
+      // several times.
+      var n = ++seq;
+      return api("/api/canvas/block", asked()).then(function (got) {
+        if (cv !== mine || cv.kit !== ask || n !== seq) return;
+        res = got;
+        if (!ask.lands && got.lands) ask.lands = got.lands;
+        draw();
+      }).catch(function (err) {
+        if (cv !== mine || cv.kit !== ask || n !== seq) return;
+        res = null;
+        makes.textContent = "";
+        makes.appendChild(el("p", { class: "cv-kit-none", text: err.message }));
+        placeBtn.disabled = true;
+      });
+    }
+
+    function options(select, list, value, none) {
+      var want = (none && !value ? [{ value: "", label: none }] : []).concat(list);
+      var key = want.map(function (o) { return o.value; }).join("\n");
+      if (select.dataset.key !== key) {
+        select.textContent = "";
+        want.forEach(function (o) { select.appendChild(el("option", { value: o.value, text: o.label })); });
+        select.dataset.key = key;
+      }
+      select.value = value || "";
+    }
+
+    function draw() {
+      if (!res) return;
+      var land = (res.landsOptions || []).filter(function (l) { return l.value === res.lands; })[0];
+      var n = res.makes.length, many = inWords(n, "cloud service");
+      many = many.charAt(0).toUpperCase() + many.slice(1);
+      sub.textContent = land
+        ? many + " on " + land.provider + " in " + land.account + ", " + land.region
+          + (res.dropped ? ", where you dropped it" : "") + (res.chain ? ", each joined to the next in the order below." : ".")
+        : many + " in the account it lands in: choose one below.";
+      var first = res.makes[0], last = res.makes[n - 1];
+      nameHint.textContent = (n > 1 ? "Each is named for it: " + first.name + ", " + last.name + "." : "")
+        + (res.clashes.length ? " The estate has " + listed(res.clashes) + " already." : "");
+      options(lands, (res.landsOptions || []).map(function (l) { return { value: l.value, label: l.label }; }),
+        res.lands, "Choose an account");
+      landsHint.textContent = !land ? "Its services land in that account, each as that cloud's product."
+        : res.dropped ? "The account you dropped it in." : "Its services land in this account.";
+      options(owner, (res.owners || []).map(function (o) { return { value: o.id, label: o.name }; }),
+        res.owner, "Choose who owns it");
+      ownerHint.textContent = res.owner && res.owner === res.suggested && res.ownerWhy ? res.ownerWhy
+        : "The org unit that answers for its services.";
+      makes.textContent = "";
+      makes.appendChild(el("p", { class: "cv-kit-makes-h", text: land ? "What it makes here" : "What it makes" }));
+      res.makes.forEach(function (m) {
+        makes.appendChild(el("p", { class: "cv-kit-made" }, [el("b", { text: m.kind }), el("span", { text: m.product })]));
+      });
+      if (res.lines.length) {
+        makes.appendChild(el("p", { class: "cv-kit-hint", text: res.chain
+          ? "Joined by " + inWords(res.lines.length, "line") + ", each service to the next."
+          : "With " + inWords(res.lines.length, "line") + ": " + res.lines.map(function (l) {
+            return lowerFirst(l[0]) + " to " + lowerFirst(l[1]);
+          }).join(", ") + "." }));
+      }
+      var waiting = (res.missing.length ? ["Place waits for " + listed(res.missing) + "."] : [])
+        .concat(res.clashes.length ? ["The estate has " + listed(res.clashes) + " already: give it another name."] : []);
+      waits.hidden = !waiting.length;
+      waits.textContent = waiting.join(" ");
+      placeBtn.textContent = "Place " + counted(n, "service");
+      placeBtn.disabled = busy || !!res.missing.length || !!res.clashes.length;
+    }
+
+    function place() {
+      if (!res || busy || res.missing.length || res.clashes.length || cv !== mine) return;
+      busy = true;
+      draw();
+      var land = (res.landsOptions || []).filter(function (l) { return l.value === res.lands; })[0];
+      setCanvasStatus("saving");
+      api("/api/canvas/block", Object.assign(asked(), { place: true })).then(function (out) {
+        if (cv !== mine) return null;
+        closeKitPanel();
+        out.placed.forEach(function (id) {
+          cv.made[id] = b.name;
+          if (pinsOf().indexOf(id) === -1) pinsOf().push(id);
+        });
+        addLines("tech_services");
+        cv.focus = out.placed.length ? { id: out.placed[0] } : null;
+        var folder = (out.paths[0] || "").replace(/[^/]*$/, "");
+        return loadIndex().then(canvasSave).then(canvasDraw).then(function () {
+          if (out.placed.length) canvasSelect({ kind: "record", id: out.placed[0] });
+          toast("ok", "Placed " + out.name, counted(out.placed.length, "cloud service") + " and their lines"
+            + (land ? ", in " + land.account : "") + ". Saved in " + folder + ".");
+        });
+      }).catch(function (err) {
+        busy = false;
+        if (cv !== mine) return;
+        setCanvasStatus("failed", err.message);
+        // Drawn first: draw says what Place waits for, and would wipe why it
+        // failed.
+        if (cv.kit === ask) { draw(); waits.hidden = false; waits.textContent = err.message; }
+      });
+    }
   }
 
   /* Where something lands, said: an account names its cloud already, so the
@@ -2924,8 +5286,16 @@
   function canvasPlace(item, into, at) {
     if (!cv) return;
     // Chosen after a quick connect arrow: joined to the record it was on.
-    var link = item.link || ((item.kind === "part" || item.kind === "system") && cv.connect) || null;
+    var link = item.link || ((item.kind === "part" || item.kind === "system" || item.kind === "record") && cv.connect) || null;
     closeCanvasPicker();
+    if (item.kind === "kit") {
+      openKitPanel(item, into || [], at);
+      return;
+    }
+    if (item.kind === "block") {
+      openBlockPanel(item, into || [], at);
+      return;
+    }
     var mine = cv;
     if (link && !item.link) {
       item = Object.assign({}, item, { link: link });
@@ -2955,7 +5325,9 @@
       }).catch(function (err) { if (cv === mine) setCanvasStatus("failed", err.message); });
       return;
     }
-    if (item.kind === "system") {
+    // A system, or a data asset, an actor or a team (V19): pinned, with the
+    // lines that join it to what is there.
+    if (item.kind === "system" || item.kind === "record") {
       if (pinsOf().indexOf(item.id) !== -1 || drawnHere(item.id)) {
         if (!link) toast("ok", item.name + " is on it already");
         canvasSelect({ kind: "record", id: item.id });
@@ -2963,6 +5335,7 @@
         return;
       }
       pinsOf().push(item.id);
+      if (item.type) addLines(item.type);
       cv.focus = { id: item.id };
       if (at && at.group) canvasDropAt(item.id, at.group, { x: at.mx, y: at.my });
       canvasSave().then(canvasDraw).then(function () {
@@ -3044,6 +5417,12 @@
   Canvas.ownChanged = canvasOwnChanged;
   Canvas.ownDrawn = canvasOwnDrawn;
   Canvas.ownSelected = canvasOwnSelected;
+  Canvas.toggleLayers = toggleLayers;
+  Canvas.switchPage = switchPage;
+  // A record's name now, for a lane that stands for it.
+  Canvas.recordName = function (id) { var it = indexItem(id); return it ? it.name || "" : ""; };
+  Canvas.goIn = canvasGoIn;
+  Canvas.groupKeyFor = groupKeyFor;
   Canvas.toggleSnap = toggleSnap;
   Canvas.toggleJumps = toggleJumps;
   Canvas.toggleKeys = toggleKeys;

@@ -22,6 +22,7 @@ flowchart LR
       end
       subgraph grp_Azure__azure_cards_prod__Private_App["Private-App"]
         direction LR
+        TS_NET_SUB_AZ_CARDS_APP[/"Cards App Subnet<br/>[Subnet]"/]
         OI_REWARDS_API("Rewards Redemption API<br/>[HTTPS]")
         SYS_REWARDS_WORKER["Rewards Redemption Async<br/>Worker<br/>[AKS · Event Hubs]"]
         TS_REWARDS_CACHE[/"Rewards Redemption Cache<br/>[Azure Cache for Redis]"/]
@@ -30,6 +31,7 @@ flowchart LR
       end
       subgraph grp_Azure__azure_cards_prod__Private_Data["Private-Data"]
         direction LR
+        TS_NET_SUB_AZ_CARDS_DATA[/"Cards Data Subnet<br/>[Subnet]"/]
         TS_REWARDS_BACKUP[/"Rewards Redemption Backup<br/>and recovery<br/>[Azure Backup]"/]
         SYS_REWARDS_STORE["Rewards Redemption<br/>Database<br/>[Azure SQL]"]
       end
@@ -66,6 +68,10 @@ flowchart LR
   SYS_REWARDS_WORKER -.->|"runs on"| TS_AZURE_AKS
   SYS_REWARDS_WORKER -.->|"runs on"| TS_AZURE_MONITOR
   SYS_REWARDS_WORKER -.->|"runs on"| TS_AZURE_EVENTHUBS
+  SYS_REWARDS_API -.->|"runs on"| TS_NET_SUB_AZ_CARDS_APP
+  SYS_REWARDS_WEB -.->|"runs on"| TS_NET_SUB_AZ_CARDS_APP
+  SYS_REWARDS_STORE -.->|"runs on"| TS_NET_SUB_AZ_CARDS_DATA
+  SYS_REWARDS_WORKER -.->|"runs on"| TS_NET_SUB_AZ_CARDS_APP
   SYS_REWARDS_API -->|"ReadWrite"| DA_REWARDS_OPERATIONAL
   SYS_REWARDS_STORE -->|"ReadWrite"| DA_REWARDS_OPERATIONAL
   OI_LEDGER_QUEUE --- SYS_CORE_LEDGER
@@ -78,7 +84,7 @@ flowchart LR
   class DA_REWARDS_OPERATIONAL s_data_assets__data_assets;
   class OI_LEDGER_QUEUE,OI_REWARDS_API s_offered_interfaces__offered_interfaces;
   class SYS_CORE_LEDGER,SYS_REWARDS_API,SYS_REWARDS_EVENTS,SYS_REWARDS_STORE,SYS_REWARDS_WEB,SYS_REWARDS_WORKER s_systems__systems;
-  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_EVENTHUBS,TS_AZURE_KEYVAULT,TS_AZURE_MONITOR,TS_AZURE_SERVICEBUS,TS_AZURE_SQL,TS_ENTRA_ID,TS_REWARDS_BACKUP,TS_REWARDS_CACHE,TS_REWARDS_DNS,TS_REWARDS_WAF s_tech_services__tech_services;
+  class TS_AZURE_AKS,TS_AZURE_APIM,TS_AZURE_EVENTHUBS,TS_AZURE_KEYVAULT,TS_AZURE_MONITOR,TS_AZURE_SERVICEBUS,TS_AZURE_SQL,TS_ENTRA_ID,TS_NET_SUB_AZ_CARDS_APP,TS_NET_SUB_AZ_CARDS_DATA,TS_REWARDS_BACKUP,TS_REWARDS_CACHE,TS_REWARDS_DNS,TS_REWARDS_WAF s_tech_services__tech_services;
   classDef boundary1 fill:#f1f6fb,stroke:#5b9bd5,color:#2f5d8a;
   class grp_Azure__azure_cards_prod__Edge,grp_Azure__azure_cards_prod__Private_App,grp_Azure__azure_cards_prod__Private_Data boundary1;
   classDef boundary2 fill:#f4f5f7,stroke:#5f6b7a,color:#3f4a5c;

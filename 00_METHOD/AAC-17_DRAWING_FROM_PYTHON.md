@@ -181,7 +181,9 @@ different numbers. "Probably" is a suggestion and nothing is taken on
 its own: `--same SYS-LEDGER=SYS-CORE-LEDGER` says the sketch's ledger is
 the estate's, and it is renamed throughout the sketch before it joins, so
 its connections reach the estate's ledger and no second ledger is written.
-`--same` is refused for an id the sketch does not have, one the estate
+A record taken so is joined as it is, never corrected, with `--correct` or
+without: the sketch calls it by another name, and that is no reason to
+rename the estate's. `--same` is refused for an id the sketch does not have, one the estate
 does not have, one of another type, and one the sketch holds as well,
 which would make two of its things one;
 `--picture change.svg` draws the change first: what the file adds, in full,
@@ -207,8 +209,28 @@ block, what it would add, who owns what it names no owner for, and what the
 estate has and the drawing says differently, with a box to correct it; and
 Adopt writes what `terrane adopt FILE --owner ORG-X`, with `--correct` when
 ticked, writes. The first page then opens on the canvas, its boxes the
-records. The page does not yet list what is probably already here; until
-it does, `terrane adopt FILE --dry-run` is where that list is read.
+records. The page lists what is probably already here, each with the
+estate's record, the score and the words the two share, and a Same record
+box: ticked where the record's type has no levels and one of the estate's
+stands alone (`terrane.join.likely_same`), left for the person where it is
+a capability, whose name repeats at every level of a map, or where two are
+as likely. A box changed reads the drawing again, the counts and the picture
+with it, and Adopt writes what `terrane adopt` writes with a `--same` for
+each box ticked.
+
+A box placed on the canvas from the library is a record made where it is
+dropped. A part is one record, given the fields of every boundary it lands
+in. A kit is the product the parts of an application make: dropped into
+an account, it asks the product's name, what its own parameters ask (in
+the words a parameter's `ask` gives, offering the estate's records where
+its `names` says what the value names) and who owns it, offering the owner
+every system already in the account names; it says what each of its
+systems runs on in that account's landing zone, from the expansion itself,
+the services a zone's systems share said once; and Place writes one
+product file whose `compose` block names the kit, which is what the
+Assemble panel writes, its systems landing in the account's subnets by
+zone and drawn with their lines. Dropped on the sheet in no account, it
+waits for one to be chosen, and says so.
 
 A diagram drawn on the canvas may also hold things of its own: shapes,
 text, notes, frames and free lines, drawn with the canvas's tools, none of
@@ -219,9 +241,21 @@ id, a key of the list or a point, and its route, straight, square or
 curved. A straight line may bend on its way at points of the sheet,
 `via`, in order; a square or a curved one turns by itself, around the
 boxes in its way, the estate's and the diagram's own, when its plain
-turns would run through one. An end on a box may be held at a point of
+turns would run through one, until its stretches are moved by hand: then
+its `via` holds the turns it has, and it runs through them and around
+nothing, each end leaving its box square toward the nearest. An end on a box may be held at a point of
 its outline, `from_at` or `to_at`, shares of the box from its top left
-corner. A shape, a note
+corner. A line's `label` is its words at its middle, and `labels` its
+words at its start and its end, `{start: ..., end: ...}`; its look may be
+dotted as well as dashed and say how heavy it is (`weight`, s, m or l),
+and a square line's turns may be rounded (`turns: rounded`). Each end may
+have a head of its own, `heads: {start: ..., end: ...}`, said in place of
+`ends`: none, arrow, open-arrow or dot; UML's inherits, made-of, has or
+depends-on; crow's foot's one, many, one-or-many, none-or-one or
+none-or-many; or ArchiMate's serving, triggering, flow, realization,
+assignment or access. A head says nothing of the line's look: the canvas
+draws a UML or ArchiMate line as its notation does when the head is
+picked, and a file says it with `look`. A shape, a note
 or text may be turned about its middle, `rotate` degrees clockwise; a
 frame is not, since what sits in it would turn too.
 They are drawn Illustrated, in the app's own picture language, the one
@@ -255,6 +289,64 @@ round (a box, a note, a frame, and as tiles every shape); and
 ink shadow Illustrated gives it. A see-through fill casts no shadow
 either, since the ink would show through it. Each is left out of the file
 when it says what the kind does anyway.
+How the words are set is part of the look too, for all of them: `bold`,
+`italic`, `underline` and `strike`, each `true` or left out; `align`,
+`left`, `center` or `right` (a shape's sit in the middle and the rest's at
+the left when it says nothing); and for a note or text `list`, its lines
+each after a bullet. A shape's name is always bold, so `bold` sets its
+caption bold with it; a frame's name, on its tab, takes italic, underline
+and strike only. A diagram can keep looks by name for the Style tab to
+offer, under `saved_styles:` in its file, each a `name` and a `look`, with
+no icon, since an icon says what a shape is, not how it looks. Choosing
+one copies its look onto what is picked; the shape keeps no tie to it.
+Styles kept for every diagram are `saved_styles` in the estate's
+`10_MODEL/model.yaml`, in the same shape, and `terrane validate` checks
+them as it checks a diagram's; the Style tab saves one there when it is
+saved for every diagram.
+A shape, a note, text or a frame can link somewhere: `link:` beside its
+look, an address on the web or for email (`https://`, `http://` or
+`mailto:`, and nothing else, so no file can carry a script to run on a
+click). It is not part of the look: Copy the look and a saved style leave
+it alone. On the canvas a small mark at its corner opens it; the picture
+makes the shape itself a link, a slide makes it a hyperlink in a slide
+show, and the draw.io page gives the cell its link.
+Several of the diagram's own can be grouped. `groups:` lists the
+diagram's groups, each a key, a name of up to 60 characters and the group
+it sits in, if any, and each of its own in one carries `group:` with that
+key; a line is in none, and the reader refuses a key used twice, a group
+in one the file does not name or in itself, and one of its own in a group
+that is not there. A group is picked, moved, copied and turned as one on the
+canvas, and has no box: no picture, slide or draw.io page draws it. It may
+sit in a frame and hold one.
+A swimlane is a `pool` and its `lane`s. The pool has its name in a band
+across its top and its lanes stacked across it, or side by side down it
+with `runs: down`; each lane has its name in a column at its left, or a
+band at its top with `names: top` on the pool. A lane sits in its pool
+(`in` ends with the pool's key), and what is drawn in a swimlane sits in
+one of its lanes as in a frame, never in the pool itself. A lane may stand
+for a record, `stands_for: ORG-PAYMENTS`: it is then named as the record
+is now, its id under its name, and the record's page lists the diagram.
+A swimlane is drawn one way whatever the diagram's look, and the picture,
+the slide and the draw.io page draw it from the same parts.
+A diagram's own can be drawn on layers. `layers:` lists them top first,
+each a key, a name, and `hidden: true` or `locked: true` when it is, and
+the estate's records sit among them as `{key: estate}`; each of its own
+names its layer with `layer:`, and what names none is on the layer just
+above the records. A layer above the records draws its shapes, notes and
+text over them, one below draws them under them; frames and swimlanes keep
+under the records either way, and what sits in a frame goes by the frame's
+layer. A hidden layer is left out of every picture, the export and the
+review pack; a locked one cannot be picked on the canvas.
+A diagram can have pages. Its first is the file's top level, as every
+diagram's one page is, named by `page:` (Page 1 when left out); the rest
+are under `pages:`, each a key, a name, and what it has of its own: the
+records it places and where they sit, what it draws, its groups and its
+locks (`places`, `scope`, `positions`, `annotations`, `groups`, `locked`).
+The diagram's name, look and drawing layers are every page's. Each page
+after the first reads as a view of its own, its id the diagram's and the
+page's key (`card-payments--page-2`) and its title the diagram's and the
+page's, so every picture, export and the review pack draws each page; a
+record on two pages is one record.
 `terrane.annotations` reads the list and says what is wrong with it.
 Every picture of the diagram draws them as the
 canvas does, from the same paths, fills and sizes: the frames, and what sits

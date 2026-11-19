@@ -1,0 +1,71 @@
+# Merchant risk monitoring — Processes and Capabilities
+
+One system, every process that uses it and in what role, and the capabilities those processes support. This shows the business impact of changing the system. A long list against a low criticality rating is worth a second look.
+
+```mermaid
+%%{init: {'flowchart': {'curve': 'basis'}} }%%
+flowchart LR
+  %% Merchant risk monitoring — Processes and Capabilities
+  %% Generated from the model by `terrane render`. Do not edit by hand.
+
+  subgraph grp_Capability["Capability"]
+    direction LR
+    CAP_MERCH_02_01{{"Merchant Credit<br/>Underwriting"}}
+    CAP_MERCH_06{{"Merchant Monitoring &<br/>Exposure Management"}}
+    CAP_MERCH_04_02{{"Merchant Reserve<br/>Management"}}
+    CAP_MERCH_02_02{{"Merchant Screening & Brand<br/>Risk"}}
+    CAP_MERCH_04{{"Merchant Settlement &<br/>Funding"}}
+    CAP_MERCH_02{{"Merchant Underwriting &<br/>Risk Vetting"}}
+  end
+
+  subgraph grp_Process["Process"]
+    direction LR
+    P_MERCHANT_009[\"Monitor merchant exposure<br/>and activity"/]
+    P_MERCHANT_004[\"Screen merchant against<br/>sanctions and network<br/>lists"/]
+    P_MERCHANT_007[\"Set and adjust merchant<br/>reserve"/]
+    P_MERCHANT_010[\"Terminate merchant and<br/>report to network list"/]
+    P_MERCHANT_003[\"Underwrite merchant"/]
+  end
+
+  subgraph grp_System["System"]
+    direction LR
+    SYS_MERCH_RISK["Merchant risk monitoring"]
+  end
+
+  P_MERCHANT_003 -->|"Primary"| SYS_MERCH_RISK
+  P_MERCHANT_004 -->|"Supporting"| SYS_MERCH_RISK
+  P_MERCHANT_007 -->|"Primary"| SYS_MERCH_RISK
+  P_MERCHANT_009 -->|"Primary"| SYS_MERCH_RISK
+  P_MERCHANT_010 -->|"Primary"| SYS_MERCH_RISK
+  P_MERCHANT_003 -->|"supports"| CAP_MERCH_02_01
+  P_MERCHANT_004 -->|"supports"| CAP_MERCH_02_02
+  P_MERCHANT_007 -->|"supports"| CAP_MERCH_04_02
+  P_MERCHANT_009 -->|"supports"| CAP_MERCH_06
+  P_MERCHANT_010 -->|"supports"| CAP_MERCH_06
+  P_MERCHANT_003 -->|"supports"| CAP_MERCH_02
+  P_MERCHANT_004 -->|"supports"| CAP_MERCH_02
+  P_MERCHANT_007 -->|"supports"| CAP_MERCH_04
+
+  classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
+  classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
+  classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
+  class CAP_MERCH_02,CAP_MERCH_02_01,CAP_MERCH_02_02,CAP_MERCH_04,CAP_MERCH_04_02,CAP_MERCH_06 s_capabilities__capabilities;
+  class P_MERCHANT_003,P_MERCHANT_004,P_MERCHANT_007,P_MERCHANT_009,P_MERCHANT_010 s_processes__processes;
+  class SYS_MERCH_RISK s_systems__systems;
+  classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
+  class grp_Capability,grp_Process,grp_System boundary1;
+```
+
+The same view as the app draws it, written beside the Mermaid by `terrane render`:
+
+![Merchant risk monitoring — Processes and Capabilities](../svg/system-processes--sys-merch-risk.svg)
+
+**Hue is the entity type.**
+
+| | Entity type |
+|---|---|
+| `#6d28d9` | capabilities |
+| `#0369a1` | processes |
+| `#4338ca` | systems |
+
+12 entities, 13 relationships. Generated from the model; edit the model, not this file.

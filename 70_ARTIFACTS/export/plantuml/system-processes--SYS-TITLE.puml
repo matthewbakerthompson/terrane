@@ -1,0 +1,45 @@
+@startuml
+' Title and lien management — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Title and lien management — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_LEND_04, "Collateral, Title & Lien Management", "Perfect and track liens and titles on financed assets across state regimes; release on payoff.", $tags="capabilities")
+  ' aac CAP_LEND_04: company_domain="Lending"
+  System(CAP_LEND_04_01, "Lien Perfection & Title Custody", "Record the lien with the titling state and hold the title, through an outsourced title servicer.", $tags="capabilities")
+  ' aac CAP_LEND_04_01: company_domain="Lending"
+  System(CAP_LEND_04_02, "Payoff & Lien Release", "Quote and apply payoffs, and release the lien within each state's deadline.", $tags="capabilities")
+  ' aac CAP_LEND_04_02: company_domain="Lending"
+}
+Boundary(b_Process, "Process") {
+  System(P_LENDING_007, "Perfect lien with titling state", "Record the bank as lienholder with the titling state, electronically where the state allows and on paper where it does not, and chase the title until it is in custody. An unperfected lien leaves the loan unsecured in a bankruptcy, so anything aging past the policy window is reported weekly by state and by dealer.", $tags="processes")
+  ' aac P_LENDING_007: company_domain=""
+  System(P_LENDING_008, "Quote payoff and release title", "Give the borrower or a refinancing lender a payoff quote, apply the payoff, and release the lien and send the title within the state's deadline. Late releases carry statutory penalties and complaints, and a release sent before the payoff funds clear is collateral given away.", $tags="processes")
+  ' aac P_LENDING_008: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_TITLE, "Title and lien management", "Electronic lien and title tracking across the titling states, title custody, and release on payoff. Built with external.", $tags="systems")
+  ' aac SYS_TITLE: company_domain=""; hosting="External"; technology="external"
+}
+
+Rel(P_LENDING_007, SYS_TITLE, "Primary")
+' aac rel: source="P_LENDING_007"; target="SYS_TITLE"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_LENDING_008, SYS_TITLE, "Primary")
+' aac rel: source="P_LENDING_008"; target="SYS_TITLE"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_LENDING_007, CAP_LEND_04_01, "supports")
+' aac rel: source="P_LENDING_007"; target="CAP_LEND_04_01"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_008, CAP_LEND_04_02, "supports")
+' aac rel: source="P_LENDING_008"; target="CAP_LEND_04_02"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_007, CAP_LEND_04, "supports")
+' aac rel: source="P_LENDING_007"; target="CAP_LEND_04"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_008, CAP_LEND_04, "supports")
+' aac rel: source="P_LENDING_008"; target="CAP_LEND_04"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

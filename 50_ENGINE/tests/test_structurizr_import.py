@@ -27,7 +27,7 @@ from terrane.quick import draw_sketch, sketch_from_structurizr_file  # noqa: E40
 from terrane.structurizr_import import sketch_from_structurizr  # noqa: E402
 from terrane.structurizr_import import StructurizrError, _tokens, sketch_from_structurizr  # noqa: E402
 
-from _fixture import Sandbox  # noqa: E402
+from _fixture import Sandbox, remove_scratch  # noqa: E402
 
 SAMPLE = Path(__file__).resolve().parents[2] / "90_EXAMPLE" / "quick" / "sample.dsl"
 
@@ -101,6 +101,7 @@ class TestRead(unittest.TestCase):
 class TestWriteAndDraw(unittest.TestCase):
     def test_the_sketch_written_beside_the_workspace_draws(self) -> None:
         folder = Path(tempfile.mkdtemp(prefix="aac-dsl-"))
+        self.addCleanup(remove_scratch, folder, "aac-dsl-")
         source = folder / "sample.dsl"
         source.write_text(SAMPLE.read_text(encoding="utf-8"), encoding="utf-8")
         sketch, _notes = sketch_from_structurizr_file(source)
@@ -236,6 +237,7 @@ class TestWriteAndDraw(unittest.TestCase):
 
     def test_the_command(self) -> None:
         folder = Path(tempfile.mkdtemp(prefix="aac-dsl-"))
+        self.addCleanup(remove_scratch, folder, "aac-dsl-")
         source = folder / "sample.dsl"
         source.write_text(SAMPLE.read_text(encoding="utf-8"), encoding="utf-8")
         text = io.StringIO()

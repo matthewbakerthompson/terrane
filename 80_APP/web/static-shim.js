@@ -40,6 +40,7 @@
     if (p === "api/overview") return "api/overview.json";
     if (p === "api/schema") return "api/schema.json";
     if (p === "api/validate") return "api/validate.json";
+    if (p === "api/checks/alike") return "api/checks/alike.json";
     if (p === "api/flows") return "api/flows.json";
     if (p === "api/log") return "api/log.json";
     if (p === "api/sources") return "api/sources.json";
@@ -73,6 +74,7 @@
     }
     // What the diagrams need: the one list, and each view's as first drawn.
     if (p === "api/needs") return "api/needs.json";
+    if (p === "api/needs/kinds") return "api/needs/kinds.json";
     if (p === "api/needs/view" && params.get("view")) {
       var bound = false;
       params.forEach(function (value, key) { if (key.indexOf("p_") === 0 && value) bound = true; });

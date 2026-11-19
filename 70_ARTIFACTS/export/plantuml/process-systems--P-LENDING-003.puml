@@ -1,0 +1,69 @@
+@startuml
+' Receive and validate dealer-submitted application — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Receive and validate dealer-submitted application — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_LEND_02_01, "Dealer Application Intake", "Take applications keyed by the dealer, check them for completeness, and verify identity before the decision.", $tags="capabilities")
+  ' aac CAP_LEND_02_01: company_domain="Lending"
+  System(CAP_LEND_02, "Indirect Application & Underwriting", "Receive applications through dealers, decision them against credit policy, and return terms while the buyer is at the point of sale.", $tags="capabilities")
+  ' aac CAP_LEND_02: company_domain="Lending"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_APP_INTAKE, "Application completeness and disclosure", "Applications are complete and required disclosures delivered before decisioning; incomplete files route to cure with notice-of-incompleteness timing honored.", $tags="controls")
+  ' aac CTL_APP_INTAKE: company_domain=""
+  System(CTL_SANCTIONS, "Sanctions and watchlist screening", "Parties are screened at onboarding and on list updates; hits are dispositioned before processing continues.", $tags="controls")
+  ' aac CTL_SANCTIONS: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_APPLICATION, "Credit application record", "Application content, identity evidence, and decision inputs, including bureau pulls.", $tags="data_assets")
+  ' aac DA_APPLICATION: company_domain=""
+  SystemDb(DA_DEALER, "Dealer master and agreement", "Dealer identity, licensing, ownership, program terms, reserve rules and performance history.", $tags="data_assets")
+  ' aac DA_DEALER: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_LENDING_003, "Receive and validate dealer-submitted application", "Accept a credit application keyed by the dealer's finance office, check it is complete, verify the applicant's identity and screen it for application fraud before it reaches the decision. The buyer is at the dealership, so intake runs against a point-of-sale clock; an incomplete or unverified application that slips through becomes a funding exception later.", $tags="processes")
+  ' aac P_LENDING_003: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_APPFRAUD, "Application fraud screening", "Application fraud and identity risk screening.", $tags="systems")
+  ' aac SYS_APPFRAUD: company_domain=""
+  System_Ext(SYS_DEALER_PORTAL, "Dealer portal", "Where dealers submit applications, see decisions and stipulations, upload contracts, and track funding and reserve. Built with SaaS.", $tags="systems")
+  ' aac SYS_DEALER_PORTAL: company_domain=""; hosting="SaaS"; technology="SaaS"
+  System(SYS_KYC, "Identity verification", "Identity verification and customer identification program checks.", $tags="systems")
+  ' aac SYS_KYC: company_domain=""
+  System(SYS_LOS, "Indirect loan origination system", "Takes dealer applications, runs the credit decision and counteroffers, and carries the contract package to funding.", $tags="systems")
+  ' aac SYS_LOS: company_domain=""
+}
+
+Rel(P_LENDING_003, SYS_LOS, "Primary")
+' aac rel: source="P_LENDING_003"; target="SYS_LOS"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_LENDING_003, SYS_DEALER_PORTAL, "Supporting")
+' aac rel: source="P_LENDING_003"; target="SYS_DEALER_PORTAL"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_003, SYS_KYC, "Supporting")
+' aac rel: source="P_LENDING_003"; target="SYS_KYC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_003, SYS_APPFRAUD, "Supporting")
+' aac rel: source="P_LENDING_003"; target="SYS_APPFRAUD"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_003, DA_APPLICATION, "Write")
+' aac rel: source="P_LENDING_003"; target="DA_APPLICATION"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_LENDING_003, DA_DEALER, "Read")
+' aac rel: source="P_LENDING_003"; target="DA_DEALER"; label="Read"; relation="process_uses_data_asset"; access="Read"
+Rel(P_LENDING_003, CTL_APP_INTAKE, "governed by")
+' aac rel: source="P_LENDING_003"; target="CTL_APP_INTAKE"; label="governed by"; relation="process_governed_by_control"
+Rel(P_LENDING_003, CTL_SANCTIONS, "governed by")
+' aac rel: source="P_LENDING_003"; target="CTL_SANCTIONS"; label="governed by"; relation="process_governed_by_control"
+Rel(P_LENDING_003, CAP_LEND_02_01, "supports")
+' aac rel: source="P_LENDING_003"; target="CAP_LEND_02_01"; label="supports"; relation="process_supports_capability"
+Rel(P_LENDING_003, CAP_LEND_02, "supports")
+' aac rel: source="P_LENDING_003"; target="CAP_LEND_02"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

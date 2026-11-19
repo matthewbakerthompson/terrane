@@ -30,4 +30,6 @@ style:
   color_by: network_zone
 
 limits:
-  max_nodes: 40
+  # 50 records once the Azure subscriptions had networks of their own
+  # (2026-11-04); at 40 the view was cut off and said so.
+  max_nodes: 64

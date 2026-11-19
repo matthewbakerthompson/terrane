@@ -1,0 +1,53 @@
+@startuml
+' Recruit, vet, and contract dealer — Systems, Data and Controls
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Recruit, vet, and contract dealer — Systems, Data and Controls
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("controls", $bgColor="#fca5a5", $borderColor="#b91c1c", $fontColor="#0f172a", $legendText="control")
+AddElementTag("data_assets", $bgColor="#a7f3d0", $borderColor="#047857", $fontColor="#0f172a", $legendText="data asset")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_LEND_01, "Dealer Network & Program Management", "Recruit, contract, monitor, and manage the dealer network that originates recreation loans, including program terms and dealer performance.", $tags="capabilities")
+  ' aac CAP_LEND_01: company_domain="Lending"
+}
+Boundary(b_Control, "Control") {
+  System(CTL_TPRM_DD, "Third-party due diligence before onboarding", "No supplier processes cardholder data before risk-tiered due diligence is complete and accepted.", $tags="controls")
+  ' aac CTL_TPRM_DD: company_domain=""
+}
+Boundary(b_Data_Asset, "Data Asset") {
+  SystemDb(DA_DEALER, "Dealer master and agreement", "Dealer identity, licensing, ownership, program terms, reserve rules and performance history.", $tags="data_assets")
+  ' aac DA_DEALER: company_domain=""
+}
+Boundary(b_Process, "Process") {
+  System(P_LENDING_001, "Recruit, vet, and contract dealer", "Recruit a dealer, check its licensing, ownership and complaint history, and sign the dealer agreement and program terms. A dealer takes credit applications in the bank's name, so diligence before the first application is the control that matters; an unvetted dealer is a fair lending and fraud exposure on every loan it sends.", $tags="processes")
+  ' aac P_LENDING_001: company_domain=""
+}
+Boundary(b_System, "System") {
+  System_Ext(SYS_DEALER_PORTAL, "Dealer portal", "Where dealers submit applications, see decisions and stipulations, upload contracts, and track funding and reserve. Built with SaaS.", $tags="systems")
+  ' aac SYS_DEALER_PORTAL: company_domain=""; hosting="SaaS"; technology="SaaS"
+  System(SYS_DOC, "Document management and archive", "Document generation, management, and archive.", $tags="systems")
+  ' aac SYS_DOC: company_domain=""
+  System(SYS_GRC, "Governance, risk and compliance platform", "Policy, control, issue, and risk register management.", $tags="systems")
+  ' aac SYS_GRC: company_domain=""
+}
+
+Rel(P_LENDING_001, SYS_DEALER_PORTAL, "Primary")
+' aac rel: source="P_LENDING_001"; target="SYS_DEALER_PORTAL"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_LENDING_001, SYS_GRC, "Supporting")
+' aac rel: source="P_LENDING_001"; target="SYS_GRC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_001, SYS_DOC, "Supporting")
+' aac rel: source="P_LENDING_001"; target="SYS_DOC"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_LENDING_001, DA_DEALER, "Write")
+' aac rel: source="P_LENDING_001"; target="DA_DEALER"; label="Write"; relation="process_uses_data_asset"; access="Write"
+Rel(P_LENDING_001, CTL_TPRM_DD, "governed by")
+' aac rel: source="P_LENDING_001"; target="CTL_TPRM_DD"; label="governed by"; relation="process_governed_by_control"
+Rel(P_LENDING_001, CAP_LEND_01, "supports")
+' aac rel: source="P_LENDING_001"; target="CAP_LEND_01"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

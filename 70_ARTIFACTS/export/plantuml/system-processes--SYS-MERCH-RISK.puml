@@ -1,0 +1,71 @@
+@startuml
+' Merchant risk monitoring — Processes and Capabilities
+' Generated from the model by `terrane export plantuml`. Edit the model, not the diagram.
+!include <C4/C4_Deployment>
+
+title Merchant risk monitoring — Processes and Capabilities
+
+AddElementTag("capabilities", $bgColor="#ddd6fe", $borderColor="#6d28d9", $fontColor="#0f172a", $legendText="capability")
+AddElementTag("processes", $bgColor="#bae6fd", $borderColor="#0369a1", $fontColor="#0f172a", $legendText="process")
+AddElementTag("systems", $bgColor="#c7d6ff", $borderColor="#4338ca", $fontColor="#0f172a", $legendText="system")
+
+Boundary(b_Capability, "Capability") {
+  System(CAP_MERCH_02_01, "Merchant Credit Underwriting", "Assess a merchant's credit and chargeback exposure, and set its limits and reserve terms.", $tags="capabilities")
+  ' aac CAP_MERCH_02_01: company_domain="Merchant Services"
+  System(CAP_MERCH_06, "Merchant Monitoring & Exposure Management", "Monitor merchant transaction behavior, credit exposure, and collusion or bust-out patterns across the portfolio.", $tags="capabilities")
+  ' aac CAP_MERCH_06: company_domain="Merchant Services"
+  System(CAP_MERCH_04_02, "Merchant Reserve Management", "Set, adjust and release the reserves merchants carry against future chargebacks.", $tags="capabilities")
+  ' aac CAP_MERCH_04_02: company_domain="Merchant Services"
+  System(CAP_MERCH_02_02, "Merchant Screening & Brand Risk", "Screen merchants and their owners against sanctions and the networks' terminated-merchant file, and review prohibited business types.", $tags="capabilities")
+  ' aac CAP_MERCH_02_02: company_domain="Merchant Services"
+  System(CAP_MERCH_04, "Merchant Settlement & Funding", "Clear and settle merchant card volume and fund merchant accounts daily, with reserves where risk requires them.", $tags="capabilities")
+  ' aac CAP_MERCH_04: company_domain="Merchant Services"
+  System(CAP_MERCH_02, "Merchant Underwriting & Risk Vetting", "Underwrite merchants against credit and brand risk appetite — the specialty-vertical appetite is the differentiator.", $tags="capabilities")
+  ' aac CAP_MERCH_02: company_domain="Merchant Services"
+}
+Boundary(b_Process, "Process") {
+  System(P_MERCHANT_009, "Monitor merchant exposure and activity", "Watch merchant volume, ticket size, refund and chargeback ratios and future delivery exposure against approved limits, and investigate spikes, collusion and bust-out patterns. Excessive chargeback ratios put the merchant and the bank into network monitoring programs, with fines.", $tags="processes")
+  ' aac P_MERCHANT_009: company_domain=""
+  System(P_MERCHANT_004, "Screen merchant against sanctions and network lists", "Screen the business and its owners against sanctions lists and the networks' terminated-merchant file, and review prohibited and brand-damaging business types before boarding. A merchant on the terminated file, or in a prohibited category, boarded under the bank's sponsorship draws network fines on the bank.", $tags="processes")
+  ' aac P_MERCHANT_004: company_domain=""
+  System(P_MERCHANT_007, "Set and adjust merchant reserve", "Set the reserve or delayed funding a merchant must carry, raise it when chargebacks, refunds or delivery risk grow, and release it when exposure ends after the merchant leaves. Reserves are held merchant money, so each change is evidenced against the merchant agreement.", $tags="processes")
+  ' aac P_MERCHANT_007: company_domain=""
+  System(P_MERCHANT_010, "Terminate merchant and report to network list", "Close a merchant for risk, fraud or breach, hold funds to cover the chargeback tail, and add it to the networks' terminated-merchant file where the rules require. A termination that is not reported lets the merchant board elsewhere, and is itself a rule breach.", $tags="processes")
+  ' aac P_MERCHANT_010: company_domain=""
+  System(P_MERCHANT_003, "Underwrite merchant", "Assess the merchant's credit, processing history, delivery timeframes and chargeback exposure against the appetite for its business type, and approve with limits and reserve terms, or decline. Specialty and higher-risk business types are the point of the program, so underwriting sets the exposure every later step monitors.", $tags="processes")
+  ' aac P_MERCHANT_003: company_domain=""
+}
+Boundary(b_System, "System") {
+  System(SYS_MERCH_RISK, "Merchant risk monitoring", "Monitors merchant volume, chargeback ratios and exposure, and checks merchants against the networks' terminated-merchant file.", $tags="systems")
+  ' aac SYS_MERCH_RISK: company_domain=""
+}
+
+Rel(P_MERCHANT_003, SYS_MERCH_RISK, "Primary")
+' aac rel: source="P_MERCHANT_003"; target="SYS_MERCH_RISK"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_MERCHANT_004, SYS_MERCH_RISK, "Supporting")
+' aac rel: source="P_MERCHANT_004"; target="SYS_MERCH_RISK"; label="Supporting"; relation="process_uses_system"; role="Supporting"
+Rel(P_MERCHANT_007, SYS_MERCH_RISK, "Primary")
+' aac rel: source="P_MERCHANT_007"; target="SYS_MERCH_RISK"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_MERCHANT_009, SYS_MERCH_RISK, "Primary")
+' aac rel: source="P_MERCHANT_009"; target="SYS_MERCH_RISK"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_MERCHANT_010, SYS_MERCH_RISK, "Primary")
+' aac rel: source="P_MERCHANT_010"; target="SYS_MERCH_RISK"; label="Primary"; relation="process_uses_system"; role="Primary"
+Rel(P_MERCHANT_003, CAP_MERCH_02_01, "supports")
+' aac rel: source="P_MERCHANT_003"; target="CAP_MERCH_02_01"; label="supports"; relation="process_supports_capability"
+Rel(P_MERCHANT_004, CAP_MERCH_02_02, "supports")
+' aac rel: source="P_MERCHANT_004"; target="CAP_MERCH_02_02"; label="supports"; relation="process_supports_capability"
+Rel(P_MERCHANT_007, CAP_MERCH_04_02, "supports")
+' aac rel: source="P_MERCHANT_007"; target="CAP_MERCH_04_02"; label="supports"; relation="process_supports_capability"
+Rel(P_MERCHANT_009, CAP_MERCH_06, "supports")
+' aac rel: source="P_MERCHANT_009"; target="CAP_MERCH_06"; label="supports"; relation="process_supports_capability"
+Rel(P_MERCHANT_010, CAP_MERCH_06, "supports")
+' aac rel: source="P_MERCHANT_010"; target="CAP_MERCH_06"; label="supports"; relation="process_supports_capability"
+Rel(P_MERCHANT_003, CAP_MERCH_02, "supports")
+' aac rel: source="P_MERCHANT_003"; target="CAP_MERCH_02"; label="supports"; relation="process_supports_capability"
+Rel(P_MERCHANT_004, CAP_MERCH_02, "supports")
+' aac rel: source="P_MERCHANT_004"; target="CAP_MERCH_02"; label="supports"; relation="process_supports_capability"
+Rel(P_MERCHANT_007, CAP_MERCH_04, "supports")
+' aac rel: source="P_MERCHANT_007"; target="CAP_MERCH_04"; label="supports"; relation="process_supports_capability"
+
+SHOW_LEGEND()
+@enduml

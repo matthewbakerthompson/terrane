@@ -11,11 +11,16 @@ flowchart LR
   subgraph grp_Capability["Capability"]
     direction LR
     CAP_COLL_07{{"Collections Compliance<br/>Oversight"}}
+    CAP_LEND_05{{"Installment Loan Servicing"}}
     CAP_COLL_02{{"Outbound Contact<br/>Operations"}}
+    CAP_COLL_02_01{{"Owned-Portfolio<br/>Collections Contact"}}
+    CAP_COLL_02_02{{"Serviced-Portfolio<br/>Collections Contact"}}
   end
 
   subgraph grp_Process["Process"]
     direction LR
+    P_LENDING_011[\"Collect delinquent<br/>installment loan"/]
+    P_COLLECTIONS_010[\"Collect serviced client<br/>portfolio to client<br/>strategy"/]
     P_COLLECTIONS_002[\"Execute outbound<br/>collections contact"/]
   end
 
@@ -25,14 +30,22 @@ flowchart LR
   end
 
   P_COLLECTIONS_002 -->|"Primary"| SYS_DIALER
+  P_LENDING_011 -->|"Supporting"| SYS_DIALER
+  P_COLLECTIONS_010 -->|"Supporting"| SYS_DIALER
   P_COLLECTIONS_002 -->|"supports"| CAP_COLL_02
   P_COLLECTIONS_002 -->|"supports"| CAP_COLL_07
+  P_LENDING_011 -->|"supports"| CAP_LEND_05
+  P_LENDING_011 -->|"supports"| CAP_COLL_02_01
+  P_COLLECTIONS_010 -->|"supports"| CAP_COLL_02_02
+  P_COLLECTIONS_002 -->|"supports"| CAP_COLL_02_01
+  P_COLLECTIONS_010 -->|"supports"| CAP_COLL_02
+  P_LENDING_011 -->|"supports"| CAP_COLL_02
 
   classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
   classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
-  class CAP_COLL_02,CAP_COLL_07 s_capabilities__capabilities;
-  class P_COLLECTIONS_002 s_processes__processes;
+  class CAP_COLL_02,CAP_COLL_02_01,CAP_COLL_02_02,CAP_COLL_07,CAP_LEND_05 s_capabilities__capabilities;
+  class P_COLLECTIONS_002,P_COLLECTIONS_010,P_LENDING_011 s_processes__processes;
   class SYS_DIALER s_systems__systems;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
   class grp_Capability,grp_Process,grp_System boundary1;
@@ -50,4 +63,4 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 | `#0369a1` | processes |
 | `#4338ca` | systems |
 
-4 entities, 3 relationships. Generated from the model; edit the model, not this file.
+9 entities, 11 relationships. Generated from the model; edit the model, not this file.

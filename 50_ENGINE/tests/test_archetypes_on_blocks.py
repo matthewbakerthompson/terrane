@@ -283,8 +283,13 @@ class TestShippedShapes(unittest.TestCase):
                 out = expand(
                     server._sample_instance(archetype), archetype, archetype.applies_to, self.library
                 )
-                self.assertTrue(out.entities.get("systems"))
-                self.assertTrue(out.relations.get("product_includes_system"))
+                if archetype.applies_to == "products":
+                    self.assertTrue(out.entities.get("systems"))
+                    self.assertTrue(out.relations.get("product_includes_system"))
+                else:
+                    # A network shape: its instance is a technology service,
+                    # and it makes more of them, from its default layout.
+                    self.assertTrue(out.entities.get(archetype.applies_to))
 
     def test_every_bound_service_exists_in_the_estate(self) -> None:
         """A bind to a service that is not there is a dangling reference on

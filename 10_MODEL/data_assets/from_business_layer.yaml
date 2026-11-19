@@ -19,6 +19,21 @@
   source_of_truth: SYS-ORIG-DECISION
   source: Business architecture repository
 
+- data_asset_id: DA-AUTH-LOG
+  name: Authorization log
+  description: Every authorization request and response, with the decision, the reason and whether stand-in answered.
+  status: Proposed
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  classification: Restricted
+  pii_flag: "Yes"
+  risk_level: High
+  data_owner_org_id: ORG-PAYMENTS
+  data_steward_org_id: ORG-DATAGOV
+  source_of_truth: SYS-AUTH-SWITCH
+  source: Business architecture repository
+
 - data_asset_id: DA-BUREAU-FILE
   name: Credit bureau furnishing file
   description: Monthly tradeline furnishing extract and consumer-dispute responses.
@@ -49,6 +64,21 @@
   source_of_truth: SYS-CLIENT-PORTAL
   source: Business architecture repository
 
+- data_asset_id: DA-COLLATERAL
+  name: Collateral, title and lien record
+  description: The financed vehicle or boat, its identification number and value, the lien filing, title custody and release.
+  status: Proposed
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  classification: Confidential
+  pii_flag: "Yes"
+  risk_level: Medium
+  data_owner_org_id: ORG-LENDING
+  data_steward_org_id: ORG-DATAGOV
+  source_of_truth: SYS-TITLE
+  source: Business architecture repository
+
 - data_asset_id: DA-COLLECT-ACT
   name: Collections activity record
   description: Contact attempts, dispositions, promises, and arrangement terms.
@@ -62,6 +92,36 @@
   data_owner_org_id: ORG-COLLECTIONS
   data_steward_org_id: ORG-DATAGOV
   source_of_truth: SYS-COLLECT-API
+  source: Business architecture repository
+
+- data_asset_id: DA-DEALER
+  name: Dealer master and agreement
+  description: Dealer identity, licensing, ownership, program terms, reserve rules and performance history.
+  status: Proposed
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  classification: Confidential
+  pii_flag: "No"
+  risk_level: Medium
+  data_owner_org_id: ORG-LENDING
+  data_steward_org_id: ORG-DATAGOV
+  source_of_truth: SYS-DEALER-PORTAL
+  source: Business architecture repository
+
+- data_asset_id: DA-DEPOSIT-ACCOUNT
+  name: Deposit account and CD record
+  description: Depositor identity and ownership category, account terms, rate, interest accrued, maturity and instructions.
+  status: Proposed
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  classification: Restricted
+  pii_flag: "Yes"
+  risk_level: High
+  data_owner_org_id: ORG-DEPOSITS
+  data_steward_org_id: ORG-DATAGOV
+  source_of_truth: SYS-DEPOSIT
   source: Business architecture repository
 
 - data_asset_id: DA-DISPUTE-CASE
@@ -94,6 +154,51 @@
   source_of_truth: SYS-GL
   source: Business architecture repository
 
+- data_asset_id: DA-LOAN-ACCOUNT
+  name: Installment loan account
+  description: Loan terms, payment schedule, balances, payment history and status for each installment loan.
+  status: Proposed
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  classification: Restricted
+  pii_flag: "Yes"
+  risk_level: High
+  data_owner_org_id: ORG-LENDING
+  data_steward_org_id: ORG-DATAGOV
+  source_of_truth: SYS-LOAN-SVC
+  source: Business architecture repository
+
+- data_asset_id: DA-MERCH-SETTLE
+  name: Merchant settlement and reserve ledger
+  description: Daily merchant volume, fees, chargebacks, funding and reserve balances.
+  status: Proposed
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  classification: Confidential
+  pii_flag: "No"
+  risk_level: High
+  data_owner_org_id: ORG-MERCHANT
+  data_steward_org_id: ORG-DATAGOV
+  source_of_truth: SYS-MERCH-ACQ
+  source: Business architecture repository
+
+- data_asset_id: DA-MERCHANT
+  name: Merchant master and underwriting file
+  description: Merchant identity, beneficial owners, underwriting decision, limits, pricing and screening results.
+  status: Proposed
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  classification: Confidential
+  pii_flag: "Yes"
+  risk_level: High
+  data_owner_org_id: ORG-MERCHANT
+  data_steward_org_id: ORG-DATAGOV
+  source_of_truth: SYS-MERCH-ACQ
+  source: Business architecture repository
+
 - data_asset_id: DA-MODEL-FEAT
   name: Model feature store
   description: Curated features and scores for credit, fraud, and collections models.
@@ -107,6 +212,20 @@
   data_owner_org_id: ORG-ANALYTICS
   data_steward_org_id: ORG-DATAGOV
   source_of_truth: SYS-MODEL
+  source: Business architecture repository
+
+- data_asset_id: DA-PARTNER-PROGRAM
+  name: Partner program terms and economics
+  description: Co-brand and affinity agreements, revenue share terms, bounties, rewards funding and settlement history.
+  status: Proposed
+  togaf_layer: Data
+  architecture_domain: Data
+  abstraction_level: Logical
+  classification: Confidential
+  pii_flag: "No"
+  risk_level: Medium
+  data_owner_org_id: ORG-PARTNERSHIPS
+  data_steward_org_id: ORG-DATAGOV
   source: Business architecture repository
 
 - data_asset_id: DA-PAYMENT-INSTR

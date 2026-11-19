@@ -317,6 +317,22 @@ be made of kits; one that contains itself is refused when the library loads,
 with the cycle named. In the New form a kit is a heading over its members,
 each still a switch of its own.
 
+On the canvas a kit is placed whole: dropped into an account, it asks what
+its parameters ask and makes one product of it there (AAC-17). A
+parameter says how it is asked, in a few words, with `ask`, and what kind
+of record its value names with `names`, so the canvas offers the estate's
+systems to pick rather than a box to type an id into; a list when the
+default is one:
+
+```yaml
+  parameters:
+    - name: sources
+      default: []
+      ask: Answers from
+      names: systems
+      description: Their documents are embedded into the retrieval index, each a daily feed.
+```
+
 ## Slots: where a shape varies
 
 The parts a shape always has go under `modules`. Where it *varies* -- one
@@ -445,7 +461,9 @@ a small table of rows rather than typed JSON.
 `application-parts.yaml` holds the components an application is built from
 beyond the product parts: a mobile channel, an internal console, scheduled
 jobs, an event consumer, a notification service, a search index, an
-inference service, a reporting service, an adapter to a partner. Each wires
+inference service, a reporting service, an adapter to a partner, and the
+assistant's own: its chat, its retrieval index and its conversation
+history. Each wires
 to the product service, a part that calls it going through the API the
 service offers (`api-service` makes both: the service, named for itself,
 and its API as an offered interface), and runs on a block or a kind the
@@ -454,11 +472,85 @@ landing zone answers for, so none names a cloud.
 `applications.yaml` holds the standard applications as kits of those: a web
 application, a mobile application, an internal tool, an event-driven
 service, a batch application, an integration adapter, an AI inference
-service, a reporting application. Picking a kit in the Assemble panel picks
+service, a reporting application, an AI assistant, an AI agent, a
+customer portal (the web application with customers signing in to it and
+the notifications it sends them) and an API offered to partners through the
+landing zone's gateway. Picking a kit in the
+Assemble panel picks
 its members under their own names, so a product can still do without one,
 tell one something, or add a part the kit did not bring. The application
 types in [`29_TYPES/`](../29_TYPES/README.md) require these kits and offer
 the components each kind of application may add.
+
+An AI assistant is the plainest case of a component that is never one
+box. `ai-assistant-baseline` is a chat behind workforce sign-on, the
+product service, the inference service that assembles each prompt and
+calls the landing zone's foundation model through its AI gateway (the
+inference service asks for an `ai-gateway` as well as the model, so no
+model is called around the guardrails), the retrieval index (an ingestion
+worker embedding the documents of the systems the product names under
+`sources` into the landing zone's vector database) and the conversation
+history, on the transactional store. Each landing zone answers all of it:
+Bedrock and Bedrock Guardrails and OpenSearch on AWS, Foundry and API
+Management's AI gateway and AI Search on Azure, Gemini and Model Armor and
+Vector Search on Google Cloud. A bought assistant is a vendor, on the vendor
+shapes.
+
+Beyond the standard applications, the parts organizations come to need
+again and again: `agent-service` and its kit `ai-agent-baseline`, an agent
+on the landing zone's agent platform that plans with its model through the
+AI gateway and acts through the APIs of the systems named under `tools`,
+every action in its action log first; `customer-sign-in`, a product's
+customers on the landing zone's customer identity service; `analytics-feed`,
+a product database's changes to the estate's ingestion by change data
+capture, the way out of a database the connection kinds offer first;
+`partner-api`, the product's API offered to the partners named under
+`partners` through the gateway; and `document-intake`, files in the object
+store read by the landing zone's document processing. The types offer them.
+
+A kind a part uses by default (`uses: [object-store, kms]`) asks the
+landing zone as much as a parameter of that kind does, and `terrane
+validate` says so where a zone cannot answer it: the card issuer's Azure
+zone had no object store, and nothing said so until document intake was
+assembled there.
+
+## A network, made once per account
+
+A product never makes a network. The network is the landing zone's, made
+once for each account by whoever runs it, and every product in the account
+lands in it. `networks.yaml` has the part, `workload-network`, and
+`20_ARCHETYPES` a shape for it on each cloud, which applies to a technology
+service rather than a product: the instance is the VPC or virtual network
+itself.
+
+```yaml
+- tech_service_id: TS-NET-VNET-AZ-CARDS
+  name: Cards Virtual Network
+  archetype: azure-workload-network
+  parameters:
+    slug: az-cards
+    network_name: Cards
+    account: azure-cards-prod
+    subnets:                       # left out, the standard three tiers
+      - {id: APP, name: App Subnet, zone: Private-App, az: zone-redundant}
+      - {id: DATA, name: Data Subnet, zone: Private-Data, az: zone-redundant}
+```
+
+It makes the subnets (each over `subnets`, a list of mappings: on AWS the
+standard layout is public, app and data in zones a and b, a NAT gateway in
+each), its NAT gateways, its attachment to the landing zone's transit hub
+and its link to the landing zone's resolver, both found by kind. Its owner
+is the estate's `platform_org`.
+
+Nothing then says which subnet a system is in. A system in a cloud account
+and a network zone uses that account's subnets for the zone, every one of
+them in its region (`terrane/model.py`, `place_by_zone`), whether a person
+wrote the system or a shape made it; a system that names a subnet of its
+own keeps it, and a kind the library says sits in no subnet of ours
+(`subnet: false` on the component type: an object store, a BI layer, a CDN,
+bought SaaS) is not placed. The lending product's eleven subnet rows were
+written by hand and no other product was placed; the five Azure
+subscriptions had no network at all.
 
 ## What a module is not
 

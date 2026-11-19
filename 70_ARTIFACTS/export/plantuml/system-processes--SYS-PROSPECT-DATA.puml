@@ -14,6 +14,8 @@ Boundary(b_Capability, "Capability") {
   ' aac CAP_ACQ_04: company_domain="MarTech"
   System(CAP_ACQ_02, "Offer & Pre-Screen Management", "Construct and govern firm offers of credit and pre-screen criteria.", $tags="capabilities")
   ' aac CAP_ACQ_02: company_domain="MarTech"
+  System(CAP_ACQ_02_01, "Offer Construction", "Assemble the offer: terms, pricing, and eligibility criteria.", $tags="capabilities")
+  ' aac CAP_ACQ_02_01: company_domain="MarTech"
   System(CAP_ACQ_01, "Prospect Data & List Management", "Source, permission, and manage prospect data.", $tags="capabilities")
   ' aac CAP_ACQ_01: company_domain="MarTech"
 }
@@ -38,6 +40,8 @@ Rel(P_MARKETING_002, CAP_ACQ_02, "supports")
 ' aac rel: source="P_MARKETING_002"; target="CAP_ACQ_02"; label="supports"; relation="process_supports_capability"
 Rel(P_MARKETING_002, CAP_ACQ_04, "supports")
 ' aac rel: source="P_MARKETING_002"; target="CAP_ACQ_04"; label="supports"; relation="process_supports_capability"
+Rel(P_MARKETING_002, CAP_ACQ_02_01, "supports")
+' aac rel: source="P_MARKETING_002"; target="CAP_ACQ_02_01"; label="supports"; relation="process_supports_capability"
 
 SHOW_LEGEND()
 @enduml

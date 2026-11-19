@@ -1,128 +1,444 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1100" height="604.4" viewBox="0 0 1100 604.4" font-family="Geist, system-ui, sans-serif" data-layout="elk">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1572.2" height="1632.44" viewBox="0 0 1572.2 1632.44" font-family="Geist, system-ui, sans-serif" data-layout="elk">
 <title>Assemble the merchant portal on Azure — Footprint</title>
 <rect width="100%" height="100%" fill="#ffffff"/>
 <g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Assemble the merchant portal on Azure — Footprint</text>
-<text x="1072" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   6 nodes · 5 edges</text>
-<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One work package and its footprint: the systems it builds or changes, the data those systems read and write, the capabilities they realize, and the processes that</text>
-<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">depend on them. The footprint is derived from the model, so it includes indirect effects.</text>
-<line x1="28" y1="112" x2="1072" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
-<g class="drawing" transform="translate(50.5 99.2)">
+<text x="1544.2" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   22 nodes · 31 edges</text>
+<text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">One work package and its footprint: the systems it builds or changes, the data those systems read and write, the capabilities they realize, and the processes that depend on them. The footprint is derived from the model, so it includes</text>
+<text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">indirect effects.</text>
+<line x1="28" y1="112" x2="1544.2" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
+<g class="drawing" transform="translate(19.2 99.24)">
+<g class="boundary" data-id="grp::Capability">
+<rect x="826.52" y="754.3" width="212.57" height="247.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="868.52" y="771.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Capability</text>
+</g>
 <g class="boundary" data-id="grp::Data Asset">
-<rect x="767.3" y="30.3" width="221.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
-<text x="809.3" y="47.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+<rect x="1302.1" y="326.3" width="221.4" height="319.04" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="1344.1" y="343.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Data Asset</text>
+</g>
+<g class="boundary" data-id="grp::Process">
+<rect x="386.67" y="24.26" width="212.27" height="999.44" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="419.52" y="41.67" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Process</text>
 </g>
 <g class="boundary" data-id="grp::System">
-<rect x="373.1" y="24.3" width="233.4" height="363.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
-<text x="402.9" y="41.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
+<rect x="365.1" y="1052.3" width="233.4" height="363.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="394.9" y="1069.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">System</text>
 </g>
 <g class="boundary" data-id="grp::Work Package">
-<rect x="10.3" y="166.3" width="211.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
-<text x="58.4" y="183.71" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Work Package</text>
+<rect x="10.3" y="1146.3" width="211.4" height="103.4" rx="8" fill="#f3f5fb" stroke="#8f9bb5" stroke-width="1"/>
+<text x="58.4" y="1163.7" font-size="11" font-weight="600" fill="#3b4a6b" text-anchor="middle">Work Package</text>
 </g>
 <g class="edge" data-id="e0::WP-MERCHANT-PORTAL::SYS-MERCHANT-WEB">
 <title>Builds</title>
-<path d="M196 202.4 L224.93 202 A10 10 0 0 1 225.07 202 L233 202 A8 8 0 0 0 241 194 L241 188 A10 10 0 0 1 251 178 L343.8 178 A10 10 0 0 1 353.8 188 L353.8 323 A7.76 7.76 0 0 0 361.8 330.75 L369.64 330.5 A10 10 0 0 1 369.96 330.5 L395.28 330.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M398.8 330.5 L389.23 335.29 L389.23 325.71 Z" fill="#7b8798"/>
+<path d="M196 1213.6 L224.93 1214 A10 10 0 0 0 225.07 1214 L233 1214 A8 8 0 0 1 241 1222 L241 1348.96 A10 10 0 0 0 251.04 1358.96 L361.78 1358.5 A10 10 0 0 1 361.82 1358.5 L387.28 1358.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M390.8 1358.5 L381.23 1363.29 L381.23 1353.71 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e0::WP-MERCHANT-PORTAL::SYS-MERCHANT-WEB">
-<rect x="275.86" y="184.5" width="35.07" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="293.4" y="196.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Builds</text>
+<rect x="275.86" y="1365.5" width="35.07" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="293.4" y="1377.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Builds</text>
 </g>
 <g class="edge" data-id="e1::WP-MERCHANT-PORTAL::SYS-MERCHANT-API">
 <title>Builds</title>
-<path d="M196 212.8 L224.97 213 A10 10 0 0 0 225.03 213 L323.8 213 A10 10 0 0 0 333.8 203 L333.8 91.86 A10 10 0 0 1 343.66 81.86 L369.73 81.5 A10 10 0 0 1 369.87 81.5 L395.28 81.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M398.8 81.5 L389.23 86.28 L389.23 76.72 Z" fill="#7b8798"/>
+<path d="M196 1182.4 L224.93 1182 A10 10 0 0 1 225.07 1182 L233 1182 A8 8 0 0 0 241 1174 L241 1119.96 A10 10 0 0 1 250.96 1109.96 L361.78 1109.5 A10 10 0 0 1 361.82 1109.5 L387.28 1109.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M390.8 1109.5 L381.23 1114.29 L381.23 1104.71 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e1::WP-MERCHANT-PORTAL::SYS-MERCHANT-API">
-<rect x="275.86" y="219.5" width="35.07" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="293.4" y="231.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Builds</text>
+<rect x="275.86" y="1116.5" width="35.07" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="293.4" y="1128.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Builds</text>
 </g>
 <g class="edge" data-id="e2::WP-MERCHANT-PORTAL::SYS-MERCHANT-STORE">
 <title>Builds</title>
-<path d="M196 223.2 L224.97 223 A10 10 0 0 1 225.03 223 L241 223 A10 10 0 0 1 251 233 L251 237.96 A10 10 0 0 0 261.04 247.96 L369.78 247.5 A10 10 0 0 1 369.82 247.5 L395.28 247.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M398.8 247.5 L389.23 252.28 L389.23 242.72 Z" fill="#7b8798"/>
+<path d="M196 1203.2 L224.97 1203 A10 10 0 0 1 225.03 1203 L241 1203 A10 10 0 0 1 251 1213 L251 1265.95 A10 10 0 0 0 261.05 1275.95 L361.78 1275.5 A10 10 0 0 1 361.82 1275.5 L387.28 1275.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M390.8 1275.5 L381.23 1280.29 L381.23 1270.71 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e2::WP-MERCHANT-PORTAL::SYS-MERCHANT-STORE">
-<rect x="275.86" y="254.5" width="35.07" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="293.4" y="266.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Builds</text>
+<rect x="275.86" y="1282.5" width="35.07" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="293.4" y="1294.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Builds</text>
 </g>
 <g class="edge" data-id="e3::WP-MERCHANT-PORTAL::SYS-MERCHANT-EVENTS">
 <title>Builds</title>
-<path d="M196 233.6 L224.93 234 A10 10 0 0 0 225.07 234 L233 234 A8 8 0 0 1 241 242 L241 273 A10 10 0 0 0 251 283 L333.8 283 A10 10 0 0 0 343.8 273 L343.8 174.81 A10 10 0 0 1 353.61 164.81 L369.7 164.5 A10 10 0 0 1 369.9 164.5 L395.28 164.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M398.8 164.5 L389.23 169.28 L389.23 159.72 Z" fill="#7b8798"/>
+<path d="M196 1192.8 L224.95 1193 A10 10 0 0 0 225.05 1193 L361.78 1192.5 A10 10 0 0 1 361.82 1192.5 L387.28 1192.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M390.8 1192.5 L381.23 1197.29 L381.23 1187.71 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e3::WP-MERCHANT-PORTAL::SYS-MERCHANT-EVENTS">
-<rect x="275.86" y="289.5" width="35.07" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="293.4" y="301.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Builds</text>
+<rect x="275.86" y="1199.5" width="35.07" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="293.4" y="1211.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Builds</text>
 </g>
 <g class="edge" data-id="e4::SYS-MERCHANT-API::DA-MERCHANT-OPERATIONAL">
 <title>ReadWrite</title>
-<path d="M580.8 81.5 L609.71 82 A10 10 0 0 0 609.89 82 L764 82 L789.48 82" fill="none" stroke="#7b8798" stroke-width="1.6"/>
-<path d="M793 82 L783.43 86.78 L783.43 77.22 Z" fill="#7b8798"/>
+<path d="M572.8 1093.75 L601.76 1094 A10 10 0 0 0 601.84 1094 L609.8 1094 A8 8 0 0 0 617.8 1086 L617.8 1065 A10 10 0 0 1 627.8 1055 L1102.8 1055 A10 10 0 0 0 1112.8 1045 L1112.8 603.9 A10 10 0 0 1 1122.7 593.9 L1148.75 593.64 A10 10 0 0 1 1148.85 593.64 L1324.28 593.64" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1327.8 593.64 L1318.23 598.42 L1318.23 588.85 Z" fill="#7b8798"/>
 </g>
 <g class="edge-label" data-edge="e4::SYS-MERCHANT-API::DA-MERCHANT-OPERATIONAL">
-<rect x="659.51" y="88.5" width="54.78" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
-<text x="686.9" y="100.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">ReadWrite</text>
+<rect x="872.91" y="1061.5" width="54.78" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="900.3" y="1073.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">ReadWrite</text>
+</g>
+<g class="edge" data-id="e5::SYS-MERCHANT-API::DA-MERCHANT">
+<title>Write</title>
+<path d="M572.8 1125.25 L601.76 1125 A10 10 0 0 1 601.84 1125 L1122.8 1125 A10 10 0 0 0 1132.8 1115 L1132.8 622 A8.19 8.19 0 0 1 1140.8 613.82 L1148.69 613.64 A10 10 0 0 1 1148.91 613.64 L1307.8 613.64 A10 10 0 0 0 1317.8 603.64 L1317.8 535.6 A3.24 3.24 0 0 1 1321.04 532.36 L1324.28 532.36" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1327.8 532.36 L1318.23 537.15 L1318.23 527.58 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e5::SYS-MERCHANT-API::DA-MERCHANT">
+<rect x="884.84" y="1131.5" width="30.91" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="900.3" y="1143.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Write</text>
+</g>
+<g class="edge" data-id="e6::SYS-MERCHANT-API::DA-MERCH-SETTLE">
+<title>Read</title>
+<path d="M572.8 1109.5 L601.71 1110 A10 10 0 0 0 601.89 1110 L737.8 1110 A10 10 0 0 0 747.8 1100 L747.8 1100 A10 10 0 0 1 757.8 1090 L1112.8 1090 A10 10 0 0 0 1122.8 1080 L1122.8 613.86 A10 10 0 0 1 1132.66 603.86 L1148.73 603.64 A10 10 0 0 1 1148.87 603.64 L1287.8 603.64 A10 10 0 0 0 1297.8 593.64 L1297.8 435.5 A10 10 0 0 1 1307.8 425.5 L1324.28 425.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1327.8 425.5 L1318.23 430.29 L1318.23 420.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e6::SYS-MERCHANT-API::DA-MERCH-SETTLE">
+<rect x="885.25" y="1096.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="900.3" y="1108.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e7::SYS-MERCHANT-WEB::CAP-MERCH-02">
+<title>realizes</title>
+<path d="M572.8 1342.75 L601.76 1343 A10 10 0 0 0 601.84 1343 L707.8 1343 A10 10 0 0 0 717.8 1333 L717.8 898 A10 10 0 0 1 727.8 888 L763.8 888 L812.8 888 A10 10 0 0 0 822.8 878 L822.8 831.6 A10 10 0 0 1 832.8 821.6 L849.28 821.6" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M852.8 821.6 L843.23 826.38 L843.23 816.81 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e8::SYS-MERCHANT-WEB::CAP-MERCH-02-01">
+<title>realizes</title>
+<path d="M572.8 1374.25 L601.76 1374 A10 10 0 0 1 601.84 1374 L727.8 1374 A10 10 0 0 0 737.8 1364 L737.8 978.87 A10 10 0 0 1 747.67 968.87 L763.74 968.67 A10 10 0 0 1 763.86 968.67 L822.8 968.67 A10 10 0 0 0 832.8 958.67 L832.8 899.24 A8.24 8.24 0 0 1 841.04 891 L849.28 891" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M852.8 891 L843.23 895.78 L843.23 886.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e9::SYS-MERCHANT-WEB::CAP-MERCH-07">
+<title>realizes</title>
+<path d="M572.8 1358.5 L601.71 1359 A10 10 0 0 0 601.89 1359 L717.8 1359 A10 10 0 0 0 727.8 1349 L727.8 968.91 A10 10 0 0 1 737.71 958.91 L763.75 958.67 A10 10 0 0 1 763.85 958.67 L849.28 958.67" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M852.8 958.67 L843.23 963.45 L843.23 953.88 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e10::P-MERCHANT-001::DA-MERCHANT">
+<title>Read</title>
+<path d="M572.8 524 L601.8 524 A10 10 0 0 0 601.8 524 L1148.8 523.64 A10 10 0 0 1 1148.8 523.64 L1227.8 523.64 A10 10 0 0 0 1237.8 513.64 L1237.8 504.18 A10 10 0 0 1 1247.8 494.18 L1324.28 494.18" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1327.8 494.18 L1318.23 498.97 L1318.23 489.4 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e10::P-MERCHANT-001::DA-MERCHANT">
+<rect x="885.25" y="530.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="900.3" y="542.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e11::P-MERCHANT-002::DA-MERCHANT">
+<title>Write</title>
+<path d="M572.8 629 L601.8 629 L617.8 629 A10 10 0 0 0 627.8 619 L627.8 569 A10 10 0 0 1 637.8 559 L1042.8 559 A10 10 0 0 0 1052.8 549 L1052.8 543.96 A10 10 0 0 1 1062.76 533.96 L1148.78 533.64 A10 10 0 0 1 1148.82 533.64 L1247.8 533.64 A10 10 0 0 0 1257.8 523.64 L1257.8 511.82 A10 10 0 0 1 1267.8 501.82 L1324.28 501.82" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1327.8 501.82 L1318.23 506.6 L1318.23 497.03 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e11::P-MERCHANT-002::DA-MERCHANT">
+<rect x="884.84" y="565.5" width="30.91" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="900.3" y="577.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Write</text>
+</g>
+<g class="edge" data-id="e12::P-MERCHANT-003::DA-MERCHANT">
+<title>Both</title>
+<path d="M572.8 981 L601.8 981 L737.8 981 A10 10 0 0 1 747.8 991 L747.8 1008 A10 10 0 0 0 757.8 1018 L1092.8 1018 A10 10 0 0 0 1102.8 1008 L1102.8 593.92 A10 10 0 0 1 1112.72 583.92 L1148.76 583.64 A10 10 0 0 1 1148.84 583.64 L1297.8 583.64 A10 10 0 0 0 1307.8 573.64 L1307.8 532.97 A8.24 8.24 0 0 1 1316.04 524.73 L1324.28 524.73" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1327.8 524.73 L1318.23 529.51 L1318.23 519.94 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e12::P-MERCHANT-003::DA-MERCHANT">
+<rect x="886.15" y="1024.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="900.3" y="1036.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e13::P-MERCHANT-004::DA-MERCHANT">
+<title>Read</title>
+<path d="M572.8 776.67 L601.74 777 A10 10 0 0 0 601.86 777 L657.8 777 A10 10 0 0 0 667.8 767 L667.8 674 A10 10 0 0 1 677.8 664 L1072.8 664 A10 10 0 0 0 1082.8 654 L1082.8 573.95 A10 10 0 0 1 1092.74 563.95 L1148.77 563.64 A10 10 0 0 1 1148.83 563.64 L1277.8 563.64 A10 10 0 0 0 1287.8 553.64 L1287.8 527.09 A10 10 0 0 1 1297.8 517.09 L1324.28 517.09" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1327.8 517.09 L1318.23 521.88 L1318.23 512.31 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e13::P-MERCHANT-004::DA-MERCHANT">
+<rect x="885.25" y="670.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="900.3" y="682.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e14::P-MERCHANT-005::DA-MERCHANT">
+<title>Both</title>
+<path d="M572.8 436 L601.8 436 L609.8 436 A8 8 0 0 1 617.8 444 L617.8 479 A10 10 0 0 0 627.8 489 L1042.8 489 A10 10 0 0 1 1052.8 499 L1052.8 503.96 A10 10 0 0 0 1062.84 513.96 L1148.78 513.64 A10 10 0 0 1 1148.82 513.64 L1217.8 513.64 A10 10 0 0 0 1227.8 503.64 L1227.8 496.55 A10 10 0 0 1 1237.8 486.55 L1324.28 486.55" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1327.8 486.55 L1318.23 491.33 L1318.23 481.76 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e14::P-MERCHANT-005::DA-MERCHANT">
+<rect x="886.15" y="495.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="900.3" y="507.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e15::P-MERCHANT-006::DA-MERCH-SETTLE">
+<title>Write</title>
+<path d="M572.8 84 L601.8 84 L1112.8 84 A10 10 0 0 1 1122.8 94 L1122.8 352.81 A10 10 0 0 0 1132.99 362.8 L1148.7 362.5 A10 10 0 0 1 1148.9 362.5 L1324.28 362.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1327.8 362.5 L1318.23 367.29 L1318.23 357.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e15::P-MERCHANT-006::DA-MERCH-SETTLE">
+<rect x="884.84" y="90.5" width="30.91" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="900.3" y="102.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Write</text>
+</g>
+<g class="edge" data-id="e16::P-MERCHANT-007::DA-MERCH-SETTLE">
+<title>Both</title>
+<path d="M572.8 160.67 L601.74 161 A10 10 0 0 0 601.86 161 L1102.8 161 A10 10 0 0 1 1112.8 171 L1112.8 363 A10 10 0 0 0 1122.8 373 L1148.8 373 L1324.28 373" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1327.8 373 L1318.23 377.79 L1318.23 368.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e16::P-MERCHANT-007::DA-MERCH-SETTLE">
+<rect x="886.15" y="167.5" width="28.3" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="900.3" y="179.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Both</text>
+</g>
+<g class="edge" data-id="e17::P-MERCHANT-007::DA-MERCHANT">
+<title>Read</title>
+<path d="M572.8 183.33 L601.74 183 A10 10 0 0 1 601.86 183 L657.8 183 A10 10 0 0 1 667.8 193 L667.8 304 A10 10 0 0 0 677.8 314 L1092.8 314 A10 10 0 0 1 1102.8 324 L1102.8 453.92 A10 10 0 0 0 1112.88 463.92 L1148.76 463.64 A10 10 0 0 1 1148.84 463.64 L1324.28 463.64" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1327.8 463.64 L1318.23 468.42 L1318.23 458.85 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e17::P-MERCHANT-007::DA-MERCHANT">
+<rect x="885.25" y="320.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="900.3" y="332.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e18::P-MERCHANT-008::DA-MERCH-SETTLE">
+<title>Write</title>
+<path d="M572.8 336.67 L601.74 337 A10 10 0 0 0 601.86 337 L627.8 337 A10 10 0 0 1 637.8 347 L637.8 409 A10 10 0 0 0 647.8 419 L1062.8 419 A10 10 0 0 1 1072.8 429 L1072.8 483.95 A10 10 0 0 0 1082.85 493.95 L1148.78 493.64 A10 10 0 0 1 1148.82 493.64 L1187.8 493.64 A10 10 0 0 0 1197.8 483.64 L1197.8 404 A10 10 0 0 1 1207.8 394 L1324.28 394" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1327.8 394 L1318.23 398.79 L1318.23 389.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e18::P-MERCHANT-008::DA-MERCH-SETTLE">
+<rect x="884.84" y="425.5" width="30.91" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="900.3" y="437.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Write</text>
+</g>
+<g class="edge" data-id="e19::P-MERCHANT-008::DA-MERCHANT">
+<title>Read</title>
+<path d="M572.8 359.33 L601.74 359 A10 10 0 0 1 601.86 359 L617.8 359 A10 10 0 0 1 627.8 369 L627.8 444 A10 10 0 0 0 637.8 454 L1052.8 454 A10 10 0 0 1 1062.8 464 L1062.8 493.96 A10 10 0 0 0 1072.84 503.96 L1148.78 503.64 A10 10 0 0 1 1148.82 503.64 L1207.8 503.64 A10 10 0 0 0 1217.8 493.64 L1217.8 488.91 A10 10 0 0 1 1227.8 478.91 L1324.28 478.91" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1327.8 478.91 L1318.23 483.69 L1318.23 474.12 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e19::P-MERCHANT-008::DA-MERCHANT">
+<rect x="885.25" y="460.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="900.3" y="472.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e20::P-MERCHANT-009::DA-MERCH-SETTLE">
+<title>Read</title>
+<path d="M572.8 688.67 L601.74 689 A10 10 0 0 0 601.86 689 L637.8 689 A10 10 0 0 0 647.8 679 L647.8 604 A10 10 0 0 1 657.8 594 L1052.8 594 A10 10 0 0 0 1062.8 584 L1062.8 553.96 A10 10 0 0 1 1072.76 543.96 L1148.78 543.64 A10 10 0 0 1 1148.82 543.64 L1237.8 543.64 A10 10 0 0 0 1247.8 533.64 L1247.8 414.5 A10 10 0 0 1 1257.8 404.5 L1324.28 404.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1327.8 404.5 L1318.23 409.29 L1318.23 399.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e20::P-MERCHANT-009::DA-MERCH-SETTLE">
+<rect x="885.25" y="600.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="900.3" y="612.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e21::P-MERCHANT-009::DA-MERCHANT">
+<title>Read</title>
+<path d="M572.8 711.33 L601.74 711 A10 10 0 0 1 601.86 711 L647.8 711 A10 10 0 0 0 657.8 701 L657.8 639 A10 10 0 0 1 667.8 629 L1062.8 629 A10 10 0 0 0 1072.8 619 L1072.8 563.95 A10 10 0 0 1 1082.75 553.95 L1148.78 553.64 A10 10 0 0 1 1148.82 553.64 L1257.8 553.64 A10 10 0 0 0 1267.8 543.64 L1267.8 519.45 A10 10 0 0 1 1277.8 509.45 L1324.28 509.45" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1327.8 509.45 L1318.23 514.24 L1318.23 504.67 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e21::P-MERCHANT-009::DA-MERCHANT">
+<rect x="885.25" y="635.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="900.3" y="647.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e22::P-MERCHANT-010::DA-MERCHANT">
+<title>Write</title>
+<path d="M572.8 271.33 L601.74 271 A10 10 0 0 1 601.86 271 L637.8 271 A10 10 0 0 1 647.8 281 L647.8 374 A10 10 0 0 0 657.8 384 L1072.8 384 A10 10 0 0 1 1082.8 394 L1082.8 473.94 A10 10 0 0 0 1092.86 483.94 L1148.77 483.64 A10 10 0 0 1 1148.83 483.64 L1201.62 483.64 A6.18 6.18 0 0 0 1207.8 477.45 L1207.8 477.45 A6.18 6.18 0 0 1 1213.98 471.27 L1324.28 471.27" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1327.8 471.27 L1318.23 476.06 L1318.23 466.49 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e22::P-MERCHANT-010::DA-MERCHANT">
+<rect x="884.84" y="390.5" width="30.91" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="900.3" y="402.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Write</text>
+</g>
+<g class="edge" data-id="e23::P-MERCHANT-010::DA-MERCH-SETTLE">
+<title>Write</title>
+<path d="M572.8 248.67 L601.74 249 A10 10 0 0 0 601.86 249 L647.8 249 A10 10 0 0 1 657.8 259 L657.8 339 A10 10 0 0 0 667.8 349 L1082.8 349 A10 10 0 0 1 1092.8 359 L1092.8 463.93 A10 10 0 0 0 1102.86 473.93 L1148.77 473.64 A10 10 0 0 1 1148.83 473.64 L1177.8 473.64 A10 10 0 0 0 1187.8 463.64 L1187.8 393.5 A10 10 0 0 1 1197.8 383.5 L1324.28 383.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1327.8 383.5 L1318.23 388.29 L1318.23 378.71 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e23::P-MERCHANT-010::DA-MERCH-SETTLE">
+<rect x="884.84" y="355.5" width="30.91" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="900.3" y="367.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Write</text>
+</g>
+<g class="edge" data-id="e24::P-MERCHANT-011::DA-MERCH-SETTLE">
+<title>Read</title>
+<path d="M572.8 864.67 L601.74 865 A10 10 0 0 0 601.86 865 L667.8 865 A10 10 0 0 0 677.8 855 L677.8 709 A10 10 0 0 1 687.8 699 L1082.8 699 A10 10 0 0 0 1092.8 689 L1092.8 583.94 A10 10 0 0 1 1102.74 573.94 L1148.77 573.64 A10 10 0 0 1 1148.83 573.64 L1267.8 573.64 A10 10 0 0 0 1277.8 563.64 L1277.8 425 A10 10 0 0 1 1287.8 415 L1324.28 415" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M1327.8 415 L1318.23 419.79 L1318.23 410.21 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e24::P-MERCHANT-011::DA-MERCH-SETTLE">
+<rect x="885.25" y="705.5" width="30.09" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="900.3" y="717.05" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">Read</text>
+</g>
+<g class="edge" data-id="e25::P-MERCHANT-002::CAP-MERCH-02-01">
+<title>supports</title>
+<path d="M572.8 612 L601.8 612 L609.8 612 A8 8 0 0 1 617.8 620 L617.8 780.99 A10 10 0 0 0 627.81 790.99 L763.79 790.8 A10 10 0 0 1 763.81 790.8 L822.8 790.8 A10 10 0 0 1 832.8 800.8 L832.8 856.76 A8.24 8.24 0 0 0 841.04 865 L849.28 865" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M852.8 865 L843.23 869.78 L843.23 860.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e26::P-MERCHANT-003::CAP-MERCH-02-01">
+<title>supports</title>
+<path d="M572.8 964 L601.8 964 L697.8 964 A10 10 0 0 0 707.8 954 L707.8 888 A10 10 0 0 1 717.8 878 L763.8 878 L849.28 878" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M852.8 878 L843.23 882.78 L843.23 873.22 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e27::P-MERCHANT-011::CAP-MERCH-07">
+<title>supports</title>
+<path d="M572.8 887.33 L601.74 887 A10 10 0 0 1 601.86 887 L677.8 887 A10 10 0 0 0 687.8 877 L687.8 820.97 A10 10 0 0 1 697.77 810.97 L763.79 810.8 A10 10 0 0 1 763.81 810.8 L792.8 810.8 A10 10 0 0 1 802.8 820.8 L802.8 931.33 A10 10 0 0 0 812.8 941.33 L849.28 941.33" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M852.8 941.33 L843.23 946.12 L843.23 936.55 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e28::P-MERCHANT-002::CAP-MERCH-02">
+<title>supports</title>
+<path d="M572.8 595 L601.8 595 L627.8 595 A10 10 0 0 1 637.8 605 L637.8 770.98 A10 10 0 0 0 647.82 780.98 L763.79 780.8 A10 10 0 0 1 763.81 780.8 L838 780.8 A4.8 4.8 0 0 1 842.8 785.6 L842.8 787.16 A3.24 3.24 0 0 0 846.04 790.4 L849.28 790.4" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M852.8 790.4 L843.23 795.18 L843.23 785.62 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e29::P-MERCHANT-003::CAP-MERCH-02">
+<title>supports</title>
+<path d="M572.8 947 L601.8 947 L687.8 947 A10 10 0 0 0 697.8 937 L697.8 830.97 A10 10 0 0 1 707.77 820.97 L763.78 820.8 A10 10 0 0 1 763.82 820.8 L808 820.8 A4.8 4.8 0 0 0 812.8 816 L812.8 816 A4.8 4.8 0 0 1 817.6 811.2 L849.28 811.2" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M852.8 811.2 L843.23 815.98 L843.23 806.41 Z" fill="#7b8798"/>
+</g>
+<g class="edge" data-id="e30::P-MERCHANT-004::CAP-MERCH-02">
+<title>supports</title>
+<path d="M572.8 799.33 L601.74 799 A10 10 0 0 1 601.86 799 L686.8 799 A1 1 0 0 1 687.8 800 L687.8 800 A1 1 0 0 0 688.8 801 L763.79 800.8 A10 10 0 0 1 763.81 800.8 L849.28 800.8" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M852.8 800.8 L843.23 805.58 L843.23 796.01 Z" fill="#7b8798"/>
+</g>
+<g class="node" data-id="CAP-MERCH-02" data-type="capabilities">
+<title>Merchant Underwriting &amp; Risk Vetting</title>
+<path d="M892.8 780 L852.8 806 L892.8 832 L972.8 832 L1012.8 806 L972.8 780 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="932.8" y="798.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant</text>
+<text x="932.8" y="810.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Underwriting &amp; Risk</text>
+<text x="932.8" y="822.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Vetting</text>
+</g>
+<g class="node" data-id="CAP-MERCH-02-01" data-type="capabilities">
+<title>Merchant Credit Underwriting</title>
+<path d="M892.8 852 L852.8 878 L892.8 904 L972.8 904 L1012.8 878 L972.8 852 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="932.8" y="876.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant Credit</text>
+<text x="932.8" y="888.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Underwriting</text>
+</g>
+<g class="node" data-id="CAP-MERCH-07" data-type="capabilities">
+<title>Merchant Servicing &amp; Billing</title>
+<path d="M892.8 924 L852.8 950 L892.8 976 L972.8 976 L1012.8 950 L972.8 924 Z" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"/>
+<text x="932.8" y="948.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant Servicing &amp;</text>
+<text x="932.8" y="960.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Billing</text>
+</g>
+<g class="node" data-id="DA-MERCH-SETTLE" data-type="data_assets">
+<title>Merchant settlement and reserve ledger</title>
+<path d="M1327.8 356.2 Q1336.3 352 1370.3 352 L1455.3 352 Q1489.3 352 1497.8 356.2 L1497.8 431.8 Q1489.3 436 1455.3 436 L1370.3 436 Q1336.3 436 1327.8 431.8 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="1408.8" y="392.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant settlement</text>
+<text x="1408.8" y="404.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and reserve ledger</text>
+<svg x="1479.8" y="357" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="DA-MERCHANT" data-type="data_assets">
+<title>Merchant master and underwriting file</title>
+<path d="M1327.8 460.2 Q1336.3 456 1370.3 456 L1455.3 456 Q1489.3 456 1497.8 460.2 L1497.8 535.8 Q1489.3 540 1455.3 540 L1370.3 540 Q1336.3 540 1327.8 535.8 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="1408.8" y="496.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant master and</text>
+<text x="1408.8" y="508.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">underwriting file</text>
+<svg x="1479.8" y="461" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
 </g>
 <g class="node" data-id="DA-MERCHANT-OPERATIONAL" data-type="data_assets">
 <title>Merchant Portal operational data</title>
-<path d="M793 58.6 Q801.5 56 835.5 56 L920.5 56 Q954.5 56 963 58.6 L963 105.4 Q954.5 108 920.5 108 L835.5 108 Q801.5 108 793 105.4 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
-<text x="874" y="80.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant Portal</text>
-<text x="874" y="92.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">operational data</text>
-<svg x="945" y="61" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+<path d="M1327.8 570.24 Q1336.3 567.64 1370.3 567.64 L1455.3 567.64 Q1489.3 567.64 1497.8 570.24 L1497.8 617.04 Q1489.3 619.64 1455.3 619.64 L1370.3 619.64 Q1336.3 619.64 1327.8 617.04 Z" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"/>
+<text x="1408.8" y="591.9" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant Portal</text>
+<text x="1408.8" y="603.9" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">operational data</text>
+<svg x="1479.8" y="572.64" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+</g>
+<g class="node" data-id="P-MERCHANT-001" data-type="processes">
+<title>Onboard and oversee ISO or agent</title>
+<path d="M492.8 490 L412.8 515.97 L443.36 558 L542.24 558 L572.8 515.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="492.8" y="522.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Onboard and oversee</text>
+<text x="492.8" y="534.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">ISO or agent</text>
+</g>
+<g class="node" data-id="P-MERCHANT-002" data-type="processes">
+<title>Capture merchant application</title>
+<path d="M492.8 578 L412.8 603.97 L443.36 646 L542.24 646 L572.8 603.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="492.8" y="610.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Capture merchant</text>
+<text x="492.8" y="622.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">application</text>
+</g>
+<g class="node" data-id="P-MERCHANT-003" data-type="processes">
+<title>Underwrite merchant</title>
+<path d="M492.8 930 L412.8 955.97 L443.36 998 L542.24 998 L572.8 955.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="492.8" y="968.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Underwrite merchant</text>
+</g>
+<g class="node" data-id="P-MERCHANT-004" data-type="processes">
+<title>Screen merchant against sanctions and network lists</title>
+<path d="M492.8 754 L412.8 779.97 L443.36 822 L542.24 822 L572.8 779.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="492.8" y="780.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Screen merchant</text>
+<text x="492.8" y="792.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">against sanctions and</text>
+<text x="492.8" y="804.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">network lists</text>
+</g>
+<g class="node" data-id="P-MERCHANT-005" data-type="processes">
+<title>Board merchant and register with networks</title>
+<path d="M492.8 402 L412.8 427.97 L443.36 470 L542.24 470 L572.8 427.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="492.8" y="434.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Board merchant and</text>
+<text x="492.8" y="446.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">register with networks</text>
+</g>
+<g class="node" data-id="P-MERCHANT-006" data-type="processes">
+<title>Settle and fund merchants</title>
+<path d="M492.8 50 L412.8 75.97 L443.36 118 L542.24 118 L572.8 75.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="492.8" y="82.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Settle and fund</text>
+<text x="492.8" y="94.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">merchants</text>
+</g>
+<g class="node" data-id="P-MERCHANT-007" data-type="processes">
+<title>Set and adjust merchant reserve</title>
+<path d="M492.8 138 L412.8 163.97 L443.36 206 L542.24 206 L572.8 163.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="492.8" y="170.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Set and adjust</text>
+<text x="492.8" y="182.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">merchant reserve</text>
+</g>
+<g class="node" data-id="P-MERCHANT-008" data-type="processes">
+<title>Process acquiring chargeback</title>
+<path d="M492.8 314 L412.8 339.97 L443.36 382 L542.24 382 L572.8 339.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="492.8" y="346.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Process acquiring</text>
+<text x="492.8" y="358.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">chargeback</text>
+</g>
+<g class="node" data-id="P-MERCHANT-009" data-type="processes">
+<title>Monitor merchant exposure and activity</title>
+<path d="M492.8 666 L412.8 691.97 L443.36 734 L542.24 734 L572.8 691.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="492.8" y="698.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Monitor merchant</text>
+<text x="492.8" y="710.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">exposure and activity</text>
+</g>
+<g class="node" data-id="P-MERCHANT-010" data-type="processes">
+<title>Terminate merchant and report to network list</title>
+<path d="M492.8 226 L412.8 251.97 L443.36 294 L542.24 294 L572.8 251.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="492.8" y="252.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Terminate merchant</text>
+<text x="492.8" y="264.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">and report to network</text>
+<text x="492.8" y="276.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">list</text>
+</g>
+<g class="node" data-id="P-MERCHANT-011" data-type="processes">
+<title>Bill merchant fees and serve statements</title>
+<path d="M492.8 842 L412.8 867.97 L443.36 910 L542.24 910 L572.8 867.97 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"/>
+<text x="492.8" y="874.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Bill merchant fees and</text>
+<text x="492.8" y="886.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">serve statements</text>
 </g>
 <g class="node" data-id="SYS-MERCHANT-API" data-type="systems">
 <title>Merchant Portal Service</title>
-<rect x="398.8" y="50" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
-<text x="479.8" y="74.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant Portal</text>
-<text x="479.8" y="86.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Service</text>
-<text x="489.8" y="107.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AKS · Merchant Portal Cache</text>
-<image x="558.8" y="54" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYWY2YTJjNDItYmQ0OC00ODU3LWE0NzktYWVjZjhiM2RlNGY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImI3MGM5Y2YxLWJhYjgtNDdlMC1iYmRiLWNlMWNkNjY0ZDI2OCIgeDE9IjIuOTQiIHkxPSIzLjc0IiB4Mj0iOC42NyIgeTI9IjMuNzQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiZWI2OTk1My1iZDk2LTQ1MTUtODg0My1hYzEyNTQ2YWY5MzYiIHgxPSI5LjEzIiB5MT0iMy43OSIgeDI9IjE0Ljg1IiB5Mj0iMy43OSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImEzOWM3NmU4LTU0N2UtNGViNC1iYzI1LWQ4MWMwZjhjZGE2MiIgeDE9IjAuMDEiIHkxPSI5LjEyIiB4Mj0iNS43MyIgeTI9IjkuMTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJmMGEyYTQ5MS0xN2RjLTRiYjgtYmJmYy1lZTU4YTVjZjQ3ZGEiIHgxPSI2LjE4IiB5MT0iOS4wOCIgeDI9IjExLjkiIHkyPSI5LjA4IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwIiB4MT0iMTIuMzUiIHkxPSI5LjEzIiB4Mj0iMTguMDgiIHkyPSI5LjEzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZTM5OWFhOTMtMzQxZi00ZGYyLTljMDItNjAzYjgyYjQ4NGMyIiB4MT0iMi44NyIgeTE9IjE0LjU2IiB4Mj0iOC42IiB5Mj0iMTQuNTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJhMTUyYmJhMC1iYTJiLTQ4M2EtYjhjMS0wYWU3ZGUzNTU5OTAiIHgxPSI5LjA1IiB5MT0iMTQuNiIgeDI9IjE0Ljc4IiB5Mj0iMTQuNiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPkljb24tY29tcHV0ZS0yMzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSI1LjggMS4yMiAyLjk0IDEuNzUgMi45NCA1LjY1IDUuOCA2LjI2IDguNjcgNS4xMSA4LjY3IDIuMiA1LjggMS4yMiIgZmlsbD0idXJsKCNiNzBjOWNmMS1iYWI4LTQ3ZTAtYmJkYi1jZTFjZDY2NGQyNjgpIiAvPjxwYXRoIGQ9Ik01LjkxLDYuMiw4LjUzLDUuMTRBLjIuMiwwLDAsMCw4LjY1LDVWMi4zNmEuMjEuMjEsMCwwLDAtLjEzLS4xOGwtMi42NS0uOUg1Ljc1bC0yLjYuNDhBLjIuMiwwLDAsMCwzLDEuOTRWNS40N2EuMTkuMTksMCwwLDAsLjE1LjE5bDIuNjMuNTVBLjMyLjMyLDAsMCwwLDUuOTEsNi4yWiIgZmlsbD0ibm9uZSIgLz48cGF0aCBkPSJNMi45NCwxLjc1djMuOWwyLjg5LjYxdi01Wm0xLjIyLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYybC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMTEuOTkgMS4yNyA5LjEzIDEuOCA5LjEzIDUuNyAxMS45OSA2LjMxIDE0Ljg1IDUuMTUgMTQuODUgMi4yNSAxMS45OSAxLjI3IiBmaWxsPSJ1cmwoI2JlYjY5OTUzLWJkOTYtNDUxNS04ODQzLWFjMTI1NDZhZjkzNikiIC8+PHBhdGggZD0iTTkuMTMsMS44VjUuN0wxMiw2LjMxdi01Wm0xLjIxLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYyLjA1bC45My0uMTdaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMi44NyA2LjYgMC4wMSA3LjEzIDAuMDEgMTEuMDMgMi44NyAxMS42NCA1Ljc0IDEwLjQ5IDUuNzQgNy41OCAyLjg3IDYuNiIgZmlsbD0idXJsKCNhMzljNzZlOC01NDdlLTRlYjQtYmMyNS1kODFjMGY4Y2RhNjIpIiAvPjxwYXRoIGQ9Ik0wLDcuMTNWMTFsMi44OS42MXYtNVptMS4yMSwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFpNMi40OCwxMWwtLjkzLS4xNVY3LjM4bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iOS4wNCA2LjU2IDYuMTggNy4wOSA2LjE4IDEwLjk5IDkuMDQgMTEuNjEgMTEuOSAxMC40NSAxMS45IDcuNTQgOS4wNCA2LjU2IiBmaWxsPSJ1cmwoI2YwYTJhNDkxLTE3ZGMtNGJiOC1iYmZjLWVlNThhNWNmNDdkYSkiIC8+PHBhdGggZD0iTTYuMTgsNy4wOVYxMWwyLjg4LjYxdi01Wk03LjM5LDEwLjdsLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjcuMzRsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxNS4yMSA2LjYxIDEyLjM1IDcuMTQgMTIuMzUgMTEuMDQgMTUuMjEgMTEuNjUgMTguMDggMTAuNSAxOC4wOCA3LjU5IDE1LjIxIDYuNjEiIGZpbGw9InVybCgjZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwKSIgLz48cGF0aCBkPSJNMTIuMzUsNy4xNFYxMWwyLjg5LjYxdi01Wm0xLjIyLDMuNjEtLjgxLS4xN3YtM2wuODEtLjE0Wm0xLjI2LjIyLS45My0uMTVWNy4zOWwuOTMtLjE2WiIgZmlsbD0iIzM0MWE2ZSIgLz48cG9seWdvbiBwb2ludHM9IjUuNzMgMTIuMDQgMi44NyAxMi41NiAyLjg3IDE2LjQ2IDUuNzMgMTcuMDggOC42IDE1LjkyIDguNiAxMy4wMiA1LjczIDEyLjA0IiBmaWxsPSJ1cmwoI2UzOTlhYTkzLTM0MWYtNGRmMi05YzAyLTYwM2I4MmI0ODRjMikiIC8+PHBhdGggZD0iTTUuODQsMTcsOC40NSwxNmEuMTguMTgsMCwwLDAsLjEyLS4xOHYtMi42QS4yLjIsMCwwLDAsOC40NCwxM0w1LjgsMTIuMWEuMTcuMTcsMCwwLDAtLjEyLDBsLTIuNi40N2EuMTkuMTksMCwwLDAtLjE2LjE5djMuNTRhLjE5LjE5LDAsMCwwLC4xNS4xOUw1LjcsMTdBLjIzLjIzLDAsMCwwLDUuODQsMTdaIiBmaWxsPSJub25lIiAvPjxwYXRoIGQ9Ik0yLjg3LDEyLjU2djMuOWwyLjg5LjYyVjEyWm0xLjIyLDMuNjFMMy4yOCwxNlYxM2wuODEtLjE0Wm0xLjI2LjIzLS45My0uMTVWMTIuODFsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxMS45MSAxMi4wOCA5LjA1IDEyLjYxIDkuMDUgMTYuNTEgMTEuOTEgMTcuMTIgMTQuNzggMTUuOTcgMTQuNzggMTMuMDYgMTEuOTEgMTIuMDgiIGZpbGw9InVybCgjYTE1MmJiYTAtYmEyYi00ODNhLWI4YzEtMGFlN2RlMzU1OTkwKSIgLz48cGF0aCBkPSJNOS4wNSwxMi42MXYzLjlsMi44OS42MXYtNVptMS4yMiwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjEyLjg2bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjwvc3ZnPg=="/>
+<rect x="390.8" y="1078" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="471.8" y="1102.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant Portal</text>
+<text x="471.8" y="1114.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Service</text>
+<text x="481.8" y="1135.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AKS · Merchant Portal Cache</text>
+<image x="550.8" y="1082" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYWY2YTJjNDItYmQ0OC00ODU3LWE0NzktYWVjZjhiM2RlNGY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImI3MGM5Y2YxLWJhYjgtNDdlMC1iYmRiLWNlMWNkNjY0ZDI2OCIgeDE9IjIuOTQiIHkxPSIzLjc0IiB4Mj0iOC42NyIgeTI9IjMuNzQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiZWI2OTk1My1iZDk2LTQ1MTUtODg0My1hYzEyNTQ2YWY5MzYiIHgxPSI5LjEzIiB5MT0iMy43OSIgeDI9IjE0Ljg1IiB5Mj0iMy43OSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImEzOWM3NmU4LTU0N2UtNGViNC1iYzI1LWQ4MWMwZjhjZGE2MiIgeDE9IjAuMDEiIHkxPSI5LjEyIiB4Mj0iNS43MyIgeTI9IjkuMTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJmMGEyYTQ5MS0xN2RjLTRiYjgtYmJmYy1lZTU4YTVjZjQ3ZGEiIHgxPSI2LjE4IiB5MT0iOS4wOCIgeDI9IjExLjkiIHkyPSI5LjA4IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwIiB4MT0iMTIuMzUiIHkxPSI5LjEzIiB4Mj0iMTguMDgiIHkyPSI5LjEzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZTM5OWFhOTMtMzQxZi00ZGYyLTljMDItNjAzYjgyYjQ4NGMyIiB4MT0iMi44NyIgeTE9IjE0LjU2IiB4Mj0iOC42IiB5Mj0iMTQuNTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJhMTUyYmJhMC1iYTJiLTQ4M2EtYjhjMS0wYWU3ZGUzNTU5OTAiIHgxPSI5LjA1IiB5MT0iMTQuNiIgeDI9IjE0Ljc4IiB5Mj0iMTQuNiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPkljb24tY29tcHV0ZS0yMzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSI1LjggMS4yMiAyLjk0IDEuNzUgMi45NCA1LjY1IDUuOCA2LjI2IDguNjcgNS4xMSA4LjY3IDIuMiA1LjggMS4yMiIgZmlsbD0idXJsKCNiNzBjOWNmMS1iYWI4LTQ3ZTAtYmJkYi1jZTFjZDY2NGQyNjgpIiAvPjxwYXRoIGQ9Ik01LjkxLDYuMiw4LjUzLDUuMTRBLjIuMiwwLDAsMCw4LjY1LDVWMi4zNmEuMjEuMjEsMCwwLDAtLjEzLS4xOGwtMi42NS0uOUg1Ljc1bC0yLjYuNDhBLjIuMiwwLDAsMCwzLDEuOTRWNS40N2EuMTkuMTksMCwwLDAsLjE1LjE5bDIuNjMuNTVBLjMyLjMyLDAsMCwwLDUuOTEsNi4yWiIgZmlsbD0ibm9uZSIgLz48cGF0aCBkPSJNMi45NCwxLjc1djMuOWwyLjg5LjYxdi01Wm0xLjIyLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYybC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMTEuOTkgMS4yNyA5LjEzIDEuOCA5LjEzIDUuNyAxMS45OSA2LjMxIDE0Ljg1IDUuMTUgMTQuODUgMi4yNSAxMS45OSAxLjI3IiBmaWxsPSJ1cmwoI2JlYjY5OTUzLWJkOTYtNDUxNS04ODQzLWFjMTI1NDZhZjkzNikiIC8+PHBhdGggZD0iTTkuMTMsMS44VjUuN0wxMiw2LjMxdi01Wm0xLjIxLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYyLjA1bC45My0uMTdaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMi44NyA2LjYgMC4wMSA3LjEzIDAuMDEgMTEuMDMgMi44NyAxMS42NCA1Ljc0IDEwLjQ5IDUuNzQgNy41OCAyLjg3IDYuNiIgZmlsbD0idXJsKCNhMzljNzZlOC01NDdlLTRlYjQtYmMyNS1kODFjMGY4Y2RhNjIpIiAvPjxwYXRoIGQ9Ik0wLDcuMTNWMTFsMi44OS42MXYtNVptMS4yMSwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFpNMi40OCwxMWwtLjkzLS4xNVY3LjM4bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iOS4wNCA2LjU2IDYuMTggNy4wOSA2LjE4IDEwLjk5IDkuMDQgMTEuNjEgMTEuOSAxMC40NSAxMS45IDcuNTQgOS4wNCA2LjU2IiBmaWxsPSJ1cmwoI2YwYTJhNDkxLTE3ZGMtNGJiOC1iYmZjLWVlNThhNWNmNDdkYSkiIC8+PHBhdGggZD0iTTYuMTgsNy4wOVYxMWwyLjg4LjYxdi01Wk03LjM5LDEwLjdsLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjcuMzRsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxNS4yMSA2LjYxIDEyLjM1IDcuMTQgMTIuMzUgMTEuMDQgMTUuMjEgMTEuNjUgMTguMDggMTAuNSAxOC4wOCA3LjU5IDE1LjIxIDYuNjEiIGZpbGw9InVybCgjZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwKSIgLz48cGF0aCBkPSJNMTIuMzUsNy4xNFYxMWwyLjg5LjYxdi01Wm0xLjIyLDMuNjEtLjgxLS4xN3YtM2wuODEtLjE0Wm0xLjI2LjIyLS45My0uMTVWNy4zOWwuOTMtLjE2WiIgZmlsbD0iIzM0MWE2ZSIgLz48cG9seWdvbiBwb2ludHM9IjUuNzMgMTIuMDQgMi44NyAxMi41NiAyLjg3IDE2LjQ2IDUuNzMgMTcuMDggOC42IDE1LjkyIDguNiAxMy4wMiA1LjczIDEyLjA0IiBmaWxsPSJ1cmwoI2UzOTlhYTkzLTM0MWYtNGRmMi05YzAyLTYwM2I4MmI0ODRjMikiIC8+PHBhdGggZD0iTTUuODQsMTcsOC40NSwxNmEuMTguMTgsMCwwLDAsLjEyLS4xOHYtMi42QS4yLjIsMCwwLDAsOC40NCwxM0w1LjgsMTIuMWEuMTcuMTcsMCwwLDAtLjEyLDBsLTIuNi40N2EuMTkuMTksMCwwLDAtLjE2LjE5djMuNTRhLjE5LjE5LDAsMCwwLC4xNS4xOUw1LjcsMTdBLjIzLjIzLDAsMCwwLDUuODQsMTdaIiBmaWxsPSJub25lIiAvPjxwYXRoIGQ9Ik0yLjg3LDEyLjU2djMuOWwyLjg5LjYyVjEyWm0xLjIyLDMuNjFMMy4yOCwxNlYxM2wuODEtLjE0Wm0xLjI2LjIzLS45My0uMTVWMTIuODFsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxMS45MSAxMi4wOCA5LjA1IDEyLjYxIDkuMDUgMTYuNTEgMTEuOTEgMTcuMTIgMTQuNzggMTUuOTcgMTQuNzggMTMuMDYgMTEuOTEgMTIuMDgiIGZpbGw9InVybCgjYTE1MmJiYTAtYmEyYi00ODNhLWI4YzEtMGFlN2RlMzU1OTkwKSIgLz48cGF0aCBkPSJNOS4wNSwxMi42MXYzLjlsMi44OS42MXYtNVptMS4yMiwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjEyLjg2bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjwvc3ZnPg=="/>
 </g>
 <g class="node" data-id="SYS-MERCHANT-EVENTS" data-type="systems">
 <title>Merchant Portal Event Publisher</title>
-<rect x="398.8" y="133" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
-<text x="479.8" y="157.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant Portal</text>
-<text x="479.8" y="169.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Event Publisher</text>
-<text x="489.8" y="190.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Service Bus</text>
-<image x="558.8" y="137" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJiZDAyODc4LTMwOWEtNDQ5MC04MTk2LTk0NjMzOGQwZjU5MyIgeDE9IjguOTk1IiB5MT0iMTAuMjk5IiB4Mj0iOC45OTUiIHkyPSIxMy4xOTkiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMwMDViYTEiIC8+PHN0b3Agb2Zmc2V0PSIwLjI1OCIgc3RvcC1jb2xvcj0iIzAwNTg5ZCIgLz48c3RvcCBvZmZzZXQ9IjAuNTI1IiBzdG9wLWNvbG9yPSIjMDA0ZjkwIiAvPjxzdG9wIG9mZnNldD0iMC43OTYiIHN0b3AtY29sb3I9IiMwMDNmN2MiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMDAzMDY3IiAvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxnPjxnIGlkPSJiNTMyZTYwMC0zNjIzLTRiZTYtOWZhNi0zMGQwNWZmZjU2YjEiPjxwb2x5Z29uIHBvaW50cz0iMTMuMzg3IDcuNCAxMy4zODIgNy4zOTYgMTMuMzgyIDcuMzg0IDEzLjM2MyA3LjM4NCA4Ljk5NyA0LjQwNSA0LjYzMSA3LjM4NCA0LjYxMiA3LjM4NCA0LjYxMiA3LjM5NiA0LjYwNiA3LjQgNC42MTIgNy40IDQuNjEyIDEzLjIwMSAxMy4zODIgMTMuMjAxIDEzLjM4MiA3LjQgMTMuMzg3IDcuNCIgZmlsbD0iIzUwZTZmZiIgLz48cGF0aCBkPSJNNC42MDYsNy40YzAtLjEuMDA4LDUuNjgxLjAwOCw1LjhMOC45OTUsMTAuM1oiIGZpbGw9IiMzMmJlZGQiIC8+PHBhdGggZD0iTTEzLjM4NCw3LjQsOC45OTUsMTAuMywxMy4zNzYsMTMuMkMxMy4zNzYsMTMuMDgzLDEzLjM4NCw3LjMsMTMuMzg0LDcuNFoiIGZpbGw9IiMxOThhYjMiIC8+PHBvbHlnb24gcG9pbnRzPSI4Ljk5NSAxMC4yOTkgNC42MTQgMTMuMTk0IDQuNjE0IDEzLjE5OSAxMy4zNzYgMTMuMTk5IDEzLjM3NiAxMy4xOTQgOC45OTUgMTAuMjk5IiBmaWxsPSJ1cmwoI2JiZDAyODc4LTMwOWEtNDQ5MC04MTk2LTk0NjMzOGQwZjU5MykiIC8+PGc+PHBhdGggZD0iTTEuMDcyLDEuNDNoMS4yOWEwLDAsMCwwLDEsMCwwdjMuNmEuMjg2LjI4NiwwLDAsMS0uMjg2LjI4NkguNzg2QS4yODYuMjg2LDAsMCwxLC41LDUuMDM1VjJBLjU3Mi41NzIsMCwwLDEsMS4wNzIsMS40M1oiIGZpbGw9IiM5OTkiIC8+PHBhdGggZD0iTTEuMDcyLDEuNDNoMS4yOWEwLDAsMCwwLDEsMCwwdjMuNmEuMjg2LjI4NiwwLDAsMS0uMjg2LjI4NkguNzg2QS4yODYuMjg2LDAsMCwxLC41LDUuMDM1VjJBLjU3Mi41NzIsMCwwLDEsMS4wNzIsMS40M1oiIGZpbGw9IiM5OTkiIG9wYWNpdHk9IjAuNSIgLz48L2c+PGc+PHBhdGggZD0iTTE1LjYzOCwxLjQzaDEuMjlBLjU3Mi41NzIsMCwwLDEsMTcuNSwyVjUuMDM1YS4yODYuMjg2LDAsMCwxLS4yODYuMjg2aC0xLjI5YS4yODYuMjg2LDAsMCwxLS4yODYtLjI4NlYxLjQzQTAsMCwwLDAsMSwxNS42MzgsMS40M1oiIGZpbGw9IiM5OTkiIC8+PHBhdGggZD0iTTE1LjYzOCwxLjQzaDEuMjlBLjU3Mi41NzIsMCwwLDEsMTcuNSwyVjUuMDM1YS4yODYuMjg2LDAsMCwxLS4yODYuMjg2aC0xLjI5YS4yODYuMjg2LDAsMCwxLS4yODYtLjI4NlYxLjQzQTAsMCwwLDAsMSwxNS42MzgsMS40M1oiIGZpbGw9IiM5OTkiIG9wYWNpdHk9IjAuNSIgLz48L2c+PHBhdGggZD0iTTguNjYtNi4xNjNIOS45MDdhMCwwLDAsMCwxLDAsMHYxN2EwLDAsMCwwLDEsMCwwSDguNjZhLjU2Ny41NjcsMCwwLDEtLjU2Ny0uNTY3Vi01LjZBLjU2Ny41NjcsMCwwLDEsOC42Ni02LjE2M1oiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDExLjMzNyAtNi42NjMpIHJvdGF0ZSg5MCkiIGZpbGw9IiM5NDk0OTQiIC8+PGc+PHBhdGggZD0iTS43ODYsMTIuNjc5aDEuMjlhLjI4Ni4yODYsMCwwLDEsLjI4Ni4yODZ2My42YTAsMCwwLDAsMSwwLDBIMS4wNzJBLjU3Mi41NzIsMCwwLDEsLjUsMTZWMTIuOTY1QS4yODYuMjg2LDAsMCwxLC43ODYsMTIuNjc5WiIgZmlsbD0iIzk5OSIgLz48cGF0aCBkPSJNLjc4NiwxMi42NzloMS4yOWEuMjg2LjI4NiwwLDAsMSwuMjg2LjI4NnYzLjZhMCwwLDAsMCwxLDAsMEgxLjA3MkEuNTcyLjU3MiwwLDAsMSwuNSwxNlYxMi45NjVBLjI4Ni4yODYsMCwwLDEsLjc4NiwxMi42NzlaIiBmaWxsPSIjOTk5IiBvcGFjaXR5PSIwLjUiIC8+PC9nPjxnPjxwYXRoIGQ9Ik0xNS45MjQsMTIuNjc5aDEuMjlhLjI4Ni4yODYsMCwwLDEsLjI4Ni4yODZWMTZhLjU3Mi41NzIsMCwwLDEtLjU3Mi41NzJoLTEuMjlhMCwwLDAsMCwxLDAsMHYtMy42QS4yODYuMjg2LDAsMCwxLDE1LjkyNCwxMi42NzlaIiBmaWxsPSIjOTk5IiAvPjxwYXRoIGQ9Ik0xNS45MjQsMTIuNjc5aDEuMjlhLjI4Ni4yODYsMCwwLDEsLjI4Ni4yODZWMTZhLjU3Mi41NzIsMCwwLDEtLjU3Mi41NzJoLTEuMjlhMCwwLDAsMCwxLDAsMHYtMy42QS4yODYuMjg2LDAsMCwxLDE1LjkyNCwxMi42NzlaIiBmaWxsPSIjOTk5IiBvcGFjaXR5PSIwLjUiIC8+PC9nPjxwYXRoIGQ9Ik04LjY2LDcuMTYzSDkuOTA3YTAsMCwwLDAsMSwwLDB2MTdhMCwwLDAsMCwxLDAsMEg4LjY2YS41NjcuNTY3LDAsMCwxLS41NjctLjU2N1Y3LjczQS41NjcuNTY3LDAsMCwxLDguNjYsNy4xNjNaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNi42NjMgMjQuNjYzKSByb3RhdGUoLTkwKSIgZmlsbD0iIzk0OTQ5NCIgLz48L2c+PC9nPjwvc3ZnPg=="/>
+<rect x="390.8" y="1161" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="471.8" y="1185.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant Portal</text>
+<text x="471.8" y="1197.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Event Publisher</text>
+<text x="481.8" y="1218.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Service Bus</text>
+<image x="550.8" y="1165" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJiZDAyODc4LTMwOWEtNDQ5MC04MTk2LTk0NjMzOGQwZjU5MyIgeDE9IjguOTk1IiB5MT0iMTAuMjk5IiB4Mj0iOC45OTUiIHkyPSIxMy4xOTkiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMwMDViYTEiIC8+PHN0b3Agb2Zmc2V0PSIwLjI1OCIgc3RvcC1jb2xvcj0iIzAwNTg5ZCIgLz48c3RvcCBvZmZzZXQ9IjAuNTI1IiBzdG9wLWNvbG9yPSIjMDA0ZjkwIiAvPjxzdG9wIG9mZnNldD0iMC43OTYiIHN0b3AtY29sb3I9IiMwMDNmN2MiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMDAzMDY3IiAvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxnPjxnIGlkPSJiNTMyZTYwMC0zNjIzLTRiZTYtOWZhNi0zMGQwNWZmZjU2YjEiPjxwb2x5Z29uIHBvaW50cz0iMTMuMzg3IDcuNCAxMy4zODIgNy4zOTYgMTMuMzgyIDcuMzg0IDEzLjM2MyA3LjM4NCA4Ljk5NyA0LjQwNSA0LjYzMSA3LjM4NCA0LjYxMiA3LjM4NCA0LjYxMiA3LjM5NiA0LjYwNiA3LjQgNC42MTIgNy40IDQuNjEyIDEzLjIwMSAxMy4zODIgMTMuMjAxIDEzLjM4MiA3LjQgMTMuMzg3IDcuNCIgZmlsbD0iIzUwZTZmZiIgLz48cGF0aCBkPSJNNC42MDYsNy40YzAtLjEuMDA4LDUuNjgxLjAwOCw1LjhMOC45OTUsMTAuM1oiIGZpbGw9IiMzMmJlZGQiIC8+PHBhdGggZD0iTTEzLjM4NCw3LjQsOC45OTUsMTAuMywxMy4zNzYsMTMuMkMxMy4zNzYsMTMuMDgzLDEzLjM4NCw3LjMsMTMuMzg0LDcuNFoiIGZpbGw9IiMxOThhYjMiIC8+PHBvbHlnb24gcG9pbnRzPSI4Ljk5NSAxMC4yOTkgNC42MTQgMTMuMTk0IDQuNjE0IDEzLjE5OSAxMy4zNzYgMTMuMTk5IDEzLjM3NiAxMy4xOTQgOC45OTUgMTAuMjk5IiBmaWxsPSJ1cmwoI2JiZDAyODc4LTMwOWEtNDQ5MC04MTk2LTk0NjMzOGQwZjU5MykiIC8+PGc+PHBhdGggZD0iTTEuMDcyLDEuNDNoMS4yOWEwLDAsMCwwLDEsMCwwdjMuNmEuMjg2LjI4NiwwLDAsMS0uMjg2LjI4NkguNzg2QS4yODYuMjg2LDAsMCwxLC41LDUuMDM1VjJBLjU3Mi41NzIsMCwwLDEsMS4wNzIsMS40M1oiIGZpbGw9IiM5OTkiIC8+PHBhdGggZD0iTTEuMDcyLDEuNDNoMS4yOWEwLDAsMCwwLDEsMCwwdjMuNmEuMjg2LjI4NiwwLDAsMS0uMjg2LjI4NkguNzg2QS4yODYuMjg2LDAsMCwxLC41LDUuMDM1VjJBLjU3Mi41NzIsMCwwLDEsMS4wNzIsMS40M1oiIGZpbGw9IiM5OTkiIG9wYWNpdHk9IjAuNSIgLz48L2c+PGc+PHBhdGggZD0iTTE1LjYzOCwxLjQzaDEuMjlBLjU3Mi41NzIsMCwwLDEsMTcuNSwyVjUuMDM1YS4yODYuMjg2LDAsMCwxLS4yODYuMjg2aC0xLjI5YS4yODYuMjg2LDAsMCwxLS4yODYtLjI4NlYxLjQzQTAsMCwwLDAsMSwxNS42MzgsMS40M1oiIGZpbGw9IiM5OTkiIC8+PHBhdGggZD0iTTE1LjYzOCwxLjQzaDEuMjlBLjU3Mi41NzIsMCwwLDEsMTcuNSwyVjUuMDM1YS4yODYuMjg2LDAsMCwxLS4yODYuMjg2aC0xLjI5YS4yODYuMjg2LDAsMCwxLS4yODYtLjI4NlYxLjQzQTAsMCwwLDAsMSwxNS42MzgsMS40M1oiIGZpbGw9IiM5OTkiIG9wYWNpdHk9IjAuNSIgLz48L2c+PHBhdGggZD0iTTguNjYtNi4xNjNIOS45MDdhMCwwLDAsMCwxLDAsMHYxN2EwLDAsMCwwLDEsMCwwSDguNjZhLjU2Ny41NjcsMCwwLDEtLjU2Ny0uNTY3Vi01LjZBLjU2Ny41NjcsMCwwLDEsOC42Ni02LjE2M1oiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDExLjMzNyAtNi42NjMpIHJvdGF0ZSg5MCkiIGZpbGw9IiM5NDk0OTQiIC8+PGc+PHBhdGggZD0iTS43ODYsMTIuNjc5aDEuMjlhLjI4Ni4yODYsMCwwLDEsLjI4Ni4yODZ2My42YTAsMCwwLDAsMSwwLDBIMS4wNzJBLjU3Mi41NzIsMCwwLDEsLjUsMTZWMTIuOTY1QS4yODYuMjg2LDAsMCwxLC43ODYsMTIuNjc5WiIgZmlsbD0iIzk5OSIgLz48cGF0aCBkPSJNLjc4NiwxMi42NzloMS4yOWEuMjg2LjI4NiwwLDAsMSwuMjg2LjI4NnYzLjZhMCwwLDAsMCwxLDAsMEgxLjA3MkEuNTcyLjU3MiwwLDAsMSwuNSwxNlYxMi45NjVBLjI4Ni4yODYsMCwwLDEsLjc4NiwxMi42NzlaIiBmaWxsPSIjOTk5IiBvcGFjaXR5PSIwLjUiIC8+PC9nPjxnPjxwYXRoIGQ9Ik0xNS45MjQsMTIuNjc5aDEuMjlhLjI4Ni4yODYsMCwwLDEsLjI4Ni4yODZWMTZhLjU3Mi41NzIsMCwwLDEtLjU3Mi41NzJoLTEuMjlhMCwwLDAsMCwxLDAsMHYtMy42QS4yODYuMjg2LDAsMCwxLDE1LjkyNCwxMi42NzlaIiBmaWxsPSIjOTk5IiAvPjxwYXRoIGQ9Ik0xNS45MjQsMTIuNjc5aDEuMjlhLjI4Ni4yODYsMCwwLDEsLjI4Ni4yODZWMTZhLjU3Mi41NzIsMCwwLDEtLjU3Mi41NzJoLTEuMjlhMCwwLDAsMCwxLDAsMHYtMy42QS4yODYuMjg2LDAsMCwxLDE1LjkyNCwxMi42NzlaIiBmaWxsPSIjOTk5IiBvcGFjaXR5PSIwLjUiIC8+PC9nPjxwYXRoIGQ9Ik04LjY2LDcuMTYzSDkuOTA3YTAsMCwwLDAsMSwwLDB2MTdhMCwwLDAsMCwxLDAsMEg4LjY2YS41NjcuNTY3LDAsMCwxLS41NjctLjU2N1Y3LjczQS41NjcuNTY3LDAsMCwxLDguNjYsNy4xNjNaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNi42NjMgMjQuNjYzKSByb3RhdGUoLTkwKSIgZmlsbD0iIzk0OTQ5NCIgLz48L2c+PC9nPjwvc3ZnPg=="/>
 </g>
 <g class="node" data-id="SYS-MERCHANT-STORE" data-type="systems">
 <title>Merchant Portal Database</title>
-<rect x="398.8" y="216" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
-<text x="479.8" y="240.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant Portal</text>
-<text x="479.8" y="252.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Database</text>
-<text x="489.8" y="273.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Azure SQL</text>
-<image x="558.8" y="220" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYTk2NzkyYjctY2UyOC00Y2EzLTk3NjctNGUwNjVlZjQ4MjBmIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImVmMTZiZjlkLWE4YjYtNDE4MS1iNmNkLTY2ZmM1MjAzZjk1NiIgeDE9IjIuNTkiIHkxPSIxMC4xNiIgeDI9IjE1LjQxIiB5Mj0iMTAuMTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMwMDViYTEiIC8+PHN0b3Agb2Zmc2V0PSIwLjA3IiBzdG9wLWNvbG9yPSIjMDA2MGE5IiAvPjxzdG9wIG9mZnNldD0iMC4zNiIgc3RvcC1jb2xvcj0iIzAwNzFjOCIgLz48c3RvcCBvZmZzZXQ9IjAuNTIiIHN0b3AtY29sb3I9IiMwMDc4ZDQiIC8+PHN0b3Agb2Zmc2V0PSIwLjY0IiBzdG9wLWNvbG9yPSIjMDA3NGNkIiAvPjxzdG9wIG9mZnNldD0iMC44MiIgc3RvcC1jb2xvcj0iIzAwNmFiYiIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwMDViYTEiIC8+PC9saW5lYXJHcmFkaWVudD48cmFkaWFsR3JhZGllbnQgaWQ9ImJmMzg0NmMzLTRkNzQtNDc0My1hYjlhLWYzMzRjMjQ4YmQ5MiIgY3g9IjkuMzYiIGN5PSIxMC41NyIgcj0iNy4wNyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2YyZjJmMiIgLz48c3RvcCBvZmZzZXQ9IjAuNTgiIHN0b3AtY29sb3I9IiNlZWUiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZTZlNmU2IiAvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjx0aXRsZT5JY29uLWRhdGFiYXNlcy0xMzA8L3RpdGxlPjxwYXRoIGQ9Ik05LDUuMTRjLTMuNTQsMC02LjQxLTEtNi40MS0yLjMyVjE1LjE4YzAsMS4yNywyLjgyLDIuMyw2LjMyLDIuMzJIOWMzLjU0LDAsNi40MS0xLDYuNDEtMi4zMlYyLjgyQzE1LjQxLDQuMTEsMTIuNTQsNS4xNCw5LDUuMTRaIiBmaWxsPSJ1cmwoI2VmMTZiZjlkLWE4YjYtNDE4MS1iNmNkLTY2ZmM1MjAzZjk1NikiIC8+PHBhdGggZD0iTTE1LjQxLDIuODJjMCwxLjI5LTIuODcsMi4zMi02LjQxLDIuMzJzLTYuNDEtMS02LjQxLTIuMzJTNS40Ni41LDksLjVzNi40MSwxLDYuNDEsMi4zMiIgZmlsbD0iI2U4ZThlOCIgLz48cGF0aCBkPSJNMTMuOTIsMi42M2MwLC44Mi0yLjIxLDEuNDgtNC45MiwxLjQ4UzQuMDgsMy40NSw0LjA4LDIuNjMsNi4yOSwxLjE2LDksMS4xNnM0LjkyLjY2LDQuOTIsMS40NyIgZmlsbD0iIzUwZTZmZiIgLz48cGF0aCBkPSJNOSwzYTExLjU1LDExLjU1LDAsMCwwLTMuODkuNTdBMTEuNDIsMTEuNDIsMCwwLDAsOSw0LjExYTExLjE1LDExLjE1LDAsMCwwLDMuODktLjU4QTExLjg0LDExLjg0LDAsMCwwLDksM1oiIGZpbGw9IiMxOThhYjMiIC8+PHBhdGggZD0iTTEyLjksMTEuNFY4SDEydjQuMTNoMi40NlYxMS40Wk01Ljc2LDkuNzNhMS44MywxLjgzLDAsMCwxLS41MS0uMzEuNDQuNDQsMCwwLDEtLjEyLS4zMi4zNC4zNCwwLDAsMSwuMTUtLjMuNjguNjgsMCwwLDEsLjQyLS4xMiwxLjYyLDEuNjIsMCwwLDEsMSwuMjlWOC4xMWEyLjU4LDIuNTgsMCwwLDAtMS0uMTYsMS42NCwxLjY0LDAsMCwwLTEuMDkuMzQsMS4wOCwxLjA4LDAsMCwwLS40Mi44OWMwLC41MS4zMi45MSwxLDEuMjFhMi44OCwyLjg4LDAsMCwxLC42Mi4zNi40Mi40MiwwLDAsMSwuMTUuMzIuMzguMzgsMCwwLDEtLjE2LjMxLjgxLjgxLDAsMCwxLS40NS4xMSwxLjY2LDEuNjYsMCwwLDEtMS4wOS0uNDJWMTJhMi4xNywyLjE3LDAsMCwwLDEuMDcuMjQsMS44OCwxLjg4LDAsMCwwLDEuMTgtLjMzQTEuMDgsMS4wOCwwLDAsMCw2Ljg0LDExYTEuMDUsMS4wNSwwLDAsMC0uMjUtLjdBMi40MiwyLjQyLDAsMCwwLDUuNzYsOS43M1pNMTEsMTEuMzJhMi4zNCwyLjM0LDAsMCwwLC4zMy0xLjI2QTIuMzIsMi4zMiwwLDAsMCwxMSw5YTEuODEsMS44MSwwLDAsMC0uNy0uNzUsMiwyLDAsMCwwLTEtLjI2LDIuMTEsMi4xMSwwLDAsMC0xLjA4LjI3QTEuODYsMS44NiwwLDAsMCw3LjQ5LDlhMi40NiwyLjQ2LDAsMCwwLS4yNiwxLjE0LDIuMjYsMi4yNiwwLDAsMCwuMjQsMSwxLjc2LDEuNzYsMCwwLDAsLjY5Ljc0LDIuMDYsMi4wNiwwLDAsMCwxLC4zbC44NiwxaDEuMjFMMTAsMTIuMDhBMS43OSwxLjc5LDAsMCwwLDExLDExLjMyWk0xMCwxMS4wN2EuOTQuOTQsMCwwLDEtLjc2LjM1LjkyLjkyLDAsMCwxLS43Ni0uMzYsMS41MiwxLjUyLDAsMCwxLS4yOS0xLDEuNTMsMS41MywwLDAsMSwuMjktMSwxLDEsMCwwLDEsLjc4LS4zNy44Ny44NywwLDAsMSwuNzUuMzcsMS42MiwxLjYyLDAsMCwxLC4yNywxQTEuNDYsMS40NiwwLDAsMSwxMCwxMS4wN1oiIGZpbGw9InVybCgjYmYzODQ2YzMtNGQ3NC00NzQzLWFiOWEtZjMzNGMyNDhiZDkyKSIgLz48L3N2Zz4="/>
+<rect x="390.8" y="1244" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="471.8" y="1268.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant Portal</text>
+<text x="471.8" y="1280.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Database</text>
+<text x="481.8" y="1301.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">Azure SQL</text>
+<image x="550.8" y="1248" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYTk2NzkyYjctY2UyOC00Y2EzLTk3NjctNGUwNjVlZjQ4MjBmIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImVmMTZiZjlkLWE4YjYtNDE4MS1iNmNkLTY2ZmM1MjAzZjk1NiIgeDE9IjIuNTkiIHkxPSIxMC4xNiIgeDI9IjE1LjQxIiB5Mj0iMTAuMTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMwMDViYTEiIC8+PHN0b3Agb2Zmc2V0PSIwLjA3IiBzdG9wLWNvbG9yPSIjMDA2MGE5IiAvPjxzdG9wIG9mZnNldD0iMC4zNiIgc3RvcC1jb2xvcj0iIzAwNzFjOCIgLz48c3RvcCBvZmZzZXQ9IjAuNTIiIHN0b3AtY29sb3I9IiMwMDc4ZDQiIC8+PHN0b3Agb2Zmc2V0PSIwLjY0IiBzdG9wLWNvbG9yPSIjMDA3NGNkIiAvPjxzdG9wIG9mZnNldD0iMC44MiIgc3RvcC1jb2xvcj0iIzAwNmFiYiIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwMDViYTEiIC8+PC9saW5lYXJHcmFkaWVudD48cmFkaWFsR3JhZGllbnQgaWQ9ImJmMzg0NmMzLTRkNzQtNDc0My1hYjlhLWYzMzRjMjQ4YmQ5MiIgY3g9IjkuMzYiIGN5PSIxMC41NyIgcj0iNy4wNyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2YyZjJmMiIgLz48c3RvcCBvZmZzZXQ9IjAuNTgiIHN0b3AtY29sb3I9IiNlZWUiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZTZlNmU2IiAvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjx0aXRsZT5JY29uLWRhdGFiYXNlcy0xMzA8L3RpdGxlPjxwYXRoIGQ9Ik05LDUuMTRjLTMuNTQsMC02LjQxLTEtNi40MS0yLjMyVjE1LjE4YzAsMS4yNywyLjgyLDIuMyw2LjMyLDIuMzJIOWMzLjU0LDAsNi40MS0xLDYuNDEtMi4zMlYyLjgyQzE1LjQxLDQuMTEsMTIuNTQsNS4xNCw5LDUuMTRaIiBmaWxsPSJ1cmwoI2VmMTZiZjlkLWE4YjYtNDE4MS1iNmNkLTY2ZmM1MjAzZjk1NikiIC8+PHBhdGggZD0iTTE1LjQxLDIuODJjMCwxLjI5LTIuODcsMi4zMi02LjQxLDIuMzJzLTYuNDEtMS02LjQxLTIuMzJTNS40Ni41LDksLjVzNi40MSwxLDYuNDEsMi4zMiIgZmlsbD0iI2U4ZThlOCIgLz48cGF0aCBkPSJNMTMuOTIsMi42M2MwLC44Mi0yLjIxLDEuNDgtNC45MiwxLjQ4UzQuMDgsMy40NSw0LjA4LDIuNjMsNi4yOSwxLjE2LDksMS4xNnM0LjkyLjY2LDQuOTIsMS40NyIgZmlsbD0iIzUwZTZmZiIgLz48cGF0aCBkPSJNOSwzYTExLjU1LDExLjU1LDAsMCwwLTMuODkuNTdBMTEuNDIsMTEuNDIsMCwwLDAsOSw0LjExYTExLjE1LDExLjE1LDAsMCwwLDMuODktLjU4QTExLjg0LDExLjg0LDAsMCwwLDksM1oiIGZpbGw9IiMxOThhYjMiIC8+PHBhdGggZD0iTTEyLjksMTEuNFY4SDEydjQuMTNoMi40NlYxMS40Wk01Ljc2LDkuNzNhMS44MywxLjgzLDAsMCwxLS41MS0uMzEuNDQuNDQsMCwwLDEtLjEyLS4zMi4zNC4zNCwwLDAsMSwuMTUtLjMuNjguNjgsMCwwLDEsLjQyLS4xMiwxLjYyLDEuNjIsMCwwLDEsMSwuMjlWOC4xMWEyLjU4LDIuNTgsMCwwLDAtMS0uMTYsMS42NCwxLjY0LDAsMCwwLTEuMDkuMzQsMS4wOCwxLjA4LDAsMCwwLS40Mi44OWMwLC41MS4zMi45MSwxLDEuMjFhMi44OCwyLjg4LDAsMCwxLC42Mi4zNi40Mi40MiwwLDAsMSwuMTUuMzIuMzguMzgsMCwwLDEtLjE2LjMxLjgxLjgxLDAsMCwxLS40NS4xMSwxLjY2LDEuNjYsMCwwLDEtMS4wOS0uNDJWMTJhMi4xNywyLjE3LDAsMCwwLDEuMDcuMjQsMS44OCwxLjg4LDAsMCwwLDEuMTgtLjMzQTEuMDgsMS4wOCwwLDAsMCw2Ljg0LDExYTEuMDUsMS4wNSwwLDAsMC0uMjUtLjdBMi40MiwyLjQyLDAsMCwwLDUuNzYsOS43M1pNMTEsMTEuMzJhMi4zNCwyLjM0LDAsMCwwLC4zMy0xLjI2QTIuMzIsMi4zMiwwLDAsMCwxMSw5YTEuODEsMS44MSwwLDAsMC0uNy0uNzUsMiwyLDAsMCwwLTEtLjI2LDIuMTEsMi4xMSwwLDAsMC0xLjA4LjI3QTEuODYsMS44NiwwLDAsMCw3LjQ5LDlhMi40NiwyLjQ2LDAsMCwwLS4yNiwxLjE0LDIuMjYsMi4yNiwwLDAsMCwuMjQsMSwxLjc2LDEuNzYsMCwwLDAsLjY5Ljc0LDIuMDYsMi4wNiwwLDAsMCwxLC4zbC44NiwxaDEuMjFMMTAsMTIuMDhBMS43OSwxLjc5LDAsMCwwLDExLDExLjMyWk0xMCwxMS4wN2EuOTQuOTQsMCwwLDEtLjc2LjM1LjkyLjkyLDAsMCwxLS43Ni0uMzYsMS41MiwxLjUyLDAsMCwxLS4yOS0xLDEuNTMsMS41MywwLDAsMSwuMjktMSwxLDEsMCwwLDEsLjc4LS4zNy44Ny44NywwLDAsMSwuNzUuMzcsMS42MiwxLjYyLDAsMCwxLC4yNywxQTEuNDYsMS40NiwwLDAsMSwxMCwxMS4wN1oiIGZpbGw9InVybCgjYmYzODQ2YzMtNGQ3NC00NzQzLWFiOWEtZjMzNGMyNDhiZDkyKSIgLz48L3N2Zz4="/>
 </g>
 <g class="node" data-id="SYS-MERCHANT-WEB" data-type="systems">
 <title>Merchant Portal Web</title>
-<rect x="398.8" y="299" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
-<text x="479.8" y="323.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant Portal</text>
-<text x="479.8" y="335.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Web</text>
-<text x="489.8" y="356.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AKS</text>
-<image x="558.8" y="303" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYWY2YTJjNDItYmQ0OC00ODU3LWE0NzktYWVjZjhiM2RlNGY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImI3MGM5Y2YxLWJhYjgtNDdlMC1iYmRiLWNlMWNkNjY0ZDI2OCIgeDE9IjIuOTQiIHkxPSIzLjc0IiB4Mj0iOC42NyIgeTI9IjMuNzQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiZWI2OTk1My1iZDk2LTQ1MTUtODg0My1hYzEyNTQ2YWY5MzYiIHgxPSI5LjEzIiB5MT0iMy43OSIgeDI9IjE0Ljg1IiB5Mj0iMy43OSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImEzOWM3NmU4LTU0N2UtNGViNC1iYzI1LWQ4MWMwZjhjZGE2MiIgeDE9IjAuMDEiIHkxPSI5LjEyIiB4Mj0iNS43MyIgeTI9IjkuMTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJmMGEyYTQ5MS0xN2RjLTRiYjgtYmJmYy1lZTU4YTVjZjQ3ZGEiIHgxPSI2LjE4IiB5MT0iOS4wOCIgeDI9IjExLjkiIHkyPSI5LjA4IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwIiB4MT0iMTIuMzUiIHkxPSI5LjEzIiB4Mj0iMTguMDgiIHkyPSI5LjEzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZTM5OWFhOTMtMzQxZi00ZGYyLTljMDItNjAzYjgyYjQ4NGMyIiB4MT0iMi44NyIgeTE9IjE0LjU2IiB4Mj0iOC42IiB5Mj0iMTQuNTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJhMTUyYmJhMC1iYTJiLTQ4M2EtYjhjMS0wYWU3ZGUzNTU5OTAiIHgxPSI5LjA1IiB5MT0iMTQuNiIgeDI9IjE0Ljc4IiB5Mj0iMTQuNiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPkljb24tY29tcHV0ZS0yMzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSI1LjggMS4yMiAyLjk0IDEuNzUgMi45NCA1LjY1IDUuOCA2LjI2IDguNjcgNS4xMSA4LjY3IDIuMiA1LjggMS4yMiIgZmlsbD0idXJsKCNiNzBjOWNmMS1iYWI4LTQ3ZTAtYmJkYi1jZTFjZDY2NGQyNjgpIiAvPjxwYXRoIGQ9Ik01LjkxLDYuMiw4LjUzLDUuMTRBLjIuMiwwLDAsMCw4LjY1LDVWMi4zNmEuMjEuMjEsMCwwLDAtLjEzLS4xOGwtMi42NS0uOUg1Ljc1bC0yLjYuNDhBLjIuMiwwLDAsMCwzLDEuOTRWNS40N2EuMTkuMTksMCwwLDAsLjE1LjE5bDIuNjMuNTVBLjMyLjMyLDAsMCwwLDUuOTEsNi4yWiIgZmlsbD0ibm9uZSIgLz48cGF0aCBkPSJNMi45NCwxLjc1djMuOWwyLjg5LjYxdi01Wm0xLjIyLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYybC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMTEuOTkgMS4yNyA5LjEzIDEuOCA5LjEzIDUuNyAxMS45OSA2LjMxIDE0Ljg1IDUuMTUgMTQuODUgMi4yNSAxMS45OSAxLjI3IiBmaWxsPSJ1cmwoI2JlYjY5OTUzLWJkOTYtNDUxNS04ODQzLWFjMTI1NDZhZjkzNikiIC8+PHBhdGggZD0iTTkuMTMsMS44VjUuN0wxMiw2LjMxdi01Wm0xLjIxLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYyLjA1bC45My0uMTdaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMi44NyA2LjYgMC4wMSA3LjEzIDAuMDEgMTEuMDMgMi44NyAxMS42NCA1Ljc0IDEwLjQ5IDUuNzQgNy41OCAyLjg3IDYuNiIgZmlsbD0idXJsKCNhMzljNzZlOC01NDdlLTRlYjQtYmMyNS1kODFjMGY4Y2RhNjIpIiAvPjxwYXRoIGQ9Ik0wLDcuMTNWMTFsMi44OS42MXYtNVptMS4yMSwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFpNMi40OCwxMWwtLjkzLS4xNVY3LjM4bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iOS4wNCA2LjU2IDYuMTggNy4wOSA2LjE4IDEwLjk5IDkuMDQgMTEuNjEgMTEuOSAxMC40NSAxMS45IDcuNTQgOS4wNCA2LjU2IiBmaWxsPSJ1cmwoI2YwYTJhNDkxLTE3ZGMtNGJiOC1iYmZjLWVlNThhNWNmNDdkYSkiIC8+PHBhdGggZD0iTTYuMTgsNy4wOVYxMWwyLjg4LjYxdi01Wk03LjM5LDEwLjdsLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjcuMzRsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxNS4yMSA2LjYxIDEyLjM1IDcuMTQgMTIuMzUgMTEuMDQgMTUuMjEgMTEuNjUgMTguMDggMTAuNSAxOC4wOCA3LjU5IDE1LjIxIDYuNjEiIGZpbGw9InVybCgjZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwKSIgLz48cGF0aCBkPSJNMTIuMzUsNy4xNFYxMWwyLjg5LjYxdi01Wm0xLjIyLDMuNjEtLjgxLS4xN3YtM2wuODEtLjE0Wm0xLjI2LjIyLS45My0uMTVWNy4zOWwuOTMtLjE2WiIgZmlsbD0iIzM0MWE2ZSIgLz48cG9seWdvbiBwb2ludHM9IjUuNzMgMTIuMDQgMi44NyAxMi41NiAyLjg3IDE2LjQ2IDUuNzMgMTcuMDggOC42IDE1LjkyIDguNiAxMy4wMiA1LjczIDEyLjA0IiBmaWxsPSJ1cmwoI2UzOTlhYTkzLTM0MWYtNGRmMi05YzAyLTYwM2I4MmI0ODRjMikiIC8+PHBhdGggZD0iTTUuODQsMTcsOC40NSwxNmEuMTguMTgsMCwwLDAsLjEyLS4xOHYtMi42QS4yLjIsMCwwLDAsOC40NCwxM0w1LjgsMTIuMWEuMTcuMTcsMCwwLDAtLjEyLDBsLTIuNi40N2EuMTkuMTksMCwwLDAtLjE2LjE5djMuNTRhLjE5LjE5LDAsMCwwLC4xNS4xOUw1LjcsMTdBLjIzLjIzLDAsMCwwLDUuODQsMTdaIiBmaWxsPSJub25lIiAvPjxwYXRoIGQ9Ik0yLjg3LDEyLjU2djMuOWwyLjg5LjYyVjEyWm0xLjIyLDMuNjFMMy4yOCwxNlYxM2wuODEtLjE0Wm0xLjI2LjIzLS45My0uMTVWMTIuODFsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxMS45MSAxMi4wOCA5LjA1IDEyLjYxIDkuMDUgMTYuNTEgMTEuOTEgMTcuMTIgMTQuNzggMTUuOTcgMTQuNzggMTMuMDYgMTEuOTEgMTIuMDgiIGZpbGw9InVybCgjYTE1MmJiYTAtYmEyYi00ODNhLWI4YzEtMGFlN2RlMzU1OTkwKSIgLz48cGF0aCBkPSJNOS4wNSwxMi42MXYzLjlsMi44OS42MXYtNVptMS4yMiwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjEyLjg2bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjwvc3ZnPg=="/>
+<rect x="390.8" y="1327" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="471.8" y="1351.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant Portal</text>
+<text x="471.8" y="1363.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Web</text>
+<text x="481.8" y="1384.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">AKS</text>
+<image x="550.8" y="1331" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYWY2YTJjNDItYmQ0OC00ODU3LWE0NzktYWVjZjhiM2RlNGY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImI3MGM5Y2YxLWJhYjgtNDdlMC1iYmRiLWNlMWNkNjY0ZDI2OCIgeDE9IjIuOTQiIHkxPSIzLjc0IiB4Mj0iOC42NyIgeTI9IjMuNzQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiZWI2OTk1My1iZDk2LTQ1MTUtODg0My1hYzEyNTQ2YWY5MzYiIHgxPSI5LjEzIiB5MT0iMy43OSIgeDI9IjE0Ljg1IiB5Mj0iMy43OSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImEzOWM3NmU4LTU0N2UtNGViNC1iYzI1LWQ4MWMwZjhjZGE2MiIgeDE9IjAuMDEiIHkxPSI5LjEyIiB4Mj0iNS43MyIgeTI9IjkuMTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJmMGEyYTQ5MS0xN2RjLTRiYjgtYmJmYy1lZTU4YTVjZjQ3ZGEiIHgxPSI2LjE4IiB5MT0iOS4wOCIgeDI9IjExLjkiIHkyPSI5LjA4IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwIiB4MT0iMTIuMzUiIHkxPSI5LjEzIiB4Mj0iMTguMDgiIHkyPSI5LjEzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZTM5OWFhOTMtMzQxZi00ZGYyLTljMDItNjAzYjgyYjQ4NGMyIiB4MT0iMi44NyIgeTE9IjE0LjU2IiB4Mj0iOC42IiB5Mj0iMTQuNTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJhMTUyYmJhMC1iYTJiLTQ4M2EtYjhjMS0wYWU3ZGUzNTU5OTAiIHgxPSI5LjA1IiB5MT0iMTQuNiIgeDI9IjE0Ljc4IiB5Mj0iMTQuNiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPkljb24tY29tcHV0ZS0yMzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSI1LjggMS4yMiAyLjk0IDEuNzUgMi45NCA1LjY1IDUuOCA2LjI2IDguNjcgNS4xMSA4LjY3IDIuMiA1LjggMS4yMiIgZmlsbD0idXJsKCNiNzBjOWNmMS1iYWI4LTQ3ZTAtYmJkYi1jZTFjZDY2NGQyNjgpIiAvPjxwYXRoIGQ9Ik01LjkxLDYuMiw4LjUzLDUuMTRBLjIuMiwwLDAsMCw4LjY1LDVWMi4zNmEuMjEuMjEsMCwwLDAtLjEzLS4xOGwtMi42NS0uOUg1Ljc1bC0yLjYuNDhBLjIuMiwwLDAsMCwzLDEuOTRWNS40N2EuMTkuMTksMCwwLDAsLjE1LjE5bDIuNjMuNTVBLjMyLjMyLDAsMCwwLDUuOTEsNi4yWiIgZmlsbD0ibm9uZSIgLz48cGF0aCBkPSJNMi45NCwxLjc1djMuOWwyLjg5LjYxdi01Wm0xLjIyLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYybC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMTEuOTkgMS4yNyA5LjEzIDEuOCA5LjEzIDUuNyAxMS45OSA2LjMxIDE0Ljg1IDUuMTUgMTQuODUgMi4yNSAxMS45OSAxLjI3IiBmaWxsPSJ1cmwoI2JlYjY5OTUzLWJkOTYtNDUxNS04ODQzLWFjMTI1NDZhZjkzNikiIC8+PHBhdGggZD0iTTkuMTMsMS44VjUuN0wxMiw2LjMxdi01Wm0xLjIxLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYyLjA1bC45My0uMTdaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMi44NyA2LjYgMC4wMSA3LjEzIDAuMDEgMTEuMDMgMi44NyAxMS42NCA1Ljc0IDEwLjQ5IDUuNzQgNy41OCAyLjg3IDYuNiIgZmlsbD0idXJsKCNhMzljNzZlOC01NDdlLTRlYjQtYmMyNS1kODFjMGY4Y2RhNjIpIiAvPjxwYXRoIGQ9Ik0wLDcuMTNWMTFsMi44OS42MXYtNVptMS4yMSwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFpNMi40OCwxMWwtLjkzLS4xNVY3LjM4bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iOS4wNCA2LjU2IDYuMTggNy4wOSA2LjE4IDEwLjk5IDkuMDQgMTEuNjEgMTEuOSAxMC40NSAxMS45IDcuNTQgOS4wNCA2LjU2IiBmaWxsPSJ1cmwoI2YwYTJhNDkxLTE3ZGMtNGJiOC1iYmZjLWVlNThhNWNmNDdkYSkiIC8+PHBhdGggZD0iTTYuMTgsNy4wOVYxMWwyLjg4LjYxdi01Wk03LjM5LDEwLjdsLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjcuMzRsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxNS4yMSA2LjYxIDEyLjM1IDcuMTQgMTIuMzUgMTEuMDQgMTUuMjEgMTEuNjUgMTguMDggMTAuNSAxOC4wOCA3LjU5IDE1LjIxIDYuNjEiIGZpbGw9InVybCgjZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwKSIgLz48cGF0aCBkPSJNMTIuMzUsNy4xNFYxMWwyLjg5LjYxdi01Wm0xLjIyLDMuNjEtLjgxLS4xN3YtM2wuODEtLjE0Wm0xLjI2LjIyLS45My0uMTVWNy4zOWwuOTMtLjE2WiIgZmlsbD0iIzM0MWE2ZSIgLz48cG9seWdvbiBwb2ludHM9IjUuNzMgMTIuMDQgMi44NyAxMi41NiAyLjg3IDE2LjQ2IDUuNzMgMTcuMDggOC42IDE1LjkyIDguNiAxMy4wMiA1LjczIDEyLjA0IiBmaWxsPSJ1cmwoI2UzOTlhYTkzLTM0MWYtNGRmMi05YzAyLTYwM2I4MmI0ODRjMikiIC8+PHBhdGggZD0iTTUuODQsMTcsOC40NSwxNmEuMTguMTgsMCwwLDAsLjEyLS4xOHYtMi42QS4yLjIsMCwwLDAsOC40NCwxM0w1LjgsMTIuMWEuMTcuMTcsMCwwLDAtLjEyLDBsLTIuNi40N2EuMTkuMTksMCwwLDAtLjE2LjE5djMuNTRhLjE5LjE5LDAsMCwwLC4xNS4xOUw1LjcsMTdBLjIzLjIzLDAsMCwwLDUuODQsMTdaIiBmaWxsPSJub25lIiAvPjxwYXRoIGQ9Ik0yLjg3LDEyLjU2djMuOWwyLjg5LjYyVjEyWm0xLjIyLDMuNjFMMy4yOCwxNlYxM2wuODEtLjE0Wm0xLjI2LjIzLS45My0uMTVWMTIuODFsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxMS45MSAxMi4wOCA5LjA1IDEyLjYxIDkuMDUgMTYuNTEgMTEuOTEgMTcuMTIgMTQuNzggMTUuOTcgMTQuNzggMTMuMDYgMTEuOTEgMTIuMDgiIGZpbGw9InVybCgjYTE1MmJiYTAtYmEyYi00ODNhLWI4YzEtMGFlN2RlMzU1OTkwKSIgLz48cGF0aCBkPSJNOS4wNSwxMi42MXYzLjlsMi44OS42MXYtNVptMS4yMiwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjEyLjg2bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjwvc3ZnPg=="/>
 </g>
 <g class="node" data-id="WP-MERCHANT-PORTAL" data-type="work_packages">
 <title>Assemble the merchant portal on Azure</title>
-<path d="M111.05 242.39 Q116 244 120.95 242.39 L191.05 219.61 Q196 218 191.05 216.39 L120.95 193.61 Q116 192 111.05 193.61 L40.95 216.39 Q36 218 40.95 219.61 Z" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.4"/>
-<text x="116" y="210.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Assemble the</text>
-<text x="116" y="222.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">merchant portal on</text>
-<text x="116" y="234.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Azure</text>
+<path d="M111.05 1222.39 Q116 1224 120.95 1222.39 L191.05 1199.61 Q196 1198 191.05 1196.39 L120.95 1173.61 Q116 1172 111.05 1173.61 L40.95 1196.39 Q36 1198 40.95 1199.61 Z" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.4"/>
+<text x="116" y="1190.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Assemble the</text>
+<text x="116" y="1202.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">merchant portal on</text>
+<text x="116" y="1214.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Azure</text>
 </g>
 </g>
-<g class="foot"><line x1="28" y1="502.4" x2="1072" y2="502.4" stroke="#d2dae5" stroke-width="1"/>
-<text x="28" y="526.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
-<g transform="translate(67.2 515.4)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
-<text x="93.2" y="526.4" font-size="12" font-weight="400" fill="#343d50">data asset · 1</text>
-<g transform="translate(181.3 515.4)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
-<text x="207.3" y="526.4" font-size="12" font-weight="400" fill="#343d50">system · 4</text>
-<g transform="translate(280.7 515.4)" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.4"><path d="M8.5 1.6a2 2 0 0 1 3 0l6.9 4.6a1.2 1.2 0 0 1 0 1.6l-6.9 4.6a2 2 0 0 1-3 0L1.6 7.8a1.2 1.2 0 0 1 0-1.6z"/></g>
-<text x="306.7" y="526.4" font-size="12" font-weight="400" fill="#343d50">work package · 1</text>
-<text x="28" y="548.4" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
-<g transform="translate(73.5 537.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
-<text x="99.5" y="548.4" font-size="12" font-weight="400" fill="#343d50">reads / writes</text>
-<g transform="translate(193.45 537.4)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
-<text x="219.45" y="548.4" font-size="12" font-weight="400" fill="#343d50">work package affects system</text>
-<text x="28" y="582.4" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · change-footprint--wp-merchant-portal · edit the model, not the picture</text></g>
+<g class="foot"><line x1="28" y1="1530.44" x2="1544.2" y2="1530.44" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="1554.44" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 1543.44)" fill="#ddd6fe" stroke="#6d28d9" stroke-width="1.4"><path d="M5 1h10l4 6-4 6H5L1 7z"/></g>
+<text x="93.2" y="1554.44" font-size="12" font-weight="400" fill="#343d50">capability · 3</text>
+<g transform="translate(180.25 1543.44)" fill="#a7f3d0" stroke="#047857" stroke-width="1.4"><path d="M3 1h14c1.5 0 2 1 2 2v8c0 1-.5 2-2 2H3c-1.5 0-2-1-2-2V3c0-1 .5-2 2-2z"/></g>
+<text x="206.25" y="1554.44" font-size="12" font-weight="400" fill="#343d50">data asset · 3</text>
+<g transform="translate(297.1 1543.44)" fill="#bae6fd" stroke="#0369a1" stroke-width="1.4"><path d="M10 1l9 5.5-3.5 6.5h-11L1 6.5z"/></g>
+<text x="323.1" y="1554.44" font-size="12" font-weight="400" fill="#343d50">process · 11</text>
+<g transform="translate(401.5 1543.44)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="427.5" y="1554.44" font-size="12" font-weight="400" fill="#343d50">system · 4</text>
+<g transform="translate(500.89 1543.44)" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.4"><path d="M8.5 1.6a2 2 0 0 1 3 0l6.9 4.6a1.2 1.2 0 0 1 0 1.6l-6.9 4.6a2 2 0 0 1-3 0L1.6 7.8a1.2 1.2 0 0 1 0-1.6z"/></g>
+<text x="526.89" y="1554.44" font-size="12" font-weight="400" fill="#343d50">work package · 1</text>
+<text x="28" y="1576.44" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 1565.44)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="1576.44" font-size="12" font-weight="400" fill="#343d50">supports</text>
+<g transform="translate(166.02 1565.44)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="192.02" y="1576.44" font-size="12" font-weight="400" fill="#343d50">uses</text>
+<g transform="translate(235.77 1565.44)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="261.77" y="1576.44" font-size="12" font-weight="400" fill="#343d50">reads / writes</text>
+<g transform="translate(355.72 1565.44)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="381.72" y="1576.44" font-size="12" font-weight="400" fill="#343d50">realizes</text>
+<g transform="translate(441.91 1565.44)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="467.91" y="1576.44" font-size="12" font-weight="400" fill="#343d50">work package affects system</text>
+<text x="28" y="1610.44" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · change-footprint--wp-merchant-portal · edit the model, not the picture</text></g>
 </svg>

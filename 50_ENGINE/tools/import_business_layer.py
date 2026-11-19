@@ -650,7 +650,11 @@ def bian_places(capability_rows: Iterable[dict]) -> Dict[str, tuple]:
     votes: Dict[str, Dict[tuple, int]] = {}
     for row in capability_rows:
         areas, domains = _many(row.get("bian_business_area")), _many(row.get("bian_business_domain"))
-        services = _many(row.get("bian_service_domains"))
+        # Keyed by the name as the references arrive, spelling cleaned: the
+        # layer writes BIAN's own spelling of Session Dialog, the reference
+        # is cleaned to ours, and keyed raw the two never met and the
+        # correspondence capability lost its place in the landscape.
+        services = [_clean(s) for s in _many(row.get("bian_service_domains"))]
         if not services or not domains:
             continue
         if len(domains) == 1:

@@ -100,6 +100,48 @@ class TestTheSameAsTheCommand(unittest.TestCase):
     def test_a_drawio_file_with_its_corrections(self) -> None:
         self._both("sample.drawio", "--correct")
 
+    def test_probably_here_listed_taken_and_written_as_the_command(self) -> None:
+        source = QUICK / "sample.archimate"
+        owner = "ORG-PAYMENTS"
+        with Sandbox(seed=True) as by_hand, Sandbox(seed=True) as by_app:
+            server = _server(by_app)
+            # Without `same`, a read takes nothing, as the command does.
+            plain = server.api_adopt_read({}, dict(_upload(source), owner=owner))
+            self.addCleanup(server.api_adopt_discard, {}, {"token": plain["token"]})
+            self.assertEqual(plain["taken"], {})
+            listed = {p["id"]: p for p in plain["probable"]}
+            self.assertEqual(listed["SYS-CARD-LEDGER"]["candidates"][0]["id"], "SYS-CORE-LEDGER")
+            self.assertEqual(listed["SYS-CARD-LEDGER"]["candidates"][0]["reasons"], ["card", "ledger"])
+            self.assertEqual(listed["SYS-CARD-LEDGER"]["likely"], "SYS-CORE-LEDGER")
+            self.assertIsNone(listed["CAP-PAYMENT-PROCESSING"]["likely"])
+            # The page asks for the likely ones: two systems fewer added,
+            # and two more here already.
+            likely = server.api_adopt_read({}, {"token": plain["token"], "owner": owner, "same": "likely"})
+            self.assertEqual(likely["taken"], {"SYS-AUTHORIZATION-SWITCH": "SYS-AUTH-SWITCH",
+                                              "SYS-CARD-LEDGER": "SYS-CORE-LEDGER"})
+            count = lambda by: sum(len(v) for v in by.values())  # noqa: E731
+            self.assertEqual(count(likely["adds"]), count(plain["adds"]) - 2)
+            # Here already now, under the estate's names.
+            self.assertIn("SYS-CORE-LEDGER", [r["id"] for r in likely["same"]["systems"]])
+            self.assertEqual(sorted(p["id"] for p in likely["probable"]), sorted(listed))
+            # A person ticks a capability too; written, it is the command's
+            # adopt with the same three --same.
+            chosen = dict(likely["taken"], **{"CAP-PAYMENT-PROCESSING": "CAP-PAY"})
+            again = server.api_adopt_read({}, {"token": plain["token"], "owner": owner, "same": chosen})
+            self.assertEqual(count(again["adds"]), count(plain["adds"]) - 3)
+            with self.assertRaises(server.ApiError):
+                server.api_adopt_read({}, {"token": plain["token"], "same": {"SYS-CARD-LEDGER": "SYS-NONE"}})
+            done = server.api_adopt_write({}, {"token": plain["token"], "owner": owner, "same": chosen})
+            self.assertEqual(done["errors"], [])
+            with redirect_stdout(io.StringIO()) as out:
+                code = cli.main(["--root", str(by_hand), "adopt", str(source), "--owner", owner]
+                                + [a for new, old in sorted(chosen.items()) for a in ("--same", "%s=%s" % (new, old))])
+            self.assertEqual(code, 0, out.getvalue())
+            hand, app = _written(by_hand), _written(by_app)
+            self.assertEqual(sorted(app), sorted(hand))
+            for path in hand:
+                self.assertEqual(app[path], hand[path], path)
+
 
 class TestTheDrop(unittest.TestCase):
     @classmethod

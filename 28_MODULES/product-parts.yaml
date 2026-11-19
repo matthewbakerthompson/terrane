@@ -4,6 +4,12 @@
 # publisher, a public front door. The AWS and Azure shapes are composed from
 # these; what differs between them is the blocks they run on and the shared
 # services they use, which the shape passes in.
+#
+# A system a part makes says its kind (`component_type`) where the library
+# has one that plainly is it: made again on every expansion, it cannot be
+# given one record at a time. The worker and the event publisher had none
+# that was them until the library had a background worker and an event
+# processor (2026-11-04).
 
 - module_id: api-service
   name: Product service
@@ -28,6 +34,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-API"
         name: "{product_name} Service"
+        component_type: service-api
         description: "Domain service for {product_name}, behind the {product_name} API."
         system_category: Application
         network_zone: Private-App
@@ -59,6 +66,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-WEB"
         name: "{product_name} Web"
+        component_type: web-app
         description: "Customer-facing front end for {product_name}."
         system_category: Channel
         network_zone: Private-App
@@ -86,6 +94,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-EDGE"
         name: "{product_name} Edge"
+        component_type: cdn
         description: "CDN distribution and WAF ruleset for {product_name}."
         system_category: Edge
         network_zone: Edge
@@ -96,6 +105,7 @@
         runs_on: [public-web-tier.cdn, public-web-tier.waf, public-web-tier.dns]
       - system_id: "SYS-{slug|upper}-ALB"
         name: "{product_name} Load Balancer"
+        component_type: load-balancer
         description: "Public load balancer terminating TLS for {product_name}."
         system_category: Network
         network_zone: Public
@@ -140,6 +150,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-WORKER"
         name: "{product_name} Async Worker"
+        component_type: background-worker
         description: "Consumes {product_name} domain events and drives long-running work."
         criticality: Medium
         system_category: Application
@@ -183,6 +194,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-{system_suffix}"
         name: "{product_name} Database"
+        component_type: relational-db
         description: "Relational database for {product_name}, encrypted with a customer managed key."
         system_category: Datastore
         network_zone: Private-Data
@@ -232,6 +244,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-BUCKET"
         name: "{product_name} Object Store"
+        component_type: object-store
         description: "Object store for {product_name} documents and extracts."
         criticality: Medium
         system_category: Datastore
@@ -267,6 +280,7 @@
     systems:
       - system_id: "SYS-{slug|upper}-EVENTS"
         name: "{product_name} Event Publisher"
+        component_type: event-processor
         description: "Publishes {product_name} domain events onto the enterprise bus."
         criticality: Medium
         system_category: Integration
@@ -279,3 +293,102 @@
         protocol: "{protocol}"
         integration_style: Event
         data_classification: Internal
+
+# --- what most products come to need -----------------------------------------------
+
+- module_id: customer-sign-in
+  name: Customer sign-in
+  category: Identity
+  needs: [product_name, slug]
+  description: >
+    Customers signing in to the product's front end with an account of their
+    own, on the landing zone's customer identity service rather than a
+    password table of the product's: sign-up, sign-in, multi-factor and
+    account recovery once, for every product. The API trusts the tokens it
+    issues.
+  requires: [web-channel]
+  parameters:
+    - name: ciam
+      component: customer-identity
+      description: The customer identity service customers sign in with
+  relations:
+    system_uses_tech_service:
+      - system_id: "SYS-{slug|upper}-WEB"
+        tech_service_id: "{ciam}"
+      - system_id: "SYS-{slug|upper}-API"
+        tech_service_id: "{ciam}"
+
+- module_id: analytics-feed
+  name: Analytics feed
+  category: Data
+  needs: [product_name, slug, classification]
+  description: >
+    The product's data, out to analytics as it changes: a change data capture
+    feed off its own database into the estate's ingestion, so reports and
+    data products read a copy and never the product's database. The way out
+    of a database that leaves it the product's own.
+  requires: [relational-datastore]
+  parameters:
+    - name: system_suffix
+      default: DB
+      description: What the product's datastore is called after its slug, as the datastore part says
+    - name: ingest_system
+      estate: true
+      description: The system the estate's data lands through
+  provides:
+    interfaces:
+      - interface_id: "INT-{slug|upper}-{system_suffix}-ANALYTICS"
+        name: "{product_name} changes to analytics"
+        description: "Every committed change in the {product_name} database, read off its log and published for the estate's ingestion."
+        source_system_id: "SYS-{slug|upper}-{system_suffix}"
+        target_system_id: "{ingest_system}"
+        integration_style: Event
+        protocol: CDC
+        frequency: Realtime
+        direction: Outbound
+        data_classification: "{classification}"
+  relations:
+    interface_transports_data_asset:
+      - interface_id: "INT-{slug|upper}-{system_suffix}-ANALYTICS"
+        data_asset_id: "DA-{slug|upper}-OPERATIONAL"
+
+- module_id: partner-api
+  name: Partner API
+  category: Integration
+  needs: [product_name, slug]
+  description: >
+    The product's API offered to partners outside the estate, published
+    through the landing zone's API gateway with its developer portal: each
+    partner registered as a client, with its own credentials, quota and
+    version, and none reaching the service but through the gateway. The
+    partners are named on the product.
+  requires: [api-service]
+  parameters:
+    - name: front_door
+      component: api-gateway
+      description: The API gateway the partner API is published through
+    - name: partners
+      default: []
+      description: The partners' systems that call it, as system ids
+  provides:
+    offered_interfaces:
+      - offered_interface_id: "OI-{slug|upper}-PARTNER-API"
+        name: "{product_name} Partner API"
+        description: "The {product_name} API as partners see it: versioned, documented on the developer portal, each partner a client with a quota."
+        system_id: "SYS-{slug|upper}-API"
+        protocol: HTTPS
+        integration_style: Request-response
+        auth_method: OAuth2
+    interfaces:
+      - each: "{partners}"
+        interface_id: "INT-{item|stem}-{slug|upper}-PARTNER-API"
+        name: "{item|stem} to the {product_name} Partner API"
+        source_system_id: "{item}"
+        target_system_id: "SYS-{slug|upper}-API"
+        offered_interface_id: "OI-{slug|upper}-PARTNER-API"
+        auth_method: OAuth2
+        direction: Inbound
+  relations:
+    system_uses_tech_service:
+      - system_id: "SYS-{slug|upper}-API"
+        tech_service_id: "{front_door}"

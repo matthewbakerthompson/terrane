@@ -8,9 +8,34 @@ flowchart LR
   %% Curate lending performance in BigQuery — Footprint
   %% Generated from the model by `terrane render`. Do not edit by hand.
 
+  subgraph grp_Capability["Capability"]
+    direction LR
+    CAP_LEND_01{{"Dealer Network & Program<br/>Management"}}
+  end
+
   subgraph grp_Data_Asset["Data Asset"]
     direction LR
+    DA_DEALER[("Dealer master and<br/>agreement")]
+    DA_LOAN_ACCOUNT[("Installment loan account")]
     DA_LENDPERF_CURATED[("Lending Portfolio<br/>Performance curated<br/>dataset")]
+  end
+
+  subgraph grp_Process["Process"]
+    direction LR
+    P_LENDING_012[\"Assign repossession and<br/>send required notices"/]
+    P_LENDING_009[\"Bill installment loan and<br/>post payments"/]
+    P_LENDING_006[\"Board loan and fund dealer"/]
+    P_LENDING_015[\"Calculate and settle<br/>dealer reserve"/]
+    P_LENDING_014[\"Cancel ancillary products<br/>and refund unearned<br/>premium"/]
+    P_LENDING_011[\"Collect delinquent<br/>installment loan"/]
+    P_LENDING_002[\"Monitor dealer performance<br/>and program compliance"/]
+    P_LENDING_007[\"Perfect lien with titling<br/>state"/]
+    P_LENDING_008[\"Quote payoff and release<br/>title"/]
+    P_LENDING_003[\"Receive and validate<br/>dealer-submitted<br/>application"/]
+    P_LENDING_001[\"Recruit, vet, and contract<br/>dealer"/]
+    P_LENDING_013[\"Remarket recovered<br/>collateral and pursue<br/>deficiency"/]
+    P_LENDING_010[\"Service installment loan<br/>account requests"/]
+    P_COMPLIANCE_006[\"Test credit decisions and<br/>pricing for fair lending"/]
   end
 
   subgraph grp_System["System"]
@@ -28,15 +53,40 @@ flowchart LR
   WP_LENDING_PERFORMANCE -->|"Builds"| SYS_LENDPERF_SEMANTIC
   SYS_LENDPERF_PIPELINE -->|"Write"| DA_LENDPERF_CURATED
   SYS_LENDPERF_SEMANTIC -->|"Read"| DA_LENDPERF_CURATED
+  SYS_LENDPERF_SEMANTIC -->|"Read"| DA_LOAN_ACCOUNT
+  SYS_LENDPERF_SEMANTIC -->|"Read"| DA_DEALER
+  SYS_LENDPERF_SEMANTIC -->|"realizes"| CAP_LEND_01
+  P_LENDING_001 -->|"Write"| DA_DEALER
+  P_LENDING_002 -->|"Read"| DA_DEALER
+  P_LENDING_002 -->|"Read"| DA_LOAN_ACCOUNT
+  P_LENDING_003 -->|"Read"| DA_DEALER
+  P_LENDING_006 -->|"Write"| DA_LOAN_ACCOUNT
+  P_LENDING_007 -->|"Read"| DA_LOAN_ACCOUNT
+  P_LENDING_008 -->|"Both"| DA_LOAN_ACCOUNT
+  P_LENDING_009 -->|"Both"| DA_LOAN_ACCOUNT
+  P_LENDING_010 -->|"Both"| DA_LOAN_ACCOUNT
+  P_LENDING_011 -->|"Read"| DA_LOAN_ACCOUNT
+  P_LENDING_012 -->|"Read"| DA_LOAN_ACCOUNT
+  P_LENDING_013 -->|"Both"| DA_LOAN_ACCOUNT
+  P_LENDING_014 -->|"Both"| DA_LOAN_ACCOUNT
+  P_LENDING_015 -->|"Read"| DA_DEALER
+  P_LENDING_015 -->|"Read"| DA_LOAN_ACCOUNT
+  P_COMPLIANCE_006 -->|"Read"| DA_LOAN_ACCOUNT
+  P_LENDING_001 -->|"supports"| CAP_LEND_01
+  P_LENDING_002 -->|"supports"| CAP_LEND_01
 
+  classDef s_capabilities__capabilities fill:#ddd6fe,stroke:#6d28d9,color:#0f172a,stroke-width:1.4px;
   classDef s_data_assets__data_assets fill:#a7f3d0,stroke:#047857,color:#0f172a,stroke-width:1.4px;
+  classDef s_processes__processes fill:#bae6fd,stroke:#0369a1,color:#0f172a,stroke-width:1.4px;
   classDef s_systems__systems fill:#c7d6ff,stroke:#4338ca,color:#0f172a,stroke-width:1.4px;
   classDef s_work_packages__work_packages fill:#ccfbf1,stroke:#0d9488,color:#0f172a,stroke-width:1.4px;
-  class DA_LENDPERF_CURATED s_data_assets__data_assets;
+  class CAP_LEND_01 s_capabilities__capabilities;
+  class DA_DEALER,DA_LENDPERF_CURATED,DA_LOAN_ACCOUNT s_data_assets__data_assets;
+  class P_COMPLIANCE_006,P_LENDING_001,P_LENDING_002,P_LENDING_003,P_LENDING_006,P_LENDING_007,P_LENDING_008,P_LENDING_009,P_LENDING_010,P_LENDING_011,P_LENDING_012,P_LENDING_013,P_LENDING_014,P_LENDING_015 s_processes__processes;
   class SYS_LENDPERF_PIPELINE,SYS_LENDPERF_SEMANTIC s_systems__systems;
   class WP_LENDING_PERFORMANCE s_work_packages__work_packages;
   classDef boundary1 fill:#f3f5fb,stroke:#8f9bb5,color:#3b4a6b;
-  class grp_Data_Asset,grp_System,grp_Work_Package boundary1;
+  class grp_Capability,grp_Data_Asset,grp_Process,grp_System,grp_Work_Package boundary1;
 ```
 
 The same view as the app draws it, written beside the Mermaid by `terrane render`:
@@ -47,8 +97,10 @@ The same view as the app draws it, written beside the Mermaid by `terrane render
 
 | | Entity type |
 |---|---|
+| `#6d28d9` | capabilities |
 | `#047857` | data assets |
+| `#0369a1` | processes |
 | `#4338ca` | systems |
 | `#0d9488` | work packages |
 
-4 entities, 4 relationships. Generated from the model; edit the model, not this file.
+21 entities, 25 relationships. Generated from the model; edit the model, not this file.

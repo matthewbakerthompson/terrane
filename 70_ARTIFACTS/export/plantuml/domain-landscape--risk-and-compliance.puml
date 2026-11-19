@@ -66,9 +66,17 @@ Boundary(b_Risk_and_Compliance, "Risk and Compliance") {
 }
 System(SYS_BUREAU_GW, "Credit bureau gateway", "Credit bureau furnishing and consumer dispute exchange.", $tags="systems")
 ' aac SYS_BUREAU_GW: company_domain=""
+System(SYS_DEPOSIT, "Deposit platform", "System of record for CDs and savings: opening, interest accrual, maturities, early withdrawal and tax reporting.", $tags="systems")
+' aac SYS_DEPOSIT: company_domain=""
+System(SYS_MERCH_RISK, "Merchant risk monitoring", "Monitors merchant volume, chargeback ratios and exposure, and checks merchants against the networks' terminated-merchant file.", $tags="systems")
+' aac SYS_MERCH_RISK: company_domain=""
 
 Rel(SYS_BUREAU_GW, SYS_CREDIT_BUREAU, "Credit Bureau Gateway to Credit Bureau", "FileTransfer", $tags="scheduled-file")
 ' aac rel: source="SYS_BUREAU_GW"; target="SYS_CREDIT_BUREAU"; label="Credit Bureau Gateway to Credit Bureau"; interface_id="INT-BUREAU-GW-BUREAU"; kind="scheduled-file"; integration_style="Batch"; auth_method="KeyPair"; frequency="Monthly"; direction="Outbound"; patterns="regulatory-file-furnishing"
+Rel(SYS_MERCH_RISK, SYS_SCREENING_GATEWAY, "Merchant Risk Monitoring to Screening Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_MERCH_RISK"; target="SYS_SCREENING_GATEWAY"; label="Merchant Risk Monitoring to Screening Gateway"; interface_id="INT-MERCH-RISK-SCREENING"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="inline-risk-decision"
+Rel(SYS_DEPOSIT, SYS_SCREENING_GATEWAY, "Deposit Platform to Screening Gateway", "HTTPS", $tags="api-call")
+' aac rel: source="SYS_DEPOSIT"; target="SYS_SCREENING_GATEWAY"; label="Deposit Platform to Screening Gateway"; interface_id="INT-DEPOSIT-SCREENING"; kind="api-call"; integration_style="Request-response"; auth_method="OAuth2"; frequency="Realtime"; direction="Outbound"; patterns="inline-risk-decision"
 Rel(SYS_CUST360_SEMANTIC, SYS_REG_REPORTING, "Customer 360 Semantic Layer to Regulatory Reporting Engine", "SQL", $tags="pipeline-load")
 ' aac rel: source="SYS_CUST360_SEMANTIC"; target="SYS_REG_REPORTING"; label="Customer 360 Semantic Layer to Regulatory Reporting Engine"; interface_id="INT-CUST360-REGREPORTING"; kind="pipeline-load"; integration_style="Batch"; auth_method="KeyPair"; frequency="Daily"; direction="Outbound"
 Rel(SYS_LENDING_API, OI_IDENTITY_API, "Installment Lending Service to Identity Service", "HTTPS", $tags="api-call")

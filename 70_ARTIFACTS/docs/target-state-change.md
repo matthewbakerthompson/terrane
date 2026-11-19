@@ -12,6 +12,7 @@ Planned systems and interfaces, what they connect to today, and the work package
 | Core Card Ledger <br>`SYS-CORE-LEDGER` | interface | Installment Lending Integration Hub <br>`SYS-LENDING-HUB` | HTTPS |
 | Customer 360 Semantic Layer <br>`SYS-CUST360-SEMANTIC` | interface | Regulatory Reporting Engine <br>`SYS-REG-REPORTING` | SQL |
 | Customer Identity Service <br>`SYS-IDENTITY-SVC` | interface | Identity Document Verification Integration Gateway <br>`SYS-IDV-GATEWAY` | HTTPS |
+| Deposit platform <br>`SYS-DEPOSIT` | interface | NICE Actimize Screening Integration Gateway <br>`SYS-SCREENING-GATEWAY` | HTTPS |
 | Dynamics 365 Customer Service <br>`SYS-CRM` | interface | Core Card Ledger <br>`SYS-CORE-LEDGER` | HTTPS |
 | Dynamics 365 Customer Service <br>`SYS-CRM` | interface | Installment Lending Integration Hub <br>`SYS-LENDING-HUB` | HTTPS |
 | Experian Credit Bureau <br>`SYS-CREDIT-BUREAU` | interface | Installment Lending Integration Hub <br>`SYS-LENDING-HUB` | HTTPS |
@@ -31,9 +32,12 @@ Planned systems and interfaces, what they connect to today, and the work package
 | Installment Lending Web <br>`SYS-LENDING-WEB` | interface | Installment Lending Service <br>`SYS-LENDING-API` | HTTPS |
 | Lending Portfolio Performance Pipeline <br>`SYS-LENDPERF-PIPELINE` | interface | Lending Portfolio Performance Semantic Layer <br>`SYS-LENDPERF-SEMANTIC` | SQL |
 | Lending Portfolio Performance Semantic Layer <br>`SYS-LENDPERF-SEMANTIC` | interface | Regulatory Reporting Engine <br>`SYS-REG-REPORTING` | HTTPS |
+| Merchant acquiring platform <br>`SYS-MERCH-ACQ` | interface | Merchant risk monitoring <br>`SYS-MERCH-RISK` | FileTransfer |
+| Merchant Portal Service <br>`SYS-MERCHANT-API` | interface | Merchant acquiring platform <br>`SYS-MERCH-ACQ` | HTTPS |
 | Merchant Portal Service <br>`SYS-MERCHANT-API` | interface | Merchant Portal Database <br>`SYS-MERCHANT-STORE` | TDS |
 | Merchant Portal Service <br>`SYS-MERCHANT-API` | interface | Merchant Portal Event Publisher <br>`SYS-MERCHANT-EVENTS` | AMQP |
 | Merchant Portal Web <br>`SYS-MERCHANT-WEB` | interface | Merchant Portal Service <br>`SYS-MERCHANT-API` | HTTPS |
+| Merchant risk monitoring <br>`SYS-MERCH-RISK` | interface | NICE Actimize Screening Integration Gateway <br>`SYS-SCREENING-GATEWAY` | HTTPS |
 | NICE Actimize Screening <br>`SYS-SCREENING-VENDOR` | interface | Security Monitoring <br>`SYS-SIEM` | HTTPS |
 | NICE Actimize Screening <br>`SYS-SCREENING-VENDOR` | interface | Enterprise Data Ingestion Hub <br>`SYS-DATA-INGEST` | SFTP |
 | NICE Actimize Screening Identity Federation <br>`SYS-SCREENING-FEDERATION` | interface | NICE Actimize Screening <br>`SYS-SCREENING-VENDOR` | SAML |
@@ -59,7 +63,15 @@ Planned systems and interfaces, what they connect to today, and the work package
 | Installment Lending Service <br>`SYS-LENDING-API` | system reads writes | Installment Lending operational data <br>`DA-LENDING-OPERATIONAL` | ReadWrite |
 | Lending Portfolio Performance Pipeline <br>`SYS-LENDPERF-PIPELINE` | system reads writes | Lending Portfolio Performance curated dataset <br>`DA-LENDPERF-CURATED` | Write |
 | Lending Portfolio Performance Semantic Layer <br>`SYS-LENDPERF-SEMANTIC` | system reads writes | Lending Portfolio Performance curated dataset <br>`DA-LENDPERF-CURATED` | Read |
+| Lending Portfolio Performance Semantic Layer <br>`SYS-LENDPERF-SEMANTIC` | system reads writes | Installment loan account <br>`DA-LOAN-ACCOUNT` | Read |
+| Lending Portfolio Performance Semantic Layer <br>`SYS-LENDPERF-SEMANTIC` | system reads writes | Dealer master and agreement <br>`DA-DEALER` | Read |
+| Merchant acquiring platform <br>`SYS-MERCH-ACQ` | system reads writes | Merchant master and underwriting file <br>`DA-MERCHANT` | ReadWrite |
+| Merchant acquiring platform <br>`SYS-MERCH-ACQ` | system reads writes | Merchant settlement and reserve ledger <br>`DA-MERCH-SETTLE` | ReadWrite |
 | Merchant Portal Service <br>`SYS-MERCHANT-API` | system reads writes | Merchant Portal operational data <br>`DA-MERCHANT-OPERATIONAL` | ReadWrite |
+| Merchant Portal Service <br>`SYS-MERCHANT-API` | system reads writes | Merchant master and underwriting file <br>`DA-MERCHANT` | Write |
+| Merchant Portal Service <br>`SYS-MERCHANT-API` | system reads writes | Merchant settlement and reserve ledger <br>`DA-MERCH-SETTLE` | Read |
+| Merchant risk monitoring <br>`SYS-MERCH-RISK` | system reads writes | Merchant master and underwriting file <br>`DA-MERCHANT` | ReadWrite |
+| Merchant risk monitoring <br>`SYS-MERCH-RISK` | system reads writes | Merchant settlement and reserve ledger <br>`DA-MERCH-SETTLE` | Read |
 | NICE Actimize Screening <br>`SYS-SCREENING-VENDOR` | system reads writes | NICE Actimize Screening outcomes <br>`DA-SCREENING-OUTCOMES` | Write |
 | Point-of-Sale Finance Database <br>`SYS-POSFIN-DB` | system reads writes | Point-of-Sale Finance operational data <br>`DA-POSFIN-OPERATIONAL` | ReadWrite |
 | Point-of-Sale Finance Service <br>`SYS-POSFIN-API` | system reads writes | Point-of-Sale Finance operational data <br>`DA-POSFIN-OPERATIONAL` | ReadWrite |
@@ -107,4 +119,4 @@ Planned systems and interfaces, what they connect to today, and the work package
 | Stand up the regulatory reporting engine <br>`WP-REG-REPORTING` | work package affects system | Regulatory Reporting Engine <br>`SYS-REG-REPORTING` | Builds |
 | Stand up the regulatory reporting engine <br>`WP-REG-REPORTING` | work package affects system | Customer 360 Semantic Layer <br>`SYS-CUST360-SEMANTIC` | Changes |
 
-100 relationships across 60 entities. Generated from the model; this is a report rather than a diagram, so it is a table.
+112 relationships across 67 entities. Generated from the model; this is a report rather than a diagram, so it is a table.

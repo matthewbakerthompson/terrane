@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1159.2" height="619.3" viewBox="0 0 1159.2 619.3" font-family="Geist, system-ui, sans-serif" data-layout="dagre">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1159.2" height="738.2" viewBox="0 0 1159.2 738.2" font-family="Geist, system-ui, sans-serif" data-layout="dagre">
 <title>Merchant Portal — Onboarding</title>
 <rect width="100%" height="100%" fill="#ffffff"/>
 <g class="head"><text x="28" y="52" font-size="24" font-weight="600" fill="#101828">Merchant Portal — Onboarding</text>
-<text x="1131.2" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   5 nodes · 4 edges</text>
+<text x="1131.2" y="50" font-size="12" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace" text-anchor="end">Architecture Model   ·   6 nodes · 5 edges</text>
 <text x="28" y="78" font-size="14" font-weight="400" fill="#343d50">What onboarding this product creates, nested by account, region and network tier. Everything inside the boundaries comes from the product's shape; the systems outside</text>
 <text x="28" y="98" font-size="14" font-weight="400" fill="#343d50">are the ones it must connect to, which are usually the long- lead items. For a bought product, the vendor's environment sits outside our accounts.</text>
 <line x1="28" y1="112" x2="1131.2" y2="112" stroke="#d2dae5" stroke-width="1"/></g>
@@ -28,29 +28,38 @@
 <rect x="782.5" y="70.3" width="233.4" height="114.4" rx="8" fill="#f1f6fb" stroke="#5b9bd5" stroke-width="1.4"/>
 <text x="830.4" y="87.7" font-size="11" font-weight="600" fill="#2f5d8a" text-anchor="middle">Private-Data</text>
 </g>
-<g class="edge" data-id="e0::SYS-MERCHANT-WEB::OI-MERCHANT-API">
+<g class="edge" data-id="e0::SYS-MERCHANT-API::SYS-MERCH-ACQ">
+<title>HTTPS</title>
+<path d="M614 216.2 L614 227.2 L614 350.8 A10 10 0 0 1 604 360.8 L553.1 360.8 A10 10 0 0 0 543.1 370.8 L543.1 393.3 L543.1 400.78" fill="none" stroke="#7b8798" stroke-width="1.6"/>
+<path d="M543.1 404.3 L538.31 394.73 L547.88 394.73 Z" fill="#7b8798"/>
+</g>
+<g class="edge-label" data-edge="e0::SYS-MERCHANT-API::SYS-MERCH-ACQ">
+<rect x="595.5" y="266" width="36.99" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
+<text x="614" y="277.55" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">HTTPS</text>
+</g>
+<g class="edge" data-id="e1::SYS-MERCHANT-WEB::OI-MERCHANT-API">
 <path d="M278.7 184 L289.7 184 L314.3 184 L321.78 184" fill="none" stroke="#7b8798" stroke-width="1.6"/>
 <path d="M325.3 184 L315.73 188.78 L315.73 179.22 Z" fill="#7b8798"/>
 </g>
-<g class="edge" data-id="e1::SYS-MERCHANT-API::SYS-MERCHANT-STORE">
+<g class="edge" data-id="e2::SYS-MERCHANT-API::SYS-MERCHANT-STORE">
 <title>TDS</title>
 <path d="M705.7 177 L716.7 177 L782.09 177 A10 10 0 0 0 792.09 167 L792.09 129.7 A2.2 2.2 0 0 1 794.3 127.5 L796.5 127.5 L803.98 127.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
 <path d="M807.5 127.5 L797.93 132.28 L797.93 122.72 Z" fill="#7b8798"/>
 </g>
-<g class="edge-label" data-edge="e1::SYS-MERCHANT-API::SYS-MERCHANT-STORE">
+<g class="edge-label" data-edge="e2::SYS-MERCHANT-API::SYS-MERCHANT-STORE">
 <rect x="741.91" y="169" width="24.97" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
 <text x="754.4" y="180.55" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">TDS</text>
 </g>
-<g class="edge" data-id="e2::SYS-MERCHANT-API::SYS-MERCHANT-EVENTS">
+<g class="edge" data-id="e3::SYS-MERCHANT-API::SYS-MERCHANT-EVENTS">
 <title>AMQP</title>
 <path d="M705.7 191 L716.7 191 L760.8 191 A10 10 0 0 1 770.8 201 L770.8 230.5 A10 10 0 0 0 780.8 240.5 L796.5 240.5 L803.98 240.5" fill="none" stroke="#7b8798" stroke-width="1.6"/>
 <path d="M807.5 240.5 L797.93 245.28 L797.93 235.72 Z" fill="#7b8798"/>
 </g>
-<g class="edge-label" data-edge="e2::SYS-MERCHANT-API::SYS-MERCHANT-EVENTS">
+<g class="edge-label" data-edge="e3::SYS-MERCHANT-API::SYS-MERCHANT-EVENTS">
 <rect x="753.03" y="207.75" width="35.54" height="16" rx="3" fill="#ffffff" fill-opacity="0.96" stroke="#cdd5e1" stroke-width="1"/>
 <text x="770.8" y="219.3" font-size="10" font-weight="500" fill="#3f4a5c" text-anchor="middle">AMQP</text>
 </g>
-<g class="edge" data-id="e3::OI-MERCHANT-API::SYS-MERCHANT-API">
+<g class="edge" data-id="e4::OI-MERCHANT-API::SYS-MERCHANT-API">
 <path d="M475.7 184 L486.7 184 L511.3 184 L522.3 184" fill="none" stroke="#7b8798" stroke-width="1.6"/>
 </g>
 <g class="node" data-id="OI-MERCHANT-API" data-type="offered_interfaces">
@@ -58,6 +67,14 @@
 <rect x="326" y="166.5" width="149" height="35" rx="14" fill="#e6ecff" stroke="#6366f1" stroke-width="1.4"/>
 <text x="400.5" y="182.76" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant Portal API</text>
 <text x="400.5" y="196" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">HTTPS</text>
+</g>
+<g class="node" data-id="SYS-MERCH-ACQ" data-type="systems">
+<title>Merchant acquiring platform</title>
+<rect x="452.1" y="405" width="182" height="63" rx="8" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"/>
+<text x="539.1" y="429.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Merchant acquiring</text>
+<text x="539.1" y="441.26" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">platform</text>
+<text x="543.1" y="462.5" font-size="8" font-weight="500" fill="#5b6577" text-anchor="middle">external</text>
+<svg x="616.1" y="410" width="12" height="12" viewBox="0 0 24 24" opacity="0.85" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
 </g>
 <g class="node" data-id="SYS-MERCHANT-API" data-type="systems">
 <title>Merchant Portal Service</title>
@@ -92,25 +109,25 @@
 <image x="256" y="156.5" width="18" height="18" href="data:image/svg+xml;base64,PHN2ZyBpZD0iYWY2YTJjNDItYmQ0OC00ODU3LWE0NzktYWVjZjhiM2RlNGY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImI3MGM5Y2YxLWJhYjgtNDdlMC1iYmRiLWNlMWNkNjY0ZDI2OCIgeDE9IjIuOTQiIHkxPSIzLjc0IiB4Mj0iOC42NyIgeTI9IjMuNzQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiZWI2OTk1My1iZDk2LTQ1MTUtODg0My1hYzEyNTQ2YWY5MzYiIHgxPSI5LjEzIiB5MT0iMy43OSIgeDI9IjE0Ljg1IiB5Mj0iMy43OSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImEzOWM3NmU4LTU0N2UtNGViNC1iYzI1LWQ4MWMwZjhjZGE2MiIgeDE9IjAuMDEiIHkxPSI5LjEyIiB4Mj0iNS43MyIgeTI9IjkuMTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJmMGEyYTQ5MS0xN2RjLTRiYjgtYmJmYy1lZTU4YTVjZjQ3ZGEiIHgxPSI2LjE4IiB5MT0iOS4wOCIgeDI9IjExLjkiIHkyPSI5LjA4IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwIiB4MT0iMTIuMzUiIHkxPSI5LjEzIiB4Mj0iMTguMDgiIHkyPSI5LjEzIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYjc3YWY0IiAvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc3M2FkYyIgLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZTM5OWFhOTMtMzQxZi00ZGYyLTljMDItNjAzYjgyYjQ4NGMyIiB4MT0iMi44NyIgeTE9IjE0LjU2IiB4Mj0iOC42IiB5Mj0iMTQuNTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiNzdhZjQiIC8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzczYWRjIiAvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJhMTUyYmJhMC1iYTJiLTQ4M2EtYjhjMS0wYWU3ZGUzNTU5OTAiIHgxPSI5LjA1IiB5MT0iMTQuNiIgeDI9IjE0Ljc4IiB5Mj0iMTQuNiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2I3N2FmNCIgLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NzNhZGMiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHRpdGxlPkljb24tY29tcHV0ZS0yMzwvdGl0bGU+PHBvbHlnb24gcG9pbnRzPSI1LjggMS4yMiAyLjk0IDEuNzUgMi45NCA1LjY1IDUuOCA2LjI2IDguNjcgNS4xMSA4LjY3IDIuMiA1LjggMS4yMiIgZmlsbD0idXJsKCNiNzBjOWNmMS1iYWI4LTQ3ZTAtYmJkYi1jZTFjZDY2NGQyNjgpIiAvPjxwYXRoIGQ9Ik01LjkxLDYuMiw4LjUzLDUuMTRBLjIuMiwwLDAsMCw4LjY1LDVWMi4zNmEuMjEuMjEsMCwwLDAtLjEzLS4xOGwtMi42NS0uOUg1Ljc1bC0yLjYuNDhBLjIuMiwwLDAsMCwzLDEuOTRWNS40N2EuMTkuMTksMCwwLDAsLjE1LjE5bDIuNjMuNTVBLjMyLjMyLDAsMCwwLDUuOTEsNi4yWiIgZmlsbD0ibm9uZSIgLz48cGF0aCBkPSJNMi45NCwxLjc1djMuOWwyLjg5LjYxdi01Wm0xLjIyLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYybC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMTEuOTkgMS4yNyA5LjEzIDEuOCA5LjEzIDUuNyAxMS45OSA2LjMxIDE0Ljg1IDUuMTUgMTQuODUgMi4yNSAxMS45OSAxLjI3IiBmaWxsPSJ1cmwoI2JlYjY5OTUzLWJkOTYtNDUxNS04ODQzLWFjMTI1NDZhZjkzNikiIC8+PHBhdGggZD0iTTkuMTMsMS44VjUuN0wxMiw2LjMxdi01Wm0xLjIxLDMuNi0uODEtLjE2di0zbC44MS0uMTNabTEuMjYuMjMtLjkzLS4xNVYyLjA1bC45My0uMTdaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iMi44NyA2LjYgMC4wMSA3LjEzIDAuMDEgMTEuMDMgMi44NyAxMS42NCA1Ljc0IDEwLjQ5IDUuNzQgNy41OCAyLjg3IDYuNiIgZmlsbD0idXJsKCNhMzljNzZlOC01NDdlLTRlYjQtYmMyNS1kODFjMGY4Y2RhNjIpIiAvPjxwYXRoIGQ9Ik0wLDcuMTNWMTFsMi44OS42MXYtNVptMS4yMSwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFpNMi40OCwxMWwtLjkzLS4xNVY3LjM4bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjxwb2x5Z29uIHBvaW50cz0iOS4wNCA2LjU2IDYuMTggNy4wOSA2LjE4IDEwLjk5IDkuMDQgMTEuNjEgMTEuOSAxMC40NSAxMS45IDcuNTQgOS4wNCA2LjU2IiBmaWxsPSJ1cmwoI2YwYTJhNDkxLTE3ZGMtNGJiOC1iYmZjLWVlNThhNWNmNDdkYSkiIC8+PHBhdGggZD0iTTYuMTgsNy4wOVYxMWwyLjg4LjYxdi01Wk03LjM5LDEwLjdsLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjcuMzRsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxNS4yMSA2LjYxIDEyLjM1IDcuMTQgMTIuMzUgMTEuMDQgMTUuMjEgMTEuNjUgMTguMDggMTAuNSAxOC4wOCA3LjU5IDE1LjIxIDYuNjEiIGZpbGw9InVybCgjZWZjNmE1NmQtODU4NS00MTdkLTkzMWEtMWRhYzIxMTRjY2QwKSIgLz48cGF0aCBkPSJNMTIuMzUsNy4xNFYxMWwyLjg5LjYxdi01Wm0xLjIyLDMuNjEtLjgxLS4xN3YtM2wuODEtLjE0Wm0xLjI2LjIyLS45My0uMTVWNy4zOWwuOTMtLjE2WiIgZmlsbD0iIzM0MWE2ZSIgLz48cG9seWdvbiBwb2ludHM9IjUuNzMgMTIuMDQgMi44NyAxMi41NiAyLjg3IDE2LjQ2IDUuNzMgMTcuMDggOC42IDE1LjkyIDguNiAxMy4wMiA1LjczIDEyLjA0IiBmaWxsPSJ1cmwoI2UzOTlhYTkzLTM0MWYtNGRmMi05YzAyLTYwM2I4MmI0ODRjMikiIC8+PHBhdGggZD0iTTUuODQsMTcsOC40NSwxNmEuMTguMTgsMCwwLDAsLjEyLS4xOHYtMi42QS4yLjIsMCwwLDAsOC40NCwxM0w1LjgsMTIuMWEuMTcuMTcsMCwwLDAtLjEyLDBsLTIuNi40N2EuMTkuMTksMCwwLDAtLjE2LjE5djMuNTRhLjE5LjE5LDAsMCwwLC4xNS4xOUw1LjcsMTdBLjIzLjIzLDAsMCwwLDUuODQsMTdaIiBmaWxsPSJub25lIiAvPjxwYXRoIGQ9Ik0yLjg3LDEyLjU2djMuOWwyLjg5LjYyVjEyWm0xLjIyLDMuNjFMMy4yOCwxNlYxM2wuODEtLjE0Wm0xLjI2LjIzLS45My0uMTVWMTIuODFsLjkzLS4xNloiIGZpbGw9IiMzNDFhNmUiIC8+PHBvbHlnb24gcG9pbnRzPSIxMS45MSAxMi4wOCA5LjA1IDEyLjYxIDkuMDUgMTYuNTEgMTEuOTEgMTcuMTIgMTQuNzggMTUuOTcgMTQuNzggMTMuMDYgMTEuOTEgMTIuMDgiIGZpbGw9InVybCgjYTE1MmJiYTAtYmEyYi00ODNhLWI4YzEtMGFlN2RlMzU1OTkwKSIgLz48cGF0aCBkPSJNOS4wNSwxMi42MXYzLjlsMi44OS42MXYtNVptMS4yMiwzLjYxLS44MS0uMTd2LTNsLjgxLS4xNFptMS4yNi4yMi0uOTMtLjE1VjEyLjg2bC45My0uMTZaIiBmaWxsPSIjMzQxYTZlIiAvPjwvc3ZnPg=="/>
 </g>
 </g>
-<g class="foot"><line x1="28" y1="495.3" x2="1131.2" y2="495.3" stroke="#d2dae5" stroke-width="1"/>
-<text x="28" y="519.3" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
-<g transform="translate(67.2 508.3)" fill="#e6ecff" stroke="#6366f1" stroke-width="1.4"><rect x="1" y="2.5" width="18" height="9" rx="4.5"/></g>
-<text x="93.2" y="519.3" font-size="12" font-weight="400" fill="#343d50">offered interface · 1</text>
-<g transform="translate(214.36 508.3)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
-<text x="240.36" y="519.3" font-size="12" font-weight="400" fill="#343d50">system · 4</text>
-<text x="28" y="541.3" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">BOUNDARIES</text>
-<g transform="translate(105 530.3)"><rect x="1" y="1" width="18" height="12" rx="2" fill="#f7fbfe" stroke="#0078d4" stroke-width="1.4"/></g>
-<text x="131" y="541.3" font-size="12" font-weight="400" fill="#343d50">Azure</text>
-<g transform="translate(180.8 530.3)"><rect x="1" y="1" width="18" height="12" rx="2" fill="#f7fbfe" stroke="#0078d4" stroke-width="1.4" stroke-dasharray="4 2"/></g>
-<text x="206.8" y="541.3" font-size="12" font-weight="400" fill="#343d50">Azure subscription</text>
-<g transform="translate(327.03 530.3)"><rect x="1" y="1" width="18" height="12" rx="2" fill="#f8fafc" stroke="#7a8699" stroke-width="1.4" stroke-dasharray="1 1"/></g>
-<text x="353.03" y="541.3" font-size="12" font-weight="400" fill="#343d50">Azure region</text>
-<g transform="translate(439.99 530.3)"><rect x="1" y="1" width="18" height="12" rx="2" fill="#f1f6fb" stroke="#5b9bd5" stroke-width="1.4"/></g>
-<text x="465.99" y="541.3" font-size="12" font-weight="400" fill="#343d50">Azure subnet</text>
-<text x="28" y="563.3" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
-<g transform="translate(73.5 552.3)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
-<text x="99.5" y="563.3" font-size="12" font-weight="400" fill="#343d50">calls</text>
-<g transform="translate(143.05 552.3)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/></g>
-<text x="169.05" y="563.3" font-size="12" font-weight="400" fill="#343d50">offers</text>
-<text x="28" y="597.3" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · onboarding--prd-merchant-portal · edit the model, not the picture</text></g>
+<g class="foot"><line x1="28" y1="614.2" x2="1131.2" y2="614.2" stroke="#d2dae5" stroke-width="1"/>
+<text x="28" y="638.2" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">TYPE</text>
+<g transform="translate(67.2 627.2)" fill="#e6ecff" stroke="#6366f1" stroke-width="1.4"><rect x="1" y="2.5" width="18" height="9" rx="4.5"/></g>
+<text x="93.2" y="638.2" font-size="12" font-weight="400" fill="#343d50">offered interface · 1</text>
+<g transform="translate(214.36 627.2)" fill="#c7d6ff" stroke="#4338ca" stroke-width="1.4"><rect x="1" y="1" width="18" height="12" rx="2.5"/></g>
+<text x="240.36" y="638.2" font-size="12" font-weight="400" fill="#343d50">system · 5</text>
+<text x="28" y="660.2" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">BOUNDARIES</text>
+<g transform="translate(105 649.2)"><rect x="1" y="1" width="18" height="12" rx="2" fill="#f7fbfe" stroke="#0078d4" stroke-width="1.4"/></g>
+<text x="131" y="660.2" font-size="12" font-weight="400" fill="#343d50">Azure</text>
+<g transform="translate(180.8 649.2)"><rect x="1" y="1" width="18" height="12" rx="2" fill="#f7fbfe" stroke="#0078d4" stroke-width="1.4" stroke-dasharray="4 2"/></g>
+<text x="206.8" y="660.2" font-size="12" font-weight="400" fill="#343d50">Azure subscription</text>
+<g transform="translate(327.03 649.2)"><rect x="1" y="1" width="18" height="12" rx="2" fill="#f8fafc" stroke="#7a8699" stroke-width="1.4" stroke-dasharray="1 1"/></g>
+<text x="353.03" y="660.2" font-size="12" font-weight="400" fill="#343d50">Azure region</text>
+<g transform="translate(439.99 649.2)"><rect x="1" y="1" width="18" height="12" rx="2" fill="#f1f6fb" stroke="#5b9bd5" stroke-width="1.4"/></g>
+<text x="465.99" y="660.2" font-size="12" font-weight="400" fill="#343d50">Azure subnet</text>
+<text x="28" y="682.2" font-size="10.5" font-weight="500" fill="#2841b9" font-family="Geist Mono, ui-monospace, monospace">LINES</text>
+<g transform="translate(73.5 671.2)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/><path d="M16 4l5 3-5 3z" fill="#7b8798"/></g>
+<text x="99.5" y="682.2" font-size="12" font-weight="400" fill="#343d50">calls</text>
+<g transform="translate(143.05 671.2)"><path d="M0 7h20" fill="none" stroke="#7b8798" stroke-width="1.6"/></g>
+<text x="169.05" y="682.2" font-size="12" font-weight="400" fill="#343d50">offers</text>
+<text x="28" y="716.2" font-size="11" font-weight="400" fill="#495366" font-family="Geist Mono, ui-monospace, monospace">Generated from the model by architecture-as-code · onboarding--prd-merchant-portal · edit the model, not the picture</text></g>
 </svg>

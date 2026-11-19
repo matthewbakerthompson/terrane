@@ -48,6 +48,8 @@ interface_transports_data_asset:
     data_asset_id: DA-GL
   # the authorization path
   - interface_id: INT-AUTH-FRAUD
+    data_asset_id: DA-AUTH-LOG
+  - interface_id: INT-AUTH-FRAUD
     data_asset_id: DA-TRANSACTION
   - interface_id: INT-FRAUD-MODEL
     data_asset_id: DA-MODEL-FEAT
@@ -117,6 +119,59 @@ interface_transports_data_asset:
   - interface_id: INT-LEDGER-AML
     data_asset_id: DA-TRANSACTION
   # The workforce and operations interfaces carry no business data asset:
+  # lending, merchant acquiring, deposits and recoveries
+  - interface_id: INT-DEALER-PORTAL-LOS
+    data_asset_id: DA-APPLICATION
+  - interface_id: INT-DEALER-PORTAL-LOS
+    data_asset_id: DA-DEALER
+  - interface_id: INT-LOS-BUREAU-GW
+    data_asset_id: DA-APPLICATION
+  - interface_id: INT-LOS-KYC
+    data_asset_id: DA-APPLICATION
+  - interface_id: INT-LOS-APPFRAUD
+    data_asset_id: DA-APPLICATION
+  - interface_id: INT-LOS-LOAN-SVC-BOARD
+    data_asset_id: DA-APPLICATION
+  - interface_id: INT-LOS-LOAN-SVC-BOARD
+    data_asset_id: DA-LOAN-ACCOUNT
+  - interface_id: INT-LOAN-SVC-TITLE
+    data_asset_id: DA-COLLATERAL
+  - interface_id: INT-PAYMENT-GW-LOAN-SVC
+    data_asset_id: DA-PAYMENT-INSTR
+  - interface_id: INT-LOAN-SVC-GL
+    data_asset_id: DA-GL
+  - interface_id: INT-LOAN-SVC-COLLECT
+    data_asset_id: DA-LOAN-ACCOUNT
+  - interface_id: INT-LOAN-SVC-BUREAU-GW
+    data_asset_id: DA-BUREAU-FILE
+  - interface_id: INT-LOAN-SVC-REMARKET
+    data_asset_id: DA-COLLATERAL
+  - interface_id: INT-MERCHANT-API-ACQ
+    data_asset_id: DA-MERCHANT
+  - interface_id: INT-MERCHANT-API-ACQ
+    data_asset_id: DA-MERCH-SETTLE
+  - interface_id: INT-MERCH-ACQ-RISK
+    data_asset_id: DA-MERCH-SETTLE
+  - interface_id: INT-MERCH-ACQ-RISK
+    data_asset_id: DA-MERCHANT
+  - interface_id: INT-MERCH-RISK-SCREENING
+    data_asset_id: DA-MERCHANT
+  - interface_id: INT-MERCH-ACQ-GL
+    data_asset_id: DA-GL
+  - interface_id: INT-MERCH-ACQ-RECON
+    data_asset_id: DA-MERCH-SETTLE
+  - interface_id: INT-DEPOSIT-KYC
+    data_asset_id: DA-DEPOSIT-ACCOUNT
+  - interface_id: INT-DEPOSIT-SCREENING
+    data_asset_id: DA-DEPOSIT-ACCOUNT
+  - interface_id: INT-BROKER-GW-DEPOSIT
+    data_asset_id: DA-DEPOSIT-ACCOUNT
+  - interface_id: INT-DEPOSIT-GL
+    data_asset_id: DA-GL
+  - interface_id: INT-DEPOSIT-TREASURY
+    data_asset_id: DA-DEPOSIT-ACCOUNT
+  - interface_id: INT-COLLECT-LEGAL
+    data_asset_id: DA-COLLECT-ACT
   # people records, telemetry, change records and test results are not in
   # the data inventory, and listing them against the nearest asset would be
   # a lie the lineage view repeated. They show as interfaces without a
@@ -231,6 +286,100 @@ system_reads_writes:
   - system_id: SYS-CARD-FULFILL
     data_asset_id: DA-CARD-ACCOUNT
     operation: Read
+  # lending, merchant acquiring, deposits and recoveries
+  - system_id: SYS-LOS
+    data_asset_id: DA-APPLICATION
+    operation: ReadWrite
+  - system_id: SYS-LOS
+    data_asset_id: DA-DEALER
+    operation: Read
+  - system_id: SYS-DEALER-PORTAL
+    data_asset_id: DA-DEALER
+    operation: ReadWrite
+  - system_id: SYS-DEALER-PORTAL
+    data_asset_id: DA-APPLICATION
+    operation: Write
+  - system_id: SYS-LOAN-SVC
+    data_asset_id: DA-LOAN-ACCOUNT
+    operation: ReadWrite
+  - system_id: SYS-LOAN-SVC
+    data_asset_id: DA-COLLATERAL
+    operation: Read
+  - system_id: SYS-LOAN-SVC
+    data_asset_id: DA-PAYMENT-INSTR
+    operation: Read
+  - system_id: SYS-TITLE
+    data_asset_id: DA-COLLATERAL
+    operation: ReadWrite
+  - system_id: SYS-REMARKET
+    data_asset_id: DA-COLLATERAL
+    operation: ReadWrite
+  - system_id: SYS-REMARKET
+    data_asset_id: DA-LOAN-ACCOUNT
+    operation: Read
+  - system_id: SYS-COLLECT-API
+    data_asset_id: DA-LOAN-ACCOUNT
+    operation: Read
+  - system_id: SYS-BUREAU-GW
+    data_asset_id: DA-LOAN-ACCOUNT
+    operation: Read
+  - system_id: SYS-LENDPERF-SEMANTIC
+    data_asset_id: DA-LOAN-ACCOUNT
+    operation: Read
+  - system_id: SYS-LENDPERF-SEMANTIC
+    data_asset_id: DA-DEALER
+    operation: Read
+  - system_id: SYS-MERCH-ACQ
+    data_asset_id: DA-MERCHANT
+    operation: ReadWrite
+  - system_id: SYS-MERCH-ACQ
+    data_asset_id: DA-MERCH-SETTLE
+    operation: ReadWrite
+  - system_id: SYS-MERCH-RISK
+    data_asset_id: DA-MERCHANT
+    operation: ReadWrite
+  - system_id: SYS-MERCH-RISK
+    data_asset_id: DA-MERCH-SETTLE
+    operation: Read
+  - system_id: SYS-MERCHANT-API
+    data_asset_id: DA-MERCHANT
+    operation: Write
+  - system_id: SYS-MERCHANT-API
+    data_asset_id: DA-MERCH-SETTLE
+    operation: Read
+  - system_id: SYS-DEPOSIT
+    data_asset_id: DA-DEPOSIT-ACCOUNT
+    operation: ReadWrite
+  - system_id: SYS-BROKER-GW
+    data_asset_id: DA-DEPOSIT-ACCOUNT
+    operation: Write
+  - system_id: SYS-TREASURY
+    data_asset_id: DA-DEPOSIT-ACCOUNT
+    operation: Read
+  - system_id: SYS-KYC
+    data_asset_id: DA-DEPOSIT-ACCOUNT
+    operation: Read
+  - system_id: SYS-AML
+    data_asset_id: DA-DEPOSIT-ACCOUNT
+    operation: Read
+  - system_id: SYS-AML
+    data_asset_id: DA-MERCHANT
+    operation: Read
+  - system_id: SYS-AUTH-SWITCH
+    data_asset_id: DA-AUTH-LOG
+    operation: ReadWrite
+  - system_id: SYS-FRAUD-DETECT
+    data_asset_id: DA-AUTH-LOG
+    operation: Read
+  - system_id: SYS-GRC
+    data_asset_id: DA-PARTNER-PROGRAM
+    operation: ReadWrite
+  - system_id: SYS-GL
+    data_asset_id: DA-PARTNER-PROGRAM
+    operation: Read
+  - system_id: SYS-LEGAL-MATTER
+    data_asset_id: DA-COLLECT-ACT
+    operation: Read
 
 system_governed_by_control:
   # Where a harvested system is the one that enforces a control the
@@ -319,6 +468,41 @@ system_governed_by_control:
     control_id: CTL-CLIENT-SLA
   - system_id: SYS-CARD-FULFILL
     control_id: CTL-TPRM-DD
+  # the lending, merchant and deposit systems, and fair lending testing
+  - system_id: SYS-LOS
+    control_id: CTL-ADVERSE-ACT
+  - system_id: SYS-LOS
+    control_id: CTL-APP-INTAKE
+  - system_id: SYS-LOS
+    control_id: CTL-FUND-STIPS
+  - system_id: SYS-DEALER-PORTAL
+    control_id: CTL-DEALER-MON
+  - system_id: SYS-LOAN-SVC
+    control_id: CTL-PMT-POSTING
+  - system_id: SYS-LOAN-SVC
+    control_id: CTL-ANCILLARY-REFUND
+  - system_id: SYS-TITLE
+    control_id: CTL-LIEN-PERFECT
+  - system_id: SYS-TITLE
+    control_id: CTL-LIEN-RELEASE
+  - system_id: SYS-REMARKET
+    control_id: CTL-REPO-NOTICE
+  - system_id: SYS-MERCH-ACQ
+    control_id: CTL-DAILY-RECON
+  - system_id: SYS-MERCH-ACQ
+    control_id: CTL-PCI-EVIDENCE
+  - system_id: SYS-MERCH-RISK
+    control_id: CTL-MERCH-SCREEN
+  - system_id: SYS-MERCH-RISK
+    control_id: CTL-MERCH-EXPOSURE
+  - system_id: SYS-DEPOSIT
+    control_id: CTL-TAX-REPORT
+  - system_id: SYS-DEPOSIT
+    control_id: CTL-SANCTIONS
+  - system_id: SYS-BROKER-GW
+    control_id: CTL-BROKERED-RECON
+  - system_id: SYS-CREDIT-DATA
+    control_id: CTL-FAIR-LEND-TEST
 
 actor_uses_system:
   - actor_id: ACT-CARDHOLDER
@@ -339,6 +523,45 @@ actor_uses_system:
   - actor_id: ACT-UNDERWRITER
     system_id: SYS-CREDIT-DATA
     interaction: Strategy analysis
+  - actor_id: ACT-DEALER
+    system_id: SYS-DEALER-PORTAL
+    interaction: Submits applications and contracts
+  - actor_id: ACT-BORROWER
+    system_id: SYS-PAYMENT-GW
+    interaction: Pays the loan
+  - actor_id: ACT-BORROWER
+    system_id: SYS-CONTACT
+    interaction: Calls about the loan
+  - actor_id: ACT-FUNDING-ANALYST
+    system_id: SYS-LOS
+    interaction: Clears stipulations and funds
+  - actor_id: ACT-FUNDING-ANALYST
+    system_id: SYS-LOAN-SVC
+    interaction: Boards loans
+  - actor_id: ACT-UNDERWRITER
+    system_id: SYS-LOS
+    interaction: Reviews referred dealer applications
+  - actor_id: ACT-ISO
+    system_id: SYS-MERCHANT-WEB
+    interaction: Submits merchant applications
+  - actor_id: ACT-DEPOSITOR
+    system_id: SYS-DEPOSIT
+    interaction: Opens and manages CDs and savings
+  - actor_id: ACT-DEPOSIT-BROKER
+    system_id: SYS-BROKER-GW
+    interaction: Exchanges allocation and position files
+  - actor_id: ACT-SERVICING-CLIENT
+    system_id: SYS-CLIENT-PORTAL
+    interaction: Receives reports and data feeds
+  - actor_id: ACT-COBRAND-PARTNER
+    system_id: SYS-CLIENT-PORTAL
+    interaction: Receives program performance reports
+  - actor_id: ACT-COLLECTION-AGENCY
+    system_id: SYS-COLLECT-API
+    interaction: Receives placements and returns payments
+  - actor_id: ACT-DEBT-BUYER
+    system_id: SYS-DOC
+    interaction: Receives account documents after a sale
 
 system_uses_tech_service:
   # Only where the harvested system is plainly the thing a technology
